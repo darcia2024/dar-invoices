@@ -19,6 +19,7 @@
             --text-muted: #5a6478;
             --border-navy: #0f2b5c;
             --border-light: #d8d3c5;
+            --gold-accent: #c5a059;
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -43,7 +44,7 @@
         }
 
         /* ----------------------------------------------------
-           INTERACTIVE ENVELOPE COVER / FRONT MODAL
+           LUXURY INTERACTIVE ENVELOPE COVER SCREEN
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -51,137 +52,183 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(232, 228, 218, 0.98);
-            backdrop-filter: blur(16px);
+            background: radial-gradient(circle at center, #0e2042 0%, #061024 100%);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 24px;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cover-overlay.opened {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: scale(1.03);
+            transform: scale(1.04) translateY(-20px);
         }
 
         .cover-card {
             background-color: var(--paper-cream);
-            border: 1.5px solid var(--navy-primary);
-            border-radius: 12px;
-            max-width: 480px;
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            border-radius: 16px;
+            max-width: 500px;
             width: 100%;
-            padding: 45px 35px;
+            padding: 45px 40px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(15, 43, 92, 0.25);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.15);
             position: relative;
             overflow: hidden;
         }
 
+        /* Top Luxury Gold Accent Bar */
         .cover-card::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--navy-primary), #2563eb, var(--navy-primary));
+            height: 5px;
+            background: linear-gradient(90deg, #9a7b38, var(--gold-accent), #f3e5ab, var(--gold-accent), #9a7b38);
         }
 
-        .cover-seal-icon {
-            width: 68px;
-            height: 68px;
-            background-color: rgba(15, 43, 92, 0.06);
-            border: 1.5px dashed var(--navy-primary);
+        /* Wax Seal Emblem Stamp */
+        .cover-seal-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 22px auto;
+        }
+
+        .cover-seal-circle {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
+            background: linear-gradient(135deg, #0f2b5c 0%, #1a3c78 100%);
+            border: 2px solid var(--gold-accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px auto;
-            color: var(--navy-primary);
+            color: var(--gold-accent);
+            box-shadow: 0 8px 20px rgba(15, 43, 92, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .cover-seal-badge {
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold-accent);
+            color: #0f2b5c;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .cover-tag {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: var(--navy-primary);
+            color: var(--gold-accent);
             margin-bottom: 8px;
         }
 
         .cover-title {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             font-weight: 800;
             color: var(--navy-primary);
             letter-spacing: -0.02em;
             margin-bottom: 6px;
-            line-height: 1.25;
+            line-height: 1.2;
         }
 
         .cover-subtitle {
             font-size: 0.84rem;
             color: var(--text-muted);
             margin-bottom: 24px;
+            font-weight: 300;
         }
 
+        /* Gold Line Divider */
+        .cover-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.4), transparent);
+            margin: 0 auto 22px auto;
+            width: 80%;
+        }
+
+        /* Recipient Frame */
         .cover-recipient-box {
-            background: rgba(15, 43, 92, 0.04);
+            background: rgba(15, 43, 92, 0.03);
             border: 1px solid rgba(15, 43, 92, 0.15);
+            border-left: 3.5px solid var(--navy-primary);
             border-radius: 8px;
-            padding: 14px 18px;
+            padding: 16px 20px;
             margin-bottom: 28px;
             text-align: left;
         }
 
         .cover-recipient-label {
-            font-size: 0.68rem;
-            font-weight: 600;
+            font-size: 0.66rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             color: var(--navy-primary);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .cover-recipient-name {
-            font-size: 0.92rem;
-            font-weight: 600;
+            font-size: 0.98rem;
+            font-weight: 700;
             color: var(--navy-primary);
+        }
+
+        .cover-recipient-org {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--navy-light);
         }
 
         .cover-inv-num {
             font-family: var(--font-mono);
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 6px;
+            font-weight: 700;
         }
 
+        /* High-End Interactive Action Button */
         .cover-open-btn {
             font-family: var(--font-sora);
             font-size: 0.92rem;
             font-weight: 700;
-            background-color: var(--navy-primary);
+            background: linear-gradient(135deg, #0f2b5c 0%, #1e40af 100%);
             color: #ffffff;
-            border: none;
-            padding: 14px 32px;
+            border: 1px solid var(--gold-accent);
+            padding: 15px 32px;
             border-radius: 30px;
             cursor: pointer;
             width: 100%;
-            transition: all 0.25 ease;
-            box-shadow: 0 8px 20px rgba(15, 43, 92, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(15, 43, 92, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            position: relative;
+            overflow: hidden;
         }
 
         .cover-open-btn:hover {
-            background-color: #1a3c78;
+            background: linear-gradient(135deg, #163875 0%, #2563eb 100%);
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(15, 43, 92, 0.4);
+            box-shadow: 0 12px 30px rgba(15, 43, 92, 0.5), 0 0 15px rgba(197, 160, 89, 0.3);
         }
 
         .cover-open-btn:active {
@@ -789,6 +836,14 @@
                 bottom: 16px;
                 text-align: center;
             }
+
+            .cover-card {
+                padding: 35px 22px;
+            }
+
+            .cover-title {
+                font-size: 1.45rem;
+            }
         }
 
         /* Print Media Styles */
@@ -857,23 +912,34 @@
 </head>
 <body>
 
-    <!-- INTERACTIVE ENVELOPE COVER SCREEN -->
+    <!-- LUXURY INTERACTIVE ENVELOPE COVER SCREEN -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card">
-            <div class="cover-seal-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
+            
+            <!-- Wax Seal Badge Stamp -->
+            <div class="cover-seal-wrapper">
+                <div class="cover-seal-circle">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+                <div class="cover-seal-badge">OFFICIAL</div>
             </div>
+
             <div class="cover-tag">DOKUMEN RESMI</div>
             <h1 class="cover-title">INVOICE & PENAWARAN</h1>
-            <div class="cover-subtitle">Pengembangan Web & Identitas Visual Markaz Fiqih</div>
+            <div class="cover-subtitle">Pengembangan Sistem Web & Identitas Visual Markaz Fiqih</div>
             
+            <div class="cover-divider"></div>
+
             <div class="cover-recipient-box">
                 <div class="cover-recipient-label">BILLED TO / DITUJUKAN KEPADA:</div>
-                <div class="cover-recipient-name">Markaz Fiqih</div>
-                <div style="font-size: 0.8rem; color: var(--navy-light);">Faqih Ubaidillah Rozan (Owner)</div>
+                <div class="cover-recipient-name">Faqih Ubaidillah Rozan</div>
+                <div class="cover-recipient-org">Owner — Markaz Fiqih</div>
                 <div class="cover-inv-num">Invoice No: #INV/MF/2026/001</div>
             </div>
 
