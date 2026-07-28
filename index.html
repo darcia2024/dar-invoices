@@ -38,6 +38,154 @@
             line-height: 1.5;
             padding: 40px 20px;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           INTERACTIVE ENVELOPE COVER / FRONT MODAL
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(232, 228, 218, 0.98);
+            backdrop-filter: blur(16px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(1.03);
+        }
+
+        .cover-card {
+            background-color: var(--paper-cream);
+            border: 1.5px solid var(--navy-primary);
+            border-radius: 12px;
+            max-width: 480px;
+            width: 100%;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(15, 43, 92, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--navy-primary), #2563eb, var(--navy-primary));
+        }
+
+        .cover-seal-icon {
+            width: 68px;
+            height: 68px;
+            background-color: rgba(15, 43, 92, 0.06);
+            border: 1.5px dashed var(--navy-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+            color: var(--navy-primary);
+        }
+
+        .cover-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+        }
+
+        .cover-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            line-height: 1.25;
+        }
+
+        .cover-subtitle {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .cover-recipient-box {
+            background: rgba(15, 43, 92, 0.04);
+            border: 1px solid rgba(15, 43, 92, 0.15);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 2px;
+        }
+
+        .cover-recipient-name {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .cover-open-btn {
+            font-family: var(--font-sora);
+            font-size: 0.92rem;
+            font-weight: 700;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.25 ease;
+            box-shadow: 0 8px 20px rgba(15, 43, 92, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cover-open-btn:hover {
+            background-color: #1a3c78;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(15, 43, 92, 0.4);
+        }
+
+        .cover-open-btn:active {
+            transform: translateY(0);
         }
 
         /* Web Top Bar Controls */
@@ -650,6 +798,10 @@
                 padding: 0;
             }
 
+            .cover-overlay {
+                display: none !important;
+            }
+
             .action-bar, .toast {
                 display: none !important;
             }
@@ -704,6 +856,33 @@
     </style>
 </head>
 <body>
+
+    <!-- INTERACTIVE ENVELOPE COVER SCREEN -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="cover-seal-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <div class="cover-tag">DOKUMEN RESMI</div>
+            <h1 class="cover-title">INVOICE & PENAWARAN</h1>
+            <div class="cover-subtitle">Pengembangan Web & Identitas Visual Markaz Fiqih</div>
+            
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">BILLED TO / DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Markaz Fiqih</div>
+                <div style="font-size: 0.8rem; color: var(--navy-light);">Faqih Ubaidillah Rozan (Owner)</div>
+                <div class="cover-inv-num">Invoice No: #INV/MF/2026/001</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="openInvoice()">
+                <span>🔓 Buka Dokumen Invoice</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+        </div>
+    </div>
 
     <!-- Top Web Controls Bar -->
     <div class="action-bar">
@@ -1021,6 +1200,11 @@
     <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
 
     <script>
+        function openInvoice() {
+            const cover = document.getElementById("coverOverlay");
+            cover.classList.add("opened");
+        }
+
         function copyBankAcc() {
             const accNo = "1550010616962";
             navigator.clipboard.writeText(accNo).then(() => {
