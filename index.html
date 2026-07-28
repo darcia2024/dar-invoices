@@ -7,7 +7,7 @@
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -19,7 +19,6 @@
             --text-muted: #5a6478;
             --border-navy: #0f2b5c;
             --border-light: #d8d3c5;
-            --gold-accent: #c5a059;
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -44,7 +43,7 @@
         }
 
         /* ----------------------------------------------------
-           LUXURY INTERACTIVE ENVELOPE COVER SCREEN
+           CLASSIFIED "RAHASIA NEGARA" TOP SECRET COVER SCREEN
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -52,187 +51,160 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, #0e2042 0%, #061024 100%);
+            background-color: #0d0d0d;
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 20px 20px;
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cover-overlay.opened {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: scale(1.04) translateY(-20px);
+            transform: scale(0.98) translateY(-30px);
         }
 
         .cover-card {
-            background-color: var(--paper-cream);
-            border: 1px solid rgba(197, 160, 89, 0.5);
-            border-radius: 16px;
-            max-width: 500px;
+            background-color: #f4f1ea;
+            border: 3px double #000000;
+            border-radius: 2px;
+            max-width: 520px;
             width: 100%;
             padding: 45px 40px;
             text-align: center;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
             position: relative;
-            overflow: hidden;
+            color: #000000;
+            font-family: var(--font-mono);
         }
 
-        /* Top Luxury Gold Accent Bar */
-        .cover-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #9a7b38, var(--gold-accent), #f3e5ab, var(--gold-accent), #9a7b38);
-        }
-
-        /* Wax Seal Emblem Stamp */
-        .cover-seal-wrapper {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 22px auto;
-        }
-
-        .cover-seal-circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0f2b5c 0%, #1a3c78 100%);
-            border: 2px solid var(--gold-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold-accent);
-            box-shadow: 0 8px 20px rgba(15, 43, 92, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-
-        .cover-seal-badge {
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gold-accent);
-            color: #0f2b5c;
-            font-size: 0.6rem;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 10px;
-            letter-spacing: 0.08em;
-            white-space: nowrap;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .cover-tag {
-            font-size: 0.7rem;
+        /* Top Classified Stamp Badge */
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #000000;
+            padding: 4px 16px;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 0.22em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
-            color: var(--gold-accent);
-            margin-bottom: 8px;
+            margin-bottom: 24px;
+            transform: rotate(-1.5deg);
+            background: #ffffff;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .cover-top-barcode {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: #444444;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .cover-title {
-            font-size: 1.7rem;
-            font-weight: 800;
-            color: var(--navy-primary);
-            letter-spacing: -0.02em;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 0.05em;
             margin-bottom: 6px;
             line-height: 1.2;
+            text-transform: uppercase;
         }
 
         .cover-subtitle {
-            font-size: 0.84rem;
-            color: var(--text-muted);
+            font-size: 0.78rem;
+            color: #444444;
             margin-bottom: 24px;
-            font-weight: 300;
+            font-style: italic;
         }
 
-        /* Gold Line Divider */
-        .cover-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.4), transparent);
-            margin: 0 auto 22px auto;
-            width: 80%;
+        .classified-line-divider {
+            border-top: 1px dashed #000000;
+            margin: 0 auto 24px auto;
+            width: 100%;
         }
 
-        /* Recipient Frame */
+        /* Recipient Dossier Box */
         .cover-recipient-box {
-            background: rgba(15, 43, 92, 0.03);
-            border: 1px solid rgba(15, 43, 92, 0.15);
-            border-left: 3.5px solid var(--navy-primary);
-            border-radius: 8px;
+            background-color: #ffffff;
+            border: 1px solid #000000;
             padding: 16px 20px;
             margin-bottom: 28px;
             text-align: left;
+            box-shadow: 3px 3px 0px #000000;
         }
 
         .cover-recipient-label {
-            font-size: 0.66rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--navy-primary);
-            margin-bottom: 4px;
+            letter-spacing: 0.15em;
+            color: #666666;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
         }
 
         .cover-recipient-name {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            color: var(--navy-primary);
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .cover-recipient-org {
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: var(--navy-light);
+            font-size: 0.78rem;
+            color: #333333;
+            margin-top: 2px;
         }
 
         .cover-inv-num {
-            font-family: var(--font-mono);
             font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 6px;
+            color: #000000;
+            margin-top: 8px;
             font-weight: 700;
+            letter-spacing: 0.05em;
         }
 
-        /* High-End Interactive Action Button */
+        /* High Contrast Black Ink Action Button */
         .cover-open-btn {
-            font-family: var(--font-sora);
-            font-size: 0.92rem;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #0f2b5c 0%, #1e40af 100%);
+            background-color: #000000;
             color: #ffffff;
-            border: 1px solid var(--gold-accent);
-            padding: 15px 32px;
-            border-radius: 30px;
+            border: 2px solid #000000;
+            padding: 15px 28px;
+            border-radius: 0px;
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(15, 43, 92, 0.4);
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0px #666666;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            position: relative;
-            overflow: hidden;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .cover-open-btn:hover {
-            background: linear-gradient(135deg, #163875 0%, #2563eb 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(15, 43, 92, 0.5), 0 0 15px rgba(197, 160, 89, 0.3);
+            background-color: #ffffff;
+            color: #000000;
+            box-shadow: 4px 4px 0px #000000;
+            transform: translate(-1px, -1px);
         }
 
         .cover-open-btn:active {
-            transform: translateY(0);
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #000000;
         }
 
         /* Web Top Bar Controls */
@@ -842,7 +814,7 @@
             }
 
             .cover-title {
-                font-size: 1.45rem;
+                font-size: 1.35rem;
             }
         }
 
@@ -912,40 +884,29 @@
 </head>
 <body>
 
-    <!-- LUXURY INTERACTIVE ENVELOPE COVER SCREEN -->
+    /* CLASSIFIED "RAHASIA NEGARA" COVER MODAL SCREEN */
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card">
             
-            <!-- Wax Seal Badge Stamp -->
-            <div class="cover-seal-wrapper">
-                <div class="cover-seal-circle">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                </div>
-                <div class="cover-seal-badge">OFFICIAL</div>
-            </div>
-
-            <div class="cover-tag">DOKUMEN RESMI</div>
-            <h1 class="cover-title">INVOICE & PENAWARAN</h1>
-            <div class="cover-subtitle">Pengembangan Sistem Web & Identitas Visual Markaz Fiqih</div>
+            <div class="cover-top-barcode">// CONFIDENTIAL DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
             
-            <div class="cover-divider"></div>
+            <!-- Rubber Stamp Badge -->
+            <div class="classified-stamp">RAHASIA NEGARA / TOP SECRET</div>
+
+            <h1 class="cover-title">DOKUMEN INVOICE & PENAWARAN</h1>
+            <div class="cover-subtitle">Penerbitan Digital & Identitas Visual Markaz Fiqih</div>
+            
+            <div class="classified-line-divider"></div>
 
             <div class="cover-recipient-box">
-                <div class="cover-recipient-label">BILLED TO / DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
                 <div class="cover-recipient-name">Faqih Ubaidillah Rozan</div>
                 <div class="cover-recipient-org">Owner — Markaz Fiqih</div>
-                <div class="cover-inv-num">Invoice No: #INV/MF/2026/001</div>
+                <div class="cover-inv-num">REF CODE: #INV/MF/2026/001</div>
             </div>
 
             <button class="cover-open-btn" onclick="openInvoice()">
-                <span>🔓 Buka Dokumen Invoice</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <span>[ BUKA DOKUMEN RAHASIA ]</span>
             </button>
         </div>
     </div>
