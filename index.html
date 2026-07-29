@@ -7,18 +7,16 @@
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #070c18;
-            --card-bg: rgba(15, 23, 42, 0.75);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --accent-blue: #38bdf8;
-            --accent-indigo: #6366f1;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --gold-accent: #c5a059;
+            --bg-dark: #0a0a0a;
+            --card-bg: #141414;
+            --card-border: #262626;
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+            --text-dim: #737373;
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -33,11 +31,8 @@
         body {
             font-family: var(--font-sora);
             background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(ellipse at 50% 0%, rgba(30, 58, 138, 0.4) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 20% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 50%);
-            background-attachment: fixed;
+            background-image: radial-gradient(#1f1f1f 1px, transparent 1px);
+            background-size: 24px 24px;
             color: var(--text-main);
             min-height: 100vh;
             padding: 60px 20px 80px 20px;
@@ -60,26 +55,26 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(56, 189, 248, 0.08);
-            color: var(--accent-blue);
+            background: #141414;
+            color: #ffffff;
+            font-family: var(--font-mono);
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             padding: 8px 18px;
-            border-radius: 30px;
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 4px;
+            border: 1px solid #333333;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         .portal-badge span {
             width: 7px;
             height: 7px;
-            background-color: #10b981;
+            background-color: #ffffff;
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 8px #10b981;
         }
 
         .portal-title {
@@ -88,9 +83,8 @@
             letter-spacing: -0.03em;
             margin-bottom: 14px;
             line-height: 1.15;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            text-transform: uppercase;
         }
 
         .portal-subtitle {
@@ -118,38 +112,38 @@
         .stat-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(16px);
             padding: 20px 24px;
-            border-radius: 14px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         .stat-card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
+            border-color: #ffffff;
             transform: translateY(-2px);
         }
 
         .stat-icon {
             width: 44px;
             height: 44px;
-            border-radius: 10px;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 4px;
+            background: #1a1a1a;
+            border: 1px solid #333333;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent-blue);
+            color: #ffffff;
         }
 
         .stat-info-title {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 600;
+            letter-spacing: 0.1em;
+            font-weight: 700;
         }
 
         .stat-info-val {
@@ -165,27 +159,25 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 14px;
         }
 
         .section-header-title {
-            font-size: 1.1rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
             font-weight: 700;
-            letter-spacing: -0.01em;
+            letter-spacing: 0.1em;
             color: #ffffff;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .section-header-title::before {
-            content: "";
-            display: inline-block;
-            width: 4px;
-            height: 18px;
-            background: var(--accent-blue);
-            border-radius: 2px;
+            content: "//";
+            color: var(--text-dim);
         }
 
         /* Invoice Cards Grid */
@@ -199,38 +191,19 @@
         .invoice-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(20px);
-            border-radius: 18px;
+            border-radius: 4px;
             padding: 32px 28px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .invoice-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-indigo));
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .invoice-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.12);
-        }
-
-        .invoice-card:hover::before {
-            opacity: 1;
+            transform: translateY(-4px);
+            border-color: #ffffff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
         }
 
         .card-top {
@@ -245,37 +218,39 @@
             font-weight: 700;
             color: #ffffff;
             line-height: 1.25;
+            text-transform: uppercase;
         }
 
         .status-pill {
+            font-family: var(--font-mono);
             font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 5px 12px;
-            border-radius: 20px;
+            padding: 4px 10px;
+            border-radius: 2px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
         .status-locked {
-            background: rgba(245, 158, 11, 0.12);
-            color: #fbbf24;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #444444;
         }
 
         .status-template {
-            background: rgba(56, 189, 248, 0.12);
-            color: var(--accent-blue);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #ffffff;
         }
 
         .ref-code {
             font-family: var(--font-mono);
             font-size: 0.78rem;
-            color: var(--accent-blue);
-            margin-bottom: 8px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
             font-weight: 700;
         }
 
@@ -288,10 +263,10 @@
         }
 
         .slug-box {
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            padding: 8px 14px;
+            background: #0d0d0d;
+            border: 1px solid #262626;
+            border-radius: 2px;
+            padding: 10px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -301,24 +276,27 @@
         .slug-url {
             font-family: var(--font-mono);
             font-size: 0.76rem;
-            color: #cbd5e1;
+            color: #ffffff;
         }
 
         .slug-copy-btn {
-            background: transparent;
-            border: none;
-            color: var(--accent-blue);
-            font-family: var(--font-sora);
-            font-size: 0.7rem;
-            font-weight: 600;
+            background: #1a1a1a;
+            border: 1px solid #444444;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
             cursor: pointer;
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: background 0.2s ease;
+            padding: 4px 10px;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
         }
 
         .slug-copy-btn:hover {
-            background: rgba(56, 189, 248, 0.15);
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
 
         .amount-box {
@@ -327,12 +305,13 @@
             align-items: flex-end;
             margin-bottom: 24px;
             padding-top: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px dashed var(--card-border);
         }
 
         .amount-label {
-            font-size: 0.72rem;
-            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
@@ -345,36 +324,36 @@
         }
 
         .action-btn {
-            font-family: var(--font-sora);
-            font-size: 0.88rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #0f2b5c 0%, #1e40af 100%);
-            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 700;
+            background-color: #ffffff;
+            color: #000000;
             text-decoration: none;
-            padding: 13px 24px;
-            border-radius: 12px;
+            padding: 14px 24px;
+            border-radius: 2px;
             text-align: center;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            box-shadow: 0 4px 15px rgba(15, 43, 92, 0.3);
+            border: 1px solid #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .action-btn:hover {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-            transform: translateY(-1px);
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #ffffff;
         }
 
         /* Developer Footer Card */
         .dev-footer-card {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.7) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 18px;
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 4px;
             padding: 30px 35px;
             display: flex;
             justify-content: space-between;
@@ -390,16 +369,17 @@
         }
 
         .dev-avatar {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0f2b5c 0%, #2563eb 100%);
-            border: 2px solid var(--accent-blue);
+            width: 50px;
+            height: 50px;
+            border-radius: 2px;
+            background: #000000;
+            border: 1.5px solid #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-weight: 800;
+            font-family: var(--font-mono);
+            font-weight: 700;
             font-size: 1.2rem;
         }
 
@@ -407,34 +387,37 @@
             font-size: 1.05rem;
             font-weight: 700;
             color: #ffffff;
+            text-transform: uppercase;
         }
 
         .dev-title {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             margin-top: 2px;
+            font-weight: 300;
         }
 
         .dev-contact-btn {
-            font-family: var(--font-sora);
-            font-size: 0.82rem;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.08);
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            background: #000000;
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 20px;
+            border-radius: 2px;
+            border: 1px solid #444444;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            text-transform: uppercase;
         }
 
         .dev-contact-btn:hover {
-            background: #10b981;
-            border-color: #10b981;
-            color: #ffffff;
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
 
         /* Toast Component */
@@ -442,14 +425,15 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #0f2b5c;
-            border: 1px solid var(--accent-blue);
-            color: #ffffff;
+            background: #ffffff;
+            border: 1px solid #000000;
+            color: #000000;
             padding: 12px 24px;
-            border-radius: 8px;
-            font-family: var(--font-sora);
-            font-size: 0.82rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-radius: 2px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
@@ -486,48 +470,48 @@
         <!-- Header Hero -->
         <div class="portal-header">
             <div class="portal-badge">
-                <span></span> DAR INVOICES • CLIENT BILLING SYSTEM
+                <span></span> DAR INVOICES &bull; SYSTEM PORTAL
             </div>
-            <h1 class="portal-title">Official Client Billing Portal</h1>
-            <p class="portal-subtitle">Secure, transparent, and high-performance digital invoice management by <strong>Daru Fahmaa Muliawan</strong>.</p>
+            <h1 class="portal-title">Client Billing Portal</h1>
+            <p class="portal-subtitle">Monochromatic Client Invoice & Billing Management by <strong>Daru Fahmaa Muliawan</strong>.</p>
         </div>
 
         <!-- Stats Bar -->
         <div class="stats-bar">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">Active Invoices</div>
-                    <div class="stat-info-val">02 Invoices</div>
+                    <div class="stat-info-title">ACTIVE INVOICES</div>
+                    <div class="stat-info-val">02 INVOICES</div>
                 </div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">Active Clients</div>
-                    <div class="stat-info-val">01 Client</div>
+                    <div class="stat-info-title">ACTIVE CLIENTS</div>
+                    <div class="stat-info-val">01 CLIENT</div>
                 </div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">Security Clearance</div>
-                    <div class="stat-info-val">PIN Protected</div>
+                    <div class="stat-info-title">CLEARANCE</div>
+                    <div class="stat-info-val">PIN PROTECTED</div>
                 </div>
             </div>
         </div>
 
         <!-- Section Title -->
         <div class="section-header">
-            <div class="section-header-title">Daftar Project Invoice Klien</div>
+            <div class="section-header-title">DAFTAR PROJECT INVOICE KLIEN</div>
         </div>
 
         <!-- Invoice Grid -->
@@ -552,14 +536,13 @@
                     </div>
 
                     <div class="amount-box">
-                        <span class="amount-label">Net Investment</span>
+                        <span class="amount-label">NET INVESTMENT</span>
                         <span class="amount-val">Rp 8.500.000</span>
                     </div>
                 </div>
 
                 <a href="/markazfiqih" class="action-btn">
-                    <span>🔓 Buka Invoice Markaz Fiqih</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <span>[ BUKA INVOICE MARKAZ FIQIH ]</span>
                 </a>
             </div>
 
@@ -582,14 +565,13 @@
                     </div>
 
                     <div class="amount-box">
-                        <span class="amount-label">Jenis Berkas</span>
-                        <span class="amount-val" style="font-size: 1.05rem;">Master Template</span>
+                        <span class="amount-label">BERKAS</span>
+                        <span class="amount-val" style="font-size: 1.05rem;">MASTER TEMPLATE</span>
                     </div>
                 </div>
 
-                <a href="/template" class="action-btn" style="background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.15);">
-                    <span>📄 Buka Master Template</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <a href="/template" class="action-btn" style="background: #1a1a1a; color: #ffffff; border-color: #444444;">
+                    <span>[ BUKA MASTER TEMPLATE ]</span>
                 </a>
             </div>
 
@@ -607,21 +589,21 @@
 
             <a href="https://wa.me/6281311506025" target="_blank" class="dev-contact-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span>Hubungi via WhatsApp (081311506025)</span>
+                <span>HUBUNGI VIA WHATSAPP (081311506025)</span>
             </a>
         </div>
 
     </div>
 
     <!-- Toast Component -->
-    <div id="toast" class="toast">Link berhasil disalin!</div>
+    <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
 
     <script>
         function copySlug(url) {
             navigator.clipboard.writeText(url).then(() => {
-                showToast("Link " + url + " berhasil disalin!");
+                showToast("LINK " + url + " BERHASIL DISALIN!");
             }).catch(() => {
-                showToast("Gagal menyalin link");
+                showToast("GAGAL MENYALIN LINK");
             });
         }
 
