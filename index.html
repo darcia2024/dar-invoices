@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DAR INVOICES — Official Billing & Client Portal</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,12 +11,13 @@
     
     <style>
         :root {
-            --bg-dark: #0a0a0a;
-            --card-bg: #141414;
-            --card-border: #262626;
+            --bg-dark: #09090b;
+            --card-bg: #121215;
+            --card-border: #27272a;
+            --card-border-hover: #ffffff;
             --text-main: #ffffff;
-            --text-muted: #a3a3a3;
-            --text-dim: #737373;
+            --text-muted: #a1a1aa;
+            --text-dim: #71717a;
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -31,8 +32,10 @@
         body {
             font-family: var(--font-sora);
             background-color: var(--bg-dark);
-            background-image: radial-gradient(#1f1f1f 1px, transparent 1px);
-            background-size: 24px 24px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1c1c22 0%, transparent 65%),
+                radial-gradient(#27272a 1px, transparent 1px);
+            background-size: 100% 100%, 28px 28px;
             color: var(--text-main);
             min-height: 100vh;
             padding: 60px 20px 80px 20px;
@@ -40,49 +43,50 @@
         }
 
         .portal-container {
-            max-width: 1000px;
+            max-width: 1040px;
             margin: 0 auto;
         }
 
-        /* Header Hero */
+        /* Top Bar Emblem Badge */
         .portal-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             position: relative;
         }
 
         .portal-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: #141414;
+            gap: 10px;
+            background: #18181b;
             color: #ffffff;
             font-family: var(--font-mono);
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            padding: 8px 18px;
-            border-radius: 4px;
-            border: 1px solid #333333;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #3f3f46;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
 
         .portal-badge span {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             background-color: #ffffff;
             border-radius: 50%;
             display: inline-block;
+            box-shadow: 0 0 10px #ffffff;
         }
 
         .portal-title {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.04em;
             margin-bottom: 14px;
-            line-height: 1.15;
+            line-height: 1.1;
             color: #ffffff;
             text-transform: uppercase;
         }
@@ -91,7 +95,7 @@
             font-size: 1.02rem;
             color: var(--text-muted);
             font-weight: 300;
-            max-width: 580px;
+            max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
         }
@@ -101,48 +105,51 @@
             font-weight: 600;
         }
 
-        /* Stats Bar */
+        /* Stats Bar Grid */
         .stats-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
             margin-bottom: 50px;
         }
 
         .stat-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 20px 24px;
-            border-radius: 4px;
+            padding: 22px 24px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
 
         .stat-card:hover {
             border-color: #ffffff;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
         }
 
         .stat-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 4px;
-            background: #1a1a1a;
-            border: 1px solid #333333;
+            width: 46px;
+            height: 46px;
+            border-radius: 6px;
+            background: #18181b;
+            border: 1px solid #3f3f46;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
+            flex-shrink: 0;
         }
 
         .stat-info-title {
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             font-weight: 700;
         }
 
@@ -151,23 +158,26 @@
             font-size: 1.25rem;
             font-weight: 700;
             color: #ffffff;
+            margin-top: 2px;
         }
 
-        /* Section Title Header */
+        /* Search & Filter Header */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 14px;
+            margin-bottom: 28px;
+            border-bottom: 1.5px solid var(--card-border);
+            padding-bottom: 16px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .section-header-title {
             font-family: var(--font-mono);
             font-size: 0.95rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             color: #ffffff;
             text-transform: uppercase;
             display: flex;
@@ -176,49 +186,101 @@
         }
 
         .section-header-title::before {
-            content: "//";
+            content: "[//]";
             color: var(--text-dim);
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .search-input {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            background: #18181b;
+            border: 1px solid var(--card-border);
+            color: #ffffff;
+            padding: 10px 14px 10px 36px;
+            border-radius: 4px;
+            width: 100%;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #ffffff;
+            background: #27272a;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
         }
 
         /* Invoice Cards Grid */
         .invoice-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 26px;
             margin-bottom: 60px;
         }
 
         .invoice-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 4px;
-            padding: 32px 28px;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 34px 30px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .invoice-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #ffffff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .invoice-card:hover {
-            transform: translateY(-4px);
-            border-color: #ffffff;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+            transform: translateY(-5px);
+            border-color: var(--card-border-hover);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .invoice-card:hover::before {
+            opacity: 1;
         }
 
         .card-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            gap: 12px;
         }
 
         .client-title {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
             color: #ffffff;
-            line-height: 1.25;
+            line-height: 1.2;
             text-transform: uppercase;
+            letter-spacing: -0.01em;
         }
 
         .status-pill {
@@ -227,17 +289,18 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 2px;
+            padding: 5px 12px;
+            border-radius: 4px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
         }
 
         .status-locked {
-            background: #1a1a1a;
+            background: #18181b;
             color: #ffffff;
-            border: 1px solid #444444;
+            border: 1px solid #3f3f46;
         }
 
         .status-template {
@@ -249,34 +312,39 @@
         .ref-code {
             font-family: var(--font-mono);
             font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-bottom: 10px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
             font-weight: 700;
+            letter-spacing: 0.05em;
         }
 
         .project-desc {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 20px;
+            line-height: 1.55;
+            margin-bottom: 22px;
             font-weight: 300;
         }
 
+        /* Slug Row & Controls */
         .slug-box {
-            background: #0d0d0d;
-            border: 1px solid #262626;
-            border-radius: 2px;
-            padding: 10px 14px;
+            background: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 4px;
+            padding: 12px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 22px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .slug-url {
             font-family: var(--font-mono);
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             color: #ffffff;
+            font-weight: 700;
         }
 
         .btn-row-flex {
@@ -285,17 +353,18 @@
         }
 
         .slug-copy-btn {
-            background: #1a1a1a;
-            border: 1px solid #444444;
+            background: #18181b;
+            border: 1px solid #3f3f46;
             color: #ffffff;
             font-family: var(--font-mono);
             font-size: 0.68rem;
             font-weight: 700;
             cursor: pointer;
-            padding: 4px 10px;
-            border-radius: 2px;
+            padding: 6px 12px;
+            border-radius: 4px;
             transition: all 0.2s ease;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .slug-copy-btn:hover {
@@ -309,8 +378,8 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 24px;
-            padding-top: 14px;
+            margin-bottom: 26px;
+            padding-top: 16px;
             border-top: 1px dashed var(--card-border);
         }
 
@@ -319,43 +388,46 @@
             font-size: 0.7rem;
             color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
+            font-weight: 700;
         }
 
         .amount-val-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .amount-val {
             font-family: var(--font-mono);
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #ffffff;
         }
 
         .amount-val.masked {
-            letter-spacing: 0.2em;
-            color: #666666;
-            filter: blur(4px);
+            letter-spacing: 0.25em;
+            color: #52525b;
+            filter: blur(5px);
             user-select: none;
             transition: all 0.3s ease;
         }
 
         .toggle-eye-btn {
-            background: #1a1a1a;
-            border: 1px solid #444;
+            background: #18181b;
+            border: 1px solid #3f3f46;
             color: #ffffff;
-            padding: 3px 8px;
-            border-radius: 2px;
+            padding: 4px 10px;
+            border-radius: 4px;
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.7rem;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             transition: all 0.2s ease;
+            text-transform: uppercase;
         }
 
         .toggle-eye-btn:hover {
@@ -366,93 +438,99 @@
 
         .action-btn {
             font-family: var(--font-mono);
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             font-weight: 700;
             background-color: #ffffff;
             color: #000000;
             text-decoration: none;
-            padding: 14px 24px;
-            border-radius: 2px;
+            padding: 16px 24px;
+            border-radius: 4px;
             text-align: center;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             border: 1px solid #ffffff;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
         }
 
         .action-btn:hover {
             background-color: #000000;
             color: #ffffff;
             border-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
         }
 
         /* Developer Footer Card */
         .dev-footer-card {
-            background: #141414;
-            border: 1px solid #262626;
-            border-radius: 4px;
-            padding: 30px 35px;
+            background: #121215;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 32px 36px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 22px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .dev-info-left {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 20px;
         }
 
         .dev-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 2px;
+            width: 56px;
+            height: 56px;
+            border-radius: 6px;
             background: #000000;
-            border: 1.5px solid #ffffff;
+            border: 2px solid #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
             font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 1.2rem;
+            font-weight: 800;
+            font-size: 1.3rem;
+            flex-shrink: 0;
         }
 
         .dev-name {
-            font-size: 1.05rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 800;
             color: #ffffff;
             text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .dev-title {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 3px;
             font-weight: 300;
         }
 
         .dev-contact-btn {
             font-family: var(--font-mono);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
             background: #000000;
             color: #ffffff;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 2px;
-            border: 1px solid #444444;
-            transition: all 0.2s ease;
+            padding: 14px 24px;
+            border-radius: 4px;
+            border: 1.5px solid #3f3f46;
+            transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .dev-contact-btn:hover {
@@ -468,7 +546,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -488,40 +567,42 @@
             background: #141414;
             border: 2px solid #ffffff;
             border-radius: 4px;
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
-            padding: 30px 25px;
+            padding: 35px 30px;
             text-align: center;
             font-family: var(--font-mono);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95);
         }
 
         .modal-title {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
             color: #ffffff;
             margin-bottom: 6px;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
 
         .modal-subtitle {
-            font-size: 0.75rem;
+            font-size: 0.76rem;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .modal-input {
             font-family: var(--font-mono);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             text-align: center;
-            letter-spacing: 0.4em;
-            padding: 10px;
+            letter-spacing: 0.5em;
+            padding: 12px;
             width: 100%;
             border: 2px solid #ffffff;
             background: #000000;
             color: #ffffff;
             outline: none;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .modal-error {
@@ -529,23 +610,25 @@
             color: #ef4444;
             font-weight: 700;
             display: none;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            letter-spacing: 0.05em;
         }
 
         .modal-btn-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .modal-btn {
             font-family: var(--font-mono);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            padding: 10px;
+            padding: 12px;
             flex: 1;
             cursor: pointer;
-            border: 1px solid #ffffff;
+            border: 1.5px solid #ffffff;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .modal-btn-confirm {
@@ -553,9 +636,17 @@
             color: #000000;
         }
 
+        .modal-btn-confirm:hover {
+            background: #e4e4e7;
+        }
+
         .modal-btn-cancel {
             background: #000000;
             color: #ffffff;
+        }
+
+        .modal-btn-cancel:hover {
+            background: #27272a;
         }
 
         /* Toast Component */
@@ -564,18 +655,19 @@
             bottom: 30px;
             right: 30px;
             background: #ffffff;
-            border: 1px solid #000000;
+            border: 2px solid #000000;
             color: #000000;
-            padding: 12px 24px;
-            border-radius: 2px;
+            padding: 14px 28px;
+            border-radius: 4px;
             font-family: var(--font-mono);
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 999;
+            letter-spacing: 0.05em;
         }
 
         .toast.show {
@@ -583,20 +675,88 @@
             opacity: 1;
         }
 
-        @media (max-width: 768px) {
+        /* ====================================================
+           ULTRA-OPTIMIZED MOBILE RESPONSIVE STYLES (≤ 768px)
+        ==================================================== */
+        @media screen and (max-width: 768px) {
             body {
-                padding: 40px 16px 60px 16px;
+                padding: 35px 14px 50px 14px;
             }
+
             .portal-title {
-                font-size: 2.1rem;
+                font-size: 2.2rem;
             }
+
+            .portal-badge {
+                font-size: 0.66rem;
+                padding: 6px 14px;
+            }
+
+            .stats-bar {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .invoice-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .invoice-card {
+                padding: 24px 20px;
+            }
+
+            .client-title {
+                font-size: 1.3rem;
+            }
+
+            .slug-box {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .btn-row-flex {
+                width: 100%;
+            }
+
+            .slug-copy-btn {
+                flex: 1;
+                text-align: center;
+                padding: 8px;
+            }
+
             .dev-footer-card {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
+                padding: 24px 20px;
             }
+
+            .dev-info-left {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+
             .dev-contact-btn {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .toast {
+                left: 14px;
+                right: 14px;
+                bottom: 14px;
+                text-align: center;
             }
         }
     </style>
@@ -625,14 +785,14 @@
                 <span></span> DAR INVOICES &bull; SYSTEM PORTAL
             </div>
             <h1 class="portal-title">Client Billing Portal</h1>
-            <p class="portal-subtitle">Monochromatic Client Invoice & Billing Management by <strong>Daru Fahmaa Muliawan</strong>.</p>
+            <p class="portal-subtitle">Monochromatic Client Invoice & Billing Management System by <strong>Daru Fahmaa Muliawan</strong>.</p>
         </div>
 
-        <!-- Stats Bar -->
+        <!-- Stats Bar Grid -->
         <div class="stats-bar">
             <div class="stat-card">
                 <div class="stat-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 </div>
                 <div>
                     <div class="stat-info-title">ACTIVE INVOICES</div>
@@ -642,7 +802,7 @@
 
             <div class="stat-card">
                 <div class="stat-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </div>
                 <div>
                     <div class="stat-info-title">ACTIVE CLIENTS</div>
@@ -652,7 +812,7 @@
 
             <div class="stat-card">
                 <div class="stat-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 </div>
                 <div>
                     <div class="stat-info-title">CLEARANCE</div>
@@ -661,16 +821,21 @@
             </div>
         </div>
 
-        <!-- Section Title -->
+        <!-- Section Search & Title Header -->
         <div class="section-header">
             <div class="section-header-title">DAFTAR PROJECT INVOICE KLIEN</div>
+            
+            <div class="search-box">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Cari nama klien / ref..." onkeyup="filterInvoices()">
+            </div>
         </div>
 
-        <!-- Invoice Grid -->
-        <div class="invoice-grid">
+        <!-- Invoice Cards Grid -->
+        <div id="invoiceGrid" class="invoice-grid">
             
             <!-- Markaz Fiqih Card -->
-            <div class="invoice-card">
+            <div class="invoice-card" data-client="markaz fiqih #inv/mf/2026/001">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Markaz Fiqih</div>
@@ -707,7 +872,7 @@
             </div>
 
             <!-- Master Template Card -->
-            <div class="invoice-card">
+            <div class="invoice-card" data-client="master template #inv/template/001">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Master Template</div>
@@ -730,7 +895,7 @@
                     </div>
                 </div>
 
-                <a href="/template" class="action-btn" style="background: #1a1a1a; color: #ffffff; border-color: #444444;">
+                <a href="/template" class="action-btn" style="background: #18181b; color: #ffffff; border-color: #3f3f46;">
                     <span>[ BUKA MASTER TEMPLATE ]</span>
                 </a>
             </div>
@@ -778,12 +943,10 @@
 
         function togglePriceVisibility(projectId) {
             if (isPriceUnlocked) {
-                // If currently visible, lock it again
                 isPriceUnlocked = false;
                 sessionStorage.removeItem("dashboard_prices_unlocked");
                 updatePriceUI();
             } else {
-                // Open PIN Modal to unlock
                 openPinModal();
             }
         }
@@ -823,6 +986,21 @@
                 submitPinModal();
             }
         });
+
+        // Filter Invoices dynamically
+        function filterInvoices() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const cards = document.querySelectorAll(".invoice-card");
+
+            cards.forEach(card => {
+                const clientData = card.getAttribute("data-client").toLowerCase();
+                if (clientData.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
 
         // Initialize UI state on page load
         updatePriceUI();
