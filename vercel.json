@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
+    { "source": "/template", "destination": "/template/index.html" }
+  ]
+}
