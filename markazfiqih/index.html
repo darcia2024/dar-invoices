@@ -83,6 +83,18 @@
             font-family: var(--font-mono);
         }
 
+        /* Shake animation for invalid PIN */
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
         /* Top Classified Stamp Badge */
         .classified-stamp {
             display: inline-block;
@@ -135,7 +147,7 @@
             background-color: #ffffff;
             border: 1px solid #000000;
             padding: 16px 20px;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
             text-align: left;
             box-shadow: 3px 3px 0px #000000;
         }
@@ -170,6 +182,51 @@
             color: #000000;
             margin-top: 8px;
             font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* Passcode Input Field */
+        .passcode-wrapper {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .passcode-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #444;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.5em;
+            padding: 12px 16px;
+            width: 100%;
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            outline: none;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .passcode-input:focus {
+            background: #fafafa;
+            border-color: #000000;
+            box-shadow: 4px 4px 0px #000000;
+        }
+
+        .passcode-error {
+            font-size: 0.7rem;
+            color: #dc2626;
+            font-weight: 700;
+            margin-top: 6px;
+            display: none;
             letter-spacing: 0.05em;
         }
 
@@ -905,7 +962,14 @@
                 <div class="cover-inv-num">REF CODE: #INV/MF/2026/001</div>
             </div>
 
-            <button class="cover-open-btn" onclick="openInvoice()">
+            <!-- PASSCODE SECURITY SECTION -->
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
                 <span>[ BUKA DOKUMEN RAHASIA ]</span>
             </button>
         </div>
@@ -1227,9 +1291,33 @@
     <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
 
     <script>
-        function openInvoice() {
-            const cover = document.getElementById("coverOverlay");
-            cover.classList.add("opened");
+        function verifyPasscode() {
+            const input = document.getElementById("passcodeInput").value.trim();
+            const errorEl = document.getElementById("passcodeError");
+            
+            // Password yang disepakati adalah 0001
+            if (input === "0001") {
+                document.getElementById("coverOverlay").classList.add("opened");
+                sessionStorage.setItem("markaz_unlocked", "true");
+                errorEl.style.display = "none";
+            } else {
+                errorEl.style.display = "block";
+                const card = document.querySelector(".cover-card");
+                card.classList.add("shake-anim");
+                setTimeout(() => card.classList.remove("shake-anim"), 400);
+            }
+        }
+
+        // Allow pressing Enter key in passcode input
+        document.getElementById("passcodeInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyPasscode();
+            }
+        });
+
+        // Auto unlock if already authenticated in current session
+        if (sessionStorage.getItem("markaz_unlocked") === "true") {
+            document.getElementById("coverOverlay").classList.add("opened");
         }
 
         function copyBankAcc() {
