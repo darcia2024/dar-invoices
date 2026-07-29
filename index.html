@@ -270,13 +270,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .slug-url {
             font-family: var(--font-mono);
             font-size: 0.76rem;
             color: #ffffff;
+        }
+
+        .btn-row-flex {
+            display: flex;
+            gap: 8px;
         }
 
         .slug-copy-btn {
@@ -532,7 +537,10 @@
 
                     <div class="slug-box">
                         <span class="slug-url">/markazfiqih</span>
-                        <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/markazfiqih')">Salin Link</button>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/markazfiqih')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScript()">Salin Script WA</button>
+                        </div>
                     </div>
 
                     <div class="amount-box">
@@ -604,6 +612,26 @@
                 showToast("LINK " + url + " BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN LINK");
+            });
+        }
+
+        function copyWaScript() {
+            const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Mas Faqih. 🙏✨
+
+Alhamdulillah, seluruh pengerjaan web & branding Markaz Fiqih telah selesai 100%. Berikut tautan dokumen resmi Invoice Resmi & Detail Pekerjaan:
+
+🔗 Invoice Online: https://dar-invoices.vercel.app/markazfiqih
+🔑 Kode PIN Akses: 0001
+
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+Net Total: Rp 8.500.000
+
+Terima kasih banyak atas kepercayaannya! Jazakallahu Khairan. 😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA MARKAZ FIQIH BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
             });
         }
 
