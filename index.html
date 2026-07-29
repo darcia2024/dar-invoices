@@ -304,6 +304,7 @@
             border-color: #ffffff;
         }
 
+        /* Amount Masking Seen / Unseen Feature */
         .amount-box {
             display: flex;
             justify-content: space-between;
@@ -321,11 +322,46 @@
             letter-spacing: 0.08em;
         }
 
+        .amount-val-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .amount-val {
             font-family: var(--font-mono);
             font-size: 1.35rem;
             font-weight: 700;
             color: #ffffff;
+        }
+
+        .amount-val.masked {
+            letter-spacing: 0.2em;
+            color: #666666;
+            filter: blur(4px);
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-eye-btn {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 2px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-eye-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
 
         .action-btn {
@@ -425,6 +461,103 @@
             border-color: #ffffff;
         }
 
+        /* PIN Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: #141414;
+            border: 2px solid #ffffff;
+            border-radius: 4px;
+            max-width: 400px;
+            width: 100%;
+            padding: 30px 25px;
+            text-align: center;
+            font-family: var(--font-mono);
+        }
+
+        .modal-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .modal-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .modal-input {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.4em;
+            padding: 10px;
+            width: 100%;
+            border: 2px solid #ffffff;
+            background: #000000;
+            color: #ffffff;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .modal-error {
+            font-size: 0.72rem;
+            color: #ef4444;
+            font-weight: 700;
+            display: none;
+            margin-bottom: 12px;
+        }
+
+        .modal-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 10px;
+            flex: 1;
+            cursor: pointer;
+            border: 1px solid #ffffff;
+            text-transform: uppercase;
+        }
+
+        .modal-btn-confirm {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .modal-btn-cancel {
+            background: #000000;
+            color: #ffffff;
+        }
+
         /* Toast Component */
         .toast {
             position: fixed;
@@ -469,6 +602,20 @@
     </style>
 </head>
 <body>
+
+    <!-- PIN MODAL PROMPT -->
+    <div id="pinModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title">AUTHENTICATION REQUIRED</div>
+            <div class="modal-subtitle">MASUKKAN KODE PIN RESMI UNTUK MELIHAT NOMINAL:</div>
+            <input type="password" id="modalPinInput" class="modal-input" maxlength="6" placeholder="• • • •">
+            <div id="modalPinError" class="modal-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            <div class="modal-btn-group">
+                <button class="modal-btn modal-btn-cancel" onclick="closePinModal()">BATAL</button>
+                <button class="modal-btn modal-btn-confirm" onclick="submitPinModal()">UNLOCK</button>
+            </div>
+        </div>
+    </div>
 
     <div class="portal-container">
         
@@ -545,7 +692,12 @@
 
                     <div class="amount-box">
                         <span class="amount-label">NET INVESTMENT</span>
-                        <span class="amount-val">Rp 8.500.000</span>
+                        <div class="amount-val-container">
+                            <span id="amountValMarkaz" class="amount-val masked">Rp •••••••••</span>
+                            <button id="toggleBtnMarkaz" class="toggle-eye-btn" onclick="togglePriceVisibility('markaz')">
+                                👁️ Tampilkan
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -607,6 +759,74 @@
     <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
 
     <script>
+        let isPriceUnlocked = sessionStorage.getItem("dashboard_prices_unlocked") === "true";
+
+        function updatePriceUI() {
+            const amountEl = document.getElementById("amountValMarkaz");
+            const toggleBtn = document.getElementById("toggleBtnMarkaz");
+            
+            if (isPriceUnlocked) {
+                amountEl.innerText = "Rp 8.500.000";
+                amountEl.classList.remove("masked");
+                toggleBtn.innerText = "🙈 Sembunyikan";
+            } else {
+                amountEl.innerText = "Rp •••••••••";
+                amountEl.classList.add("masked");
+                toggleBtn.innerText = "👁️ Tampilkan";
+            }
+        }
+
+        function togglePriceVisibility(projectId) {
+            if (isPriceUnlocked) {
+                // If currently visible, lock it again
+                isPriceUnlocked = false;
+                sessionStorage.removeItem("dashboard_prices_unlocked");
+                updatePriceUI();
+            } else {
+                // Open PIN Modal to unlock
+                openPinModal();
+            }
+        }
+
+        function openPinModal() {
+            const modal = document.getElementById("pinModal");
+            const input = document.getElementById("modalPinInput");
+            const errorEl = document.getElementById("modalPinError");
+            input.value = "";
+            errorEl.style.display = "none";
+            modal.classList.add("active");
+            input.focus();
+        }
+
+        function closePinModal() {
+            document.getElementById("pinModal").classList.remove("active");
+        }
+
+        function submitPinModal() {
+            const pin = document.getElementById("modalPinInput").value.trim();
+            const errorEl = document.getElementById("modalPinError");
+            
+            if (pin === "0001") {
+                isPriceUnlocked = true;
+                sessionStorage.setItem("dashboard_prices_unlocked", "true");
+                updatePriceUI();
+                closePinModal();
+                showToast("NOMINAL INVOICE BERHASIL DITAMPILKAN!");
+            } else {
+                errorEl.style.display = "block";
+            }
+        }
+
+        // Allow pressing Enter key in modal input
+        document.getElementById("modalPinInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                submitPinModal();
+            }
+        });
+
+        // Initialize UI state on page load
+        updatePriceUI();
+
         function copySlug(url) {
             navigator.clipboard.writeText(url).then(() => {
                 showToast("LINK " + url + " BERHASIL DISALIN!");
