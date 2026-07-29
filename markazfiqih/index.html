@@ -1292,6 +1292,11 @@
     <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
 
     <script>
+        function lockDocument() {
+            document.getElementById("coverOverlay").classList.remove("opened");
+            document.getElementById("passcodeInput").value = "";
+        }
+
         function verifyPasscode() {
             const input = document.getElementById("passcodeInput").value.trim();
             const errorEl = document.getElementById("passcodeError");
@@ -1299,8 +1304,8 @@
             // Password yang disepakati adalah 0001
             if (input === "0001") {
                 document.getElementById("coverOverlay").classList.add("opened");
-                sessionStorage.setItem("markaz_unlocked", "true");
                 errorEl.style.display = "none";
+                document.getElementById("passcodeInput").value = "";
             } else {
                 errorEl.style.display = "block";
                 const card = document.querySelector(".cover-card");
@@ -1316,10 +1321,20 @@
             }
         });
 
-        // Auto unlock if already authenticated in current session
-        if (sessionStorage.getItem("markaz_unlocked") === "true") {
-            document.getElementById("coverOverlay").classList.add("opened");
-        }
+        // RE-LOCK IMMEDIATELY ON TAB SWITCH, MINIMIZE, LEAVE PAGE, OR BLUR
+        window.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                lockDocument();
+            }
+        });
+
+        window.addEventListener("blur", function() {
+            lockDocument();
+        });
+
+        window.addEventListener("pageshow", function(event) {
+            lockDocument();
+        });
 
         function copyBankAcc() {
             const accNo = "1550010616962";
