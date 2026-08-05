@@ -1,0 +1,1189 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/DU/2026/001 - Dreammecca - Umrahme</title>
+    <!-- Google Fonts: Sora & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #e8e4da;
+            --paper-cream: #f6f2e9;
+            --navy-primary: #0f2b5c;
+            --navy-light: #2c497f;
+            --text-dark: #1e2432;
+            --text-muted: #5a6478;
+            --border-navy: #0f2b5c;
+            --border-light: #d8d3c5;
+            
+            --font-sora: 'Sora', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sora);
+            font-weight: 300;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           CLASSIFIED "RAHASIA NEGARA" TOP SECRET COVER SCREEN
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0d0d0d;
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
+        }
+
+        .cover-card {
+            background-color: #f4f1ea;
+            border: 3px double #000000;
+            border-radius: 2px;
+            max-width: 520px;
+            width: 100%;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            color: #000000;
+            font-family: var(--font-mono);
+        }
+
+        /* Shake animation for invalid PIN */
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        /* Top Classified Stamp Badge */
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #000000;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            transform: rotate(-1.5deg);
+            background: #ffffff;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .cover-top-barcode {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: #444444;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .cover-title {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .cover-subtitle {
+            font-size: 0.78rem;
+            color: #444444;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .classified-line-divider {
+            border-top: 1px dashed #000000;
+            margin: 0 auto 24px auto;
+            width: 100%;
+        }
+
+        /* Recipient Dossier Box */
+        .cover-recipient-box {
+            background-color: #ffffff;
+            border: 1px solid #000000;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #666666;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
+        }
+
+        .cover-recipient-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cover-recipient-org {
+            font-size: 0.78rem;
+            color: #333333;
+            margin-top: 2px;
+        }
+
+        .cover-inv-num {
+            font-size: 0.75rem;
+            color: #000000;
+            margin-top: 8px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* Passcode Input Field */
+        .passcode-wrapper {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .passcode-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #444;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.5em;
+            padding: 12px 16px;
+            width: 100%;
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            outline: none;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .passcode-input:focus {
+            background: #fafafa;
+            border-color: #000000;
+            box-shadow: 4px 4px 0px #000000;
+        }
+
+        .passcode-error {
+            font-size: 0.7rem;
+            color: #dc2626;
+            font-weight: 700;
+            margin-top: 6px;
+            display: none;
+            letter-spacing: 0.05em;
+        }
+
+        /* High Contrast Black Ink Action Button */
+        .cover-open-btn {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 700;
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 15px 28px;
+            border-radius: 0px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0px #666666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .cover-open-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            box-shadow: 4px 4px 0px #000000;
+            transform: translate(-1px, -1px);
+        }
+
+        .cover-open-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        /* Web Top Bar Controls */
+        .action-bar {
+            max-width: 880px;
+            margin: 0 auto 24px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 14px 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .action-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            font-family: var(--font-sora);
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a3c78;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--navy-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        /* ----------------------------------------------------
+           MARGARITA PEREZ VERTICAL SIDEBAR LAYOUT
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 880px;
+            margin: 0 auto;
+            background-color: var(--paper-cream);
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-navy);
+            display: flex;
+            min-height: 1000px;
+            overflow: hidden;
+        }
+
+        /* Left Vertical Sidebar Accent (Desktop) */
+        .sidebar-left {
+            width: 140px;
+            background-color: #efeadf;
+            border-right: 1px solid var(--border-navy);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Vertical Rotated Text */
+        .vertical-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .vertical-brand-name {
+            font-family: var(--font-sora);
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--navy-primary);
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+
+        .vertical-invoice-title {
+            font-family: var(--font-sora);
+            font-size: 4rem;
+            font-weight: 800; /* BOLD JUDUL UTAMA INVOICE */
+            color: var(--navy-primary);
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            letter-spacing: -0.02em;
+            text-transform: lowercase;
+            line-height: 0.9;
+            white-space: nowrap;
+        }
+
+        /* Right Main Panel */
+        .main-panel {
+            flex: 1;
+            padding: 45px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Left Meta & Billed To (RATA KIRI) */
+        .top-left-meta {
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
+        .inv-num-label {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--navy-primary);
+        }
+
+        .inv-date-label {
+            font-size: 0.82rem;
+            font-weight: 300;
+            color: var(--navy-light);
+            margin-top: 2px;
+        }
+
+        .billed-to-box {
+            margin-top: 22px;
+        }
+
+        .billed-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .billed-content {
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: var(--navy-light);
+            line-height: 1.5;
+        }
+
+        .billed-content strong {
+            font-weight: 500;
+            color: var(--navy-primary);
+        }
+
+        /* Items Table & High Readability Section Styling (TANPA QTY) */
+        .table-area {
+            margin-bottom: 35px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .margarita-table th {
+            font-family: var(--font-sora);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--navy-primary);
+            padding: 12px 12px;
+            border-top: 1.5px solid var(--border-navy);
+            border-bottom: 1.5px solid var(--border-navy);
+            text-align: left;
+            background: rgba(15, 43, 92, 0.04);
+        }
+
+        /* SUBTOTAL SELALU RATA KANAN (PERFECT RIGHT ALIGNMENT) */
+        .margarita-table th.col-subtotal,
+        .margarita-table td.col-subtotal {
+            text-align: right !important;
+            width: 160px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            padding-right: 12px;
+        }
+
+        /* Distinct Section Header Banner */
+        .section-header-row td {
+            padding: 14px 12px 10px 12px;
+            background-color: #eae5d7;
+            border-left: 4px solid var(--navy-primary);
+            border-top: 1px solid var(--border-navy);
+            border-bottom: 1px solid var(--border-navy);
+        }
+
+        .section-title-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-sora);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.04em;
+        }
+
+        .section-subtotal-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            text-align: right !important;
+            margin-left: auto;
+        }
+
+        /* Readable Item Row with Bullet Points */
+        .item-row td {
+            padding: 14px 12px;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed rgba(15, 43, 92, 0.18);
+            vertical-align: top;
+            color: var(--navy-primary);
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--navy-primary);
+            font-size: 0.88rem;
+            margin-bottom: 4px;
+            line-height: 1.35;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 4px 0 0 0;
+        }
+
+        .bullet-list li {
+            font-size: 0.78rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.5;
+            position: relative;
+            padding-left: 0;
+            margin-bottom: 2px;
+        }
+
+        /* Domain Links styling */
+        .domain-link {
+            color: var(--navy-primary);
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+        }
+
+        .domain-link:hover {
+            color: #2563eb;
+        }
+
+        /* Totals Divider Line */
+        .table-totals-row td {
+            padding: 12px 12px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border-top: 1px solid var(--border-navy);
+            color: var(--navy-primary);
+        }
+
+        .table-totals-row.grand-total td {
+            border-top: 1.5px solid var(--border-navy);
+            border-bottom: 1.5px solid var(--border-navy);
+            font-size: 1.05rem;
+            font-weight: 700;
+            background-color: rgba(15, 43, 92, 0.03);
+        }
+
+        .table-totals-row.grand-total td.col-subtotal {
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            text-align: right !important;
+        }
+
+        /* Bottom Section: Payments (Left) & Issuer & Contact (Right) */
+        .bottom-section-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-navy);
+            margin-top: 30px;
+        }
+
+        .bottom-block-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .bottom-block-content {
+            font-size: 0.84rem;
+            font-weight: 300;
+            color: var(--navy-light);
+            line-height: 1.6;
+        }
+
+        .bottom-block-content strong {
+            font-weight: 500;
+            color: var(--navy-primary);
+        }
+
+        /* Clean Flat Copy Button */
+        .copy-pill-btn {
+            font-family: var(--font-sora);
+            font-size: 0.72rem;
+            font-weight: 600;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .copy-pill-btn:hover {
+            background-color: #1a3c78;
+        }
+
+        /* Terms & Conditions Section */
+        .terms-container {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border-navy);
+            font-size: 0.74rem;
+            font-weight: 300;
+            color: var(--navy-light);
+            line-height: 1.5;
+        }
+
+        .terms-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+        }
+
+        .terms-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .terms-item {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terms-num {
+            font-weight: 500;
+            color: var(--navy-primary);
+        }
+
+        /* Toast Component */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: var(--font-sora);
+            font-size: 0.82rem;
+            font-weight: 400;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ====================================================
+           ULTRA-OPTIMIZED MOBILE RESPONSIVE STYLES (<= 768px)
+        ==================================================== */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+                background-color: #dfdbd0;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 16px;
+                align-items: stretch;
+            }
+
+            .action-title {
+                justify-content: center;
+                font-size: 0.82rem;
+            }
+
+            .btn-group {
+                width: 100%;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+                font-size: 0.78rem;
+                padding: 8px 12px;
+            }
+
+            /* Container changes from row to column on mobile */
+            .invoice-container {
+                flex-direction: column;
+                min-height: auto;
+                border-radius: 8px;
+            }
+
+            /* Transform vertical sidebar into a sleek top banner */
+            .sidebar-left {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 18px 20px;
+                border-right: none;
+                border-bottom: 1.5px solid var(--border-navy);
+                background-color: #e6e1d3;
+            }
+
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 2.2rem;
+                line-height: 1;
+            }
+
+            .vertical-text-wrapper {
+                flex-direction: row;
+                gap: 0;
+            }
+
+            .vertical-brand-name {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.1rem;
+                font-weight: 700;
+            }
+
+            /* Main panel padding on mobile */
+            .main-panel {
+                padding: 24px 18px;
+            }
+
+            .top-left-meta {
+                margin-bottom: 24px;
+            }
+
+            .inv-num-label {
+                font-size: 0.85rem;
+            }
+
+            .billed-to-box {
+                margin-top: 16px;
+            }
+
+            .billed-content {
+                font-size: 0.82rem;
+            }
+
+            /* Section headers on mobile */
+            .section-title-flex {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 4px;
+                font-size: 0.78rem;
+            }
+
+            .section-subtotal-tag {
+                font-size: 0.76rem;
+                text-align: right !important;
+            }
+
+            .margarita-table th {
+                padding: 10px 8px;
+                font-size: 0.7rem;
+            }
+
+            .margarita-table th.col-subtotal,
+            .margarita-table td.col-subtotal {
+                width: 125px;
+                font-size: 0.82rem;
+                text-align: right !important;
+            }
+
+            .item-row td {
+                padding: 12px 8px;
+            }
+
+            .item-title {
+                font-size: 0.84rem;
+            }
+
+            .bullet-list li {
+                font-size: 0.75rem;
+            }
+
+            .table-totals-row td {
+                padding: 10px 8px;
+                font-size: 0.82rem;
+            }
+
+            .table-totals-row.grand-total td {
+                font-size: 0.95rem;
+            }
+
+            .table-totals-row.grand-total td.col-subtotal {
+                font-size: 1.1rem;
+                text-align: right !important;
+            }
+
+            /* Stack Payments and Issuer vertically on mobile */
+            .bottom-section-grid {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .bottom-section-grid > div {
+                text-align: left !important;
+                width: 100%;
+            }
+
+            .toast {
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
+                text-align: center;
+            }
+
+            .cover-card {
+                padding: 35px 22px;
+            }
+
+            .cover-title {
+                font-size: 1.35rem;
+            }
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+
+            .cover-overlay {
+                display: none !important;
+            }
+
+            .action-bar, .toast {
+                display: none !important;
+            }
+
+            .invoice-container {
+                max-width: 100%;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                flex-direction: row !important;
+                min-height: 1000px !important;
+            }
+
+            .sidebar-left {
+                width: 140px !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                border-right: 1px solid var(--border-navy) !important;
+                border-bottom: none !important;
+                padding: 40px 20px !important;
+                background-color: #efeadf !important;
+            }
+
+            .vertical-invoice-title {
+                writing-mode: vertical-rl !important;
+                transform: rotate(180deg) !important;
+                font-size: 4rem !important;
+            }
+
+            .vertical-brand-name {
+                writing-mode: vertical-rl !important;
+                transform: rotate(180deg) !important;
+                font-size: 1.8rem !important;
+            }
+
+            .main-panel {
+                padding: 45px 50px !important;
+            }
+
+            .bottom-section-grid {
+                flex-direction: row !important;
+            }
+
+            .bottom-section-grid > div:last-child {
+                text-align: right !important;
+            }
+
+            .copy-pill-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CLASSIFIED "RAHASIA NEGARA" TOP SECRET COVER MODAL SCREEN -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            
+            <div class="cover-top-barcode">// CONFIDENTIAL DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
+            
+            <!-- Rubber Stamp Badge -->
+            <div class="classified-stamp">RAHASIA NEGARA / TOP SECRET</div>
+
+            <h1 class="cover-title">DOKUMEN INVOICE RESMI</h1>
+            <div class="cover-subtitle">Invoice layanan Dreammecca - Umrahme</div>
+            
+            <div class="classified-line-divider"></div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">M. Hilmy Hafizh</div>
+                <div class="cover-recipient-org">Bos Dreammecca Tour & Travel</div>
+                <div class="cover-inv-num">REF CODE: #INV/DU/2026/001</div>
+            </div>
+
+            <!-- PASSCODE SECURITY SECTION -->
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <span>[ BUKA DOKUMEN RAHASIA ]</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Web Controls Bar -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> INVOICE #INV/DU/2026/001
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Simpan PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Printable Invoice Container (Margarita Perez Style) -->
+    <div class="invoice-container">
+        
+        <!-- Left Vertical Sidebar Accent -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">invoice</div>
+            <div class="vertical-text-wrapper">
+                <div class="vertical-brand-name">Dreammecca - Umrahme</div>
+            </div>
+        </div>
+
+        <!-- Right Main Panel -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Top Left Meta & Billed To (RATA KIRI) -->
+                <div class="top-left-meta">
+                    <div class="inv-num-label">Invoice No. #INV/DU/2026/001</div>
+                    <div class="inv-date-label">5th August, 2026</div>
+
+                    <div class="billed-to-box">
+                        <div class="billed-title">BILLED TO</div>
+                        <div class="billed-content">
+                            <strong>M. Hilmy Hafizh</strong><br>
+                            Bos Dreammecca Tour & Travel<br>
+                            Dreammecca - Umrahme
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Line Items Table (TANPA QTY) -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>DESCRIPTION</th>
+                                <th class="col-subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="section-header-row">
+                                <td colspan="2">
+                                    <div class="section-title-flex">
+                                        <span>INVOICE DREAMMECCA - UMRAHME</span>
+                                        <span class="section-subtotal-tag">20 pax x Rp 35.000</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="item-row">
+                                <td>
+                                    <div class="item-title">Layanan Dreammecca - Umrahme</div>
+                                    <ul class="bullet-list">
+                                        <li>Harga satuan: Rp 35.000 per pax</li>
+                                        <li>Jumlah peserta: 20 pax</li>
+                                        <li>Perhitungan: Rp 35.000 x 20 pax</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">Rp 700.000</td>
+                            </tr>
+
+                            <tr class="table-totals-row" style="border-top: 1.5px solid var(--border-navy);">
+                                <td>SUBTOTAL</td>
+                                <td class="col-subtotal">Rp 700.000</td>
+                            </tr>
+                            <tr class="table-totals-row grand-total">
+                                <td>TOTAL</td>
+                                <td class="col-subtotal">Rp 700.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:6px;">
+                        # tujuh ratus ribu rupiah #
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section: Payments (Left) & Issuer & Contact (Right) -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                <img src="mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 22px; width: auto; object-fit: contain;">
+                                <strong style="font-size: 0.95rem; color: var(--navy-primary);">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 4px;">
+                                Account Name: <strong>Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px; flex-wrap: nowrap;">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--navy-primary);">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Salin
+                                </button>
+                            </div>
+                            <div style="font-size: 0.72rem; opacity: 0.75; font-style: italic;">
+                                Pay by: Immediate / Upon Receipt
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer & Contact -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER & CONTACT</div>
+                        <div class="bottom-block-content">
+                            <strong>Daru Fahmaa Muliawan</strong><br>
+                            Web Developer & Logo Designer<br>
+                            Kota Tangerang, Banten<br>
+                            WA: 081311506025
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">SYARAT & KETENTUAN LAYANAN (TERMS & CONDITIONS)</div>
+                    <ul class="terms-list">
+                        <li class="terms-item"><span class="terms-num">1.</span> <span><strong>Rincian Tagihan:</strong> Biaya layanan Dreammecca - Umrahme sebesar <strong>Rp 35.000 x 20 pax</strong>.</span></li>
+                        <li class="terms-item"><span class="terms-num">2.</span> <span><strong>Total Pembayaran:</strong> Total invoice yang wajib diselesaikan adalah <strong>Rp 700.000</strong>.</span></li>
+                        <li class="terms-item"><span class="terms-num">3.</span> <span><strong>Tata Cara Pembayaran:</strong> Transfer via Bank Mandiri No. 1550010616962 a.n. Daru Fahmaa Muliawan menandakan persetujuan seluruh ketentuan.</span></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Component -->
+    <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
+
+    <script>
+        function lockDocument() {
+            document.getElementById("coverOverlay").classList.remove("opened");
+            document.getElementById("passcodeInput").value = "";
+        }
+
+        function verifyPasscode() {
+            const input = document.getElementById("passcodeInput").value.trim();
+            const errorEl = document.getElementById("passcodeError");
+            
+            // Password yang disepakati adalah 0001
+            if (input === "0001") {
+                document.getElementById("coverOverlay").classList.add("opened");
+                errorEl.style.display = "none";
+                document.getElementById("passcodeInput").value = "";
+            } else {
+                errorEl.style.display = "block";
+                const card = document.querySelector(".cover-card");
+                card.classList.add("shake-anim");
+                setTimeout(() => card.classList.remove("shake-anim"), 400);
+            }
+        }
+
+        // Allow pressing Enter key in passcode input
+        document.getElementById("passcodeInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyPasscode();
+            }
+        });
+
+        // RE-LOCK IMMEDIATELY ON TAB SWITCH, MINIMIZE, LEAVE PAGE, OR BLUR
+        window.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                lockDocument();
+            }
+        });
+
+        window.addEventListener("blur", function() {
+            lockDocument();
+        });
+
+        window.addEventListener("pageshow", function(event) {
+            lockDocument();
+        });
+
+        function copyBankAcc() {
+            const accNo = "1550010616962";
+            navigator.clipboard.writeText(accNo).then(() => {
+                showToast("Nomor Rekening 1550010616962 (Bank Mandiri) telah disalin!");
+            }).catch(() => {
+                showToast("Silakan salin manual: 1550010616962");
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            toast.innerText = msg;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
+

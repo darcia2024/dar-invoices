@@ -870,6 +870,42 @@
                     <span>[ BUKA INVOICE MARKAZ FIQIH ]</span>
                 </a>
             </div>
+            <!-- Dreammecca - Umrahme Card -->
+            <div class="invoice-card" data-client="dreammecca umrahme #inv/du/2026/001">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Dreammecca - Umrahme</div>
+                        <span class="status-pill status-locked">PIN PROTECTED</span>
+                    </div>
+
+                    <div class="ref-code">REF: #INV/DU/2026/001</div>
+                    <div class="project-desc">
+                        Invoice layanan Dreammecca - Umrahme: Rp 35.000 x 20 pax.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/dreammecca-umrahme</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/dreammecca-umrahme')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptDreammecca()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <div class="amount-box">
+                        <span class="amount-label">TOTAL</span>
+                        <div class="amount-val-container">
+                            <span id="amountValDreammecca" class="amount-val masked">Rp *********</span>
+                            <button id="toggleBtnDreammecca" class="toggle-eye-btn" onclick="togglePriceVisibility('dreammecca')">
+                                Tampilkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/dreammecca-umrahme" class="action-btn">
+                    <span>[ BUKA INVOICE DREAMMECCA - UMRAHME ]</span>
+                </a>
+            </div>
 
             <!-- Master Template Card -->
             <div class="invoice-card" data-client="master template #inv/template/001">
@@ -927,18 +963,34 @@
         let isPriceUnlocked = sessionStorage.getItem("dashboard_prices_unlocked") === "true";
 
         function updatePriceUI() {
-            const amountEl = document.getElementById("amountValMarkaz");
-            const toggleBtn = document.getElementById("toggleBtnMarkaz");
-            
-            if (isPriceUnlocked) {
-                amountEl.innerText = "Rp 8.500.000";
-                amountEl.classList.remove("masked");
-                toggleBtn.innerText = "🙈 Sembunyikan";
-            } else {
-                amountEl.innerText = "Rp •••••••••";
-                amountEl.classList.add("masked");
-                toggleBtn.innerText = "👁️ Tampilkan";
-            }
+            const priceTargets = [
+                {
+                    amountEl: document.getElementById("amountValMarkaz"),
+                    toggleBtn: document.getElementById("toggleBtnMarkaz"),
+                    unlockedText: "Rp 8.500.000",
+                    maskedText: "Rp *********"
+                },
+                {
+                    amountEl: document.getElementById("amountValDreammecca"),
+                    toggleBtn: document.getElementById("toggleBtnDreammecca"),
+                    unlockedText: "Rp 700.000",
+                    maskedText: "Rp *********"
+                }
+            ];
+
+            priceTargets.forEach(({ amountEl, toggleBtn, unlockedText, maskedText }) => {
+                if (!amountEl || !toggleBtn) return;
+
+                if (isPriceUnlocked) {
+                    amountEl.innerText = unlockedText;
+                    amountEl.classList.remove("masked");
+                    toggleBtn.innerText = "Sembunyikan";
+                } else {
+                    amountEl.innerText = maskedText;
+                    amountEl.classList.add("masked");
+                    toggleBtn.innerText = "Tampilkan";
+                }
+            });
         }
 
         function togglePriceVisibility(projectId) {
@@ -1033,6 +1085,28 @@ Terima kasih banyak atas kepercayaannya! Jazakallahu Khairan. 😊`;
             });
         }
 
+        function copyWaScriptDreammecca() {
+            const waScript = `Assalamu'alaikum Warahmatullahi Wabarakatuh.
+
+Berikut tautan dokumen resmi Invoice Dreammecca - Umrahme:
+
+Invoice Online: https://dar-invoices.vercel.app/dreammecca-umrahme
+Kode PIN Akses: 0001
+
+Rincian:
+Rp 35.000 x 20 pax = Rp 700.000
+
+Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+Total: Rp 700.000
+
+Terima kasih.`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA DREAMMECCA - UMRAHME BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
         function showToast(msg) {
             const toast = document.getElementById("toast");
             toast.innerText = msg;
