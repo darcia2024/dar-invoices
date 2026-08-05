@@ -907,6 +907,43 @@
                 </a>
             </div>
 
+            <!-- Haramain Capture Card -->
+            <div class="invoice-card" data-client="haramain capture aris azhari harahap #inv/hc/2026/001">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Haramain Capture</div>
+                        <span class="status-pill status-locked">PIN PROTECTED</span>
+                    </div>
+
+                    <div class="ref-code">REF: #INV/HC/2026/001</div>
+                    <div class="project-desc">
+                        Invoice desain Logo untuk Haramain Capture.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/haramain-capture</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/haramain-capture')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptHaramainCapture()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <div class="amount-box">
+                        <span class="amount-label">TOTAL</span>
+                        <div class="amount-val-container">
+                            <span id="amountValHaramainCapture" class="amount-val masked">Rp *********</span>
+                            <button id="toggleBtnHaramainCapture" class="toggle-eye-btn" onclick="togglePriceVisibility('haramain-capture')">
+                                Tampilkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/haramain-capture" class="action-btn">
+                    <span>[ BUKA INVOICE HARAMAIN CAPTURE ]</span>
+                </a>
+            </div>
+
             <!-- Master Template Card -->
             <div class="invoice-card" data-client="master template #inv/template/001">
                 <div>
@@ -974,6 +1011,12 @@
                     amountEl: document.getElementById("amountValDreammecca"),
                     toggleBtn: document.getElementById("toggleBtnDreammecca"),
                     unlockedText: "Rp 700.000",
+                    maskedText: "Rp *********"
+                },
+                {
+                    amountEl: document.getElementById("amountValHaramainCapture"),
+                    toggleBtn: document.getElementById("toggleBtnHaramainCapture"),
+                    unlockedText: "Rp 600.000",
                     maskedText: "Rp *********"
                 }
             ];
@@ -1103,6 +1146,29 @@ Terima kasih.`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA DREAMMECCA - UMRAHME BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptHaramainCapture() {
+            const waScript = `Assalamu'alaikum Warahmatullahi Wabarakatuh.
+
+Berikut tautan dokumen resmi Invoice Haramain Capture:
+
+Invoice Online: https://dar-invoices.vercel.app/haramain-capture
+Kode PIN Akses: 0001
+
+Rincian:
+Produk: Logo
+Total: Rp 600.000
+
+Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih.`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA HARAMAIN CAPTURE BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
