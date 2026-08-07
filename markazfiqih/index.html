@@ -1344,37 +1344,10 @@
         });
 
         function downloadPDF() {
-            showToast("MENGENERASI PDF (1 HALAMAN A4)...");
-            
-            document.body.classList.add('pdf-rendering');
-            const element = document.querySelector('.invoice-container');
-            
-            const opt = {
-                margin: 0,
-                filename: 'INVOICE_MARKAZ_FIQIH.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, 
-                    logging: false,
-                    scrollX: 0,
-                    scrollY: 0
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            if (typeof html2pdf !== 'undefined') {
-                html2pdf().set(opt).from(element).save().then(() => {
-                    document.body.classList.remove('pdf-rendering');
-                    showToast("DOWNLOAD PDF 1 HALAMAN BERHASIL!");
-                }).catch(err => {
-                    document.body.classList.remove('pdf-rendering');
-                    window.print();
-                });
-            } else {
-                document.body.classList.remove('pdf-rendering');
+            showToast("Membuka dialog Simpan sebagai PDF (A4 1 Halaman)...");
+            setTimeout(() => {
                 window.print();
-            }
+            }, 300);
         }
 
         function copyBankAcc() {

@@ -917,14 +917,14 @@
             margin: 0;
         }
 
-        /* Print Media Styles */
+        /* Print & PDF Media Styles */
         @media print {
             html, body {
                 background-color: #ffffff !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
+                width: 210mm !important;
+                height: 297mm !important;
                 overflow: hidden !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -935,15 +935,16 @@
             }
 
             .invoice-container {
-                width: 100% !important;
-                max-width: 100% !important;
-                height: 100vh !important;
-                max-height: 100vh !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                max-width: 210mm !important;
+                max-height: 297mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
+                display: flex !important;
                 flex-direction: row !important;
                 box-sizing: border-box !important;
                 page-break-inside: avoid !important;
@@ -954,26 +955,27 @@
                 width: 120px !important;
                 flex-direction: column !important;
                 justify-content: space-between !important;
-                border-right: 1px solid var(--border-navy) !important;
+                border-right: 1.5px solid var(--border-navy) !important;
                 border-bottom: none !important;
-                padding: 40px 20px !important;
+                padding: 30px 15px !important;
                 background-color: #efeadf !important;
+                -webkit-print-color-adjust: exact !important;
             }
 
             .vertical-invoice-title {
                 writing-mode: vertical-rl !important;
                 transform: rotate(180deg) !important;
-                font-size: 4rem !important;
+                font-size: 3.5rem !important;
             }
 
             .vertical-brand-name {
                 writing-mode: vertical-rl !important;
                 transform: rotate(180deg) !important;
-                font-size: 1.8rem !important;
+                font-size: 1.5rem !important;
             }
 
             .main-panel {
-                padding: 45px 50px !important;
+                padding: 30px 36px !important;
             }
 
             .bottom-section-grid {
@@ -982,10 +984,6 @@
 
             .bottom-section-grid > div:last-child {
                 text-align: right !important;
-            }
-
-            .copy-pill-btn {
-                display: none !important;
             }
         }
     </style>
@@ -1038,7 +1036,7 @@
             </button>
             <button class="btn btn-primary" style="background:#047857;" onclick="downloadPDF()">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Download PDF (Instan)
+                Download / Simpan PDF (A4)
             </button>
             <button class="btn btn-primary" onclick="window.print()">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
@@ -1249,37 +1247,10 @@
         });
 
         function downloadPDF() {
-            showToast("MENGENERASI PDF (1 HALAMAN A4)...");
-            
-            document.body.classList.add('pdf-rendering');
-            const element = document.querySelector('.invoice-container');
-            
-            const opt = {
-                margin: 0,
-                filename: 'INVOICE_ABDURRAHMAN_TEMANTIKET.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, 
-                    logging: false,
-                    scrollX: 0,
-                    scrollY: 0
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            if (typeof html2pdf !== 'undefined') {
-                html2pdf().set(opt).from(element).save().then(() => {
-                    document.body.classList.remove('pdf-rendering');
-                    showToast("DOWNLOAD PDF 1 HALAMAN BERHASIL!");
-                }).catch(err => {
-                    document.body.classList.remove('pdf-rendering');
-                    window.print();
-                });
-            } else {
-                document.body.classList.remove('pdf-rendering');
+            showToast("Membuka dialog Simpan sebagai PDF (A4 1 Halaman)...");
+            setTimeout(() => {
                 window.print();
-            }
+            }, 300);
         }
 
         function copyBankAcc() {
