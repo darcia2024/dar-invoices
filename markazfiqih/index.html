@@ -1344,24 +1344,91 @@
         });
 
         function downloadPDF() {
+            showToast("MENGENERASI PDF (PAS 1 HALAMAN A4)...");
+            
             const element = document.querySelector('.invoice-container');
-            showToast("MENGENERASI BERKAS PDF...");
+            const clone = element.cloneNode(true);
+            
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'absolute';
+            wrapper.style.left = '-9999px';
+            wrapper.style.top = '-9999px';
+            wrapper.style.width = '794px';
+            wrapper.style.height = '1120px';
+            wrapper.style.background = '#f6f2e9';
+            
+            clone.style.width = '794px';
+            clone.style.height = '1120px';
+            clone.style.maxWidth = '794px';
+            clone.style.maxHeight = '1120px';
+            clone.style.margin = '0';
+            clone.style.boxShadow = 'none';
+            clone.style.borderRadius = '0';
+            clone.style.flexDirection = 'row';
+            
+            // Hide buttons in clone
+            clone.querySelectorAll('.copy-pill-btn').forEach(btn => btn.style.display = 'none');
+            
+            // Ensure vertical sidebar alignment in clone
+            const sidebar = clone.querySelector('.sidebar-left');
+            if (sidebar) {
+                sidebar.style.width = '130px';
+                sidebar.style.flexDirection = 'column';
+                sidebar.style.justify = 'space-between';
+                sidebar.style.padding = '35px 15px';
+                sidebar.style.borderRight = '1.5px solid #0f2b5c';
+                sidebar.style.borderBottom = 'none';
+                sidebar.style.background = '#efeadf';
+            }
+            const sidebarTitle = clone.querySelector('.vertical-invoice-title');
+            if (sidebarTitle) {
+                sidebarTitle.style.writingMode = 'vertical-rl';
+                sidebarTitle.style.transform = 'rotate(180deg)';
+                sidebarTitle.style.fontSize = '3.8rem';
+            }
+            const sidebarBrand = clone.querySelector('.vertical-brand-name');
+            if (sidebarBrand) {
+                sidebarBrand.style.writingMode = 'vertical-rl';
+                sidebarBrand.style.transform = 'rotate(180deg)';
+                sidebarBrand.style.fontSize = '1.6rem';
+            }
+            const mainPanel = clone.querySelector('.main-panel');
+            if (mainPanel) {
+                mainPanel.style.padding = '35px 40px';
+            }
+            const bottomGrid = clone.querySelector('.bottom-section-grid');
+            if (bottomGrid) {
+                bottomGrid.style.flexDirection = 'row';
+                const rightChild = bottomGrid.querySelector('div:last-child');
+                if (rightChild) rightChild.style.textAlign = 'right';
+            }
+
+            wrapper.appendChild(clone);
+            document.body.appendChild(wrapper);
             
             const opt = {
                 margin: 0,
                 filename: 'INVOICE_MARKAZ_FIQIH.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true, 
+                    logging: false,
+                    windowWidth: 794
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             if (typeof html2pdf !== 'undefined') {
-                html2pdf().set(opt).from(element).save().then(() => {
-                    showToast("DOWNLOAD PDF BERHASIL!");
+                html2pdf().set(opt).from(clone).save().then(() => {
+                    document.body.removeChild(wrapper);
+                    showToast("DOWNLOAD PDF 1 HALAMAN BERHASIL!");
                 }).catch(err => {
+                    document.body.removeChild(wrapper);
                     window.print();
                 });
             } else {
+                document.body.removeChild(wrapper);
                 window.print();
             }
         }
