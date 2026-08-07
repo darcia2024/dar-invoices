@@ -47,6 +47,177 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* ----------------------------------------------------
+           CLASSIFIED AGENCY ADMIN COVER SCREEN (PASS: 050900)
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #09090b;
+            background-image: radial-gradient(#1c1c22 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
+        }
+
+        .cover-card {
+            background-color: #141417;
+            border: 2px solid #ffffff;
+            border-radius: 6px;
+            max-width: 480px;
+            width: 100%;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95);
+            position: relative;
+            color: #ffffff;
+            font-family: var(--font-mono);
+        }
+
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #ffffff;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            transform: rotate(-1.5deg);
+            background: #000000;
+            color: #ffffff;
+            box-shadow: 2px 2px 0px #ffffff;
+        }
+
+        .cover-top-barcode {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .cover-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .cover-subtitle {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .classified-line-divider {
+            border-top: 1px dashed #3f3f46;
+            margin: 0 auto 24px auto;
+            width: 100%;
+        }
+
+        .passcode-wrapper {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .passcode-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.5em;
+            padding: 12px 16px;
+            width: 100%;
+            border: 2px solid #ffffff;
+            background: #000000;
+            color: #ffffff;
+            outline: none;
+            box-shadow: 3px 3px 0px #ffffff;
+        }
+
+        .passcode-input:focus {
+            background: #09090b;
+            border-color: #ffffff;
+            box-shadow: 5px 5px 0px #ffffff;
+        }
+
+        .passcode-error {
+            font-size: 0.72rem;
+            color: #ef4444;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+            letter-spacing: 0.05em;
+        }
+
+        .cover-open-btn {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 700;
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #ffffff;
+            padding: 15px 28px;
+            border-radius: 0px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0px #3f3f46;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .cover-open-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: 4px 4px 0px #ffffff;
+            transform: translate(-1px, -1px);
+        }
+
         .portal-container {
             max-width: 1080px;
             margin: 0 auto;
@@ -685,108 +856,6 @@
             border-color: #ffffff;
         }
 
-        /* PIN Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-card {
-            background: #141414;
-            border: 2px solid #ffffff;
-            border-radius: 4px;
-            max-width: 420px;
-            width: 100%;
-            padding: 35px 30px;
-            text-align: center;
-            font-family: var(--font-mono);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95);
-        }
-
-        .modal-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .modal-subtitle {
-            font-size: 0.76rem;
-            color: var(--text-muted);
-            margin-bottom: 22px;
-        }
-
-        .modal-input {
-            font-family: var(--font-mono);
-            font-size: 1.25rem;
-            font-weight: 700;
-            text-align: center;
-            letter-spacing: 0.5em;
-            padding: 12px;
-            width: 100%;
-            border: 2px solid #ffffff;
-            background: #000000;
-            color: #ffffff;
-            outline: none;
-            margin-bottom: 14px;
-        }
-
-        .modal-error {
-            font-size: 0.72rem;
-            color: #ef4444;
-            font-weight: 700;
-            display: none;
-            margin-bottom: 14px;
-            letter-spacing: 0.05em;
-        }
-
-        .modal-btn-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .modal-btn {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 12px;
-            flex: 1;
-            cursor: pointer;
-            border: 1.5px solid #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .modal-btn-confirm {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        .modal-btn-cancel {
-            background: #000000;
-            color: #ffffff;
-        }
-
         /* Toast Component */
         .toast {
             position: fixed;
@@ -813,9 +882,6 @@
             opacity: 1;
         }
 
-        /* ====================================================
-           ULTRA-OPTIMIZED MOBILE RESPONSIVE STYLES (≤ 768px)
-        ==================================================== */
         @media screen and (max-width: 768px) {
             body {
                 padding: 35px 14px 50px 14px;
@@ -900,17 +966,30 @@
 </head>
 <body>
 
-    <!-- PIN MODAL PROMPT -->
-    <div id="pinModal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-title">AUTHENTICATION REQUIRED</div>
-            <div class="modal-subtitle">MASUKKAN KODE PIN RESMI UNTUK MELIHAT NOMINAL:</div>
-            <input type="password" id="modalPinInput" class="modal-input" maxlength="6" placeholder="• • • •">
-            <div id="modalPinError" class="modal-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
-            <div class="modal-btn-group">
-                <button class="modal-btn modal-btn-cancel" onclick="closePinModal()">BATAL</button>
-                <button class="modal-btn modal-btn-confirm" onclick="submitPinModal()">UNLOCK</button>
+    <!-- CLASSIFIED AGENCY ADMIN COVER SCREEN (PASS: 050900) -->
+    <div id="adminCoverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            
+            <div class="cover-top-barcode">// CONFIDENTIAL FINANCIAL DASHBOARD &bull; CLEARANCE LEVEL 0 //</div>
+            
+            <!-- Rubber Stamp Badge -->
+            <div class="classified-stamp">RAHASIA AGENCY / TOP SECRET</div>
+
+            <h1 class="cover-title">DAR INVOICES PORTAL</h1>
+            <div class="cover-subtitle">Laporan Pendapatan, Financial Accounting & Billing Portal</div>
+            
+            <div class="classified-line-divider"></div>
+
+            <!-- PASSCODE SECURITY SECTION -->
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER AGENCY ADMIN PASSWORD // MASUKKAN PASSWORD:</div>
+                <input type="password" id="adminPassInput" class="passcode-input" maxlength="8" placeholder="• • • • • •">
+                <div id="adminPassError" class="passcode-error">[ ACCESS DENIED // PASSWORD SALAH ]</div>
             </div>
+
+            <button class="cover-open-btn" onclick="verifyAdminPasscode()">
+                <span>[ BUKA DASHBOARD KEUANGAN ]</span>
+            </button>
         </div>
     </div>
 
@@ -1039,10 +1118,7 @@
                     <div class="amount-box">
                         <span class="amount-label">NET INVESTMENT</span>
                         <div class="amount-val-container">
-                            <span id="amountValMarkaz" class="amount-val masked">Rp *********</span>
-                            <button id="toggleBtnMarkaz" class="toggle-eye-btn" onclick="togglePriceVisibility('markaz')">
-                                👁️ Tampilkan
-                            </button>
+                            <span id="amountValMarkaz" class="amount-val">Rp 8.500.000</span>
                         </div>
                     </div>
                 </div>
@@ -1084,10 +1160,7 @@
                     <div class="amount-box">
                         <span class="amount-label">TOTAL</span>
                         <div class="amount-val-container">
-                            <span id="amountValDreammecca" class="amount-val masked">Rp *********</span>
-                            <button id="toggleBtnDreammecca" class="toggle-eye-btn" onclick="togglePriceVisibility('dreammecca')">
-                                👁️ Tampilkan
-                            </button>
+                            <span id="amountValDreammecca" class="amount-val">Rp 700.000</span>
                         </div>
                     </div>
                 </div>
@@ -1129,10 +1202,7 @@
                     <div class="amount-box">
                         <span class="amount-label">TOTAL</span>
                         <div class="amount-val-container">
-                            <span id="amountValHaramainCapture" class="amount-val masked">Rp *********</span>
-                            <button id="toggleBtnHaramainCapture" class="toggle-eye-btn" onclick="togglePriceVisibility('haramain-capture')">
-                                👁️ Tampilkan
-                            </button>
+                            <span id="amountValHaramainCapture" class="amount-val">Rp 600.000</span>
                         </div>
                     </div>
                 </div>
@@ -1174,10 +1244,7 @@
                     <div class="amount-box">
                         <span class="amount-label">TOTAL</span>
                         <div class="amount-val-container">
-                            <span id="amountValAbdurrahman" class="amount-val masked">Rp *********</span>
-                            <button id="toggleBtnAbdurrahman" class="toggle-eye-btn" onclick="togglePriceVisibility('abdurrahman')">
-                                👁️ Tampilkan
-                            </button>
+                            <span id="amountValAbdurrahman" class="amount-val">Rp 13.800.000</span>
                         </div>
                     </div>
                 </div>
@@ -1244,11 +1311,53 @@
     <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
 
     <script>
-        let isPriceUnlocked = sessionStorage.getItem("dashboard_prices_unlocked") === "true";
         let activeMonthFilter = "all";
 
+        // Admin Security Lock (Passcode: 050900)
+        function verifyAdminPasscode() {
+            const input = document.getElementById("adminPassInput").value.trim();
+            const errorEl = document.getElementById("adminPassError");
+            
+            if (input === "050900") {
+                document.getElementById("adminCoverOverlay").classList.add("opened");
+                errorEl.style.display = "none";
+                document.getElementById("adminPassInput").value = "";
+            } else {
+                errorEl.style.display = "block";
+                const card = document.querySelector("#adminCoverOverlay .cover-card");
+                card.classList.add("shake-anim");
+                setTimeout(() => card.classList.remove("shake-anim"), 400);
+            }
+        }
+
+        function lockAdminDashboard() {
+            document.getElementById("adminCoverOverlay").classList.remove("opened");
+            document.getElementById("adminPassInput").value = "";
+        }
+
+        // Allow pressing Enter key in admin password input
+        document.getElementById("adminPassInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyAdminPasscode();
+            }
+        });
+
+        // RE-LOCK IMMEDIATELY ON TAB SWITCH, MINIMIZE, LEAVE PAGE, OR BLUR FOR SECURITY
+        window.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                lockAdminDashboard();
+            }
+        });
+
+        window.addEventListener("blur", function() {
+            lockAdminDashboard();
+        });
+
+        window.addEventListener("pageshow", function(event) {
+            lockAdminDashboard();
+        });
+
         // Initial Payment Statuses (Loaded from localStorage or default)
-        // Default: markaz, dreammecca, haramain-capture, abdurrahman are default PAID unless changed
         const paymentStatuses = {
             markaz: localStorage.getItem("status_markaz") || "PAID",
             dreammecca: localStorage.getItem("status_dreammecca") || "PAID",
@@ -1257,10 +1366,10 @@
         };
 
         const invoiceItems = [
-            { id: "markaz", month: "2026-07", monthLabel: "Juli 2026", amount: 8500000, unformatted: "8.500.000" },
-            { id: "dreammecca", month: "2026-07", monthLabel: "Juli 2026", amount: 700000, unformatted: "700.000" },
-            { id: "haramain-capture", month: "2026-07", monthLabel: "Juli 2026", amount: 600000, unformatted: "600.000" },
-            { id: "abdurrahman", month: "2026-08", monthLabel: "Agustus 2026", amount: 13800000, unformatted: "13.800.000" }
+            { id: "markaz", month: "2026-07", monthLabel: "Juli 2026", amount: 8500000 },
+            { id: "dreammecca", month: "2026-07", monthLabel: "Juli 2026", amount: 700000 },
+            { id: "haramain-capture", month: "2026-07", monthLabel: "Juli 2026", amount: 600000 },
+            { id: "abdurrahman", month: "2026-08", monthLabel: "Agustus 2026", amount: 13800000 }
         ];
 
         function formatIDR(num) {
@@ -1398,81 +1507,9 @@
             calculateFinancials();
         }
 
-        function updatePriceUI() {
-            const priceTargets = [
-                { id: "Markaz", amount: "Rp 8.500.000" },
-                { id: "Dreammecca", amount: "Rp 700.000" },
-                { id: "HaramainCapture", amount: "Rp 600.000" },
-                { id: "Abdurrahman", amount: "Rp 13.800.000" }
-            ];
-
-            priceTargets.forEach(target => {
-                const amountEl = document.getElementById("amountVal" + target.id);
-                const toggleBtn = document.getElementById("toggleBtn" + target.id);
-                if (!amountEl || !toggleBtn) return;
-
-                if (isPriceUnlocked) {
-                    amountEl.innerText = target.amount;
-                    amountEl.classList.remove("masked");
-                    toggleBtn.innerText = "🙈 Sembunyikan";
-                } else {
-                    amountEl.innerText = "Rp *********";
-                    amountEl.classList.add("masked");
-                    toggleBtn.innerText = "👁️ Tampilkan";
-                }
-            });
-        }
-
-        function togglePriceVisibility(projectId) {
-            if (isPriceUnlocked) {
-                isPriceUnlocked = false;
-                sessionStorage.removeItem("dashboard_prices_unlocked");
-                updatePriceUI();
-            } else {
-                openPinModal();
-            }
-        }
-
-        function openPinModal() {
-            const modal = document.getElementById("pinModal");
-            const input = document.getElementById("modalPinInput");
-            const errorEl = document.getElementById("modalPinError");
-            input.value = "";
-            errorEl.style.display = "none";
-            modal.classList.add("active");
-            input.focus();
-        }
-
-        function closePinModal() {
-            document.getElementById("pinModal").classList.remove("active");
-        }
-
-        function submitPinModal() {
-            const pin = document.getElementById("modalPinInput").value.trim();
-            const errorEl = document.getElementById("modalPinError");
-            
-            if (pin === "0001") {
-                isPriceUnlocked = true;
-                sessionStorage.setItem("dashboard_prices_unlocked", "true");
-                updatePriceUI();
-                closePinModal();
-                showToast("NOMINAL INVOICE BERHASIL DITAMPILKAN!");
-            } else {
-                errorEl.style.display = "block";
-            }
-        }
-
-        // Allow pressing Enter key in modal input
-        document.getElementById("modalPinInput").addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                submitPinModal();
-            }
-        });
-
         // Initialize state on page load
         updatePaymentBadges();
         calculateFinancials();
-        updatePriceUI();
 
         function copySlug(url) {
             navigator.clipboard.writeText(url).then(() => {
