@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DAR INVOICES — Official Billing & Client Portal</title>
+    <title>DAR INVOICES — Official Billing & Revenue Portal</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +18,11 @@
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
             --text-dim: #71717a;
+            
+            --color-paid: #10b981;
+            --color-paid-bg: rgba(16, 185, 129, 0.12);
+            --color-unpaid: #ef4444;
+            --color-unpaid-bg: rgba(239, 68, 68, 0.12);
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -43,14 +48,14 @@
         }
 
         .portal-container {
-            max-width: 1040px;
+            max-width: 1080px;
             margin: 0 auto;
         }
 
         /* Top Bar Emblem Badge */
         .portal-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
             position: relative;
         }
 
@@ -68,34 +73,34 @@
             padding: 8px 20px;
             border-radius: 20px;
             border: 1px solid #3f3f46;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
 
         .portal-badge span {
             width: 8px;
             height: 8px;
-            background-color: #ffffff;
+            background-color: #10b981;
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 10px #ffffff;
+            box-shadow: 0 0 10px #10b981;
         }
 
         .portal-title {
             font-size: 3.2rem;
             font-weight: 800;
             letter-spacing: -0.04em;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             line-height: 1.1;
             color: #ffffff;
             text-transform: uppercase;
         }
 
         .portal-subtitle {
-            font-size: 1.02rem;
+            font-size: 1rem;
             color: var(--text-muted);
             font-weight: 300;
-            max-width: 600px;
+            max-width: 620px;
             margin: 0 auto;
             line-height: 1.6;
         }
@@ -105,12 +110,12 @@
             font-weight: 600;
         }
 
-        /* Stats Bar Grid */
+        /* Executive Financial Stats Bar Grid */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 18px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
@@ -123,6 +128,20 @@
             gap: 16px;
             transition: all 0.3s ease;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card.paid-stat {
+            border-left: 4px solid var(--color-paid);
+        }
+
+        .stat-card.unpaid-stat {
+            border-left: 4px solid var(--color-unpaid);
+        }
+
+        .stat-card.total-stat {
+            border-left: 4px solid #ffffff;
         }
 
         .stat-card:hover {
@@ -155,44 +174,81 @@
 
         .stat-info-val {
             font-family: var(--font-mono);
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #ffffff;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
-        /* Search & Filter Header */
-        .section-header {
+        /* Monthly Filter Bar & Search Header */
+        .filter-section {
+            background: #121215;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .filter-row-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
-            border-bottom: 1.5px solid var(--card-border);
-            padding-bottom: 16px;
-            gap: 16px;
             flex-wrap: wrap;
+            gap: 16px;
         }
 
-        .section-header-title {
+        .filter-title {
             font-family: var(--font-mono);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             color: #ffffff;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .section-header-title::before {
-            content: "[//]";
-            color: var(--text-dim);
+        .month-pills-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .month-pill-btn {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            font-weight: 700;
+            background: #18181b;
+            border: 1px solid #3f3f46;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .month-pill-btn:hover {
+            background: #27272a;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .month-pill-btn.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .search-box {
             position: relative;
-            max-width: 300px;
+            max-width: 320px;
             width: 100%;
         }
 
@@ -221,6 +277,67 @@
             transform: translateY(-50%);
             color: var(--text-dim);
             pointer-events: none;
+        }
+
+        /* Monthly Financial Revenue Report Accordion */
+        .revenue-report-box {
+            background: #18181b;
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 20px 24px;
+            margin-bottom: 35px;
+        }
+
+        .revenue-report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .revenue-report-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .revenue-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-family: var(--font-mono);
+        }
+
+        .revenue-table th {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--card-border);
+            text-align: left;
+        }
+
+        .revenue-table td {
+            font-size: 0.82rem;
+            padding: 12px 12px;
+            border-bottom: 1px dashed #27272a;
+            color: #ffffff;
+        }
+
+        .revenue-table tr.grand-row td {
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-top: 1.5px solid #ffffff;
+            border-bottom: none;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         /* Invoice Cards Grid */
@@ -270,12 +387,12 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             gap: 12px;
         }
 
         .client-title {
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 800;
             color: #ffffff;
             line-height: 1.2;
@@ -283,30 +400,51 @@
             letter-spacing: -0.01em;
         }
 
-        .status-pill {
+        /* Payment Status Pill Toggle */
+        .status-badge-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .payment-status-pill {
             font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             padding: 5px 12px;
             border-radius: 4px;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             white-space: nowrap;
+            transition: all 0.25s ease;
+            user-select: none;
         }
 
-        .status-locked {
-            background: #18181b;
-            color: #ffffff;
-            border: 1px solid #3f3f46;
+        .payment-status-pill.status-paid {
+            background: var(--color-paid-bg);
+            color: var(--color-paid);
+            border: 1px solid var(--color-paid);
         }
 
-        .status-template {
-            background: #ffffff;
+        .payment-status-pill.status-paid:hover {
+            background: var(--color-paid);
             color: #000000;
-            border: 1px solid #ffffff;
+        }
+
+        .payment-status-pill.status-unpaid {
+            background: var(--color-unpaid-bg);
+            color: var(--color-unpaid);
+            border: 1px solid var(--color-unpaid);
+        }
+
+        .payment-status-pill.status-unpaid:hover {
+            background: var(--color-unpaid);
+            color: #ffffff;
         }
 
         .ref-code {
@@ -316,6 +454,14 @@
             margin-bottom: 12px;
             font-weight: 700;
             letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .month-tag {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
         .project-desc {
@@ -636,17 +782,9 @@
             color: #000000;
         }
 
-        .modal-btn-confirm:hover {
-            background: #e4e4e7;
-        }
-
         .modal-btn-cancel {
             background: #000000;
             color: #ffffff;
-        }
-
-        .modal-btn-cancel:hover {
-            background: #27272a;
         }
 
         /* Toast Component */
@@ -697,9 +835,8 @@
                 gap: 12px;
             }
 
-            .section-header {
-                flex-direction: column;
-                align-items: stretch;
+            .filter-section {
+                padding: 16px;
             }
 
             .search-box {
@@ -782,67 +919,111 @@
         <!-- Header Hero -->
         <div class="portal-header">
             <div class="portal-badge">
-                <span></span> DAR INVOICES &bull; SYSTEM PORTAL
+                <span></span> DAR INVOICES &bull; FINANCIAL SYSTEM PORTAL
             </div>
             <h1 class="portal-title">Client Billing Portal</h1>
-            <p class="portal-subtitle">Monochromatic Client Invoice & Billing Management System by <strong>Daru Fahmaa Muliawan</strong>.</p>
+            <p class="portal-subtitle">Executive Billing Management & Monthly Financial Revenue Dashboard by <strong>Daru Fahmaa Muliawan</strong>.</p>
         </div>
 
-        <!-- Stats Bar Grid -->
+        <!-- Executive Financial KPI Stats Bar Grid -->
         <div class="stats-bar">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <div class="stat-card paid-stat">
+                <div class="stat-icon" style="color: var(--color-paid); border-color: var(--color-paid);">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">ACTIVE INVOICES</div>
-                    <div class="stat-info-val">02 INVOICES</div>
+                    <div class="stat-info-title">PENDAPATAN TERIMA (PAID)</div>
+                    <div id="statPaidTotal" class="stat-info-val" style="color: var(--color-paid);">Rp 0</div>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <div class="stat-card unpaid-stat">
+                <div class="stat-icon" style="color: var(--color-unpaid); border-color: var(--color-unpaid);">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">ACTIVE CLIENTS</div>
-                    <div class="stat-info-val">01 CLIENT</div>
+                    <div class="stat-info-title">PENDAPATAN PENDING (UNPAID)</div>
+                    <div id="statUnpaidTotal" class="stat-info-val" style="color: var(--color-unpaid);">Rp 0</div>
                 </div>
             </div>
 
-            <div class="stat-card">
+            <div class="stat-card total-stat">
                 <div class="stat-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">CLEARANCE</div>
-                    <div class="stat-info-val">PIN PROTECTED</div>
+                    <div class="stat-info-title">TOTAL POTENSI OMSET</div>
+                    <div id="statGrandTotal" class="stat-info-val">Rp 0</div>
                 </div>
             </div>
         </div>
 
-        <!-- Section Search & Title Header -->
-        <div class="section-header">
-            <div class="section-header-title">DAFTAR PROJECT INVOICE KLIEN</div>
-            
-            <div class="search-box">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Cari nama klien / ref..." onkeyup="filterInvoices()">
+        <!-- Monthly Categorization & Search Filter Section -->
+        <div class="filter-section">
+            <div class="filter-row-top">
+                <div class="filter-title">
+                    <span>🗓️ KATEGORI PER PERIODE BULAN:</span>
+                </div>
+                <div class="month-pills-group">
+                    <button class="month-pill-btn active" data-filter="all" onclick="setMonthFilter('all', this)">SEMUA BULAN</button>
+                    <button class="month-pill-btn" data-filter="2026-07" onclick="setMonthFilter('2026-07', this)">JULI 2026</button>
+                    <button class="month-pill-btn" data-filter="2026-08" onclick="setMonthFilter('2026-08', this)">AGUSTUS 2026</button>
+                </div>
             </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 1px dashed var(--card-border); padding-top: 16px;">
+                <div class="filter-title">
+                    <span>🔍 CARI DOKUMEN:</span>
+                </div>
+                <div class="search-box">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Cari nama klien / ref code..." onkeyup="filterInvoices()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Collapsible Executive Monthly Revenue Report Table -->
+        <div class="revenue-report-box">
+            <div class="revenue-report-header">
+                <div class="revenue-report-title">
+                    <span>📊 LAPORAN REKAPITULASI PENDAPATAN BULANAN (PAID ONLY)</span>
+                </div>
+            </div>
+            <table class="revenue-table">
+                <thead>
+                    <tr>
+                        <th>PERIODE BULAN</th>
+                        <th>JML INVOICE LUNAS</th>
+                        <th>JML PENDING</th>
+                        <th style="text-align: right;">PENDAPATAN TERIMA (PAID REVENUE)</th>
+                    </tr>
+                </thead>
+                <tbody id="revenueReportBody">
+                    <!-- Dynamic rendering by JS -->
+                </tbody>
+            </table>
         </div>
 
         <!-- Invoice Cards Grid -->
         <div id="invoiceGrid" class="invoice-grid">
             
             <!-- Markaz Fiqih Card -->
-            <div class="invoice-card" data-client="markaz fiqih #inv/mf/2026/001">
+            <div class="invoice-card" id="card-markaz" data-id="markaz" data-month="2026-07" data-amount="8500000" data-client="markaz fiqih #inv/mf/2026/001 juli 2026">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Markaz Fiqih</div>
-                        <span class="status-pill status-locked">🔒 PIN PROTECTED</span>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('markaz')">
+                                🟢 LUNAS
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="ref-code">REF: #INV/MF/2026/001</div>
+                    <div class="ref-code">
+                        <span>REF: #INV/MF/2026/001</span>
+                        <span class="month-tag">📅 Juli 2026</span>
+                    </div>
+                    
                     <div class="project-desc">
                         Pengembangan Web Portal Artikel Syariah, Platform LMS Kelas Online Interaktif, & Redesign Identitas Visual Logo.
                     </div>
@@ -858,7 +1039,7 @@
                     <div class="amount-box">
                         <span class="amount-label">NET INVESTMENT</span>
                         <div class="amount-val-container">
-                            <span id="amountValMarkaz" class="amount-val masked">Rp •••••••••</span>
+                            <span id="amountValMarkaz" class="amount-val masked">Rp *********</span>
                             <button id="toggleBtnMarkaz" class="toggle-eye-btn" onclick="togglePriceVisibility('markaz')">
                                 👁️ Tampilkan
                             </button>
@@ -870,15 +1051,24 @@
                     <span>[ BUKA INVOICE MARKAZ FIQIH ]</span>
                 </a>
             </div>
+
             <!-- Dreammecca - Umrahme Card -->
-            <div class="invoice-card" data-client="dreammecca umrahme #inv/du/2026/001">
+            <div class="invoice-card" id="card-dreammecca" data-id="dreammecca" data-month="2026-07" data-amount="700000" data-client="dreammecca umrahme #inv/du/2026/001 juli 2026">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Dreammecca - Umrahme</div>
-                        <span class="status-pill status-locked">PIN PROTECTED</span>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('dreammecca')">
+                                🟢 LUNAS
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="ref-code">REF: #INV/DU/2026/001</div>
+                    <div class="ref-code">
+                        <span>REF: #INV/DU/2026/001</span>
+                        <span class="month-tag">📅 Juli 2026</span>
+                    </div>
+                    
                     <div class="project-desc">
                         Invoice layanan Dreammecca - Umrahme: Rp 35.000 x 20 pax.
                     </div>
@@ -896,7 +1086,7 @@
                         <div class="amount-val-container">
                             <span id="amountValDreammecca" class="amount-val masked">Rp *********</span>
                             <button id="toggleBtnDreammecca" class="toggle-eye-btn" onclick="togglePriceVisibility('dreammecca')">
-                                Tampilkan
+                                👁️ Tampilkan
                             </button>
                         </div>
                     </div>
@@ -908,14 +1098,22 @@
             </div>
 
             <!-- Haramain Capture Card -->
-            <div class="invoice-card" data-client="haramain capture aris azhari harahap #inv/hc/2026/001">
+            <div class="invoice-card" id="card-haramain-capture" data-id="haramain-capture" data-month="2026-07" data-amount="600000" data-client="haramain capture aris azhari harahap #inv/hc/2026/001 juli 2026">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Haramain Capture</div>
-                        <span class="status-pill status-locked">PIN PROTECTED</span>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('haramain-capture')">
+                                🟢 LUNAS
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="ref-code">REF: #INV/HC/2026/001</div>
+                    <div class="ref-code">
+                        <span>REF: #INV/HC/2026/001</span>
+                        <span class="month-tag">📅 Juli 2026</span>
+                    </div>
+                    
                     <div class="project-desc">
                         Invoice desain Logo untuk Haramain Capture.
                     </div>
@@ -933,7 +1131,7 @@
                         <div class="amount-val-container">
                             <span id="amountValHaramainCapture" class="amount-val masked">Rp *********</span>
                             <button id="toggleBtnHaramainCapture" class="toggle-eye-btn" onclick="togglePriceVisibility('haramain-capture')">
-                                Tampilkan
+                                👁️ Tampilkan
                             </button>
                         </div>
                     </div>
@@ -945,14 +1143,22 @@
             </div>
 
             <!-- Abdurrahman Ja'far Muhammad Card -->
-            <div class="invoice-card" data-client="abdurrahman ja'far muhammad voa mesir egyptair #inv/ajm/2026/002">
+            <div class="invoice-card" id="card-abdurrahman" data-id="abdurrahman" data-month="2026-08" data-amount="13800000" data-client="abdurrahman ja'far muhammad voa mesir egyptair temantiket #inv/ajm/2026/002 agustus 2026">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Abdurrahman J.M.</div>
-                        <span class="status-pill status-locked">🔒 PIN PROTECTED</span>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('abdurrahman')">
+                                🟢 LUNAS
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="ref-code">REF: #INV/AJM/2026/002</div>
+                    <div class="ref-code">
+                        <span>REF: #INV/AJM/2026/002</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
                     <div class="project-desc">
                         Visa on Arrival (VOA) Mesir ($270 USD - Penerbitan, OK to Board, Jasa Mandub, & Uber ke Nasr City) & Tiket Pesawat One Way EgyptAir.
                     </div>
@@ -970,7 +1176,7 @@
                         <div class="amount-val-container">
                             <span id="amountValAbdurrahman" class="amount-val masked">Rp *********</span>
                             <button id="toggleBtnAbdurrahman" class="toggle-eye-btn" onclick="togglePriceVisibility('abdurrahman')">
-                                Tampilkan
+                                👁️ Tampilkan
                             </button>
                         </div>
                     </div>
@@ -982,14 +1188,18 @@
             </div>
 
             <!-- Master Template Card -->
-            <div class="invoice-card" data-client="master template #inv/template/001">
+            <div class="invoice-card" id="card-template" data-id="template" data-month="none" data-amount="0" data-client="master template #inv/template/001">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Master Template</div>
-                        <span class="status-pill status-template">📋 REUSABLE</span>
+                        <span class="payment-status-pill" style="background:#ffffff; color:#000000; cursor:default;">📋 REUSABLE</span>
                     </div>
 
-                    <div class="ref-code">REF: #INV/TEMPLATE/001</div>
+                    <div class="ref-code">
+                        <span>REF: #INV/TEMPLATE/001</span>
+                        <span class="month-tag">Master Berkas</span>
+                    </div>
+
                     <div class="project-desc">
                         Template Standar Invoice Klien Reusable. Siap Di-clone Untuk Pembuatan Invoice Proyek Klien Baru.
                     </div>
@@ -1018,7 +1228,7 @@
                 <div class="dev-avatar">D</div>
                 <div>
                     <div class="dev-name">Daru Fahmaa Muliawan</div>
-                    <div class="dev-title">Web Developer & Logo Designer &bull; Kota Tangerang, Banten</div>
+                    <div class="dev-title">Temantiket Travel Agent &bull; Kota Tangerang, Banten</div>
                 </div>
             </div>
 
@@ -1035,46 +1245,180 @@
 
     <script>
         let isPriceUnlocked = sessionStorage.getItem("dashboard_prices_unlocked") === "true";
+        let activeMonthFilter = "all";
+
+        // Initial Payment Statuses (Loaded from localStorage or default)
+        // Default: markaz, dreammecca, haramain-capture, abdurrahman are default PAID unless changed
+        const paymentStatuses = {
+            markaz: localStorage.getItem("status_markaz") || "PAID",
+            dreammecca: localStorage.getItem("status_dreammecca") || "PAID",
+            "haramain-capture": localStorage.getItem("status_haramain-capture") || "PAID",
+            abdurrahman: localStorage.getItem("status_abdurrahman") || "PAID"
+        };
+
+        const invoiceItems = [
+            { id: "markaz", month: "2026-07", monthLabel: "Juli 2026", amount: 8500000, unformatted: "8.500.000" },
+            { id: "dreammecca", month: "2026-07", monthLabel: "Juli 2026", amount: 700000, unformatted: "700.000" },
+            { id: "haramain-capture", month: "2026-07", monthLabel: "Juli 2026", amount: 600000, unformatted: "600.000" },
+            { id: "abdurrahman", month: "2026-08", monthLabel: "Agustus 2026", amount: 13800000, unformatted: "13.800.000" }
+        ];
+
+        function formatIDR(num) {
+            return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Toggle payment status between PAID and UNPAID
+        function togglePaymentStatus(id) {
+            const current = paymentStatuses[id] || "UNPAID";
+            const next = current === "PAID" ? "UNPAID" : "PAID";
+            paymentStatuses[id] = next;
+            localStorage.setItem("status_" + id, next);
+            
+            updatePaymentBadges();
+            calculateFinancials();
+            showToast("STATUS PEMBAYARAN DIUBAH MENJADI: " + (next === "PAID" ? "LUNAS" : "BELUM LUNAS"));
+        }
+
+        function updatePaymentBadges() {
+            invoiceItems.forEach(item => {
+                const card = document.getElementById("card-" + item.id);
+                if (!card) return;
+                const pill = card.querySelector(".payment-status-pill");
+                if (!pill) return;
+
+                const status = paymentStatuses[item.id] || "UNPAID";
+                if (status === "PAID") {
+                    pill.className = "payment-status-pill status-paid";
+                    pill.innerHTML = "🟢 LUNAS";
+                } else {
+                    pill.className = "payment-status-pill status-unpaid";
+                    pill.innerHTML = "🔴 BELUM LUNAS";
+                }
+            });
+        }
+
+        // Calculate KPI Financial Totals and Render Monthly Revenue Report
+        function calculateFinancials() {
+            let totalPaid = 0;
+            let totalUnpaid = 0;
+            let totalGrand = 0;
+
+            const monthlyMap = {};
+
+            invoiceItems.forEach(item => {
+                const isPaid = paymentStatuses[item.id] === "PAID";
+                const isVisibleByMonth = (activeMonthFilter === "all" || activeMonthFilter === item.month);
+
+                if (isVisibleByMonth) {
+                    totalGrand += item.amount;
+                    if (isPaid) {
+                        totalPaid += item.amount;
+                    } else {
+                        totalUnpaid += item.amount;
+                    }
+                }
+
+                // Global Monthly Aggregation for Report Table
+                if (!monthlyMap[item.month]) {
+                    monthlyMap[item.month] = { label: item.monthLabel, paidTotal: 0, paidCount: 0, unpaidCount: 0 };
+                }
+
+                if (isPaid) {
+                    monthlyMap[item.month].paidTotal += item.amount;
+                    monthlyMap[item.month].paidCount += 1;
+                } else {
+                    monthlyMap[item.month].unpaidCount += 1;
+                }
+            });
+
+            // Update KPI Card Texts
+            document.getElementById("statPaidTotal").innerText = formatIDR(totalPaid);
+            document.getElementById("statUnpaidTotal").innerText = formatIDR(totalUnpaid);
+            document.getElementById("statGrandTotal").innerText = formatIDR(totalGrand);
+
+            // Render Monthly Report Table
+            const tbody = document.getElementById("revenueReportBody");
+            let tableHTML = "";
+            let sumReportPaid = 0;
+
+            Object.keys(monthlyMap).sort().forEach(mKey => {
+                const row = monthlyMap[mKey];
+                sumReportPaid += row.paidTotal;
+                tableHTML += `
+                    <tr>
+                        <td>📅 ${row.label}</td>
+                        <td style="color: var(--color-paid); font-weight: 700;">${row.paidCount} Invoice Lunas</td>
+                        <td style="color: var(--color-unpaid); font-weight: 700;">${row.unpaidCount} Pending</td>
+                        <td style="text-align: right; color: var(--color-paid); font-weight: 700;">${formatIDR(row.paidTotal)}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                <tr class="grand-row">
+                    <td>TOTAL PENDAPATAN BERSIH TERIMA (PAID REVENUE)</td>
+                    <td colspan="2" style="color: var(--text-dim); font-size: 0.76rem;">Semua Transaksi Terkonfirmasi Lunas</td>
+                    <td style="text-align: right; color: var(--color-paid); font-size: 1.15rem;">${formatIDR(sumReportPaid)}</td>
+                </tr>
+            `;
+
+            tbody.innerHTML = tableHTML;
+        }
+
+        // Set Month Filter Tab
+        function setMonthFilter(month, btnEl) {
+            activeMonthFilter = month;
+            
+            document.querySelectorAll(".month-pill-btn").forEach(btn => btn.classList.remove("active"));
+            btnEl.classList.add("active");
+
+            filterInvoices();
+            calculateFinancials();
+        }
+
+        // Filter Invoices dynamically by Search Query and Selected Month
+        function filterInvoices() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const cards = document.querySelectorAll(".invoice-card");
+
+            cards.forEach(card => {
+                const cardMonth = card.getAttribute("data-month");
+                const clientData = card.getAttribute("data-client").toLowerCase();
+                
+                const matchesMonth = (activeMonthFilter === "all" || cardMonth === activeMonthFilter || cardMonth === "none");
+                const matchesQuery = clientData.includes(query);
+
+                if (matchesMonth && matchesQuery) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            calculateFinancials();
+        }
 
         function updatePriceUI() {
             const priceTargets = [
-                {
-                    amountEl: document.getElementById("amountValMarkaz"),
-                    toggleBtn: document.getElementById("toggleBtnMarkaz"),
-                    unlockedText: "Rp 8.500.000",
-                    maskedText: "Rp *********"
-                },
-                {
-                    amountEl: document.getElementById("amountValDreammecca"),
-                    toggleBtn: document.getElementById("toggleBtnDreammecca"),
-                    unlockedText: "Rp 700.000",
-                    maskedText: "Rp *********"
-                },
-                {
-                    amountEl: document.getElementById("amountValHaramainCapture"),
-                    toggleBtn: document.getElementById("toggleBtnHaramainCapture"),
-                    unlockedText: "Rp 600.000",
-                    maskedText: "Rp *********"
-                },
-                {
-                    amountEl: document.getElementById("amountValAbdurrahman"),
-                    toggleBtn: document.getElementById("toggleBtnAbdurrahman"),
-                    unlockedText: "Rp 13.800.000",
-                    maskedText: "Rp *********"
-                }
+                { id: "Markaz", amount: "Rp 8.500.000" },
+                { id: "Dreammecca", amount: "Rp 700.000" },
+                { id: "HaramainCapture", amount: "Rp 600.000" },
+                { id: "Abdurrahman", amount: "Rp 13.800.000" }
             ];
 
-            priceTargets.forEach(({ amountEl, toggleBtn, unlockedText, maskedText }) => {
+            priceTargets.forEach(target => {
+                const amountEl = document.getElementById("amountVal" + target.id);
+                const toggleBtn = document.getElementById("toggleBtn" + target.id);
                 if (!amountEl || !toggleBtn) return;
 
                 if (isPriceUnlocked) {
-                    amountEl.innerText = unlockedText;
+                    amountEl.innerText = target.amount;
                     amountEl.classList.remove("masked");
-                    toggleBtn.innerText = "Sembunyikan";
+                    toggleBtn.innerText = "🙈 Sembunyikan";
                 } else {
-                    amountEl.innerText = maskedText;
+                    amountEl.innerText = "Rp *********";
                     amountEl.classList.add("masked");
-                    toggleBtn.innerText = "Tampilkan";
+                    toggleBtn.innerText = "👁️ Tampilkan";
                 }
             });
         }
@@ -1125,22 +1469,9 @@
             }
         });
 
-        // Filter Invoices dynamically
-        function filterInvoices() {
-            const query = document.getElementById("searchInput").value.toLowerCase();
-            const cards = document.querySelectorAll(".invoice-card");
-
-            cards.forEach(card => {
-                const clientData = card.getAttribute("data-client").toLowerCase();
-                if (clientData.includes(query)) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-
-        // Initialize UI state on page load
+        // Initialize state on page load
+        updatePaymentBadges();
+        calculateFinancials();
         updatePriceUI();
 
         function copySlug(url) {
@@ -1242,6 +1573,7 @@ Terima kasih banyak! 😊`;
                 showToast("GAGAL MENYALIN SCRIPT");
             });
         }
+
         function showToast(msg) {
             const toast = document.getElementById("toast");
             toast.innerText = msg;
