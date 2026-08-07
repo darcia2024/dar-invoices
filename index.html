@@ -944,6 +944,43 @@
                 </a>
             </div>
 
+            <!-- Abdurrahman Ja'far Muhammad Card -->
+            <div class="invoice-card" data-client="abdurrahman ja'far muhammad voa mesir egyptair #inv/ajm/2026/002">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Abdurrahman J.M.</div>
+                        <span class="status-pill status-locked">🔒 PIN PROTECTED</span>
+                    </div>
+
+                    <div class="ref-code">REF: #INV/AJM/2026/002</div>
+                    <div class="project-desc">
+                        Visa on Arrival (VOA) Mesir ($270 USD) & Tiket Pesawat One Way EgyptAir.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/abdurrahman</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/abdurrahman')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptAbdurrahman()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <div class="amount-box">
+                        <span class="amount-label">TOTAL</span>
+                        <div class="amount-val-container">
+                            <span id="amountValAbdurrahman" class="amount-val masked">Rp *********</span>
+                            <button id="toggleBtnAbdurrahman" class="toggle-eye-btn" onclick="togglePriceVisibility('abdurrahman')">
+                                Tampilkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/abdurrahman" class="action-btn">
+                    <span>[ BUKA INVOICE ABDURRAHMAN ]</span>
+                </a>
+            </div>
+
             <!-- Master Template Card -->
             <div class="invoice-card" data-client="master template #inv/template/001">
                 <div>
@@ -1017,6 +1054,12 @@
                     amountEl: document.getElementById("amountValHaramainCapture"),
                     toggleBtn: document.getElementById("toggleBtnHaramainCapture"),
                     unlockedText: "Rp 600.000",
+                    maskedText: "Rp *********"
+                },
+                {
+                    amountEl: document.getElementById("amountValAbdurrahman"),
+                    toggleBtn: document.getElementById("toggleBtnAbdurrahman"),
+                    unlockedText: "Rp 13.350.000",
                     maskedText: "Rp *********"
                 }
             ];
@@ -1169,6 +1212,30 @@ Terima kasih.`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA HARAMAIN CAPTURE BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptAbdurrahman() {
+            const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Mas Abdurrahman. 🙏✨
+
+Berikut tautan dokumen resmi Invoice Visa on Arrival (VOA) Mesir & Tiket Pesawat EgyptAir:
+
+🔗 Invoice Online: https://dar-invoices.vercel.app/abdurrahman
+🔑 Kode PIN Akses: 0001
+
+Rincian:
+- Visa on Arrival (VOA) Mesir ($270 USD): Rp 4.374.000
+- Tiket Pesawat One Way EgyptAir: Rp 8.976.000
+
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+Total (Net Investment): Rp 13.350.000
+
+Terima kasih banyak! 😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA ABDURRAHMAN BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
