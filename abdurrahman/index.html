@@ -671,6 +671,151 @@
             color: var(--navy-primary);
         }
 
+        /* Flight Itinerary Ticket Section Styling */
+        .flight-itinerary-box {
+            margin-top: 14px;
+            margin-bottom: 16px;
+            background: #f4efdf;
+            border: 1.5px solid var(--border-navy);
+            border-radius: 4px;
+            padding: 14px 18px;
+        }
+
+        .flight-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-navy);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        .flight-badge {
+            font-family: var(--font-sora);
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .flight-status-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            background: #0f2b5c;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 2px;
+            letter-spacing: 0.1em;
+        }
+
+        .passenger-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed rgba(15, 43, 92, 0.2);
+        }
+
+        .passenger-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--navy-light);
+            margin-bottom: 2px;
+        }
+
+        .passenger-val {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        .flight-timeline-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+        }
+
+        .flight-node {
+            flex: 1;
+        }
+
+        .flight-node.text-right {
+            text-align: right;
+        }
+
+        .flight-time {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            line-height: 1;
+        }
+
+        .time-tz {
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: var(--navy-light);
+        }
+
+        .flight-airport-code {
+            font-family: var(--font-sora);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-top: 4px;
+        }
+
+        .flight-airport-name {
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: var(--navy-light);
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+
+        .flight-arrow-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 6px;
+        }
+
+        .flight-arrow-line {
+            width: 80px;
+            border-top: 2px dashed var(--navy-primary);
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .plane-icon {
+            position: absolute;
+            top: -10px;
+            left: 32px;
+            font-size: 0.8rem;
+        }
+
+        .flight-duration-tag {
+            font-size: 0.62rem;
+            color: var(--navy-light);
+            white-space: nowrap;
+        }
+
+        .flight-copy-row {
+            margin-top: 8px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
         /* Toast Component */
         .toast {
             position: fixed;
@@ -1140,6 +1285,59 @@
                     </div>
                 </div>
 
+                <!-- RINCIAN INFORMASI PENERBANGAN (EGYPTAIR FLIGHT ITINERARY) -->
+                <div class="flight-itinerary-box">
+                    <div class="flight-header-row">
+                        <div class="flight-badge">
+                            <span>✈️</span> FLIGHT ITINERARY &bull; EGYPTAIR (ONE WAY)
+                        </div>
+                        <div class="flight-status-tag">CONFIRMED</div>
+                    </div>
+
+                    <div class="passenger-meta-grid">
+                        <div>
+                            <div class="passenger-label">PASSENGER NAME / NAMA PENUMPANG</div>
+                            <div class="passenger-val">Abdurrahman Jafar Muhammad</div>
+                        </div>
+                        <div>
+                            <div class="passenger-label">AIRLINE / MASKAPAI</div>
+                            <div class="passenger-val">EgyptAir (MS) &bull; Economy Class</div>
+                        </div>
+                    </div>
+
+                    <!-- Flight Timeline Grid -->
+                    <div class="flight-timeline-grid">
+                        <!-- Departure -->
+                        <div class="flight-node">
+                            <div class="flight-time">00.50 <span class="time-tz">WIB</span></div>
+                            <div class="flight-airport-code">CGK &bull; JAKARTA</div>
+                            <div class="flight-airport-name">Bandar Udara Internasional Soekarno-Hatta (Terminal 3)</div>
+                        </div>
+
+                        <!-- Flight Arrow Divider -->
+                        <div class="flight-arrow-col">
+                            <div class="flight-arrow-line">
+                                <span class="plane-icon">✈️</span>
+                            </div>
+                            <div class="flight-duration-tag">Penerbangan Langsung</div>
+                        </div>
+
+                        <!-- Arrival -->
+                        <div class="flight-node text-right">
+                            <div class="flight-time">07.25 <span class="time-tz">CLT</span></div>
+                            <div class="flight-airport-code">CAI &bull; KAIRO</div>
+                            <div class="flight-airport-name">Bandar Udara Internasional Kairo (Terminal 3)</div>
+                        </div>
+                    </div>
+
+                    <div class="flight-copy-row">
+                        <button class="copy-pill-btn" style="padding: 6px 14px; font-size: 0.72rem; background: #0f2b5c; color: #ffffff;" onclick="copyFlightInfo()">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Salin Rincian Penerbangan (WA)
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Bottom Section: Payments (Left) & Issuer & Contact (Right) -->
@@ -1251,6 +1449,27 @@
             setTimeout(() => {
                 window.print();
             }, 300);
+        }
+
+        function copyFlightInfo() {
+            const flightText = `✈️ RINCIAN JADWAL PENERBANGAN EGYPTAIR:
+
+👤 Penumpang: Abdurrahman Jafar Muhammad
+✈️ Maskapai: EgyptAir (One Way)
+
+🛫 KEBERANGKATAN:
+00.50 WIB — CGK Jakarta (Bandar Udara Internasional Soekarno-Hatta T3)
+
+🛬 KEDATANGAN:
+07.25 CLT — CAI Kairo (Bandar Udara Internasional Kairo T3)
+
+🔗 Detail Dokumen Invoice: https://dar-invoices.vercel.app/abdurrahman`;
+
+            navigator.clipboard.writeText(flightText).then(() => {
+                showToast("Rincian Jadwal Penerbangan berhasil disalin!");
+            }).catch(() => {
+                showToast("Silakan salin manual rincian penerbangan.");
+            });
         }
 
         function copyBankAcc() {
