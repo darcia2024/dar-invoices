@@ -861,32 +861,97 @@
             }
         }
 
+        /* PDF rendering capture helper class */
+        body.pdf-rendering .invoice-container {
+            width: 794px !important;
+            max-width: 794px !important;
+            min-height: 1060px !important;
+            height: auto !important;
+            margin: 0 auto !important;
+            flex-direction: row !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            background-color: var(--paper-cream) !important;
+        }
+
+        body.pdf-rendering .sidebar-left {
+            width: 120px !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            padding: 30px 15px !important;
+            border-right: 1.5px solid var(--border-navy) !important;
+            border-bottom: none !important;
+            background-color: #efeadf !important;
+        }
+
+        body.pdf-rendering .vertical-invoice-title {
+            writing-mode: vertical-rl !important;
+            transform: rotate(180deg) !important;
+            font-size: 3.5rem !important;
+        }
+
+        body.pdf-rendering .vertical-brand-name {
+            writing-mode: vertical-rl !important;
+            transform: rotate(180deg) !important;
+            font-size: 1.5rem !important;
+        }
+
+        body.pdf-rendering .main-panel {
+            padding: 30px 36px !important;
+        }
+
+        body.pdf-rendering .bottom-section-grid {
+            flex-direction: row !important;
+        }
+
+        body.pdf-rendering .bottom-section-grid > div:last-child {
+            text-align: right !important;
+        }
+
+        body.pdf-rendering .copy-pill-btn {
+            display: none !important;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
         /* Print Media Styles */
         @media print {
-            body {
-                background-color: #ffffff;
-                padding: 0;
+            html, body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
-            .cover-overlay {
-                display: none !important;
-            }
-
-            .action-bar, .toast {
+            .cover-overlay, .action-bar, .toast, .copy-pill-btn, #pinModal {
                 display: none !important;
             }
 
             .invoice-container {
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-                border-radius: 0;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
                 flex-direction: row !important;
-                min-height: 850px !important;
+                box-sizing: border-box !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
             }
 
             .sidebar-left {
-                width: 140px !important;
+                width: 120px !important;
                 flex-direction: column !important;
                 justify-content: space-between !important;
                 border-right: 1px solid var(--border-navy) !important;
@@ -1184,67 +1249,10 @@
         });
 
         function downloadPDF() {
-            showToast("MENGENERASI PDF (PAS 1 HALAMAN A4)...");
+            showToast("MENGENERASI PDF (1 HALAMAN A4)...");
             
+            document.body.classList.add('pdf-rendering');
             const element = document.querySelector('.invoice-container');
-            const clone = element.cloneNode(true);
-            
-            const wrapper = document.createElement('div');
-            wrapper.style.position = 'absolute';
-            wrapper.style.left = '-9999px';
-            wrapper.style.top = '-9999px';
-            wrapper.style.width = '794px';
-            wrapper.style.height = '1120px';
-            wrapper.style.background = '#f6f2e9';
-            
-            clone.style.width = '794px';
-            clone.style.height = '1120px';
-            clone.style.maxWidth = '794px';
-            clone.style.maxHeight = '1120px';
-            clone.style.margin = '0';
-            clone.style.boxShadow = 'none';
-            clone.style.borderRadius = '0';
-            clone.style.flexDirection = 'row';
-            
-            // Hide buttons in clone
-            clone.querySelectorAll('.copy-pill-btn').forEach(btn => btn.style.display = 'none');
-            
-            // Ensure vertical sidebar alignment in clone
-            const sidebar = clone.querySelector('.sidebar-left');
-            if (sidebar) {
-                sidebar.style.width = '130px';
-                sidebar.style.flexDirection = 'column';
-                sidebar.style.justifyContent = 'space-between';
-                sidebar.style.padding = '35px 15px';
-                sidebar.style.borderRight = '1.5px solid #0f2b5c';
-                sidebar.style.borderBottom = 'none';
-                sidebar.style.background = '#efeadf';
-            }
-            const sidebarTitle = clone.querySelector('.vertical-invoice-title');
-            if (sidebarTitle) {
-                sidebarTitle.style.writingMode = 'vertical-rl';
-                sidebarTitle.style.transform = 'rotate(180deg)';
-                sidebarTitle.style.fontSize = '3.8rem';
-            }
-            const sidebarBrand = clone.querySelector('.vertical-brand-name');
-            if (sidebarBrand) {
-                sidebarBrand.style.writingMode = 'vertical-rl';
-                sidebarBrand.style.transform = 'rotate(180deg)';
-                sidebarBrand.style.fontSize = '1.6rem';
-            }
-            const mainPanel = clone.querySelector('.main-panel');
-            if (mainPanel) {
-                mainPanel.style.padding = '35px 40px';
-            }
-            const bottomGrid = clone.querySelector('.bottom-section-grid');
-            if (bottomGrid) {
-                bottomGrid.style.flexDirection = 'row';
-                const rightChild = bottomGrid.querySelector('div:last-child');
-                if (rightChild) rightChild.style.textAlign = 'right';
-            }
-
-            wrapper.appendChild(clone);
-            document.body.appendChild(wrapper);
             
             const opt = {
                 margin: 0,
@@ -1254,21 +1262,22 @@
                     scale: 2, 
                     useCORS: true, 
                     logging: false,
-                    windowWidth: 794
+                    scrollX: 0,
+                    scrollY: 0
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             if (typeof html2pdf !== 'undefined') {
-                html2pdf().set(opt).from(clone).save().then(() => {
-                    document.body.removeChild(wrapper);
+                html2pdf().set(opt).from(element).save().then(() => {
+                    document.body.classList.remove('pdf-rendering');
                     showToast("DOWNLOAD PDF 1 HALAMAN BERHASIL!");
                 }).catch(err => {
-                    document.body.removeChild(wrapper);
+                    document.body.classList.remove('pdf-rendering');
                     window.print();
                 });
             } else {
-                document.body.removeChild(wrapper);
+                document.body.classList.remove('pdf-rendering');
                 window.print();
             }
         }
