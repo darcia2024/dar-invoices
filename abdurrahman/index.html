@@ -810,6 +810,37 @@
             white-space: nowrap;
         }
 
+        .baggage-allowance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-top: 1px dashed rgba(15, 43, 92, 0.2);
+            background: rgba(15, 43, 92, 0.04);
+            border-radius: 3px;
+        }
+
+        .baggage-item {
+            text-align: center;
+        }
+
+        .baggage-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--navy-light);
+            margin-bottom: 2px;
+        }
+
+        .baggage-val {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
         .flight-copy-row {
             margin-top: 8px;
             display: flex;
@@ -1330,6 +1361,22 @@
                         </div>
                     </div>
 
+                    <!-- Baggage Allowance Grid -->
+                    <div class="baggage-allowance-grid">
+                        <div class="baggage-item">
+                            <div class="baggage-label">🎒 BARANG PRIBADI (RANSEL)</div>
+                            <div class="baggage-val">1 x 2 kg</div>
+                        </div>
+                        <div class="baggage-item">
+                            <div class="baggage-label">🧳 BAGASI KABIN (KOPER KECIL)</div>
+                            <div class="baggage-val">1 x 8 kg</div>
+                        </div>
+                        <div class="baggage-item">
+                            <div class="baggage-label">🧳 BAGASI TERDAFTAR (KOPER BESAR)</div>
+                            <div class="baggage-val">1 x 23 kg</div>
+                        </div>
+                    </div>
+
                     <div class="flight-copy-row">
                         <button class="copy-pill-btn" style="padding: 6px 14px; font-size: 0.72rem; background: #0f2b5c; color: #ffffff;" onclick="copyFlightInfo()">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1463,10 +1510,15 @@
 🛬 KEDATANGAN:
 07.25 CLT — CAI Kairo (Bandar Udara Internasional Kairo T3)
 
+🎒 KETENTUAN ELAUAN BAGASI:
+- Barang Pribadi (Ransel): 1 x 2 kg
+- Bagasi Kabin (Koper Kecil): 1 x 8 kg
+- Bagasi Terdaftar (Koper Besar): 1 x 23 kg
+
 🔗 Detail Dokumen Invoice: https://dar-invoices.vercel.app/abdurrahman`;
 
             navigator.clipboard.writeText(flightText).then(() => {
-                showToast("Rincian Jadwal Penerbangan berhasil disalin!");
+                showToast("Rincian Penerbangan & Bagasi berhasil disalin!");
             }).catch(() => {
                 showToast("Silakan salin manual rincian penerbangan.");
             });
