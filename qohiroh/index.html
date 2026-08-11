@@ -8,7 +8,7 @@
     <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -20,10 +20,8 @@
             --text-dark: #1c1917;
             --text-muted: #57534e;
             --border-navy: #0f2b5c;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --font-title: 'Cinzel', serif;
             --font-sora: 'Sora', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-mono: 'Space Mono', monospace;
         }
 
         * {
@@ -34,13 +32,15 @@
 
         body {
             background-color: #0d1117;
-            font-family: var(--font-main);
+            font-family: var(--font-sora);
+            font-weight: 300;
             color: var(--text-dark);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* PASSCODE OVERLAY STYLING */
@@ -103,7 +103,7 @@
         }
 
         .cover-title {
-            font-family: var(--font-title);
+            font-family: var(--font-sora);
             color: #ffffff;
             font-size: 1.4rem;
             font-weight: 700;
@@ -254,7 +254,7 @@
         .btn {
             padding: 8px 16px;
             border-radius: 6px;
-            font-family: var(--font-main);
+            font-family: var(--font-sora);
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
@@ -313,7 +313,7 @@
         .vertical-invoice-title {
             writing-mode: vertical-rl;
             transform: rotate(180deg);
-            font-family: var(--font-title);
+            font-family: var(--font-sora);
             font-size: 4.2rem;
             font-weight: 800;
             color: var(--navy-primary);
@@ -613,7 +613,7 @@
             padding: 3px 8px;
             border-radius: 3px;
             font-size: 0.68rem;
-            font-family: var(--font-main);
+            font-family: var(--font-sora);
             font-weight: 600;
             cursor: pointer;
             margin-left: 6px;
