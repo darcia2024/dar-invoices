@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penawaran & Invoice — Qohiroh Digital Ecosystem Phase 1 | Qohiroh Center</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-cream: #faf7f2;
+            --card-cream: #f4efdf;
+            --navy-primary: #0f2b5c;
+            --navy-dark: #091a3a;
+            --navy-light: #1e3a8a;
+            --text-dark: #1c1917;
+            --text-muted: #57534e;
+            --border-navy: #0f2b5c;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-title: 'Cinzel', serif;
+            --font-sora: 'Sora', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0d1117;
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* PASSCODE OVERLAY STYLING */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #090d16;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.3s ease;
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .cover-card {
+            background: #141b2d;
+            border: 1px solid #1e293b;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            max-width: 460px;
+            width: 100%;
+            padding: 36px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cover-top-barcode {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: #64748b;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #ef4444;
+            color: #ef4444;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            transform: rotate(-2deg);
+        }
+
+        .cover-title {
+            font-family: var(--font-title);
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .cover-subtitle {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            margin-bottom: 24px;
+        }
+
+        .classified-line-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #334155, transparent);
+            margin: 20px 0;
+        }
+
+        .cover-recipient-box {
+            background: #0f172a;
+            border: 1px dashed #334155;
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .cover-recipient-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .cover-recipient-name {
+            font-weight: 700;
+            color: #f8fafc;
+            font-size: 0.95rem;
+        }
+
+        .cover-recipient-org {
+            font-size: 0.78rem;
+            color: #38bdf8;
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .passcode-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .passcode-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .passcode-input {
+            width: 100%;
+            background: #090d16;
+            border: 1.5px solid #334155;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            color: #38bdf8;
+            text-align: center;
+            letter-spacing: 0.4em;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+
+        .passcode-error {
+            color: #f87171;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            margin-top: 6px;
+            display: none;
+        }
+
+        .cover-open-btn {
+            width: 100%;
+            background: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: var(--font-sora);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cover-open-btn:hover {
+            background: #0369a1;
+        }
+
+        /* WEB TOP CONTROL BAR */
+        .action-bar {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #161b22;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+        }
+
+        .action-title {
+            color: #c9d1d9;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #238636;
+            border-radius: 50%;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: var(--font-main);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #238636;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #2ea043;
+        }
+
+        .btn-secondary {
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+        }
+
+        .btn-secondary:hover {
+            background: #30363d;
+        }
+
+        /* INVOICE PAPER CONTAINER (MARGARITA PEREZ ARCHITECTURE) */
+        .invoice-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--bg-cream);
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            border: 1.5px solid var(--border-navy);
+            position: relative;
+        }
+
+        /* Sidebar Kiri - Accent Vertical Text */
+        .sidebar-left {
+            width: 130px;
+            background-color: #efeadf;
+            border-right: 1.5px solid var(--border-navy);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 35px 20px;
+            user-select: none;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-title);
+            font-size: 4.2rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            opacity: 0.95;
+        }
+
+        .vertical-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vertical-brand-name {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-sora);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Main Panel Right */
+        .main-panel {
+            flex: 1;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--bg-cream);
+        }
+
+        .top-left-meta {
+            margin-bottom: 24px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-sora);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .inv-date-label {
+            font-size: 0.76rem;
+            color: var(--navy-light);
+            margin-top: 2px;
+        }
+
+        .billed-to-box {
+            margin-top: 14px;
+        }
+
+        .billed-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--navy-light);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .billed-content {
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            line-height: 1.45;
+        }
+
+        .billed-content strong {
+            color: var(--navy-primary);
+            font-size: 1rem;
+        }
+
+        /* Table Line Items */
+        .table-area {
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .margarita-table th {
+            font-family: var(--font-sora);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            border-bottom: 1.5px solid var(--border-navy);
+            padding: 8px 4px;
+            text-align: left;
+        }
+
+        .margarita-table th.col-subtotal {
+            text-align: right;
+        }
+
+        .margarita-table td {
+            padding: 10px 4px;
+            border-bottom: 1px solid rgba(15, 43, 92, 0.15);
+            font-size: 0.82rem;
+            vertical-align: top;
+        }
+
+        .margarita-table td.col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--navy-primary);
+            white-space: nowrap;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            font-size: 0.88rem;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list {
+            margin-left: 14px;
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            line-height: 1.4;
+        }
+
+        .bullet-list li {
+            margin-bottom: 2px;
+        }
+
+        .table-totals-row td {
+            border-bottom: none;
+            padding-top: 14px;
+        }
+
+        .table-totals-row.grand-total td {
+            font-family: var(--font-sora);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            border-top: 2px solid var(--border-navy);
+            padding-top: 10px;
+        }
+
+        /* PAYMENT TERMINS GRID */
+        .termin-box {
+            background: #f4efdf;
+            border: 1.5px solid var(--border-navy);
+            border-radius: 4px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+        }
+
+        .termin-title {
+            font-family: var(--font-sora);
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-navy);
+            padding-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .termin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .termin-card {
+            background: rgba(15, 43, 92, 0.04);
+            border: 1px solid rgba(15, 43, 92, 0.2);
+            border-radius: 3px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .termin-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--navy-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        .termin-amount {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 2px;
+        }
+
+        .termin-desc {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            line-height: 1.25;
+        }
+
+        /* INCLUDED & EXCLUDED SCOPE BOX */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .scope-card {
+            background: #f4efdf;
+            border: 1px solid var(--border-navy);
+            border-radius: 4px;
+            padding: 12px 14px;
+        }
+
+        .scope-card-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .scope-card-title.inc {
+            color: #047857;
+        }
+
+        .scope-card-title.exc {
+            color: #b91c1c;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 3px;
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding-top: 14px;
+            border-top: 1.5px solid var(--border-navy);
+        }
+
+        .bottom-block-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--navy-light);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .bottom-block-content {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            line-height: 1.45;
+        }
+
+        .domain-link {
+            color: var(--navy-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .copy-pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.68rem;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--navy-light);
+        }
+
+        .terms-container {
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-navy);
+            font-size: 0.7rem;
+            color: var(--navy-light);
+            line-height: 1.4;
+        }
+
+        .terms-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* PRINT & PDF PRESERVATION */
+        @media print {
+            html, body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .cover-overlay, .action-bar, .toast, .copy-pill-btn {
+                display: none !important;
+            }
+
+            .invoice-container {
+                width: 210mm !important;
+                height: 297mm !important;
+                max-width: 210mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                display: flex !important;
+                flex-direction: row !important;
+                box-sizing: border-box !important;
+            }
+
+            .sidebar-left {
+                width: 125px !important;
+                background-color: #efeadf !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .main-panel {
+                padding: 24px 30px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PASSCODE SECURITY COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="cover-top-barcode">// CONFIDENTIAL DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
+            <div class="classified-stamp">OFFICIAL PROPOSAL & INVOICE</div>
+
+            <h1 class="cover-title">DOKUMEN PENAWARAN RESMI</h1>
+            <div class="cover-subtitle">Qohiroh Digital Ecosystem — Phase 1</div>
+            
+            <div class="classified-line-divider"></div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Ust. Muhamad Iqbal, Lc</div>
+                <div class="cover-recipient-org">Pimpinan Qohiroh Center</div>
+                <div class="cover-inv-num">REF CODE: #INV/QC/2026/001</div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <span>[ BUKA DOKUMEN RAHASIA ]</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Control Bar -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> PROPOSAL & INVOICE #INV/QC/2026/001
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" style="background:#047857;" onclick="downloadPDF()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download / Simpan PDF (A4)
+            </button>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Printable Paper Container -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Accent -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">proposal</div>
+            <div class="vertical-text-wrapper">
+                <div class="vertical-brand-name">Temantiket</div>
+            </div>
+        </div>
+
+        <!-- Main Panel Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Top Left Meta -->
+                <div class="top-left-meta">
+                    <div class="inv-num-label">Proposal & Invoice No. #INV/QC/2026/001</div>
+                    <div class="inv-date-label">11th August, 2026</div>
+
+                    <div class="billed-to-box">
+                        <div class="billed-title">CLIENT & RECIPIENT // DITUJUKAN KEPADA:</div>
+                        <div class="billed-content">
+                            <strong>Ust. Muhamad Iqbal, Lc</strong><br>
+                            Pimpinan Qohiroh Center<br>
+                            Project: <strong>Qohiroh Digital Ecosystem — Phase 1</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>RINCIAN SCOPE PEKERJAAN (SCOPE OF WORK)</th>
+                                <th class="col-subtotal">NILAI (IDR)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ITEM 1 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">1. Qohiroh Public (Website Publik Terintegrasi)</div>
+                                    <ul class="bullet-list">
+                                        <li>Homepage, Profil Qohiroh Center, Informasi Program, & Fasilitas</li>
+                                        <li>Galeri Foto/Video, Testimoni, FAQ, Kontak & WhatsApp Direct Link</li>
+                                        <li>Desain Responsive Modern (Mobile, Tablet, Desktop)</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">Rp 2.000.000</td>
+                            </tr>
+
+                            <!-- ITEM 2 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">2. Online Admission System (Sistem Pendaftaran Santri Online)</div>
+                                    <ul class="bullet-list">
+                                        <li>Form Pendaftaran Santri Online & Pengumpulan Data Calon Santri</li>
+                                        <li>Modul Upload Dokumen (Ijazah, KK, Pasfoto, Berkas Persyaratan)</li>
+                                        <li>Portal Cek Status Pendaftaran & Pengelolaan Data via Admin Panel</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">Rp 2.500.000</td>
+                            </tr>
+
+                            <!-- ITEM 3 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">3. Qohiroh Family — Version 1 (Portal Wali Santri)</div>
+                                    <ul class="bullet-list">
+                                        <li>Sistem Login Khusus Wali Santri & Manajemen Profil Santri</li>
+                                        <li>Modul Informasi Kehadiran, Nilai & Perkembangan Belajar Santri</li>
+                                        <li>Catatan Pembimbing, Laporan Perkembangan, Pengumuman & Dokumen Terkait</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">Rp 3.500.000</td>
+                            </tr>
+
+                            <!-- ITEM 4 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">4. Backend, Deployment & Finalization</div>
+                                    <ul class="bullet-list">
+                                        <li>Database Architecture, Authentication, Role & Access Management</li>
+                                        <li>Document Storage, Production Deployment, Testing & Initial Bug Fixing</li>
+                                        <li>Training Penggunaan Sistem & Handover Dokumentasi Sistem</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">Rp 1.500.000</td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td>TOTAL PENAWARAN (PROJECT VALUE)</td>
+                                <td class="col-subtotal">Rp 9.500.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:4px;">
+                        # sembilan juta lima ratus ribu rupiah #
+                    </div>
+                </div>
+
+                <!-- PAYMENT TERMINS GRID -->
+                <div class="termin-box">
+                    <div class="termin-title">
+                        <span>💳 TERMIN PEMBAYARAN (PAYMENT MILESTONES)</span>
+                        <span style="font-size:0.65rem; font-weight:400; color:var(--navy-light);">Total: Rp 9.500.000</span>
+                    </div>
+                    <div class="termin-grid">
+                        <div class="termin-card">
+                            <div class="termin-badge">TERMIN 1 (50%)</div>
+                            <div class="termin-amount">Rp 4.750.000</div>
+                            <div class="termin-desc">Dibayarkan saat project dimulai (DP Kickoff)</div>
+                        </div>
+                        <div class="termin-card">
+                            <div class="termin-badge">TERMIN 2 (30%)</div>
+                            <div class="termin-amount">Rp 2.850.000</div>
+                            <div class="termin-desc">Dibayarkan setelah versi beta sistem siap direview</div>
+                        </div>
+                        <div class="termin-card">
+                            <div class="termin-badge">TERMIN 3 (20%)</div>
+                            <div class="termin-amount">Rp 1.900.000</div>
+                            <div class="termin-desc">Dibayarkan setelah finalisasi & sebelum handover</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INCLUDED & EXCLUDED SCOPE -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title inc">
+                            <span>✓</span> TERMASUK (INCLUDED)
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>• UI/UX Implementation & Responsive Web</li>
+                            <li>• Frontend & Backend Development</li>
+                            <li>• Database Setup, Auth & User Roles</li>
+                            <li>• Deployment Production & Testing</li>
+                            <li>• Training System & Maintenance Bug 30 Hari</li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title exc">
+                            <span>✕</span> BELUM TERMASUK (EXCLUDED)
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>• Pembelian Domain & Server/Storage Berbayar</li>
+                            <li>• WhatsApp API / Email / SMS Service Berbayar</li>
+                            <li>• Data Entry Santri Dalam Jumlah Besar</li>
+                            <li>• Scope Phase 2 (Qohiroh Campus)</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section: Payments (Left) & Issuer (Right) -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS & REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="../abdurrahman/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 20px; width: auto; object-fit: contain;">
+                                <strong style="font-size: 0.92rem; color: var(--navy-primary);">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 3px;">
+                                Account Name: <strong>Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px; flex-wrap: nowrap;">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--navy-primary);">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    Salin
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer & Contact -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER & CONTACT</div>
+                        <div class="bottom-block-content">
+                            <strong>Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--navy-primary);">Temantiket Travel Agent & Digital System</strong><br>
+                            <a href="https://voatemantiket.site" target="_blank" rel="noopener noreferrer" class="domain-link">voatemantiket.site</a><br>
+                            WA: 081311506025
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">CATATAN & KETENTUAN PENGEMBANGAN</div>
+                    <div>
+                        • <strong>Phase 2 (Qohiroh Campus):</strong> Dikembangkan sebagai Phase 2 setelah Phase 1 berjalan & kebutuhan operasional akademik divalidasi.<br>
+                        • <strong>Penyesuaian Scope:</strong> Perubahan minor dalam scope disesuaikan saat review. Permintaan fitur baru di luar scope Phase 1 dihitung terpisah.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Component -->
+    <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
+
+    <script>
+        function lockDocument() {
+            document.getElementById("coverOverlay").classList.remove("opened");
+            document.getElementById("passcodeInput").value = "";
+        }
+
+        function verifyPasscode() {
+            const input = document.getElementById("passcodeInput").value.trim();
+            const errorEl = document.getElementById("passcodeError");
+            
+            if (input === "0001") {
+                document.getElementById("coverOverlay").classList.add("opened");
+                errorEl.style.display = "none";
+                document.getElementById("passcodeInput").value = "";
+            } else {
+                errorEl.style.display = "block";
+                const card = document.querySelector(".cover-card");
+                card.classList.add("shake-anim");
+                setTimeout(() => card.classList.remove("shake-anim"), 400);
+            }
+        }
+
+        document.getElementById("passcodeInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyPasscode();
+            }
+        });
+
+        // AUTO RE-LOCK SECURITY
+        window.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                lockDocument();
+            }
+        });
+
+        window.addEventListener("blur", function() {
+            lockDocument();
+        });
+
+        window.addEventListener("pageshow", function(event) {
+            lockDocument();
+        });
+
+        function downloadPDF() {
+            showToast("Membuka dialog Simpan sebagai PDF (A4)...");
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        }
+
+        function copyBankAcc() {
+            const accNo = "1550010616962";
+            navigator.clipboard.writeText(accNo).then(() => {
+                showToast("Nomor Rekening 1550010616962 (Bank Mandiri) disalin!");
+            }).catch(() => {
+                showToast("Silakan salin manual: 1550010616962");
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            toast.innerText = msg;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
