@@ -448,12 +448,29 @@
             vertical-align: top;
         }
 
-        .margarita-table td.col-subtotal {
-            text-align: right;
-            font-family: var(--font-mono);
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.62rem;
+            font-family: var(--font-sora);
             font-weight: 700;
-            color: var(--navy-primary);
-            white-space: nowrap;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-inc {
+            background: rgba(4, 120, 87, 0.08);
+            color: #047857;
+            border: 1px solid rgba(4, 120, 87, 0.2);
+        }
+
+        .status-bonus {
+            background: rgba(180, 83, 9, 0.08);
+            color: #b45309;
+            border: 1px solid rgba(180, 83, 9, 0.2);
         }
 
         .item-title {
@@ -1030,7 +1047,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#e6f4ea; color:#047857; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">TERMASUK</span>
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1044,7 +1064,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#e6f4ea; color:#047857; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">TERMASUK</span>
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1058,7 +1081,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#e6f4ea; color:#047857; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">TERMASUK</span>
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1073,7 +1099,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#e6f4ea; color:#047857; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">TERMASUK</span>
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1086,7 +1115,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#e6f4ea; color:#047857; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">TERMASUK</span>
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1100,7 +1132,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#e6f4ea; color:#047857; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">TERMASUK</span>
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1116,7 +1151,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#fef3c7; color:#b45309; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">BONUS GRATIS</span>
+                                    <span class="status-pill status-bonus">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect></svg>
+                                        BONUS GRATIS
+                                    </span>
                                 </td>
                             </tr>
 
@@ -1133,7 +1171,10 @@
                                     </ul>
                                 </td>
                                 <td class="col-subtotal">
-                                    <span style="display:inline-block; padding:3px 8px; background:#fef3c7; color:#b45309; border-radius:12px; font-size:0.65rem; font-weight:700; letter-spacing:0.04em;">BONUS GRATIS</span>
+                                    <span class="status-pill status-bonus">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect></svg>
+                                        BONUS GRATIS
+                                    </span>
                                 </td>
                             </tr>
 
