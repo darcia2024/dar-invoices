@@ -5,6 +5,7 @@
     { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
     { "source": "/abdurrahman", "destination": "/abdurrahman/index.html" },
     { "source": "/template", "destination": "/template/index.html" },
-    { "source": "/qohiroh", "destination": "/qohiroh/index.html" }
+    { "source": "/qohiroh", "destination": "/qohiroh/index.html" },
+    { "source": "/zaky", "destination": "/zaky/index.html" }
   ]
 }

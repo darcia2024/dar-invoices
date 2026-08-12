@@ -1492,6 +1492,60 @@
                 </a>
             </div>
 
+            <!-- Zaky Fakhru Ar-Rozi Saputra Card -->
+            <div class="invoice-card" id="card-zaky" data-id="zaky" data-month="2026-08" data-amount="600000" data-client="zaky fakhru ar-rozi saputra kampanye landing page zakyforkmb.sbs #inv/zk/2026/006 agustus 2026 600.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Zaky Fakhru Ar-Rozi Saputra</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('zaky')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/ZK/2026/006</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pengembangan Landing Page Kampanye Digital (Profil Calon, Visi-Misi, Form Aspirasi, Direct WA & Domain zakyforkmb.sbs).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/zaky</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/zaky')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptZaky()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 600.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValZaky">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValZaky">Rp 600.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('zaky')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/zaky" class="action-btn">
+                    <span>[ BUKA INVOICE ZAKY FAKHRU ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -1925,6 +1979,32 @@ Jazakallahu Khairan. 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA QOHIROH CENTER BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptZaky() {
+            const waScript = `Halo Mas Zaky Fakhru Ar-Rozi Saputra 👋✨
+
+Berikut dokumen resmi Invoice Pengembangan Landing Page Kampanye Digital (zakyforkmb.sbs):
+
+🔗 Invoice Online: https://dar-invoices.vercel.app/zaky
+🔑 Kode PIN Akses: 0001
+
+Ruang Lingkup Website:
+1. Desain Tampilan Modern & Layout Responsive (HP / Tablet / Desktop)
+2. Profil Calon, Visi-Misi, Program Kerja & Galeri Kegiatan Kampanye
+3. Form Aspirasi Simpatisan & Integrasi Tombol WA Direct
+4. Pendaftaran Domain zakyforkmb.sbs (Gratis 1 Tahun), SSL HTTPS & Peluncuran Web
+
+💰 Total Investasi Pengembangan: Rp 600.000 (Net)
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA ZAKY KAMPANYE BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
