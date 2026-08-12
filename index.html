@@ -1546,6 +1546,60 @@
                 </a>
             </div>
 
+            <!-- Sidi Ifdony Card -->
+            <div class="invoice-card" id="card-sidi" data-id="sidi" data-month="2026-08" data-amount="1000000" data-client="sidi ifdony hamasah bakery hamasah laundry desain logo #inv/sd/2026/007 agustus 2026 1.000.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Sidi Ifdony</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('sidi')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/SD/2026/007</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Desain Identitas Logo (Hamasah Bakery & Hamasah Laundry — File Master Vector AI/EPS, PNG, JPG, PDF & Hak Cipta Penuh).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/sidi</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/sidi')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptSidi()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 1.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValSidi">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValSidi">Rp 1.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('sidi')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/sidi" class="action-btn">
+                    <span>[ BUKA INVOICE SIDI IFDONY ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -2005,6 +2059,31 @@ Terima kasih banyak! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA ZAKY KAMPANYE BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptSidi() {
+            const waScript = `Halo Mas Sidi Ifdony 👋✨
+
+Berikut dokumen resmi Invoice Pengembangan Desain Logo (Hamasah Bakery & Hamasah Laundry):
+
+🔗 Invoice Online: https://dar-invoices.vercel.app/sidi
+🔑 Kode PIN Akses: 0001
+
+Ruang Lingkup Desain Logo:
+1. Desain Logo Utama Hamasah Bakery (Vector High Res, AI/EPS, PNG Transparan, JPG, PDF)
+2. Desain Logo Utama Hamasah Laundry (Vector High Res, AI/EPS, PNG Transparan, JPG, PDF)
+3. Panduan Warna Resmi (Color Palette Guidelines) & Hak Kepemilikan Lisensi Komersial Penuh
+
+💰 Total Investasi Pengembangan: Rp 1.000.000 (Net)
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA SIDI IFDONY BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
