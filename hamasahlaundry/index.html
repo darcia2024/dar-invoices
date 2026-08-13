@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/SD/2026/007 - Sidi Ifdony</title>
+    <!-- Google Fonts: Sora & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #e8e4da;
+            --bg-cream: #f9f6ef;
+            --navy-primary: #0f2b5c;
+            --navy-light: #2c497f;
+            --text-dark: #1e2432;
+            --text-muted: #5a6478;
+            --border-navy: #0f2b5c;
+            --border-light: #d8d3c5;
+            
+            --font-sora: 'Sora', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sora);
+            font-weight: 300;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           CLASSIFIED "RAHASIA NEGARA" TOP SECRET COVER SCREEN
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0d0d0d;
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
+        }
+
+        .cover-card {
+            background-color: #f4f1ea;
+            border: 3px double #000000;
+            border-radius: 2px;
+            max-width: 520px;
+            width: 100%;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            color: #000000;
+            font-family: var(--font-mono);
+        }
+
+        /* Shake animation for invalid PIN */
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #000000;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            transform: rotate(-1.5deg);
+            background: #ffffff;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .cover-title {
+            font-family: var(--font-sora);
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #000000;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .cover-subtitle {
+            font-size: 0.82rem;
+            color: #444444;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .classified-line-divider {
+            height: 1px;
+            background: #000000;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .cover-recipient-box {
+            background: #ffffff;
+            border: 1px solid #000000;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #666666;
+            margin-bottom: 4px;
+        }
+
+        .cover-recipient-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #000000;
+            font-family: var(--font-sora);
+        }
+
+        .cover-recipient-org {
+            font-size: 0.82rem;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: #000000;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .passcode-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .passcode-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .passcode-input {
+            width: 180px;
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            letter-spacing: 0.3em;
+            text-align: center;
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            outline: none;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            box-shadow: 4px 4px 0px #000000;
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .cover-open-btn {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0px #666666;
+        }
+
+        .cover-open-btn:hover {
+            background: #222222;
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .cover-top-barcode {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #555555;
+            margin-bottom: 12px;
+        }
+
+        /* ----------------------------------------------------
+           TOP CONTROL BAR
+        ---------------------------------------------------- */
+        .action-bar {
+            max-width: 210mm;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(15, 43, 92, 0.15);
+        }
+
+        .action-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-family: var(--font-sora);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: var(--navy-primary);
+        }
+
+        .btn-primary:hover {
+            background: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* ----------------------------------------------------
+           MAIN PRINTABLE PAPER INVOICE CONTAINER
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: var(--bg-cream);
+            box-shadow: 0 25px 60px rgba(11, 30, 66, 0.12), inset 0 0 0 1px rgba(11, 30, 66, 0.08);
+            border-radius: 4px;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sidebar Kiri Accent */
+        .sidebar-left {
+            width: 140px;
+            background-color: #efeadf;
+            border-right: 1.5px solid var(--border-navy);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 0;
+            position: relative;
+            user-select: none;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-sora);
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            text-transform: lowercase;
+            position: absolute;
+            top: 40px;
+            right: 28px;
+            opacity: 0.95;
+        }
+
+        .vertical-text-wrapper {
+            position: absolute;
+            bottom: 40px;
+            right: 48px;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            display: flex;
+            gap: 12px;
+        }
+
+        .vertical-brand-name {
+            font-family: var(--font-sora);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            color: var(--navy-primary);
+            text-transform: uppercase;
+        }
+
+        /* Main Panel Right */
+        .main-panel {
+            flex: 1;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--bg-cream);
+        }
+
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .top-left-meta {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-sora);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .inv-date-label {
+            font-size: 0.76rem;
+            color: var(--navy-light);
+            margin-top: 2px;
+        }
+
+        .billed-to-box {
+            margin-top: 14px;
+        }
+
+        .billed-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--navy-light);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .billed-content {
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            line-height: 1.45;
+        }
+
+        .billed-content strong {
+            color: var(--navy-primary);
+            font-size: 1rem;
+        }
+
+        .top-right-logo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .design-badge-pill {
+            background: rgba(15, 43, 92, 0.08);
+            border: 1px solid rgba(15, 43, 92, 0.2);
+            color: var(--navy-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* Table Line Items */
+        .table-area {
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .margarita-table th {
+            font-family: var(--font-sora);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            border-bottom: 1.5px solid var(--border-navy);
+            padding: 8px 4px;
+            text-align: left;
+        }
+
+        .margarita-table th.col-subtotal {
+            text-align: right;
+        }
+
+        .margarita-table td {
+            padding: 10px 4px;
+            border-bottom: 1px solid rgba(15, 43, 92, 0.15);
+            font-size: 0.82rem;
+            vertical-align: top;
+        }
+
+        .margarita-table td.col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--navy-primary);
+            white-space: nowrap;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.62rem;
+            font-family: var(--font-sora);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-inc {
+            background: rgba(4, 120, 87, 0.08);
+            color: #047857;
+            border: 1px solid rgba(4, 120, 87, 0.2);
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            font-size: 0.88rem;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list {
+            margin-left: 14px;
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            line-height: 1.4;
+        }
+
+        .bullet-list li {
+            margin-bottom: 2px;
+        }
+
+        .table-totals-row td {
+            border-bottom: none;
+            padding-top: 14px;
+        }
+
+        .table-totals-row.grand-total td {
+            font-family: var(--font-sora);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            border-top: 2px solid var(--border-navy);
+            padding-top: 10px;
+        }
+
+        /* INCLUDED & HIGHLIGHTS BOX */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .scope-card {
+            background: #f4efdf;
+            border: 1px solid var(--border-navy);
+            border-radius: 4px;
+            padding: 12px 14px;
+        }
+
+        .scope-card-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(15, 43, 92, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--navy-primary);
+        }
+
+        .scope-card-title.inc {
+            color: #047857;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding-top: 14px;
+            border-top: 1.5px solid var(--border-navy);
+        }
+
+        .bottom-block-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--navy-light);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .bottom-block-content {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            line-height: 1.45;
+        }
+
+        .copy-pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.68rem;
+            font-family: var(--font-sora);
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--navy-light);
+        }
+
+        .terms-container {
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-navy);
+            font-size: 0.7rem;
+            color: var(--navy-light);
+            line-height: 1.4;
+        }
+
+        .terms-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ====================================================
+           ULTRA-OPTIMIZED MOBILE RESPONSIVE STYLES (≤ 768px)
+           (MATCHING MARKAZ FIQIH, QOHIROH & ZAKY COMPACT MOBILE PREVIEW)
+        ==================================================== */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+                background-color: #dfdbd0;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 16px;
+                align-items: stretch;
+            }
+
+            .action-title {
+                justify-content: center;
+                font-size: 0.82rem;
+            }
+
+            .btn-group {
+                width: 100%;
+                display: flex;
+                gap: 8px;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+                font-size: 0.78rem;
+                padding: 8px 12px;
+            }
+
+            .invoice-container {
+                flex-direction: column;
+                min-height: auto;
+                border-radius: 8px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .sidebar-left {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 18px 20px;
+                border-right: none;
+                border-bottom: 1.5px solid var(--border-navy);
+                background-color: #e6e1d3;
+            }
+
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 2.2rem;
+                line-height: 1;
+                position: relative;
+                top: auto;
+                right: auto;
+            }
+
+            .vertical-text-wrapper {
+                flex-direction: row;
+                gap: 0;
+                writing-mode: horizontal-tb;
+                transform: none;
+                position: relative;
+                top: auto;
+                right: auto;
+            }
+
+            .vertical-brand-name {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.1rem;
+                font-weight: 700;
+            }
+
+            .main-panel {
+                padding: 24px 18px;
+            }
+
+            .invoice-header-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+                margin-bottom: 16px;
+            }
+
+            .top-right-logo-box {
+                width: 100%;
+                align-items: flex-start;
+            }
+
+            .inv-num-label {
+                font-size: 0.85rem;
+            }
+
+            .billed-to-box {
+                margin-top: 14px;
+            }
+
+            .billed-content {
+                font-size: 0.84rem;
+            }
+
+            .margarita-table th {
+                padding: 10px 8px;
+                font-size: 0.7rem;
+            }
+
+            .margarita-table th.col-subtotal,
+            .margarita-table td.col-subtotal {
+                width: 125px;
+                font-size: 0.82rem;
+                text-align: right !important;
+            }
+
+            .margarita-table td {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+
+            .item-title {
+                font-size: 0.84rem;
+            }
+
+            .bullet-list li {
+                font-size: 0.75rem;
+            }
+
+            .table-totals-row td {
+                padding: 10px 8px;
+                font-size: 0.82rem;
+            }
+
+            .table-totals-row.grand-total td {
+                font-size: 0.95rem;
+            }
+
+            .table-totals-row.grand-total td.col-subtotal {
+                font-size: 1.1rem;
+                text-align: right !important;
+            }
+
+            .scope-breakdown-box {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .bottom-section-grid {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .bottom-section-grid > div {
+                text-align: left !important;
+                width: 100%;
+            }
+
+            .toast {
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
+                text-align: center;
+            }
+
+            .cover-card {
+                padding: 35px 22px;
+                width: 92%;
+            }
+
+            .cover-title {
+                font-size: 1.35rem;
+            }
+        }
+
+        /* PRINT & PDF PRESERVATION */
+        @media print {
+            html, body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .cover-overlay, .action-bar, .toast, .copy-pill-btn {
+                display: none !important;
+            }
+
+            .invoice-container {
+                width: 210mm !important;
+                height: 297mm !important;
+                max-width: 210mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                display: flex !important;
+                flex-direction: row !important;
+                box-sizing: border-box !important;
+            }
+
+            .sidebar-left {
+                width: 125px !important;
+                background-color: #efeadf !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .main-panel {
+                padding: 24px 30px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PASSCODE SECURITY COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="cover-top-barcode">// OFFICIAL BILLING DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
+            <div class="classified-stamp">OFFICIAL INVOICE</div>
+
+            <h1 class="cover-title">INVOICE DESAIN LOGO</h1>
+            <div class="cover-subtitle">Hamasah Bakery & Hamasah Laundry</div>
+            
+            <div class="classified-line-divider"></div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Sidi Ifdony</div>
+                <div class="cover-recipient-org">Hamasah Bakery & Hamasah Laundry</div>
+                <div class="cover-inv-num">REF CODE: #INV/SD/2026/007</div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <span>[ BUKA DOKUMEN RESMI ]</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Control Bar -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> INVOICE #INV/SD/2026/007 — Sidi Ifdony
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" style="background:#047857;" onclick="downloadPDF()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download / Simpan PDF (A4)
+            </button>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Printable Paper Container -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Accent -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">invoice</div>
+            <div class="vertical-text-wrapper">
+                <div class="vertical-brand-name">Hamasah Logo</div>
+            </div>
+        </div>
+
+        <!-- Main Panel Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Top Header Row: Left Meta & Right Design Tag -->
+                <div class="invoice-header-row">
+                    <div class="top-left-meta">
+                        <div class="inv-num-label">Invoice No. #INV/SD/2026/007</div>
+                        <div class="inv-date-label">12th August, 2026</div>
+
+                        <div class="billed-to-box">
+                            <div class="billed-title">CLIENT & RECIPIENT // DITUJUKAN KEPADA:</div>
+                            <div class="billed-content">
+                                <strong>Sidi Ifdony</strong><br>
+                                Project: <strong>Desain Logo (Hamasah Bakery & Hamasah Laundry)</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-right-logo-box">
+                        <span class="design-badge-pill">🎨 DESAIN IDENTITAS BRAND</span>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>RUANG LINGKUP & PENGEMBANGAN LOGO</th>
+                                <th class="col-subtotal">HARGA / SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ITEM 1 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">1. Desain Logo Utama — Hamasah Bakery</div>
+                                    <ul class="bullet-list">
+                                        <li>Konsep identitas visual profesional toko roti & kue, filosofi warna & variasi alternatif logo</li>
+                                        <li>File master PNG High Resolution Transparan (siap pakai di media cetak, kemasan & digital)</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                    Rp 500.000
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 2 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">2. Desain Logo Utama — Hamasah Laundry</div>
+                                    <ul class="bullet-list">
+                                        <li>Konsep identitas visual profesional usaha laundry & perawatan pakaian, filosofi bersih & variasi alternatif logo</li>
+                                        <li>File master PNG High Resolution Transparan (siap pakai di media cetak, kemasan & digital)</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                    Rp 500.000
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 3 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">3. Guideline Logo & Brand Identity (Filosofi, Makna & Mockup)</div>
+                                    <ul class="bullet-list">
+                                        <li>Dokumentasi filosofi bentuk logo, makna visual, & panduan kombinasi warna resmi</li>
+                                        <li>Preview mockup aplikasi desain logo pada media cetak, kemasan & media digital</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td>TOTAL INVESTASI PENGEMBANGAN (NET)</td>
+                                <td class="col-subtotal" style="font-size:1.15rem; font-weight:800;">Rp 1.000.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:4px;">
+                        # satu juta rupiah #
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHTS & ARCHITECTURE CARDS -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title inc">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>KEUNGGULAN DESAIN LOGO</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>File Master PNG High Resolution Transparan Ready</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Guideline Brand Identity (Filosofi, Makna & Mockup)</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Fleksibel Siap Pakai di Cetak, Kemasan & Media Sosial</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f2b5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span>OUTLET & BRAND TERMASUK</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f2b5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path></svg>
+                                <span><strong>Hamasah Bakery:</strong> Desain Logo Toko Roti & Kue.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f2b5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path></svg>
+                                <span><strong>Hamasah Laundry:</strong> Desain Logo Perawatan Pakaian.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section: Payments (Left) & Issuer (Right) -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS & REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="/abdurrahman/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 20px; width: auto; object-fit: contain;">
+                                <strong style="font-size: 0.92rem; color: var(--navy-primary);">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 3px;">
+                                Account Name: <strong>Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px; flex-wrap: nowrap;">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--navy-primary);">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer Details -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER & CONTACT</div>
+                        <div class="bottom-block-content">
+                            <strong>Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--navy-primary);">Web Developer & Desainer Grafis</strong><br>
+                            WA: 081311506025
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">KETENTUAN DESAIN LOGO</div>
+                    <div>
+                        • <strong>Hak Cipta:</strong> Hak kepemilikan penuh atas logo yang disetujui beralih sepenuhnya kepada pihak pemesan.<br>
+                        • <strong>Penyerahan File:</strong> File master PNG High Resolution Transparan & dokumen guideline diserahkan setelah pelunasan invoice.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
+    <script>
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const coverCard = document.querySelector('.cover-card');
+
+            if (input.value === '0001') {
+                overlay.classList.add('opened');
+            } else {
+                errorMsg.style.display = 'block';
+                coverCard.classList.add('shake-anim');
+                setTimeout(() => {
+                    coverCard.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+
+        document.getElementById('passcodeInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri Berhasil Disalin!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>
