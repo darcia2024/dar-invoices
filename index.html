@@ -1729,7 +1729,10 @@
             dreammecca: localStorage.getItem("status_dreammecca") || "PAID",
             "haramain-capture": localStorage.getItem("status_haramain-capture") || "PAID",
             abdurrahman: localStorage.getItem("status_abdurrahman") || "PAID",
-            qohiroh: localStorage.getItem("status_qohiroh") || "UNPAID"
+            qohiroh: localStorage.getItem("status_qohiroh") || "UNPAID",
+            zaky: localStorage.getItem("status_zaky") || "UNPAID",
+            sidi: localStorage.getItem("status_sidi") || "UNPAID",
+            umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1738,7 +1741,10 @@
             dreammecca: parseInt(localStorage.getItem("profit_dreammecca")) || 350000,
             "haramain-capture": parseInt(localStorage.getItem("profit_haramain-capture")) || 600000,
             abdurrahman: parseInt(localStorage.getItem("profit_abdurrahman")) || 1460690,
-            qohiroh: parseInt(localStorage.getItem("profit_qohiroh")) || 9500000
+            qohiroh: parseInt(localStorage.getItem("profit_qohiroh")) || 9500000,
+            zaky: parseInt(localStorage.getItem("profit_zaky")) || 600000,
+            sidi: parseInt(localStorage.getItem("profit_sidi")) || 1000000,
+            umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000
         };
 
         const invoiceItems = [
@@ -1746,7 +1752,10 @@
             { id: "dreammecca", name: "Dreammecca - Umrahme", month: "2026-07", monthLabel: "Juli 2026", gross: 700000 },
             { id: "haramain-capture", name: "Haramain Capture", month: "2026-07", monthLabel: "Juli 2026", gross: 600000 },
             { id: "abdurrahman", name: "Abdurrahman Ja'far M.", month: "2026-08", monthLabel: "Agustus 2026", gross: 14550000 },
-            { id: "qohiroh", name: "Qohiroh Center", month: "2026-08", monthLabel: "Agustus 2026", gross: 9500000 }
+            { id: "qohiroh", name: "Qohiroh Center", month: "2026-08", monthLabel: "Agustus 2026", gross: 9500000 },
+            { id: "zaky", name: "Zaky Fakhru Ar-Rozi", month: "2026-08", monthLabel: "Agustus 2026", gross: 600000 },
+            { id: "sidi", name: "Sidi Ifdony - Hamasah", month: "2026-08", monthLabel: "Agustus 2026", gross: 1000000 },
+            { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 }
         ];
 
         function formatIDR(num) {
