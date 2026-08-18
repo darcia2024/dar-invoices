@@ -1600,6 +1600,60 @@
                 </a>
             </div>
 
+            <!-- Teh Umi Atiyah Card -->
+            <div class="invoice-card" id="card-umiatiyah" data-id="umiatiyah" data-month="2026-08" data-amount="2200000" data-client="teh umi atiyah umiatiyah platform e-book e-reader watermark proteksi landing page buku otomatis #inv/ua/2026/008 agustus 2026 2.200.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Teh Umi Atiyah</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('umiatiyah')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/UA/2026/008</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Platform Landing Page Penjualan & E-Reader Buku Digital Terproteksi Anti-Pirasi (Pembayaran Otomatis QRIS/Bank + Dynamic Watermark).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/umiatiyah</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/umiatiyah')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptUmiAtiyah()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 2.200.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValUmiatiyah">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValUmiatiyah">Rp 2.200.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('umiatiyah')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/umiatiyah" class="action-btn">
+                    <span>[ BUKA INVOICE TEH UMI ATIYAH ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -2084,6 +2138,31 @@ Terima kasih banyak! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA SIDI IFDONY BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptUmiAtiyah() {
+            const waScript = `Assalamu'alaikum Teh Umi Atiyah, ini rincian gambaran website dan estimasi biayanya:
+
+🔗 Proposal & Invoice Online: https://dar-invoices.vercel.app/umiatiyah
+🔑 Kode PIN Akses: 0001
+
+Fitur & Fasilitas Sistem:
+1. Landing Page Buku: Halaman bersih untuk sinopsis, profil penulis, dan tombol beli otomatis.
+2. Pembayaran Otomatis: Pembeli bayar via QRIS / Transfer Bank, langsung terverifikasi instan tanpa perlu cek manual.
+3. E-Reader Terproteksi + Watermark: Buku dibaca langsung di web via kode unik. Fitur download/copy dinonaktifkan, dan ada watermark nama/email pembeli di layar baca agar pembeli tidak berani sembarangan foto/screenshot.
+4. Laporan Penjualan: Panel admin untuk pantau pembeli dan pemasukan.
+5. Domain .com: Sudah termasuk langganan domain 1 tahun pertama (perpanjangan tahun berikutnya ~Rp180rb/tahun).
+
+💰 Investasi Pembuatan: Rp 2.200.000 (Net)
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak Teh! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA TEH UMI ATIYAH BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

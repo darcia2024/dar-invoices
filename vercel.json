@@ -8,6 +8,8 @@
     { "source": "/qohiroh", "destination": "/qohiroh/index.html" },
     { "source": "/zaky", "destination": "/zaky/index.html" },
     { "source": "/sidi", "destination": "/hamasahlaundry/index.html" },
-    { "source": "/hamasahlaundry", "destination": "/hamasahlaundry/index.html" }
+    { "source": "/hamasahlaundry", "destination": "/hamasahlaundry/index.html" },
+    { "source": "/umiatiyah", "destination": "/umiatiyah/index.html" },
+    { "source": "/umi", "destination": "/umiatiyah/index.html" }
   ]
 }
