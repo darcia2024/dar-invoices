@@ -1708,6 +1708,60 @@
                 </a>
             </div>
 
+            <!-- PT Zalvice Digital Nusantara Card -->
+            <div class="invoice-card" id="card-zalvice" data-id="zalvice" data-month="2026-08" data-amount="1200000" data-client="pt zalvice digital nusantara zalvice landing page html logo corporate #inv/zdn/2026/010 agustus 2026 1.200.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">PT Zalvice Digital Nusantara</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('zalvice')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/ZDN/2026/010</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pengembangan Landing Page HTML Professional &amp; Desain Logo Corporate PT Zalvice Digital Nusantara.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/zalvice</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/zalvice')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptZalvice()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 1.200.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValZalvice">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValZalvice">Rp 1.200.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('zalvice')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/zalvice" class="action-btn">
+                    <span>[ BUKA INVOICE PT ZALVICE ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -1787,7 +1841,8 @@
             zaky: localStorage.getItem("status_zaky") || "UNPAID",
             sidi: localStorage.getItem("status_sidi") || "UNPAID",
             umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID",
-            kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID"
+            kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
+            zalvice: localStorage.getItem("status_zalvice") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1800,7 +1855,8 @@
             zaky: parseInt(localStorage.getItem("profit_zaky")) || 600000,
             sidi: parseInt(localStorage.getItem("profit_sidi")) || 1000000,
             umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000,
-            kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 700000
+            kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 700000,
+            zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000
         };
 
         const invoiceItems = [
@@ -1812,7 +1868,8 @@
             { id: "zaky", name: "Zaky Fakhru Ar-Rozi", month: "2026-08", monthLabel: "Agustus 2026", gross: 600000 },
             { id: "sidi", name: "Sidi Ifdony - Hamasah", month: "2026-08", monthLabel: "Agustus 2026", gross: 1000000 },
             { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 },
-            { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 700000 }
+            { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 700000 },
+            { id: "zalvice", name: "PT Zalvice Digital Nusantara", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 }
         ];
 
         function formatIDR(num) {
@@ -2259,6 +2316,31 @@ Terima kasih banyak Mas Ajam! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA KOLOHAGA BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptZalvice() {
+            const waScript = `Halo Tim PT Zalvice Digital Nusantara 👋✨
+
+Berikut dokumen resmi Penawaran & Invoice Rincian Scope Pengembangan Landing Page HTML & Desain Logo Corporate:
+
+🔗 Proposal & Invoice Online: https://dar-invoices.vercel.app/zalvice
+🔑 Kode PIN Akses: 0001
+
+Ruang Lingkup Pekerjaan:
+1. Pengembangan Landing Page HTML Professional (Clean Code HTML5/CSS3/JS, Fast Loading & Mobile Responsive)
+2. Desain Logo Utama & Identitas Visual Corporate PT Zalvice Digital Nusantara (Paket Master Vector AI/EPS/SVG/PNG HD/PDF)
+3. Brand Identity Guideline & Penataan File Siap Rilis ke Hosting
+
+💰 Total Investasi Pengembangan: Rp 1.200.000 (Net)
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA PT ZALVICE BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

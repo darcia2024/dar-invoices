@@ -12,6 +12,8 @@
     { "source": "/umiatiyah", "destination": "/umiatiyah/index.html" },
     { "source": "/umi", "destination": "/umiatiyah/index.html" },
     { "source": "/kolohaga", "destination": "/kolohaga/index.html" },
-    { "source": "/azzam", "destination": "/kolohaga/index.html" }
+    { "source": "/azzam", "destination": "/kolohaga/index.html" },
+    { "source": "/zalvice", "destination": "/zalvice/index.html" },
+    { "source": "/ptzalvice", "destination": "/zalvice/index.html" }
   ]
 }
