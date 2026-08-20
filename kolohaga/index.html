@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PENAWARAN & INVOICE #INV/KH/2026/009 - Ziaudin Azzam (KOLOHAGA)</title>
+    <!-- Google Fonts: Sora & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #e8e4da;
+            --bg-cream: #f9f6ef;
+            --navy-primary: #064e3b; /* Emerald Deep */
+            --emerald-accent: #047857;
+            --gold-accent: #b45309;
+            --gold-light: #fef3c7;
+            --text-dark: #1e2432;
+            --text-muted: #5a6478;
+            --border-navy: #064e3b;
+            --border-light: #d8d3c5;
+            
+            --font-sora: 'Sora', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sora);
+            font-weight: 300;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           CLASSIFIED "RAHASIA NEGARA" TOP SECRET COVER SCREEN
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #081c15;
+            background-image: radial-gradient(#1b4332 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
+        }
+
+        .cover-card {
+            background-color: #f4f1ea;
+            border: 3px double #064e3b;
+            border-radius: 2px;
+            max-width: 540px;
+            width: 100%;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            color: #000000;
+            font-family: var(--font-mono);
+        }
+
+        /* Shake animation for invalid PIN */
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #064e3b;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            transform: rotate(-1.5deg);
+            background: #ffffff;
+            color: #064e3b;
+            box-shadow: 2px 2px 0px #064e3b;
+        }
+
+        .cover-title {
+            font-family: var(--font-sora);
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #064e3b;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .cover-subtitle {
+            font-size: 0.82rem;
+            color: #444444;
+            margin-bottom: 24px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .classified-line-divider {
+            height: 1px;
+            background: #064e3b;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .cover-recipient-box {
+            background: #ffffff;
+            border: 1px solid #064e3b;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #064e3b;
+            margin-bottom: 4px;
+        }
+
+        .cover-recipient-name {
+            font-family: var(--font-sora);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .cover-recipient-org {
+            font-size: 0.78rem;
+            color: #444444;
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #064e3b;
+            margin-top: 6px;
+            font-weight: 700;
+            background: #ecfdf5;
+            display: inline-block;
+            padding: 2px 6px;
+            border: 1px solid #a7f3d0;
+        }
+
+        .passcode-wrapper {
+            margin: 25px 0 15px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            color: #555555;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            width: 180px;
+            height: 48px;
+            background: #ffffff;
+            border: 2px solid #064e3b;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: #064e3b;
+            outline: none;
+            box-shadow: 3px 3px 0px #064e3b;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: #047857;
+            box-shadow: 4px 4px 0px #047857;
+        }
+
+        .passcode-error {
+            color: #b91c1c;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+            letter-spacing: 0.05em;
+        }
+
+        .cover-open-btn {
+            background: #064e3b;
+            color: #ffffff;
+            border: 2px solid #064e3b;
+            padding: 12px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+            transition: all 0.15s ease;
+            width: 100%;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .cover-open-btn:hover {
+            background: #047857;
+            transform: translate(-1px, -1px);
+            box-shadow: 5px 5px 0px #064e3b;
+        }
+
+        .cover-open-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #064e3b;
+        }
+
+        .cover-top-barcode {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #888888;
+            margin-bottom: 12px;
+        }
+
+        /* ----------------------------------------------------
+           MAIN DOCUMENT STYLES
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: var(--bg-cream);
+            border: 1px solid var(--border-navy);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            position: relative;
+        }
+
+        /* Sidebar Kiri Khas Editorial */
+        .sidebar-left {
+            width: 70px;
+            background-color: #efeadf;
+            border-right: 1px solid var(--border-navy);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: lowercase;
+            color: var(--navy-primary);
+            opacity: 0.9;
+        }
+
+        .vertical-text-wrapper {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            gap: 15px;
+        }
+
+        .vertical-brand-name {
+            font-weight: 600;
+            color: var(--navy-primary);
+        }
+
+        /* Main Content Right */
+        .main-panel {
+            flex-grow: 1;
+            padding: 40px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .inv-date-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .billed-to-box {
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        .billed-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 2px;
+        }
+
+        .top-right-logo-box {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .brand-badge-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #064e3b;
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Table Architecture */
+        .table-area {
+            margin-bottom: 25px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--navy-primary);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--navy-primary);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 150px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--navy-primary);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-inc {
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .table-totals-row td {
+            padding: 12px 0;
+            border-bottom: none;
+        }
+
+        .grand-total {
+            border-top: 2px solid var(--navy-primary);
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        .grand-total td {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            padding-top: 14px;
+        }
+
+        /* Highlight & Specification Cards */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--navy-primary);
+            padding: 14px 16px;
+            border-radius: 2px;
+        }
+
+        .scope-card-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .scope-card-title.inc {
+            color: #047857;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--text-dark);
+            line-height: 1.45;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .scope-card-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            margin-bottom: 18px;
+        }
+
+        .bottom-block-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .bottom-block-content {
+            font-size: 0.8rem;
+            line-height: 1.45;
+            color: var(--text-dark);
+        }
+
+        .copy-pill-btn {
+            background: #efeadf;
+            border: 1px solid #d8d3c5;
+            color: var(--navy-primary);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--navy-primary);
+            color: #ffffff;
+            border-color: var(--navy-primary);
+        }
+
+        /* Terms & Notes Box */
+        .terms-container {
+            background-color: #efeadf;
+            border: 1px dashed var(--border-navy);
+            padding: 12px 16px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            border-radius: 2px;
+        }
+
+        .terms-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Top Action / Control Bar */
+        .action-bar {
+            max-width: 960px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 10px 16px;
+            border: 1px solid var(--border-navy);
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .action-title {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #047857;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font-family: var(--font-sora);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            border: 1px solid var(--navy-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--emerald-accent);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--navy-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #efeadf;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE (MOBILE OPTIMIZED)
+        ---------------------------------------------------- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+                padding: 12px;
+            }
+
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .invoice-container {
+                flex-direction: column;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .sidebar-left {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 16px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-navy);
+                background-color: #efeadf;
+            }
+
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.3rem;
+                letter-spacing: 0.05em;
+            }
+
+            .vertical-text-wrapper {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 0.7rem;
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .main-panel {
+                padding: 16px 14px;
+            }
+
+            .invoice-header-row {
+                flex-direction: column;
+                gap: 14px;
+                align-items: flex-start;
+                margin-bottom: 16px;
+                padding-bottom: 14px;
+            }
+
+            .top-right-logo-box {
+                align-items: flex-start;
+                text-align: left;
+                width: 100%;
+            }
+
+            .scope-breakdown-box {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .bottom-section-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding-top: 14px;
+            }
+
+            .col-subtotal {
+                width: 125px;
+                text-align: right !important;
+            }
+
+            .cover-card {
+                padding: 30px 18px;
+            }
+
+            .cover-title {
+                font-size: 1.15rem;
+            }
+
+            .cover-recipient-name {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ----------------------------------------------------
+           PRINT OPTIMIZATIONS
+        ---------------------------------------------------- */
+        @media print {
+            body {
+                background: none !important;
+                padding: 0 !important;
+                color: #000000 !important;
+            }
+
+            .cover-overlay,
+            .action-bar,
+            .copy-pill-btn,
+            .toast {
+                display: none !important;
+            }
+
+            .invoice-container {
+                box-shadow: none !important;
+                border: 1px solid #000000 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            .sidebar-left {
+                background-color: #efeadf !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .main-panel {
+                padding: 24px 30px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PASSCODE SECURITY COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="cover-top-barcode">// OFFICIAL PROPOSAL &amp; BILLING DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
+            <div class="classified-stamp">OFFICIAL PROPOSAL</div>
+
+            <h1 class="cover-title">DESAIN IDENTITAS BRAND &amp; LOGO</h1>
+            <div class="cover-subtitle">KOLOHAGA &bull; "Everything You Need" (One-Stop Service Mesir)</div>
+            
+            <div class="classified-line-divider"></div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Ziaudin Azzam (Ajam)</div>
+                <div class="cover-recipient-org">Brand: <strong>KOLOHAGA</strong> (كل حاجة)</div>
+                <div class="cover-inv-num">REF CODE: #INV/KH/2026/009</div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <span>[ BUKA DOKUMEN RESMI ]</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Control Bar -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> PROPOSAL &amp; INVOICE #INV/KH/2026/009 — Ziaudin Azzam (KOLOHAGA)
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" style="background:#047857;" onclick="downloadPDF()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download / Simpan PDF (A4)
+            </button>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Printable Paper Container -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Accent -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">proposal</div>
+            <div class="vertical-text-wrapper">
+                <div class="vertical-brand-name">KOLOHAGA BRAND</div>
+            </div>
+        </div>
+
+        <!-- Main Panel Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Top Header Row: Left Meta & Right Tag -->
+                <div class="invoice-header-row">
+                    <div class="top-left-meta">
+                        <div class="inv-num-label">Invoice No. #INV/KH/2026/009</div>
+                        <div class="inv-date-label">20th August, 2026</div>
+
+                        <div class="billed-to-box">
+                            <div class="billed-title">CLIENT &amp; RECIPIENT // DITUJUKAN KEPADA:</div>
+                            <div class="billed-content">
+                                <strong>Ziaudin Azzam (Ajam)</strong><br>
+                                Brand: <strong>KOLOHAGA (كل حاجة)</strong><br>
+                                Tagline: <em>"Everything You Need" &bull; One-Stop Service Mesir</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-right-logo-box">
+                        <span class="brand-badge-pill">✨ BRAND IDENTITY DESIGN</span>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>RUANG LINGKUP &amp; PENGEMBANGAN LOGO KOLOHAGA</th>
+                                <th class="col-subtotal">HARGA / SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ITEM 1 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">1. Eksplorasi Konsep &amp; Desain Logo Utama — KOLOHAGA</div>
+                                    <ul class="bullet-list">
+                                        <li>Perancangan konsep visual modern, minimalis &amp; elegan yang merepresentasikan filosofi <em>"Everything / All-in-One"</em> (كل حاجة) sebagai platform layanan serba ada di Mesir</li>
+                                        <li>Karakter desain profesional, terpercaya, distinctive &amp; mudah dikenali tanpa elemen klise travel/umrah</li>
+                                        <li>Penyediaan alternatif konsep &amp; sesi revisi fleksibel hingga hasil logo disetujui sepenuhnya</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                    Rp 500.000
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 2 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">2. Paket File Master Lengkap (Multi-Format High Resolution)</div>
+                                    <ul class="bullet-list">
+                                        <li>File Master Vector Resolusi Tinggi: AI, EPS, SVG, PDF Print-Ready</li>
+                                        <li>File Export Digital: PNG Transparan High-Res (Varian Utama, Monokrom, Coklat/Gold &amp; White), serta JPG HD</li>
+                                        <li>Format siap pakai di media digital (web, app, sosmed) serta media cetak (banner, merchandise, kop surat)</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 3 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">3. Brand Identity Guideline &amp; Lisensi Komersial Penuh</div>
+                                    <ul class="bullet-list">
+                                        <li>Panduan palet warna resmi (Emerald Green, Warm Cream/Off-White &amp; Luxury Gold Accent) beserta kode HEX, RGB &amp; CMYK</li>
+                                        <li>Rekomendasi tipografi brand &amp; preview mockup aplikasi logo di berbagai media bisnis</li>
+                                        <li>Hak kepemilikan cipta &amp; lisensi komersial penuh beralih 100% kepada pihak pemesan</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal">
+                                    <span class="status-pill status-inc">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        TERMASUK
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td>TOTAL INVESTASI PENGEMBANGAN (NET)</td>
+                                <td class="col-subtotal" style="font-size:1.15rem; font-weight:800;">Rp 500.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:4px;">
+                        # lima ratus ribu rupiah #
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHTS & ARCHITECTURE CARDS -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title inc">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>ARAH KREATIF &amp; KARAKTER BRAND</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Style:</strong> Minimalis, Modern, Elegan &amp; Distinctive.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Filosofi:</strong> "كل حاجة" (Everything / One-Stop Service Mesir).</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Palette:</strong> Emerald Deep, Cream Off-White &amp; Gold Accent.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#064e3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span>OUTPUT &amp; DELIVERABLES</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#064e3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                <span><strong>Master Vector:</strong> AI, EPS, SVG, PDF &amp; High-Res PNG.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#064e3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span><strong>Guideline Brand:</strong> Kode Warna, Makna &amp; Mockup.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#064e3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Hak Cipta Penuh:</strong> Lisensi komersial 100% milik klien.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section: Payments (Left) & Issuer (Right) -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="/abdurrahman/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 20px; width: auto; object-fit: contain;">
+                                <strong style="font-size: 0.92rem; color: var(--navy-primary);">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 3px;">
+                                Account Name: <strong>Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px; flex-wrap: nowrap;">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--navy-primary);">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer Details -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER &amp; CONTACT</div>
+                        <div class="bottom-block-content">
+                            <strong>Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--navy-primary);">Web Developer &amp; Desainer Grafis</strong><br>
+                            WA: 081311506025
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">KETENTUAN PENGEMBANGAN DESAIN LOGO</div>
+                    <div>
+                        • <strong>Hak Cipta:</strong> Hak kepemilikan penuh atas logo yang disetujui beralih sepenuhnya kepada pihak Ziaudin Azzam (KOLOHAGA).<br>
+                        • <strong>Penyerahan File:</strong> File master final (Vector AI, EPS, SVG, PNG, PDF) dan dokumen guideline diserahkan setelah pelunasan invoice.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
+    <script>
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const coverCard = document.querySelector('.cover-card');
+
+            if (input.value === '0001') {
+                overlay.classList.add('opened');
+            } else {
+                errorMsg.style.display = 'block';
+                coverCard.classList.add('shake-anim');
+                setTimeout(() => {
+                    coverCard.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+
+        document.getElementById('passcodeInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri Berhasil Disalin!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>

@@ -1654,6 +1654,60 @@
                 </a>
             </div>
 
+            <!-- Ziaudin Azzam (KOLOHAGA) Card -->
+            <div class="invoice-card" id="card-kolohaga" data-id="kolohaga" data-month="2026-08" data-amount="500000" data-client="ziaudin azzam ajam kolohaga كل حاجة everything you need one stop service mesir desain logo brand identity #inv/kh/2026/009 agustus 2026 500.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Ziaudin Azzam (Ajam)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('kolohaga')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/KH/2026/009</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Desain Identitas Brand & Logo Eksklusif KOLOHAGA (كل حاجة &bull; "Everything You Need" — One-Stop Service Mesir).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/kolohaga</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/kolohaga')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptKolohaga()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 500.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValKolohaga">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValKolohaga">Rp 500.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('kolohaga')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/kolohaga" class="action-btn">
+                    <span>[ BUKA INVOICE KOLOHAGA ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -1732,7 +1786,8 @@
             qohiroh: localStorage.getItem("status_qohiroh") || "UNPAID",
             zaky: localStorage.getItem("status_zaky") || "UNPAID",
             sidi: localStorage.getItem("status_sidi") || "UNPAID",
-            umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID"
+            umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID",
+            kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1744,7 +1799,8 @@
             qohiroh: parseInt(localStorage.getItem("profit_qohiroh")) || 9500000,
             zaky: parseInt(localStorage.getItem("profit_zaky")) || 600000,
             sidi: parseInt(localStorage.getItem("profit_sidi")) || 1000000,
-            umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000
+            umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000,
+            kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 500000
         };
 
         const invoiceItems = [
@@ -1755,7 +1811,8 @@
             { id: "qohiroh", name: "Qohiroh Center", month: "2026-08", monthLabel: "Agustus 2026", gross: 9500000 },
             { id: "zaky", name: "Zaky Fakhru Ar-Rozi", month: "2026-08", monthLabel: "Agustus 2026", gross: 600000 },
             { id: "sidi", name: "Sidi Ifdony - Hamasah", month: "2026-08", monthLabel: "Agustus 2026", gross: 1000000 },
-            { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 }
+            { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 },
+            { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 500000 }
         ];
 
         function formatIDR(num) {
@@ -2177,6 +2234,31 @@ Terima kasih banyak Teh! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA TEH UMI ATIYAH BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptKolohaga() {
+            const waScript = `Halo Mas Ziaudin Azzam (Ajam) 👋✨
+
+Berikut dokumen resmi Penawaran & Rincian Scope Pengembangan Desain Identitas Brand & Logo KOLOHAGA ("Everything You Need" — One-Stop Service Mesir):
+
+🔗 Proposal & Invoice Online: https://dar-invoices.vercel.app/kolohaga
+🔑 Kode PIN Akses: 0001
+
+Ruang Lingkup Pengembangan Logo:
+1. Eksplorasi Konsep & Desain Logo Utama KOLOHAGA (Minimalis, Modern, Elegan & Filosofi "كل حاجة")
+2. Paket Master File High Resolution Lengkap (Vector AI, EPS, SVG, PNG Transparan HD, JPG, PDF Print-Ready)
+3. Brand Identity Guideline (Panduan Palet Warna Emerald Gold, Tipografi, Preview Mockup & Hak Cipta Lisensi Penuh)
+
+💰 Total Investasi Pengembangan: Rp 500.000 (Net)
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak Mas Ajam! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA KOLOHAGA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
