@@ -1762,6 +1762,60 @@
                 </a>
             </div>
 
+            <!-- Yayasan Peradaban Islam Azhariyah (Umi Elly) Card -->
+            <div class="invoice-card" id="card-azhariyah" data-id="azhariyah" data-month="2026-08" data-amount="7000000" data-client="yayasan peradaban islam azhariyah umi elly perisa platform pembelajaran bahasa arab interaktif game sd smp sma cicilan 3 bulan #inv/ypia/2026/011 agustus 2026 7.000.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Yayasan Peradaban Islam Azhariyah (Umi Elly)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('azhariyah')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/YPIA/2026/011</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Platform Pembelajaran Bahasa Arab Interaktif Berbasis Game (SD, SMP, SMA) &bull; Cicilan 3 Bulan (3-2-2).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/azhariyah</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/azhariyah')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptAzhariyah()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 7.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValAzhariyah">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValAzhariyah">Rp 7.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('azhariyah')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/azhariyah" class="action-btn">
+                    <span>[ BUKA INVOICE UMI ELLY / AZHARIYAH ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -1842,7 +1896,8 @@
             sidi: localStorage.getItem("status_sidi") || "UNPAID",
             umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID",
             kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
-            zalvice: localStorage.getItem("status_zalvice") || "UNPAID"
+            zalvice: localStorage.getItem("status_zalvice") || "UNPAID",
+            azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1856,7 +1911,8 @@
             sidi: parseInt(localStorage.getItem("profit_sidi")) || 1000000,
             umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000,
             kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 700000,
-            zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000
+            zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000,
+            azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000
         };
 
         const invoiceItems = [
@@ -1869,7 +1925,8 @@
             { id: "sidi", name: "Sidi Ifdony - Hamasah", month: "2026-08", monthLabel: "Agustus 2026", gross: 1000000 },
             { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 },
             { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 700000 },
-            { id: "zalvice", name: "PT Zalvice Digital Nusantara", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 }
+            { id: "zalvice", name: "PT Zalvice Digital Nusantara", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
+            { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 }
         ];
 
         function formatIDR(num) {
@@ -2341,6 +2398,36 @@ Terima kasih banyak! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA PT ZALVICE BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptAzhariyah() {
+            const waScript = `Assalamu'alaikum Umi Elly & Dewan Pengurus Yayasan Peradaban Islam Azhariyah 👋✨
+
+Berikut dokumen resmi Proposal Penawaran & Invoice Pengembangan Platform Pembelajaran Bahasa Arab Interaktif Berbasis Game (PERISA Azhariyah - Tingkat SD, SMP, SMA):
+
+🔗 Proposal & Invoice Online: https://dar-invoices.vercel.app/azhariyah
+🔑 Kode PIN Akses: 0001
+
+Ringkasan Ruang Lingkup Platform:
+1. Kurikulum Mufrodat Berjenjang SD-SMA & Game Edukasi Interaktif (Tebak Mufrodat, Susun Kalimat, Poin XP & Lencana Prestasi)
+2. Portal Santri & Video Player Terproteksi (Dynamic Watermark Nama/WA Santri & Enkripsi Anti-Download)
+3. Panel Otoritas Izin Admin Yayasan (Kontrol Akses Umi Elly, Login WA Direct, Rekap Infaq & E-Sertifikat Sanad)
+
+💰 Total Investasi: Rp 7.000.000 (Net)
+💡 Skema Cicilan Ringan 3 Bulan (3 - 2 - 2):
+• Termin 1 (DP / Bulan 1): Rp 3.000.000 (Agustus 2026)
+• Termin 2 (Bulan 2): Rp 2.000.000 (September 2026)
+• Termin 3 (Bulan 3): Rp 2.000.000 (Oktober 2026)
+
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Jazakumullah Khairan Katsiran Umi Elly & Pengurus Yayasan! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA YAYASAN AZHARIYAH BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
