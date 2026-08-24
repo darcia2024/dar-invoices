@@ -1708,11 +1708,11 @@
                 </a>
             </div>
 
-            <!-- PT Zalvice Digital Nusantara Card -->
-            <div class="invoice-card" id="card-zalvice" data-id="zalvice" data-month="2026-08" data-amount="1200000" data-client="pt zalvice digital nusantara zalvice landing page html logo corporate #inv/zdn/2026/010 agustus 2026 1.200.000">
+            <!-- Bang Ridwan Zalbina (LaptopBisnis & Zalvice) Card -->
+            <div class="invoice-card" id="card-zalvice" data-id="zalvice" data-month="2026-08" data-amount="1200000" data-client="bang ridwan zalbina ridwan zalvice laptopbisnis desain logo identitas brand diskon 200rb #inv/rz/2026/012 agustus 2026 1.200.000">
                 <div>
                     <div class="card-top">
-                        <div class="client-title">PT Zalvice Digital Nusantara</div>
+                        <div class="client-title">Bang Ridwan Zalbina (Zalvice &amp; LaptopBisnis)</div>
                         <div class="status-badge-group">
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('zalvice')">
                                 🔴 BELUM LUNAS
@@ -1721,12 +1721,12 @@
                     </div>
 
                     <div class="ref-code">
-                        <span>REF: #INV/ZDN/2026/010</span>
+                        <span>REF: #INV/RZ/2026/012</span>
                         <span class="month-tag">📅 Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
-                        Pengembangan Landing Page HTML Professional &amp; Desain Logo Corporate PT Zalvice Digital Nusantara.
+                        Desain Identitas Brand &amp; Logo Eksklusif LaptopBisnis &amp; Zalvice (Diskon Bundle Rp 200.000).
                     </div>
 
                     <div class="slug-box">
@@ -1758,7 +1758,7 @@
                 </div>
 
                 <a href="/zalvice" class="action-btn">
-                    <span>[ BUKA INVOICE PT ZALVICE ]</span>
+                    <span>[ BUKA INVOICE ZALVICE / BANG RIDWAN ]</span>
                 </a>
             </div>
 
@@ -1813,60 +1813,6 @@
 
                 <a href="/azhariyah" class="action-btn">
                     <span>[ BUKA INVOICE UMI ELLY / AZHARIYAH ]</span>
-                </a>
-            </div>
-
-            <!-- Bang Ridwan Zalbina (LaptopBisnis & Zalvice) Card -->
-            <div class="invoice-card" id="card-zalbina" data-id="zalbina" data-month="2026-08" data-amount="1200000" data-client="bang ridwan zalbina ridwan laptopbisnis zalvice desain logo identitas brand diskon 200rb #inv/rz/2026/012 agustus 2026 1.200.000">
-                <div>
-                    <div class="card-top">
-                        <div class="client-title">Bang Ridwan Zalbina</div>
-                        <div class="status-badge-group">
-                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('zalbina')">
-                                🔴 BELUM LUNAS
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="ref-code">
-                        <span>REF: #INV/RZ/2026/012</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
-                    </div>
-                    
-                    <div class="project-desc">
-                        Desain Identitas Brand &amp; Logo Eksklusif LaptopBisnis &amp; Zalvice (Diskon Bundle Rp 200.000).
-                    </div>
-
-                    <div class="slug-box">
-                        <span class="slug-url">/zalbina</span>
-                        <div class="btn-row-flex">
-                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/zalbina')">Salin Link</button>
-                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptZalbina()">Salin Script WA</button>
-                        </div>
-                    </div>
-
-                    <!-- Financial Net Profit Breakdown Box -->
-                    <div class="financial-breakdown-box">
-                        <div class="fin-row">
-                            <span class="fin-label">OMSET INVOICE:</span>
-                            <span class="fin-val">Rp 1.200.000</span>
-                        </div>
-                        <div class="fin-row">
-                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
-                            <span class="fin-val" id="costValZalbina">Rp 0</span>
-                        </div>
-                        <div class="fin-row net-profit-row">
-                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
-                            <div class="net-profit-flex">
-                                <span class="net-profit-val" id="profitValZalbina">Rp 1.200.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('zalbina')">✏️ Edit Profit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="/zalbina" class="action-btn">
-                    <span>[ BUKA INVOICE BANG RIDWAN ]</span>
                 </a>
             </div>
 
@@ -1951,8 +1897,7 @@
             umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID",
             kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
             zalvice: localStorage.getItem("status_zalvice") || "UNPAID",
-            azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID",
-            zalbina: localStorage.getItem("status_zalbina") || "UNPAID"
+            azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1967,8 +1912,7 @@
             umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000,
             kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 700000,
             zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000,
-            azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000,
-            zalbina: parseInt(localStorage.getItem("profit_zalbina")) || 1200000
+            azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000
         };
 
         const invoiceItems = [
@@ -1981,9 +1925,8 @@
             { id: "sidi", name: "Sidi Ifdony - Hamasah", month: "2026-08", monthLabel: "Agustus 2026", gross: 1000000 },
             { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 },
             { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 700000 },
-            { id: "zalvice", name: "PT Zalvice Digital Nusantara", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
-            { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 },
-            { id: "zalbina", name: "Bang Ridwan Zalbina", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 }
+            { id: "zalvice", name: "Bang Ridwan Zalbina (Zalvice & LaptopBisnis)", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
+            { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 }
         ];
 
         function formatIDR(num) {
@@ -2436,25 +2379,29 @@ Terima kasih banyak Mas Ajam! 🙏😊`;
         }
 
         function copyWaScriptZalvice() {
-            const waScript = `Halo Tim PT Zalvice Digital Nusantara 👋✨
+            const waScript = `Halo Bang Ridwan Zalbina 👋✨
 
-Berikut dokumen resmi Penawaran & Invoice Rincian Scope Pengembangan Landing Page HTML & Desain Logo Corporate:
+Berikut dokumen resmi Penawaran & Invoice Rincian Scope Desain Identitas Brand & Logo Eksklusif (LaptopBisnis & Zalvice):
 
 🔗 Proposal & Invoice Online: https://dar-invoices.vercel.app/zalvice
 🔑 Kode PIN Akses: 0001
 
-Ruang Lingkup Pekerjaan:
-1. Pengembangan Landing Page HTML Professional (Clean Code HTML5/CSS3/JS, Fast Loading & Mobile Responsive)
-2. Desain Logo Utama & Identitas Visual Corporate PT Zalvice Digital Nusantara (Paket Master Vector AI/EPS/SVG/PNG HD/PDF)
-3. Brand Identity Guideline & Penataan File Siap Rilis ke Hosting
+Ruang Lingkup Pengembangan 2 Logo:
+1. Desain Logo Utama & Identitas Visual — LaptopBisnis (Rp 700.000)
+2. Desain Logo Utama & Identitas Visual — Zalvice (Rp 700.000)
+3. Diskon Khusus Bundle 2 Logo (-Rp 200.000)
+4. Master File High Resolution Lengkap (PNG Transparan HD, JPG HD, PDF) & Hak Cipta Lisensi Penuh 100%
 
-💰 Total Investasi Pengembangan: Rp 1.200.000 (Net)
+💰 Total Subtotal: Rp 1.400.000
+🏷️ Diskon Potongan Khusus: -Rp 200.000
+💵 Total Investasi Pengembangan (Net): Rp 1.200.000
+
 💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
 
-Terima kasih banyak! 🙏😊`;
+Terima kasih banyak Bang Ridwan! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
-                showToast("SCRIPT PESAN WA PT ZALVICE BERHASIL DISALIN!");
+                showToast("SCRIPT PESAN WA BANG RIDWAN ZALBINA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
@@ -2490,35 +2437,6 @@ Jazakumullah Khairan Katsiran Umi Elly & Pengurus Yayasan! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA YAYASAN AZHARIYAH BERHASIL DISALIN!");
-            }).catch(() => {
-                showToast("GAGAL MENYALIN SCRIPT");
-            });
-        }
-
-        function copyWaScriptZalbina() {
-            const waScript = `Halo Bang Ridwan Zalbina 👋✨
-
-Berikut dokumen resmi Penawaran & Invoice Rincian Scope Desain Identitas Brand & Logo Eksklusif (LaptopBisnis & Zalvice):
-
-🔗 Proposal & Invoice Online: https://dar-invoices.vercel.app/zalbina
-🔑 Kode PIN Akses: 0001
-
-Ruang Lingkup Pengembangan 2 Logo:
-1. Desain Logo Utama & Identitas Visual — LaptopBisnis (Rp 700.000)
-2. Desain Logo Utama & Identitas Visual — Zalvice (Rp 700.000)
-3. Diskon Khusus Bundle 2 Logo (-Rp 200.000)
-4. Master File High Resolution Lengkap (PNG Transparan HD, JPG HD, PDF) & Hak Cipta Lisensi Penuh 100%
-
-💰 Total Subtotal: Rp 1.400.000
-🏷️ Diskon Potongan Khusus: -Rp 200.000
-💵 Total Investasi Pengembangan (Net): Rp 1.200.000
-
-💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
-
-Terima kasih banyak Bang Ridwan! 🙏😊`;
-
-            navigator.clipboard.writeText(waScript).then(() => {
-                showToast("SCRIPT PESAN WA BANG RIDWAN ZALBINA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
