@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INVOICE #INV/BU/2026/013 - Owner Barber Underrated (Website & Kasir Multi-Cabang)</title>
+    <title>INVOICE #INV/BU/2026/013 - Underrated Barbershop (Website & Kasir Multi-Cabang)</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +11,17 @@
     
     <style>
         :root {
-            --bg-canvas: #0f172a;
-            --bg-paper: #ffffff;
-            --navy-primary: #0f172a;
-            --gold-accent: #d97706;
-            --gold-light: #fef3c7;
-            --gold-border: #b45309;
+            --bg-canvas: #09090b;
+            --bg-card: #121215;
+            --bg-inner: #18181c;
+            --red-primary: #dc2626;
+            --red-accent: #ef4444;
+            --red-glow: rgba(220, 38, 38, 0.15);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --text-dark: #0f172a;
-            --text-muted: #475569;
-            --border-dark: #0f172a;
-            --border-light: #cbd5e1;
+            --border-hairline: rgba(255, 255, 255, 0.1);
+            --border-red: rgba(220, 38, 38, 0.4);
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -36,7 +37,10 @@
             font-family: var(--font-sora);
             font-weight: 300;
             background-color: var(--bg-canvas);
-            color: var(--text-dark);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(220, 38, 38, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(220, 38, 38, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
             line-height: 1.5;
             padding: 40px 20px;
             -webkit-font-smoothing: antialiased;
@@ -45,7 +49,7 @@
         }
 
         /* ----------------------------------------------------
-           TOP SECRET COVER SCREEN OVERLAY
+           TOP SECRET COVER SCREEN OVERLAY (PASSCODE LOCK)
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -53,9 +57,11 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #0b0f19;
-            background-image: radial-gradient(#d97706 1px, transparent 1px);
-            background-size: 24px 24px;
+            background-color: #050507;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(220, 38, 38, 0.15) 0%, transparent 60%),
+                radial-gradient(#1e1e24 1px, transparent 1px);
+            background-size: 100% 100%, 24px 24px;
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -72,16 +78,17 @@
         }
 
         .cover-card {
-            background-color: #ffffff;
-            border: 3px double #0f172a;
-            border-radius: 2px;
-            max-width: 560px;
+            background-color: #0d0d10;
+            border: 1px solid var(--border-hairline);
+            border-top: 3px solid var(--red-primary);
+            border-radius: 12px;
+            max-width: 520px;
             width: 100%;
-            padding: 45px 40px;
+            padding: 45px 36px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 40px var(--red-glow);
             position: relative;
-            color: #000000;
+            color: #ffffff;
             font-family: var(--font-mono);
         }
 
@@ -96,49 +103,53 @@
             40%, 60% { transform: translate3d(6px, 0, 0); }
         }
 
-        .classified-stamp {
+        .brand-logo-heading {
+            font-family: var(--font-sora);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .brand-logo-heading .red-star {
+            color: var(--red-primary);
+            font-size: 1.2rem;
+            margin: 0 2px;
             display: inline-block;
-            border: 2px solid #d97706;
-            padding: 4px 16px;
+            transform: translateY(-2px);
+        }
+
+        .brand-logo-sub {
             font-size: 0.75rem;
-            font-weight: 700;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            transform: rotate(-1.5deg);
-            background: #fffbeb;
-            color: #b45309;
-            box-shadow: 2px 2px 0px #b45309;
-        }
-
-        .cover-title {
-            font-family: var(--font-sora);
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            color: #0f172a;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .cover-subtitle {
-            font-size: 0.82rem;
-            color: #475569;
+            color: var(--text-muted);
             margin-bottom: 24px;
-            font-weight: 400;
-            line-height: 1.4;
+            font-weight: 500;
         }
 
-        .classified-line-divider {
-            height: 1px;
-            background: #0f172a;
-            margin: 20px 0;
-            position: relative;
+        .classified-stamp {
+            display: inline-block;
+            border: 1px solid var(--red-primary);
+            padding: 4px 14px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--red-accent);
+            border-radius: 4px;
         }
 
         .cover-recipient-box {
-            background: #f8fafc;
-            border: 1px solid #0f172a;
+            background: #141418;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
             padding: 16px;
             text-align: left;
             margin-bottom: 24px;
@@ -150,32 +161,34 @@
             font-size: 0.65rem;
             font-weight: 700;
             letter-spacing: 0.15em;
-            color: #d97706;
+            color: var(--red-primary);
             margin-bottom: 4px;
+            text-transform: uppercase;
         }
 
         .cover-recipient-name {
             font-family: var(--font-sora);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            color: #000000;
+            color: #ffffff;
         }
 
         .cover-recipient-org {
             font-size: 0.78rem;
-            color: #475569;
+            color: var(--text-muted);
         }
 
         .cover-inv-num {
             font-family: var(--font-mono);
             font-size: 0.75rem;
-            color: #b45309;
+            color: #f8fafc;
             margin-top: 6px;
             font-weight: 700;
-            background: #fffbeb;
+            background: rgba(255, 255, 255, 0.05);
             display: inline-block;
-            padding: 2px 6px;
-            border: 1px solid #fde68a;
+            padding: 2px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
         }
 
         .passcode-wrapper {
@@ -183,35 +196,36 @@
         }
 
         .passcode-label {
-            font-size: 0.72rem;
-            letter-spacing: 0.1em;
-            color: #555555;
-            margin-bottom: 8px;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
 
         .passcode-input {
-            width: 180px;
+            width: 190px;
             height: 48px;
-            background: #ffffff;
-            border: 2px solid #0f172a;
+            background: #18181c;
+            border: 1px solid var(--border-hairline);
+            border-radius: 6px;
             text-align: center;
             font-family: var(--font-mono);
             font-size: 1.4rem;
             letter-spacing: 8px;
-            color: #0f172a;
+            color: #ffffff;
             outline: none;
-            box-shadow: 3px 3px 0px #d97706;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
             transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
-            border-color: #d97706;
-            box-shadow: 4px 4px 0px #b45309;
+            border-color: var(--red-primary);
+            box-shadow: 0 0 15px var(--red-glow), inset 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .passcode-error {
-            color: #b91c1c;
+            color: #ef4444;
             font-size: 0.75rem;
             font-weight: 700;
             margin-top: 8px;
@@ -220,59 +234,53 @@
         }
 
         .cover-open-btn {
-            background: #0f172a;
+            background: var(--red-primary);
             color: #ffffff;
-            border: 2px solid #0f172a;
-            padding: 12px 28px;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 28px;
             font-family: var(--font-mono);
             font-size: 0.85rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             cursor: pointer;
-            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
-            transition: all 0.15s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            transition: all 0.2s ease;
             width: 100%;
             text-transform: uppercase;
             margin-top: 10px;
         }
 
         .cover-open-btn:hover {
-            background: #d97706;
-            border-color: #d97706;
-            transform: translate(-1px, -1px);
-            box-shadow: 5px 5px 0px #0f172a;
+            background: #ef4444;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
         }
 
         .cover-open-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #0f172a;
-        }
-
-        .cover-top-barcode {
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            color: #888888;
-            margin-bottom: 12px;
+            transform: translateY(1px);
         }
 
         /* ----------------------------------------------------
-           MAIN DOCUMENT STYLES
+           MAIN INVOICE CONTAINER (LUXURY HARDWARE STYLE)
         ---------------------------------------------------- */
         .invoice-container {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
-            background-color: var(--bg-paper);
-            border: 1px solid var(--border-dark);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-hairline);
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
             display: flex;
             position: relative;
+            overflow: hidden;
         }
 
-        /* Sidebar Kiri Khas Editorial */
+        /* Sidebar Kiri Accent */
         .sidebar-left {
-            width: 70px;
-            background-color: #f8fafc;
-            border-right: 1px solid var(--border-dark);
+            width: 75px;
+            background-color: #0b0b0e;
+            border-right: 1px solid var(--border-hairline);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -288,8 +296,8 @@
             font-weight: 800;
             letter-spacing: 0.15em;
             text-transform: lowercase;
-            color: var(--navy-primary);
-            opacity: 0.9;
+            color: var(--red-primary);
+            opacity: 0.95;
         }
 
         .vertical-text-wrapper {
@@ -305,13 +313,13 @@
 
         .vertical-brand-name {
             font-weight: 700;
-            color: var(--gold-accent);
+            color: #ffffff;
         }
 
-        /* Main Content Right */
+        /* Main Panel Right */
         .main-panel {
             flex-grow: 1;
-            padding: 40px 48px;
+            padding: 44px 50px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -322,9 +330,9 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 24px;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 20px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border-hairline);
+            padding-bottom: 24px;
         }
 
         .top-left-meta {
@@ -335,29 +343,33 @@
 
         .inv-num-label {
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 700;
-            color: var(--navy-primary);
+            color: var(--red-accent);
             letter-spacing: 0.05em;
         }
 
         .inv-date-label {
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .billed-to-box {
             font-size: 0.85rem;
-            line-height: 1.45;
+            line-height: 1.5;
+            background: #18181c;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .billed-title {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--gold-accent);
-            margin-bottom: 2px;
+            letter-spacing: 0.12em;
+            color: var(--red-primary);
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
@@ -366,35 +378,61 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 8px;
+            gap: 10px;
+        }
+
+        .brand-logo-display {
+            font-family: var(--font-sora);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .brand-logo-display .red-star {
+            color: var(--red-primary);
+            font-size: 1.1rem;
+            display: inline-block;
+            transform: translateY(-2px);
+        }
+
+        .brand-logo-sub-tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: -6px;
         }
 
         .brand-badge-pill {
             display: inline-block;
             padding: 6px 14px;
-            background: #0f172a;
-            color: #d97706;
+            background: rgba(220, 38, 38, 0.15);
+            color: #f8fafc;
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.08em;
-            border-radius: 2px;
+            border-radius: 4px;
             text-transform: uppercase;
-            border: 1px solid #d97706;
+            border: 1px solid var(--red-primary);
         }
 
         .target-timeline-tag {
             font-size: 0.75rem;
             color: var(--text-muted);
-            background: #f8fafc;
-            padding: 4px 8px;
-            border: 1px solid #e2e8f0;
-            border-radius: 2px;
+            background: #18181c;
+            padding: 6px 12px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 6px;
             font-family: var(--font-mono);
         }
 
         /* Table Architecture */
         .table-area {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         .margarita-table {
@@ -406,24 +444,24 @@
         .margarita-table th {
             text-align: left;
             font-weight: 700;
-            color: var(--navy-primary);
-            padding: 10px 0;
-            border-bottom: 2px solid var(--navy-primary);
+            color: #f8fafc;
+            padding: 12px 0;
+            border-bottom: 2px solid var(--red-primary);
             font-size: 0.75rem;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
 
         .margarita-table td {
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border-light);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-hairline);
             vertical-align: top;
         }
 
         .section-header-banner {
-            background-color: #1e293b;
+            background-color: #1a1a20;
             color: #ffffff;
-            padding: 10px 14px;
+            padding: 12px 16px;
             font-family: var(--font-mono);
             font-size: 0.78rem;
             font-weight: 700;
@@ -431,9 +469,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--gold-accent);
+            margin-top: 14px;
+            margin-bottom: 14px;
+            border-left: 4px solid var(--red-primary);
+            border-radius: 4px;
+        }
+
+        .section-header-banner.adjust-banner {
+            background-color: #161a22;
+            border-left-color: #38bdf8;
         }
 
         .col-subtotal {
@@ -445,9 +489,9 @@
 
         .item-title {
             font-weight: 700;
-            color: var(--navy-primary);
+            color: #ffffff;
             margin-bottom: 6px;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
@@ -457,13 +501,13 @@
             list-style: none;
             padding-left: 0;
             color: var(--text-muted);
-            font-size: 0.8rem;
-            line-height: 1.5;
+            font-size: 0.82rem;
+            line-height: 1.55;
         }
 
         .bullet-list li {
             position: relative;
-            padding-left: 14px;
+            padding-left: 16px;
             margin-bottom: 4px;
         }
 
@@ -471,26 +515,27 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: var(--gold-accent);
+            color: var(--red-primary);
             font-weight: bold;
         }
 
         .table-totals-row td {
-            padding: 10px 0;
+            padding: 14px 0;
             border-bottom: none;
         }
 
         .grand-total {
-            border-top: 2px solid var(--navy-primary);
-            border-bottom: 2px solid var(--navy-primary);
+            border-top: 2px solid var(--red-primary);
+            border-bottom: 2px solid var(--red-primary);
             font-weight: 700;
-            color: var(--navy-primary);
+            background: rgba(220, 38, 38, 0.05);
         }
 
         .grand-total td {
             font-family: var(--font-mono);
-            font-size: 1.15rem;
-            padding: 16px 0;
+            font-size: 1.2rem;
+            padding: 18px 12px;
+            color: #ffffff;
         }
 
         /* Highlight & Specification Cards */
@@ -498,23 +543,23 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .scope-card {
-            background: #f8fafc;
-            border: 1px solid var(--border-light);
-            border-left: 3px solid var(--gold-accent);
-            padding: 14px 16px;
-            border-radius: 2px;
+            background: #16161a;
+            border: 1px solid var(--border-hairline);
+            border-left: 3px solid var(--red-primary);
+            padding: 16px 18px;
+            border-radius: 8px;
         }
 
         .scope-card-title {
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.1em;
-            color: var(--navy-primary);
-            margin-bottom: 8px;
+            color: #ffffff;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -526,12 +571,12 @@
             padding: 0;
             margin: 0;
             font-size: 0.78rem;
-            color: var(--text-dark);
-            line-height: 1.45;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .scope-card-list li {
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             display: flex;
             align-items: flex-start;
             gap: 6px;
@@ -546,88 +591,88 @@
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 20px;
-            border-top: 1px solid var(--border-light);
-            padding-top: 20px;
-            margin-bottom: 18px;
+            border-top: 1px solid var(--border-hairline);
+            padding-top: 24px;
+            margin-bottom: 20px;
         }
 
         .bottom-block-title {
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.1em;
-            color: var(--navy-primary);
+            color: var(--red-accent);
             margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .bottom-block-content {
-            font-size: 0.8rem;
-            line-height: 1.45;
-            color: var(--text-dark);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--text-main);
         }
 
         .copy-pill-btn {
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            color: var(--navy-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
             font-family: var(--font-mono);
             font-size: 0.65rem;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 2px;
+            padding: 2px 8px;
+            border-radius: 4px;
             cursor: pointer;
-            margin-left: 6px;
+            margin-left: 8px;
             transition: all 0.15s ease;
         }
 
         .copy-pill-btn:hover {
-            background: var(--navy-primary);
+            background: var(--red-primary);
+            border-color: var(--red-primary);
             color: #ffffff;
-            border-color: var(--navy-primary);
         }
 
         /* Terms & Notes Box */
         .terms-container {
-            background-color: #f8fafc;
-            border: 1px dashed var(--border-dark);
-            padding: 14px 16px;
-            font-size: 0.75rem;
+            background-color: #141418;
+            border: 1px dashed rgba(220, 38, 38, 0.4);
+            padding: 16px 18px;
+            font-size: 0.78rem;
             color: var(--text-muted);
-            line-height: 1.45;
-            border-radius: 2px;
+            line-height: 1.5;
+            border-radius: 8px;
         }
 
         .terms-title {
             font-weight: 700;
-            color: var(--navy-primary);
-            margin-bottom: 4px;
+            color: var(--red-accent);
+            margin-bottom: 6px;
             text-transform: uppercase;
-            font-size: 0.7rem;
-            letter-spacing: 0.05em;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
         }
 
         /* Top Action / Control Bar */
         .action-bar {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto 16px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #ffffff;
-            padding: 10px 16px;
-            border: 1px solid var(--border-dark);
-            border-radius: 2px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: #121215;
+            padding: 12px 20px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
         .action-title {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            color: var(--navy-primary);
+            color: #ffffff;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .action-title span {
@@ -635,22 +680,23 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #d97706;
+            background: var(--red-primary);
+            box-shadow: 0 0 8px var(--red-primary);
         }
 
         .btn-group {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn {
             font-family: var(--font-sora);
             font-size: 0.75rem;
             font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 2px;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
-            border: 1px solid var(--navy-primary);
+            border: 1px solid var(--border-hairline);
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -659,22 +705,23 @@
         }
 
         .btn-primary {
-            background-color: var(--navy-primary);
+            background-color: var(--red-primary);
             color: #ffffff;
+            border-color: var(--red-primary);
         }
 
         .btn-primary:hover {
-            background-color: var(--gold-accent);
-            border-color: var(--gold-accent);
+            background-color: #ef4444;
+            border-color: #ef4444;
         }
 
         .btn-secondary {
-            background-color: #ffffff;
-            color: var(--navy-primary);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
         }
 
         .btn-secondary:hover {
-            background-color: #f1f5f9;
+            background-color: rgba(255, 255, 255, 0.12);
         }
 
         /* Toast notification */
@@ -682,13 +729,13 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: var(--navy-primary);
+            background-color: var(--red-primary);
             color: #ffffff;
-            padding: 10px 18px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -711,9 +758,9 @@
 
             .action-bar {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
                 align-items: stretch;
-                padding: 12px;
+                padding: 14px;
             }
 
             .btn-group {
@@ -724,13 +771,14 @@
 
             .btn {
                 justify-content: center;
-                padding: 10px;
+                padding: 12px;
             }
 
             .invoice-container {
                 flex-direction: column;
                 width: 100%;
                 max-width: 100%;
+                border-radius: 10px;
             }
 
             .sidebar-left {
@@ -739,37 +787,37 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                padding: 12px 16px;
+                padding: 14px 18px;
                 border-right: none;
-                border-bottom: 1px solid var(--border-dark);
-                background-color: #f8fafc;
+                border-bottom: 1px solid var(--border-hairline);
+                background-color: #0b0b0e;
             }
 
             .vertical-invoice-title {
                 writing-mode: horizontal-tb;
                 transform: none;
-                font-size: 1.3rem;
+                font-size: 1.4rem;
                 letter-spacing: 0.05em;
             }
 
             .vertical-text-wrapper {
                 writing-mode: horizontal-tb;
                 transform: none;
-                font-size: 0.7rem;
+                font-size: 0.72rem;
                 flex-direction: row;
                 gap: 8px;
             }
 
             .main-panel {
-                padding: 16px 14px;
+                padding: 20px 16px;
             }
 
             .invoice-header-row {
                 flex-direction: column;
-                gap: 14px;
+                gap: 16px;
                 align-items: flex-start;
-                margin-bottom: 16px;
-                padding-bottom: 14px;
+                margin-bottom: 20px;
+                padding-bottom: 16px;
             }
 
             .top-right-logo-box {
@@ -785,8 +833,8 @@
 
             .bottom-section-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
-                padding-top: 14px;
+                gap: 16px;
+                padding-top: 16px;
             }
 
             .col-subtotal {
@@ -795,24 +843,20 @@
             }
 
             .cover-card {
-                padding: 30px 18px;
+                padding: 32px 20px;
             }
 
-            .cover-title {
-                font-size: 1.15rem;
-            }
-
-            .cover-recipient-name {
-                font-size: 0.95rem;
+            .brand-logo-heading {
+                font-size: 1.3rem;
             }
         }
 
         /* ----------------------------------------------------
-           PRINT OPTIMIZATIONS
+           PRINT OPTIMIZATIONS (A4 WHITE CLEAN MODE)
         ---------------------------------------------------- */
         @media print {
             body {
-                background: none !important;
+                background: #ffffff !important;
                 padding: 0 !important;
                 color: #000000 !important;
             }
@@ -829,15 +873,50 @@
                 border: 1px solid #000000 !important;
                 max-width: 100% !important;
                 width: 100% !important;
+                background-color: #ffffff !important;
+                color: #000000 !important;
             }
 
             .sidebar-left {
-                background-color: #f8fafc !important;
+                background-color: #f1f5f9 !important;
+                border-right: 1px solid #000000 !important;
                 -webkit-print-color-adjust: exact !important;
+            }
+
+            .vertical-invoice-title {
+                color: #dc2626 !important;
             }
 
             .main-panel {
                 padding: 24px 30px !important;
+                color: #000000 !important;
+            }
+
+            .billed-to-box,
+            .scope-card,
+            .terms-container {
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #000000 !important;
+            }
+
+            .brand-logo-display,
+            .item-title,
+            .scope-card-title,
+            .bottom-block-content,
+            .grand-total td {
+                color: #000000 !important;
+            }
+
+            .bullet-list,
+            .scope-card-list {
+                color: #334155 !important;
+            }
+
+            .section-header-banner {
+                background-color: #0f172a !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
             }
         }
     </style>
@@ -847,11 +926,13 @@
     <!-- PASSCODE SECURITY COVER OVERLAY -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card">
-            <div class="cover-top-barcode">// OFFICIAL BILLING DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
+            <div class="cover-top-barcode">// OFFICIAL BILLING DOSSIER &bull; UNDERRATED BARBERSHOP //</div>
             <div class="classified-stamp">OFFICIAL INVOICE</div>
 
-            <h1 class="cover-title">WEBSITE &amp; KASIR BARBER UNDERRATED</h1>
-            <div class="cover-subtitle">Owner Barber Underrated &bull; Omnichannel PWA &amp; Multi-Cabang</div>
+            <div class="brand-logo-heading">
+                Under<span class="red-star">★</span>rated
+            </div>
+            <div class="brand-logo-sub">Barbershop</div>
             
             <div class="classified-line-divider"></div>
 
@@ -884,11 +965,11 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 Salin Rekening
             </button>
-            <button class="btn btn-primary" style="background:#d97706;" onclick="downloadPDF()">
+            <button class="btn btn-primary" onclick="downloadPDF()">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download / Simpan PDF (A4)
             </button>
-            <button class="btn btn-primary" onclick="window.print()">
+            <button class="btn btn-primary" style="background:#dc2626;" onclick="window.print()">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 Cetak / Print
             </button>
@@ -902,7 +983,7 @@
         <div class="sidebar-left">
             <div class="vertical-invoice-title">invoice</div>
             <div class="vertical-text-wrapper">
-                <div class="vertical-brand-name">BARBER UNDERRATED</div>
+                <div class="vertical-brand-name">UNDERRATED BARBERSHOP</div>
             </div>
         </div>
 
@@ -926,7 +1007,11 @@
                     </div>
 
                     <div class="top-right-logo-box">
-                        <span class="brand-badge-pill">✂️ OMNICHANNEL PWA &amp; POS KASIR</span>
+                        <div class="brand-logo-display">
+                            Under<span class="red-star">★</span>rated
+                        </div>
+                        <div class="brand-logo-sub-tag">Barbershop &bull; Omnichannel PWA &amp; Kasir</div>
+                        <span class="brand-badge-pill">💈 OMNICHANNEL PWA &amp; POS KASIR</span>
                         <div class="target-timeline-tag">📅 Target Opening: 30 Agt 2026 &bull; Estimasi Rampung: 16 Sep 2026</div>
                     </div>
                 </div>
@@ -965,7 +1050,7 @@
                                         <li><strong>Dashboard Owner Multi-Cabang:</strong> Rekap omzet harian &amp; performa capster real-time</li>
                                     </ul>
                                 </td>
-                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #ffffff;">
                                     Rp 5.250.000
                                 </td>
                             </tr>
@@ -981,7 +1066,7 @@
                                         <li><strong>Absensi Karyawan Selfie:</strong> Selfie + Geofence GPS 100m Server-Time &amp; Kalender Cuti Tim</li>
                                     </ul>
                                 </td>
-                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #ffffff;">
                                     Rp 750.000
                                 </td>
                             </tr>
@@ -989,7 +1074,7 @@
                             <!-- BANNER BAGIAN II -->
                             <tr>
                                 <td colspan="2" style="padding:0; border-bottom:none;">
-                                    <div class="section-header-banner" style="background-color: #0f172a; border-left-color: #38bdf8;">
+                                    <div class="section-header-banner adjust-banner">
                                         <span>BAGIAN II: PENYESUAIAN TERMIN 1 (DP 50% KICKOFF SPRINT)</span>
                                         <span>Subtotal: -Rp 3.000.000</span>
                                     </div>
@@ -1007,15 +1092,15 @@
                                         <li><strong>Termin 3 (Rp 1.200.000):</strong> ditagihkan saat serah terima akhir modul HPP &amp; absensi serta pelatihan</li>
                                     </ul>
                                 </td>
-                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #b91c1c;">
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #ef4444;">
                                     -Rp 3.000.000
                                 </td>
                             </tr>
 
                             <!-- GRAND TOTAL ROW -->
                             <tr class="table-totals-row grand-total">
-                                <td style="font-weight: 800; color: var(--navy-primary);">TOTAL TAGIHAN (TERMIN 1 DP 50%)</td>
-                                <td class="col-subtotal" style="font-size:1.2rem; font-weight:800; color: var(--navy-primary);">Rp 3.000.000</td>
+                                <td style="font-weight: 800; color: #ffffff;">TOTAL TAGIHAN (TERMIN 1 DP 50%)</td>
+                                <td class="col-subtotal" style="font-size:1.25rem; font-weight:800; color: var(--red-accent);">Rp 3.000.000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1028,40 +1113,40 @@
                 <div class="scope-breakdown-box">
                     <div class="scope-card">
                         <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span>KEUNGGULAN SYSTEM BARBER</span>
                         </div>
                         <ul class="scope-card-list">
                             <li>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>PWA App 5 Tab:</strong> Tanpa perlu Play Store/App Store.</span>
                             </li>
                             <li>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>5-Tier Membership:</strong> Auto-Upgrade &amp; Cashback Poin.</span>
                             </li>
                             <li>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>POS Kasir Multi-Cabang:</strong> Struk WA &amp; Omzet Realtime.</span>
                             </li>
                         </ul>
                     </div>
                     <div class="scope-card">
                         <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                             <span>ADD-ON FITUR MANAJEMEN</span>
                         </div>
                         <ul class="scope-card-list">
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
                                 <span><strong>Kalkulator HPP Produk:</strong> Hitung modal &amp; batas diskon aman.</span>
                             </li>
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 <span><strong>Absensi Selfie &amp; GPS:</strong> Geofence 100m &amp; Cuti Tim.</span>
                             </li>
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>Cicilan 3 Termin:</strong> DP 50% Kickoff Sprint.</span>
                             </li>
                         </ul>
@@ -1077,15 +1162,15 @@
                     <div>
                         <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
                         <div class="bottom-block-content">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                                 <img src="/abdurrahman/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 20px; width: auto; object-fit: contain;">
-                                <strong style="font-size: 0.92rem; color: var(--navy-primary);">Bank Mandiri</strong>
+                                <strong style="font-size: 0.95rem; color: #ffffff;">Bank Mandiri</strong>
                             </div>
-                            <div style="margin-bottom: 3px;">
-                                Account Name: <strong>Daru Fahmaa Muliawan</strong>
+                            <div style="margin-bottom: 4px; color: var(--text-muted);">
+                                Account Name: <strong style="color: #ffffff;">Daru Fahmaa Muliawan</strong>
                             </div>
                             <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px; flex-wrap: nowrap;">
-                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--navy-primary);">1550010616962</strong></span>
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--red-accent);">1550010616962</strong></span>
                                 <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
                             </div>
                         </div>
@@ -1095,8 +1180,8 @@
                     <div>
                         <div class="bottom-block-title">ISSUER &amp; CONTACT</div>
                         <div class="bottom-block-content">
-                            <strong>Daru Fahmaa Muliawan</strong><br>
-                            <strong style="color:var(--navy-primary);">Web Developer &amp; Tech Consultant</strong><br>
+                            <strong style="color:#ffffff;">Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--red-accent);">Web Developer &amp; Tech Consultant</strong><br>
                             WA: 081311506025
                         </div>
                     </div>
