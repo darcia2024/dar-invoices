@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INVOICE #INV/BU/2026/013 - Underrated Barbershop (Website & Kasir Multi-Cabang)</title>
-    <!-- Google Fonts: Sora & Space Mono -->
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-canvas: #09090b;
-            --bg-card: #121215;
-            --bg-inner: #18181c;
+            --bg-canvas: #e2e8f0; /* Gray Canvas Background */
+            --bg-card: #ffffff;   /* Pure White Invoice Paper */
+            --bg-inner: #f8fafc;  /* Subtle Light Gray Inner Container */
             --red-primary: #dc2626;
-            --red-accent: #ef4444;
+            --red-accent: #b91c1c;
             --red-glow: rgba(220, 38, 38, 0.15);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-main: #0f172a;
+            --text-muted: #475569;
             --text-dark: #0f172a;
-            --border-hairline: rgba(255, 255, 255, 0.1);
-            --border-red: rgba(220, 38, 38, 0.4);
+            --border-hairline: #cbd5e1;
+            --border-dark: #0f172a;
             
-            --font-sora: 'Sora', sans-serif;
+            --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+            --font-sora: 'Plus Jakarta Sans', sans-serif;
             --font-mono: 'Space Mono', monospace;
         }
 
@@ -34,12 +35,9 @@
         }
 
         body {
-            font-family: var(--font-sora);
-            font-weight: 300;
+            font-family: var(--font-jakarta);
+            font-weight: 400;
             background-color: var(--bg-canvas);
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(220, 38, 38, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(220, 38, 38, 0.05) 0%, transparent 40%);
             color: var(--text-main);
             line-height: 1.5;
             padding: 40px 20px;
@@ -57,9 +55,9 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #050507;
+            background-color: #0b0f19;
             background-image: 
-                radial-gradient(circle at 50% 30%, rgba(220, 38, 38, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 50% 30%, rgba(220, 38, 38, 0.2) 0%, transparent 60%),
                 radial-gradient(#1e1e24 1px, transparent 1px);
             background-size: 100% 100%, 24px 24px;
             z-index: 10000;
@@ -78,17 +76,17 @@
         }
 
         .cover-card {
-            background-color: #0d0d10;
-            border: 1px solid var(--border-hairline);
-            border-top: 3px solid var(--red-primary);
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-top: 4px solid var(--red-primary);
             border-radius: 12px;
             max-width: 520px;
             width: 100%;
             padding: 45px 36px;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 40px var(--red-glow);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
             position: relative;
-            color: #ffffff;
+            color: #0f172a;
             font-family: var(--font-mono);
         }
 
@@ -104,20 +102,20 @@
         }
 
         .brand-logo-heading {
-            font-family: var(--font-sora);
-            font-size: 1.6rem;
+            font-family: var(--font-jakarta);
+            font-size: 1.7rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            color: #ffffff;
+            color: #0f172a;
             display: inline-flex;
             align-items: center;
             gap: 2px;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .brand-logo-heading .red-star {
             color: var(--red-primary);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin: 0 2px;
             display: inline-block;
             transform: translateY(-2px);
@@ -127,9 +125,9 @@
             font-size: 0.75rem;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            color: var(--text-muted);
+            color: #64748b;
             margin-bottom: 24px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .classified-stamp {
@@ -141,14 +139,14 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-bottom: 20px;
-            background: rgba(220, 38, 38, 0.1);
-            color: var(--red-accent);
+            background: #fef2f2;
+            color: #b91c1c;
             border-radius: 4px;
         }
 
         .cover-recipient-box {
-            background: #141418;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 16px;
             text-align: left;
@@ -167,27 +165,27 @@
         }
 
         .cover-recipient-name {
-            font-family: var(--font-sora);
+            font-family: var(--font-jakarta);
             font-size: 1.05rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #0f172a;
         }
 
         .cover-recipient-org {
             font-size: 0.78rem;
-            color: var(--text-muted);
+            color: #64748b;
         }
 
         .cover-inv-num {
             font-family: var(--font-mono);
             font-size: 0.75rem;
-            color: #f8fafc;
+            color: #b91c1c;
             margin-top: 6px;
             font-weight: 700;
-            background: rgba(255, 255, 255, 0.05);
+            background: #fef2f2;
             display: inline-block;
             padding: 2px 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #fecaca;
             border-radius: 4px;
         }
 
@@ -198,7 +196,7 @@
         .passcode-label {
             font-size: 0.7rem;
             letter-spacing: 0.12em;
-            color: var(--text-muted);
+            color: #64748b;
             margin-bottom: 10px;
             text-transform: uppercase;
         }
@@ -206,26 +204,25 @@
         .passcode-input {
             width: 190px;
             height: 48px;
-            background: #18181c;
-            border: 1px solid var(--border-hairline);
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
             border-radius: 6px;
             text-align: center;
             font-family: var(--font-mono);
             font-size: 1.4rem;
             letter-spacing: 8px;
-            color: #ffffff;
+            color: #0f172a;
             outline: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
             transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
             border-color: var(--red-primary);
-            box-shadow: 0 0 15px var(--red-glow), inset 0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
         }
 
         .passcode-error {
-            color: #ef4444;
+            color: #dc2626;
             font-size: 0.75rem;
             font-weight: 700;
             margin-top: 8px;
@@ -234,7 +231,7 @@
         }
 
         .cover-open-btn {
-            background: var(--red-primary);
+            background: #0f172a;
             color: #ffffff;
             border: none;
             border-radius: 6px;
@@ -244,7 +241,7 @@
             font-weight: 700;
             letter-spacing: 0.1em;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
             transition: all 0.2s ease;
             width: 100%;
             text-transform: uppercase;
@@ -252,9 +249,9 @@
         }
 
         .cover-open-btn:hover {
-            background: #ef4444;
+            background: var(--red-primary);
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.4);
         }
 
         .cover-open-btn:active {
@@ -262,15 +259,15 @@
         }
 
         /* ----------------------------------------------------
-           MAIN INVOICE CONTAINER (LUXURY HARDWARE STYLE)
+           MAIN INVOICE CONTAINER (WHITE PAPER ON GRAY CANVAS)
         ---------------------------------------------------- */
         .invoice-container {
             max-width: 980px;
             margin: 0 auto;
             background-color: var(--bg-card);
-            border: 1px solid var(--border-hairline);
-            border-radius: 16px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
             display: flex;
             position: relative;
             overflow: hidden;
@@ -279,8 +276,8 @@
         /* Sidebar Kiri Accent */
         .sidebar-left {
             width: 75px;
-            background-color: #0b0b0e;
-            border-right: 1px solid var(--border-hairline);
+            background-color: #f8fafc;
+            border-right: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -313,7 +310,7 @@
 
         .vertical-brand-name {
             font-weight: 700;
-            color: #ffffff;
+            color: #0f172a;
         }
 
         /* Main Panel Right */
@@ -331,7 +328,7 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 28px;
-            border-bottom: 1px solid var(--border-hairline);
+            border-bottom: 1px solid #e2e8f0;
             padding-bottom: 24px;
         }
 
@@ -345,7 +342,7 @@
             font-family: var(--font-mono);
             font-size: 0.88rem;
             font-weight: 700;
-            color: var(--red-accent);
+            color: var(--red-primary);
             letter-spacing: 0.05em;
         }
 
@@ -358,10 +355,10 @@
         .billed-to-box {
             font-size: 0.85rem;
             line-height: 1.5;
-            background: #18181c;
+            background: #f8fafc;
             padding: 14px 18px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid #e2e8f0;
         }
 
         .billed-title {
@@ -382,11 +379,11 @@
         }
 
         .brand-logo-display {
-            font-family: var(--font-sora);
-            font-size: 1.5rem;
+            font-family: var(--font-jakarta);
+            font-size: 1.55rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            color: #ffffff;
+            color: #0f172a;
             display: flex;
             align-items: center;
             gap: 2px;
@@ -394,7 +391,7 @@
 
         .brand-logo-display .red-star {
             color: var(--red-primary);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             display: inline-block;
             transform: translateY(-2px);
         }
@@ -405,27 +402,27 @@
             text-transform: uppercase;
             color: var(--text-muted);
             margin-top: -6px;
+            font-weight: 600;
         }
 
         .brand-badge-pill {
             display: inline-block;
             padding: 6px 14px;
-            background: rgba(220, 38, 38, 0.15);
-            color: #f8fafc;
+            background: #0f172a;
+            color: #ffffff;
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             border-radius: 4px;
             text-transform: uppercase;
-            border: 1px solid var(--red-primary);
         }
 
         .target-timeline-tag {
             font-size: 0.75rem;
             color: var(--text-muted);
-            background: #18181c;
+            background: #f8fafc;
             padding: 6px 12px;
-            border: 1px solid var(--border-hairline);
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
             font-family: var(--font-mono);
         }
@@ -444,7 +441,7 @@
         .margarita-table th {
             text-align: left;
             font-weight: 700;
-            color: #f8fafc;
+            color: #0f172a;
             padding: 12px 0;
             border-bottom: 2px solid var(--red-primary);
             font-size: 0.75rem;
@@ -454,12 +451,12 @@
 
         .margarita-table td {
             padding: 16px 0;
-            border-bottom: 1px solid var(--border-hairline);
+            border-bottom: 1px solid #e2e8f0;
             vertical-align: top;
         }
 
         .section-header-banner {
-            background-color: #1a1a20;
+            background-color: #0f172a;
             color: #ffffff;
             padding: 12px 16px;
             font-family: var(--font-mono);
@@ -476,7 +473,7 @@
         }
 
         .section-header-banner.adjust-banner {
-            background-color: #161a22;
+            background-color: #1e293b;
             border-left-color: #38bdf8;
         }
 
@@ -489,7 +486,7 @@
 
         .item-title {
             font-weight: 700;
-            color: #ffffff;
+            color: #0f172a;
             margin-bottom: 6px;
             font-size: 0.92rem;
             display: flex;
@@ -528,14 +525,14 @@
             border-top: 2px solid var(--red-primary);
             border-bottom: 2px solid var(--red-primary);
             font-weight: 700;
-            background: rgba(220, 38, 38, 0.05);
+            background: #fef2f2;
         }
 
         .grand-total td {
             font-family: var(--font-mono);
             font-size: 1.2rem;
             padding: 18px 12px;
-            color: #ffffff;
+            color: #0f172a;
         }
 
         /* Highlight & Specification Cards */
@@ -547,8 +544,8 @@
         }
 
         .scope-card {
-            background: #16161a;
-            border: 1px solid var(--border-hairline);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-left: 3px solid var(--red-primary);
             padding: 16px 18px;
             border-radius: 8px;
@@ -558,7 +555,7 @@
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.1em;
-            color: #ffffff;
+            color: #0f172a;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -591,7 +588,7 @@
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 20px;
-            border-top: 1px solid var(--border-hairline);
+            border-top: 1px solid #e2e8f0;
             padding-top: 24px;
             margin-bottom: 20px;
         }
@@ -600,7 +597,7 @@
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.1em;
-            color: var(--red-accent);
+            color: var(--red-primary);
             margin-bottom: 8px;
             text-transform: uppercase;
         }
@@ -612,9 +609,9 @@
         }
 
         .copy-pill-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
             font-family: var(--font-mono);
             font-size: 0.65rem;
             font-weight: 700;
@@ -633,8 +630,8 @@
 
         /* Terms & Notes Box */
         .terms-container {
-            background-color: #141418;
-            border: 1px dashed rgba(220, 38, 38, 0.4);
+            background-color: #f8fafc;
+            border: 1px dashed #cbd5e1;
             padding: 16px 18px;
             font-size: 0.78rem;
             color: var(--text-muted);
@@ -644,7 +641,7 @@
 
         .terms-title {
             font-weight: 700;
-            color: var(--red-accent);
+            color: var(--red-primary);
             margin-bottom: 6px;
             text-transform: uppercase;
             font-size: 0.72rem;
@@ -658,18 +655,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #121215;
+            background: #ffffff;
             padding: 12px 20px;
-            border: 1px solid var(--border-hairline);
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .action-title {
             font-family: var(--font-mono);
             font-size: 0.82rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #0f172a;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -681,7 +678,6 @@
             height: 8px;
             border-radius: 50%;
             background: var(--red-primary);
-            box-shadow: 0 0 8px var(--red-primary);
         }
 
         .btn-group {
@@ -690,13 +686,13 @@
         }
 
         .btn {
-            font-family: var(--font-sora);
+            font-family: var(--font-jakarta);
             font-size: 0.75rem;
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
-            border: 1px solid var(--border-hairline);
+            border: 1px solid #cbd5e1;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -711,17 +707,17 @@
         }
 
         .btn-primary:hover {
-            background-color: #ef4444;
-            border-color: #ef4444;
+            background-color: #b91c1c;
+            border-color: #b91c1c;
         }
 
         .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #0f172a;
         }
 
         .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: #f1f5f9;
         }
 
         /* Toast notification */
@@ -729,13 +725,13 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: var(--red-primary);
+            background-color: #0f172a;
             color: #ffffff;
             padding: 12px 20px;
             border-radius: 6px;
             font-size: 0.82rem;
             font-weight: 600;
-            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -789,8 +785,8 @@
                 align-items: center;
                 padding: 14px 18px;
                 border-right: none;
-                border-bottom: 1px solid var(--border-hairline);
-                background-color: #0b0b0e;
+                border-bottom: 1px solid #e2e8f0;
+                background-color: #f8fafc;
             }
 
             .vertical-invoice-title {
@@ -847,7 +843,7 @@
             }
 
             .brand-logo-heading {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
             }
         }
 
@@ -969,7 +965,7 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download / Simpan PDF (A4)
             </button>
-            <button class="btn btn-primary" style="background:#dc2626;" onclick="window.print()">
+            <button class="btn btn-primary" style="background:#dc2626; border-color:#dc2626;" onclick="window.print()">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 Cetak / Print
             </button>
@@ -1050,7 +1046,7 @@
                                         <li><strong>Dashboard Owner Multi-Cabang:</strong> Rekap omzet harian &amp; performa capster real-time</li>
                                     </ul>
                                 </td>
-                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #ffffff;">
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">
                                     Rp 5.250.000
                                 </td>
                             </tr>
@@ -1066,7 +1062,7 @@
                                         <li><strong>Absensi Karyawan Selfie:</strong> Selfie + Geofence GPS 100m Server-Time &amp; Kalender Cuti Tim</li>
                                     </ul>
                                 </td>
-                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #ffffff;">
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">
                                     Rp 750.000
                                 </td>
                             </tr>
@@ -1092,15 +1088,15 @@
                                         <li><strong>Termin 3 (Rp 1.200.000):</strong> ditagihkan saat serah terima akhir modul HPP &amp; absensi serta pelatihan</li>
                                     </ul>
                                 </td>
-                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #ef4444;">
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #dc2626;">
                                     -Rp 3.000.000
                                 </td>
                             </tr>
 
                             <!-- GRAND TOTAL ROW -->
                             <tr class="table-totals-row grand-total">
-                                <td style="font-weight: 800; color: #ffffff;">TOTAL TAGIHAN (TERMIN 1 DP 50%)</td>
-                                <td class="col-subtotal" style="font-size:1.25rem; font-weight:800; color: var(--red-accent);">Rp 3.000.000</td>
+                                <td style="font-weight: 800; color: #0f172a;">TOTAL TAGIHAN (TERMIN 1 DP 50%)</td>
+                                <td class="col-subtotal" style="font-size:1.25rem; font-weight:800; color: #0f172a;">Rp 3.000.000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1133,20 +1129,20 @@
                     </div>
                     <div class="scope-card">
                         <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                             <span>ADD-ON FITUR MANAJEMEN</span>
                         </div>
                         <ul class="scope-card-list">
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
                                 <span><strong>Kalkulator HPP Produk:</strong> Hitung modal &amp; batas diskon aman.</span>
                             </li>
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 <span><strong>Absensi Selfie &amp; GPS:</strong> Geofence 100m &amp; Cuti Tim.</span>
                             </li>
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>Cicilan 3 Termin:</strong> DP 50% Kickoff Sprint.</span>
                             </li>
                         </ul>
@@ -1164,13 +1160,13 @@
                         <div class="bottom-block-content">
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                                 <img src="/abdurrahman/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 20px; width: auto; object-fit: contain;">
-                                <strong style="font-size: 0.95rem; color: #ffffff;">Bank Mandiri</strong>
+                                <strong style="font-size: 0.95rem; color: #0f172a;">Bank Mandiri</strong>
                             </div>
                             <div style="margin-bottom: 4px; color: var(--text-muted);">
-                                Account Name: <strong style="color: #ffffff;">Daru Fahmaa Muliawan</strong>
+                                Account Name: <strong style="color: #0f172a;">Daru Fahmaa Muliawan</strong>
                             </div>
                             <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px; flex-wrap: nowrap;">
-                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--red-accent);">1550010616962</strong></span>
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.95rem; color: #0f172a;">1550010616962</strong></span>
                                 <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
                             </div>
                         </div>
@@ -1180,8 +1176,8 @@
                     <div>
                         <div class="bottom-block-title">ISSUER &amp; CONTACT</div>
                         <div class="bottom-block-content">
-                            <strong style="color:#ffffff;">Daru Fahmaa Muliawan</strong><br>
-                            <strong style="color:var(--red-accent);">Web Developer &amp; Tech Consultant</strong><br>
+                            <strong style="color:#0f172a;">Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--red-primary);">Web Developer &amp; Tech Consultant</strong><br>
                             WA: 081311506025
                         </div>
                     </div>
