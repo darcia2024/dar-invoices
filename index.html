@@ -1816,6 +1816,60 @@
                 </a>
             </div>
 
+            <!-- Owner Barber Underrated Card -->
+            <div class="invoice-card" id="card-barber" data-id="barber" data-month="2026-08" data-amount="6000000" data-client="owner barber underrated website kasir pwa 5 tab membership pos kasir multi cabang hpp absensi selfie #inv/bu/2026/013 agustus 2026 6.000.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Owner Barber Underrated</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('barber')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/BU/2026/013</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Website &amp; Kasir Barber Underrated (PWA 5 Tab, 5-Tier Membership, POS Kasir Multi-Cabang, HPP &amp; Absensi).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/barber</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/barber')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptBarber()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET KONTRAK:</span>
+                            <span class="fin-val">Rp 6.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValBarber">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValBarber">Rp 6.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('barber')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/barber" class="action-btn">
+                    <span>[ BUKA INVOICE BARBER UNDERRATED ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -1897,7 +1951,8 @@
             umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID",
             kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
             zalvice: localStorage.getItem("status_zalvice") || "UNPAID",
-            azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID"
+            azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID",
+            barber: localStorage.getItem("status_barber") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1912,7 +1967,8 @@
             umiatiyah: parseInt(localStorage.getItem("profit_umiatiyah")) || 2200000,
             kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 700000,
             zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000,
-            azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000
+            azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000,
+            barber: parseInt(localStorage.getItem("profit_barber")) || 6000000
         };
 
         const invoiceItems = [
@@ -1926,7 +1982,8 @@
             { id: "umiatiyah", name: "Teh Umi Atiyah", month: "2026-08", monthLabel: "Agustus 2026", gross: 2200000 },
             { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 700000 },
             { id: "zalvice", name: "Bang Ridwan Zalbina (Zalvice & LaptopBisnis)", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
-            { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 }
+            { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 },
+            { id: "barber", name: "Owner Barber Underrated", month: "2026-08", monthLabel: "Agustus 2026", gross: 6000000 }
         ];
 
         function formatIDR(num) {
@@ -2437,6 +2494,35 @@ Jazakumullah Khairan Katsiran Umi Elly & Pengurus Yayasan! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA YAYASAN AZHARIYAH BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptBarber() {
+            const waScript = `Halo Owner Barber Underrated 👋✨
+
+Berikut dokumen resmi Invoice Tagihan Termin 1 (DP 50%) Rincian Scope Pengembangan Website & Kasir Barber Underrated:
+
+🔗 Invoice Online: https://dar-invoices.vercel.app/barber
+🔑 Kode PIN Akses: 0001
+
+Ringkasan Ruang Lingkup Sistem:
+1. Paket Full — Omnichannel PWA (5 Tab: Home, Reward, Scan QR, Product, Store), 5-Tier Membership Auto-Upgrade & Cashback Poin, POS Kasir Multi-Device, Dashboard Owner Multi-Cabang (Rp 5.250.000)
+2. Add-on Modul Kalkulator HPP Produk + Absensi Karyawan Selfie (GPS Geofence 100m & Kalender Cuti) (Rp 750.000)
+
+💰 Total Nilai Kontrak Proyek: Rp 6.000.000
+💳 Skema Pembayaran 3 Termin:
+• Termin 1 (DP 50% Kickoff Sprint): Rp 3.000.000 [TAGIHAN SEKARANG]
+• Termin 2 (30% Selesai Fase 2 App Member): Rp 1.800.000
+• Termin 3 (20% Serah Terima Akhir & Pelatihan): Rp 1.200.000
+
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak Boss! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA BARBER UNDERRATED BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

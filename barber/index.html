@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/BU/2026/013 - Owner Barber Underrated (Website & Kasir Multi-Cabang)</title>
+    <!-- Google Fonts: Sora & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #0f172a;
+            --bg-paper: #ffffff;
+            --navy-primary: #0f172a;
+            --gold-accent: #d97706;
+            --gold-light: #fef3c7;
+            --gold-border: #b45309;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --border-dark: #0f172a;
+            --border-light: #cbd5e1;
+            
+            --font-sora: 'Sora', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sora);
+            font-weight: 300;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           TOP SECRET COVER SCREEN OVERLAY
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0b0f19;
+            background-image: radial-gradient(#d97706 1px, transparent 1px);
+            background-size: 24px 24px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
+        }
+
+        .cover-card {
+            background-color: #ffffff;
+            border: 3px double #0f172a;
+            border-radius: 2px;
+            max-width: 560px;
+            width: 100%;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            color: #000000;
+            font-family: var(--font-mono);
+        }
+
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #d97706;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            transform: rotate(-1.5deg);
+            background: #fffbeb;
+            color: #b45309;
+            box-shadow: 2px 2px 0px #b45309;
+        }
+
+        .cover-title {
+            font-family: var(--font-sora);
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #0f172a;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .cover-subtitle {
+            font-size: 0.82rem;
+            color: #475569;
+            margin-bottom: 24px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .classified-line-divider {
+            height: 1px;
+            background: #0f172a;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .cover-recipient-box {
+            background: #f8fafc;
+            border: 1px solid #0f172a;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #d97706;
+            margin-bottom: 4px;
+        }
+
+        .cover-recipient-name {
+            font-family: var(--font-sora);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .cover-recipient-org {
+            font-size: 0.78rem;
+            color: #475569;
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #b45309;
+            margin-top: 6px;
+            font-weight: 700;
+            background: #fffbeb;
+            display: inline-block;
+            padding: 2px 6px;
+            border: 1px solid #fde68a;
+        }
+
+        .passcode-wrapper {
+            margin: 25px 0 15px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            color: #555555;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            width: 180px;
+            height: 48px;
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: #0f172a;
+            outline: none;
+            box-shadow: 3px 3px 0px #d97706;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: #d97706;
+            box-shadow: 4px 4px 0px #b45309;
+        }
+
+        .passcode-error {
+            color: #b91c1c;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+            letter-spacing: 0.05em;
+        }
+
+        .cover-open-btn {
+            background: #0f172a;
+            color: #ffffff;
+            border: 2px solid #0f172a;
+            padding: 12px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+            transition: all 0.15s ease;
+            width: 100%;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .cover-open-btn:hover {
+            background: #d97706;
+            border-color: #d97706;
+            transform: translate(-1px, -1px);
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .cover-open-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #0f172a;
+        }
+
+        .cover-top-barcode {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: #888888;
+            margin-bottom: 12px;
+        }
+
+        /* ----------------------------------------------------
+           MAIN DOCUMENT STYLES
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: var(--bg-paper);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            position: relative;
+        }
+
+        /* Sidebar Kiri Khas Editorial */
+        .sidebar-left {
+            width: 70px;
+            background-color: #f8fafc;
+            border-right: 1px solid var(--border-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: lowercase;
+            color: var(--navy-primary);
+            opacity: 0.9;
+        }
+
+        .vertical-text-wrapper {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            gap: 15px;
+        }
+
+        .vertical-brand-name {
+            font-weight: 700;
+            color: var(--gold-accent);
+        }
+
+        /* Main Content Right */
+        .main-panel {
+            flex-grow: 1;
+            padding: 40px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Meta Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .inv-date-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .billed-to-box {
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        .billed-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--gold-accent);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .top-right-logo-box {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .brand-badge-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #0f172a;
+            color: #d97706;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 2px;
+            text-transform: uppercase;
+            border: 1px solid #d97706;
+        }
+
+        .target-timeline-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #f8fafc;
+            padding: 4px 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            font-family: var(--font-mono);
+        }
+
+        /* Table Architecture */
+        .table-area {
+            margin-bottom: 25px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--navy-primary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--navy-primary);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .section-header-banner {
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 10px 14px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--gold-accent);
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 160px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 4px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold-accent);
+            font-weight: bold;
+        }
+
+        .table-totals-row td {
+            padding: 10px 0;
+            border-bottom: none;
+        }
+
+        .grand-total {
+            border-top: 2px solid var(--navy-primary);
+            border-bottom: 2px solid var(--navy-primary);
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        .grand-total td {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            padding: 16px 0;
+        }
+
+        /* Highlight & Specification Cards */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--gold-accent);
+            padding: 14px 16px;
+            border-radius: 2px;
+        }
+
+        .scope-card-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--text-dark);
+            line-height: 1.45;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .scope-card-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            margin-bottom: 18px;
+        }
+
+        .bottom-block-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .bottom-block-content {
+            font-size: 0.8rem;
+            line-height: 1.45;
+            color: var(--text-dark);
+        }
+
+        .copy-pill-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: var(--navy-primary);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--navy-primary);
+            color: #ffffff;
+            border-color: var(--navy-primary);
+        }
+
+        /* Terms & Notes Box */
+        .terms-container {
+            background-color: #f8fafc;
+            border: 1px dashed var(--border-dark);
+            padding: 14px 16px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            border-radius: 2px;
+        }
+
+        .terms-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Top Action / Control Bar */
+        .action-bar {
+            max-width: 960px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 10px 16px;
+            border: 1px solid var(--border-dark);
+            border-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-title {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d97706;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font-family: var(--font-sora);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            border: 1px solid var(--navy-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--navy-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE (MOBILE OPTIMIZED)
+        ---------------------------------------------------- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 12px 8px;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+                padding: 12px;
+            }
+
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .invoice-container {
+                flex-direction: column;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .sidebar-left {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 16px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-dark);
+                background-color: #f8fafc;
+            }
+
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.3rem;
+                letter-spacing: 0.05em;
+            }
+
+            .vertical-text-wrapper {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 0.7rem;
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .main-panel {
+                padding: 16px 14px;
+            }
+
+            .invoice-header-row {
+                flex-direction: column;
+                gap: 14px;
+                align-items: flex-start;
+                margin-bottom: 16px;
+                padding-bottom: 14px;
+            }
+
+            .top-right-logo-box {
+                align-items: flex-start;
+                text-align: left;
+                width: 100%;
+            }
+
+            .scope-breakdown-box {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .bottom-section-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding-top: 14px;
+            }
+
+            .col-subtotal {
+                width: 135px;
+                text-align: right !important;
+            }
+
+            .cover-card {
+                padding: 30px 18px;
+            }
+
+            .cover-title {
+                font-size: 1.15rem;
+            }
+
+            .cover-recipient-name {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ----------------------------------------------------
+           PRINT OPTIMIZATIONS
+        ---------------------------------------------------- */
+        @media print {
+            body {
+                background: none !important;
+                padding: 0 !important;
+                color: #000000 !important;
+            }
+
+            .cover-overlay,
+            .action-bar,
+            .copy-pill-btn,
+            .toast {
+                display: none !important;
+            }
+
+            .invoice-container {
+                box-shadow: none !important;
+                border: 1px solid #000000 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            .sidebar-left {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .main-panel {
+                padding: 24px 30px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PASSCODE SECURITY COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="cover-top-barcode">// OFFICIAL BILLING DOSSIER &bull; CLEARANCE LEVEL 1 //</div>
+            <div class="classified-stamp">OFFICIAL INVOICE</div>
+
+            <h1 class="cover-title">WEBSITE &amp; KASIR BARBER UNDERRATED</h1>
+            <div class="cover-subtitle">Owner Barber Underrated &bull; Omnichannel PWA &amp; Multi-Cabang</div>
+            
+            <div class="classified-line-divider"></div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Owner Barber Underrated</div>
+                <div class="cover-recipient-org">Proyek: <strong>Website &amp; Kasir Barber Underrated</strong></div>
+                <div class="cover-inv-num">REF CODE: #INV/BU/2026/013</div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <span>[ BUKA DOKUMEN RESMI ]</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Control Bar -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> INVOICE #INV/BU/2026/013 — Owner Barber Underrated
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" style="background:#d97706;" onclick="downloadPDF()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download / Simpan PDF (A4)
+            </button>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Printable Paper Container -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Accent -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">invoice</div>
+            <div class="vertical-text-wrapper">
+                <div class="vertical-brand-name">BARBER UNDERRATED</div>
+            </div>
+        </div>
+
+        <!-- Main Panel Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Top Header Row: Left Meta & Right Tag -->
+                <div class="invoice-header-row">
+                    <div class="top-left-meta">
+                        <div class="inv-num-label">Invoice No. #INV/BU/2026/013</div>
+                        <div class="inv-date-label">29th August, 2026</div>
+
+                        <div class="billed-to-box">
+                            <div class="billed-title">BILLED TO // DITUJUKAN KEPADA:</div>
+                            <div class="billed-content">
+                                <strong>Owner Barber Underrated</strong><br>
+                                Proyek: <strong>Website &amp; Kasir Barber Underrated</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-right-logo-box">
+                        <span class="brand-badge-pill">✂️ OMNICHANNEL PWA &amp; POS KASIR</span>
+                        <div class="target-timeline-tag">📅 Target Opening: 30 Agt 2026 &bull; Estimasi Rampung: 16 Sep 2026</div>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>DESCRIPTION // RINCIAN PENGEMBANGAN</th>
+                                <th class="col-subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <!-- BANNER BAGIAN I -->
+                            <tr>
+                                <td colspan="2" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner">
+                                        <span>BAGIAN I: LINGKUP UTAMA PAKET FULL (TOTAL KONTRAK: RP 6.000.000)</span>
+                                        <span>Subtotal: Rp 6.000.000</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 1.1 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        <span>Paket Full — Omnichannel PWA (5 Tab, 5-Tier Membership, POS Kasir &amp; Multi-Cabang)</span>
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>PWA 5 Tab:</strong> Home, Reward, Scan QR, Product, dan Store (bisa install di HP tanpa Play Store)</li>
+                                        <li><strong>5-Tier Membership Auto-Upgrade:</strong> (Silver sampai Black) &amp; Poin Cashback Retroaktif</li>
+                                        <li><strong>POS Kasir Multi-Device:</strong> Catat Tunai/QRIS/EDC, input WA cepat, &amp; konfirmasi struk WA</li>
+                                        <li><strong>Dashboard Owner Multi-Cabang:</strong> Rekap omzet harian &amp; performa capster real-time</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                    Rp 5.250.000
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 1.2 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        <span>Add-on: Modul Kalkulator HPP Produk + Absensi Selfie &amp; Cuti Karyawan</span>
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Kalkulator HPP Produk:</strong> Hitung modal per unit, margin kotor %, laba kotor &amp; batas diskon aman poin</li>
+                                        <li><strong>Absensi Karyawan Selfie:</strong> Selfie + Geofence GPS 100m Server-Time &amp; Kalender Cuti Tim</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: var(--navy-primary);">
+                                    Rp 750.000
+                                </td>
+                            </tr>
+
+                            <!-- BANNER BAGIAN II -->
+                            <tr>
+                                <td colspan="2" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner" style="background-color: #0f172a; border-left-color: #38bdf8;">
+                                        <span>BAGIAN II: PENYESUAIAN TERMIN 1 (DP 50% KICKOFF SPRINT)</span>
+                                        <span>Subtotal: -Rp 3.000.000</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 2.1 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        <span>Sisa Termin 2 (30% - Rp 1.800.000) &amp; Termin 3 (20% - Rp 1.200.000)</span>
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Termin 2 (Rp 1.800.000):</strong> ditagihkan setelah Fase 2 selesai (Aplikasi Member 5 Tab berjalan)</li>
+                                        <li><strong>Termin 3 (Rp 1.200.000):</strong> ditagihkan saat serah terima akhir modul HPP &amp; absensi serta pelatihan</li>
+                                    </ul>
+                                </td>
+                                <td class="col-subtotal" style="font-size: 0.95rem; font-weight: 700; color: #b91c1c;">
+                                    -Rp 3.000.000
+                                </td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td style="font-weight: 800; color: var(--navy-primary);">TOTAL TAGIHAN (TERMIN 1 DP 50%)</td>
+                                <td class="col-subtotal" style="font-size:1.2rem; font-weight:800; color: var(--navy-primary);">Rp 3.000.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:6px; font-family: var(--font-mono);">
+                        // tiga juta rupiah //
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHTS & ARCHITECTURE CARDS -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>KEUNGGULAN SYSTEM BARBER</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>PWA App 5 Tab:</strong> Tanpa perlu Play Store/App Store.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>5-Tier Membership:</strong> Auto-Upgrade &amp; Cashback Poin.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>POS Kasir Multi-Cabang:</strong> Struk WA &amp; Omzet Realtime.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span>ADD-ON FITUR MANAJEMEN</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                <span><strong>Kalkulator HPP Produk:</strong> Hitung modal &amp; batas diskon aman.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span><strong>Absensi Selfie &amp; GPS:</strong> Geofence 100m &amp; Cuti Tim.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Cicilan 3 Termin:</strong> DP 50% Kickoff Sprint.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section: Payments (Left) & Issuer (Right) -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="/abdurrahman/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 20px; width: auto; object-fit: contain;">
+                                <strong style="font-size: 0.92rem; color: var(--navy-primary);">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 3px;">
+                                Account Name: <strong>Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 3px; flex-wrap: nowrap;">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--navy-primary);">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer Details -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER &amp; CONTACT</div>
+                        <div class="bottom-block-content">
+                            <strong>Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--navy-primary);">Web Developer &amp; Tech Consultant</strong><br>
+                            WA: 081311506025
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">KETENTUAN TERMIN PEMBAYARAN</div>
+                    <div>
+                        • <strong>Termin 1 (DP 50% / Rp 3.000.000):</strong> Ditagihkan saat Kickoff Sprint proyek (Agustus 2026).<br>
+                        • <strong>Termin 2 (30% / Rp 1.800.000):</strong> Ditagihkan setelah Fase 2 selesai (Aplikasi Member 5 Tab berjalan).<br>
+                        • <strong>Termin 3 (20% / Rp 1.200.000):</strong> Ditagihkan saat serah terima akhir modul HPP, absensi &amp; pelatihan.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
+    <script>
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const coverCard = document.querySelector('.cover-card');
+
+            if (input.value === '0001') {
+                overlay.classList.add('opened');
+            } else {
+                errorMsg.style.display = 'block';
+                coverCard.classList.add('shake-anim');
+                setTimeout(() => {
+                    coverCard.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+
+        document.getElementById('passcodeInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri Berhasil Disalin!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>

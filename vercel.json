@@ -18,6 +18,8 @@
     { "source": "/azhariyah", "destination": "/azhariyah/index.html" },
     { "source": "/umielly", "destination": "/azhariyah/index.html" },
     { "source": "/zalbina", "destination": "/zalvice/index.html" },
-    { "source": "/ridwan", "destination": "/zalvice/index.html" }
+    { "source": "/ridwan", "destination": "/zalvice/index.html" },
+    { "source": "/barber", "destination": "/barber/index.html" },
+    { "source": "/underrated", "destination": "/barber/index.html" }
   ]
 }
