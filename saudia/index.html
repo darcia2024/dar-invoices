@@ -513,11 +513,25 @@
             border-left: 4px solid var(--green-accent);
         }
 
+        .col-qty {
+            text-align: center;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 70px;
+        }
+
+        .col-unit-price {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 140px;
+        }
+
         .col-subtotal {
             text-align: right;
             font-family: var(--font-mono);
             white-space: nowrap;
-            width: 160px;
+            width: 150px;
         }
 
         .item-title {
@@ -917,19 +931,22 @@
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                             <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; font-family: var(--font-mono); margin-bottom: 2px;">PENUMPANG 1 // PAX 1</div>
                             <div style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">VERROS NABRIS MUHAMMAD</div>
-                            <div style="font-size: 0.7rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
+                            <div style="font-size: 0.72rem; color: #0b3c26; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
+                            <div style="font-size: 0.68rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
                         </div>
 
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                             <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; font-family: var(--font-mono); margin-bottom: 2px;">PENUMPANG 2 // PAX 2</div>
                             <div style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">AHMAD REZIQ VAIHAQ</div>
-                            <div style="font-size: 0.7rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
+                            <div style="font-size: 0.72rem; color: #0b3c26; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
+                            <div style="font-size: 0.68rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
                         </div>
 
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                             <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; font-family: var(--font-mono); margin-bottom: 2px;">PENUMPANG 3 // PAX 3</div>
                             <div style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">VERNAS NIQRIS MUHAMMAD</div>
-                            <div style="font-size: 0.7rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
+                            <div style="font-size: 0.72rem; color: #0b3c26; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
+                            <div style="font-size: 0.68rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
                         </div>
                     </div>
                 </div>
@@ -1070,6 +1087,8 @@
                         <thead>
                             <tr>
                                 <th>ITEM DESKRIPSI LAYANAN PENERBANGAN</th>
+                                <th class="col-qty">QTY</th>
+                                <th class="col-unit-price">HARGA SATUAN</th>
                                 <th class="col-subtotal">SUBTOTAL</th>
                             </tr>
                         </thead>
@@ -1077,7 +1096,7 @@
                             
                             <!-- BANNER BAGIAN I -->
                             <tr>
-                                <td colspan="2" style="padding:0; border-bottom:none;">
+                                <td colspan="4" style="padding:0; border-bottom:none;">
                                     <div class="section-header-banner">
                                         <span>TIKET PENERBANGAN INTERNASIONAL (SAUDIA ARABIAN AIRLINES PP - 3 PAX)</span>
                                         <span>Subtotal: Rp 39.600.000</span>
@@ -1089,7 +1108,7 @@
                             <tr>
                                 <td>
                                     <div class="item-title">
-                                        Tiket Pesawat Saudia (Saudi Arabian Airlines) — Kelas Ekonomi Pulang-Pergi (PP) (3 Pax @ Rp 13.200.000)
+                                        Tiket Pesawat Saudia (Saudi Arabian Airlines) — Kelas Ekonomi Pulang-Pergi (PP)
                                     </div>
                                     <ul class="bullet-list">
                                         <li><strong>Daftar Penumpang (3 Pax):</strong> 1. VERROS NABRIS MUHAMMAD | 2. AHMAD REZIQ VAIHAQ | 3. VERNAS NIQRIS MUHAMMAD</li>
@@ -1099,6 +1118,8 @@
                                         <li><strong>Layanan Tambahan:</strong> Makanan Muka (*In-flight Meals*), Hiburan Penerbangan &amp; Akses Aliansi SkyTeam</li>
                                     </ul>
                                 </td>
+                                <td class="col-qty" style="font-weight: 700; color: #0f172a;">3 Pax</td>
+                                <td class="col-unit-price" style="font-weight: 700; color: #0f172a;">Rp 13.200.000</td>
                                 <td class="col-subtotal" style="font-weight: 700; color: #0f172a;">
                                     Rp 39.600.000
                                 </td>
@@ -1106,7 +1127,7 @@
 
                             <!-- GRAND TOTAL ROW -->
                             <tr class="table-totals-row grand-total">
-                                <td style="font-weight: 700; color: #0b3c26;">TOTAL HARGA NETT PP (3 PAX)</td>
+                                <td colspan="3" style="font-weight: 700; color: #0b3c26;">TOTAL HARGA NETT PP (3 PAX @ RP 13.200.000)</td>
                                 <td class="col-subtotal" style="font-size:1.25rem; font-weight:700; color: #0b3c26;">Rp 39.600.000</td>
                             </tr>
                         </tbody>
