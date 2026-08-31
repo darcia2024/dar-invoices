@@ -2038,7 +2038,7 @@
             kolohaga: "UNPAID",
             zalvice: "UNPAID",
             azhariyah: "UNPAID",
-            barber: "DP",
+            barber: "UNPAID",
             saudia: "UNPAID"
         };
 
@@ -2054,9 +2054,7 @@
             return storedValue === null || storedValue === "" ? fallback : storedValue;
         }
 
-        const defaultDpAmounts = {
-            barber: 3000000
-        };
+        const defaultDpAmounts = {};
 
         const defaultNetProfits = {
             markaz: 5500000,
@@ -2078,7 +2076,7 @@
             Object.entries(defaultPaymentStatuses).map(([id, fallback]) => [id, getStoredText("status_" + id, fallback)])
         );
 
-        // DP Amounts for partial payment (Default Barber DP = Rp 3.000.000)
+        // DP Amounts for partial payment
         const dpAmounts = Object.fromEntries(
             Object.entries(defaultDpAmounts).map(([id, fallback]) => [id, getStoredNumber("dp_" + id, fallback)])
         );

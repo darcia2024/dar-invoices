@@ -13,12 +13,10 @@ const defaultState = {
     kolohaga: "UNPAID",
     zalvice: "UNPAID",
     azhariyah: "UNPAID",
-    barber: "DP",
+    barber: "UNPAID",
     saudia: "UNPAID",
   },
-  dpAmounts: {
-    barber: 3000000,
-  },
+  dpAmounts: {},
   netProfits: {
     markaz: 5500000,
     dreammecca: 350000,
