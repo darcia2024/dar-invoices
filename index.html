@@ -1981,16 +1981,18 @@
     <script>
         let activeMonthFilter = "all";
         let activeEditProjectId = null;
+        const adminPasscode = "050900";
 
         // Admin Security Lock (Passcode: 050900)
         function verifyAdminPasscode() {
             const input = document.getElementById("adminPassInput").value.trim();
             const errorEl = document.getElementById("adminPassError");
             
-            if (input === "050900") {
+            if (input === adminPasscode) {
                 document.getElementById("adminCoverOverlay").classList.add("opened");
                 errorEl.style.display = "none";
                 document.getElementById("adminPassInput").value = "";
+                loadBillingState();
             } else {
                 errorEl.style.display = "block";
                 const card = document.querySelector("#adminCoverOverlay .cover-card");
@@ -2024,21 +2026,20 @@
             lockAdminDashboard();
         });
 
-        // Initial Payment Statuses
-        const paymentStatuses = {
-            markaz: localStorage.getItem("status_markaz") || "PAID",
-            dreammecca: localStorage.getItem("status_dreammecca") || "PAID",
-            "haramain-capture": localStorage.getItem("status_haramain-capture") || "PAID",
-            abdurrahman: localStorage.getItem("status_abdurrahman") || "PAID",
-            qohiroh: localStorage.getItem("status_qohiroh") || "UNPAID",
-            zaky: localStorage.getItem("status_zaky") || "UNPAID",
-            sidi: localStorage.getItem("status_sidi") || "UNPAID",
-            umiatiyah: localStorage.getItem("status_umiatiyah") || "UNPAID",
-            kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
-            zalvice: localStorage.getItem("status_zalvice") || "UNPAID",
-            azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID",
-            barber: localStorage.getItem("status_barber") || "DP",
-            saudia: localStorage.getItem("status_saudia") || "UNPAID"
+        const defaultPaymentStatuses = {
+            markaz: "PAID",
+            dreammecca: "PAID",
+            "haramain-capture": "PAID",
+            abdurrahman: "PAID",
+            qohiroh: "UNPAID",
+            zaky: "UNPAID",
+            sidi: "UNPAID",
+            umiatiyah: "UNPAID",
+            kolohaga: "UNPAID",
+            zalvice: "UNPAID",
+            azhariyah: "UNPAID",
+            barber: "DP",
+            saudia: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2048,27 +2049,44 @@
             return Number.isNaN(parsedValue) ? fallback : parsedValue;
         }
 
-        // DP Amounts for partial payment (Default Barber DP = Rp 3.000.000)
-        const dpAmounts = {
-            barber: getStoredNumber("dp_barber", 3000000)
+        function getStoredText(key, fallback) {
+            const storedValue = localStorage.getItem(key);
+            return storedValue === null || storedValue === "" ? fallback : storedValue;
+        }
+
+        const defaultDpAmounts = {
+            barber: 3000000
         };
 
-        // Initial Net Profit Values (Saved in localStorage or default)
-        const netProfits = {
-            markaz: getStoredNumber("profit_markaz", 5500000),
-            dreammecca: getStoredNumber("profit_dreammecca", 350000),
-            "haramain-capture": getStoredNumber("profit_haramain-capture", 600000),
-            abdurrahman: getStoredNumber("profit_abdurrahman", 1460690),
-            qohiroh: getStoredNumber("profit_qohiroh", 9500000),
-            zaky: getStoredNumber("profit_zaky", 600000),
-            sidi: getStoredNumber("profit_sidi", 1000000),
-            umiatiyah: getStoredNumber("profit_umiatiyah", 2200000),
-            kolohaga: getStoredNumber("profit_kolohaga", 700000),
-            zalvice: getStoredNumber("profit_zalvice", 1200000),
-            azhariyah: getStoredNumber("profit_azhariyah", 7000000),
-            barber: getStoredNumber("profit_barber", 6000000),
-            saudia: getStoredNumber("profit_saudia", 39600000)
+        const defaultNetProfits = {
+            markaz: 5500000,
+            dreammecca: 350000,
+            "haramain-capture": 600000,
+            abdurrahman: 1460690,
+            qohiroh: 9500000,
+            zaky: 600000,
+            sidi: 1000000,
+            umiatiyah: 2200000,
+            kolohaga: 700000,
+            zalvice: 1200000,
+            azhariyah: 7000000,
+            barber: 6000000,
+            saudia: 39600000
         };
+
+        const paymentStatuses = Object.fromEntries(
+            Object.entries(defaultPaymentStatuses).map(([id, fallback]) => [id, getStoredText("status_" + id, fallback)])
+        );
+
+        // DP Amounts for partial payment (Default Barber DP = Rp 3.000.000)
+        const dpAmounts = Object.fromEntries(
+            Object.entries(defaultDpAmounts).map(([id, fallback]) => [id, getStoredNumber("dp_" + id, fallback)])
+        );
+
+        // Initial Net Profit Values (Saved in localStorage or default)
+        const netProfits = Object.fromEntries(
+            Object.entries(defaultNetProfits).map(([id, fallback]) => [id, getStoredNumber("profit_" + id, fallback)])
+        );
 
         const invoiceItems = [
             { id: "markaz", name: "Markaz Fiqih", month: "2026-07", monthLabel: "Juli 2026", gross: 8500000 },
@@ -2090,6 +2108,79 @@
             return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
+        function applyBillingState(state) {
+            if (!state) return;
+            if (state.paymentStatuses) {
+                Object.assign(paymentStatuses, state.paymentStatuses);
+            }
+            if (state.dpAmounts) {
+                Object.assign(dpAmounts, state.dpAmounts);
+            }
+            if (state.netProfits) {
+                Object.assign(netProfits, state.netProfits);
+            }
+        }
+
+        function saveLocalBillingState() {
+            Object.entries(paymentStatuses).forEach(([id, status]) => {
+                localStorage.setItem("status_" + id, status);
+            });
+            Object.entries(dpAmounts).forEach(([id, amount]) => {
+                localStorage.setItem("dp_" + id, amount);
+            });
+            Object.entries(netProfits).forEach(([id, profit]) => {
+                localStorage.setItem("profit_" + id, profit);
+            });
+        }
+
+        async function loadBillingState() {
+            try {
+                const response = await fetch("/api/billing-state", {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json",
+                        "X-Admin-Passcode": adminPasscode
+                    },
+                    cache: "no-store"
+                });
+                if (!response.ok) throw new Error("Cloud state unavailable");
+                const state = await response.json();
+                applyBillingState(state);
+                saveLocalBillingState();
+            } catch (error) {
+                console.warn("Using local billing state fallback:", error);
+            }
+            updatePaymentBadges();
+            renderProfitUI();
+            calculateFinancials();
+        }
+
+        async function persistBillingState() {
+            saveLocalBillingState();
+            try {
+                const response = await fetch("/api/billing-state", {
+                    method: "PUT",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "X-Admin-Passcode": adminPasscode
+                    },
+                    body: JSON.stringify({
+                        paymentStatuses,
+                        dpAmounts,
+                        netProfits
+                    })
+                });
+                if (!response.ok) throw new Error("Cloud save failed");
+                const state = await response.json();
+                applyBillingState(state);
+                saveLocalBillingState();
+            } catch (error) {
+                console.warn("Billing state saved locally only:", error);
+                showToast("DATA TERSIMPAN LOKAL, SINKRON UPSTASH GAGAL");
+            }
+        }
+
         let activeDpEditProjectId = null;
 
         function togglePaymentStatus(id) {
@@ -2107,13 +2198,12 @@
 
         function setPaymentStatus(id, status, dpValue) {
             paymentStatuses[id] = status;
-            localStorage.setItem("status_" + id, status);
             if (dpValue !== undefined) {
                 dpAmounts[id] = dpValue;
-                localStorage.setItem("dp_" + id, dpValue);
             }
             updatePaymentBadges();
             calculateFinancials();
+            persistBillingState();
             showToast("STATUS PEMBAYARAN DIUBAH MENJADI: " + (status === "PAID" ? "LUNAS" : status === "DP" ? "DIBAYAR DP" : "BELUM LUNAS"));
         }
 
@@ -2216,11 +2306,11 @@
             }
 
             netProfits[activeEditProjectId] = inputVal;
-            localStorage.setItem("profit_" + activeEditProjectId, inputVal);
 
             renderProfitUI();
             calculateFinancials();
             closeProfitModal();
+            persistBillingState();
             showToast("KEUNTUNGAN BERSIH BERHASIL DISIMPAN!");
         }
 
