@@ -1871,10 +1871,10 @@
             </div>
 
             <!-- Tiket Pesawat Saudia Airlines Card -->
-            <div class="invoice-card" id="card-saudia" data-id="saudia" data-month="2026-08" data-amount="13200000" data-client="tiket pesawat saudia airlines saudi arabian airlines kairo jakarta pp flight internatioal #inv/sv/2026/014 agustus 2026 13.200.000">
+            <div class="invoice-card" id="card-saudia" data-id="saudia" data-month="2026-08" data-amount="39600000" data-client="tiket pesawat saudia airlines saudi arabian airlines kairo jakarta pp flight internatioal 3 pax #inv/sv/2026/014 agustus 2026 39.600.000">
                 <div>
                     <div class="card-top">
-                        <div class="client-title">Tiket Pesawat Saudia Airlines (Kairo - Jakarta PP)</div>
+                        <div class="client-title">Tiket Pesawat Saudia Airlines (3 Pax Kairo - Jakarta PP)</div>
                         <div class="status-badge-group">
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('saudia')">
                                 🔴 BELUM LUNAS
@@ -1888,7 +1888,7 @@
                     </div>
                     
                     <div class="project-desc">
-                        Tiket Penerbangan Internasional Saudia Arabian Airlines (SkyTeam) Kairo (CAI) ⇄ Jakarta (CGK) via Transit Jeddah (JED). Pergi 31 Agt 2026, Pulang 30 Okt 2026.
+                        Tiket Penerbangan Internasional Saudia Arabian Airlines (SkyTeam) Kairo (CAI) ⇄ Jakarta (CGK) via Transit Jeddah (JED) untuk 3 Pax Penumpang (Verros, Ahmad Reziq, Vernas). Pergi 31 Agt 2026, Pulang 30 Okt 2026.
                     </div>
 
                     <div class="slug-box">
@@ -1902,8 +1902,8 @@
                     <!-- Financial Net Profit Breakdown Box -->
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
-                            <span class="fin-label">OMSET TIKET:</span>
-                            <span class="fin-val">Rp 13.200.000</span>
+                            <span class="fin-label">OMSET TIKET (3 PAX):</span>
+                            <span class="fin-val">Rp 39.600.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
@@ -1912,7 +1912,7 @@
                         <div class="fin-row net-profit-row">
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
-                                <span class="net-profit-val" id="profitValSaudia">Rp 13.200.000</span>
+                                <span class="net-profit-val" id="profitValSaudia">Rp 39.600.000</span>
                                 <button class="edit-profit-btn" onclick="openProfitModal('saudia')">✏️ Edit Profit</button>
                             </div>
                         </div>
@@ -2024,7 +2024,7 @@
             zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000,
             azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000,
             barber: parseInt(localStorage.getItem("profit_barber")) || 6000000,
-            saudia: parseInt(localStorage.getItem("profit_saudia")) || 13200000
+            saudia: parseInt(localStorage.getItem("profit_saudia")) || 39600000
         };
 
         const invoiceItems = [
@@ -2040,7 +2040,7 @@
             { id: "zalvice", name: "Bang Ridwan Zalbina (Zalvice & LaptopBisnis)", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
             { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 },
             { id: "barber", name: "Owner Barber Underrated", month: "2026-08", monthLabel: "Agustus 2026", gross: 6000000 },
-            { id: "saudia", name: "Tiket Pesawat Saudia Airlines", month: "2026-08", monthLabel: "Agustus 2026", gross: 13200000 }
+            { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 }
         ];
 
         function formatIDR(num) {
@@ -2609,7 +2609,7 @@ Berikut rincian resmi Invoice & E-Ticket Penerbangan Internasional Saudia Arabia
    • Transit Jeddah: 1j 30m (Bagasi Checked-Through)
    • SV 309: 00:55 JED (Jeddah T1) ➔ 02:15 CAI (Kairo T2)
 
-💰 Total Harga Nett PP: Rp 13.200.000
+💰 Total Harga Nett PP (3 Pax @ Rp 13.200.000): Rp 39.600.000
 💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
 
 Terima kasih banyak & Semoga penerbangan menyenangkan! 🙏✈️`;
