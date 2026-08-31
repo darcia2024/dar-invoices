@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DAR INVOICES — Official Billing & Revenue Portal</title>
+    <title>DAR INVOICES | Official Billing & Revenue Portal</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,20 +11,24 @@
     
     <style>
         :root {
-            --bg-dark: #09090b;
-            --card-bg: #121215;
-            --card-border: #27272a;
-            --card-border-hover: #ffffff;
+            --bg-dark: #0d0b08;
+            --card-bg: #171410;
+            --card-strong: #211c15;
+            --card-border: #3a3025;
+            --card-border-hover: #c99a45;
             --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --text-dim: #71717a;
+            --text-muted: #c9c0b4;
+            --text-dim: #897d6e;
+            --accent: #c99a45;
+            --accent-soft: rgba(201, 154, 69, 0.16);
             
-            --color-paid: #10b981;
-            --color-paid-bg: rgba(16, 185, 129, 0.12);
-            --color-unpaid: #ef4444;
-            --color-unpaid-bg: rgba(239, 68, 68, 0.12);
-            --color-profit: #3b82f6;
-            --color-profit-bg: rgba(59, 130, 246, 0.12);
+            --color-paid: #4ec08b;
+            --color-paid-bg: rgba(78, 192, 139, 0.13);
+            --color-unpaid: #e46f61;
+            --color-unpaid-bg: rgba(228, 111, 97, 0.13);
+            --color-profit: #9db7e8;
+            --color-profit-bg: rgba(157, 183, 232, 0.13);
+            --shadow-deep: 0 24px 70px rgba(0, 0, 0, 0.38);
             
             --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -40,13 +44,26 @@
             font-family: var(--font-sora);
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 50% 0%, #1c1c22 0%, transparent 65%),
-                radial-gradient(#27272a 1px, transparent 1px);
-            background-size: 100% 100%, 28px 28px;
+                radial-gradient(circle at 18% 0%, rgba(201, 154, 69, 0.16) 0%, transparent 34%),
+                linear-gradient(135deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 12px);
+            background-size: 100% 100%, 18px 18px;
             color: var(--text-main);
             min-height: 100vh;
-            padding: 60px 20px 80px 20px;
+            padding: 36px 20px 80px 20px;
             -webkit-font-smoothing: antialiased;
+        }
+
+        a,
+        button,
+        input {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
         }
 
         /* ----------------------------------------------------
@@ -221,60 +238,77 @@
         }
 
         .portal-container {
-            max-width: 1080px;
+            max-width: 1240px;
             margin: 0 auto;
         }
 
         /* Top Bar Emblem Badge */
         .portal-header {
-            text-align: center;
-            margin-bottom: 45px;
+            text-align: left;
+            margin-bottom: 30px;
             position: relative;
+            padding: 30px;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            background:
+                linear-gradient(135deg, rgba(201, 154, 69, 0.14), transparent 42%),
+                rgba(23, 20, 16, 0.94);
+            box-shadow: var(--shadow-deep);
+            overflow: hidden;
+        }
+
+        .portal-header::after {
+            content: "";
+            position: absolute;
+            inset: auto 30px 0 30px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.7;
         }
 
         .portal-badge {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: #18181b;
-            color: #ffffff;
+            background: rgba(201, 154, 69, 0.12);
+            color: #ead8b7;
             font-family: var(--font-mono);
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.22em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            padding: 8px 20px;
-            border-radius: 20px;
-            border: 1px solid #3f3f46;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(201, 154, 69, 0.38);
+            margin-bottom: 18px;
         }
 
         .portal-badge span {
             width: 8px;
             height: 8px;
-            background-color: #10b981;
+            background-color: var(--color-paid);
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 10px #10b981;
+            box-shadow: 0 0 14px rgba(78, 192, 139, 0.62);
         }
 
         .portal-title {
-            font-size: 3.2rem;
+            font-size: clamp(2.35rem, 5vw, 4.75rem);
             font-weight: 800;
-            letter-spacing: -0.04em;
-            margin-bottom: 12px;
-            line-height: 1.1;
+            letter-spacing: 0;
+            margin-bottom: 10px;
+            line-height: 0.96;
             color: #ffffff;
-            text-transform: uppercase;
+            max-width: 840px;
+            text-wrap: balance;
         }
 
         .portal-subtitle {
-            font-size: 1rem;
+            font-size: 0.98rem;
             color: var(--text-muted);
-            font-weight: 300;
-            max-width: 620px;
-            margin: 0 auto;
+            font-weight: 400;
+            max-width: 680px;
+            margin: 0;
             line-height: 1.6;
         }
 
@@ -286,21 +320,22 @@
         /* Executive Financial Stats Bar Grid */
         .stats-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .stat-card {
-            background: var(--card-bg);
+            background: rgba(23, 20, 16, 0.94);
             border: 1px solid var(--card-border);
-            padding: 22px 24px;
+            padding: 18px;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            display: grid;
+            grid-template-columns: 42px minmax(0, 1fr);
+            align-items: start;
+            gap: 14px;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            box-shadow: 0 12px 34px rgba(0,0,0,0.22);
             position: relative;
             overflow: hidden;
         }
@@ -322,17 +357,17 @@
         }
 
         .stat-card:hover {
-            border-color: #ffffff;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            border-color: rgba(201, 154, 69, 0.62);
+            transform: translateY(-2px);
+            background: var(--card-strong);
         }
 
         .stat-icon {
-            width: 46px;
-            height: 46px;
+            width: 42px;
+            height: 42px;
             border-radius: 6px;
-            background: #18181b;
-            border: 1px solid #3f3f46;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.12);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -342,31 +377,35 @@
 
         .stat-info-title {
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.08em;
             font-weight: 700;
+            line-height: 1.45;
         }
 
         .stat-info-val {
             font-family: var(--font-mono);
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 1.8vw, 1.32rem);
             font-weight: 700;
             color: #ffffff;
-            margin-top: 3px;
+            margin-top: 6px;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
         }
 
         /* Monthly Filter Bar & Search Header */
         .filter-section {
-            background: #121215;
+            background: rgba(23, 20, 16, 0.94);
             border: 1px solid var(--card-border);
             border-radius: 8px;
-            padding: 20px 24px;
-            margin-bottom: 35px;
+            padding: 16px;
+            margin-bottom: 18px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 14px;
+            box-shadow: 0 14px 44px rgba(0,0,0,0.24);
         }
 
         .filter-row-top {
@@ -379,14 +418,24 @@
 
         .filter-title {
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            color: #ffffff;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
             text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        .filter-subrow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--card-border);
+            padding-top: 14px;
         }
 
         .month-pills-group {
@@ -397,12 +446,12 @@
 
         .month-pill-btn {
             font-family: var(--font-mono);
-            font-size: 0.76rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            background: #18181b;
-            border: 1px solid #3f3f46;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--text-muted);
-            padding: 8px 16px;
+            padding: 9px 14px;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -411,16 +460,16 @@
         }
 
         .month-pill-btn:hover {
-            background: #27272a;
+            background: rgba(201, 154, 69, 0.12);
             color: #ffffff;
-            border-color: #ffffff;
+            border-color: rgba(201, 154, 69, 0.52);
         }
 
         .month-pill-btn.active {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            background: var(--accent);
+            color: #15100a;
+            border-color: var(--accent);
+            box-shadow: 0 10px 26px rgba(201, 154, 69, 0.18);
         }
 
         .search-box {
@@ -432,10 +481,10 @@
         .search-input {
             font-family: var(--font-mono);
             font-size: 0.78rem;
-            background: #18181b;
+            background: rgba(255,255,255,0.04);
             border: 1px solid var(--card-border);
             color: #ffffff;
-            padding: 10px 14px 10px 36px;
+            padding: 12px 14px 12px 38px;
             border-radius: 4px;
             width: 100%;
             outline: none;
@@ -443,8 +492,8 @@
         }
 
         .search-input:focus {
-            border-color: #ffffff;
-            background: #27272a;
+            border-color: var(--accent);
+            background: rgba(0,0,0,0.24);
         }
 
         .search-icon {
@@ -458,19 +507,20 @@
 
         /* Monthly Financial Revenue & Profit Report Accordion */
         .revenue-report-box {
-            background: #18181b;
+            background: rgba(23, 20, 16, 0.94);
             border: 1px solid var(--card-border);
-            border-radius: 6px;
-            padding: 20px 24px;
-            margin-bottom: 35px;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 24px;
             overflow-x: auto;
+            box-shadow: 0 14px 44px rgba(0,0,0,0.24);
         }
 
         .revenue-report-title {
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             color: #ffffff;
             text-transform: uppercase;
             display: flex;
@@ -487,49 +537,51 @@
         }
 
         .revenue-table th {
-            font-size: 0.7rem;
+            font-size: 0.66rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             color: var(--text-dim);
-            padding: 10px 12px;
+            padding: 12px;
             border-bottom: 1px solid var(--card-border);
             text-align: left;
         }
 
         .revenue-table td {
             font-size: 0.82rem;
-            padding: 12px 12px;
-            border-bottom: 1px dashed #27272a;
+            padding: 13px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.065);
             color: #ffffff;
+            font-variant-numeric: tabular-nums;
         }
 
         .revenue-table tr.grand-row td {
             font-weight: 700;
             font-size: 0.95rem;
-            border-top: 1.5px solid #ffffff;
+            border-top: 1px solid var(--accent);
             border-bottom: none;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--accent-soft);
         }
 
         /* Invoice Cards Grid */
         .invoice-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 26px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 16px;
             margin-bottom: 60px;
         }
 
         .invoice-card {
-            background: var(--card-bg);
+            background: rgba(23, 20, 16, 0.96);
             border: 1px solid var(--card-border);
             border-radius: 8px;
-            padding: 34px 30px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 22px;
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 14px 38px rgba(0, 0, 0, 0.24);
+            min-height: 100%;
         }
 
         .invoice-card::before {
@@ -538,16 +590,16 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: #ffffff;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
         .invoice-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             border-color: var(--card-border-hover);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
+            background: var(--card-strong);
         }
 
         .invoice-card:hover::before {
@@ -558,17 +610,17 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             gap: 12px;
         }
 
         .client-title {
-            font-size: 1.45rem;
+            font-size: 1.14rem;
             font-weight: 800;
             color: #ffffff;
-            line-height: 1.2;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
+            line-height: 1.25;
+            letter-spacing: 0;
+            text-wrap: balance;
         }
 
         /* Payment Status Pill Toggle */
@@ -581,11 +633,11 @@
 
         .payment-status-pill {
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.64rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            padding: 5px 12px;
+            padding: 6px 10px;
             border-radius: 4px;
             cursor: pointer;
             display: inline-flex;
@@ -602,9 +654,18 @@
             border: 1px solid var(--color-paid);
         }
 
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 10px currentColor;
+            flex: 0 0 auto;
+        }
+
         .payment-status-pill.status-paid:hover {
             background: var(--color-paid);
-            color: #000000;
+            color: #07150e;
         }
 
         .payment-status-pill.status-dp {
@@ -615,7 +676,7 @@
 
         .payment-status-pill.status-dp:hover {
             background: #f59e0b;
-            color: #000000;
+            color: #15100a;
         }
 
         .payment-status-pill.status-unpaid {
@@ -631,11 +692,11 @@
 
         .dp-status-action {
             font-family: var(--font-mono);
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            padding: 5px 9px;
+            padding: 6px 9px;
             border-radius: 4px;
             border: 1px solid #f59e0b;
             background: rgba(245, 158, 11, 0.1);
@@ -651,13 +712,15 @@
 
         .ref-code {
             font-family: var(--font-mono);
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             color: var(--text-dim);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 700;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
             display: flex;
             justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .month-tag {
@@ -670,16 +733,16 @@
             font-size: 0.88rem;
             color: var(--text-muted);
             line-height: 1.55;
-            margin-bottom: 22px;
-            font-weight: 300;
+            margin-bottom: 18px;
+            font-weight: 400;
         }
 
         /* Slug Row & Controls */
         .slug-box {
-            background: #09090b;
-            border: 1px solid #27272a;
+            background: rgba(0,0,0,0.22);
+            border: 1px solid var(--card-border);
             border-radius: 4px;
-            padding: 12px 14px;
+            padding: 11px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -690,9 +753,10 @@
 
         .slug-url {
             font-family: var(--font-mono);
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             color: #ffffff;
             font-weight: 700;
+            overflow-wrap: anywhere;
         }
 
         .btn-row-flex {
@@ -701,11 +765,11 @@
         }
 
         .slug-copy-btn {
-            background: #18181b;
-            border: 1px solid #3f3f46;
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(255,255,255,0.12);
             color: #ffffff;
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             font-weight: 700;
             cursor: pointer;
             padding: 6px 12px;
@@ -716,15 +780,15 @@
         }
 
         .slug-copy-btn:hover {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
+            background: var(--accent);
+            color: #15100a;
+            border-color: var(--accent);
         }
 
         /* Financial Breakdown Net Profit & Operational Cost Box */
         .financial-breakdown-box {
-            background: #09090b;
-            border: 1px solid #27272a;
+            background: rgba(0,0,0,0.18);
+            border: 1px solid var(--card-border);
             border-radius: 6px;
             padding: 14px 16px;
             margin-bottom: 24px;
@@ -755,7 +819,7 @@
         }
 
         .fin-row.net-profit-row {
-            border-top: 1px dashed #27272a;
+            border-top: 1px solid var(--card-border);
             padding-top: 8px;
             margin-top: 2px;
         }
@@ -773,8 +837,8 @@
         }
 
         .edit-profit-btn {
-            background: #18181b;
-            border: 1px solid #3f3f46;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12);
             color: #ffffff;
             font-family: var(--font-mono);
             font-size: 0.65rem;
@@ -787,19 +851,19 @@
         }
 
         .edit-profit-btn:hover {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
+            background: var(--accent);
+            color: #15100a;
+            border-color: var(--accent);
         }
 
         .action-btn {
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            background-color: #ffffff;
-            color: #000000;
+            background-color: #ead8b7;
+            color: #17100a;
             text-decoration: none;
-            padding: 16px 24px;
+            padding: 13px 16px;
             border-radius: 4px;
             text-align: center;
             transition: all 0.25s ease;
@@ -807,31 +871,40 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            border: 1px solid #ffffff;
+            border: 1px solid #ead8b7;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.05em;
+            box-shadow: 0 12px 28px rgba(201, 154, 69, 0.12);
         }
 
         .action-btn:hover {
-            background-color: #000000;
-            color: #ffffff;
-            border-color: #ffffff;
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+            background-color: var(--accent);
+            color: #15100a;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .month-pill-btn:active,
+        .payment-status-pill:active,
+        .dp-status-action:active,
+        .slug-copy-btn:active,
+        .edit-profit-btn:active,
+        .action-btn:active {
+            transform: translateY(1px);
         }
 
         /* Developer Footer Card */
         .dev-footer-card {
-            background: #121215;
+            background: rgba(23, 20, 16, 0.94);
             border: 1px solid var(--card-border);
             border-radius: 8px;
-            padding: 32px 36px;
+            padding: 26px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 22px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            box-shadow: 0 14px 44px rgba(0,0,0,0.24);
         }
 
         .dev-info-left {
@@ -844,12 +917,12 @@
             width: 56px;
             height: 56px;
             border-radius: 6px;
-            background: #000000;
-            border: 2px solid #ffffff;
+            background: var(--accent-soft);
+            border: 1px solid rgba(201, 154, 69, 0.44);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
+            color: #ead8b7;
             font-family: var(--font-mono);
             font-weight: 800;
             font-size: 1.3rem;
@@ -875,12 +948,12 @@
             font-family: var(--font-mono);
             font-size: 0.8rem;
             font-weight: 700;
-            background: #000000;
-            color: #ffffff;
+            background: rgba(255,255,255,0.045);
+            color: #ead8b7;
             text-decoration: none;
             padding: 14px 24px;
             border-radius: 4px;
-            border: 1.5px solid #3f3f46;
+            border: 1px solid rgba(201, 154, 69, 0.38);
             transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
@@ -890,9 +963,9 @@
         }
 
         .dev-contact-btn:hover {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
+            background: var(--accent);
+            color: #15100a;
+            border-color: var(--accent);
         }
 
         /* Edit Net Profit Modal Overlay */
@@ -902,8 +975,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(8px);
+            background: rgba(13, 11, 8, 0.9);
+            backdrop-filter: blur(10px);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -920,15 +993,15 @@
         }
 
         .modal-card {
-            background: #141417;
-            border: 2px solid #ffffff;
-            border-radius: 4px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border-hover);
+            border-radius: 8px;
             max-width: 440px;
             width: 100%;
             padding: 35px 30px;
             text-align: center;
             font-family: var(--font-mono);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95);
+            box-shadow: 0 34px 80px rgba(0, 0, 0, 0.64);
         }
 
         .modal-title {
@@ -962,8 +1035,8 @@
             text-align: left;
             padding: 12px 14px;
             width: 100%;
-            border: 2px solid #ffffff;
-            background: #000000;
+            border: 1px solid var(--card-border-hover);
+            background: rgba(0,0,0,0.28);
             color: #ffffff;
             outline: none;
             margin-bottom: 20px;
@@ -981,19 +1054,19 @@
             padding: 12px;
             flex: 1;
             cursor: pointer;
-            border: 1.5px solid #ffffff;
+            border: 1px solid var(--card-border-hover);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .modal-btn-confirm {
-            background: #ffffff;
-            color: #000000;
+            background: var(--accent);
+            color: #15100a;
         }
 
         .modal-btn-cancel {
-            background: #000000;
-            color: #ffffff;
+            background: rgba(255,255,255,0.035);
+            color: #ead8b7;
         }
 
         /* Toast Component */
@@ -1001,15 +1074,15 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #ffffff;
-            border: 2px solid #000000;
-            color: #000000;
+            background: #ead8b7;
+            border: 1px solid var(--accent);
+            color: #15100a;
             padding: 14px 28px;
             border-radius: 4px;
             font-family: var(--font-mono);
             font-size: 0.82rem;
             font-weight: 700;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            box-shadow: 0 18px 42px rgba(0,0,0,0.45);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
@@ -1024,25 +1097,56 @@
 
         @media screen and (max-width: 768px) {
             body {
-                padding: 35px 14px 50px 14px;
+                padding: 22px 12px 50px 12px;
+            }
+
+            .portal-header {
+                padding: 22px 18px;
+                margin-bottom: 16px;
             }
 
             .portal-title {
-                font-size: 2.2rem;
+                font-size: 2.15rem;
+                line-height: 1;
             }
 
             .portal-badge {
-                font-size: 0.66rem;
-                padding: 6px 14px;
+                font-size: 0.58rem;
+                padding: 6px 10px;
+                letter-spacing: 0.08em;
             }
 
             .stats-bar {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
                 gap: 12px;
+            }
+
+            .stat-card {
+                grid-template-columns: 1fr;
+                padding: 14px;
+                gap: 10px;
+            }
+
+            .stat-info-val {
+                font-size: 0.96rem;
+                white-space: normal;
             }
 
             .filter-section {
                 padding: 16px;
+            }
+
+            .filter-row-top,
+            .filter-subrow {
+                align-items: stretch;
+            }
+
+            .month-pills-group {
+                width: 100%;
+            }
+
+            .month-pill-btn {
+                flex: 1 1 120px;
             }
 
             .search-box {
@@ -1055,11 +1159,21 @@
             }
 
             .invoice-card {
-                padding: 24px 20px;
+                padding: 18px;
             }
 
             .client-title {
-                font-size: 1.3rem;
+                font-size: 1.05rem;
+            }
+
+            .card-top {
+                flex-direction: column;
+            }
+
+            .status-badge-group {
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .slug-box {
@@ -1128,7 +1242,7 @@
             </div>
 
             <button class="cover-open-btn" onclick="verifyAdminPasscode()">
-                <span>[ BUKA DASHBOARD KEUANGAN ]</span>
+                <span>Buka dashboard keuangan</span>
             </button>
         </div>
     </div>
@@ -1209,7 +1323,7 @@
         <div class="filter-section">
             <div class="filter-row-top">
                 <div class="filter-title">
-                    <span>🗓️ KATEGORI PER PERIODE BULAN:</span>
+                    <span>Periode invoice</span>
                 </div>
                 <div class="month-pills-group">
                     <button class="month-pill-btn active" data-filter="all" onclick="setMonthFilter('all', this)">SEMUA BULAN</button>
@@ -1218,9 +1332,9 @@
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 1px dashed var(--card-border); padding-top: 16px;">
+            <div class="filter-subrow">
                 <div class="filter-title">
-                    <span>🔍 CARI DOKUMEN:</span>
+                    <span>Cari dokumen</span>
                 </div>
                 <div class="search-box">
                     <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -1232,7 +1346,7 @@
         <!-- Collapsible Executive Monthly Revenue & Net Profit Report Table -->
         <div class="revenue-report-box">
             <div class="revenue-report-title">
-                <span>📊 LAPORAN OMSET, BIAYA OPERASIONAL, & KEUNTUNGAN BERSIH BULANAN</span>
+                <span>Laporan omset, biaya operasional, dan keuntungan bersih bulanan</span>
             </div>
             <table class="revenue-table">
                 <thead>
@@ -1303,7 +1417,7 @@
                 </div>
 
                 <a href="/markazfiqih" class="action-btn">
-                    <span>[ BUKA INVOICE MARKAZ FIQIH ]</span>
+                    <span>Buka invoice Markaz Fiqih</span>
                 </a>
             </div>
 
@@ -1357,7 +1471,7 @@
                 </div>
 
                 <a href="/dreammecca-umrahme" class="action-btn">
-                    <span>[ BUKA INVOICE DREAMMECCA - UMRAHME ]</span>
+                    <span>Buka invoice Dreammecca - Umrahme</span>
                 </a>
             </div>
 
@@ -1411,7 +1525,7 @@
                 </div>
 
                 <a href="/haramain-capture" class="action-btn">
-                    <span>[ BUKA INVOICE HARAMAIN CAPTURE ]</span>
+                    <span>Buka invoice Haramain Capture</span>
                 </a>
             </div>
 
@@ -1465,7 +1579,7 @@
                 </div>
 
                 <a href="/abdurrahman" class="action-btn">
-                    <span>[ BUKA INVOICE ABDURRAHMAN ]</span>
+                    <span>Buka invoice Abdurrahman</span>
                 </a>
             </div>
 
@@ -1519,7 +1633,7 @@
                 </div>
 
                 <a href="/qohiroh" class="action-btn">
-                    <span>[ BUKA PENAWARAN & INVOICE QOHIROH ]</span>
+                    <span>Buka penawaran dan invoice Qohiroh</span>
                 </a>
             </div>
 
@@ -1573,7 +1687,7 @@
                 </div>
 
                 <a href="/zaky" class="action-btn">
-                    <span>[ BUKA INVOICE ZAKY FAKHRU ]</span>
+                    <span>Buka invoice Zaky Fakhru</span>
                 </a>
             </div>
 
@@ -1627,7 +1741,7 @@
                 </div>
 
                 <a href="/hamasahlaundry" class="action-btn">
-                    <span>[ BUKA INVOICE HAMASAH LAUNDRY ]</span>
+                    <span>Buka invoice Hamasah Laundry</span>
                 </a>
             </div>
 
@@ -1681,7 +1795,7 @@
                 </div>
 
                 <a href="/umiatiyah" class="action-btn">
-                    <span>[ BUKA INVOICE TEH UMI ATIYAH ]</span>
+                    <span>Buka invoice Teh Umi Atiyah</span>
                 </a>
             </div>
 
@@ -1735,7 +1849,7 @@
                 </div>
 
                 <a href="/kolohaga" class="action-btn">
-                    <span>[ BUKA INVOICE KOLOHAGA ]</span>
+                    <span>Buka invoice Kolohaga</span>
                 </a>
             </div>
 
@@ -1789,7 +1903,7 @@
                 </div>
 
                 <a href="/zalvice" class="action-btn">
-                    <span>[ BUKA INVOICE ZALVICE / BANG RIDWAN ]</span>
+                    <span>Buka invoice Zalvice</span>
                 </a>
             </div>
 
@@ -1843,7 +1957,7 @@
                 </div>
 
                 <a href="/azhariyah" class="action-btn">
-                    <span>[ BUKA INVOICE UMI ELLY / AZHARIYAH ]</span>
+                    <span>Buka invoice Azhariyah</span>
                 </a>
             </div>
 
@@ -1897,7 +2011,7 @@
                 </div>
 
                 <a href="/barber" class="action-btn">
-                    <span>[ BUKA INVOICE BARBER UNDERRATED ]</span>
+                    <span>Buka invoice Barber Underrated</span>
                 </a>
             </div>
 
@@ -1951,7 +2065,7 @@
                 </div>
 
                 <a href="/saudia" class="action-btn">
-                    <span>[ BUKA INVOICE SAUDIA AIRLINES ]</span>
+                    <span>Buka invoice Saudia Airlines</span>
                 </a>
             </div>
 
@@ -2247,15 +2361,15 @@
 
                 if (status === "PAID") {
                     pill.className = "payment-status-pill status-paid";
-                    pill.innerHTML = "🟢 LUNAS";
+                    pill.innerHTML = "<span class=\"status-dot\"></span>LUNAS";
                     dpAction.innerText = "SET DP";
                 } else if (status === "DP") {
                     pill.className = "payment-status-pill status-dp";
-                    pill.innerHTML = "🟡 DIBAYAR DP (" + formatIDR(dpVal) + ")";
+                    pill.innerHTML = "<span class=\"status-dot\"></span>DP (" + formatIDR(dpVal) + ")";
                     dpAction.innerText = "EDIT DP";
                 } else {
                     pill.className = "payment-status-pill status-unpaid";
-                    pill.innerHTML = "🔴 BELUM LUNAS";
+                    pill.innerHTML = "<span class=\"status-dot\"></span>BELUM LUNAS";
                     dpAction.innerText = "SET DP";
                 }
             });
