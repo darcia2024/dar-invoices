@@ -26,8 +26,7 @@
     { "source": "/tiket-saudia", "destination": "/saudia/index.html" },
     { "source": "/kairo", "destination": "/saudia/index.html" },
     { "source": "/flight", "destination": "/saudia/index.html" },
-    { "source": "/etiket", "destination": "/saudia/etiket.html" },
-    { "source": "/e-ticket", "destination": "/saudia/etiket.html" },
-    { "source": "/saudia/etiket", "destination": "/saudia/etiket.html" }
+    { "source": "/etiket", "destination": "/saudia/etiket" },
+    { "source": "/e-ticket", "destination": "/saudia/etiket" }
   ]
 }
