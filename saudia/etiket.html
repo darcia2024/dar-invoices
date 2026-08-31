@@ -311,51 +311,118 @@
             position: relative;
         }
 
-        /* Header Row */
+        /* Header Row Redesign */
         .ticket-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1.5px solid var(--navy-primary);
-            padding-bottom: 16px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 18px;
+            margin-bottom: 22px;
         }
 
-        .brand-block {
+        .header-left-brand {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
+        }
+
+        .brand-logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
         }
 
         .brand-logo-img {
-            height: 32px;
+            height: 38px;
             width: auto;
             display: block;
             object-fit: contain;
         }
 
-        .ticket-title-badge {
-            font-size: 0.72rem;
+        .header-tag-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.68rem;
             font-weight: 800;
             letter-spacing: 0.05em;
-            color: var(--navy-primary);
-            text-transform: uppercase;
-        }
-
-        .pnr-box {
-            background: var(--blue-light);
+            padding: 5px 12px;
+            border-radius: 20px;
             border: 1px solid #bae6fd;
-            border-radius: 8px;
-            padding: 10px 18px;
-            text-align: right;
+            text-transform: uppercase;
         }
 
-        .pnr-label {
-            font-size: 0.65rem;
-            font-weight: 700;
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #0284c7;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .header-issuer-subtext {
+            font-size: 0.76rem;
             color: var(--text-muted);
-            letter-spacing: 0.05em;
+        }
+
+        /* PNR Card Stub */
+        .pnr-card-stub {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1.5px solid #1e3a8a;
+            border-radius: 10px;
+            padding: 10px 20px;
+            text-align: center;
+            min-width: 195px;
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pnr-card-stub::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--navy-primary);
+        }
+
+        .pnr-card-header {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 2px;
+        }
+
+        .pnr-code-text {
+            font-family: var(--font-mono);
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        .pnr-card-footer {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 2px;
         }
 
         .pnr-code {
@@ -804,16 +871,29 @@
         <div>
             <!-- Header Row -->
             <div class="ticket-header-row">
-                <div class="brand-block">
-                    <img src="/saudia/temantiket_logo_dark.png" alt="Temantiket Official Logo" class="brand-logo-img">
-                    <div class="ticket-title-badge">ELECTRONIC TICKET ITINERARY RECEIPT</div>
-                    <div style="font-size: 0.76rem; color: var(--text-muted);">Penerbit: <strong>Temantiket (Mudah, Cepat, Amanah)</strong></div>
+                <div class="header-left-brand">
+                    <div class="brand-logo-wrapper">
+                        <img src="/saudia/temantiket_logo_dark.png" alt="Temantiket Official Logo" class="brand-logo-img">
+                        <div class="header-tag-pill">
+                            <span class="pulse-dot"></span>
+                            OFFICIAL E-TICKET ITINERARY RECEIPT
+                        </div>
+                    </div>
+                    <div class="header-issuer-subtext">
+                        Penerbit Resmi: <strong>Temantiket Travel Solutions</strong> &bull; <em>Mudah, Cepat, Amanah</em>
+                    </div>
                 </div>
 
-                <div class="pnr-box">
-                    <div class="pnr-label">KODE BOOKING MASKAPAI (PNR)</div>
-                    <div class="pnr-code">8HK648</div>
-                    <div style="font-size: 0.72rem; color: #0284c7; font-weight: 700;">Saudia Arabian Airlines</div>
+                <div class="pnr-card-stub">
+                    <div class="pnr-card-header">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.7 5.2c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
+                        <span>KODE BOOKING PNR</span>
+                    </div>
+                    <div class="pnr-code-text">8HK648</div>
+                    <div class="pnr-card-footer">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Saudia Arabian Airlines</span>
+                    </div>
                 </div>
             </div>
 
