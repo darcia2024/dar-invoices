@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INVOICE #INV/SV/2026/014 - Tiket Pesawat Saudia Airlines (Kairo - Jakarta PP)</title>
+    <title>INVOICE #INV/SV/2026/014 - Verros Nabris Muhammad (Temantiket - Tiket Pesawat Saudia PP 3 Pax)</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,12 +13,12 @@
         :root {
             --bg-canvas: #e2e8f0;
             --bg-cream: #f8fafc;
-            --navy-primary: #0b3c26; /* Deep Saudia Emerald Green */
-            --green-accent: #16a34a;
-            --green-light: #f0fdf4;
+            --navy-primary: #1e3a8a; /* Deep Temantiket Royal Blue */
+            --blue-accent: #0284c7;  /* Sky Blue Accent */
+            --blue-light: #e0f2fe;   /* Soft Blue Light */
             --text-dark: #0f172a;
             --text-muted: #475569;
-            --border-navy: #0b3c26;
+            --border-navy: #1e3a8a;
             --border-light: #cbd5e1;
             
             --font-sora: 'Sora', sans-serif;
@@ -52,8 +52,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #051a10;
-            background-image: radial-gradient(#0b3c26 1px, transparent 1px);
+            background-color: #081126;
+            background-image: radial-gradient(#1e3a8a 1px, transparent 1px);
             background-size: 20px 20px;
             z-index: 10000;
             display: flex;
@@ -72,7 +72,7 @@
 
         .cover-card {
             background-color: #f8fafc;
-            border: 3px double #0b3c26;
+            border: 3px double #1e3a8a;
             border-radius: 2px;
             max-width: 540px;
             width: 100%;
@@ -97,15 +97,15 @@
 
         .classified-stamp {
             display: inline-block;
-            border: 2px solid #0b3c26;
+            border: 2px solid #1e3a8a;
             padding: 4px 14px;
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-bottom: 20px;
-            background: #f0fdf4;
-            color: #0b3c26;
+            background: #e0f2fe;
+            color: #1e3a8a;
         }
 
         .cover-recipient-box {
@@ -163,20 +163,20 @@
             width: 190px;
             height: 48px;
             background: #ffffff;
-            border: 2px solid #0b3c26;
+            border: 2px solid #1e3a8a;
             border-radius: 0;
             text-align: center;
             font-family: var(--font-mono);
             font-size: 1.4rem;
             letter-spacing: 8px;
-            color: #0b3c26;
+            color: #1e3a8a;
             outline: none;
             transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
-            border-color: var(--green-accent);
-            box-shadow: 0 0 8px rgba(22, 163, 74, 0.3);
+            border-color: var(--blue-accent);
+            box-shadow: 0 0 8px rgba(2, 132, 199, 0.3);
         }
 
         .passcode-error {
@@ -198,7 +198,7 @@
             font-weight: 700;
             letter-spacing: 0.1em;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(11, 60, 38, 0.3);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
             transition: all 0.2s ease;
             width: 100%;
             text-transform: uppercase;
@@ -206,7 +206,7 @@
         }
 
         .cover-open-btn:hover {
-            background: var(--green-accent);
+            background: var(--blue-accent);
             transform: translateY(-1px);
         }
 
@@ -324,17 +324,6 @@
             gap: 8px;
         }
 
-        .airline-brand-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            padding: 8px 16px;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
         .brand-badge-pill {
             display: inline-block;
             padding: 6px 14px;
@@ -386,7 +375,7 @@
             font-family: var(--font-mono);
         }
 
-        .flight-badge-tag.pergi { background: #0b3c26; color: #ffffff; }
+        .flight-badge-tag.pergi { background: #1e3a8a; color: #ffffff; }
         .flight-badge-tag.pulang { background: #0f172a; color: #ffffff; }
 
         .route-title {
@@ -398,7 +387,7 @@
         .flight-date-tag {
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--green-accent);
+            color: var(--blue-accent);
             font-family: var(--font-mono);
         }
 
@@ -446,9 +435,9 @@
         }
 
         .transit-banner {
-            background: #f0fdf4;
-            border: 1px dashed #86efac;
-            color: #15803d;
+            background: #e0f2fe;
+            border: 1px dashed #7dd3fc;
+            color: #0369a1;
             font-size: 0.72rem;
             font-weight: 700;
             padding: 6px 12px;
@@ -510,7 +499,7 @@
             align-items: center;
             margin-top: 10px;
             margin-bottom: 10px;
-            border-left: 4px solid var(--green-accent);
+            border-left: 4px solid var(--blue-accent);
         }
 
         .col-qty {
@@ -559,7 +548,7 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: var(--green-accent);
+            color: var(--blue-accent);
             font-weight: bold;
         }
 
@@ -567,7 +556,7 @@
             border-top: 2px solid var(--navy-primary);
             border-bottom: 2px solid var(--navy-primary);
             font-weight: 700;
-            background: var(--green-light);
+            background: var(--blue-light);
         }
 
         .grand-total td {
@@ -714,7 +703,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--green-accent);
+            background: var(--blue-accent);
         }
 
         .btn-group {
@@ -744,8 +733,8 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--green-accent);
-            border-color: var(--green-accent);
+            background-color: var(--blue-accent);
+            border-color: var(--blue-accent);
         }
 
         .btn-secondary {
@@ -816,7 +805,7 @@
             .cover-overlay, .action-bar, .copy-pill-btn, .toast { display: none !important; }
             .invoice-container { box-shadow: none !important; border: 1px solid #000000 !important; max-width: 100% !important; }
             .sidebar-left { background-color: #f1f5f9 !important; border-right: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
-            .section-header-banner { background-color: #0b3c26 !important; color: #ffffff !important; -webkit-print-color-adjust: exact !important; }
+            .section-header-banner { background-color: #1e3a8a !important; color: #ffffff !important; -webkit-print-color-adjust: exact !important; }
         }
     </style>
 </head>
@@ -827,17 +816,14 @@
         <div class="cover-card">
             <div class="classified-stamp">DOSSIER RAHASIA // CONFIDENTIAL</div>
 
-            <div style="background:#ffffff; padding:12px 24px; border-radius:6px; border:1px solid #cbd5e1; display:inline-block; margin-bottom:16px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                <div style="font-family:var(--font-sora); font-size:1.15rem; font-weight:800; color:#0b3c26; display:flex; align-items:center; gap:8px;">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.7 5.2c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
-                    <span>SAUDIA AIRLINES &bull; SKYTEAM</span>
-                </div>
+            <div style="background:#0f172a; padding:14px 28px; border-radius:6px; border:1px solid #1e3a8a; display:inline-block; margin-bottom:16px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+                <img src="/saudia/temantiket_logo.png" alt="Temantiket Official Logo" style="height: 48px; width: auto; display: block;">
             </div>
 
             <div class="cover-recipient-box">
                 <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
-                <div class="cover-recipient-name">Penerbangan Internasional Kairo ⇄ Jakarta</div>
-                <div class="cover-recipient-org">Maskapai: <strong>Saudia (Saudi Arabian Airlines) PP</strong></div>
+                <div class="cover-recipient-name">VERROS NABRIS MUHAMMAD</div>
+                <div class="cover-recipient-org">Layanan: <strong>Temantiket — Tiket Pesawat Saudia Airlines PP (3 Pax)</strong></div>
                 <div class="cover-inv-num">REF CODE: #INV/SV/2026/014</div>
             </div>
 
@@ -856,7 +842,7 @@
     <!-- TOP CONTROL BAR -->
     <div class="action-bar">
         <div class="action-title">
-            <span></span> INVOICE #INV/SV/2026/014 — Saudia Airlines (Kairo - Jakarta PP)
+            <span></span> INVOICE #INV/SV/2026/014 — VERROS NABRIS MUHAMMAD (Temantiket)
         </div>
         <div class="btn-group">
             <button class="btn btn-secondary" onclick="copyBankAcc()">
@@ -867,7 +853,7 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download PDF
             </button>
-            <button class="btn btn-primary" style="background:#0b3c26; border-color:#0b3c26;" onclick="window.print()">
+            <button class="btn btn-primary" style="background:#1e3a8a; border-color:#1e3a8a;" onclick="window.print()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 Cetak / Print
             </button>
@@ -881,7 +867,7 @@
         <div class="sidebar-left">
             <div class="vertical-invoice-title">invoice</div>
             <div class="vertical-text-wrapper">
-                <div class="vertical-brand-name">SAUDIA AIRLINES</div>
+                <div class="vertical-brand-name">TEMANTIKET</div>
             </div>
         </div>
 
@@ -898,55 +884,51 @@
                         <div class="billed-to-box">
                             <div class="billed-title">BILLED TO // DITUJUKAN KEPADA:</div>
                             <div class="billed-content">
-                                <strong>Penerbangan Internasional Kairo ⇄ Jakarta (3 Pax)</strong><br>
-                                Layanan: <strong>Tiket Pesawat Saudia Airlines Pulang-Pergi (PP)</strong>
+                                <strong>VERROS NABRIS MUHAMMAD</strong><br>
+                                Layanan: <strong>Tiket Pesawat Saudia Airlines Pulang-Pergi (3 Pax)</strong>
                             </div>
                         </div>
                     </div>
 
                     <div class="top-right-logo-box">
-                        <div class="airline-brand-badge">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.7 5.2c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg>
-                            <div>
-                                <div style="font-weight:800; font-size:1.05rem; color:#0b3c26; line-height:1.2;">Saudia (Saudi Arabian Airlines)</div>
-                                <div style="font-size:0.72rem; color:#16a34a; font-weight:700; font-family:var(--font-mono);">SKYTEAM ALLIANCE MEMBER</div>
-                            </div>
+                        <div style="background: #0f172a; padding: 10px 20px; border-radius: 6px; border: 1px solid #1e3a8a; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: inline-block;">
+                            <img src="/saudia/temantiket_logo.png" alt="Temantiket Official Logo" style="height: 40px; width: auto; display: block;">
                         </div>
-                        <span class="brand-badge-pill">✈️ KELAS EKONOMI &bull; INTERNASIONAL PP (3 PAX)</span>
+                        <span class="brand-badge-pill" style="background:#1e3a8a;">✈️ TEMANTIKET &bull; KELAS EKONOMI PP (3 PAX)</span>
                         <div style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">✈️ CAI (Kairo) ⇄ CGK (Jakarta) via JED (Jeddah)</div>
                     </div>
                 </div>
 
                 <!-- PASSENGER DETAILS CARD (3 PAX) -->
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #0b3c26; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
-                    <div style="font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; color: #0b3c26; margin-bottom: 12px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between;">
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #1e3a8a; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                    <div style="font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; color: #1e3a8a; margin-bottom: 12px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 6px;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                             <span>INFORMASI DAFTAR PENUMPANG RESMI // PASSENGER DETAILS</span>
                         </div>
-                        <span style="background: #f0fdf4; color: #16a34a; padding: 2px 8px; border-radius: 4px; font-weight: 800; font-family: var(--font-mono); font-size: 0.7rem; border: 1px solid #bbf7d0;">3 PAX (PENUMPANG)</span>
+                        <span style="background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 4px; font-weight: 800; font-family: var(--font-mono); font-size: 0.7rem; border: 1px solid #7dd3fc;">3 PAX (PENUMPANG)</span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                             <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; font-family: var(--font-mono); margin-bottom: 2px;">PENUMPANG 1 // PAX 1</div>
                             <div style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">VERROS NABRIS MUHAMMAD</div>
-                            <div style="font-size: 0.72rem; color: #0b3c26; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
-                            <div style="font-size: 0.68rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
+                            <div style="font-size: 0.72rem; color: #1e3a8a; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
+                            <div style="font-size: 0.68rem; color: #0284c7; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
                         </div>
 
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                             <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; font-family: var(--font-mono); margin-bottom: 2px;">PENUMPANG 2 // PAX 2</div>
                             <div style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">AHMAD REZIQ VAIHAQ</div>
-                            <div style="font-size: 0.72rem; color: #0b3c26; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
-                            <div style="font-size: 0.68rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
+                            <div style="font-size: 0.72rem; color: #1e3a8a; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
+                            <div style="font-size: 0.68rem; color: #0284c7; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
                         </div>
 
                         <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px;">
                             <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; font-family: var(--font-mono); margin-bottom: 2px;">PENUMPANG 3 // PAX 3</div>
                             <div style="font-weight: 800; font-size: 0.88rem; color: #0f172a;">VERNAS NIQRIS MUHAMMAD</div>
-                            <div style="font-size: 0.72rem; color: #0b3c26; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
-                            <div style="font-size: 0.68rem; color: #16a34a; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
+                            <div style="font-size: 0.72rem; color: #1e3a8a; font-weight: 700; font-family: var(--font-mono); margin-top: 4px;">Rp 13.200.000 / pax</div>
+                            <div style="font-size: 0.68rem; color: #0284c7; font-weight: 700; margin-top: 2px;">✓ E-Ticket Confirmed</div>
                         </div>
                     </div>
                 </div>
@@ -955,7 +937,7 @@
                 <div class="flight-schedule-container">
                     <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; color:var(--navy-primary); margin-bottom:12px; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        <span>RINCIAN JADWAL &amp; RUTE PENERBANGAN RESMI</span>
+                        <span>RINCIAN JADWAL &amp; RUTE PENERBANGAN RESMI (SAUDIA AIRLINES)</span>
                     </div>
 
                     <div class="schedule-grid">
@@ -1008,7 +990,7 @@
                                     </div>
                                     <div style="color:var(--text-muted); font-size:1.1rem;">&rarr;</div>
                                     <div style="text-align:right;">
-                                        <div class="time-box">16:00 <span style="font-size:0.75rem; color:#16a34a; font-weight:700;">(+1h)</span></div>
+                                        <div class="time-box">16:00 <span style="font-size:0.75rem; color:#0284c7; font-weight:700;">(+1h)</span></div>
                                         <div class="city-box">CGK (Jakarta T3)</div>
                                     </div>
                                 </div>
@@ -1067,7 +1049,7 @@
                                     </div>
                                     <div style="color:var(--text-muted); font-size:1.1rem;">&rarr;</div>
                                     <div style="text-align:right;">
-                                        <div class="time-box">02:15 <span style="font-size:0.75rem; color:#16a34a; font-weight:700;">(+1h)</span></div>
+                                        <div class="time-box">02:15 <span style="font-size:0.75rem; color:#0284c7; font-weight:700;">(+1h)</span></div>
                                         <div class="city-box">CAI (Kairo T2)</div>
                                     </div>
                                 </div>
@@ -1086,7 +1068,7 @@
                     <table class="margarita-table">
                         <thead>
                             <tr>
-                                <th>ITEM DESKRIPSI LAYANAN PENERBANGAN</th>
+                                <th>ITEM DESKRIPSI LAYANAN PENERBANGAN (TEMANTIKET)</th>
                                 <th class="col-qty">QTY</th>
                                 <th class="col-unit-price">HARGA SATUAN</th>
                                 <th class="col-subtotal">SUBTOTAL</th>
@@ -1127,8 +1109,8 @@
 
                             <!-- GRAND TOTAL ROW -->
                             <tr class="table-totals-row grand-total">
-                                <td colspan="3" style="font-weight: 700; color: #0b3c26;">TOTAL HARGA NETT PP (3 PAX @ RP 13.200.000)</td>
-                                <td class="col-subtotal" style="font-size:1.25rem; font-weight:700; color: #0b3c26;">Rp 39.600.000</td>
+                                <td colspan="3" style="font-weight: 700; color: #1e3a8a;">TOTAL HARGA NETT PP (3 PAX @ RP 13.200.000)</td>
+                                <td class="col-subtotal" style="font-size:1.25rem; font-weight:700; color: #1e3a8a;">Rp 39.600.000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1141,40 +1123,40 @@
                 <div class="scope-breakdown-box">
                     <div class="scope-card">
                         <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>FASILITAS &amp; LAYANAN PENERBANGAN</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>FASILITAS &amp; LAYANAN TEMANTIKET</span>
                         </div>
                         <ul class="scope-card-list">
                             <li>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Layanan Temantiket:</strong> Mudah, cepat, dan amanah untuk tiket internasional.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>Maskapai Aliansi SkyTeam:</strong> Armada Airbus A330 &amp; Boeing 777-300.</span>
                             </li>
                             <li>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>Transit Direct Jeddah (JED T1):</strong> Penanganan bagasi otomatis checked-through.</span>
-                            </li>
-                            <li>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                <span><strong>Layanan Penuh (Full Service):</strong> Termasuk santapan in-flight &amp; bagasi.</span>
                             </li>
                         </ul>
                     </div>
                     <div class="scope-card">
                         <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                             <span>INFORMASI PENERBANGAN</span>
                         </div>
                         <ul class="scope-card-list">
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
                                 <span><strong>Rute Pergi:</strong> SV 302 (CAI-JED) &amp; SV 818 (JED-CGK).</span>
                             </li>
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 <span><strong>Rute Pulang:</strong> SV 819 (CGK-JED) &amp; SV 309 (JED-CAI).</span>
                             </li>
                             <li>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0b3c26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 <span><strong>Status Dokumen:</strong> E-Ticket Resmi Issued.</span>
                             </li>
                         </ul>
@@ -1209,7 +1191,7 @@
                         <div class="bottom-block-title">ISSUER &amp; CONTACT</div>
                         <div class="bottom-block-content">
                             <strong style="color:#0f172a;">Daru Fahmaa Muliawan</strong><br>
-                            <strong style="color:var(--navy-primary);">Travel &amp; Flight Ticketing Agent</strong><br>
+                            <strong style="color:var(--navy-primary);">Travel &amp; Flight Ticketing Agent (Temantiket)</strong><br>
                             WA: 081311506025
                         </div>
                     </div>
@@ -1217,7 +1199,7 @@
 
                 <!-- Terms & Conditions Section -->
                 <div class="terms-container">
-                    <div class="terms-title">KETENTUAN PEMBELIAN TIKET PESAWAT</div>
+                    <div class="terms-title">KETENTUAN PEMBELIAN TIKET PESAWAT (TEMANTIKET)</div>
                     <div>
                         • <strong>Status E-Ticket:</strong> Tiket telah terbit (*Issued*) dan dikonfirmasi resmi di sistem Saudia Arabian Airlines.<br>
                         • <strong>Check-in &amp; Boarding Pass:</strong> Disarankan melakukan web check-in 24 jam sebelum keberangkatan.<br>
