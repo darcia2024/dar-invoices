@@ -1870,6 +1870,60 @@
                 </a>
             </div>
 
+            <!-- Tiket Pesawat Saudia Airlines Card -->
+            <div class="invoice-card" id="card-saudia" data-id="saudia" data-month="2026-08" data-amount="13200000" data-client="tiket pesawat saudia airlines saudi arabian airlines kairo jakarta pp flight internatioal #inv/sv/2026/014 agustus 2026 13.200.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Tiket Pesawat Saudia Airlines (Kairo - Jakarta PP)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('saudia')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/SV/2026/014</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Tiket Penerbangan Internasional Saudia Arabian Airlines (SkyTeam) Kairo (CAI) ⇄ Jakarta (CGK) via Transit Jeddah (JED). Pergi 31 Agt 2026, Pulang 30 Okt 2026.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/saudia</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/saudia')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptSaudia()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET TIKET:</span>
+                            <span class="fin-val">Rp 13.200.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValSaudia">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValSaudia">Rp 13.200.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('saudia')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/saudia" class="action-btn">
+                    <span>[ BUKA INVOICE SAUDIA AIRLINES ]</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -1952,7 +2006,8 @@
             kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
             zalvice: localStorage.getItem("status_zalvice") || "UNPAID",
             azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID",
-            barber: localStorage.getItem("status_barber") || "UNPAID"
+            barber: localStorage.getItem("status_barber") || "UNPAID",
+            saudia: localStorage.getItem("status_saudia") || "UNPAID"
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -1968,7 +2023,8 @@
             kolohaga: parseInt(localStorage.getItem("profit_kolohaga")) || 700000,
             zalvice: parseInt(localStorage.getItem("profit_zalvice")) || 1200000,
             azhariyah: parseInt(localStorage.getItem("profit_azhariyah")) || 7000000,
-            barber: parseInt(localStorage.getItem("profit_barber")) || 6000000
+            barber: parseInt(localStorage.getItem("profit_barber")) || 6000000,
+            saudia: parseInt(localStorage.getItem("profit_saudia")) || 13200000
         };
 
         const invoiceItems = [
@@ -1983,7 +2039,8 @@
             { id: "kolohaga", name: "Ziaudin Azzam (KOLOHAGA)", month: "2026-08", monthLabel: "Agustus 2026", gross: 700000 },
             { id: "zalvice", name: "Bang Ridwan Zalbina (Zalvice & LaptopBisnis)", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
             { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 },
-            { id: "barber", name: "Owner Barber Underrated", month: "2026-08", monthLabel: "Agustus 2026", gross: 6000000 }
+            { id: "barber", name: "Owner Barber Underrated", month: "2026-08", monthLabel: "Agustus 2026", gross: 6000000 },
+            { id: "saudia", name: "Tiket Pesawat Saudia Airlines", month: "2026-08", monthLabel: "Agustus 2026", gross: 13200000 }
         ];
 
         function formatIDR(num) {
@@ -2523,6 +2580,37 @@ Terima kasih banyak Boss! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA BARBER UNDERRATED BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptSaudia() {
+            const waScript = `Halo Kak 👋✨
+
+Berikut rincian resmi Invoice & E-Ticket Penerbangan Internasional Saudia Arabian Airlines (Kairo - Jakarta PP):
+
+🔗 Invoice Online: https://dar-invoices.vercel.app/saudia
+🔑 Kode PIN Akses: 0001
+
+✈️ Rincian Jadwal Penerbangan:
+1. PERGI (Senin, 31 Agt 2026):
+   • SV 302: 20:50 CAI (Kairo T2) ➔ 23:00 JED (Jeddah T1)
+   • Transit Jeddah: 2j 55m (Bagasi Checked-Through)
+   • SV 818: 01:55 JED (Jeddah T1) ➔ 16:00 CGK (Jakarta T3)
+
+2. PULANG (Jumat, 30 Okt 2026):
+   • SV 819: 17:30 CGK (Jakarta T3) ➔ 23:25 JED (Jeddah T1)
+   • Transit Jeddah: 1j 30m (Bagasi Checked-Through)
+   • SV 309: 00:55 JED (Jeddah T1) ➔ 02:15 CAI (Kairo T2)
+
+💰 Total Harga Nett PP: Rp 13.200.000
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak & Semoga penerbangan menyenangkan! 🙏✈️`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA SAUDIA AIRLINES BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

@@ -20,6 +20,11 @@
     { "source": "/zalbina", "destination": "/zalvice/index.html" },
     { "source": "/ridwan", "destination": "/zalvice/index.html" },
     { "source": "/barber", "destination": "/barber/index.html" },
-    { "source": "/underrated", "destination": "/barber/index.html" }
+    { "source": "/underrated", "destination": "/barber/index.html" },
+    { "source": "/saudia", "destination": "/saudia/index.html" },
+    { "source": "/tiket", "destination": "/saudia/index.html" },
+    { "source": "/tiket-saudia", "destination": "/saudia/index.html" },
+    { "source": "/kairo", "destination": "/saudia/index.html" },
+    { "source": "/flight", "destination": "/saudia/index.html" }
   ]
 }
