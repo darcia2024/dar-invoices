@@ -629,6 +629,26 @@
             color: #ffffff;
         }
 
+        .dp-status-action {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 5px 9px;
+            border-radius: 4px;
+            border: 1px solid #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dp-status-action:hover {
+            background: #f59e0b;
+            color: #000000;
+        }
+
         .ref-code {
             font-family: var(--font-mono);
             font-size: 0.78rem;
@@ -2069,8 +2089,7 @@
             const current = paymentStatuses[id] || "UNPAID";
             let next = "UNPAID";
             if (current === "UNPAID") {
-                openDpModal(id);
-                return;
+                next = "PAID";
             } else if (current === "DP") {
                 next = "PAID";
             } else {
@@ -2116,6 +2135,17 @@
                 if (!card) return;
                 const pill = card.querySelector(".payment-status-pill");
                 if (!pill) return;
+                let dpAction = card.querySelector(".dp-status-action");
+                if (!dpAction) {
+                    dpAction = document.createElement("button");
+                    dpAction.type = "button";
+                    dpAction.className = "dp-status-action";
+                    dpAction.addEventListener("click", function(event) {
+                        event.stopPropagation();
+                        openDpModal(item.id);
+                    });
+                    pill.insertAdjacentElement("afterend", dpAction);
+                }
 
                 const status = paymentStatuses[item.id] || "UNPAID";
                 const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
@@ -2123,12 +2153,15 @@
                 if (status === "PAID") {
                     pill.className = "payment-status-pill status-paid";
                     pill.innerHTML = "🟢 LUNAS";
+                    dpAction.innerText = "SET DP";
                 } else if (status === "DP") {
                     pill.className = "payment-status-pill status-dp";
                     pill.innerHTML = "🟡 DIBAYAR DP (" + formatIDR(dpVal) + ")";
+                    dpAction.innerText = "EDIT DP";
                 } else {
                     pill.className = "payment-status-pill status-unpaid";
                     pill.innerHTML = "🔴 BELUM LUNAS";
+                    dpAction.innerText = "SET DP";
                 }
             });
         }
