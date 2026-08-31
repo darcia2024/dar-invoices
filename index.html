@@ -607,6 +607,17 @@
             color: #000000;
         }
 
+        .payment-status-pill.status-dp {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .payment-status-pill.status-dp:hover {
+            background: #f59e0b;
+            color: #000000;
+        }
+
         .payment-status-pill.status-unpaid {
             background: var(--color-unpaid-bg);
             color: var(--color-unpaid);
@@ -2006,8 +2017,13 @@
             kolohaga: localStorage.getItem("status_kolohaga") || "UNPAID",
             zalvice: localStorage.getItem("status_zalvice") || "UNPAID",
             azhariyah: localStorage.getItem("status_azhariyah") || "UNPAID",
-            barber: localStorage.getItem("status_barber") || "UNPAID",
+            barber: localStorage.getItem("status_barber") || "DP",
             saudia: localStorage.getItem("status_saudia") || "UNPAID"
+        };
+
+        // DP Amounts for partial payment (Default Barber DP = Rp 3.000.000)
+        const dpAmounts = {
+            barber: parseInt(localStorage.getItem("dp_barber")) || 3000000
         };
 
         // Initial Net Profit Values (Saved in localStorage or default)
@@ -2047,15 +2063,51 @@
             return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
+        let activeDpEditProjectId = null;
+
         function togglePaymentStatus(id) {
             const current = paymentStatuses[id] || "UNPAID";
-            const next = current === "PAID" ? "UNPAID" : "PAID";
-            paymentStatuses[id] = next;
-            localStorage.setItem("status_" + id, next);
-            
+            let next = "UNPAID";
+            if (current === "UNPAID") {
+                openDpModal(id);
+                return;
+            } else if (current === "DP") {
+                next = "PAID";
+            } else {
+                next = "UNPAID";
+            }
+            setPaymentStatus(id, next);
+        }
+
+        function setPaymentStatus(id, status, dpValue) {
+            paymentStatuses[id] = status;
+            localStorage.setItem("status_" + id, status);
+            if (dpValue !== undefined) {
+                dpAmounts[id] = dpValue;
+                localStorage.setItem("dp_" + id, dpValue);
+            }
             updatePaymentBadges();
             calculateFinancials();
-            showToast("STATUS PEMBAYARAN DIUBAH MENJADI: " + (next === "PAID" ? "LUNAS" : "BELUM LUNAS"));
+            showToast("STATUS PEMBAYARAN DIUBAH MENJADI: " + (status === "PAID" ? "LUNAS" : status === "DP" ? "DIBAYAR DP" : "BELUM LUNAS"));
+        }
+
+        function openDpModal(id) {
+            activeDpEditProjectId = id;
+            const item = invoiceItems.find(i => i.id === id);
+            if (!item) return;
+
+            const defaultDp = dpAmounts[id] !== undefined ? dpAmounts[id] : Math.round(item.gross / 2);
+            
+            const customVal = prompt("Masukkan Jumlah DP / Pembayaran Parsial yang telah diterima (Rp):", defaultDp);
+            if (customVal === null) return; // User cancelled
+            
+            const parsedDp = parseInt(customVal);
+            if (isNaN(parsedDp) || parsedDp < 0) {
+                showToast("NOMINAL DP TIDAK VALID!");
+                return;
+            }
+
+            setPaymentStatus(id, "DP", parsedDp);
         }
 
         function updatePaymentBadges() {
@@ -2066,9 +2118,14 @@
                 if (!pill) return;
 
                 const status = paymentStatuses[item.id] || "UNPAID";
+                const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
+
                 if (status === "PAID") {
                     pill.className = "payment-status-pill status-paid";
                     pill.innerHTML = "🟢 LUNAS";
+                } else if (status === "DP") {
+                    pill.className = "payment-status-pill status-dp";
+                    pill.innerHTML = "🟡 DIBAYAR DP (" + formatIDR(dpVal) + ")";
                 } else {
                     pill.className = "payment-status-pill status-unpaid";
                     pill.innerHTML = "🔴 BELUM LUNAS";
@@ -2137,19 +2194,35 @@
             const monthlyMap = {};
 
             invoiceItems.forEach(item => {
-                const isPaid = paymentStatuses[item.id] === "PAID";
+                const status = paymentStatuses[item.id] || "UNPAID";
                 const isVisibleByMonth = (activeMonthFilter === "all" || activeMonthFilter === item.month);
                 const itemNetProfit = netProfits[item.id] !== undefined ? netProfits[item.id] : item.gross;
                 const itemCost = item.gross - itemNetProfit;
+                const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
+
+                let paidGross = 0;
+                let paidNetProfit = 0;
+                let unpaidGross = 0;
+
+                if (status === "PAID") {
+                    paidGross = item.gross;
+                    paidNetProfit = itemNetProfit;
+                    unpaidGross = 0;
+                } else if (status === "DP") {
+                    paidGross = dpVal;
+                    paidNetProfit = Math.round((dpVal / item.gross) * itemNetProfit);
+                    unpaidGross = item.gross - dpVal;
+                } else {
+                    paidGross = 0;
+                    paidNetProfit = 0;
+                    unpaidGross = item.gross;
+                }
 
                 if (isVisibleByMonth) {
                     totalGrandGross += item.gross;
-                    if (isPaid) {
-                        totalPaidGross += item.gross;
-                        totalNetProfitPaid += itemNetProfit;
-                    } else {
-                        totalUnpaidGross += item.gross;
-                    }
+                    totalPaidGross += paidGross;
+                    totalNetProfitPaid += paidNetProfit;
+                    totalUnpaidGross += unpaidGross;
                 }
 
                 // Global Monthly Aggregation for Report Table
@@ -2160,15 +2233,18 @@
                         paidNetProfitTotal: 0,
                         costTotal: 0,
                         paidCount: 0, 
+                        dpCount: 0,
                         unpaidCount: 0 
                     };
                 }
 
-                if (isPaid) {
-                    monthlyMap[item.month].paidGrossTotal += item.gross;
-                    monthlyMap[item.month].paidNetProfitTotal += itemNetProfit;
+                monthlyMap[item.month].paidGrossTotal += paidGross;
+                monthlyMap[item.month].paidNetProfitTotal += paidNetProfit;
+                if (status === "PAID") {
                     monthlyMap[item.month].costTotal += (itemCost < 0 ? 0 : itemCost);
                     monthlyMap[item.month].paidCount += 1;
+                } else if (status === "DP") {
+                    monthlyMap[item.month].dpCount += 1;
                 } else {
                     monthlyMap[item.month].unpaidCount += 1;
                 }
@@ -2193,11 +2269,18 @@
                 sumReportCost += row.costTotal;
                 sumReportProfit += row.paidNetProfitTotal;
 
+                const statusLabel = row.dpCount > 0 ? `${row.paidCount} Lunas, ${row.dpCount} DP` : `${row.paidCount} Invoice Lunas`;
+
                 tableHTML += `
                     <tr>
                         <td>📅 ${row.label}</td>
-                        <td style="color: var(--color-paid); font-weight: 700;">${row.paidCount} Invoice Lunas</td>
+                        <td style="color: var(--color-paid); font-weight: 700;">${statusLabel}</td>
                         <td>${formatIDR(row.paidGrossTotal)}</td>
+                        <td style="color: var(--text-dim);">${formatIDR(row.costTotal)}</td>
+                        <td style="text-align: right; color: var(--color-paid); font-weight: 700;">${formatIDR(row.paidNetProfitTotal)}</td>
+                    </tr>
+                `;
+            });
                         <td style="color: var(--text-dim);">${formatIDR(row.costTotal)}</td>
                         <td style="text-align: right; color: var(--color-paid); font-weight: 700;">${formatIDR(row.paidNetProfitTotal)}</td>
                     </tr>
