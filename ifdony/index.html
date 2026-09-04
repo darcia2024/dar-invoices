@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/AZH/2026/015 - Ustadz Ifdony (Desain Logo Azharuna)</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #f1f5f9;
+            --bg-card: #ffffff;
+            --navy-primary: #0f172a; /* Midnight Dark Slate */
+            --navy-light: #1e293b;
+            --blue-accent: #0284c7;  /* Sky Accent */
+            --blue-light: #e0f2fe;   /* Soft Highlight */
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.45;
+            padding: 24px 16px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           SECURITY PASSCODE COVER OVERLAY
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0b132b;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-20px);
+        }
+
+        .cover-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            max-width: 440px;
+            width: 100%;
+            padding: 32px 28px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            background: #e0f2fe;
+            color: #0369a1;
+            border-radius: 4px;
+        }
+
+        .cover-recipient-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 16px;
+            text-align: left;
+            margin-bottom: 18px;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .cover-recipient-name {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .cover-recipient-org {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--navy-primary);
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        .passcode-wrapper {
+            margin: 16px 0 14px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            width: 170px;
+            height: 42px;
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: var(--navy-primary);
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.15);
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .cover-open-btn {
+            background: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .cover-open-btn:hover {
+            background: #1e293b;
+        }
+
+        /* ----------------------------------------------------
+           TOP CONTROL BAR
+        ---------------------------------------------------- */
+        .action-bar {
+            max-width: 900px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .action-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--blue-accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid var(--border-light);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            border-color: var(--navy-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #1e293b;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f8fafc;
+        }
+
+        /* ----------------------------------------------------
+           MAIN INVOICE CONTAINER
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sidebar Kiri Minimalis */
+        .sidebar-left {
+            width: 56px;
+            background-color: #f8fafc;
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--navy-primary);
+            opacity: 0.9;
+        }
+
+        .vertical-brand-name {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Main Content Panel */
+        .main-panel {
+            flex-grow: 1;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            border-bottom: 1.5px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        .inv-date-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .billed-to-box {
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+
+        .billed-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .top-right-logo-box {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .brand-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: #f1f5f9;
+            color: var(--navy-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Table Architecture */
+        .table-area {
+            margin-bottom: 24px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--navy-primary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--navy-primary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .section-header-banner {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 10px 14px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .col-qty {
+            text-align: center;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 80px;
+        }
+
+        .col-unit-price {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 130px;
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 140px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            font-size: 0.88rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+            color: var(--navy-primary);
+            font-weight: bold;
+        }
+
+        .grand-total {
+            border-top: 2px solid var(--navy-primary);
+            border-bottom: 2px solid var(--navy-primary);
+            font-weight: 700;
+            background: #f8fafc;
+        }
+
+        .grand-total td {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            padding: 14px 10px;
+            color: var(--navy-primary);
+        }
+
+        /* Scope Breakdown Box */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .scope-card-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .scope-card-list svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 18px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 18px;
+            margin-bottom: 16px;
+        }
+
+        .bottom-block-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .bottom-block-content {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .copy-pill-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            color: var(--navy-primary);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--navy-primary);
+            color: #ffffff;
+        }
+
+        /* Terms & Notes Box */
+        .terms-container {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-light);
+            padding: 14px 16px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            border-radius: 8px;
+        }
+
+        .terms-title {
+            font-weight: 800;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Layout */
+        @media screen and (max-width: 768px) {
+            body { padding: 12px 8px; }
+            .action-bar { flex-direction: column; gap: 12px; align-items: stretch; }
+            .btn-group { display: flex; flex-direction: column; }
+            .btn { justify-content: center; padding: 10px; }
+
+            .invoice-container { flex-direction: column; width: 100%; }
+            .sidebar-left {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 16px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
+            }
+            .vertical-invoice-title { writing-mode: horizontal-tb; transform: none; font-size: 1.3rem; }
+            .vertical-brand-name { writing-mode: horizontal-tb; transform: none; }
+
+            .main-panel { padding: 20px 16px; }
+            .invoice-header-row { flex-direction: column; gap: 14px; align-items: flex-start; }
+            .top-right-logo-box { align-items: flex-start; text-align: left; width: 100%; }
+
+            .scope-breakdown-box { grid-template-columns: 1fr !important; gap: 12px; }
+            .bottom-section-grid { grid-template-columns: 1fr; gap: 14px; }
+            .col-subtotal { width: 120px; }
+        }
+
+        /* Print Optimization */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm;
+            }
+            body { background: #ffffff !important; padding: 0 !important; font-size: 10.5px !important; }
+            .cover-overlay, .action-bar, .copy-pill-btn, .toast { display: none !important; }
+            .invoice-container { box-shadow: none !important; border: none !important; max-width: 100% !important; }
+            .sidebar-left { background-color: #f8fafc !important; border-right: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
+            .section-header-banner { background-color: #0f172a !important; color: #ffffff !important; -webkit-print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURITY PASSCODE COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="classified-stamp">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>DOSSIER RAHASIA // CONFIDENTIAL</span>
+            </div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Ustadz Ifdony</div>
+                <div class="cover-recipient-org">Founder Hamasah Internasional</div>
+                <div class="cover-inv-num">REF CODE: #INV/AZH/2026/015</div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">MASUKKAN KODE PIN RESMI:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                <span>BUKA DOKUMEN RESMI</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- TOP CONTROL BAR -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> INVOICE #INV/AZH/2026/015 — Ustadz Ifdony (Desain Logo Azharuna)
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" onclick="downloadPDF()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+            </button>
+            <button class="btn btn-primary" style="background:#0f172a; border-color:#0f172a;" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN INVOICE CONTAINER -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Minimalis -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">invoice</div>
+            <div class="vertical-brand-name">AZHARUNA</div>
+        </div>
+
+        <!-- Main Content Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Header Meta Row -->
+                <div class="invoice-header-row">
+                    <div class="top-left-meta">
+                        <div class="inv-num-label">Invoice No. #INV/AZH/2026/015</div>
+                        <div class="inv-date-label">5 September 2026</div>
+
+                        <div class="billed-to-box">
+                            <div class="billed-title">BILLED TO // DITUJUKAN KEPADA:</div>
+                            <div class="billed-content">
+                                <strong style="font-size: 1rem; color: #0f172a;">Ustadz Ifdony</strong><br>
+                                Organisasi: <span style="color: var(--text-muted);">Founder Hamasah Internasional</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-right-logo-box">
+                        <span class="brand-badge-pill" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">
+                            <span style="width:6px; height:6px; background:#0284c7; border-radius:50%; display:inline-block;"></span>
+                            DESAIN LOGO AZHARUNA
+                        </span>
+                        <div style="font-size:0.76rem; color:var(--text-muted);">Hamasah Internasional &bull; Azharuna Branding</div>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>DESKRIPSI LAYANAN DESAIN &amp; BRANDING</th>
+                                <th class="col-qty">QTY</th>
+                                <th class="col-unit-price">HARGA SATUAN</th>
+                                <th class="col-subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <!-- BANNER BAGIAN I -->
+                            <tr>
+                                <td colspan="4" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner">
+                                        <span>DESAIN BRANDING &amp; MASTER VEKTOR LOGO "AZHARUNA"</span>
+                                        <span>Subtotal: Rp 500.000</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 1.1 -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        Pembuatan Desain Logo &amp; Identitas Visual Azharuna
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Konsep Vektor Logo Azharuna:</strong> Desain identitas merek yang profesional, modern, dan berkarakter khas.</li>
+                                        <li><strong>Penyerahan File Master Vektor:</strong> Berkas master lengkap beresolusi tinggi (AI / EPS, SVG, PNG Transparan, &amp; PDF Vector).</li>
+                                        <li><strong>Lisensi Penggunaan Hak Cipta Komersial:</strong> Hak penggunaan penuh untuk keperluan media digital, cetak, &amp; merchandise.</li>
+                                    </ul>
+                                </td>
+                                <td class="col-qty" style="font-weight: 700; color: #0f172a;">1 Paket</td>
+                                <td class="col-unit-price" style="font-weight: 700; color: #0f172a;">Rp 500.000</td>
+                                <td class="col-subtotal" style="font-weight: 700; color: #0f172a;">
+                                    Rp 500.000
+                                </td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td colspan="3" style="font-weight: 700; color: #0f172a;">TOTAL TAGIHAN LUNAS // GRAND TOTAL</td>
+                                <td class="col-subtotal" style="font-size:1.1rem; font-weight:700; color: #0f172a;">Rp 500.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:6px;">
+                        // lima ratus ribu rupiah //
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHTS & SPECIFICATION CARDS -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <span>FILE DELIVERABLES LENGKAP</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Master Vector AI/EPS:</strong> Siap untuk kebutuhan cetak skala besar.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>PNG HD Transparan &amp; SVG:</strong> Siap pakai di website, aplikasi, &amp; sosial media.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span>INFORMASI PROYEK</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span><strong>Klien:</strong> Ustadz Ifdony (Founder Hamasah Internasional).</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Status Tagihan:</strong> Official Verified Invoice.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section Grid -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 16px; width: auto; object-fit: contain;">
+                                <strong style="font-size: 0.92rem; color: #0f172a;">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 2px; color: var(--text-muted);">
+                                Account Name: <strong style="color: #0f172a;">Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: #0f172a;">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer Details -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER &amp; DESIGNER</div>
+                        <div class="bottom-block-content">
+                            <strong style="color:#0f172a;">Daru Fahmaa Muliawan</strong><br>
+                            <strong style="color:var(--navy-primary);">Brand &amp; Identity Designer</strong><br>
+                            <span style="color:var(--text-muted);">WA: 081311506025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">KETENTUAN LAYANAN DESAIN LOGO AZHARUNA</div>
+                    <div>
+                        – <strong>Penyerahan File:</strong> Seluruh berkas master vektor diserahkan secara digital setelah invoice dikonfirmasi.<br>
+                        – <strong>Lisensi Penggunaan:</strong> Klien memegang hak cipta komersial penuh atas hasil karya desain logo Azharuna.<br>
+                        – <strong>Konfirmasi Pembayaran:</strong> Transfer pembayaran dapat ditujukan ke rekening Bank Mandiri resmi tertera.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
+    <script>
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const coverCard = document.querySelector('.cover-card');
+
+            if (input.value === '0001') {
+                overlay.classList.add('opened');
+            } else {
+                errorMsg.style.display = 'block';
+                coverCard.classList.add('shake-anim');
+                setTimeout(() => {
+                    coverCard.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+
+        document.getElementById('passcodeInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri Berhasil Disalin!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>

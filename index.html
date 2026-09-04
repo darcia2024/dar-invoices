@@ -2069,6 +2069,60 @@
                 </a>
             </div>
 
+            <!-- Ustadz Ifdony (Logo Azharuna) Card -->
+            <div class="invoice-card" id="card-ifdony" data-id="ifdony" data-month="2026-09" data-amount="500000" data-client="ustadz ifdony founder hamasah internasional logo azharuna desain logo branding #inv/azh/2026/015 september 2026 500.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Ustadz Ifdony - Founder Hamasah Internasional (Logo Azharuna)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('ifdony')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/AZH/2026/015</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pembuatan Desain Branding &amp; Identitas Visual Logo Azharuna, Penyerahan File Master Vektor (AI, EPS, SVG, PNG Transparan HD, &amp; PDF Vector) + Lisensi Hak Cipta Komersial Penuh.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/azharuna</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/azharuna')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptIfdony()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET DESAIN LOGO:</span>
+                            <span class="fin-val">Rp 500.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValIfdony">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValIfdony">Rp 500.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('ifdony')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/azharuna" class="action-btn">
+                    <span>Buka Invoice Logo Azharuna</span>
+                </a>
+            </div>
+
         </div>
 
         <!-- Developer Footer -->
@@ -2153,7 +2207,8 @@
             zalvice: "UNPAID",
             azhariyah: "UNPAID",
             barber: "UNPAID",
-            saudia: "UNPAID"
+            saudia: "UNPAID",
+            ifdony: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2183,7 +2238,8 @@
             zalvice: 1200000,
             azhariyah: 7000000,
             barber: 6000000,
-            saudia: 39600000
+            saudia: 39600000,
+            ifdony: 500000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2213,7 +2269,8 @@
             { id: "zalvice", name: "Bang Ridwan Zalbina (Zalvice & LaptopBisnis)", month: "2026-08", monthLabel: "Agustus 2026", gross: 1200000 },
             { id: "azhariyah", name: "Yayasan Azhariyah (Umi Elly)", month: "2026-08", monthLabel: "Agustus 2026", gross: 7000000 },
             { id: "barber", name: "Owner Barber Underrated", month: "2026-08", monthLabel: "Agustus 2026", gross: 6000000 },
-            { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 }
+            { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 },
+            { id: "ifdony", name: "Ustadz Ifdony (Logo Azharuna)", month: "2026-09", monthLabel: "September 2026", gross: 500000 }
         ];
 
         function formatIDR(num) {
@@ -2900,6 +2957,31 @@ Terima kasih banyak Boss! 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA BARBER UNDERRATED BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptIfdony() {
+            const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Ustadz Ifdony. 🙏✨
+
+Berikut tautan resmi Dokumen Invoice Desain Logo Azharuna dari Hamasah Internasional:
+
+🔗 Invoice Online: https://temantiket.com/azharuna
+🔑 Kode PIN Akses: 0001
+
+Rincian Layanan:
+- Pembuatan Desain Branding & Identitas Visual Logo "Azharuna"
+- Penyerahan File Master Vektor High-Resolution (AI, EPS, SVG, PNG Transparan HD, & PDF Vector)
+- Lisensi Penggunaan Hak Cipta Komersial Penuh
+
+💰 Total Tagihan: Rp 500.000
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak Ustadz! Semoga berkah selalu. 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA LOGO AZHARUNA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
