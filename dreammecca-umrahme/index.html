@@ -201,6 +201,8 @@
         }
 
         .passcode-input {
+            -webkit-text-security: disc;
+            text-security: disc;
             font-family: var(--font-mono);
             font-size: 1.15rem;
             font-weight: 700;
@@ -958,7 +960,7 @@
             <!-- PASSCODE SECURITY SECTION -->
             <div class="passcode-wrapper">
                 <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
-                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6">
+                <input type="text" id="passcodeInput" autocomplete="off" autocomplete="new-password" name="pin_code_clean" value="" class="passcode-input" maxlength="6">
                 <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
             </div>
 
@@ -1182,7 +1184,16 @@
                 toast.classList.remove("show");
             }, 3000);
         }
-    </script>
+    
+        window.addEventListener("DOMContentLoaded", function () {
+            const el = document.getElementById("passcodeInput") || document.getElementById("adminPasscodeInput");
+            if (el) {
+                el.value = "";
+                setTimeout(function () { el.value = ""; }, 100);
+                setTimeout(function () { el.value = ""; }, 400);
+            }
+        });
+</script>
 </body>
 </html>
 

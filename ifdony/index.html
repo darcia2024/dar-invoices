@@ -171,6 +171,8 @@
             color: #0f172a;
             outline: none;
             transition: all 0.2s ease;
+            -webkit-text-security: disc;
+            text-security: disc;
         }
 
         .passcode-input:focus {
@@ -704,7 +706,7 @@
 
             <div class="passcode-wrapper">
                 <div class="passcode-label">MASUKKAN KODE PIN RESMI:</div>
-                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <input type="text" id="passcodeInput" class="passcode-input" maxlength="6" autocomplete="off" autocomplete="new-password" name="pin_code_clean" value="" placeholder="• • • •">
                 <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
             </div>
 
@@ -937,6 +939,15 @@
         document.getElementById('passcodeInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 verifyPasscode();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('passcodeInput');
+            if (input) {
+                input.value = '';
+                setTimeout(() => { input.value = ''; }, 100);
+                setTimeout(() => { input.value = ''; }, 400);
             }
         });
 

@@ -185,6 +185,8 @@
         }
 
         .passcode-input {
+            -webkit-text-security: disc;
+            text-security: disc;
             width: 180px;
             padding: 12px;
             font-family: var(--font-mono);
@@ -935,7 +937,7 @@
 
             <div class="passcode-wrapper">
                 <div class="passcode-label">ENTER ACCESS PIN // MASUKKAN KODE PIN RESMI:</div>
-                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •">
+                <input type="text" id="passcodeInput" autocomplete="off" autocomplete="new-password" name="pin_code_clean" value="" class="passcode-input" maxlength="6" placeholder="• • • •">
                 <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
             </div>
 
@@ -1208,7 +1210,16 @@
         function downloadPDF() {
             window.print();
         }
-    </script>
+    
+        window.addEventListener("DOMContentLoaded", function () {
+            const el = document.getElementById("passcodeInput") || document.getElementById("adminPasscodeInput");
+            if (el) {
+                el.value = "";
+                setTimeout(function () { el.value = ""; }, 100);
+                setTimeout(function () { el.value = ""; }, 400);
+            }
+        });
+</script>
 
 </body>
 </html>
