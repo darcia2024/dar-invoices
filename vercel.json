@@ -30,8 +30,8 @@
     { "source": "/flight", "destination": "/saudia/index.html" },
     { "source": "/etiket", "destination": "/saudia/etiket" },
     { "source": "/e-ticket", "destination": "/saudia/etiket" },
-    { "source": "/azharuna", "destination": "/ifdony/index.html" },
-    { "source": "/ifdony", "destination": "/ifdony/index.html" },
-    { "source": "/logo-azharuna", "destination": "/ifdony/index.html" }
+    { "source": "/azharuna", "destination": "/ifdony" },
+    { "source": "/ifdony", "destination": "/ifdony" },
+    { "source": "/logo-azharuna", "destination": "/ifdony" }
   ]
 }
