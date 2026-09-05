@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAR INVOICES | Official Billing & Revenue Portal</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1217,6 +1217,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/dashboard.css">
 </head>
 <body>
 
@@ -1224,21 +1225,21 @@
     <div id="adminCoverOverlay" class="cover-overlay">
         <div class="cover-card">
             
-            <div class="cover-top-barcode">// CONFIDENTIAL FINANCIAL DASHBOARD &bull; CLEARANCE LEVEL 0 //</div>
+            <div class="cover-top-barcode">DAR / Workspace</div>
             
             <!-- Rubber Stamp Badge -->
-            <div class="classified-stamp">RAHASIA AGENCY / TOP SECRET</div>
+            <div class="classified-stamp">Keuangan agency</div>
 
-            <h1 class="cover-title">DAR INVOICES PORTAL</h1>
-            <div class="cover-subtitle">Laporan Pendapatan, Net Profit & Operational Cost Accounting</div>
+            <h1 class="cover-title">Semua invoice.<br>Satu ruang kerja.</h1>
+            <div class="cover-subtitle">Masuk untuk mengelola tagihan dan melihat pendapatan agency.</div>
             
             <div class="classified-line-divider"></div>
 
             <!-- PASSCODE SECURITY SECTION -->
             <div class="passcode-wrapper">
-                <div class="passcode-label">ENTER AGENCY ADMIN PASSWORD // MASUKKAN PASSWORD:</div>
-                <input type="password" id="adminPassInput" class="passcode-input" maxlength="8" placeholder="• • • • • •">
-                <div id="adminPassError" class="passcode-error">[ ACCESS DENIED // PASSWORD SALAH ]</div>
+                <label for="adminPassInput" class="passcode-label">PIN akses</label>
+                <input type="password" id="adminPassInput" class="passcode-input" inputmode="numeric" autocomplete="current-password" maxlength="8" placeholder="Masukkan PIN">
+                <div id="adminPassError" class="passcode-error" role="alert">PIN belum sesuai. Coba lagi.</div>
             </div>
 
             <button class="cover-open-btn" onclick="verifyAdminPasscode()">
@@ -1265,15 +1266,26 @@
         </div>
     </div>
 
-    <div class="portal-container">
+    <aside class="workspace-sidebar">
+        <a class="workspace-brand" href="/">DAR<span>Invoices</span></a>
+        <p class="sidebar-caption">Workspace</p>
+        <nav aria-label="Navigasi utama">
+            <button class="sidebar-link active" data-view="board" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true">▦</span> Invoice</button>
+            <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true">▤</span> Laporan keuangan</button>
+            <button class="sidebar-link mobile-lock" onclick="lockAdminDashboard()">Kunci</button>
+        </nav>
+        <div class="sidebar-note"><span>Catatan workspace</span><p>Status pembayaran dan profit bisa dikelola langsung dari kartu invoice.</p></div>
+        <div class="sidebar-account"><strong>Daru Fahmaa</strong><span>Agency workspace</span><button onclick="lockAdminDashboard()">Kunci workspace</button></div>
+    </aside>
+    <main class="portal-container" id="workspace">
         
         <!-- Header Hero -->
         <div class="portal-header">
             <div class="portal-badge">
-                <span></span> DAR INVOICES &bull; FINANCIAL SYSTEM PORTAL
+                Workspace / Keuangan
             </div>
-            <h1 class="portal-title">Client Billing Portal</h1>
-            <p class="portal-subtitle">Executive Revenue & Net Profit Financial Dashboard by <strong>Daru Fahmaa Muliawan</strong>.</p>
+            <h1 class="portal-title" id="workspaceTitle">Invoice</h1>
+            <p class="portal-subtitle">Tagihan tertata, pendapatan terpantau.</p>
         </div>
 
         <!-- Executive Financial KPI Stats Bar Grid -->
@@ -1283,7 +1295,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">KEUNTUNGAN BERSIH (PAID PROFIT)</div>
+                    <div class="stat-info-title">Profit diterima</div>
                     <div id="statNetProfitTotal" class="stat-info-val" style="color: var(--color-profit);">Rp 0</div>
                 </div>
             </div>
@@ -1293,7 +1305,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">PENDAPATAN TERIMA (OMSET LUNAS)</div>
+                    <div class="stat-info-title">Pendapatan diterima</div>
                     <div id="statPaidTotal" class="stat-info-val" style="color: var(--color-paid);">Rp 0</div>
                 </div>
             </div>
@@ -1303,7 +1315,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">PENDAPATAN PENDING (UNPAID)</div>
+                    <div class="stat-info-title">Belum dibayar</div>
                     <div id="statUnpaidTotal" class="stat-info-val" style="color: var(--color-unpaid);">Rp 0</div>
                 </div>
             </div>
@@ -1313,7 +1325,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                 </div>
                 <div>
-                    <div class="stat-info-title">TOTAL OMSET GROSS</div>
+                    <div class="stat-info-title">Total nilai invoice</div>
                     <div id="statGrandTotal" class="stat-info-val">Rp 0</div>
                 </div>
             </div>
@@ -1339,7 +1351,7 @@
                 </div>
                 <div class="search-box">
                     <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Cari nama klien / ref code..." onkeyup="filterInvoices()">
+                    <input type="search" id="searchInput" class="search-input" aria-label="Cari invoice" placeholder="Cari klien atau nomor invoice…" oninput="filterInvoices()">
                 </div>
             </div>
         </div>
@@ -1366,7 +1378,7 @@
         </div>
 
         <!-- Invoice Cards Grid -->
-        <div id="invoiceGrid" class="invoice-grid">
+        <div id="invoiceGrid" class="invoice-grid" aria-label="Invoice menurut status pembayaran">
             
             <!-- Markaz Fiqih Card -->
             <div class="invoice-card" id="card-markaz" data-id="markaz" data-month="2026-07" data-amount="8500000" data-client="markaz fiqih #inv/mf/2026/001 juli 2026">
@@ -2146,7 +2158,7 @@
             </a>
         </div>
 
-    </div>
+    </main>
 
     <!-- Toast Component -->
     <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
@@ -2163,6 +2175,8 @@
             
             if (input === adminPasscode || input === "0001") {
                 document.getElementById("adminCoverOverlay").classList.add("opened");
+                document.querySelector('.workspace-sidebar').inert = false;
+                document.getElementById('workspace').inert = false;
                 errorEl.style.display = "none";
                 document.getElementById("adminPassInput").value = "";
                 loadBillingState();
@@ -2177,6 +2191,10 @@
         function lockAdminDashboard() {
             document.getElementById("adminCoverOverlay").classList.remove("opened");
             document.getElementById("adminPassInput").value = "";
+            document.querySelector('.workspace-sidebar').inert = true;
+            document.getElementById('workspace').inert = true;
+            document.getElementById('adminPassError').style.display = 'none';
+            document.getElementById('adminPassInput').focus();
         }
 
         document.getElementById("adminPassInput").addEventListener("keyup", function(event) {
@@ -2416,6 +2434,15 @@
                 if (!card) return;
                 const pill = card.querySelector(".payment-status-pill");
                 if (!pill) return;
+                pill.setAttribute('role', 'button');
+                pill.setAttribute('tabindex', '0');
+                pill.setAttribute('aria-label', 'Ubah status pembayaran ' + item.name);
+                pill.onkeydown = function(event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        pill.click();
+                    }
+                };
                 let dpAction = card.querySelector(".dp-status-action");
                 if (!dpAction) {
                     dpAction = document.createElement("button");
@@ -2620,6 +2647,38 @@
             `;
 
             tbody.innerHTML = tableHTML;
+            renderInvoiceBoard();
+        }
+
+        function setWorkspaceView(view) {
+            document.body.dataset.view = view;
+            document.getElementById('workspaceTitle').textContent = view === 'report' ? 'Laporan keuangan' : 'Invoice';
+            document.querySelectorAll('[data-view].sidebar-link').forEach(button => {
+                button.classList.toggle('active', button.dataset.view === view);
+                button.setAttribute('aria-pressed', String(button.dataset.view === view));
+            });
+        }
+
+        function renderInvoiceBoard() {
+            const grid = document.getElementById('invoiceGrid');
+            const statuses = [['UNPAID', 'Belum lunas'], ['DP', 'Pembayaran DP'], ['PAID', 'Lunas']];
+            statuses.forEach(([status, label]) => {
+                let column = document.getElementById('column-' + status);
+                if (!column) {
+                    column = document.createElement('section');
+                    column.id = 'column-' + status;
+                    column.className = 'board-column';
+                    column.innerHTML = '<h2 class="board-heading">' + label + ' <span class="board-count"></span></h2><div class="board-cards"></div><p class="board-empty">Tidak ada invoice yang cocok dengan filter ini.</p>';
+                    grid.appendChild(column);
+                }
+                const cards = column.querySelector('.board-cards');
+                document.querySelectorAll('.invoice-card').forEach(card => {
+                    if ((paymentStatuses[card.dataset.id] || 'UNPAID') === status) cards.appendChild(card);
+                });
+                const count = [...cards.children].filter(card => card.style.display !== 'none').length;
+                column.querySelector('.board-count').textContent = count;
+                column.querySelector('.board-empty').hidden = count > 0;
+            });
         }
 
         function setMonthFilter(month, btnEl) {
@@ -2640,7 +2699,7 @@
                 const cardMonth = card.getAttribute("data-month");
                 const clientData = card.getAttribute("data-client").toLowerCase();
                 
-                const matchesMonth = (activeMonthFilter === "all" || cardMonth === activeMonthFilter || cardMonth === "none");
+                const matchesMonth = (activeMonthFilter === "all" || cardMonth.split(' ').includes(activeMonthFilter) || cardMonth === "none");
                 const matchesQuery = clientData.includes(query);
 
                 if (matchesMonth && matchesQuery) {
@@ -3068,35 +3127,8 @@ Terima kasih banyak & Semoga penerbangan menyenangkan! 🙏✈️`;
             }
         });
 
-        document.getElementById("adminPassInput").addEventListener("input", function() {
-            const val = this.value.trim();
-            if (val === "050900" || val === "0001") {
-                verifyAdminPasscode();
-            }
-        });
-
-        window.addEventListener("DOMContentLoaded", function() {
-            const adminInp = document.getElementById("adminPassInput");
-            if (adminInp) {
-                adminInp.addEventListener("input", function() {
-                    const val = this.value.trim();
-                    if (val === "050900" || val === "0001") {
-                        verifyAdminPasscode();
-                    }
-                });
-            }
-        });
-
-        window.addEventListener("DOMContentLoaded", function() {
-            const adminInp = document.getElementById("adminPassInput");
-            if (adminInp) {
-                adminInp.addEventListener("input", function() {
-                    const val = this.value.trim();
-                    if (val === "050900" || val === "0001") {
-                        verifyAdminPasscode();
-                    }
-                });
-            }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && activeEditProjectId) closeProfitModal();
         });
 </script>
 
