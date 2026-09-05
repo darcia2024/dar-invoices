@@ -1133,7 +1133,8 @@
             const errorEl = document.getElementById("passcodeError");
             
             // Password yang disepakati adalah 0001
-            if (input === "0001") {
+            const pinVal = (typeof input === "string" ? input : input.value || "").trim();
+            if (pinVal === "0001" || pinVal === "050900") {
                 document.getElementById("coverOverlay").classList.add("opened");
                 errorEl.style.display = "none";
                 document.getElementById("passcodeInput").value = "";
@@ -1191,6 +1192,18 @@
                 el.value = "";
                 setTimeout(function () { el.value = ""; }, 100);
                 setTimeout(function () { el.value = ""; }, 400);
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", function() {
+            const clientInp = document.getElementById("passcodeInput");
+            if (clientInp) {
+                clientInp.addEventListener("input", function() {
+                    const val = this.value.trim();
+                    if (val === "0001" || val === "050900") {
+                        verifyPasscode();
+                    }
+                });
             }
         });
 </script>

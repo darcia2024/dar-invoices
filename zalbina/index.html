@@ -1105,7 +1105,8 @@
             const overlay = document.getElementById('coverOverlay');
             const coverCard = document.querySelector('.cover-card');
 
-            if (input.value === '0001') {
+            const pinVal = (typeof input === "string" ? input : input.value || "").trim();
+            if (pinVal === "0001" || pinVal === "050900") {
                 overlay.classList.add('opened');
             } else {
                 errorMsg.style.display = 'block';
@@ -1146,6 +1147,18 @@
                 el.value = "";
                 setTimeout(function () { el.value = ""; }, 100);
                 setTimeout(function () { el.value = ""; }, 400);
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", function() {
+            const clientInp = document.getElementById("passcodeInput");
+            if (clientInp) {
+                clientInp.addEventListener("input", function() {
+                    const val = this.value.trim();
+                    if (val === "0001" || val === "050900") {
+                        verifyPasscode();
+                    }
+                });
             }
         });
 </script>
