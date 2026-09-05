@@ -1288,6 +1288,12 @@
             <p class="portal-subtitle">Tagihan tertata, pendapatan terpantau.</p>
         </div>
 
+        <div class="invoice-tools">
+            <button class="create-invoice-btn" onclick="openInvoiceComposer()">+ Buat invoice</button>
+            <button class="month-pill-btn" onclick="openInvoiceTrash()">Sampah <span id="trashCount">0</span></button>
+            <span class="invoice-sync-state" role="status"></span>
+            <button class="month-pill-btn" onclick="persistBillingState()">Sinkronkan</button>
+        </div>
         <!-- Executive Financial KPI Stats Bar Grid -->
         <div class="stats-bar">
             <div class="stat-card profit-stat">
@@ -2163,6 +2169,7 @@
     <!-- Toast Component -->
     <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
 
+    <script src="/invoice-manager.js"></script>
     <script>
         let activeMonthFilter = "all";
         let activeEditProjectId = null;
@@ -2189,6 +2196,7 @@
         }
 
         function lockAdminDashboard() {
+            document.getElementById('invoiceManagerDialog')?.close();
             document.getElementById("adminCoverOverlay").classList.remove("opened");
             document.getElementById("adminPassInput").value = "";
             document.querySelector('.workspace-sidebar').inert = true;
@@ -2312,6 +2320,7 @@
 
         function applyBillingState(state) {
             if (!state) return;
+            applyInvoiceMetadata(state);
             if (state.paymentStatuses) {
                 Object.assign(paymentStatuses, state.paymentStatuses);
             }
@@ -2324,6 +2333,7 @@
         }
 
         function saveLocalBillingState() {
+            saveInvoiceMetadata();
             Object.entries(paymentStatuses).forEach(([id, status]) => {
                 localStorage.setItem("status_" + id, status);
             });
@@ -2359,6 +2369,7 @@
 
         async function persistBillingState() {
             saveLocalBillingState();
+            setInvoiceSyncStatus('Tersimpan di perangkat. Menyinkronkan…');
             try {
                 const response = await fetch("/api/billing-state", {
                     method: "PUT",
@@ -2370,14 +2381,19 @@
                     body: JSON.stringify({
                         paymentStatuses,
                         dpAmounts,
-                        netProfits
+                        netProfits,
+                        customInvoices,
+                        deletedInvoiceIds
                     })
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
                 const state = await response.json();
+                invoiceMetadataPending = false;
                 applyBillingState(state);
                 saveLocalBillingState();
+                setInvoiceSyncStatus('Tersimpan dan tersinkron.');
             } catch (error) {
+                setInvoiceSyncStatus('Tersimpan di perangkat ini. Sinkron belum berhasil; simpan kembali saat koneksi tersedia.');
                 console.warn("Billing state saved locally only:", error);
                 showToast("DATA TERSIMPAN LOKAL, SINKRON UPSTASH GAGAL");
             }
@@ -2539,6 +2555,7 @@
             };
 
             invoiceItems.forEach(item => {
+                if (deletedInvoiceIds.includes(item.id)) return;
                 const status = paymentStatuses[item.id] || "UNPAID";
                 const itemNetProfit = netProfits[item.id] !== undefined ? netProfits[item.id] : item.gross;
                 const itemCost = item.gross - itemNetProfit;
@@ -2588,6 +2605,7 @@
                     }
 
                     const mKey = item.month;
+                    if (!monthlyMap[mKey]) monthlyMap[mKey] = { label: item.monthLabel, paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 };
                     if (monthlyMap[mKey]) {
                         monthlyMap[mKey].paidGrossTotal += paidGross;
                         monthlyMap[mKey].paidNetProfitTotal += paidNetProfit;
@@ -2660,6 +2678,7 @@
         }
 
         function renderInvoiceBoard() {
+            refreshInvoiceControls();
             const grid = document.getElementById('invoiceGrid');
             const statuses = [['UNPAID', 'Belum lunas'], ['DP', 'Pembayaran DP'], ['PAID', 'Lunas']];
             statuses.forEach(([status, label]) => {
@@ -2675,7 +2694,7 @@
                 document.querySelectorAll('.invoice-card').forEach(card => {
                     if ((paymentStatuses[card.dataset.id] || 'UNPAID') === status) cards.appendChild(card);
                 });
-                const count = [...cards.children].filter(card => card.style.display !== 'none').length;
+                const count = [...cards.children].filter(card => card.style.display !== 'none' && !deletedInvoiceIds.includes(card.dataset.id)).length;
                 column.querySelector('.board-count').textContent = count;
                 column.querySelector('.board-empty').hidden = count > 0;
             });
@@ -2702,7 +2721,7 @@
                 const matchesMonth = (activeMonthFilter === "all" || cardMonth.split(' ').includes(activeMonthFilter) || cardMonth === "none");
                 const matchesQuery = clientData.includes(query);
 
-                if (matchesMonth && matchesQuery) {
+                if (matchesMonth && matchesQuery && !deletedInvoiceIds.includes(card.dataset.id)) {
                     card.style.display = "flex";
                 } else {
                     card.style.display = "none";
@@ -2713,6 +2732,7 @@
         }
 
         // Initialize state on page load
+        initializeInvoiceManager();
         updatePaymentBadges();
         renderProfitUI();
         calculateFinancials();

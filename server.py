@@ -55,7 +55,7 @@ class InvoiceRequestHandler(http.server.SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     handler = InvoiceRequestHandler
     socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), handler) as httpd:
+    with http.server.ThreadingHTTPServer(("", PORT), handler) as httpd:
         print(f"[SERVER] Localhost server running at http://localhost:{PORT}")
         print("Press Ctrl+C to stop.")
         try:

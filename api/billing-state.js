@@ -36,6 +36,8 @@ const defaultState = {
 
 function mergeState(state) {
   return {
+    customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
+    deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),
@@ -103,7 +105,9 @@ module.exports = async function handler(req, res) {
 
     if (req.method === "PUT" || req.method === "POST") {
       const incoming = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-      const state = mergeState(incoming);
+      const saved = await redisCommand(["GET", STATE_KEY]);
+      const previous = saved ? JSON.parse(saved) : {};
+      const state = mergeState({ ...previous, ...incoming });
       await redisCommand(["SET", STATE_KEY, JSON.stringify(state)]);
       return res.status(200).json(state);
     }
