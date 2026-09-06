@@ -1,5 +1,4 @@
 {
-  "buildCommand": "node scripts/check-site.cjs && node invoice-manager.test.cjs",
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [

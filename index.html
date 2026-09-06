@@ -2432,34 +2432,61 @@
         let activeEditProjectId = null;
         const adminPasscode = "050900";
 
-        // Admin Security Lock (Passcode: 050900)
+        // Admin Security Lock (Passcode: 050900 or 0001)
         function verifyAdminPasscode() {
-            const input = document.getElementById("adminPassInput").value.trim();
+            const inputEl = document.getElementById("adminPassInput");
+            const input = (inputEl ? inputEl.value : "").trim();
             const errorEl = document.getElementById("adminPassError");
+            const overlay = document.getElementById("adminCoverOverlay");
             
-            if (input === adminPasscode || input === "0001") {
-                document.getElementById("adminCoverOverlay").classList.add("opened");
-                document.querySelector('.workspace-sidebar').inert = false;
-                document.getElementById('workspace').inert = false;
-                errorEl.style.display = "none";
-                document.getElementById("adminPassInput").value = "";
-                loadBillingState();
+            if (input === adminPasscode || input === "0001" || input === "050900") {
+                if (overlay) {
+                    overlay.classList.add("opened");
+                    overlay.style.pointerEvents = "none";
+                    setTimeout(() => {
+                        if (overlay.classList.contains("opened")) {
+                            overlay.style.display = "none";
+                        }
+                    }, 500);
+                }
+                const sidebar = document.querySelector('.workspace-sidebar');
+                if (sidebar) sidebar.inert = false;
+                const workspace = document.getElementById('workspace');
+                if (workspace) workspace.inert = false;
+                if (errorEl) errorEl.style.display = "none";
+                if (inputEl) inputEl.value = "";
+                try {
+                    loadBillingState();
+                } catch (e) {
+                    console.warn("loadBillingState error:", e);
+                }
             } else {
-                errorEl.style.display = "block";
+                if (errorEl) errorEl.style.display = "block";
                 const card = document.querySelector("#adminCoverOverlay .cover-card");
-                card.classList.add("shake-anim");
-                setTimeout(() => card.classList.remove("shake-anim"), 400);
+                if (card) {
+                    card.classList.add("shake-anim");
+                    setTimeout(() => card.classList.remove("shake-anim"), 400);
+                }
             }
         }
 
         function lockAdminDashboard() {
             document.getElementById('invoiceManagerDialog')?.close();
-            document.getElementById("adminCoverOverlay").classList.remove("opened");
-            document.getElementById("adminPassInput").value = "";
-            document.querySelector('.workspace-sidebar').inert = true;
-            document.getElementById('workspace').inert = true;
-            document.getElementById('adminPassError').style.display = 'none';
-            document.getElementById('adminPassInput').focus();
+            const overlay = document.getElementById("adminCoverOverlay");
+            if (overlay) {
+                overlay.style.display = "flex";
+                overlay.style.pointerEvents = "all";
+                overlay.classList.remove("opened");
+            }
+            const inputEl = document.getElementById("adminPassInput");
+            if (inputEl) inputEl.value = "";
+            const sidebar = document.querySelector('.workspace-sidebar');
+            if (sidebar) sidebar.inert = true;
+            const workspace = document.getElementById('workspace');
+            if (workspace) workspace.inert = true;
+            const errorEl = document.getElementById('adminPassError');
+            if (errorEl) errorEl.style.display = 'none';
+            if (inputEl) inputEl.focus();
         }
 
         document.getElementById("adminPassInput").addEventListener("keyup", function(event) {
