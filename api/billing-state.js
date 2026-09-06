@@ -2,6 +2,7 @@ const STATE_KEY = "dar-invoices:billing-state";
 
 const defaultState = {
   paymentStatuses: {
+    almadroj: "UNPAID",
     markaz: "PAID",
     dreammecca: "PAID",
     "haramain-capture": "PAID",
@@ -18,6 +19,7 @@ const defaultState = {
   },
   dpAmounts: {},
   netProfits: {
+    almadroj: 3500000,
     markaz: 5500000,
     dreammecca: 350000,
     "haramain-capture": 600000,

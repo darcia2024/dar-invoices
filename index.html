@@ -1385,6 +1385,15 @@
 
         <!-- Invoice Cards Grid -->
         <div id="invoiceGrid" class="invoice-grid" aria-label="Invoice menurut status pembayaran">
+            <div class="invoice-card" id="card-almadroj" data-id="almadroj" data-month="2026-09" data-amount="3500000" data-client="sidi watra pusat belajar al madroj al madraj bimbel standard september 2026 inv/alm/2026/016">
+                <div>
+                    <div class="card-top"><div class="client-title">Sidi Watra · Pusat Belajar Al Madroj</div><div class="status-badge-group"><span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('almadroj')">Belum lunas</span></div></div>
+                    <div class="ref-code">REF: INV/ALM/2026/016 <span class="month-tag">September 2026</span></div>
+                    <p class="project-desc">Platform bimbel Paket Standard: portal mahasiswa, payment gateway, video ber-watermark, Admin Master & PJ Uploader. Termin 50% / 30% / 20%.</p>
+                    <div class="slug-box"><div class="btn-row-flex"><button class="slug-copy-btn" onclick="copySlug(new URL('/almadroj', location.href).href)">Salin link</button></div></div>
+                    <div class="financial-breakdown-box"><div class="fin-row"><span class="fin-label">TOTAL INVOICE</span><span class="fin-val">Rp 3.500.000</span></div><div class="fin-row"><span class="fin-label">BIAYA OPERASIONAL</span><span class="fin-val" id="costValAlmadroj">Rp 0</span></div><div class="fin-row"><span class="fin-label">PROFIT (ESTIMASI)</span><div class="net-profit-flex"><span class="net-profit-val" id="profitValAlmadroj">Rp 3.500.000</span><button class="edit-profit-btn" onclick="openProfitModal('almadroj')">Edit profit</button></div></div></div>
+                </div><a class="action-btn" href="/almadroj">Buka invoice Al Madroj</a>
+            </div>
             
             <!-- Markaz Fiqih Card -->
             <div class="invoice-card" id="card-markaz" data-id="markaz" data-month="2026-07" data-amount="8500000" data-client="markaz fiqih #inv/mf/2026/001 juli 2026">
@@ -2128,6 +2137,201 @@
                             <span class="fin-val">Rp 500.000</span>
                         </div>
                         <div class="fin-row">
+                                🟡 DP (Rp 3.000.000)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/YPIA/2026/011</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Platform Pembelajaran Bahasa Arab Interaktif Berbasis Game (SD, SMP, SMA) &bull; Cicilan 3 Bulan (3-2-2).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/azhariyah</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/azhariyah')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptAzhariyah()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET INVOICE:</span>
+                            <span class="fin-val">Rp 7.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValAzhariyah">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValAzhariyah">Rp 7.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('azhariyah')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/azhariyah" class="action-btn">
+                    <span>Buka invoice Azhariyah</span>
+                </a>
+            </div>
+
+            <!-- Owner Barber Underrated Card -->
+            <div class="invoice-card" id="card-barber" data-id="barber" data-month="2026-08 2026-09" data-amount="6000000" data-client="owner barber underrated website kasir pwa 5 tab membership pos kasir multi cabang hpp absensi selfie #inv/bu/2026/013 agustus september 2026 6.000.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Owner Barber Underrated</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('barber')">
+                                🟢 LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/BU/2026/013</span>
+                        <span class="month-tag">📅 Agt 2026 (DP 3JT) &amp; Sep 2026 (Pelunasan 3JT)</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Website &amp; Kasir Barber Underrated (PWA 5 Tab, 5-Tier Membership, POS Kasir Multi-Cabang, HPP &amp; Absensi).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/barber</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://dar-invoices.vercel.app/barber')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptBarber()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET KONTRAK:</span>
+                            <span class="fin-val">Rp 6.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">PEMASUKAN AGUSTUS 2026 (DP 50%):</span>
+                            <span class="fin-val" style="color: #f59e0b; font-weight:700;">Rp 3.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">PEMASUKAN SEPTEMBER 2026 (PELUNASAN):</span>
+                            <span class="fin-val" style="color: var(--color-paid); font-weight:700;">Rp 3.000.000</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValBarber">Rp 6.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('barber')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/barber" class="action-btn">
+                    <span>Buka invoice Barber Underrated</span>
+                </a>
+            </div>
+
+            <!-- Tiket Pesawat Saudia Airlines Card -->
+            <div class="invoice-card" id="card-saudia" data-id="saudia" data-month="2026-08" data-amount="39600000" data-client="verros nabris muhammad temantiket tiket pesawat saudia airlines saudi arabian airlines kairo jakarta pp flight internatioal 3 pax #inv/sv/2026/014 agustus 2026 39.600.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">VERROS NABRIS MUHAMMAD (Temantiket - Saudia PP)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('saudia')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/SV/2026/014</span>
+                        <span class="month-tag">📅 Agustus 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Tiket Penerbangan Internasional Saudia Arabian Airlines (SkyTeam) Kairo (CAI) ⇄ Jakarta (CGK) via Transit Jeddah (JED) untuk 3 Pax Penumpang (Verros, Ahmad Reziq, Vernas). Pergi 31 Agt 2026, Pulang 30 Okt 2026.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/saudia</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/saudia')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptSaudia()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET TIKET (3 PAX):</span>
+                            <span class="fin-val">Rp 39.600.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValSaudia">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValSaudia">Rp 39.600.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('saudia')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/saudia" class="action-btn">
+                    <span>Buka invoice Saudia Airlines</span>
+                </a>
+            </div>
+
+            <!-- Ustadz Ifdony (Logo Azharuna) Card -->
+            <div class="invoice-card" id="card-ifdony" data-id="ifdony" data-month="2026-09" data-amount="500000" data-client="ustadz ifdony founder hamasah internasional logo azharuna desain logo branding #inv/azh/2026/015 september 2026 500.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Ustadz Ifdony - Founder Hamasah Internasional (Logo Azharuna)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('ifdony')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/AZH/2026/015</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pembuatan Desain Branding &amp; Identitas Visual Logo Azharuna, Penyerahan File Master Vektor (AI, EPS, SVG, PNG Transparan HD, &amp; PDF Vector) + Lisensi Hak Cipta Komersial Penuh.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">/azharuna</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/azharuna')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptIfdony()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET DESAIN LOGO:</span>
+                            <span class="fin-val">Rp 500.000</span>
+                        </div>
+                        <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
                             <span class="fin-val" id="costValIfdony">Rp 0</span>
                         </div>
@@ -2142,13 +2346,66 @@
                 </div>
 
                 <a href="/azharuna" class="action-btn">
-                    <span>Buka Invoice Logo Azharuna</span>
+                    <span>Buka invoice Logo Azharuna</span>
                 </a>
             </div>
 
+            <!-- Ibrahim Nawawi (Visa Entry Student Kairo) Card -->
+            <div class="invoice-card" id="card-ibrahim" data-id="ibrahim" data-month="2026-09" data-amount="1100000" data-client="ibrahim nawawi visa entry student kairo visa pelajar mesir #inv/ves/2026/016 september 2026 1.100.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Ibrahim Nawawi (Visa Entry Student Kairo)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('ibrahim')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/VES/2026/016</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pembuatan Visa Entry Student Kairo (Visa Pelajar Mesir), Syarat: Paspor, Pasfoto (background putih), Tadaruj Dirasi. Estimasi pengerjaan ~1 minggu (alur kedutaan lancar).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/ibrahim</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/ibrahim')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptIbrahim()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET VISA ENTRY:</span>
+                            <span class="fin-val">Rp 1.100.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValIbrahim">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValIbrahim">Rp 1.100.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('ibrahim')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/ibrahim" class="action-btn">
+                    <span>Buka invoice Visa Ibrahim</span>
+                </a>
+            </div>
         </div>
 
-        <!-- Developer Footer -->
+        <!-- Developer Footer Profile Card -->
         <div class="dev-footer-card">
             <div class="dev-info-left">
                 <div class="dev-avatar">D</div>
@@ -2220,10 +2477,28 @@
         // window.blur lock removed
 
         window.addEventListener("pageshow", function(event) {
+        }
+
+        document.getElementById("adminPassInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyAdminPasscode();
+            }
+        });
+
+        window.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                lockAdminDashboard();
+            }
+        });
+
+        // window.blur lock removed
+
+        window.addEventListener("pageshow", function(event) {
             lockAdminDashboard();
         });
 
         const defaultPaymentStatuses = {
+            almadroj: "UNPAID",
             markaz: "PAID",
             dreammecca: "PAID",
             "haramain-capture": "PAID",
@@ -2237,7 +2512,8 @@
             azhariyah: "DP",
             barber: "PAID",
             saudia: "UNPAID",
-            ifdony: "UNPAID"
+            ifdony: "UNPAID",
+            ibrahim: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2257,6 +2533,7 @@
         };
 
         const defaultNetProfits = {
+            almadroj: 3500000,
             markaz: 5500000,
             dreammecca: 350000,
             "haramain-capture": 600000,
@@ -2270,7 +2547,8 @@
             azhariyah: 7000000,
             barber: 6000000,
             saudia: 39600000,
-            ifdony: 500000
+            ifdony: 500000,
+            ibrahim: 1100000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2288,6 +2566,7 @@
         );
 
         const invoiceItems = [
+            { id: "almadroj", name: "Sidi Watra (Pusat Belajar Al Madroj)", month: "2026-09", monthLabel: "September 2026", gross: 3500000 },
             { id: "markaz", name: "Markaz Fiqih", month: "2026-07", monthLabel: "Juli 2026", gross: 8500000 },
             { id: "dreammecca", name: "Dreammecca - Umrahme", month: "2026-07", monthLabel: "Juli 2026", gross: 700000 },
             { id: "haramain-capture", name: "Haramain Capture", month: "2026-07", monthLabel: "Juli 2026", gross: 600000 },
@@ -2311,7 +2590,8 @@
                 }
             },
             { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 },
-            { id: "ifdony", name: "Ustadz Ifdony (Logo Azharuna)", month: "2026-09", monthLabel: "September 2026", gross: 500000 }
+            { id: "ifdony", name: "Ustadz Ifdony (Logo Azharuna)", month: "2026-09", monthLabel: "September 2026", gross: 500000 },
+            { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 }
         ];
 
         function formatIDR(num) {
@@ -3089,9 +3369,6 @@ Terima kasih banyak Ustadz! Semoga berkah selalu. 🙏😊`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA LOGO AZHARUNA BERHASIL DISALIN!");
-            }).catch(() => {
-                showToast("GAGAL MENYALIN SCRIPT");
-            });
         }
 
         function copyWaScriptSaudia() {
@@ -3131,6 +3408,33 @@ Terima kasih banyak & Semoga penerbangan menyenangkan! 🙏✈️`;
             });
         }
 
+        function copyWaScriptIbrahim() {
+            const waScript = `Halo Bro / Kak Ibrahim Nawawi 👋✨
+
+Berikut invoice resmi & rincian pengurusan Visa Entry Student Kairo (Visa Pelajar Mesir):
+
+🔗 Invoice Online: https://temantiket.com/ibrahim
+🔑 PIN Akses: 0001
+
+📋 Persyaratan & Dokumen:
+- Paspor (Masa berlaku min. 6 bulan)
+- Pasfoto Terbaru (Background Putih)
+- Tadaruj Dirasi (Surat Keterangan Jenjang Studi / Riwayat Belajar)
+
+⏱️ Estimasi Pengerjaan: ~1 minggu (apabila alur kedutaan lancar)
+
+💰 Total Tagihan: Rp 1.100.000
+💳 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak! Semoga proses pengurusan visa berjalan lancar & sukses selalu. 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA VISA IBRAHIM BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
         function showToast(msg) {
             const toast = document.getElementById("toast");
             toast.innerText = msg;
@@ -3139,7 +3443,7 @@ Terima kasih banyak & Semoga penerbangan menyenangkan! 🙏✈️`;
                 toast.classList.remove("show");
             }, 3000);
         }
-    
+
         document.getElementById("adminPassInput").addEventListener("input", function() {
             const val = this.value.trim();
             if (val === "050900" || val === "0001") {
@@ -3150,7 +3454,6 @@ Terima kasih banyak & Semoga penerbangan menyenangkan! 🙏✈️`;
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && activeEditProjectId) closeProfitModal();
         });
-</script>
-
+    </script>
 </body>
 </html>

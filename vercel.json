@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/almadroj", "destination": "/almadroj/index.html" },
     { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
     { "source": "/abdurrahman", "destination": "/abdurrahman/index.html" },
     { "source": "/dreammecca-umrahme", "destination": "/dreammecca-umrahme/index.html" },
@@ -32,6 +33,10 @@
     { "source": "/e-ticket", "destination": "/saudia/etiket" },
     { "source": "/azharuna", "destination": "/ifdony" },
     { "source": "/ifdony", "destination": "/ifdony" },
-    { "source": "/logo-azharuna", "destination": "/ifdony" }
+    { "source": "/logo-azharuna", "destination": "/ifdony" },
+    { "source": "/ibrahim", "destination": "/ibrahim" },
+    { "source": "/visa-ibrahim", "destination": "/ibrahim" },
+    { "source": "/visa-entry", "destination": "/ibrahim" },
+    { "source": "/visa-cairo", "destination": "/ibrahim" }
   ]
 }

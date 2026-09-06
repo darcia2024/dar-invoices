@@ -10,6 +10,7 @@ if hasattr(sys.stdout, 'reconfigure'):
 PORT = 3000
 
 REWRITES = {
+    "/almadroj": "/almadroj/index.html",
     "/": "/index.html",
     "/saudia": "/saudia/index.html",
     "/etiket": "/saudia/etiket.html",
@@ -33,7 +34,11 @@ REWRITES = {
     "/azzam": "/kolohaga/index.html",
     "/zalvice": "/zalvice/index.html",
     "/azhariyah": "/azhariyah/index.html",
-    "/umielly": "/azhariyah/index.html"
+    "/umielly": "/azhariyah/index.html",
+    "/ibrahim": "/ibrahim/index.html",
+    "/visa-ibrahim": "/ibrahim/index.html",
+    "/visa-entry": "/ibrahim/index.html",
+    "/visa-cairo": "/ibrahim/index.html"
 }
 
 class InvoiceRequestHandler(http.server.SimpleHTTPRequestHandler):
