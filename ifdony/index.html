@@ -643,34 +643,260 @@
             transform: translateY(-5px);
         }
 
-        /* Mobile Layout */
+        /* ----------------------------------------------------
+           PREMIUM MOBILE & RESPONSIVE LAYOUT (< 768px)
+        ---------------------------------------------------- */
         @media screen and (max-width: 768px) {
-            body { padding: 12px 8px; }
-            .action-bar { flex-direction: column; gap: 12px; align-items: stretch; }
-            .btn-group { display: flex; flex-direction: column; }
-            .btn { justify-content: center; padding: 10px; }
+            body {
+                padding: 12px 10px 40px 10px;
+                background-color: #f8fafc;
+            }
 
-            .invoice-container { flex-direction: column; width: 100%; }
+            /* Security Cover Modal on Mobile */
+            .cover-card {
+                padding: 24px 18px;
+                max-width: 92vw;
+                border-radius: 14px;
+            }
+
+            .classified-stamp {
+                font-size: 0.6rem;
+                padding: 3px 8px;
+            }
+
+            .cover-recipient-box {
+                padding: 12px 14px;
+            }
+
+            .cover-recipient-name {
+                font-size: 0.95rem;
+            }
+
+            .passcode-input {
+                width: 100%;
+                max-width: 200px;
+                height: 48px;
+                font-size: 16px; /* Prevents iOS Safari auto-zoom */
+            }
+
+            .cover-open-btn {
+                padding: 14px 18px;
+                font-size: 0.88rem;
+                border-radius: 8px;
+            }
+
+            /* Action Control Bar */
+            .action-bar {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+                padding: 12px 14px;
+                margin-bottom: 12px;
+                border-radius: 12px;
+            }
+
+            .action-title {
+                font-size: 0.78rem;
+                justify-content: center;
+            }
+
+            .btn-group {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+                padding: 10px 12px;
+                font-size: 0.76rem;
+                border-radius: 8px;
+                min-height: 42px;
+            }
+
+            /* Main Invoice Container */
+            .invoice-container {
+                flex-direction: column;
+                width: 100%;
+                border-radius: 14px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            }
+
+            /* Top Mobile Brand Banner */
             .sidebar-left {
                 width: 100%;
                 height: auto;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                padding: 12px 16px;
+                padding: 14px 18px;
+                background-color: #0f172a;
+                color: #ffffff;
                 border-right: none;
                 border-bottom: 1px solid var(--border-light);
             }
-            .vertical-invoice-title { writing-mode: horizontal-tb; transform: none; font-size: 1.3rem; }
-            .vertical-brand-name { writing-mode: horizontal-tb; transform: none; }
 
-            .main-panel { padding: 20px 16px; }
-            .invoice-header-row { flex-direction: column; gap: 14px; align-items: flex-start; }
-            .top-right-logo-box { align-items: flex-start; text-align: left; width: 100%; }
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.15rem;
+                color: #ffffff;
+                letter-spacing: 0.08em;
+            }
 
-            .scope-breakdown-box { grid-template-columns: 1fr !important; gap: 12px; }
-            .bottom-section-grid { grid-template-columns: 1fr; gap: 14px; }
-            .col-subtotal { width: 120px; }
+            .vertical-brand-name {
+                writing-mode: horizontal-tb;
+                transform: none;
+                color: #94a3b8;
+                font-size: 0.65rem;
+            }
+
+            /* Main Panel Mobile Padding */
+            .main-panel {
+                padding: 20px 14px;
+            }
+
+            /* Header Row */
+            .invoice-header-row {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+                padding-bottom: 16px;
+                margin-bottom: 20px;
+            }
+
+            .top-left-meta {
+                width: 100%;
+            }
+
+            .inv-num-label {
+                font-size: 0.95rem;
+            }
+
+            .inv-date-label {
+                font-size: 0.78rem;
+                margin-bottom: 12px;
+            }
+
+            .billed-to-box {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 12px 14px;
+                width: 100%;
+            }
+
+            .top-right-logo-box {
+                align-items: flex-start;
+                text-align: left;
+                width: 100%;
+                background: #f1f5f9;
+                border-radius: 8px;
+                padding: 12px 14px;
+                border: 1px solid #e2e8f0;
+            }
+
+            .brand-badge-pill {
+                background: #ffffff;
+            }
+
+            /* Responsive Table Container */
+            .table-area {
+                margin-bottom: 20px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-left: -14px;
+                margin-right: -14px;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .margarita-table {
+                min-width: 540px;
+                font-size: 0.8rem;
+            }
+
+            .margarita-table th {
+                font-size: 0.65rem;
+                padding: 8px 4px;
+            }
+
+            .margarita-table td {
+                padding: 12px 4px;
+            }
+
+            .item-title {
+                font-size: 0.84rem;
+            }
+
+            .bullet-list {
+                font-size: 0.75rem;
+            }
+
+            .col-qty {
+                width: 60px;
+            }
+
+            .col-unit-price {
+                width: 110px;
+            }
+
+            .col-subtotal {
+                width: 115px;
+            }
+
+            .grand-total td {
+                font-size: 0.95rem;
+                padding: 12px 6px;
+            }
+
+            /* Requirement & Scope Cards */
+            .scope-breakdown-box {
+                grid-template-columns: 1fr !important;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .scope-card {
+                padding: 14px;
+                border-radius: 8px;
+            }
+
+            .scope-card-title {
+                font-size: 0.72rem;
+            }
+
+            .scope-card-list {
+                font-size: 0.76rem;
+            }
+
+            /* Bottom Payment & Term Grid */
+            .bottom-section-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px;
+                padding-top: 16px;
+            }
+
+            .bottom-block-title {
+                font-size: 0.7rem;
+            }
+
+            .bottom-block-content {
+                font-size: 0.78rem;
+            }
+
+            .copy-pill-btn {
+                padding: 4px 8px;
+                font-size: 0.68rem;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .btn-group {
+                flex-direction: column;
+            }
         }
 
         /* Print Optimization */
