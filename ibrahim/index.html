@@ -645,94 +645,109 @@
         }
 
         /* ----------------------------------------------------
-           PREMIUM MOBILE & RESPONSIVE LAYOUT (< 768px)
+           COMPACT PREMIUM MOBILE LAYOUT (< 768px)
         ---------------------------------------------------- */
         @media screen and (max-width: 768px) {
             body {
-                padding: 12px 10px 40px 10px;
-                background-color: #f8fafc;
+                padding: 8px 6px 28px 6px;
+                background-color: #f1f5f9;
             }
 
-            /* Security Cover Modal on Mobile */
+            /* Compact Security Cover Modal */
             .cover-card {
-                padding: 24px 18px;
-                max-width: 92vw;
-                border-radius: 14px;
+                padding: 20px 16px;
+                max-width: 94vw;
+                border-radius: 12px;
             }
 
             .classified-stamp {
-                font-size: 0.6rem;
+                font-size: 0.58rem;
                 padding: 3px 8px;
+                margin-bottom: 12px;
             }
 
             .cover-recipient-box {
-                padding: 12px 14px;
+                padding: 10px 12px;
+                margin-bottom: 12px;
+                font-size: 0.78rem;
             }
 
             .cover-recipient-name {
-                font-size: 0.95rem;
+                font-size: 0.92rem;
+            }
+
+            .passcode-wrapper {
+                margin: 12px 0 10px 0;
             }
 
             .passcode-input {
                 width: 100%;
-                max-width: 200px;
-                height: 48px;
-                font-size: 16px; /* Prevents iOS Safari auto-zoom */
+                max-width: 170px;
+                height: 42px;
+                font-size: 16px;
+                letter-spacing: 4px;
             }
 
             .cover-open-btn {
-                padding: 14px 18px;
-                font-size: 0.88rem;
+                padding: 11px 16px;
+                font-size: 0.82rem;
+                border-radius: 6px;
+            }
+
+            /* Compact Top Control Bar */
+            .action-bar {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+                padding: 9px 12px;
+                margin-bottom: 8px;
                 border-radius: 8px;
             }
 
-            /* Action Control Bar */
-            .action-bar {
-                flex-direction: column;
-                gap: 10px;
-                align-items: stretch;
-                padding: 12px 14px;
-                margin-bottom: 12px;
-                border-radius: 12px;
-            }
-
             .action-title {
-                font-size: 0.78rem;
-                justify-content: center;
+                font-size: 0.72rem;
+                justify-content: flex-start;
+                line-height: 1.3;
             }
 
             .btn-group {
                 display: flex;
                 flex-direction: row;
-                gap: 8px;
+                gap: 6px;
                 width: 100%;
             }
 
             .btn {
                 flex: 1;
                 justify-content: center;
-                padding: 10px 12px;
-                font-size: 0.76rem;
-                border-radius: 8px;
-                min-height: 42px;
+                padding: 8px 10px;
+                font-size: 0.72rem;
+                border-radius: 6px;
+                min-height: 36px;
+                gap: 4px;
             }
 
-            /* Main Invoice Container */
+            .btn svg {
+                width: 13px;
+                height: 13px;
+            }
+
+            /* Compact Main Invoice Container */
             .invoice-container {
                 flex-direction: column;
                 width: 100%;
-                border-radius: 14px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+                border-radius: 10px;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
             }
 
-            /* Top Mobile Brand Banner */
+            /* Compact Mobile Header Banner */
             .sidebar-left {
                 width: 100%;
                 height: auto;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                padding: 14px 18px;
+                padding: 10px 14px;
                 background-color: #0f172a;
                 color: #ffffff;
                 border-right: none;
@@ -742,7 +757,7 @@
             .vertical-invoice-title {
                 writing-mode: horizontal-tb;
                 transform: none;
-                font-size: 1.15rem;
+                font-size: 1rem;
                 color: #ffffff;
                 letter-spacing: 0.08em;
             }
@@ -751,21 +766,21 @@
                 writing-mode: horizontal-tb;
                 transform: none;
                 color: #94a3b8;
-                font-size: 0.65rem;
+                font-size: 0.62rem;
             }
 
-            /* Main Panel Mobile Padding */
+            /* Compact Main Panel */
             .main-panel {
-                padding: 20px 14px;
+                padding: 14px 12px;
             }
 
-            /* Header Row */
+            /* Compact Header Row */
             .invoice-header-row {
                 flex-direction: column;
-                gap: 16px;
+                gap: 10px;
                 align-items: stretch;
-                padding-bottom: 16px;
-                margin-bottom: 20px;
+                padding-bottom: 12px;
+                margin-bottom: 14px;
             }
 
             .top-left-meta {
@@ -773,130 +788,196 @@
             }
 
             .inv-num-label {
-                font-size: 0.95rem;
+                font-size: 0.88rem;
             }
 
             .inv-date-label {
-                font-size: 0.78rem;
-                margin-bottom: 12px;
+                font-size: 0.74rem;
+                margin-bottom: 8px;
             }
 
             .billed-to-box {
                 background: #f8fafc;
                 border: 1px solid #e2e8f0;
-                border-radius: 8px;
-                padding: 12px 14px;
+                border-radius: 6px;
+                padding: 10px 12px;
                 width: 100%;
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            .billed-title {
+                font-size: 0.62rem;
+                margin-bottom: 2px;
             }
 
             .top-right-logo-box {
                 align-items: flex-start;
                 text-align: left;
                 width: 100%;
-                background: #f1f5f9;
-                border-radius: 8px;
-                padding: 12px 14px;
+                background: #f8fafc;
+                border-radius: 6px;
+                padding: 8px 12px;
                 border: 1px solid #e2e8f0;
+                gap: 4px;
             }
 
             .brand-badge-pill {
+                font-size: 0.64rem;
+                padding: 3px 8px;
                 background: #ffffff;
             }
 
-            /* Responsive Table Container */
+            /* Compact Table */
             .table-area {
-                margin-bottom: 20px;
+                margin-bottom: 14px;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
-                margin-left: -14px;
-                margin-right: -14px;
-                padding-left: 14px;
-                padding-right: 14px;
             }
 
             .margarita-table {
-                min-width: 540px;
-                font-size: 0.8rem;
-            }
-
-            .margarita-table th {
-                font-size: 0.65rem;
-                padding: 8px 4px;
-            }
-
-            .margarita-table td {
-                padding: 12px 4px;
-            }
-
-            .item-title {
-                font-size: 0.84rem;
-            }
-
-            .bullet-list {
-                font-size: 0.75rem;
-            }
-
-            .col-qty {
-                width: 60px;
-            }
-
-            .col-unit-price {
-                width: 110px;
-            }
-
-            .col-subtotal {
-                width: 115px;
-            }
-
-            .grand-total td {
-                font-size: 0.95rem;
-                padding: 12px 6px;
-            }
-
-            /* Requirement & Scope Cards */
-            .scope-breakdown-box {
-                grid-template-columns: 1fr !important;
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-
-            .scope-card {
-                padding: 14px;
-                border-radius: 8px;
-            }
-
-            .scope-card-title {
-                font-size: 0.72rem;
-            }
-
-            .scope-card-list {
+                min-width: 480px;
                 font-size: 0.76rem;
             }
 
-            /* Bottom Payment & Term Grid */
+            .margarita-table th {
+                font-size: 0.62rem;
+                padding: 7px 4px;
+            }
+
+            .margarita-table td {
+                padding: 9px 4px;
+            }
+
+            .section-header-banner {
+                padding: 8px 10px;
+                font-size: 0.68rem;
+                margin-top: 4px;
+                margin-bottom: 4px;
+                border-radius: 4px;
+            }
+
+            .item-title {
+                font-size: 0.8rem;
+                margin-bottom: 3px;
+            }
+
+            .bullet-list {
+                font-size: 0.72rem;
+                line-height: 1.45;
+            }
+
+            .bullet-list li {
+                margin-bottom: 2px;
+            }
+
+            .col-qty {
+                width: 55px;
+                font-size: 0.74rem;
+            }
+
+            .col-unit-price {
+                width: 95px;
+                font-size: 0.74rem;
+            }
+
+            .col-subtotal {
+                width: 100px;
+                font-size: 0.74rem;
+            }
+
+            .grand-total td {
+                font-size: 0.88rem;
+                padding: 10px 6px;
+            }
+
+            /* Compact Cards & Scope */
+            .scope-breakdown-box {
+                grid-template-columns: 1fr !important;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+
+            .scope-card {
+                padding: 11px 12px;
+                border-radius: 6px;
+            }
+
+            .scope-card-title {
+                font-size: 0.68rem;
+                margin-bottom: 6px;
+            }
+
+            .scope-card-list {
+                font-size: 0.73rem;
+                line-height: 1.4;
+            }
+
+            .scope-card-list li {
+                margin-bottom: 3px;
+                gap: 5px;
+            }
+
+            .scope-card-list svg {
+                width: 12px;
+                height: 12px;
+                margin-top: 1px;
+            }
+
+            /* Compact Bottom Section */
             .bottom-section-grid {
                 grid-template-columns: 1fr !important;
-                gap: 16px;
-                padding-top: 16px;
+                gap: 10px;
+                padding-top: 10px;
+                margin-bottom: 10px;
             }
 
             .bottom-block-title {
-                font-size: 0.7rem;
+                font-size: 0.64rem;
+                margin-bottom: 4px;
             }
 
             .bottom-block-content {
-                font-size: 0.78rem;
+                font-size: 0.75rem;
+                line-height: 1.4;
             }
 
             .copy-pill-btn {
-                padding: 4px 8px;
-                font-size: 0.68rem;
+                padding: 2px 6px;
+                font-size: 0.62rem;
+                border-radius: 3px;
+            }
+
+            .terms-container {
+                padding: 10px 12px;
+                font-size: 0.72rem;
+                line-height: 1.4;
+                border-radius: 6px;
+            }
+
+            .terms-title {
+                font-size: 0.64rem;
+                margin-bottom: 3px;
+            }
+
+            .toast {
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                padding: 10px 14px;
+                font-size: 0.74rem;
+                text-align: center;
+                border-radius: 6px;
             }
         }
 
-        @media screen and (max-width: 400px) {
+        @media screen and (max-width: 380px) {
             .btn-group {
                 flex-direction: column;
+                gap: 5px;
+            }
+            .btn {
+                min-height: 34px;
             }
         }
 
