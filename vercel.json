@@ -37,6 +37,9 @@
     { "source": "/ibrahim", "destination": "/ibrahim" },
     { "source": "/visa-ibrahim", "destination": "/ibrahim" },
     { "source": "/visa-entry", "destination": "/ibrahim" },
-    { "source": "/visa-cairo", "destination": "/ibrahim" }
+    { "source": "/visa-cairo", "destination": "/ibrahim" },
+    { "source": "/kpi", "destination": "/kpi" },
+    { "source": "/ppmi-kpi", "destination": "/kpi" },
+    { "source": "/komisi-interaksi", "destination": "/kpi" }
   ]
 }

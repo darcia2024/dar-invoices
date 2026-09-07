@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/KPI/2026/017 - Komisi Peduli Interaksi (KPI) PPMI Mesir</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #f8fafc;
+            --bg-card: #ffffff;
+            --red-primary: #c4161c;     /* Merah Resmi KPI */
+            --red-hover: #a2121a;
+            --red-deep: #7c1417;       /* Merah Gelap Elegan */
+            --red-bright: #de2027;     /* Merah Aksen */
+            --red-subtle: #fdf2f2;     /* Background Soft Red */
+            --red-border: #fecaca;     /* Garis Border Merah Halus */
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #e2e8f0;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.45;
+            padding: 24px 16px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           SECURITY PASSCODE COVER OVERLAY
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0f172a;
+            background-image: radial-gradient(circle at top center, #1e1b24 0%, #0b0f19 100%);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-20px);
+        }
+
+        .cover-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-light);
+            border-top: 5px solid var(--red-primary);
+            border-radius: 14px;
+            max-width: 460px;
+            width: 100%;
+            padding: 34px 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .cover-shield-icon {
+            width: 54px;
+            height: auto;
+            margin: 0 auto 12px;
+            display: block;
+        }
+
+        .classified-stamp {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            background: var(--red-subtle);
+            color: var(--red-primary);
+            border: 1px solid var(--red-border);
+            border-radius: 6px;
+        }
+
+        .cover-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+        }
+
+        .cover-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        .cover-recipient-box {
+            background: #fafafa;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--red-primary);
+            border-radius: 8px;
+            padding: 14px 16px;
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--red-primary);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .cover-recipient-name {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .cover-recipient-org {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .passcode-wrapper {
+            margin-bottom: 18px;
+        }
+
+        .passcode-label {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .passcode-input {
+            width: 100%;
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.2s;
+            color: var(--text-dark);
+            background: #ffffff;
+        }
+
+        .passcode-input:focus {
+            border-color: var(--red-primary);
+            box-shadow: 0 0 0 3px rgba(196, 22, 28, 0.15);
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .cover-open-btn {
+            background-color: var(--red-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.15s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .cover-open-btn:hover {
+            background-color: var(--red-hover);
+        }
+
+        .cover-open-btn:active {
+            transform: scale(0.99);
+        }
+
+        /* ----------------------------------------------------
+           TOP ACTION BAR
+        ---------------------------------------------------- */
+        .action-bar {
+            max-width: 960px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 10px 18px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .action-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title strong {
+            color: var(--red-primary);
+            font-weight: 700;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            border-color: var(--border-light);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .btn-primary {
+            background: var(--red-primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--red-hover);
+        }
+
+        /* ----------------------------------------------------
+           DESKTOP / PRINT INVOICE PAPER
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            overflow: hidden;
+        }
+
+        /* Red Accent Left Sidebar */
+        .sidebar-left {
+            background: linear-gradient(180deg, var(--red-deep) 0%, var(--red-primary) 50%, var(--red-bright) 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 0;
+            user-select: none;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .vertical-shield {
+            width: 32px;
+            height: auto;
+        }
+
+        .vertical-ref {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            opacity: 0.7;
+        }
+
+        /* Main Panel Right */
+        .main-panel {
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--red-primary);
+            padding-bottom: 22px;
+            margin-bottom: 22px;
+        }
+
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo-svg {
+            width: 48px;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .brand-sub {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--red-primary);
+            letter-spacing: 0.02em;
+            margin-top: 3px;
+        }
+
+        .inv-badge-box {
+            text-align: right;
+        }
+
+        .inv-type-pill {
+            display: inline-block;
+            background: var(--red-subtle);
+            color: var(--red-primary);
+            border: 1px solid var(--red-border);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .inv-ref-number {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .inv-date-text {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Two-Column Metadata Box */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            background: #fafafa;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            font-size: 0.82rem;
+        }
+
+        .meta-block-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--red-primary);
+            margin-bottom: 6px;
+        }
+
+        .meta-recipient-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .meta-recipient-sub {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 2px;
+        }
+
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .meta-table td {
+            padding: 3px 0;
+            font-size: 0.78rem;
+        }
+
+        .meta-label {
+            color: var(--text-muted);
+            width: 110px;
+        }
+
+        .meta-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: right;
+        }
+
+        /* Deliverables & Line Items Table */
+        .invoice-table-wrapper {
+            margin-bottom: 24px;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .table-custom th {
+            background-color: #fafafa;
+            color: var(--text-dark);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 10px 12px;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .table-custom td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .col-qty {
+            text-align: center;
+            width: 70px;
+        }
+
+        .col-price {
+            text-align: right;
+            width: 130px;
+            font-family: var(--font-mono);
+        }
+
+        .col-subtotal {
+            text-align: right;
+            width: 140px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .item-badge-tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--red-primary);
+            background: var(--red-subtle);
+            border: 1px solid var(--red-border);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+
+        .item-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .item-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .item-desc ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 4px;
+        }
+
+        .item-desc li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 2px;
+        }
+
+        .item-desc li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--red-primary);
+            font-weight: bold;
+        }
+
+        /* Grand Total Highlight Row */
+        .grand-total-row {
+            background: var(--red-subtle);
+            border-top: 2px solid var(--red-primary);
+            border-bottom: 2px solid var(--red-primary);
+        }
+
+        .grand-total-row td {
+            padding: 16px 12px;
+        }
+
+        .grand-total-label {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .grand-total-val {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--red-primary);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .spelled-out-text {
+            text-align: right;
+            font-size: 0.75rem;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* Scope Cards Grid */
+        .scope-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--red-primary);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .scope-card-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--red-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .scope-card-list li strong {
+            color: var(--text-dark);
+        }
+
+        /* Milestone Installments Box */
+        .milestone-box {
+            background: #fafafa;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .milestone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .milestone-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--red-primary);
+        }
+
+        .milestone-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .milestone-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .milestone-item {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
+
+        .milestone-item.active-step {
+            border-color: var(--red-primary);
+            background: var(--red-subtle);
+        }
+
+        .ms-label {
+            font-size: 0.66rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .ms-amount {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .ms-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Bottom Section Grid: Payments & Issuer */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            margin-bottom: 18px;
+        }
+
+        .bottom-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--red-primary);
+            margin-bottom: 6px;
+        }
+
+        .bank-info-box {
+            font-size: 0.82rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .bank-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .bank-logo-img {
+            height: 16px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .copy-pill-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            color: var(--red-primary);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--red-primary);
+            color: #ffffff;
+            border-color: var(--red-primary);
+        }
+
+        .issuer-box {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* Terms & Notes Section */
+        .terms-box {
+            background: #fafafa;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .terms-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        /* ----------------------------------------------------
+           DEDICATED NATIVE-STYLE MOBILE VIEW (<768px)
+        ---------------------------------------------------- */
+        .mobile-invoice-view {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 10px;
+                background-color: #f1f5f9;
+            }
+
+            .action-bar,
+            .invoice-container {
+                display: none !important;
+            }
+
+            .mobile-invoice-view {
+                display: block;
+                max-width: 520px;
+                margin: 0 auto;
+            }
+
+            .mob-top-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 12px;
+                padding: 12px 14px;
+                margin-bottom: 12px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            }
+
+            .mob-brand-group {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .mob-brand-title {
+                font-size: 0.88rem;
+                font-weight: 800;
+                color: var(--text-dark);
+                line-height: 1.2;
+            }
+
+            .mob-brand-sub {
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: var(--red-primary);
+            }
+
+            .mob-actions {
+                display: flex;
+                gap: 6px;
+            }
+
+            .mob-btn {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                color: var(--text-dark);
+                font-size: 0.72rem;
+                font-weight: 600;
+                padding: 6px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .mob-btn-primary {
+                background: var(--red-primary);
+                color: #ffffff;
+                border-color: var(--red-primary);
+            }
+
+            /* Main Receipt Card */
+            .mob-receipt-card {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 14px;
+                overflow: hidden;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+                margin-bottom: 14px;
+            }
+
+            .mob-hero-header {
+                background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-primary) 100%);
+                color: #ffffff;
+                padding: 20px 18px;
+                text-align: center;
+            }
+
+            .mob-hero-shield {
+                width: 38px;
+                height: auto;
+                margin-bottom: 8px;
+            }
+
+            .mob-hero-client-label {
+                font-size: 0.68rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                opacity: 0.85;
+                margin-bottom: 2px;
+            }
+
+            .mob-hero-client-name {
+                font-size: 1.15rem;
+                font-weight: 800;
+                color: #ffffff;
+                margin-bottom: 12px;
+                line-height: 1.3;
+            }
+
+            .mob-hero-total-box {
+                background: rgba(255, 255, 255, 0.12);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                border-radius: 8px;
+                padding: 10px 14px;
+                display: inline-block;
+            }
+
+            .mob-hero-total-label {
+                font-size: 0.65rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                opacity: 0.9;
+            }
+
+            .mob-hero-total-amount {
+                font-family: var(--font-mono);
+                font-size: 1.45rem;
+                font-weight: 800;
+                color: #ffffff;
+                letter-spacing: -0.02em;
+            }
+
+            .mob-body {
+                padding: 18px 16px;
+            }
+
+            /* Meta rows */
+            .mob-meta-row {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.78rem;
+                padding: 8px 0;
+                border-bottom: 1px dashed var(--border-light);
+            }
+
+            .mob-meta-row:last-child {
+                border-bottom: none;
+            }
+
+            .mob-meta-label {
+                color: var(--text-muted);
+            }
+
+            .mob-meta-val {
+                font-weight: 700;
+                color: var(--text-dark);
+                text-align: right;
+            }
+
+            /* Deliverable Cards in Mobile */
+            .mob-sec-title {
+                font-size: 0.72rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--red-primary);
+                margin: 18px 0 10px 0;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .mob-item-card {
+                background: #fafafa;
+                border: 1px solid var(--border-light);
+                border-radius: 8px;
+                padding: 12px 14px;
+                margin-bottom: 10px;
+            }
+
+            .mob-item-head {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 6px;
+            }
+
+            .mob-item-title {
+                font-size: 0.84rem;
+                font-weight: 800;
+                color: var(--text-dark);
+                line-height: 1.3;
+            }
+
+            .mob-item-price {
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+                font-weight: 700;
+                color: var(--red-primary);
+                white-space: nowrap;
+                margin-left: 8px;
+            }
+
+            .mob-item-bullets {
+                list-style: none;
+                padding: 0;
+                font-size: 0.74rem;
+                color: var(--text-muted);
+                line-height: 1.45;
+            }
+
+            .mob-item-bullets li {
+                position: relative;
+                padding-left: 12px;
+                margin-bottom: 3px;
+            }
+
+            .mob-item-bullets li::before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: var(--red-primary);
+            }
+
+            /* Bank & Payment Box Mobile */
+            .mob-bank-card {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-left: 4px solid var(--red-primary);
+                border-radius: 10px;
+                padding: 14px 16px;
+                margin-bottom: 12px;
+            }
+
+            .mob-bank-title {
+                font-size: 0.7rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--red-primary);
+                margin-bottom: 6px;
+            }
+
+            .mob-bank-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 6px;
+            }
+
+            .mob-acc-num {
+                font-family: var(--font-mono);
+                font-size: 0.95rem;
+                font-weight: 800;
+                color: var(--text-dark);
+            }
+        }
+
+        /* ----------------------------------------------------
+           TOAST NOTIFICATION
+        ---------------------------------------------------- */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ----------------------------------------------------
+           PRINT OPTIMIZATION
+        ---------------------------------------------------- */
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+
+            .cover-overlay,
+            .action-bar,
+            .mobile-invoice-view,
+            .toast {
+                display: none !important;
+            }
+
+            .invoice-container {
+                box-shadow: none !important;
+                border: none !important;
+                max-width: 100% !important;
+                display: grid !important;
+                grid-template-columns: 60px 1fr !important;
+            }
+
+            .sidebar-left {
+                background: #c4161c !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .main-panel {
+                padding: 20px 24px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PASSCODE SECURITY COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card" id="coverCard">
+            <!-- Shield SVG -->
+            <svg class="cover-shield-icon" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="kpiShieldCover" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#E4232B"/>
+                        <stop offset="0.55" stop-color="#C4161C"/>
+                        <stop offset="1" stop-color="#7C1417"/>
+                    </linearGradient>
+                </defs>
+                <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#kpiShieldCover)"/>
+                <circle cx="18" cy="15" r="5.4" fill="#fff"/>
+                <path d="M18 21C11.5 21 8 26.5 8 33.5C8 39 11 43 15.5 45C14 40 14.5 34 16 29C17.2 25 19.5 22.5 22.5 21.8C21.3 21.3 19.8 21 18 21Z" fill="#fff"/>
+                <circle cx="30" cy="20.5" r="3.8" fill="#fff"/>
+                <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#fff"/>
+            </svg>
+
+            <div class="classified-stamp">OFFICIAL INVOICE &bull; CLEARANCE LEVEL 1</div>
+
+            <h1 class="cover-title">KOMISI PEDULI INTERAKSI (KPI)</h1>
+            <div class="cover-subtitle">Dewan Pengurus PPMI Mesir &bull; Ekosistem Digital</div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DITUJUKAN KEPADA // RECIPIENT:</div>
+                <div class="cover-recipient-name">Pengurus Komisi Peduli Interaksi (KPI)</div>
+                <div class="cover-recipient-org">Lembaga: <strong>Dewan Pengurus PPMI Mesir</strong></div>
+                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red-primary); margin-top: 4px;">
+                    REF: #INV/KPI/2026/017 &bull; Rp 13.000.000
+                </div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">Masukkan PIN Akses Resmi:</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •" autocomplete="off">
+                <div id="passcodeError" class="passcode-error">[ AKSES DITOLAK // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Buka Dokumen Resmi</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- TOP CONTROL ACTION BAR (DESKTOP) -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span>INVOICE RESMI</span>
+            <strong>#INV/KPI/2026/017</strong>
+            <span>&bull; Komisi Peduli Interaksi (KPI) PPMI Mesir</span>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <button class="btn btn-primary" onclick="downloadPDF()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Simpan PDF
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN DESKTOP INVOICE CONTAINER -->
+    <div class="invoice-container">
+        
+        <!-- Red Accent Sidebar -->
+        <div class="sidebar-left">
+            <svg class="vertical-shield" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="#ffffff" opacity="0.95"/>
+                <circle cx="18" cy="15" r="5.4" fill="#c4161c"/>
+                <path d="M18 21C11.5 21 8 26.5 8 33.5C8 39 11 43 15.5 45C14 40 14.5 34 16 29C17.2 25 19.5 22.5 22.5 21.8C21.3 21.3 19.8 21 18 21Z" fill="#c4161c"/>
+                <circle cx="30" cy="20.5" r="3.8" fill="#c4161c"/>
+                <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#c4161c"/>
+            </svg>
+            <div class="vertical-invoice-title">OFFICIAL INVOICE &bull; KPI PPMI MESIR</div>
+            <div class="vertical-ref">#INV/KPI/2026/017</div>
+        </div>
+
+        <!-- Main Panel Content -->
+        <div class="main-panel">
+            <div>
+                <!-- Top Header Row -->
+                <div class="invoice-header-row">
+                    <div class="brand-block">
+                        <svg class="brand-logo-svg" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="kpiShieldMain" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#DE2027"/>
+                                    <stop offset="0.55" stop-color="#C4161C"/>
+                                    <stop offset="1" stop-color="#7C1417"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#kpiShieldMain)"/>
+                            <circle cx="18" cy="15" r="5.4" fill="#fff"/>
+                            <path d="M18 21C11.5 21 8 26.5 8 33.5C8 39 11 43 15.5 45C14 40 14.5 34 16 29C17.2 25 19.5 22.5 22.5 21.8C21.3 21.3 19.8 21 18 21Z" fill="#fff"/>
+                            <circle cx="30" cy="20.5" r="3.8" fill="#fff"/>
+                            <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#fff"/>
+                        </svg>
+                        <div>
+                            <div class="brand-name">Komisi Peduli Interaksi (KPI)</div>
+                            <div class="brand-sub">Dewan Pengurus PPMI Mesir &bull; Perancangan Ekosistem Digital</div>
+                        </div>
+                    </div>
+
+                    <div class="inv-badge-box">
+                        <span class="inv-type-pill">TAGIHAN RESMI</span>
+                        <div class="inv-ref-number">#INV/KPI/2026/017</div>
+                        <div class="inv-date-text">Tanggal: 07 September 2026</div>
+                    </div>
+                </div>
+
+                <!-- Two-Column Metadata -->
+                <div class="meta-grid">
+                    <div>
+                        <div class="meta-block-title">DITUJUKAN KEPADA:</div>
+                        <div class="meta-recipient-name">Pengurus Komisi Peduli Interaksi (KPI)</div>
+                        <div class="meta-recipient-sub">
+                            Lembaga: <strong>PPMI Mesir</strong> (Persatuan Pelajar dan Mahasiswa Indonesia di Mesir)<br>
+                            Kairo, Republik Arab Mesir
+                        </div>
+                    </div>
+                    <div>
+                        <div class="meta-block-title">INFORMASI KONTRAK:</div>
+                        <table class="meta-table">
+                            <tr>
+                                <td class="meta-label">ID Proyek:</td>
+                                <td class="meta-value" style="font-family:var(--font-mono); color:var(--red-primary);">KPI-ECOSYSTEM-V1</td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Ruang Lingkup:</td>
+                                <td class="meta-value">11 Modul &bull; 113 Layar &bull; F01–F09</td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Acuan Standar:</td>
+                                <td class="meta-value">Apple HIG &amp; Tri-Pillar Tech</td>
+                            </tr>
+                            <tr>
+                                <td class="meta-label">Status Tagihan:</td>
+                                <td class="meta-value" style="color:var(--red-primary);">🔴 BELUM LUNAS</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Deliverables Table -->
+                <div class="invoice-table-wrapper">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>DESKRIPSI RUANG LINGKUP PEKERJAAN &amp; DELIVERABLES</th>
+                                <th class="col-qty">QTY</th>
+                                <th class="col-price">HARGA</th>
+                                <th class="col-subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ITEM 1 -->
+                            <tr>
+                                <td>
+                                    <span class="item-badge-tag">MODUL 01 - 11</span>
+                                    <div class="item-title">Perancangan Arsitektur UI/UX &amp; Peta Sistem 113 Layar</div>
+                                    <div class="item-desc">
+                                        Riset komprehensif 27 dokumen sumber organisasi menjadi spesifikasi digital menyeluruh untuk seluruh unit:
+                                        <ul>
+                                            <li><strong>Cakupan 113 Layar:</strong> Portal Publik (P01–P15), Workspace Anggota (W01–W05), Task &amp; Evidence Tracker (T01–T11), Dokumen Terklasifikasi (F01–F06), Rapat &amp; Voting Tertutup (M01–M07), Layanan Aspirasi &amp; Tracking Rahasia Warga (S01–S06), CMS Redaksi 2 Bahasa ID/EN (C01–C07), Evaluasi Kinerja (E01–E03), Arsip &amp; Handover (H01–H03), Asisten AI Terkendali (I01–I03), dan Akun/MFA &amp; Audit Log (A01–A12).</li>
+                                            <li><strong>Kriteria Review Tanpa Celah:</strong> Penentuan batasan hak akses per peran (Ketua, Sekjend, Koordinator, Anggota, Tim Pengembang, dan Publik).</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="col-qty">1 Paket</td>
+                                <td class="col-price">Rp 4.000.000</td>
+                                <td class="col-subtotal">Rp 4.000.000</td>
+                            </tr>
+
+                            <!-- ITEM 2 -->
+                            <tr>
+                                <td>
+                                    <span class="item-badge-tag">DESIGN SYSTEM</span>
+                                    <div class="item-title">Sistem Desain Terpadu (Apple HIG Adapted) &amp; Antarmuka Responsif</div>
+                                    <div class="item-desc">
+                                        Adaptasi prinsip Apple Human Interface Guidelines berpadu dengan identitas Merah &amp; Putih PPMI Mesir:
+                                        <ul>
+                                            <li><strong>Palet Institusional Merah-Putih:</strong> Sistem token warna kontras tinggi WCAG 2.1 (Merah KPI #C4161C, Putih Bersih, Slate Netral) lengkap mode Terang &amp; Gelap.</li>
+                                            <li><strong>Komponen Antarmuka Lengkap:</strong> AppShell, Drawer, Data Table dengan sort/filter, Approval Panel, Classification Banner, dan PIN modal.</li>
+                                            <li><strong>Tata Letak Responsif Lintas Perangkat:</strong> Optimalisasi desktop widescreen (≥1024px), tablet (768–1023px), hingga layar smartphone compact (320–767px).</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="col-qty">1 Paket</td>
+                                <td class="col-price">Rp 3.500.000</td>
+                                <td class="col-subtotal">Rp 3.500.000</td>
+                            </tr>
+
+                            <!-- ITEM 3 -->
+                            <tr>
+                                <td>
+                                    <span class="item-badge-tag">ARCHITECTURE</span>
+                                    <div class="item-title">Tri-Pillar Technical Blueprint &amp; Paket Protokol Keamanan Data</div>
+                                    <div class="item-desc">
+                                        Spesifikasi teknis pembagian 3 pilar arsitektur dan kebijakan kerahasiaan data (Zero-Knowledge):
+                                        <ul>
+                                            <li><strong>3 Tim Pengerjaan:</strong> Tim Tampilan (Frontend UX), Tim Sistem (Backend State Machine &amp; Virus Quarantine), dan Tim Penyimpanan Data (PostgreSQL/Supabase Row-Level Security).</li>
+                                            <li><strong>Kerahasiaan Data Warga &amp; Organisasi:</strong> Pengembang bekerja dengan synthetic data, PIN rahasia hanya dipegang KPI, klasifikasi 4 tingkat (Umum, Terbatas, Rahasia, Sangat Rahasia), dan audit log permanen anti-tamper.</li>
+                                            <li><strong>Kemandirian Total:</strong> Repositori kode Git, hosting, dan domain 100% didaftarkan atas nama KPI PPMI Mesir (tanpa lock-in).</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="col-qty">1 Paket</td>
+                                <td class="col-price">Rp 3.000.000</td>
+                                <td class="col-subtotal">Rp 3.000.000</td>
+                            </tr>
+
+                            <!-- ITEM 4 -->
+                            <tr>
+                                <td>
+                                    <span class="item-badge-tag">SHOWCASE REPO</span>
+                                    <div class="item-title">Dokumentasi Alur Kerja F01–F09 &amp; Repositori Prototipe Statis</div>
+                                    <div class="item-desc">
+                                        Perumusan alur interaktif end-to-end serta penyusunan repositori web statis siap uji:
+                                        <ul>
+                                            <li><strong>Alur Logika Inti:</strong> Login MFA, Lifecycle Tugas (Draf → Dikerjakan → Bukti → Review Selesai), Notulen Terkunci &amp; 1-Person-1-Vote Closed Ballot, Brankas Dokumen Rahasia, dan Tiket Pengaduan Anonim dengan Token Pelacakan.</li>
+                                            <li><strong>Aplikasi Showcase:</strong> Katalog navigasi 113 layar, 15 tampilan contoh (wireframes), kamus tabel data, dan penyesuaian zona waktu resmi Kairo (EET).</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="col-qty">1 Paket</td>
+                                <td class="col-price">Rp 2.500.000</td>
+                                <td class="col-subtotal">Rp 2.500.000</td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="grand-total-row">
+                                <td colspan="3" class="grand-total-label">
+                                    TOTAL KONTRAK // GRAND TOTAL TAGIHAN
+                                </td>
+                                <td class="grand-total-val">
+                                    Rp 13.000.000
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="spelled-out-text">
+                        // Terbilang: Tiga Belas Juta Rupiah //
+                    </div>
+                </div>
+
+                <!-- Scope Cards Grid -->
+                <div class="scope-grid">
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>
+                            <span>113 LAYAR &bull; 11 MODUL</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li><strong>Struktur Lengkap:</strong> Dari portal publik P01–P15 hingga audit keamanan A01–A12.</li>
+                            <li><strong>Kendali Manusia:</strong> Tidak ada aksi otomatis AI tanpa konfirmasi peninjau.</li>
+                            <li><strong>Multi-Bahasa:</strong> Redaksi publik bilingual (Indonesia &amp; Inggris) terpisah.</li>
+                        </ul>
+                    </div>
+
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"/></svg>
+                            <span>DESAIN MERAH-PUTIH &bull; APPLE HIG</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li><strong>Warna Institusi:</strong> Nuansa Merah Resmi KPI (#C4161C) dan Putih Bersih.</li>
+                            <li><strong>Aksesibilitas WCAG:</strong> Kontras teks tinggi, navigasi ramah keyboard &amp; screen reader.</li>
+                            <li><strong>Mobile Friendly:</strong> Tampilan rapi pada layar 320px tanpa overflow horizontal.</li>
+                        </ul>
+                    </div>
+
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                            <span>KERAHASIAAN DATA &bull; ZERO KNOWLEDGE</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li><strong>Batas Pengembang:</strong> Pengembang bukan anggota &amp; tidak memegang akun pengurus.</li>
+                            <li><strong>Kunci PIN di KPI:</strong> Dokumen rahasia hanya dibuka oleh PIN yang disimpan KPI.</li>
+                            <li><strong>Catatan Permanen:</strong> Rekaman audit log anti-tamper tidak dapat diubah siapa pun.</li>
+                        </ul>
+                    </div>
+
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>TRI-PILLAR ARCHITECTURE</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li><strong>Tim Tampilan:</strong> Frontend UI/UX, state recovery, responsive shell.</li>
+                            <li><strong>Tim Sistem:</strong> Backend state machine, rule validasi, file quarantine.</li>
+                            <li><strong>Tim Penyimpanan:</strong> Row-Level Security Supabase/PostgreSQL &amp; enkripsi.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Milestone Payment Schedule -->
+                <div class="milestone-box">
+                    <div class="milestone-header">
+                        <div class="milestone-title">OPSI TERMIN PEMBAYARAN BERTAHAP (3 TAHAP SPRINT)</div>
+                        <div class="milestone-badge">Atau Pembayaran Penuh Sekaligus (Rp 13.000.000)</div>
+                    </div>
+                    <div class="milestone-grid">
+                        <div class="milestone-item active-step">
+                            <div class="ms-label">Termin 1 (DP 50% Kickoff)</div>
+                            <div class="ms-amount">Rp 6.500.000</div>
+                            <div class="ms-desc">Kickoff proyek, konsolidasi 27 dokumen sumber, &amp; fondasi UX0–UX2.</div>
+                        </div>
+                        <div class="milestone-item">
+                            <div class="ms-label">Termin 2 (30% Arsitektur)</div>
+                            <div class="ms-amount">Rp 3.900.000</div>
+                            <div class="ms-desc">Spesifikasi 113 layar UX3–UX7 &amp; blueprint teknis 3 pilar sistem.</div>
+                        </div>
+                        <div class="milestone-item">
+                            <div class="ms-label">Termin 3 (Pelunasan 20%)</div>
+                            <div class="ms-amount">Rp 2.600.000</div>
+                            <div class="ms-desc">Showcase alur F01–F09, pengujian UX8 &amp; serah terima aset digital.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Section: Payments & Issuer -->
+                <div class="bottom-grid">
+                    <div>
+                        <div class="bottom-title">REKENING PEMBAYARAN RESMI</div>
+                        <div class="bank-info-box">
+                            <div class="bank-logo-row">
+                                <img src="/mandiri_logo.webp" alt="Bank Mandiri Logo" class="bank-logo-img">
+                                <strong style="color:var(--text-dark); font-size:0.92rem;">Bank Mandiri</strong>
+                            </div>
+                            <div style="color:var(--text-muted); margin-bottom:2px;">
+                                Atas Nama: <strong style="color:var(--text-dark);">Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div style="display:flex; align-items:center;">
+                                <span>No. Rekening: <strong style="font-family:var(--font-mono); color:var(--text-dark); font-size:0.92rem;">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="bottom-title">PENERBIT &amp; KONSULTAN TEKNIS</div>
+                        <div class="issuer-box">
+                            <strong style="color:var(--text-dark); font-size:0.9rem;">Daru Fahmaa Muliawan (Dar Dev)</strong><br>
+                            <span style="color:var(--red-primary); font-weight:600;">Web Developer &amp; Digital Ecosystem Architect</span><br>
+                            <span style="color:var(--text-muted);">WhatsApp: 081311506025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="terms-box">
+                    <div class="terms-title">SYARAT &amp; KETENTUAN PENGERJAAN EKOSISTEM DIGITAL</div>
+                    <div>
+                        • <strong>Kerahasiaan Penuh:</strong> Seluruh data, alur kerja, dan dokumen internal KPI PPMI Mesir terikat pada pakta kerahasiaan dan batas akses pengembang yang tidak dapat dipindahtangankan.<br>
+                        • <strong>Kepemilikan Aset:</strong> Seluruh kode sumber, desain UI/UX, dan dokumentasi arsitektur menjadi hak milik organisasi KPI PPMI Mesir secara penuh.<br>
+                        • <strong>Konfirmasi Transfer:</strong> Bukti transfer termin atau pelunasan dapat dikirimkan langsung melalui WhatsApp konfirmasi resmi.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- DEDICATED NATIVE-STYLE MOBILE VIEW -->
+    <div class="mobile-invoice-view">
+        
+        <!-- Mobile Top App Bar -->
+        <div class="mob-top-bar">
+            <div class="mob-brand-group">
+                <svg width="28" height="32" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="kpiShieldMob" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#E4232B"/>
+                            <stop offset="0.55" stop-color="#C4161C"/>
+                            <stop offset="1" stop-color="#7C1417"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#kpiShieldMob)"/>
+                    <circle cx="18" cy="15" r="5.4" fill="#fff"/>
+                    <path d="M18 21C11.5 21 8 26.5 8 33.5C8 39 11 43 15.5 45C14 40 14.5 34 16 29C17.2 25 19.5 22.5 22.5 21.8C21.3 21.3 19.8 21 18 21Z" fill="#fff"/>
+                    <circle cx="30" cy="20.5" r="3.8" fill="#fff"/>
+                    <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#fff"/>
+                </svg>
+                <div>
+                    <div class="mob-brand-title">KPI PPMI Mesir</div>
+                    <div class="mob-brand-sub">#INV/KPI/2026/017</div>
+                </div>
+            </div>
+            <div class="mob-actions">
+                <button class="mob-btn" onclick="copyBankAcc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Rekening
+                </button>
+                <button class="mob-btn mob-btn-primary" onclick="downloadPDF()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Main Receipt Card -->
+        <div class="mob-receipt-card">
+            <div class="mob-hero-header">
+                <div class="mob-hero-client-label">INVOICE PEMBAYARAN KEPADA:</div>
+                <div class="mob-hero-client-name">Komisi Peduli Interaksi (KPI) PPMI Mesir</div>
+                <div class="mob-hero-total-box">
+                    <div class="mob-hero-total-label">TOTAL TAGIHAN RESMI</div>
+                    <div class="mob-hero-total-amount">Rp 13.000.000</div>
+                </div>
+            </div>
+
+            <div class="mob-body">
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Nomor Referensi</span>
+                    <span class="mob-meta-val" style="font-family:var(--font-mono); color:var(--red-primary);">#INV/KPI/2026/017</span>
+                </div>
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Tanggal Terbit</span>
+                    <span class="mob-meta-val">07 September 2026</span>
+                </div>
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Status Tagihan</span>
+                    <span class="mob-meta-val" style="color:var(--red-primary);">🔴 BELUM LUNAS</span>
+                </div>
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Opsi Termin</span>
+                    <span class="mob-meta-val">DP 50% (Rp 6,5jt) / 3 Termin</span>
+                </div>
+
+                <!-- Deliverable Items -->
+                <div class="mob-sec-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    RINCIAN RUANG LINGKUP (11 MODUL)
+                </div>
+
+                <div class="mob-item-card">
+                    <div class="mob-item-head">
+                        <div class="mob-item-title">1. Arsitektur UI/UX &amp; Peta 113 Layar</div>
+                        <div class="mob-item-price">Rp 4.000.000</div>
+                    </div>
+                    <ul class="mob-item-bullets">
+                        <li>Konsolidasi 27 dokumen sumber resmi organisasi.</li>
+                        <li>113 layar mencakup publik P01–P15 hingga audit A01–A12.</li>
+                    </ul>
+                </div>
+
+                <div class="mob-item-card">
+                    <div class="mob-item-head">
+                        <div class="mob-item-title">2. Design System Apple HIG (Merah-Putih)</div>
+                        <div class="mob-item-price">Rp 3.500.000</div>
+                    </div>
+                    <ul class="mob-item-bullets">
+                        <li>Identitas Merah-Putih &amp; token Dark/Light mode.</li>
+                        <li>Shell antarmuka desktop, tablet &amp; mobile compact.</li>
+                    </ul>
+                </div>
+
+                <div class="mob-item-card">
+                    <div class="mob-item-head">
+                        <div class="mob-item-title">3. Tri-Pillar Tech &amp; Keamanan Data</div>
+                        <div class="mob-item-price">Rp 3.000.000</div>
+                    </div>
+                    <ul class="mob-item-bullets">
+                        <li>3 Pilar: Tim Tampilan, Tim Sistem, &amp; Tim Data RLS.</li>
+                        <li>Protokol Zero-Knowledge: PIN rahasia dipegang KPI.</li>
+                    </ul>
+                </div>
+
+                <div class="mob-item-card">
+                    <div class="mob-item-head">
+                        <div class="mob-item-title">4. Showcase Prototipe &amp; Alur F01–F09</div>
+                        <div class="mob-item-price">Rp 2.500.000</div>
+                    </div>
+                    <ul class="mob-item-bullets">
+                        <li>Dokumentasi MFA, voting tertutup, &amp; brankas dokumen.</li>
+                        <li>Showcase katalog web statis 15 preview layar interaktif.</li>
+                    </ul>
+                </div>
+
+                <!-- Bank Info Card Mobile -->
+                <div class="mob-bank-card">
+                    <div class="mob-bank-title">REKENING TRANSFER RESMI</div>
+                    <div style="font-size:0.8rem; color:var(--text-dark); margin-bottom:2px;">
+                        <strong>Bank Mandiri</strong> &bull; a.n. Daru Fahmaa Muliawan
+                    </div>
+                    <div class="mob-bank-row">
+                        <span class="mob-acc-num">1550010616962</span>
+                        <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REK</button>
+                    </div>
+                </div>
+
+                <div style="font-size:0.72rem; color:var(--text-muted); text-align:center; margin-top:8px;">
+                    Diterbitkan oleh <strong>Daru Fahmaa Muliawan (Dar Dev)</strong><br>
+                    WhatsApp: 081311506025
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toastMsg">Nomor Rekening Bank Mandiri Berhasil Disalin!</span>
+    </div>
+
+    <script>
+        // Passcode verification logic
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const card = document.getElementById('coverCard');
+            
+            const enteredPin = (input.value || '').trim();
+            
+            // Valid master passcode for dashboard and clients
+            if (enteredPin === '050900' || enteredPin === '0001') {
+                overlay.classList.add('opened');
+                sessionStorage.setItem('kpi_invoice_unlocked', 'true');
+            } else {
+                errorMsg.style.display = 'block';
+                card.classList.remove('shake-anim');
+                void card.offsetWidth; // Trigger reflow
+                card.classList.add('shake-anim');
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Enter key trigger for passcode
+        document.getElementById('passcodeInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+
+        // Auto unlock if previously unlocked in current session
+        window.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('kpi_invoice_unlocked') === 'true') {
+                const overlay = document.getElementById('coverOverlay');
+                if (overlay) overlay.classList.add('opened');
+            }
+        });
+
+        // Copy Bank Account
+        function copyBankAcc() {
+            const accNumber = "1550010616962";
+            navigator.clipboard.writeText(accNumber).then(() => {
+                showToast("Nomor Rekening Mandiri (1550010616962) Berhasil Disalin!");
+            }).catch(() => {
+                // Fallback prompt
+                prompt("Salin nomor rekening Bank Mandiri berikut:", accNumber);
+            });
+        }
+
+        // Toast feedback
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (toastMsg) toastMsg.innerText = msg;
+            
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Print / PDF download
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

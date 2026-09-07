@@ -2208,6 +2208,59 @@
                     <span>Buka invoice Visa Ibrahim</span>
                 </a>
             </div>
+<!-- Komisi Peduli Interaksi (KPI) PPMI Mesir Card -->
+            <div class="invoice-card" id="card-kpi" data-id="kpi" data-month="2026-09" data-amount="13000000" data-client="kpi komisi peduli interaksi ppmi mesir dewan pengurus website digital ecosystem 113 layar sora apple hig merah putih 13.000.000 #inv/kpi/2026/017 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Komisi Peduli Interaksi (KPI) PPMI Mesir</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('kpi')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/KPI/2026/017</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Perancangan Arsitektur UI/UX, Desain Sistem Digital (Apple HIG Adapted Merah-Putih), Spesifikasi 3 Pilar &amp; Repositori Showcase Alur F01–F09 (11 Modul, 113 Layar).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/kpi</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/kpi')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptKpi()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET EKOSISTEM DIGITAL:</span>
+                            <span class="fin-val">Rp 13.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValKpi">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValKpi">Rp 13.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('kpi')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/kpi" class="action-btn">
+                    <span>Buka invoice KPI PPMI Mesir</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2328,7 +2381,8 @@
             barber: "PAID",
             saudia: "UNPAID",
             ifdony: "UNPAID",
-            ibrahim: "UNPAID"
+            ibrahim: "UNPAID",
+            kpi: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2344,7 +2398,8 @@
         }
 
         const defaultDpAmounts = {
-            azhariyah: 3000000
+            azhariyah: 3000000,
+            kpi: 6500000
         };
 
         const defaultNetProfits = {
@@ -2363,7 +2418,8 @@
             barber: 6000000,
             saudia: 39600000,
             ifdony: 500000,
-            ibrahim: 1100000
+            ibrahim: 1100000,
+            kpi: 13000000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2406,7 +2462,8 @@
             },
             { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 },
             { id: "ifdony", name: "Ustadz Ifdony (Logo Azharuna)", month: "2026-09", monthLabel: "September 2026", gross: 500000 },
-            { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 }
+            { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 },
+            { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 13000000 }
         ];
 
         function formatIDR(num) {
@@ -3248,6 +3305,34 @@ Terima kasih banyak! Semoga proses pengurusan visa berjalan lancar & sukses sela
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA VISA IBRAHIM BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptKpi() {
+            const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Pengurus Komisi Peduli Interaksi (KPI) PPMI Mesir. 🙏✨
+
+Berikut tautan resmi Dokumen Perancangan Ekosistem Digital & Invoice KPI PPMI Mesir:
+
+🔗 Invoice Online: https://temantiket.com/kpi
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Ruang Lingkup Pengerjaan (11 Modul & 113 Layar):
+1. Perancangan Arsitektur UI/UX & Peta Sistem (113 Layar P01–P15 s.d. A01–A12)
+2. Sistem Desain Terpadu (Apple HIG Adapted) Bernuansa Merah & Putih PPMI Mesir
+3. Tri-Pillar Technical Blueprint (Tim Tampilan, Tim Sistem & Tim Data RLS)
+4. Protokol Keamanan & Kerahasiaan Data (Zero-Knowledge Security Policy)
+5. Showcase Prototipe Statis & Dokumentasi Alur Kerja Interaktif F01–F09
+
+💰 Total Investasi Ekosistem Digital: Rp 13.000.000
+💳 Skema Pembayaran: Tersedia opsi Pembayaran Penuh atau Bertahap 3 Termin (DP 50% / 30% / 20%)
+💳 Rekening Resmi: Bank Mandiri 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Dokumen spesifikasi lengkap dapat diakses dan diunduh langsung dalam format PDF resmi pada tautan di atas. Terima kasih banyak! Salam hangat & sukses selalu untuk seluruh jajaran KPI & PPMI Mesir. 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA KPI PPMI MESIR BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
