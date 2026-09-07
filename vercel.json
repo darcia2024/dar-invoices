@@ -40,6 +40,10 @@
     { "source": "/visa-cairo", "destination": "/ibrahim" },
     { "source": "/kpi", "destination": "/kpi" },
     { "source": "/ppmi-kpi", "destination": "/kpi" },
-    { "source": "/komisi-interaksi", "destination": "/kpi" }
+    { "source": "/komisi-interaksi", "destination": "/kpi" },
+    { "source": "/tehumi", "destination": "/tehumi" },
+    { "source": "/teh-umi", "destination": "/tehumi" },
+    { "source": "/ereader-tehumi", "destination": "/tehumi" },
+    { "source": "/e-reader-tehumi", "destination": "/tehumi" }
   ]
 }

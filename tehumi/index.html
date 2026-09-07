@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/UMI/2026/018 - Teh Umi (Sistem Akses Media Baca Terproteksi)</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #f6f5f1;
+            --bg-card: #ffffff;
+            --emerald-primary: #1b4332;   /* Deep Evergreen Slate */
+            --emerald-light: #2d6a4f;
+            --emerald-soft: #d8f3dc;
+            --amber-accent: #b45309;      /* Warm Amber Highlight */
+            --amber-light: #fef3c7;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --border-warm: #e5e0d3;
+            
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.45;
+            padding: 24px 16px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           SECURITY PASSCODE COVER OVERLAY
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0f1e17;
+            background-image: radial-gradient(circle at top center, #1b382b 0%, #0a1410 100%);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-20px);
+        }
+
+        .cover-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-light);
+            border-top: 5px solid var(--emerald-primary);
+            border-radius: 14px;
+            max-width: 440px;
+            width: 100%;
+            padding: 34px 28px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            background: var(--emerald-soft);
+            color: var(--emerald-primary);
+            border-radius: 6px;
+        }
+
+        .cover-recipient-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            text-align: left;
+            margin-bottom: 18px;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        .cover-recipient-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .cover-recipient-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .cover-recipient-org {
+            color: var(--emerald-primary);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .passcode-wrapper {
+            margin: 16px 0 14px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            width: 170px;
+            height: 42px;
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s ease;
+            -webkit-text-security: disc;
+            text-security: disc;
+        }
+
+        .passcode-input:focus {
+            border-color: var(--emerald-primary);
+            box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.18);
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .cover-open-btn {
+            background: var(--emerald-primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .cover-open-btn:hover {
+            background: var(--emerald-light);
+        }
+
+        /* ----------------------------------------------------
+           TOP ACTION / CONTROL BAR
+        ---------------------------------------------------- */
+        .action-bar {
+            max-width: 900px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border: 1px solid var(--border-warm);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .action-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--emerald-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--emerald-light);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid var(--border-light);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--emerald-primary);
+            color: #ffffff;
+            border-color: var(--emerald-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--emerald-light);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f8fafc;
+        }
+
+        /* ----------------------------------------------------
+           MAIN INVOICE CONTAINER (DESKTOP)
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-warm);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sidebar Kiri Minimalis */
+        .sidebar-left {
+            width: 56px;
+            background-color: #f3efe6;
+            border-right: 1px solid var(--border-warm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--emerald-primary);
+            opacity: 0.9;
+        }
+
+        .vertical-brand-name {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Main Content Panel */
+        .main-panel {
+            flex-grow: 1;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            border-bottom: 1.5px solid var(--border-warm);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--emerald-primary);
+        }
+
+        .inv-date-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .billed-to-box {
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+
+        .billed-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .billed-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .top-right-logo-box {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .badge-dp-tag {
+            display: inline-block;
+            background: var(--amber-light);
+            color: var(--amber-accent);
+            border: 1px solid #fde68a;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* Scope Table */
+        .table-area {
+            margin-bottom: 24px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--emerald-primary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--emerald-primary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 0.86rem;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .item-desc {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .item-desc ul {
+            margin-top: 4px;
+            padding-left: 16px;
+        }
+
+        .item-desc li {
+            margin-bottom: 2px;
+        }
+
+        .col-qty {
+            text-align: center;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 70px;
+        }
+
+        .col-unit-price {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 130px;
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            white-space: nowrap;
+            width: 130px;
+        }
+
+        /* Calculations & Payment Box */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 24px;
+            align-items: start;
+            margin-top: 10px;
+        }
+
+        .payment-info-box {
+            background: #fafaf7;
+            border: 1px solid var(--border-warm);
+            border-radius: 12px;
+            padding: 16px 18px;
+            font-size: 0.8rem;
+        }
+
+        .payment-info-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-warm);
+        }
+
+        .bank-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--emerald-primary);
+        }
+
+        .bank-brand img {
+            height: 18px;
+            width: auto;
+        }
+
+        .acc-number-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+        }
+
+        .acc-number-val {
+            font-family: var(--font-mono);
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-pill-btn {
+            background: var(--emerald-primary);
+            color: #ffffff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--emerald-light);
+        }
+
+        .acc-holder {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .acc-notes {
+            font-size: 0.72rem;
+            color: #475569;
+            line-height: 1.4;
+        }
+
+        /* Calculation Column */
+        .calc-panel {
+            background: #ffffff;
+            border: 1px solid var(--border-warm);
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .calc-row.total-row {
+            border-bottom: 2px solid var(--border-warm);
+            padding: 10px 0;
+            font-size: 0.88rem;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .calc-row.dp-row {
+            background: #fffbeb;
+            border: 1px solid #fef08a;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin: 8px 0;
+            font-size: 0.88rem;
+            color: var(--amber-accent);
+            font-weight: 700;
+        }
+
+        .calc-row.remaining-row {
+            border-bottom: none;
+            padding: 6px 0;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .calc-row .num {
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        .calc-row.dp-row .num {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        /* Terms & Signature Row */
+        .bottom-terms-row {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-warm);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+        }
+
+        .terms-list {
+            max-width: 500px;
+            line-height: 1.45;
+        }
+
+        .terms-list ul {
+            padding-left: 14px;
+            margin-top: 4px;
+        }
+
+        .signature-box {
+            text-align: right;
+        }
+
+        .signature-name {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 0.86rem;
+            margin-top: 28px;
+        }
+
+        .signature-title {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE VIEW SWITCHER
+        ---------------------------------------------------- */
+        .desktop-only-view {
+            display: block;
+        }
+
+        .mobile-invoice-view {
+            display: none;
+        }
+
+        /* ----------------------------------------------------
+           COMPACT MOBILE-FIRST INVOICE DESIGN
+        ---------------------------------------------------- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px 8px;
+                background-color: #f1ede4;
+            }
+
+            .desktop-only-view {
+                display: none !important;
+            }
+
+            .mobile-invoice-view {
+                display: block;
+                max-width: 480px;
+                margin: 0 auto;
+            }
+
+            /* Mobile Top Navigation Bar */
+            .mob-top-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #ffffff;
+                padding: 10px 14px;
+                border-radius: 12px;
+                border: 1px solid var(--border-warm);
+                margin-bottom: 10px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            }
+
+            .mob-top-brand {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .mob-top-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--emerald-primary);
+            }
+
+            .mob-top-title {
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--emerald-primary);
+            }
+
+            .mob-top-sub {
+                font-size: 0.65rem;
+                color: var(--text-muted);
+                font-family: var(--font-mono);
+            }
+
+            .mob-actions {
+                display: flex;
+                gap: 6px;
+            }
+
+            .mob-btn {
+                font-family: var(--font-sans);
+                font-size: 0.68rem;
+                font-weight: 600;
+                padding: 6px 10px;
+                border-radius: 6px;
+                border: 1px solid var(--border-light);
+                background: #ffffff;
+                color: var(--text-dark);
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .mob-btn-primary {
+                background: var(--emerald-primary);
+                color: #ffffff;
+                border-color: var(--emerald-primary);
+            }
+
+            /* Mobile Main Card */
+            .mob-bill-card {
+                background: #ffffff;
+                border-radius: 16px;
+                border: 1px solid var(--border-warm);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+                overflow: hidden;
+            }
+
+            /* Hero Banner */
+            .mob-hero-header {
+                background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+                color: #ffffff;
+                padding: 20px 18px;
+                text-align: center;
+            }
+
+            .mob-hero-category {
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                opacity: 0.85;
+                margin-bottom: 6px;
+            }
+
+            .mob-hero-amount-label {
+                font-size: 0.65rem;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                opacity: 0.9;
+                margin-bottom: 2px;
+            }
+
+            .mob-hero-amount-val {
+                font-size: 1.85rem;
+                font-weight: 700;
+                letter-spacing: -0.5px;
+                margin-bottom: 4px;
+            }
+
+            .mob-hero-spelled {
+                font-size: 0.72rem;
+                opacity: 0.9;
+                font-weight: 400;
+            }
+
+            .mob-dp-callout {
+                display: inline-block;
+                background: rgba(254, 243, 199, 0.95);
+                color: #92400e;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.72rem;
+                font-weight: 700;
+                margin-top: 10px;
+            }
+
+            /* Meta Strip */
+            .mob-meta-strip {
+                display: flex;
+                justify-content: space-between;
+                background: #fbfaf7;
+                padding: 12px 16px;
+                border-bottom: 1px solid var(--border-warm);
+                font-size: 0.72rem;
+            }
+
+            .mob-meta-col label {
+                display: block;
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 2px;
+            }
+
+            .mob-client-name {
+                font-size: 0.92rem;
+                font-weight: 700;
+                color: #0f172a;
+            }
+
+            .mob-meta-col small {
+                display: block;
+                color: var(--text-muted);
+                font-size: 0.65rem;
+            }
+
+            /* Body */
+            .mob-body {
+                padding: 16px 14px;
+            }
+
+            .mob-section-heading {
+                font-size: 0.7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--emerald-primary);
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            /* Service Card */
+            .mob-service-card {
+                background: #fbfaf7;
+                border: 1px solid var(--border-warm);
+                border-radius: 12px;
+                padding: 14px;
+                margin-bottom: 12px;
+            }
+
+            .mob-service-title {
+                font-size: 0.88rem;
+                font-weight: 700;
+                color: #0f172a;
+                margin-bottom: 2px;
+            }
+
+            .mob-service-sub {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                margin-bottom: 10px;
+            }
+
+            .mob-checklist {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .mob-checklist li {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                font-size: 0.75rem;
+                color: #334155;
+                line-height: 1.4;
+            }
+
+            .mob-checklist li svg {
+                flex-shrink: 0;
+                color: var(--emerald-light);
+                margin-top: 2px;
+            }
+
+            /* Calculation Card */
+            .mob-calc-card {
+                background: #ffffff;
+                border: 1px solid var(--border-warm);
+                border-radius: 12px;
+                padding: 12px 14px;
+                margin-bottom: 12px;
+            }
+
+            .mob-calc-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 7px 0;
+                font-size: 0.78rem;
+                color: #475569;
+                border-bottom: 1px dashed var(--border-light);
+            }
+
+            .mob-calc-row.highlight-dp {
+                background: #fefce8;
+                margin: 6px -8px;
+                padding: 8px;
+                border-radius: 8px;
+                border: 1px solid #fef08a;
+                color: var(--amber-accent);
+                font-weight: 700 !important;
+                font-size: 0.86rem;
+            }
+
+            .mob-calc-row:last-child {
+                border-bottom: none;
+                padding-top: 8px;
+                font-size: 0.74rem;
+                color: var(--text-muted);
+            }
+
+            .mob-calc-row .val {
+                font-family: var(--font-sans);
+                font-weight: 400;
+            }
+
+            .mob-calc-row.highlight-dp .val {
+                font-weight: 700 !important;
+                font-size: 0.95rem;
+            }
+
+            /* Bank Transfer Card */
+            .mob-pay-card {
+                background: #f3efe6;
+                border: 1.5px solid #e5dfd0;
+                border-radius: 14px;
+                padding: 14px;
+                margin-bottom: 12px;
+            }
+
+            .mob-pay-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .mob-bank-brand {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+            }
+
+            .mob-bank-brand img {
+                height: 18px;
+                width: auto;
+            }
+
+            .mob-bank-brand span {
+                font-size: 0.85rem;
+                font-weight: 700;
+                color: var(--emerald-primary);
+            }
+
+            .mob-acc-box {
+                background: #ffffff;
+                border: 1px solid var(--border-warm);
+                border-radius: 10px;
+                padding: 10px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 8px;
+            }
+
+            .mob-acc-info {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .mob-acc-label {
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+
+            .mob-acc-num {
+                font-size: 1.15rem;
+                font-weight: 700;
+                color: #0f172a;
+                letter-spacing: 0.5px;
+            }
+
+            .mob-acc-holder {
+                font-size: 0.74rem;
+                color: #475569;
+            }
+
+            .mob-copy-btn {
+                background: var(--emerald-primary);
+                color: #ffffff;
+                border: none;
+                border-radius: 6px;
+                padding: 7px 12px;
+                font-size: 0.7rem;
+                font-weight: 700;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .mob-pay-hint {
+                font-size: 0.68rem;
+                color: #475569;
+                text-align: center;
+            }
+
+            /* Terms Notes */
+            .mob-notes-box {
+                background: #fbfaf7;
+                border: 1px solid var(--border-warm);
+                border-radius: 10px;
+                padding: 10px 12px;
+                font-size: 0.7rem;
+                color: #64748b;
+                line-height: 1.45;
+                margin-bottom: 12px;
+            }
+
+            .mob-footer {
+                text-align: center;
+                padding-top: 6px;
+                font-size: 0.68rem;
+                color: #64748b;
+            }
+
+            .mob-footer strong {
+                color: #0f172a;
+            }
+
+            .cover-card {
+                padding: 24px 18px;
+                max-width: 90vw;
+                border-radius: 16px;
+            }
+        }
+
+        /* Toast Component */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0f172a;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Print Optimization */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm;
+            }
+            body { background: #ffffff !important; padding: 0 !important; font-size: 10.5px !important; }
+            .cover-overlay, .action-bar, .mob-top-bar, .copy-pill-btn, .toast { display: none !important; }
+            .mobile-invoice-view { display: none !important; }
+            .desktop-only-view { display: block !important; }
+            .invoice-container { box-shadow: none !important; border: none !important; max-width: 100% !important; }
+            .sidebar-left { background-color: #f3efe6 !important; border-right: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURITY PASSCODE COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div id="coverCard" class="cover-card">
+            <div class="classified-stamp">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>DOKUMEN TERPROTEKSI // CONFIDENTIAL</span>
+            </div>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">Teh Umi</div>
+                <div class="cover-recipient-org">Sistem Akses Media Baca Terproteksi (Permission Gate)</div>
+                <div class="cover-inv-num">REF CODE: #INV/UMI/2026/018</div>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">MASUKKAN KODE PIN RESMI:</div>
+                <input type="text" id="passcodeInput" class="passcode-input" maxlength="6" autocomplete="off" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                <span>BUKA DOKUMEN INVOICE</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         1. DESKTOP / PRINT VIEW
+         ========================================================================= -->
+    <div class="desktop-only-view">
+        <div style="width: 100%;">
+            <!-- Top Control Bar -->
+            <div class="action-bar">
+                <div class="action-title">
+                    <span></span> INVOICE #INV/UMI/2026/018 — Teh Umi (Media Baca Terproteksi)
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="copyBankAcc()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Salin Rekening
+                    </button>
+                    <button class="btn btn-primary" onclick="downloadPDF()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download PDF
+                    </button>
+                    <button class="btn btn-primary" style="background:#0f172a; border-color:#0f172a;" onclick="window.print()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Cetak / Print
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Invoice Container -->
+            <div class="invoice-container">
+                <!-- Sidebar Kiri -->
+                <div class="sidebar-left">
+                    <div class="vertical-invoice-title">invoice</div>
+                    <div class="vertical-brand-name">DAR DEV // E-READER</div>
+                </div>
+
+                <!-- Main Panel -->
+                <div class="main-panel">
+                    <div>
+                        <!-- Header Row -->
+                        <div class="invoice-header-row">
+                            <div class="top-left-meta">
+                                <div class="inv-num-label">Invoice No. #INV/UMI/2026/018</div>
+                                <div class="inv-date-label">07 September 2026</div>
+
+                                <div class="billed-to-box">
+                                    <div class="billed-title">DITUJUKAN KEPADA // CLIENT:</div>
+                                    <div class="billed-name">Teh Umi</div>
+                                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">
+                                        Proyek: <strong>Sistem Akses Media Baca Terproteksi (Permission-Based E-Reader)</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="top-right-logo-box">
+                                <div style="font-size:0.86rem; font-weight:700; color:var(--emerald-primary); text-transform: uppercase; letter-spacing:0.04em;">
+                                    MEDIA BACA DIGITAL EKSKLUSIF
+                                </div>
+                                <div style="font-size:0.75rem; color:var(--text-muted);">
+                                    Protected Reading Environment &bull; Permission Gate
+                                </div>
+                                <div class="badge-dp-tag">
+                                    TAGIHAN: TERMIN 1 DP (RP 100.000)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scope Table -->
+                        <div class="table-area">
+                            <table class="margarita-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 45px;">NO</th>
+                                        <th>SPESIFIKASI &amp; RUANG LINGKUP PENGERJAAN</th>
+                                        <th class="col-qty">QTY</th>
+                                        <th class="col-unit-price">HARGA</th>
+                                        <th class="col-subtotal">SUBTOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight:700; color:var(--emerald-primary);">01</td>
+                                        <td>
+                                            <div class="item-title">Sistem Proteksi Akses Berizin (Permission-Based Access Gate)</div>
+                                            <div class="item-desc">
+                                                Konfigurasi gerbang proteksi media bacaan: konten terkunci secara bawaan dan hanya bisa diakses oleh pembaca yang telah diberikan izin resmi (Whitelisted / Approval Gate) oleh Teh Umi. Mencegah link dibagikan secara bebas ke publik tanpa otorisasi.
+                                            </div>
+                                        </td>
+                                        <td class="col-qty">1 Modul</td>
+                                        <td class="col-unit-price">Rp 150.000</td>
+                                        <td class="col-subtotal">Rp 150.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight:700; color:var(--emerald-primary);">02</td>
+                                        <td>
+                                            <div class="item-title">Antarmuka Pembaca Bersih &amp; Ramah Mata (Distraction-Free E-Reader UI)</div>
+                                            <div class="item-desc">
+                                                Tampilan bacaan bersih, elegan, dan nyaman dibaca berjam-jam tanpa distraksi. Penataan tipografi proporsional, dukungan mode malam/siang, serta optimalisasi responsif untuk smartphone (Android/iOS), tablet, dan laptop.
+                                            </div>
+                                        </td>
+                                        <td class="col-qty">1 Modul</td>
+                                        <td class="col-unit-price">Rp 100.000</td>
+                                        <td class="col-subtotal">Rp 100.000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight:700; color:var(--emerald-primary);">03</td>
+                                        <td>
+                                            <div class="item-title">Proteksi Konten Anti-Copy Dasar &amp; Setup Web App Siap Pakai</div>
+                                            <div class="item-desc">
+                                                Proteksi dasar teks dari salin-tempel bebas untuk menjaga eksklusivitas karya Teh Umi, deployment web app ringan siap pakai (tanpa instal aplikasi berat), dan panduan praktis pengelolaan izin pembaca.
+                                            </div>
+                                        </td>
+                                        <td class="col-qty">1 Paket</td>
+                                        <td class="col-unit-price">Rp 50.000</td>
+                                        <td class="col-subtotal">Rp 50.000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Calculations & Payment Box -->
+                        <div class="summary-grid">
+                            <!-- Bank Transfer Info -->
+                            <div class="payment-info-box">
+                                <div class="payment-info-header">
+                                    <div class="bank-brand">
+                                        <img src="/mandiri_logo.webp" alt="Mandiri" onerror="this.style.display='none'">
+                                        <span>Bank Mandiri</span>
+                                    </div>
+                                    <span style="font-size:0.68rem; color:var(--emerald-primary); font-weight:700; background:var(--emerald-soft); padding:2px 8px; border-radius:4px;">
+                                        REKENING RESMI
+                                    </span>
+                                </div>
+
+                                <div class="acc-number-row">
+                                    <span class="acc-number-val">1550010616962</span>
+                                    <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REK</button>
+                                </div>
+
+                                <div class="acc-holder">
+                                    Atas Nama: <strong>Daru Fahmaa Muliawan</strong>
+                                </div>
+
+                                <div class="acc-notes">
+                                    Mohon sertakan berita transfer: <strong>DP E-Reader Teh Umi</strong>. Konfirmasi pembayaran dapat dikirimkan langsung via WhatsApp.
+                                </div>
+                            </div>
+
+                            <!-- Calculation Panel -->
+                            <div class="calc-panel">
+                                <div class="calc-row">
+                                    <span>Total Kontrak Pengembangan</span>
+                                    <span class="num">Rp 300.000</span>
+                                </div>
+                                <div class="calc-row dp-row">
+                                    <span>TAGIHAN SAAT INI (DP KICKOFF)</span>
+                                    <span class="num">Rp 100.000</span>
+                                </div>
+                                <div class="calc-row remaining-row">
+                                    <span>Sisa Pelunasan (Termin 2 - Setelah Selesai)</span>
+                                    <span class="num">Rp 200.000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Signatures -->
+                        <div class="bottom-terms-row">
+                            <div class="terms-list">
+                                <strong>Ketentuan &amp; Tahapan Pengerjaan:</strong>
+                                <ul>
+                                    <li>Pengerjaan langsung dimulai setelah pembayaran Termin 1 DP (Rp 100.000) terkonfirmasi.</li>
+                                    <li>Pelunasan Termin 2 (Rp 200.000) dibayarkan setelah pengujian sistem izin &amp; serah terima akses media bacaan selesai.</li>
+                                </ul>
+                            </div>
+
+                            <div class="signature-box">
+                                <div class="signature-name">Daru Fahmaa Muliawan</div>
+                                <div class="signature-title">Developer &bull; Temantiket / Dar Dev</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         2. COMPACT MOBILE INVOICE VIEW (Optimized for Mobile Screens)
+         ========================================================================= -->
+    <div class="mobile-invoice-view">
+        
+        <!-- Mobile Top Navigation Bar -->
+        <div class="mob-top-bar">
+            <div class="mob-top-brand">
+                <span class="mob-top-dot"></span>
+                <div>
+                    <div class="mob-top-title">Dar Dev &bull; E-Reader System</div>
+                    <div class="mob-top-sub">#INV/UMI/2026/018</div>
+                </div>
+            </div>
+            <div class="mob-actions">
+                <button class="mob-btn" onclick="copyBankAcc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Rekening
+                </button>
+                <button class="mob-btn mob-btn-primary" onclick="downloadPDF()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Main Bill Card -->
+        <div class="mob-bill-card">
+            
+            <!-- Hero Header -->
+            <div class="mob-hero-header">
+                <div class="mob-hero-category">Sistem Media Baca Terproteksi</div>
+                <div class="mob-hero-amount-label">TAGIHAN DP KICKOFF SEKARANG</div>
+                <div class="mob-hero-amount-val">Rp 100.000</div>
+                <div class="mob-hero-spelled">Seratus ribu rupiah (Total Kontrak: Rp 300.000)</div>
+                <div class="mob-dp-callout">
+                    ⚡ Termin 1: DP Rp 100.000 &bull; Sisa Rp 200.000 Setelah Selesai
+                </div>
+            </div>
+
+            <!-- Meta Strip -->
+            <div class="mob-meta-strip">
+                <div class="mob-meta-col">
+                    <label>DITUJUKAN KEPADA</label>
+                    <span class="mob-client-name">Teh Umi</span>
+                    <small>Owner Media Baca</small>
+                </div>
+                <div class="mob-meta-col" style="text-align: right;">
+                    <label>TANGGAL INVOICE</label>
+                    <span style="font-weight:600; color:#0f172a;">07 Sep 2026</span>
+                    <small>Ref: #018</small>
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="mob-body">
+                
+                <!-- Service Card -->
+                <div class="mob-section-heading">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    SPESIFIKASI PENGERJAAN
+                </div>
+
+                <div class="mob-service-card">
+                    <div class="mob-service-title">Akses Media Baca Berizin (Permission Gate)</div>
+                    <div class="mob-service-sub">E-Reader Terproteksi &bull; Konten Aman Bebas Bocor</div>
+                    <ul class="mob-checklist">
+                        <li>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Hanya Bisa Diakses dengan Izin:</strong> Konten terkunci dan hanya terbuka untuk pembaca yang telah diberi izin resmi oleh Teh Umi.</span>
+                        </li>
+                        <li>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Tampilan Ramah Mata:</strong> E-reader bersih bebas gangguan iklan, nyaman dibaca di HP, tablet, dan laptop.</span>
+                        </li>
+                        <li>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Proteksi Konten:</strong> Pembatasan copy-paste teks untuk menjaga keaslian karya bacaan Teh Umi.</span>
+                        </li>
+                        <li>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Praktis Tanpa Instal App:</strong> Berbasis web app ringan yang cepat diakses dari browser mana saja.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Price Breakdown Card -->
+                <div class="mob-calc-card">
+                    <div class="mob-calc-row">
+                        <span>Total Nilai Kontrak</span>
+                        <span class="val">Rp 300.000</span>
+                    </div>
+                    <div class="mob-calc-row highlight-dp">
+                        <span>Tagihan DP Kickoff (Termin 1)</span>
+                        <span class="val">Rp 100.000</span>
+                    </div>
+                    <div class="mob-calc-row">
+                        <span>Sisa Pelunasan (Setelah Sistem Selesai)</span>
+                        <span class="val">Rp 200.000</span>
+                    </div>
+                </div>
+
+                <!-- Payment Box Highlight -->
+                <div class="mob-pay-card">
+                    <div class="mob-pay-header">
+                        <div class="mob-bank-brand">
+                            <img src="/mandiri_logo.webp" alt="Bank Mandiri" onerror="this.style.display='none'">
+                            <span>Bank Mandiri</span>
+                        </div>
+                        <span style="font-size:0.65rem; color:var(--emerald-primary); font-weight:700;">REKENING TRANSFER</span>
+                    </div>
+
+                    <div class="mob-acc-box">
+                        <div class="mob-acc-info">
+                            <span class="mob-acc-label">NOMOR REKENING</span>
+                            <span class="mob-acc-num">1550010616962</span>
+                            <span class="mob-acc-holder">a.n. Daru Fahmaa Muliawan</span>
+                        </div>
+                        <button class="mob-copy-btn" onclick="copyBankAcc()">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Salin
+                        </button>
+                    </div>
+                    <div class="mob-pay-hint">
+                        Silakan konfirmasi bukti transfer DP via WhatsApp agar langsung dikerjakan.
+                    </div>
+                </div>
+
+                <!-- Terms Box -->
+                <div class="mob-notes-box">
+                    Ketentuan: Pengerjaan langsung dimulai setelah DP Rp 100.000 masuk. Pelunasan sisa Rp 200.000 dibayarkan setelah sistem e-reader terproteksi selesai diuji coba.
+                </div>
+
+                <!-- Footer Issuer -->
+                <div class="mob-footer">
+                    Diterbitkan oleh <strong>Daru Fahmaa Muliawan (Dar Dev)</strong><br>
+                    WhatsApp: 081311506025 &bull; Tangsel, Banten
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toastMsg">Nomor Rekening Bank Mandiri Berhasil Disalin!</span>
+    </div>
+
+    <script>
+        // Passcode verification logic (PIN: 0001 or 050900)
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const card = document.getElementById('coverCard');
+            const val = (input.value || '').trim();
+
+            if (val === '0001' || val === '050900') {
+                overlay.classList.add('opened');
+            } else {
+                errorMsg.style.display = 'block';
+                card.classList.add('shake-anim');
+                setTimeout(() => {
+                    card.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+
+        document.getElementById('passcodeInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+
+        window.addEventListener("DOMContentLoaded", function() {
+            const clientInp = document.getElementById("passcodeInput");
+            if (clientInp) {
+                clientInp.value = '';
+                setTimeout(function() { clientInp.value = ''; }, 100);
+                setTimeout(function() { clientInp.value = ''; }, 400);
+
+                clientInp.addEventListener("input", function() {
+                    const val = this.value.trim();
+                    if (val === "0001" || val === "050900") {
+                        verifyPasscode();
+                    }
+                });
+            }
+        });
+
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri Berhasil Disalin!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (toastMsg) toastMsg.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>

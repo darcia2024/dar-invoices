@@ -2261,6 +2261,64 @@
                     <span>Buka invoice KPI PPMI Mesir</span>
                 </a>
             </div>
+
+            <!-- Teh Umi (Sistem Media Baca Terproteksi) Card -->
+            <div class="invoice-card" id="card-tehumi" data-id="tehumi" data-month="2026-09" data-amount="300000" data-client="teh umi sistem akses media baca terproteksi permission gate e-reader digital eksklusif izin baca #inv/umi/2026/018 september 2026 300.000 dp 100.000">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Teh Umi (Media Baca Terproteksi)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-dp" onclick="togglePaymentStatus('tehumi')">
+                                🟡 DP (Rp 100.000)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/UMI/2026/018</span>
+                        <span class="month-tag">📅 September 2026 (DP 100rb)</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pengembangan Sistem Akses Media Baca Digital / E-Reader Eksklusif dengan Proteksi Izin (Permission-Based Access Gate). Konten media hanya bisa dibaca oleh pembaca yang telah diberi izin resmi oleh Teh Umi.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/tehumi</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/tehumi')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptTehUmi()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET SISTEM E-READER:</span>
+                            <span class="fin-val">Rp 300.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">TAGIHAN DP KICKOFF:</span>
+                            <span class="fin-val" style="color: #f59e0b; font-weight:700;">Rp 100.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">SISA PELUNASAN (SELESAI):</span>
+                            <span class="fin-val" style="color: var(--text-muted);">Rp 200.000</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValTehumi">Rp 300.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('tehumi')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/tehumi" class="action-btn">
+                    <span>Buka invoice E-Reader Teh Umi</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2382,7 +2440,8 @@
             saudia: "UNPAID",
             ifdony: "UNPAID",
             ibrahim: "UNPAID",
-            kpi: "UNPAID"
+            kpi: "UNPAID",
+            tehumi: "DP"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2399,7 +2458,8 @@
 
         const defaultDpAmounts = {
             azhariyah: 3000000,
-            kpi: 6500000
+            kpi: 6500000,
+            tehumi: 100000
         };
 
         const defaultNetProfits = {
@@ -2419,7 +2479,8 @@
             saudia: 39600000,
             ifdony: 500000,
             ibrahim: 1100000,
-            kpi: 13000000
+            kpi: 13000000,
+            tehumi: 300000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2463,7 +2524,8 @@
             { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 },
             { id: "ifdony", name: "Ustadz Ifdony (Logo Azharuna)", month: "2026-09", monthLabel: "September 2026", gross: 500000 },
             { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 },
-            { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 13000000 }
+            { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 13000000 },
+            { id: "tehumi", name: "Teh Umi (Media Baca Terproteksi)", month: "2026-09", monthLabel: "September 2026", gross: 300000 }
         ];
 
         function formatIDR(num) {
@@ -3333,6 +3395,34 @@ Dokumen spesifikasi lengkap dapat diakses dan diunduh langsung dalam format PDF 
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA KPI PPMI MESIR BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptTehUmi() {
+            const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Teh Umi. 🙏✨
+
+Berikut tautan resmi Dokumen Penawaran & Invoice Sistem E-Reader / Media Baca Digital Terproteksi:
+
+🔗 Invoice Online: https://temantiket.com/tehumi
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Ruang Lingkup Sistem & Spesifikasi Fitur:
+1. Sistem Akses Berizin (Permission Gate): Media bacaan terkunci secara default. Hanya pembaca yang telah diberikan izin resmi (whitelisted/approval) oleh Teh Umi yang dapat membuka & membaca dokumen (mencegah link disebar sembarangan ke publik).
+2. Antarmuka Pembaca Bersih & Ramah Mata: E-reader nyaman bebas distraksi iklan, responsif optimal untuk HP (Android/iOS), tablet, dan laptop.
+3. Proteksi Salin-Tempel Dasar & Web App Ringan: Perlindungan konten teks dari copy-paste bebas, tanpa perlu instalasi aplikasi berat (langsung dibuka dari browser).
+
+💰 Total Nilai Kontrak Pengembangan: Rp 300.000
+💳 Termin 1 (DP Kickoff): Rp 100.000 [TAGIHAN AKTIF SEKARANG]
+💳 Termin 2 (Pelunasan): Rp 200.000 (Dibayarkan setelah uji coba sistem berizin & serah terima selesai)
+
+💳 Rekening Resmi: Bank Mandiri 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak Teh Umi! Semoga berkah dan bermanfaat luas untuk para pembaca. 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA TEH UMI BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

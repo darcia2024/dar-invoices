@@ -38,7 +38,13 @@ REWRITES = {
     "/ibrahim": "/ibrahim/index.html",
     "/visa-ibrahim": "/ibrahim/index.html",
     "/visa-entry": "/ibrahim/index.html",
-    "/visa-cairo": "/ibrahim/index.html"
+    "/visa-cairo": "/ibrahim/index.html",
+    "/kpi": "/kpi/index.html",
+    "/ppmi-kpi": "/kpi/index.html",
+    "/komisi-interaksi": "/kpi/index.html",
+    "/tehumi": "/tehumi/index.html",
+    "/teh-umi": "/tehumi/index.html",
+    "/ereader-tehumi": "/tehumi/index.html"
 }
 
 class InvoiceRequestHandler(http.server.SimpleHTTPRequestHandler):
