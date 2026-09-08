@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INVOICE #INV/KPI/2026/017 - Komisi Peduli Interaksi (KPI) PPMI Mesir</title>
+    <title>PENAWARAN &amp; INVOICE #INV/KPI/2026/017 - Ekosistem Digital KPI PPMI Mesir</title>
     <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -19,10 +19,11 @@
             --red-bright: #de2027;     /* Merah Aksen */
             --red-subtle: #fdf2f2;     /* Background Soft Red */
             --red-border: #fecaca;     /* Garis Border Merah Halus */
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
             --text-light: #94a3b8;
             --border-light: #e2e8f0;
+            --border-subtle: #cbd5e1;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
             --font-mono: 'Space Mono', monospace;
         }
@@ -38,7 +39,7 @@
             font-weight: 400;
             background-color: var(--bg-canvas);
             color: var(--text-dark);
-            line-height: 1.45;
+            line-height: 1.55;
             padding: 24px 16px;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
@@ -75,7 +76,7 @@
             border: 1px solid var(--border-light);
             border-top: 5px solid var(--red-primary);
             border-radius: 14px;
-            max-width: 460px;
+            max-width: 480px;
             width: 100%;
             padding: 34px 30px;
             text-align: center;
@@ -96,7 +97,7 @@
         }
 
         .cover-shield-icon {
-            width: 54px;
+            width: 52px;
             height: auto;
             margin: 0 auto 12px;
             display: block;
@@ -155,8 +156,8 @@
         }
 
         .cover-recipient-name {
-            font-size: 0.92rem;
-            font-weight: 700;
+            font-size: 0.95rem;
+            font-weight: 800;
             color: var(--text-dark);
         }
 
@@ -238,7 +239,7 @@
            TOP ACTION BAR
         ---------------------------------------------------- */
         .action-bar {
-            max-width: 960px;
+            max-width: 1040px;
             margin: 0 auto 20px auto;
             display: flex;
             justify-content: space-between;
@@ -261,7 +262,7 @@
 
         .action-title strong {
             color: var(--red-primary);
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .btn-group {
@@ -304,72 +305,70 @@
         }
 
         /* ----------------------------------------------------
-           DESKTOP / PRINT INVOICE PAPER
+           MAIN PROPOSAL & INVOICE CONTAINER (DESKTOP)
         ---------------------------------------------------- */
         .invoice-container {
-            max-width: 960px;
+            max-width: 1040px;
             margin: 0 auto;
             background: #ffffff;
             border: 1px solid var(--border-light);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            display: grid;
-            grid-template-columns: 80px 1fr;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
             overflow: hidden;
+            display: grid;
+            grid-template-columns: 60px 1fr;
         }
 
-        /* Red Accent Left Sidebar */
         .sidebar-left {
-            background: linear-gradient(180deg, var(--red-deep) 0%, var(--red-primary) 50%, var(--red-bright) 100%);
-            color: #ffffff;
+            background: var(--red-primary);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 32px 0;
-            user-select: none;
+            padding: 28px 0;
+            color: #ffffff;
+        }
+
+        .vertical-shield {
+            width: 28px;
+            height: auto;
         }
 
         .vertical-invoice-title {
             writing-mode: vertical-rl;
             transform: rotate(180deg);
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 800;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            opacity: 0.85;
-        }
-
-        .vertical-shield {
-            width: 32px;
-            height: auto;
+            opacity: 0.95;
+            white-space: nowrap;
         }
 
         .vertical-ref {
             writing-mode: vertical-rl;
             transform: rotate(180deg);
             font-family: var(--font-mono);
-            font-size: 0.62rem;
-            letter-spacing: 0.12em;
-            opacity: 0.7;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            white-space: nowrap;
         }
 
-        /* Main Panel Right */
         .main-panel {
-            padding: 36px 40px;
+            padding: 40px 48px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 28px;
         }
 
-        /* Top Header Row */
+        /* Header block */
         .invoice-header-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            border-bottom: 2px solid var(--red-primary);
-            padding-bottom: 22px;
-            margin-bottom: 22px;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 24px;
         }
 
         .brand-block {
@@ -388,16 +387,15 @@
             font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-dark);
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            letter-spacing: -0.01em;
+            line-height: 1.25;
         }
 
         .brand-sub {
-            font-size: 0.76rem;
-            font-weight: 600;
-            color: var(--red-primary);
-            letter-spacing: 0.02em;
-            margin-top: 3px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
         }
 
         .inv-badge-box {
@@ -409,7 +407,7 @@
             background: var(--red-subtle);
             color: var(--red-primary);
             border: 1px solid var(--red-border);
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -420,50 +418,50 @@
 
         .inv-ref-number {
             font-family: var(--font-mono);
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
             color: var(--text-dark);
         }
 
         .inv-date-text {
-            font-size: 0.74rem;
+            font-size: 0.76rem;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         /* Two-Column Metadata Box */
         .meta-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 24px;
             background: #fafafa;
             border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
-            font-size: 0.82rem;
+            border-radius: 10px;
+            padding: 20px 24px;
+            font-size: 0.84rem;
         }
 
         .meta-block-title {
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-size: 0.68rem;
+            font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--red-primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .meta-recipient-name {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--text-dark);
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .meta-recipient-sub {
             color: var(--text-muted);
-            font-size: 0.78rem;
-            margin-top: 2px;
+            font-size: 0.82rem;
+            margin-top: 4px;
+            line-height: 1.5;
         }
 
         .meta-table {
@@ -472,116 +470,157 @@
         }
 
         .meta-table td {
-            padding: 3px 0;
-            font-size: 0.78rem;
+            padding: 4px 0;
+            font-size: 0.82rem;
         }
 
         .meta-label {
             color: var(--text-muted);
-            width: 110px;
+            width: 140px;
         }
 
         .meta-value {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-dark);
             text-align: right;
         }
 
-        /* Deliverables & Line Items Table */
-        .invoice-table-wrapper {
-            margin-bottom: 24px;
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
         }
 
+        .section-num {
+            background: var(--red-primary);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+
+        .section-body {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Highlight Card for Total Offering */
+        .offering-summary-card {
+            background: linear-gradient(135deg, #fdf2f2 0%, #ffffff 100%);
+            border: 1.5px solid var(--red-border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-left-title {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--red-primary);
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .summary-left-desc {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .summary-right-total {
+            text-align: right;
+        }
+
+        .summary-total-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .summary-total-value {
+            font-family: var(--font-sans);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--red-primary);
+            letter-spacing: -0.02em;
+        }
+
+        /* Deliverables & Line Items Table */
         .table-custom {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.82rem;
+            font-size: 0.84rem;
+            margin-bottom: 18px;
         }
 
         .table-custom th {
             background-color: #fafafa;
             color: var(--text-dark);
-            font-size: 0.68rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 800;
             letter-spacing: 0.06em;
             text-transform: uppercase;
             text-align: left;
-            padding: 10px 12px;
+            padding: 10px 14px;
             border-top: 1px solid var(--border-light);
             border-bottom: 1px solid var(--border-light);
         }
 
         .table-custom td {
-            padding: 14px 12px;
+            padding: 14px 14px;
             border-bottom: 1px solid var(--border-light);
             vertical-align: top;
         }
 
-        .col-qty {
+        .col-phase {
+            width: 80px;
             text-align: center;
-            width: 70px;
-        }
-
-        .col-price {
-            text-align: right;
-            width: 130px;
-            font-family: var(--font-mono);
-        }
-
-        .col-subtotal {
-            text-align: right;
-            width: 140px;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .item-badge-tag {
-            display: inline-block;
-            font-size: 0.62rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--red-primary);
-            background: var(--red-subtle);
-            border: 1px solid var(--red-border);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-bottom: 4px;
         }
 
-        .item-title {
-            font-size: 0.9rem;
+        .col-scope {
+            /* flex */
+        }
+
+        .col-durasi {
+            width: 150px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .col-val {
+            text-align: right;
+            width: 170px;
+            font-family: var(--font-mono);
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 4px;
         }
 
-        .item-desc {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            line-height: 1.45;
-        }
-
-        .item-desc ul {
-            list-style: none;
-            padding-left: 0;
-            margin-top: 4px;
-        }
-
-        .item-desc li {
-            position: relative;
-            padding-left: 14px;
-            margin-bottom: 2px;
-        }
-
-        .item-desc li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--red-primary);
-            font-weight: bold;
-        }
-
-        /* Grand Total Highlight Row */
         .grand-total-row {
             background: var(--red-subtle);
             border-top: 2px solid var(--red-primary);
@@ -589,11 +628,11 @@
         }
 
         .grand-total-row td {
-            padding: 16px 12px;
+            padding: 16px 14px;
         }
 
         .grand-total-label {
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             font-weight: 800;
             color: var(--text-dark);
             text-transform: uppercase;
@@ -601,223 +640,320 @@
         }
 
         .grand-total-val {
-            font-family: var(--font-mono);
-            font-size: 1.25rem;
+            font-family: var(--font-sans);
+            font-size: 1.35rem;
             font-weight: 800;
             color: var(--red-primary);
             text-align: right;
-            white-space: nowrap;
         }
 
         .spelled-out-text {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--red-primary);
             text-align: right;
-            font-size: 0.75rem;
+            padding-top: 6px;
             font-style: italic;
-            color: var(--text-muted);
-            margin-top: 6px;
         }
 
-        /* Scope Cards Grid */
-        .scope-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .scope-card {
+        /* Scope Cards Detail */
+        .phase-card {
             background: #ffffff;
             border: 1px solid var(--border-light);
-            border-left: 3px solid var(--red-primary);
-            border-radius: 8px;
-            padding: 14px 16px;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            position: relative;
         }
 
-        .scope-card-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--red-primary);
+        .phase-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .phase-badge-title {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+        }
+
+        .phase-pill {
+            background: var(--red-subtle);
+            color: var(--red-primary);
+            border: 1px solid var(--red-border);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .phase-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .phase-price {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--red-primary);
+        }
+
+        .phase-list {
+            list-style: none;
+            padding-left: 0;
             margin-bottom: 8px;
         }
 
-        .scope-card-list {
-            list-style: none;
-            padding: 0;
+        .phase-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 6px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .phase-list li strong {
+            color: var(--text-dark);
+        }
+
+        .phase-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--red-primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .phase-note {
+            font-size: 0.75rem;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            line-height: 1.45;
+            border-left: 3px solid var(--border-subtle);
+        }
+
+        /* 4 Termin Payment Cards */
+        .termin-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .termin-card {
+            background: #fafafa;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 14px;
+            position: relative;
+        }
+
+        .termin-card.active-phase {
+            border-color: var(--red-primary);
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(196, 22, 28, 0.08);
+        }
+
+        .termin-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--red-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+
+        .termin-percent {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .termin-pemicu {
             font-size: 0.76rem;
             color: var(--text-muted);
             line-height: 1.45;
         }
 
-        .scope-card-list li {
-            margin-bottom: 4px;
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
+        /* Support & Third Party Box */
+        .two-col-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
         }
 
-        .scope-card-list li strong {
-            color: var(--text-dark);
-        }
-
-        /* Milestone Installments Box */
-        .milestone-box {
+        .info-panel {
             background: #fafafa;
             border: 1px solid var(--border-light);
             border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            padding: 16px 18px;
+            font-size: 0.8rem;
+            line-height: 1.55;
+            color: var(--text-muted);
         }
 
-        .milestone-header {
+        .info-panel-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--red-primary);
+            margin-bottom: 8px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            gap: 6px;
         }
 
-        .milestone-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+        .info-panel ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-panel li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 5px;
+        }
+
+        .info-panel li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
             color: var(--red-primary);
+            font-weight: bold;
         }
 
-        .milestone-badge {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            background: #f1f5f9;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .milestone-grid {
+        /* Signature block */
+        .signature-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-        }
-
-        .milestone-item {
-            background: #ffffff;
-            border: 1px solid var(--border-light);
-            border-radius: 6px;
-            padding: 10px 12px;
-        }
-
-        .milestone-item.active-step {
-            border-color: var(--red-primary);
-            background: var(--red-subtle);
-        }
-
-        .ms-label {
-            font-size: 0.66rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 3px;
-        }
-
-        .ms-amount {
-            font-family: var(--font-mono);
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--text-dark);
-        }
-
-        .ms-desc {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* Bottom Section Grid: Payments & Issuer */
-        .bottom-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
-            border-top: 1px solid var(--border-light);
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 16px;
             padding-top: 20px;
-            margin-bottom: 18px;
+            border-top: 1px solid var(--border-light);
         }
 
-        .bottom-title {
-            font-size: 0.68rem;
+        .sign-box {
+            background: #fafafa;
+            border: 1px dashed var(--border-subtle);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .sign-party {
+            font-size: 0.75rem;
             font-weight: 800;
-            letter-spacing: 0.06em;
             text-transform: uppercase;
+            letter-spacing: 0.06em;
             color: var(--red-primary);
+            margin-bottom: 14px;
+        }
+
+        .sign-row {
+            display: flex;
+            align-items: center;
+            font-size: 0.82rem;
+            margin-bottom: 10px;
+        }
+
+        .sign-label {
+            width: 100px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+
+        .sign-line {
+            flex-grow: 1;
+            border-bottom: 1px dotted var(--border-subtle);
+            height: 18px;
+        }
+
+        .sign-space {
+            height: 55px;
+            border-bottom: 1px solid #94a3b8;
+            margin-top: 10px;
             margin-bottom: 6px;
         }
 
+        /* Bottom Section: Payments & Issuer */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+            margin-top: 14px;
+        }
+
+        .bottom-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--red-primary);
+            margin-bottom: 8px;
+        }
+
         .bank-info-box {
-            font-size: 0.82rem;
-            color: var(--text-dark);
-            line-height: 1.5;
+            background: #ffffff;
+            border: 1.5px solid var(--red-border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-size: 0.84rem;
         }
 
         .bank-logo-row {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
+            gap: 10px;
+            margin-bottom: 8px;
         }
 
         .bank-logo-img {
-            height: 16px;
+            height: 24px;
             width: auto;
             object-fit: contain;
         }
 
         .copy-pill-btn {
-            background: #f1f5f9;
-            border: 1px solid var(--border-light);
-            color: var(--red-primary);
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 2px 7px;
+            background: var(--red-primary);
+            color: #ffffff;
+            border: none;
             border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 3px 10px;
             cursor: pointer;
-            margin-left: 6px;
-            transition: all 0.15s ease;
+            margin-left: 10px;
+            letter-spacing: 0.04em;
         }
 
         .copy-pill-btn:hover {
-            background: var(--red-primary);
-            color: #ffffff;
-            border-color: var(--red-primary);
+            background: var(--red-hover);
         }
 
         .issuer-box {
-            font-size: 0.8rem;
-            color: var(--text-dark);
-            line-height: 1.5;
-        }
-
-        /* Terms & Notes Section */
-        .terms-box {
             background: #fafafa;
             border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 14px 18px;
-            font-size: 0.74rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .terms-title {
-            font-size: 0.68rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-dark);
-            margin-bottom: 4px;
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-size: 0.82rem;
+            line-height: 1.55;
         }
 
         /* ----------------------------------------------------
@@ -840,7 +976,7 @@
 
             .mobile-invoice-view {
                 display: block;
-                max-width: 520px;
+                max-width: 540px;
                 margin: 0 auto;
             }
 
@@ -913,12 +1049,12 @@
             .mob-hero-header {
                 background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-primary) 100%);
                 color: #ffffff;
-                padding: 20px 18px;
+                padding: 22px 18px;
                 text-align: center;
             }
 
             .mob-hero-shield {
-                width: 38px;
+                width: 40px;
                 height: auto;
                 margin-bottom: 8px;
             }
@@ -927,7 +1063,7 @@
                 font-size: 0.68rem;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
-                opacity: 0.85;
+                opacity: 0.9;
                 margin-bottom: 2px;
             }
 
@@ -935,31 +1071,40 @@
                 font-size: 1.15rem;
                 font-weight: 800;
                 color: #ffffff;
-                margin-bottom: 12px;
+                margin-bottom: 14px;
                 line-height: 1.3;
             }
 
             .mob-hero-total-box {
-                background: rgba(255, 255, 255, 0.12);
-                border: 1px solid rgba(255, 255, 255, 0.25);
-                border-radius: 8px;
-                padding: 10px 14px;
+                background: rgba(255, 255, 255, 0.14);
+                border: 1px solid rgba(255, 255, 255, 0.28);
+                border-radius: 10px;
+                padding: 12px 16px;
                 display: inline-block;
+                width: 100%;
+                max-width: 320px;
             }
 
             .mob-hero-total-label {
                 font-size: 0.65rem;
                 text-transform: uppercase;
                 letter-spacing: 0.06em;
-                opacity: 0.9;
+                opacity: 0.92;
             }
 
             .mob-hero-total-amount {
-                font-family: var(--font-mono);
-                font-size: 1.45rem;
+                font-family: var(--font-sans);
+                font-size: 1.65rem;
                 font-weight: 800;
                 color: #ffffff;
                 letter-spacing: -0.02em;
+            }
+
+            .mob-hero-sub-kickoff {
+                font-size: 0.72rem;
+                color: #fef08a;
+                font-weight: 700;
+                margin-top: 4px;
             }
 
             .mob-body {
@@ -970,8 +1115,8 @@
             .mob-meta-row {
                 display: flex;
                 justify-content: space-between;
-                font-size: 0.78rem;
-                padding: 8px 0;
+                font-size: 0.8rem;
+                padding: 9px 0;
                 border-bottom: 1px dashed var(--border-light);
             }
 
@@ -984,19 +1129,18 @@
             }
 
             .mob-meta-val {
-                font-weight: 700;
+                font-weight: 800;
                 color: var(--text-dark);
                 text-align: right;
             }
 
-            /* Deliverable Cards in Mobile */
             .mob-sec-title {
-                font-size: 0.72rem;
+                font-size: 0.75rem;
                 font-weight: 800;
                 text-transform: uppercase;
                 letter-spacing: 0.06em;
                 color: var(--red-primary);
-                margin: 18px 0 10px 0;
+                margin: 20px 0 10px 0;
                 display: flex;
                 align-items: center;
                 gap: 6px;
@@ -1006,7 +1150,7 @@
                 background: #fafafa;
                 border: 1px solid var(--border-light);
                 border-radius: 8px;
-                padding: 12px 14px;
+                padding: 14px 14px;
                 margin-bottom: 10px;
             }
 
@@ -1014,11 +1158,11 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                margin-bottom: 6px;
+                margin-bottom: 8px;
             }
 
             .mob-item-title {
-                font-size: 0.84rem;
+                font-size: 0.86rem;
                 font-weight: 800;
                 color: var(--text-dark);
                 line-height: 1.3;
@@ -1026,8 +1170,8 @@
 
             .mob-item-price {
                 font-family: var(--font-mono);
-                font-size: 0.82rem;
-                font-weight: 700;
+                font-size: 0.85rem;
+                font-weight: 800;
                 color: var(--red-primary);
                 white-space: nowrap;
                 margin-left: 8px;
@@ -1036,7 +1180,7 @@
             .mob-item-bullets {
                 list-style: none;
                 padding: 0;
-                font-size: 0.74rem;
+                font-size: 0.76rem;
                 color: var(--text-muted);
                 line-height: 1.45;
             }
@@ -1044,7 +1188,7 @@
             .mob-item-bullets li {
                 position: relative;
                 padding-left: 12px;
-                margin-bottom: 3px;
+                margin-bottom: 4px;
             }
 
             .mob-item-bullets li::before {
@@ -1082,7 +1226,7 @@
 
             .mob-acc-num {
                 font-family: var(--font-mono);
-                font-size: 0.95rem;
+                font-size: 0.98rem;
                 font-weight: 800;
                 color: var(--text-dark);
             }
@@ -1136,7 +1280,7 @@
                 border: none !important;
                 max-width: 100% !important;
                 display: grid !important;
-                grid-template-columns: 60px 1fr !important;
+                grid-template-columns: 50px 1fr !important;
             }
 
             .sidebar-left {
@@ -1146,7 +1290,11 @@
             }
 
             .main-panel {
-                padding: 20px 24px !important;
+                padding: 24px 28px !important;
+            }
+
+            .phase-card, .meta-grid, .offering-summary-card, .termin-card, .sign-box {
+                page-break-inside: avoid;
             }
         }
     </style>
@@ -1160,7 +1308,7 @@
             <svg class="cover-shield-icon" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="kpiShieldCover" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stop-color="#E4232B"/>
+                        <stop offset="0" stop-color="#DE2027"/>
                         <stop offset="0.55" stop-color="#C4161C"/>
                         <stop offset="1" stop-color="#7C1417"/>
                     </linearGradient>
@@ -1172,17 +1320,17 @@
                 <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#fff"/>
             </svg>
 
-            <div class="classified-stamp">OFFICIAL INVOICE &bull; CLEARANCE LEVEL 1</div>
+            <div class="classified-stamp">OFFICIAL PROPOSAL &amp; INVOICE &bull; CLEARANCE LEVEL 1</div>
 
             <h1 class="cover-title">KOMISI PEDULI INTERAKSI (KPI)</h1>
             <div class="cover-subtitle">Dewan Pengurus PPMI Mesir &bull; Ekosistem Digital</div>
 
             <div class="cover-recipient-box">
                 <div class="cover-recipient-label">DITUJUKAN KEPADA // RECIPIENT:</div>
-                <div class="cover-recipient-name">Pengurus Komisi Peduli Interaksi (KPI)</div>
+                <div class="cover-recipient-name">Komisi Peduli Interaksi (KPI), PPMI Mesir</div>
                 <div class="cover-recipient-org">Lembaga: <strong>Dewan Pengurus PPMI Mesir</strong></div>
-                <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red-primary); margin-top: 4px;">
-                    REF: #INV/KPI/2026/017 &bull; Rp 13.000.000
+                <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--red-primary); margin-top: 6px; font-weight:700;">
+                    REF: #INV/KPI/2026/017 &bull; TOTAL Rp 375.000.000
                 </div>
             </div>
 
@@ -1202,9 +1350,9 @@
     <!-- TOP CONTROL ACTION BAR (DESKTOP) -->
     <div class="action-bar">
         <div class="action-title">
-            <span>INVOICE RESMI</span>
+            <span>DOKUMEN RESMI</span>
             <strong>#INV/KPI/2026/017</strong>
-            <span>&bull; Komisi Peduli Interaksi (KPI) PPMI Mesir</span>
+            <span>&bull; Penawaran Ekosistem Digital KPI PPMI Mesir (Rp 375.000.000)</span>
         </div>
         <div class="btn-group">
             <button class="btn btn-secondary" onclick="copyBankAcc()">
@@ -1234,294 +1382,565 @@
                 <circle cx="30" cy="20.5" r="3.8" fill="#c4161c"/>
                 <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#c4161c"/>
             </svg>
-            <div class="vertical-invoice-title">OFFICIAL INVOICE &bull; KPI PPMI MESIR</div>
+            <div class="vertical-invoice-title">PENAWARAN &amp; INVOICE &bull; KPI PPMI MESIR</div>
             <div class="vertical-ref">#INV/KPI/2026/017</div>
         </div>
 
         <!-- Main Panel Content -->
         <div class="main-panel">
+            
+            <!-- Top Header Row -->
+            <div class="invoice-header-row">
+                <div class="brand-block">
+                    <svg class="brand-logo-svg" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="kpiShieldMain" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0" stop-color="#DE2027"/>
+                                <stop offset="0.55" stop-color="#C4161C"/>
+                                <stop offset="1" stop-color="#7C1417"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#kpiShieldMain)"/>
+                        <circle cx="18" cy="15" r="5.4" fill="#fff"/>
+                        <path d="M18 21C11.5 21 8 26.5 8 33.5C8 39 11 43 15.5 45C14 40 14.5 34 16 29C17.2 25 19.5 22.5 22.5 21.8C21.3 21.3 19.8 21 18 21Z" fill="#fff"/>
+                        <circle cx="30" cy="20.5" r="3.8" fill="#fff"/>
+                        <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#fff"/>
+                    </svg>
+                    <div>
+                        <div class="brand-name">Penawaran Pengembangan Ekosistem Digital</div>
+                        <div class="brand-sub">Komisi Peduli Interaksi (KPI) &bull; Dewan Pengurus PPMI Mesir</div>
+                    </div>
+                </div>
+
+                <div class="inv-badge-box">
+                    <span class="inv-type-pill">DOKUMEN RESMI &amp; INVOICE</span>
+                    <div class="inv-ref-number">#INV/KPI/2026/017</div>
+                    <div class="inv-date-text">Tanggal: <strong>08 September 2026</strong></div>
+                </div>
+            </div>
+
+            <!-- Two-Column Metadata -->
+            <div class="meta-grid">
+                <div>
+                    <div class="meta-block-title">DITUJUKAN KEPADA // KLIEN:</div>
+                    <div class="meta-recipient-name">Komisi Peduli Interaksi (KPI), PPMI Mesir</div>
+                    <div class="meta-recipient-sub">
+                        Lembaga: <strong>PPMI Mesir</strong> (Persatuan Pelajar dan Mahasiswa Indonesia di Mesir)<br>
+                        Kairo, Republik Arab Mesir<br>
+                        Status: <strong>Draft untuk dibahas dan disetujui</strong>
+                    </div>
+                </div>
+                <div>
+                    <div class="meta-block-title">PENYEDIA &amp; PARAMETER PROYEK:</div>
+                    <table class="meta-table">
+                        <tr>
+                            <td class="meta-label">Penyedia:</td>
+                            <td class="meta-value">Dar Dev (Daru Fahmaa Muliawan)</td>
+                        </tr>
+                        <tr>
+                            <td class="meta-label">Masa Berlaku:</td>
+                            <td class="meta-value">30 Hari Kalender</td>
+                        </tr>
+                        <tr>
+                            <td class="meta-label">Acuan Kebutuhan:</td>
+                            <td class="meta-value">28 Keputusan Disetujui (08 Sep 2026)</td>
+                        </tr>
+                        <tr>
+                            <td class="meta-label">Target Durasi:</td>
+                            <td class="meta-value" style="color:var(--red-primary);">10 sampai 13 Bulan (4 Phase)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 1: TUJUAN PEKERJAAN -->
             <div>
-                <!-- Top Header Row -->
-                <div class="invoice-header-row">
-                    <div class="brand-block">
-                        <svg class="brand-logo-svg" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="kpiShieldMain" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0" stop-color="#DE2027"/>
-                                    <stop offset="0.55" stop-color="#C4161C"/>
-                                    <stop offset="1" stop-color="#7C1417"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#kpiShieldMain)"/>
-                            <circle cx="18" cy="15" r="5.4" fill="#fff"/>
-                            <path d="M18 21C11.5 21 8 26.5 8 33.5C8 39 11 43 15.5 45C14 40 14.5 34 16 29C17.2 25 19.5 22.5 22.5 21.8C21.3 21.3 19.8 21 18 21Z" fill="#fff"/>
-                            <circle cx="30" cy="20.5" r="3.8" fill="#fff"/>
-                            <path d="M30 24.5C25.5 24.5 23 28.5 23 33.5C23 37.5 25 40.5 28 42C27 38 27.3 33.5 28.5 30C29.4 27 31 25.4 33.2 24.9C32.3 24.6 31.2 24.5 30 24.5Z" fill="#fff"/>
-                        </svg>
+                <div class="section-header">
+                    <span class="section-num">1</span>
+                    <h2 class="section-title">Tujuan Pekerjaan</h2>
+                </div>
+                <div class="section-body">
+                    <p style="margin-bottom:8px;">
+                        <strong>Dar Dev</strong> akan membangun ekosistem digital KPI PPMI Mesir secara bertahap. Sistem terdiri dari website publik, portal internal pengurus, penyimpanan dokumen, pengelolaan tugas dan rapat, arsip lintas periode, serta layanan AI dengan batas akses yang ditetapkan KPI.
+                    </p>
+                    <p>
+                        Pekerjaan mengikuti dokumen kebutuhan KPI, rancangan UI/UX, dan <strong>28 keputusan</strong> yang telah disetujui KPI pada 8 September 2026. Fitur dikerjakan per phase agar setiap bagian dapat diuji dan diterima sebelum phase berikutnya dimulai.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 2: NILAI PENAWARAN -->
+            <div>
+                <div class="section-header">
+                    <span class="section-num">2</span>
+                    <h2 class="section-title">Nilai Penawaran</h2>
+                </div>
+                <div class="section-body">
+                    <div class="offering-summary-card">
                         <div>
-                            <div class="brand-name">Komisi Peduli Interaksi (KPI)</div>
-                            <div class="brand-sub">Dewan Pengurus PPMI Mesir &bull; Perancangan Ekosistem Digital</div>
+                            <div class="summary-left-title">NILAI TOTAL KONTRAK EKOSISTEM DIGITAL</div>
+                            <div class="summary-left-desc">Mencakup 4 Phase Pengembangan Menyeluruh, Pengujian &amp; Handover</div>
+                        </div>
+                        <div class="summary-right-total">
+                            <div class="summary-total-label">GRAND TOTAL NILAI PENAWARAN</div>
+                            <div class="summary-total-value">Rp 375.000.000</div>
                         </div>
                     </div>
+                    <p style="margin-bottom:14px; font-size:0.82rem;">
+                        Nilai tersebut mencakup analisis teknis, desain antarmuka, pengembangan frontend dan backend, database Supabase, pengujian, dokumentasi handover, serta masa stabilisasi setelah rilis tiap phase. Nilai ini belum termasuk PPN bila berlaku dan belum termasuk biaya layanan pihak ketiga.
+                    </p>
 
-                    <div class="inv-badge-box">
-                        <span class="inv-type-pill">TAGIHAN RESMI</span>
-                        <div class="inv-ref-number">#INV/KPI/2026/017</div>
-                        <div class="inv-date-text">Tanggal: 07 September 2026</div>
-                    </div>
-                </div>
-
-                <!-- Two-Column Metadata -->
-                <div class="meta-grid">
-                    <div>
-                        <div class="meta-block-title">DITUJUKAN KEPADA:</div>
-                        <div class="meta-recipient-name">Pengurus Komisi Peduli Interaksi (KPI)</div>
-                        <div class="meta-recipient-sub">
-                            Lembaga: <strong>PPMI Mesir</strong> (Persatuan Pelajar dan Mahasiswa Indonesia di Mesir)<br>
-                            Kairo, Republik Arab Mesir
-                        </div>
-                    </div>
-                    <div>
-                        <div class="meta-block-title">INFORMASI KONTRAK:</div>
-                        <table class="meta-table">
-                            <tr>
-                                <td class="meta-label">ID Proyek:</td>
-                                <td class="meta-value" style="font-family:var(--font-mono); color:var(--red-primary);">KPI-ECOSYSTEM-V1</td>
-                            </tr>
-                            <tr>
-                                <td class="meta-label">Ruang Lingkup:</td>
-                                <td class="meta-value">11 Modul &bull; 113 Layar &bull; F01–F09</td>
-                            </tr>
-                            <tr>
-                                <td class="meta-label">Acuan Standar:</td>
-                                <td class="meta-value">Apple HIG &amp; Tri-Pillar Tech</td>
-                            </tr>
-                            <tr>
-                                <td class="meta-label">Status Tagihan:</td>
-                                <td class="meta-value" style="color:var(--red-primary);">🔴 BELUM LUNAS</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Deliverables Table -->
-                <div class="invoice-table-wrapper">
+                    <!-- Table 4 Phase -->
                     <table class="table-custom">
                         <thead>
                             <tr>
-                                <th>DESKRIPSI RUANG LINGKUP PEKERJAAN &amp; DELIVERABLES</th>
-                                <th class="col-qty">QTY</th>
-                                <th class="col-price">HARGA</th>
-                                <th class="col-subtotal">SUBTOTAL</th>
+                                <th class="col-phase">PHASE</th>
+                                <th class="col-scope">LINGKUP UTAMA PEKERJAAN</th>
+                                <th class="col-durasi">ESTIMASI DURASI</th>
+                                <th class="col-val">NILAI INVESTASI</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- ITEM 1 -->
                             <tr>
+                                <td class="col-phase">Phase 1</td>
                                 <td>
-                                    <span class="item-badge-tag">MODUL 01 - 11</span>
-                                    <div class="item-title">Perancangan Arsitektur UI/UX &amp; Peta Sistem 113 Layar</div>
-                                    <div class="item-desc">
-                                        Riset komprehensif 27 dokumen sumber organisasi menjadi spesifikasi digital menyeluruh untuk seluruh unit:
-                                        <ul>
-                                            <li><strong>Cakupan 113 Layar:</strong> Portal Publik (P01–P15), Workspace Anggota (W01–W05), Task &amp; Evidence Tracker (T01–T11), Dokumen Terklasifikasi (F01–F06), Rapat &amp; Voting Tertutup (M01–M07), Layanan Aspirasi &amp; Tracking Rahasia Warga (S01–S06), CMS Redaksi 2 Bahasa ID/EN (C01–C07), Evaluasi Kinerja (E01–E03), Arsip &amp; Handover (H01–H03), Asisten AI Terkendali (I01–I03), dan Akun/MFA &amp; Audit Log (A01–A12).</li>
-                                            <li><strong>Kriteria Review Tanpa Celah:</strong> Penentuan batasan hak akses per peran (Ketua, Sekjend, Koordinator, Anggota, Tim Pengembang, dan Publik).</li>
-                                        </ul>
-                                    </div>
+                                    <strong style="color:var(--text-dark);">Website Publik dan CMS</strong>
+                                    <div style="font-size:0.76rem; color:var(--text-muted); margin-top:2px;">Bilingual ID/EN, Design System Apple HIG Merah-Putih, Aspirasi Publik &amp; Tracking</div>
                                 </td>
-                                <td class="col-qty">1 Paket</td>
-                                <td class="col-price">Rp 4.000.000</td>
-                                <td class="col-subtotal">Rp 4.000.000</td>
+                                <td class="col-durasi">6 sampai 8 minggu</td>
+                                <td class="col-val">Rp 55.000.000</td>
                             </tr>
-
-                            <!-- ITEM 2 -->
                             <tr>
+                                <td class="col-phase">Phase 2</td>
                                 <td>
-                                    <span class="item-badge-tag">DESIGN SYSTEM</span>
-                                    <div class="item-title">Sistem Desain Terpadu (Apple HIG Adapted) &amp; Antarmuka Responsif</div>
-                                    <div class="item-desc">
-                                        Adaptasi prinsip Apple Human Interface Guidelines berpadu dengan identitas Merah &amp; Putih PPMI Mesir:
-                                        <ul>
-                                            <li><strong>Palet Institusional Merah-Putih:</strong> Sistem token warna kontras tinggi WCAG 2.1 (Merah KPI #C4161C, Putih Bersih, Slate Netral) lengkap mode Terang &amp; Gelap.</li>
-                                            <li><strong>Komponen Antarmuka Lengkap:</strong> AppShell, Drawer, Data Table dengan sort/filter, Approval Panel, Classification Banner, dan PIN modal.</li>
-                                            <li><strong>Tata Letak Responsif Lintas Perangkat:</strong> Optimalisasi desktop widescreen (≥1024px), tablet (768–1023px), hingga layar smartphone compact (320–767px).</li>
-                                        </ul>
-                                    </div>
+                                    <strong style="color:var(--text-dark);">Portal MVP</strong>
+                                    <div style="font-size:0.76rem; color:var(--text-muted); margin-top:2px;">Login MFA, RBAC 5 Tingkat Rahasia, Task Management, Dokumen Dasar &amp; Audit Log</div>
                                 </td>
-                                <td class="col-qty">1 Paket</td>
-                                <td class="col-price">Rp 3.500.000</td>
-                                <td class="col-subtotal">Rp 3.500.000</td>
+                                <td class="col-durasi">12 sampai 16 minggu</td>
+                                <td class="col-val">Rp 135.000.000</td>
                             </tr>
-
-                            <!-- ITEM 3 -->
                             <tr>
+                                <td class="col-phase">Phase 3</td>
                                 <td>
-                                    <span class="item-badge-tag">ARCHITECTURE</span>
-                                    <div class="item-title">Tri-Pillar Technical Blueprint &amp; Paket Protokol Keamanan Data</div>
-                                    <div class="item-desc">
-                                        Spesifikasi teknis pembagian 3 pilar arsitektur dan kebijakan kerahasiaan data (Zero-Knowledge):
-                                        <ul>
-                                            <li><strong>3 Tim Pengerjaan:</strong> Tim Tampilan (Frontend UX), Tim Sistem (Backend State Machine &amp; Virus Quarantine), dan Tim Penyimpanan Data (PostgreSQL/Supabase Row-Level Security).</li>
-                                            <li><strong>Kerahasiaan Data Warga &amp; Organisasi:</strong> Pengembang bekerja dengan synthetic data, PIN rahasia hanya dipegang KPI, klasifikasi 4 tingkat (Umum, Terbatas, Rahasia, Sangat Rahasia), dan audit log permanen anti-tamper.</li>
-                                            <li><strong>Kemandirian Total:</strong> Repositori kode Git, hosting, dan domain 100% didaftarkan atas nama KPI PPMI Mesir (tanpa lock-in).</li>
-                                        </ul>
-                                    </div>
+                                    <strong style="color:var(--text-dark);">Operasional Lanjutan</strong>
+                                    <div style="font-size:0.76rem; color:var(--text-muted); margin-top:2px;">Rapat, Notulen &amp; Voting Rahasia, Form Builder, Pengaduan Internal, Handover &amp; Keuangan</div>
                                 </td>
-                                <td class="col-qty">1 Paket</td>
-                                <td class="col-price">Rp 3.000.000</td>
-                                <td class="col-subtotal">Rp 3.000.000</td>
+                                <td class="col-durasi">12 sampai 16 minggu</td>
+                                <td class="col-val">Rp 110.000.000</td>
                             </tr>
-
-                            <!-- ITEM 4 -->
                             <tr>
+                                <td class="col-phase">Phase 4</td>
                                 <td>
-                                    <span class="item-badge-tag">SHOWCASE REPO</span>
-                                    <div class="item-title">Dokumentasi Alur Kerja F01–F09 &amp; Repositori Prototipe Statis</div>
-                                    <div class="item-desc">
-                                        Perumusan alur interaktif end-to-end serta penyusunan repositori web statis siap uji:
-                                        <ul>
-                                            <li><strong>Alur Logika Inti:</strong> Login MFA, Lifecycle Tugas (Draf → Dikerjakan → Bukti → Review Selesai), Notulen Terkunci &amp; 1-Person-1-Vote Closed Ballot, Brankas Dokumen Rahasia, dan Tiket Pengaduan Anonim dengan Token Pelacakan.</li>
-                                            <li><strong>Aplikasi Showcase:</strong> Katalog navigasi 113 layar, 15 tampilan contoh (wireframes), kamus tabel data, dan penyesuaian zona waktu resmi Kairo (EET).</li>
-                                        </ul>
-                                    </div>
+                                    <strong style="color:var(--text-dark);">AI, Hardening, UAT, dan Handover</strong>
+                                    <div style="font-size:0.76rem; color:var(--text-muted); margin-top:2px;">AI Assistant Terkendali (Klasifikasi Umum &amp; Internal), Testing, Security &amp; Serah Terima</div>
                                 </td>
-                                <td class="col-qty">1 Paket</td>
-                                <td class="col-price">Rp 2.500.000</td>
-                                <td class="col-subtotal">Rp 2.500.000</td>
+                                <td class="col-durasi">8 sampai 12 minggu</td>
+                                <td class="col-val">Rp 75.000.000</td>
                             </tr>
-
-                            <!-- GRAND TOTAL ROW -->
                             <tr class="grand-total-row">
                                 <td colspan="3" class="grand-total-label">
-                                    TOTAL KONTRAK // GRAND TOTAL TAGIHAN
+                                    TOTAL KESELURUHAN (4 PHASE &bull; 10–13 BULAN)
                                 </td>
                                 <td class="grand-total-val">
-                                    Rp 13.000.000
+                                    Rp 375.000.000
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="spelled-out-text">
-                        // Terbilang: Tiga Belas Juta Rupiah //
+                        // Terbilang: Tiga Ratus Tujuh Puluh Lima Juta Rupiah //
                     </div>
                 </div>
-
-                <!-- Scope Cards Grid -->
-                <div class="scope-grid">
-                    <div class="scope-card">
-                        <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>
-                            <span>113 LAYAR &bull; 11 MODUL</span>
-                        </div>
-                        <ul class="scope-card-list">
-                            <li><strong>Struktur Lengkap:</strong> Dari portal publik P01–P15 hingga audit keamanan A01–A12.</li>
-                            <li><strong>Kendali Manusia:</strong> Tidak ada aksi otomatis AI tanpa konfirmasi peninjau.</li>
-                            <li><strong>Multi-Bahasa:</strong> Redaksi publik bilingual (Indonesia &amp; Inggris) terpisah.</li>
-                        </ul>
-                    </div>
-
-                    <div class="scope-card">
-                        <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"/></svg>
-                            <span>DESAIN MERAH-PUTIH &bull; APPLE HIG</span>
-                        </div>
-                        <ul class="scope-card-list">
-                            <li><strong>Warna Institusi:</strong> Nuansa Merah Resmi KPI (#C4161C) dan Putih Bersih.</li>
-                            <li><strong>Aksesibilitas WCAG:</strong> Kontras teks tinggi, navigasi ramah keyboard &amp; screen reader.</li>
-                            <li><strong>Mobile Friendly:</strong> Tampilan rapi pada layar 320px tanpa overflow horizontal.</li>
-                        </ul>
-                    </div>
-
-                    <div class="scope-card">
-                        <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-                            <span>KERAHASIAAN DATA &bull; ZERO KNOWLEDGE</span>
-                        </div>
-                        <ul class="scope-card-list">
-                            <li><strong>Batas Pengembang:</strong> Pengembang bukan anggota &amp; tidak memegang akun pengurus.</li>
-                            <li><strong>Kunci PIN di KPI:</strong> Dokumen rahasia hanya dibuka oleh PIN yang disimpan KPI.</li>
-                            <li><strong>Catatan Permanen:</strong> Rekaman audit log anti-tamper tidak dapat diubah siapa pun.</li>
-                        </ul>
-                    </div>
-
-                    <div class="scope-card">
-                        <div class="scope-card-title">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            <span>TRI-PILLAR ARCHITECTURE</span>
-                        </div>
-                        <ul class="scope-card-list">
-                            <li><strong>Tim Tampilan:</strong> Frontend UI/UX, state recovery, responsive shell.</li>
-                            <li><strong>Tim Sistem:</strong> Backend state machine, rule validasi, file quarantine.</li>
-                            <li><strong>Tim Penyimpanan:</strong> Row-Level Security Supabase/PostgreSQL &amp; enkripsi.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Milestone Payment Schedule -->
-                <div class="milestone-box">
-                    <div class="milestone-header">
-                        <div class="milestone-title">OPSI TERMIN PEMBAYARAN BERTAHAP (3 TAHAP SPRINT)</div>
-                        <div class="milestone-badge">Atau Pembayaran Penuh Sekaligus (Rp 13.000.000)</div>
-                    </div>
-                    <div class="milestone-grid">
-                        <div class="milestone-item active-step">
-                            <div class="ms-label">Termin 1 (DP 50% Kickoff)</div>
-                            <div class="ms-amount">Rp 6.500.000</div>
-                            <div class="ms-desc">Kickoff proyek, konsolidasi 27 dokumen sumber, &amp; fondasi UX0–UX2.</div>
-                        </div>
-                        <div class="milestone-item">
-                            <div class="ms-label">Termin 2 (30% Arsitektur)</div>
-                            <div class="ms-amount">Rp 3.900.000</div>
-                            <div class="ms-desc">Spesifikasi 113 layar UX3–UX7 &amp; blueprint teknis 3 pilar sistem.</div>
-                        </div>
-                        <div class="milestone-item">
-                            <div class="ms-label">Termin 3 (Pelunasan 20%)</div>
-                            <div class="ms-amount">Rp 2.600.000</div>
-                            <div class="ms-desc">Showcase alur F01–F09, pengujian UX8 &amp; serah terima aset digital.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bottom Section: Payments & Issuer -->
-                <div class="bottom-grid">
-                    <div>
-                        <div class="bottom-title">REKENING PEMBAYARAN RESMI</div>
-                        <div class="bank-info-box">
-                            <div class="bank-logo-row">
-                                <img src="/mandiri_logo.webp" alt="Bank Mandiri Logo" class="bank-logo-img">
-                                <strong style="color:var(--text-dark); font-size:0.92rem;">Bank Mandiri</strong>
-                            </div>
-                            <div style="color:var(--text-muted); margin-bottom:2px;">
-                                Atas Nama: <strong style="color:var(--text-dark);">Daru Fahmaa Muliawan</strong>
-                            </div>
-                            <div style="display:flex; align-items:center;">
-                                <span>No. Rekening: <strong style="font-family:var(--font-mono); color:var(--text-dark); font-size:0.92rem;">1550010616962</strong></span>
-                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="bottom-title">PENERBIT &amp; KONSULTAN TEKNIS</div>
-                        <div class="issuer-box">
-                            <strong style="color:var(--text-dark); font-size:0.9rem;">Daru Fahmaa Muliawan (Dar Dev)</strong><br>
-                            <span style="color:var(--red-primary); font-weight:600;">Web Developer &amp; Digital Ecosystem Architect</span><br>
-                            <span style="color:var(--text-muted);">WhatsApp: 081311506025</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Terms & Conditions -->
-                <div class="terms-box">
-                    <div class="terms-title">SYARAT &amp; KETENTUAN PENGERJAAN EKOSISTEM DIGITAL</div>
-                    <div>
-                        • <strong>Kerahasiaan Penuh:</strong> Seluruh data, alur kerja, dan dokumen internal KPI PPMI Mesir terikat pada pakta kerahasiaan dan batas akses pengembang yang tidak dapat dipindahtangankan.<br>
-                        • <strong>Kepemilikan Aset:</strong> Seluruh kode sumber, desain UI/UX, dan dokumentasi arsitektur menjadi hak milik organisasi KPI PPMI Mesir secara penuh.<br>
-                        • <strong>Konfirmasi Transfer:</strong> Bukti transfer termin atau pelunasan dapat dikirimkan langsung melalui WhatsApp konfirmasi resmi.
-                    </div>
-                </div>
-
             </div>
+
+            <!-- SECTION 3: RINCIAN LINGKUP PEKERJAAN -->
+            <div>
+                <div class="section-header">
+                    <span class="section-num">3</span>
+                    <h2 class="section-title">Lingkup Pekerjaan Menyeluruh</h2>
+                </div>
+
+                <!-- Phase 1 Card -->
+                <div class="phase-card">
+                    <div class="phase-card-head">
+                        <div class="phase-badge-title">
+                            <span class="phase-pill">PHASE 1</span>
+                            <span class="phase-title">Website Publik dan CMS</span>
+                        </div>
+                        <div class="phase-price">Rp 55.000.000</div>
+                    </div>
+                    <ul class="phase-list">
+                        <li><strong>Halaman &amp; Arsitektur Publik:</strong> Beranda, Tentang KPI, struktur organisasi publik, profil divisi, program dan kegiatan, publikasi, repository, statistik publik, transparansi, serta layanan resmi.</li>
+                        <li><strong>Dua Bahasa (Bilingual):</strong> Website publik bahasa Indonesia dan Inggris dengan kepatuhan aturan fallback yang disepakati.</li>
+                        <li><strong>CMS Editorial Terstruktur:</strong> Alur pembuatan konten dengan tahapan draf, peninjauan (review), persetujuan (approval), penerbitan (publish), hingga pengarsipan (archive).</li>
+                        <li><strong>Pengelolaan Konten &amp; SEO:</strong> Publikasi, metadata, repository file, media library, data/statistik publik, optimasi SEO dasar, sitemap otomatis, serta link pratinjau privat (private preview).</li>
+                        <li><strong>Aspirasi &amp; Aduan Warga:</strong> Formulir aspirasi/pengaduan publik terintegrasi pelacakan status dengan token/kode unik rahasia.</li>
+                        <li><strong>Design System Apple HIG Adapted:</strong> Standar desain visual modern bernuansa Merah (#C4161C) dan Putih Bersih, responsif penuh dari desktop hingga layar ponsel.</li>
+                    </ul>
+                    <div class="phase-note">
+                        <em>Catatan Batasan:</em> Tidak termasuk penulisan artikel, terjemahan profesional, foto, video, logo, maupun data statistik resmi. KPI menyediakan atau menyetujui seluruh konten publik sebelum diterbitkan.
+                    </div>
+                </div>
+
+                <!-- Phase 2 Card -->
+                <div class="phase-card">
+                    <div class="phase-card-head">
+                        <div class="phase-badge-title">
+                            <span class="phase-pill">PHASE 2</span>
+                            <span class="phase-title">Portal MVP Pengurus</span>
+                        </div>
+                        <div class="phase-price">Rp 135.000.000</div>
+                    </div>
+                    <ul class="phase-list">
+                        <li><strong>Autentikasi &amp; Keamanan Sesi:</strong> Login aman, Multi-Factor Authentication (MFA) via aplikasi authenticator (TOTP), alur pemulihan akun terverifikasi, manajemen sesi aktif, dan fitur logout paksa seluruh perangkat.</li>
+                        <li><strong>Manajemen Identitas &amp; Organisasi:</strong> Struktur pengguna, jabatan, divisi, periode kepengurusan, status keanggotaan, konfigurasi role (RBAC), dan matriks perizinan spesifik.</li>
+                        <li><strong>Hierarki 5 Tingkat Kerahasiaan:</strong> Kontrol akses ketat berbasis jabatan, divisi, periode aktif, jenis resource, serta klasifikasi dokumen organisasi.</li>
+                        <li><strong>Pusat Kendali Pengurus:</strong> Dashboard terpadu, My Workspace, Action Required (daftar tugas mendesak), pusat notifikasi, pencarian cepat internal, serta konteks filter periode aktif.</li>
+                        <li><strong>Sistem Manajemen Tugas (Task Lifecycle):</strong> Pembuatan tugas, assignment, monitoring progress, penandaan hambatan (blocker), lampiran bukti kerja, alur review &amp; revisi, deadline, peringatan overdue, pengajuan perpanjangan waktu (extension), transfer tugas, subtasks, task dependency, template tugas, tugas berulang (recurring), kalkulasi beban kerja (workload), serta arsip dan riwayat penugasan.</li>
+                        <li><strong>Pengelolaan Dokumen Dasar:</strong> Upload bukti dan dokumen kerja dengan validasi file (maksimal 25 MB), pemblokiran file biner/program berisiko, status pemeriksaan, versioning dokumen, klasifikasi akses, unduh terkontrol, serta pencatatan log akses sensitif.</li>
+                        <li><strong>Audit Log Permanen:</strong> Security events dan pencatatan audit log anti-tamper untuk seluruh aktivitas penting pengurus.</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 3 Card -->
+                <div class="phase-card">
+                    <div class="phase-card-head">
+                        <div class="phase-badge-title">
+                            <span class="phase-pill">PHASE 3</span>
+                            <span class="phase-title">Operasional Lanjutan &amp; Tata Kelola</span>
+                        </div>
+                        <div class="phase-price">Rp 110.000.000</div>
+                    </div>
+                    <ul class="phase-list">
+                        <li><strong>Modul Rapat &amp; Voting Tertutup:</strong> Manajemen agenda rapat, kalender terintegrasi, pencatatan presensi kehadiran, notulen rapat ber-versi dengan tanda tangan digital pengunci, rekaman keputusan resmi, voting rahasia 1-person-1-vote (closed ballot), dan konversi hasil rapat otomatis menjadi penugasan (actionable tasks).</li>
+                        <li><strong>Brankas Dokumen Lanjutan:</strong> Berbagi dokumen (sharing), pemberian izin akses sementara (temporary access grant), link berbagi berbatas waktu kedaluwarsa (expiry), pencabutan izin (revoke) seketika, watermark dinamis sesuai kebijakan kerahasiaan, serta fitur arsip dan pemulihan (restore).</li>
+                        <li><strong>Pusat Pengetahuan (Knowledge Base):</strong> Taksonomi repositori, sitasi sumber terverifikasi, alur review dokumen pengetahuan, pelacakan versi, arsip pengetahuan, dan pencarian cerdas sesuai hak akses.</li>
+                        <li><strong>Form Builder &amp; Workflow Dinamis:</strong> Pembangun formulir kustom untuk kebutuhan internal organisasi lengkap dengan alur persetujuan submission bertingkat.</li>
+                        <li><strong>Pengaduan Internal Tertutup:</strong> Sistem triage, penugasan investigator, catatan rahasia internal, update status aman kepada pelapor, penutupan kasus, dan pengarsipan terisolasi.</li>
+                        <li><strong>Komunikasi &amp; Buku Kontak Lembaga:</strong> Saluran pengumuman resmi internal dan direktori kontak lembaga mitra dengan pembatasan visibilitas data yang disepakati.</li>
+                        <li><strong>Laporan Kinerja Pengurus:</strong> Pelacakan metrik kinerja divisi dan personal dengan formula dan bobot resmi yang dapat ditelusuri riwayat perhitungannya.</li>
+                        <li><strong>Transisi &amp; Serah Terima Kepengurusan:</strong> Arsip komprehensif penutupan periode, rekapitulasi daftar outstanding tugas, serta modul penerimaan resmi (acceptance) oleh kepengurusan periode baru.</li>
+                        <li><strong>Modul Keuangan Organisasi:</strong> Penetapan periode anggaran, dukungan mata uang utama, pengajuan dana, approval bertingkat berjenjang, validasi bukti transaksi, masking rekening sensitif, pencocokan data kas, dan modul audit internal.</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 4 Card -->
+                <div class="phase-card">
+                    <div class="phase-card-head">
+                        <div class="phase-badge-title">
+                            <span class="phase-pill">PHASE 4</span>
+                            <span class="phase-title">AI Terkendali, Hardening, UAT &amp; Handover</span>
+                        </div>
+                        <div class="phase-price">Rp 75.000.000</div>
+                    </div>
+                    <ul class="phase-list">
+                        <li><strong>AI Assistant Terproteksi:</strong> Layanan asisten cerdas yang dibatasi hanya untuk mengakses dokumen berklasifikasi Umum dan Internal (tidak memiliki akses ke dokumen Rahasia/Sangat Rahasia).</li>
+                        <li><strong>Sitasi Ketat &amp; Etika AI:</strong> Pencantuman sitasi sumber dokumen rujukan secara transparan, pembatasan retrieval berbasis hak akses pengguna, serta pemisahan tegas antara fakta dokumen, analisis sistem, dan rekomendasi AI.</li>
+                        <li><strong>Human-in-the-Loop Protocol:</strong> AI dirancang untuk menyiapkan draf tindakan, wajib melalui peninjauan dan konfirmasi manual manusia, verifikasi ulang perizinan, dan pencatatan audit log sebelum tindakan dieksekusi.</li>
+                        <li><strong>Deteksi Anomali Transaksi:</strong> AI dapat memberi penanda (flag) terhadap transaksi yang membutuhkan peninjauan khusus manusia tanpa memberikan kesimpulan pelanggaran sepihak.</li>
+                        <li><strong>Uji Kelayakan Komprehensif (UAT):</strong> Pengujian menyeluruh meliputi otorisasi role, alur kerja sistem, hak akses dokumen, pembatas tegas publik-internal, mitigasi kebocoran data AI (anti-leakage), pengujian antarmuka ponsel pintar, aksesibilitas, serta pendampingan UAT bersama KPI.</li>
+                        <li><strong>Hardening Keamanan &amp; Serah Terima:</strong> Penguatan proteksi infrastruktur, simulasi prosedur pencadangan dan pemulihan data (backup/restore), dokumentasi arsitektur teknis, dokumentasi panduan admin, panduan operasional pengguna, dan serah terima kepemilikan aset secara tuntas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SECTION 4: DELIVERABLE SETIAP PHASE -->
+            <div>
+                <div class="section-header">
+                    <span class="section-num">4</span>
+                    <h2 class="section-title">Deliverable Setiap Phase</h2>
+                </div>
+                <div class="section-body">
+                    <p style="margin-bottom:8px;">Setiap phase pengembangan secara konsisten menghasilkan output resmi sebagai berikut:</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:6px; font-size:0.8rem;">
+                            <strong>• Desain &amp; Alur Disetujui:</strong> Desain layar antarmuka dan alur pengguna tervalidasi.
+                        </div>
+                        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:6px; font-size:0.8rem;">
+                            <strong>• Repositori Source Code:</strong> Kode sumber bersih dikelola di repositori Git resmi yang disepakati.
+                        </div>
+                        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:6px; font-size:0.8rem;">
+                            <strong>• Database Migration &amp; Env:</strong> Skrip migrasi skema Supabase dan dokumentasi konfigurasi environment.
+                        </div>
+                        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:6px; font-size:0.8rem;">
+                            <strong>• Kontrak API &amp; Matriks Izin:</strong> Spesifikasi endpoint, integrasi data, dan hak perizinan role.
+                        </div>
+                        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:6px; font-size:0.8rem;">
+                            <strong>• Skenario UAT &amp; Laporan Uji:</strong> Lembar skenario pengujian dan berita acara penerimaan UAT per phase.
+                        </div>
+                        <div style="background:#fafafa; border:1px solid var(--border-light); padding:10px 14px; border-radius:6px; font-size:0.8rem;">
+                            <strong>• Dokumentasi &amp; Deployment:</strong> Panduan teknis/admin, rilis ke staging, lalu ke production pasca persetujuan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: JADWAL INDIKATIF -->
+            <div>
+                <div class="section-header">
+                    <span class="section-num">5</span>
+                    <h2 class="section-title">Jadwal Indikatif Pelaksanaan</h2>
+                </div>
+                <div class="section-body">
+                    <p style="margin-bottom:12px;">
+                        Jadwal bergantung pada kecepatan KPI memberi konten, keputusan, akses layanan pihak ketiga, dan hasil UAT. Estimasi durasi kerja efektif setelah kickoff:
+                    </p>
+                    <table class="table-custom" style="margin-bottom:8px;">
+                        <thead>
+                            <tr>
+                                <th style="width:120px;">PHASE</th>
+                                <th>RUANG LINGKUP TAHAPAN</th>
+                                <th style="width:200px; text-align:right;">ESTIMASI WAKTU KERJA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Phase 1</strong></td>
+                                <td>Website Publik &amp; Content Management System (CMS)</td>
+                                <td style="text-align:right; font-weight:700;">6 sampai 8 minggu</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phase 2</strong></td>
+                                <td>Portal Pengurus MVP, Task Tracker &amp; Dokumen Kerja</td>
+                                <td style="text-align:right; font-weight:700;">12 sampai 16 minggu</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phase 3</strong></td>
+                                <td>Operasional Lanjutan, Voting, Knowledge Base &amp; Modul Keuangan</td>
+                                <td style="text-align:right; font-weight:700;">12 sampai 16 minggu</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phase 4</strong></td>
+                                <td>Integrasi AI Terkendali, Hardening, Pengujian &amp; Handover</td>
+                                <td style="text-align:right; font-weight:700;">8 sampai 12 minggu</td>
+                            </tr>
+                            <tr style="background:#fafafa;">
+                                <td colspan="2"><strong>ESTIMASI TOTAL KONTRAK KESELURUHAN</strong></td>
+                                <td style="text-align:right; font-weight:800; color:var(--red-primary);">10 sampai 13 Bulan</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size:0.78rem; color:#64748b;">
+                        * Jadwal final dibuat saat kickoff, setelah KPI menunjuk PIC yang dapat menerima atau memberi revisi atas setiap deliverable.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 6: TERMIN PEMBAYARAN -->
+            <div>
+                <div class="section-header">
+                    <span class="section-num">6</span>
+                    <h2 class="section-title">Termin Pembayaran Bertahap</h2>
+                </div>
+                <div class="section-body">
+                    <p style="margin-bottom:10px;">
+                        Pembayaran dilakukan secara aman dan bertahap pada setiap phase dengan pola persentase terukur:
+                    </p>
+                    <div class="termin-grid">
+                        <div class="termin-card active-phase">
+                            <div class="termin-tag">TERMIN 1 &bull; KICKOFF</div>
+                            <div class="termin-percent">30%</div>
+                            <div class="termin-pemicu">Kontrak phase ditandatangani dan pekerjaan resmi dimulai.</div>
+                        </div>
+                        <div class="termin-card">
+                            <div class="termin-tag">TERMIN 2 &bull; DEMO</div>
+                            <div class="termin-percent">40%</div>
+                            <div class="termin-pemicu">Demo lingkungan staging berhasil memenuhi lingkup utama phase.</div>
+                        </div>
+                        <div class="termin-card">
+                            <div class="termin-tag">TERMIN 3 &bull; UAT</div>
+                            <div class="termin-percent">20%</div>
+                            <div class="termin-pemicu">UAT phase diterima KPI atau perbaikan UAT kritis dinyatakan tuntas.</div>
+                        </div>
+                        <div class="termin-card">
+                            <div class="termin-tag">TERMIN 4 &bull; RILIS</div>
+                            <div class="termin-percent">10%</div>
+                            <div class="termin-pemicu">Rilis production, handover aset digital, dan masa stabilisasi selesai.</div>
+                        </div>
+                    </div>
+                    <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:8px; padding:12px 16px; margin-top:12px; font-size:0.8rem; line-height:1.5;">
+                        <strong style="color:var(--text-dark);">Simulasi Pembayaran Phase 1 (Nilai Rp 55.000.000):</strong><br>
+                        • <strong>Termin 1 (DP Kickoff 30%):</strong> Rp 16.500.000<br>
+                        • <strong>Termin 2 (Demo Staging 40%):</strong> Rp 22.000.000<br>
+                        • <strong>Termin 3 (Penerimaan UAT 20%):</strong> Rp 11.000.000<br>
+                        • <strong>Termin 4 (Rilis &amp; Handover 10%):</strong> Rp 5.500.000<br>
+                        <span style="font-size:0.75rem; color:var(--text-muted);">* Pembayaran phase berikutnya dimulai setelah phase sebelumnya diterima dan termin yang jatuh tempo dibayarkan.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 7 & 8: STABILISASI, SUPPORT & THIRD-PARTY -->
+            <div>
+                <div class="two-col-box">
+                    <!-- Stabilisasi & Support -->
+                    <div class="info-panel">
+                        <div class="info-panel-title">
+                            <span class="section-num" style="width:18px; height:18px; font-size:0.65rem;">7</span>
+                            <span>Masa Stabilisasi &amp; Support</span>
+                        </div>
+                        <p style="margin-bottom:8px;">
+                            Setiap phase mencakup <strong>30 hari kalender masa stabilisasi</strong> setelah rilis production tanpa biaya tambahan (perbaikan defect yang menyimpang dari scope).
+                        </p>
+                        <div style="font-size:0.78rem; font-weight:700; color:var(--text-dark); margin-bottom:4px;">
+                            Layanan Dukungan Operasional Lanjutan (Opsional):
+                        </div>
+                        <ul>
+                            <li><strong>Maintenance Standar:</strong> Rp 5.000.000 per bulan (maksimal 12 jam kerja per bulan).</li>
+                            <li><strong>Pekerjaan Tambahan:</strong> Rp 500.000 per jam untuk penyesuaian di luar kuota retainer.</li>
+                        </ul>
+                        <div style="font-size:0.72rem; color:#64748b; margin-top:6px;">
+                            * Maintenance tidak termasuk biaya langganan provider dan tidak mencakup fitur baru yang mengubah scope (fitur baru diajukan via Change Request).
+                        </div>
+                    </div>
+
+                    <!-- Biaya Pihak Ketiga -->
+                    <div class="info-panel">
+                        <div class="info-panel-title">
+                            <span class="section-num" style="width:18px; height:18px; font-size:0.65rem;">8</span>
+                            <span>Biaya Layanan Pihak Ketiga</span>
+                        </div>
+                        <p style="margin-bottom:8px;">
+                            KPI membayar langsung atau mengganti biaya aktual layanan infrastruktur pihak ketiga sesuai paket yang dipilih:
+                        </p>
+                        <ul>
+                            <li>Registrasi Nama Domain &amp; Konfigurasi DNS.</li>
+                            <li>Hosting Frontend &amp; API (misal Vercel / Dedicated Server).</li>
+                            <li>Database Supabase, Cloud Storage, dan Add-on Keamanan.</li>
+                            <li>Layanan Provider Email Transaksional &amp; WhatsApp Resmi.</li>
+                            <li>Konsumsi API Model AI (OpenAI / Claude / lainnya).</li>
+                            <li>Layanan Monitoring, Error Tracking &amp; Hardening.</li>
+                        </ul>
+                        <div style="font-size:0.72rem; color:#64748b; margin-top:6px;">
+                            * Dar Dev akan memberikan rekomendasi spesifikasi paling efisien sebelum akun dan layanan diaktifkan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 9, 10 & 11: TANGGUNG JAWAB, CR & BATAS PEKERJAAN -->
+            <div>
+                <div class="two-col-box">
+                    <!-- Tanggung Jawab KPI -->
+                    <div class="info-panel">
+                        <div class="info-panel-title">
+                            <span class="section-num" style="width:18px; height:18px; font-size:0.65rem;">9</span>
+                            <span>Tanggung Jawab KPI</span>
+                        </div>
+                        <ul>
+                            <li>Menunjuk PIC Produk dan PIC Keputusan Resmi organisasi.</li>
+                            <li>Menyediakan struktur organisasi, nama pejabat, dan hierarki approver.</li>
+                            <li>Menyediakan konten publik, logo, warna resmi, aset foto, dan dokumen.</li>
+                            <li>Menetapkan parameter spesifik (nominal keuangan, formula evaluasi kinerja, retensi data, masa sesi akun, dan SLA pengaduan).</li>
+                            <li>Memberikan akses administratif (domain, hosting, Supabase, AI).</li>
+                            <li>Melakukan pengujian UAT dan penerimaan deliverable tepat waktu.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Batas Pekerjaan & Change Request -->
+                    <div class="info-panel">
+                        <div class="info-panel-title">
+                            <span class="section-num" style="width:18px; height:18px; font-size:0.65rem;">10</span>
+                            <span>Change Request &amp; Batasan</span>
+                        </div>
+                        <p style="margin-bottom:6px;">
+                            <strong>Prosedur Change Request:</strong> Penambahan modul, role, bahasa, atau integrasi baru di luar proposal diproses tertulis dengan penyesuaian biaya dan jadwal.
+                        </p>
+                        <p style="font-size:0.76rem; font-weight:700; color:var(--text-dark); margin-bottom:4px;">
+                            Proposal ini tidak mencakup:
+                        </p>
+                        <ul>
+                            <li>Aplikasi native Android atau iOS (sistem berupa web app responsif).</li>
+                            <li>Integrasi tak terdaftar (Payment Gateway, Kalender Eksternal, CRM).</li>
+                            <li>Migrasi massal data arsip kotor tanpa pembersihan format.</li>
+                            <li>Layanan audit hukum, translasi tersumpah, atau konten substantif.</li>
+                            <li>SLA on-call 24/7 di luar kesepakatan retainer tersendiri.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 12: PENERIMAAN PROPOSAL & TANDA TANGAN -->
+            <div>
+                <div class="section-header">
+                    <span class="section-num">12</span>
+                    <h2 class="section-title">Lembar Penerimaan &amp; Pengesahan Dokumen</h2>
+                </div>
+                <div class="section-body">
+                    <p style="margin-bottom:12px;">
+                        Dengan menyetujui dokumen ini, pihak KPI PPMI Mesir menyetujui nilai investasi, pembagian 4 phase kerja, jadwal indikatif, mekanisme termin pembayaran, batas pekerjaan, dan tata cara Change Request. Detail kontrak formal mengikat dicantumkan dalam lampiran perjanjian kerja sama final.
+                    </p>
+                    <div class="signature-grid">
+                        <div class="sign-box">
+                            <div class="sign-party">UNTUK KPI PPMI MESIR (KLIEN)</div>
+                            <div class="sign-row">
+                                <span class="sign-label">Nama:</span>
+                                <span class="sign-line"></span>
+                            </div>
+                            <div class="sign-row">
+                                <span class="sign-label">Jabatan:</span>
+                                <span class="sign-line"></span>
+                            </div>
+                            <div class="sign-row">
+                                <span class="sign-label">Tanggal:</span>
+                                <span class="sign-line"></span>
+                            </div>
+                            <div style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">Tanda Tangan &amp; Cap Organisasi:</div>
+                            <div class="sign-space"></div>
+                        </div>
+
+                        <div class="sign-box">
+                            <div class="sign-party">UNTUK DAR DEV (PENYEDIA)</div>
+                            <div class="sign-row">
+                                <span class="sign-label">Nama:</span>
+                                <span style="font-weight:700; color:var(--text-dark);">Daru Fahmaa Muliawan</span>
+                            </div>
+                            <div class="sign-row">
+                                <span class="sign-label">Jabatan:</span>
+                                <span style="font-weight:600; color:var(--text-dark);">Lead Architect &amp; Developer</span>
+                            </div>
+                            <div class="sign-row">
+                                <span class="sign-label">Tanggal:</span>
+                                <span style="font-weight:600; color:var(--text-dark);">08 September 2026</span>
+                            </div>
+                            <div style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">Tanda Tangan Penyedia:</div>
+                            <div class="sign-space" style="display:flex; align-items:flex-end; justify-content:center; font-family:var(--font-mono); font-size:0.8rem; color:var(--red-primary); padding-bottom:4px;">
+                                [ DIGITAL VERIFIED &bull; DAR DEV ]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section: Payments & Issuer -->
+            <div class="bottom-grid">
+                <div>
+                    <div class="bottom-title">REKENING RESMI PEMBAYARAN TERMIN</div>
+                    <div class="bank-info-box">
+                        <div class="bank-logo-row">
+                            <img src="/mandiri_logo.webp" alt="Bank Mandiri Logo" class="bank-logo-img">
+                            <strong style="color:var(--text-dark); font-size:0.95rem;">Bank Mandiri</strong>
+                        </div>
+                        <div style="color:var(--text-muted); margin-bottom:4px;">
+                            Atas Nama: <strong style="color:var(--text-dark);">Daru Fahmaa Muliawan</strong>
+                        </div>
+                        <div style="display:flex; align-items:center;">
+                            <span>No. Rekening: <strong style="font-family:var(--font-mono); color:var(--text-dark); font-size:1.05rem;">1550010616962</strong></span>
+                            <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REKENING</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bottom-title">PENERBIT &amp; KONSULTAN TEKNIS</div>
+                    <div class="issuer-box">
+                        <strong style="color:var(--text-dark); font-size:0.92rem;">Daru Fahmaa Muliawan (Dar Dev)</strong><br>
+                        <span style="color:var(--red-primary); font-weight:700;">Web Developer &amp; Digital Ecosystem Architect</span><br>
+                        <span style="color:var(--text-muted);">Kontak WhatsApp: <strong>081311506025</strong></span><br>
+                        <span style="font-size:0.75rem; color:#64748b;">Kairo &bull; Jakarta &bull; Global Web Delivery</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -1534,7 +1953,7 @@
                 <svg width="28" height="32" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="kpiShieldMob" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0" stop-color="#E4232B"/>
+                            <stop offset="0" stop-color="#DE2027"/>
                             <stop offset="0.55" stop-color="#C4161C"/>
                             <stop offset="1" stop-color="#7C1417"/>
                         </linearGradient>
@@ -1565,11 +1984,12 @@
         <!-- Mobile Main Receipt Card -->
         <div class="mob-receipt-card">
             <div class="mob-hero-header">
-                <div class="mob-hero-client-label">INVOICE PEMBAYARAN KEPADA:</div>
-                <div class="mob-hero-client-name">Komisi Peduli Interaksi (KPI) PPMI Mesir</div>
+                <div class="mob-hero-client-label">PENAWARAN &amp; INVOICE RESMI:</div>
+                <div class="mob-hero-client-name">Komisi Peduli Interaksi (KPI), PPMI Mesir</div>
                 <div class="mob-hero-total-box">
-                    <div class="mob-hero-total-label">TOTAL TAGIHAN RESMI</div>
-                    <div class="mob-hero-total-amount">Rp 13.000.000</div>
+                    <div class="mob-hero-total-label">TOTAL INVESTASI (4 PHASE)</div>
+                    <div class="mob-hero-total-amount">Rp 375.000.000</div>
+                    <div class="mob-hero-sub-kickoff">Termin 1 Phase 1 (30%): Rp 16.500.000</div>
                 </div>
             </div>
 
@@ -1579,72 +1999,93 @@
                     <span class="mob-meta-val" style="font-family:var(--font-mono); color:var(--red-primary);">#INV/KPI/2026/017</span>
                 </div>
                 <div class="mob-meta-row">
-                    <span class="mob-meta-label">Tanggal Terbit</span>
-                    <span class="mob-meta-val">07 September 2026</span>
+                    <span class="mob-meta-label">Tanggal Penawaran</span>
+                    <span class="mob-meta-val">08 September 2026</span>
                 </div>
                 <div class="mob-meta-row">
-                    <span class="mob-meta-label">Status Tagihan</span>
-                    <span class="mob-meta-val" style="color:var(--red-primary);">🔴 BELUM LUNAS</span>
+                    <span class="mob-meta-label">Masa Berlaku</span>
+                    <span class="mob-meta-val">30 Hari Kalender</span>
                 </div>
                 <div class="mob-meta-row">
-                    <span class="mob-meta-label">Opsi Termin</span>
-                    <span class="mob-meta-val">DP 50% (Rp 6,5jt) / 3 Termin</span>
+                    <span class="mob-meta-label">Estimasi Waktu</span>
+                    <span class="mob-meta-val">10 sampai 13 Bulan</span>
+                </div>
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Pola Pembayaran</span>
+                    <span class="mob-meta-val">4 Termin per Phase</span>
                 </div>
 
-                <!-- Deliverable Items -->
+                <!-- 4 Phase Cards Mobile -->
                 <div class="mob-sec-title">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                    RINCIAN RUANG LINGKUP (11 MODUL)
+                    RINCIAN 4 PHASE PENGEMBANGAN
                 </div>
 
                 <div class="mob-item-card">
                     <div class="mob-item-head">
-                        <div class="mob-item-title">1. Arsitektur UI/UX &amp; Peta 113 Layar</div>
-                        <div class="mob-item-price">Rp 4.000.000</div>
+                        <div class="mob-item-title">Phase 1: Website Publik &amp; CMS (6–8 mg)</div>
+                        <div class="mob-item-price">Rp 55.000.000</div>
                     </div>
                     <ul class="mob-item-bullets">
-                        <li>Konsolidasi 27 dokumen sumber resmi organisasi.</li>
-                        <li>113 layar mencakup publik P01–P15 hingga audit A01–A12.</li>
+                        <li>Website publik dua bahasa (ID &amp; EN) dengan fallback.</li>
+                        <li>CMS alur draf, review, approval, publish &amp; arsip.</li>
+                        <li>Design System Apple HIG (Merah-Putih) &amp; Form Aspirasi.</li>
                     </ul>
                 </div>
 
                 <div class="mob-item-card">
                     <div class="mob-item-head">
-                        <div class="mob-item-title">2. Design System Apple HIG (Merah-Putih)</div>
-                        <div class="mob-item-price">Rp 3.500.000</div>
+                        <div class="mob-item-title">Phase 2: Portal MVP (12–16 mg)</div>
+                        <div class="mob-item-price">Rp 135.000.000</div>
                     </div>
                     <ul class="mob-item-bullets">
-                        <li>Identitas Merah-Putih &amp; token Dark/Light mode.</li>
-                        <li>Shell antarmuka desktop, tablet &amp; mobile compact.</li>
+                        <li>Login MFA Authenticator &amp; 5 tingkat kerahasiaan hak akses.</li>
+                        <li>Lifecycle penugasan (task management lengkap).</li>
+                        <li>Upload dokumen kerja berklasifikasi &amp; audit log anti-tamper.</li>
                     </ul>
                 </div>
 
                 <div class="mob-item-card">
                     <div class="mob-item-head">
-                        <div class="mob-item-title">3. Tri-Pillar Tech &amp; Keamanan Data</div>
-                        <div class="mob-item-price">Rp 3.000.000</div>
+                        <div class="mob-item-title">Phase 3: Operasional Lanjutan (12–16 mg)</div>
+                        <div class="mob-item-price">Rp 110.000.000</div>
                     </div>
                     <ul class="mob-item-bullets">
-                        <li>3 Pilar: Tim Tampilan, Tim Sistem, &amp; Tim Data RLS.</li>
-                        <li>Protokol Zero-Knowledge: PIN rahasia dipegang KPI.</li>
+                        <li>Modul rapat, kalender, notulen &amp; voting tertutup 1-person-1-vote.</li>
+                        <li>Knowledge Base, Form builder &amp; alur pengaduan internal.</li>
+                        <li>Laporan kinerja, serah terima jabatan &amp; modul keuangan berjenjang.</li>
                     </ul>
                 </div>
 
                 <div class="mob-item-card">
                     <div class="mob-item-head">
-                        <div class="mob-item-title">4. Showcase Prototipe &amp; Alur F01–F09</div>
-                        <div class="mob-item-price">Rp 2.500.000</div>
+                        <div class="mob-item-title">Phase 4: AI &amp; Handover (8–12 mg)</div>
+                        <div class="mob-item-price">Rp 75.000.000</div>
                     </div>
                     <ul class="mob-item-bullets">
-                        <li>Dokumentasi MFA, voting tertutup, &amp; brankas dokumen.</li>
-                        <li>Showcase katalog web statis 15 preview layar interaktif.</li>
+                        <li>AI Assistant terkendali (khusus Umum &amp; Internal, sitasi transparan).</li>
+                        <li>Human-in-the-loop: aksi AI wajib konfirmasi manusia.</li>
+                        <li>UAT komprehensif, hardening keamanan &amp; serah terima aset 100%.</li>
                     </ul>
+                </div>
+
+                <!-- Skema Termin Pembayaran -->
+                <div class="mob-sec-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    SKEMA TERMIN PEMBAYARAN PER PHASE
+                </div>
+                <div style="background:#fafafa; border:1px solid var(--border-light); border-radius:8px; padding:12px 14px; font-size:0.78rem; line-height:1.6; margin-bottom:14px;">
+                    • <strong>Termin 1 (30%):</strong> Kontrak phase &amp; kickoff dimulai<br>
+                    • <strong>Termin 2 (40%):</strong> Demo staging memenuhi lingkup<br>
+                    • <strong>Termin 3 (20%):</strong> UAT phase diterima KPI<br>
+                    • <strong>Termin 4 (10%):</strong> Rilis production, handover &amp; stabilisasi<br>
+                    <span style="font-size:0.72rem; color:var(--red-primary); font-weight:700;">* Termin 1 Phase 1 (Kickoff): Rp 16.500.000</span>
                 </div>
 
                 <!-- Bank Info Card Mobile -->
                 <div class="mob-bank-card">
                     <div class="mob-bank-title">REKENING TRANSFER RESMI</div>
-                    <div style="font-size:0.8rem; color:var(--text-dark); margin-bottom:2px;">
+                    <div style="font-size:0.84rem; color:var(--text-dark); margin-bottom:2px;">
                         <strong>Bank Mandiri</strong> &bull; a.n. Daru Fahmaa Muliawan
                     </div>
                     <div class="mob-bank-row">
@@ -1653,9 +2094,9 @@
                     </div>
                 </div>
 
-                <div style="font-size:0.72rem; color:var(--text-muted); text-align:center; margin-top:8px;">
-                    Diterbitkan oleh <strong>Daru Fahmaa Muliawan (Dar Dev)</strong><br>
-                    WhatsApp: 081311506025
+                <div style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px; line-height:1.45;">
+                    Penyedia: <strong>Dar Dev (Daru Fahmaa Muliawan)</strong><br>
+                    WhatsApp Resmi: <strong>081311506025</strong>
                 </div>
 
             </div>
@@ -1678,7 +2119,7 @@
             
             const enteredPin = (input.value || '').trim();
             
-            // Valid master passcode for dashboard and clients
+            // Valid master passcode
             if (enteredPin === '050900' || enteredPin === '0001') {
                 overlay.classList.add('opened');
                 sessionStorage.setItem('kpi_invoice_unlocked', 'true');
