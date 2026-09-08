@@ -462,7 +462,7 @@
             line-height: 1.65;
         }
 
-        /* Clean Total Offering Highlight (Clean, Minimal, Non-Boxy) */
+        /* Clean Total Offering Highlight */
         .total-highlight-row {
             display: flex;
             justify-content: space-between;
@@ -470,7 +470,7 @@
             padding: 18px 0;
             border-top: 2px solid var(--red-primary);
             border-bottom: 2px solid var(--red-primary);
-            margin: 10px 0 18px 0;
+            margin: 10px 0 14px 0;
         }
 
         .total-highlight-label {
@@ -488,17 +488,36 @@
             letter-spacing: -0.02em;
         }
 
+        .feature-included-badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .included-pill {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--red-primary);
+            background: var(--red-subtle);
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .spelled-text {
             font-size: 0.82rem;
             font-weight: 400;
             font-style: italic;
             color: var(--red-primary);
             text-align: right;
-            margin-top: -8px;
+            margin-top: -4px;
             margin-bottom: 12px;
         }
 
-        /* Minimal Open Table (Tanpa Kotak Abu-Abu di Belakang) */
+        /* Minimal Open Table */
         .clean-table {
             width: 100%;
             border-collapse: collapse;
@@ -543,7 +562,7 @@
             color: var(--text-dark);
         }
 
-        /* Clean Phase Detail Section (Tanpa Box Abu-Abu) */
+        /* Clean Phase Detail Section */
         .phase-entry {
             padding: 16px 0;
             border-bottom: 1px solid var(--border-light);
@@ -622,28 +641,29 @@
             gap: 36px;
         }
 
-        /* Termin Table Clean */
+        /* Termin Table Clean (2x Pembayaran) */
         .termin-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.83rem;
-            margin-top: 8px;
+            font-size: 0.85rem;
+            margin-top: 10px;
         }
 
         .termin-table th {
             text-align: left;
-            padding: 8px 6px;
+            padding: 10px 8px;
             font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
             color: var(--text-muted);
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1.5px solid var(--border-light);
         }
 
         .termin-table td {
-            padding: 10px 6px;
+            padding: 14px 8px;
             border-bottom: 1px solid var(--border-subtle);
             font-weight: 400;
+            vertical-align: top;
         }
 
         /* Signature Section Clean */
@@ -1039,7 +1059,7 @@
                 <div class="cover-recipient-name">Komisi Peduli Interaksi (KPI), PPMI Mesir</div>
                 <div class="cover-recipient-org">Lembaga: Dewan Pengurus PPMI Mesir</div>
                 <div style="font-size: 0.8rem; color: var(--red-primary); margin-top: 4px; font-weight:700;">
-                    REF: #INV/KPI/2026/017 &bull; TOTAL Rp 14.000.000
+                    REF: #INV/KPI/2026/017 &bull; TOTAL Rp 14.000.000 (2x Pembayaran)
                 </div>
             </div>
 
@@ -1135,12 +1155,12 @@
                         <td class="meta-value">30 Hari Kalender</td>
                     </tr>
                     <tr>
-                        <td class="meta-label">Acuan Kebutuhan:</td>
-                        <td class="meta-value">28 Keputusan Disetujui (8 Sep 2026)</td>
+                        <td class="meta-label">Skema Pembayaran:</td>
+                        <td class="meta-value" style="color:var(--red-primary);">2x Pembayaran (DP 50% &amp; 50%)</td>
                     </tr>
                     <tr>
-                        <td class="meta-label">Target Durasi:</td>
-                        <td class="meta-value" style="color:var(--red-primary);">10 sampai 13 Bulan (4 Phase)</td>
+                        <td class="meta-label">Bonus Termasuk:</td>
+                        <td class="meta-value" style="color:#16a34a;">Domain .com 1 Th &amp; Free Maintenance</td>
                     </tr>
                 </table>
             </div>
@@ -1165,10 +1185,17 @@
                 <span class="total-highlight-label">TOTAL NILAI KONTRAK PENGEMBANGAN</span>
                 <span class="total-highlight-amount">Rp 14.000.000</span>
             </div>
+            
+            <div class="feature-included-badges">
+                <span class="included-pill">✓ Sudah Termasuk Domain (.com) Resmi 1 Tahun Penuh</span>
+                <span class="included-pill">✓ Biaya Maintenance &amp; Dukungan Teknis Gratis</span>
+                <span class="included-pill">✓ Skema Ringan 2x Pembayaran (50% / 50%)</span>
+            </div>
+
             <div class="spelled-text">// Terbilang: Empat Belas Juta Rupiah //</div>
 
             <p class="section-desc">
-                Nilai tersebut mencakup analisis teknis, desain antarmuka, pengembangan frontend dan backend, database Supabase, pengujian, dokumentasi handover, serta masa stabilisasi setelah rilis tiap phase. Nilai ini belum termasuk PPN bila berlaku dan belum termasuk biaya layanan pihak ketiga.
+                Nilai tersebut mencakup analisis teknis, desain antarmuka, pengembangan frontend dan backend, database Supabase, pengujian, dokumentasi handover, masa stabilisasi, pendaftaran nama domain resmi (.com) selama 1 tahun, serta pemeliharaan teknis (maintenance) tanpa biaya tambahan.
             </p>
 
             <!-- Table 4 Phase Clean -->
@@ -1207,7 +1234,7 @@
                         <td class="price-col">Rp 2.500.000</td>
                     </tr>
                     <tr style="border-top: 2px solid var(--text-dark);">
-                        <td colspan="3" style="font-weight: 800; text-transform: uppercase;">TOTAL KESELURUHAN</td>
+                        <td colspan="3" style="font-weight: 800; text-transform: uppercase;">TOTAL KESELURUHAN (ALL-IN)</td>
                         <td class="price-col" style="font-size: 1.15rem; font-weight: 800; color: var(--red-primary);">Rp 14.000.000</td>
                     </tr>
                 </tbody>
@@ -1307,7 +1334,7 @@
         <div class="section-wrap">
             <h2 class="section-heading"><span class="sec-tag">5.</span> Jadwal Indikatif</h2>
             <p class="section-desc">
-                Jadwal bergantung pada kecepatan KPI memberi konten, keputusan, akses layanan pihak ketiga, dan hasil UAT. Estimasi kerja setelah kickoff:
+                Jadwal bergantung pada kecepatan KPI memberi konten, keputusan, akses layanan pihak ketiga, dan hasil UAT. Estimasi durasi per tahapan:
             </p>
             <table class="clean-table">
                 <thead>
@@ -1345,74 +1372,60 @@
             </p>
         </div>
 
-        <!-- SECTION 6: TERMIN PEMBAYARAN -->
+        <!-- SECTION 6: TERMIN PEMBAYARAN (2X PEMBAYARAN) -->
         <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">6.</span> Termin Pembayaran</h2>
-            <p class="section-desc">Pembayaran dilakukan pada setiap phase dengan pola berikut:</p>
+            <h2 class="section-heading"><span class="sec-tag">6.</span> Skema 2x Pembayaran</h2>
+            <p class="section-desc">
+                Untuk kemudahan administrasi dan fleksibilitas keuangan KPI PPMI Mesir, pembayaran dibagi ringkas menjadi <strong>2 (dua) kali termin pembayaran</strong>:
+            </p>
             <table class="termin-table">
                 <thead>
                     <tr>
-                        <th style="width:90px;">TERMIN</th>
-                        <th style="width:180px;">PERSENTASE NILAI PHASE</th>
-                        <th>PEMICU PEMBAYARAN</th>
+                        <th style="width:110px;">TERMIN</th>
+                        <th style="width:140px;">BOBOT &amp; NILAI</th>
+                        <th>PEMICU / TAHAP PEMBAYARAN</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Termin 1</strong></td>
-                        <td><strong>30%</strong></td>
-                        <td>Kontrak phase ditandatangani dan pekerjaan dimulai</td>
+                        <td><strong>Termin 1 (DP)</strong></td>
+                        <td><strong style="color:var(--red-primary);">50% &bull; Rp 7.000.000</strong></td>
+                        <td>Dibayarkan saat kontrak kerja sama disepakati dan pekerjaan resmi dimulai (Kickoff).</td>
                     </tr>
                     <tr>
-                        <td><strong>Termin 2</strong></td>
-                        <td><strong>40%</strong></td>
-                        <td>Demo staging memenuhi lingkup utama phase</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Termin 3</strong></td>
-                        <td><strong>20%</strong></td>
-                        <td>UAT phase diterima KPI atau perbaikan UAT kritis selesai</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Termin 4</strong></td>
-                        <td><strong>10%</strong></td>
-                        <td>Rilis production, handover, dan stabilisasi selesai</td>
+                        <td><strong>Termin 2 (Pelunasan)</strong></td>
+                        <td><strong style="color:var(--text-dark);">50% &bull; Rp 7.000.000</strong></td>
+                        <td>Dibayarkan saat seluruh sistem selesai, UAT disetujui KPI, dan serah terima/rilis production tuntas.</td>
                     </tr>
                 </tbody>
             </table>
-            <p class="section-desc" style="margin-top:8px;">
-                Pembayaran phase berikutnya dimulai setelah phase sebelumnya diterima dan termin yang jatuh tempo dibayarkan.
-            </p>
         </div>
 
         <!-- SECTION 7 & 8: STABILISASI, SUPPORT & BIAYA PIHAK KETIGA -->
         <div class="two-column-flow">
             <div class="section-wrap">
-                <h2 class="section-heading"><span class="sec-tag">7.</span> Masa Stabilisasi &amp; Support</h2>
+                <h2 class="section-heading"><span class="sec-tag">7.</span> Garansi &amp; Maintenance Gratis</h2>
                 <p class="section-desc">
-                    Setiap phase mencakup <strong>30 hari kalender masa stabilisasi</strong> setelah rilis production. Masa ini mencakup perbaikan defect yang menyimpang dari scope dan acceptance criteria phase tersebut.
+                    Setiap phase mencakup <strong>30 hari kalender masa stabilisasi</strong> setelah rilis production tanpa biaya tambahan.
                 </p>
                 <p class="section-desc" style="font-weight:600; color:var(--text-dark); margin-top:4px;">
-                    Support operasional pasca stabilisasi (opsional):
+                    Dukungan Maintenance &amp; Operasional:
                 </p>
                 <ul class="clean-bullet-list">
-                    <li>Maintenance standar (maks 12 jam/bln): <strong>Rp5.000.000 / bulan</strong></li>
-                    <li>Pekerjaan tambahan di luar retainer: <strong>Rp500.000 / jam</strong></li>
+                    <li><strong>Biaya Maintenance: GRATIS (Rp 0)</strong> — Pendampingan teknis dan perbaikan berkala diberikan tanpa biaya retainer bulanan.</li>
+                    <li><strong>Konsultasi &amp; Bug Fixing:</strong> Tim siap mendampingi operasional kepengurusan selama ekosistem berjalan.</li>
                 </ul>
             </div>
 
             <div class="section-wrap">
-                <h2 class="section-heading"><span class="sec-tag">8.</span> Biaya Pihak Ketiga</h2>
+                <h2 class="section-heading"><span class="sec-tag">8.</span> Domain &amp; Layanan Pihak Ketiga</h2>
                 <p class="section-desc">
-                    KPI membayar langsung atau mengganti biaya aktual layanan pihak ketiga:
+                    Ketentuan penyediaan infrastruktur dan integrasi:
                 </p>
                 <ul class="clean-bullet-list">
-                    <li>Domain dan DNS.</li>
-                    <li>Vercel atau hosting frontend/API.</li>
-                    <li>Supabase, storage, backup, dan add-on.</li>
-                    <li>Provider email transaksional &amp; WhatsApp resmi.</li>
-                    <li>Layanan AI dan model yang dipilih.</li>
-                    <li>Monitoring, error tracking, dan layanan keamanan.</li>
+                    <li><strong>Nama Domain (.com): SUDAH TERMASUK</strong> — Pendaftaran domain resmi .com selama 1 tahun pertama gratis (tercover dalam penawaran Rp 14jt).</li>
+                    <li><strong>Hosting &amp; Database:</strong> Menggunakan tier gratis/rekomendasi Vercel &amp; Supabase (biaya upgrade hanya bila melebihi kuota wajar).</li>
+                    <li><strong>Provider Email / WA / AI:</strong> Disesuaikan dengan kebutuhan penggunaan aktual organisasi.</li>
                 </ul>
             </div>
         </div>
@@ -1434,16 +1447,16 @@
             <div class="section-wrap">
                 <h2 class="section-heading"><span class="sec-tag">10–11.</span> Batas &amp; Change Request</h2>
                 <p class="section-desc">
-                    <strong>Change Request:</strong> Penambahan fitur di luar proposal diproses tertulis dengan estimasi biaya dan waktu yang disetujui.
+                    <strong>Change Request:</strong> Penambahan fitur di luar proposal diproses tertulis dengan estimasi biaya dan waktu yang disetujui bersama.
                 </p>
                 <p class="section-desc" style="font-weight:600; color:var(--text-dark); margin-top:4px;">
                     Proposal tidak mencakup:
                 </p>
                 <ul class="clean-bullet-list">
-                    <li>Aplikasi native Android atau iOS.</li>
+                    <li>Aplikasi native Android atau iOS (sistem berupa web responsif modern).</li>
                     <li>Integrasi eksternal tak disepakati (Payment Gateway, Kalender).</li>
                     <li>Migrasi massal data historis yang belum diperiksa formatnya.</li>
-                    <li>Layanan hukum, penerjemahan tersumpah, konten substantif, atau SLA 24/7.</li>
+                    <li>Layanan hukum substantif atau penerjemahan tersumpah.</li>
                 </ul>
             </div>
         </div>
@@ -1452,7 +1465,7 @@
         <div class="section-wrap">
             <h2 class="section-heading"><span class="sec-tag">12.</span> Penerimaan Proposal</h2>
             <p class="section-desc">
-                Dengan menyetujui proposal ini, KPI menyetujui nilai, pembagian phase, mekanisme pembayaran, batas pekerjaan, dan proses Change Request. Detail kontrak, invoice, rekening pembayaran, pajak, serta identitas para pihak dicantumkan dalam dokumen kerja sama final.
+                Dengan menyetujui proposal ini, KPI menyetujui nilai, pembagian 4 phase kerja, skema 2x pembayaran, fasilitas domain .com 1 tahun, serta pemeliharaan gratis. Detail rekening pembayaran dan identitas para pihak tertera di bawah ini.
             </p>
             <div class="sign-grid">
                 <div>
@@ -1552,8 +1565,12 @@
             <div class="mob-client-name">Komisi Peduli Interaksi (KPI), PPMI Mesir</div>
             
             <div class="mob-total-display">
-                <span class="mob-total-label">TOTAL PENAWARAN:</span>
+                <span class="mob-total-label">TOTAL (ALL-IN):</span>
                 <span class="mob-total-amount">Rp 14.000.000</span>
+            </div>
+
+            <div style="font-size:0.75rem; color:#16a34a; font-weight:600; margin-bottom:10px;">
+                ✓ Termasuk Domain .com 1 Tahun &bull; Maintenance Gratis
             </div>
 
             <div class="mob-meta-row">
@@ -1561,24 +1578,20 @@
                 <span class="mob-meta-val" style="color:var(--red-primary);">#INV/KPI/2026/017</span>
             </div>
             <div class="mob-meta-row">
-                <span class="mob-meta-label">Tanggal Penawaran</span>
-                <span class="mob-meta-val">8 September 2026</span>
+                <span class="mob-meta-label">Skema Pembayaran</span>
+                <span class="mob-meta-val">2x (DP 50% &bull; Pelunasan 50%)</span>
             </div>
             <div class="mob-meta-row">
-                <span class="mob-meta-label">Masa Berlaku</span>
-                <span class="mob-meta-val">30 Hari Kalender</span>
+                <span class="mob-meta-label">Termin 1 (DP Kickoff)</span>
+                <span class="mob-meta-val" style="color:var(--red-primary); font-weight:700;">Rp 7.000.000</span>
             </div>
             <div class="mob-meta-row">
-                <span class="mob-meta-label">Estimasi Waktu</span>
-                <span class="mob-meta-val">10 sampai 13 Bulan</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Pola Pembayaran</span>
-                <span class="mob-meta-val">4 Termin per Phase</span>
+                <span class="mob-meta-label">Termin 2 (Pelunasan UAT)</span>
+                <span class="mob-meta-val">Rp 7.000.000</span>
             </div>
         </div>
 
-        <!-- Clean Mobile Phase List (Tanpa Kotak Abu-Abu) -->
+        <!-- Clean Mobile Phase List -->
         <div class="mob-sec-heading">RINCIAN 4 PHASE PENGEMBANGAN</div>
 
         <div class="mob-phase-item">
