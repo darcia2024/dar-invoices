@@ -774,8 +774,8 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 12px 10px;
-                background-color: #ffffff;
+                padding: 12px 8px;
+                background-color: #f8fafc;
             }
 
             .action-bar,
@@ -783,20 +783,26 @@
                 display: none !important;
             }
 
+            /* Main Mobile Container Card */
             .mobile-view {
                 display: block;
-                max-width: 520px;
+                max-width: 480px;
                 margin: 0 auto;
-                padding: 10px 4px;
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 14px;
+                padding: 16px 14px;
+                box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
             }
 
+            /* Mobile Top Bar */
             .mob-top-bar {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 12px 0;
-                margin-bottom: 16px;
-                border-bottom: 1px solid var(--border-light);
+                padding-bottom: 12px;
+                margin-bottom: 14px;
+                border-bottom: 1px solid var(--border-subtle);
             }
 
             .mob-brand-group {
@@ -806,21 +812,23 @@
             }
 
             .mob-brand-title {
-                font-size: 0.92rem;
+                font-size: 0.9rem;
                 font-weight: 800;
                 color: var(--text-dark);
-                line-height: 1.2;
+                line-height: 1.25;
             }
 
             .mob-brand-sub {
                 font-size: 0.72rem;
                 color: var(--red-primary);
-                font-weight: 600;
+                font-weight: 700;
+                letter-spacing: 0.02em;
             }
 
             .mob-actions {
                 display: flex;
                 gap: 6px;
+                align-items: center;
             }
 
             .mob-btn {
@@ -829,9 +837,13 @@
                 color: var(--text-dark);
                 font-size: 0.72rem;
                 font-weight: 600;
-                padding: 6px 12px;
-                border-radius: 6px;
+                padding: 6px 10px;
+                border-radius: 8px;
                 cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                transition: all 0.15s ease;
             }
 
             .mob-btn-primary {
@@ -840,140 +852,311 @@
                 border-color: var(--red-primary);
             }
 
-            /* Clean Mobile Header */
+            /* Clean Mobile Header Section */
             .mob-header-section {
-                padding-bottom: 16px;
-                border-bottom: 1px solid var(--border-light);
-                margin-bottom: 20px;
+                padding-bottom: 14px;
+                border-bottom: 1px solid var(--border-subtle);
+                margin-bottom: 16px;
             }
 
             .mob-client-label {
-                font-size: 0.68rem;
+                font-size: 0.66rem;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
                 color: var(--red-primary);
                 font-weight: 700;
-                margin-bottom: 2px;
+                margin-bottom: 4px;
             }
 
             .mob-client-name {
-                font-size: 1.2rem;
-                font-weight: 800; /* Bold */
+                font-size: 1.18rem;
+                font-weight: 800;
                 color: var(--text-dark);
-                margin-bottom: 8px;
                 line-height: 1.3;
+                margin-bottom: 3px;
             }
 
-            .mob-total-display {
-                padding: 14px 0;
-                border-top: 1.5px solid var(--red-primary);
-                border-bottom: 1.5px solid var(--red-primary);
-                margin: 12px 0;
+            .mob-client-inst {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                line-height: 1.4;
+                margin-bottom: 14px;
+            }
+
+            /* Compact Total Highlight Box */
+            .mob-total-box {
+                background: #fff8f8;
+                border: 1px solid #fed7d7;
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-bottom: 14px;
+            }
+
+            .mob-total-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: baseline;
+                gap: 8px;
             }
 
-            .mob-total-label {
-                font-size: 0.78rem;
+            .mob-total-title {
+                font-size: 0.72rem;
                 font-weight: 700;
                 text-transform: uppercase;
-                color: var(--text-dark);
+                letter-spacing: 0.05em;
+                color: #991b1b;
             }
 
-            .mob-total-amount {
-                font-size: 1.6rem;
-                font-weight: 800; /* Bold */
+            .mob-total-price {
+                font-size: 1.45rem;
+                font-weight: 800;
                 color: var(--red-primary);
+                line-height: 1;
+            }
+
+            .mob-perk-badge {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px dashed #fca5a5;
+                font-size: 0.73rem;
+                color: #15803d;
+                font-weight: 600;
+                line-height: 1.35;
+            }
+
+            /* Metadata Rows */
+            .mob-meta-list {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                margin-bottom: 12px;
             }
 
             .mob-meta-row {
                 display: flex;
                 justify-content: space-between;
-                font-size: 0.8rem;
-                font-weight: 400;
-                padding: 6px 0;
+                align-items: center;
+                font-size: 0.79rem;
+                padding: 7px 0;
+                border-bottom: 1px dashed #f1f5f9;
+            }
+
+            .mob-meta-row:last-child {
+                border-bottom: none;
             }
 
             .mob-meta-label {
                 color: var(--text-muted);
+                font-weight: 400;
             }
 
             .mob-meta-val {
                 font-weight: 600;
                 color: var(--text-dark);
+                text-align: right;
             }
 
-            /* Clean Mobile Phases */
-            .mob-sec-heading {
-                font-size: 0.82rem;
-                font-weight: 800;
-                text-transform: uppercase;
-                letter-spacing: 0.06em;
-                color: var(--red-primary);
-                margin: 24px 0 12px 0;
-                padding-bottom: 6px;
-                border-bottom: 1px solid var(--border-light);
+            /* Compact 2-Column Termin Grid */
+            .mob-termin-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-top: 8px;
             }
 
-            .mob-phase-item {
-                padding: 12px 0;
-                border-bottom: 1px solid var(--border-subtle);
-            }
-
-            .mob-phase-item:last-child {
-                border-bottom: none;
-            }
-
-            .mob-phase-head {
+            .mob-termin-card {
+                background: #f8fafc;
+                border: 1px solid var(--border-subtle);
+                border-radius: 8px;
+                padding: 9px 10px;
                 display: flex;
-                justify-content: space-between;
-                align-items: baseline;
-                margin-bottom: 4px;
+                flex-direction: column;
+                gap: 3px;
             }
 
-            .mob-phase-name {
-                font-size: 0.88rem;
+            .mob-termin-lbl {
+                font-size: 0.65rem;
                 font-weight: 700;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                letter-spacing: 0.03em;
+            }
+
+            .mob-termin-val {
+                font-size: 0.95rem;
+                font-weight: 800;
                 color: var(--text-dark);
             }
 
-            .mob-phase-cost {
-                font-size: 0.88rem;
-                font-weight: 800; /* Bold */
+            /* Clean Mobile Phase Cards */
+            .mob-sec-heading {
+                font-size: 0.76rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.07em;
                 color: var(--red-primary);
+                margin: 18px 0 10px 0;
+                display: flex;
+                align-items: center;
+                gap: 6px;
             }
 
-            .mob-phase-bullets {
+            .mob-phase-card {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-bottom: 10px;
+                transition: border-color 0.15s ease;
+            }
+
+            .mob-phase-card:last-child {
+                margin-bottom: 0;
+            }
+
+            .mob-phase-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 6px;
+            }
+
+            .mob-phase-pill {
+                display: inline-flex;
+                align-items: center;
+                font-size: 0.67rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--red-primary);
+                background: #fee2e2;
+                padding: 3px 8px;
+                border-radius: 6px;
+            }
+
+            .mob-phase-price {
+                font-size: 0.92rem;
+                font-weight: 800;
+                color: var(--text-dark);
+            }
+
+            .mob-phase-title {
+                font-size: 0.88rem;
+                font-weight: 700;
+                color: var(--text-dark);
+                line-height: 1.35;
+                margin-bottom: 8px;
+            }
+
+            .mob-phase-list {
                 list-style: none;
                 padding: 0;
-                margin-top: 4px;
+                margin: 0;
             }
 
-            .mob-phase-bullets li {
+            .mob-phase-list li {
                 position: relative;
                 padding-left: 14px;
-                margin-bottom: 3px;
-                font-size: 0.78rem;
+                margin-bottom: 4px;
+                font-size: 0.76rem;
                 font-weight: 400;
-                color: var(--text-muted);
+                color: #4b5563;
                 line-height: 1.45;
             }
 
-            .mob-phase-bullets li::before {
+            .mob-phase-list li:last-child {
+                margin-bottom: 0;
+            }
+
+            .mob-phase-list li::before {
                 content: "•";
                 position: absolute;
-                left: 0;
+                left: 2px;
                 color: var(--red-primary);
+                font-weight: 700;
             }
 
-            .mob-bank-section {
-                padding-top: 18px;
-                border-top: 1px solid var(--border-light);
-                margin-top: 20px;
+            /* Bank & Payment Card */
+            .mob-bank-card {
+                background: #fff8f8;
+                border: 1px solid #fecaca;
+                border-radius: 12px;
+                padding: 14px 14px;
+                margin-top: 18px;
+            }
+
+            .mob-bank-label {
+                font-size: 0.66rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--red-primary);
+                margin-bottom: 4px;
+            }
+
+            .mob-bank-name {
+                font-size: 0.82rem;
+                color: var(--text-dark);
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+
+            .mob-bank-acc-box {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: #ffffff;
+                border: 1px solid #fca5a5;
+                border-radius: 8px;
+                padding: 8px 10px;
+                margin-bottom: 10px;
+            }
+
+            .mob-acc-number {
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1.05rem;
+                font-weight: 800;
+                color: var(--text-dark);
+                letter-spacing: 0.04em;
+            }
+
+            .mob-copy-btn {
+                background: var(--red-primary);
+                color: #ffffff;
+                border: none;
+                font-size: 0.7rem;
+                font-weight: 700;
+                padding: 5px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .mob-footer-info {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                line-height: 1.5;
+                text-align: center;
+                padding-top: 4px;
+            }
+
+            /* Mobile Cover Card Tweaks */
+            .cover-card {
+                padding: 24px 18px !important;
+                max-width: 380px !important;
+                width: 92% !important;
+            }
+
+            .cover-title {
+                font-size: 1.15rem !important;
             }
         }
-
         /* ----------------------------------------------------
            TOAST NOTIFICATION
         ---------------------------------------------------- */
@@ -1543,7 +1726,7 @@
         <!-- Mobile Top App Bar -->
         <div class="mob-top-bar">
             <div class="mob-brand-group">
-                <svg width="24" height="28" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
+                <svg width="22" height="25" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="kpiShieldMob" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0" stop-color="#DE2027"/>
@@ -1563,8 +1746,14 @@
                 </div>
             </div>
             <div class="mob-actions">
-                <button class="mob-btn" onclick="copyBankAcc()">Rekening</button>
-                <button class="mob-btn mob-btn-primary" onclick="downloadPDF()">PDF</button>
+                <button class="mob-btn" onclick="copyBankAcc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Rekening
+                </button>
+                <button class="mob-btn mob-btn-primary" onclick="downloadPDF()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    PDF
+                </button>
             </div>
         </div>
 
@@ -1572,103 +1761,118 @@
         <div class="mob-header-section">
             <div class="mob-client-label">DITUJUKAN KEPADA:</div>
             <div class="mob-client-name">Abdul (Ketua KPI)</div>
-            <div style="font-size:0.78rem; color:var(--text-muted); margin-top:-4px; margin-bottom:8px;">Komisi Peduli Interaksi (KPI)</div>
+            <div class="mob-client-inst">Komisi Peduli Interaksi (KPI) &bull; Kairo, Republik Arab Mesir</div>
             
-            <div class="mob-total-display">
-                <span class="mob-total-label">TOTAL (ALL-IN):</span>
-                <span class="mob-total-amount">Rp 14.000.000</span>
+            <!-- Compact Total Box -->
+            <div class="mob-total-box">
+                <div class="mob-total-row">
+                    <span class="mob-total-title">TOTAL PENGEMBANGAN (ALL-IN)</span>
+                    <span class="mob-total-price">Rp 14.000.000</span>
+                </div>
+                <div class="mob-perk-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Domain .com 1 Th &bull; Maintenance Operasional Gratis</span>
+                </div>
             </div>
 
-            <div style="font-size:0.75rem; color:#16a34a; font-weight:600; margin-bottom:10px;">
-                ✓ Termasuk Domain .com 1 Tahun &bull; Maintenance Gratis
+            <!-- Clean Meta Info Rows -->
+            <div class="mob-meta-list">
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Nomor Referensi</span>
+                    <span class="mob-meta-val" style="color:var(--red-primary);">#INV/KPI/2026/017</span>
+                </div>
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Target Durasi</span>
+                    <span class="mob-meta-val" style="color:var(--red-primary); font-weight:700;">Kurang lebih 1 Bulan (4 Minggu)</span>
+                </div>
+                <div class="mob-meta-row">
+                    <span class="mob-meta-label">Skema Pembayaran</span>
+                    <span class="mob-meta-val">2x Pembayaran (DP 50% &bull; Pelunasan 50%)</span>
+                </div>
             </div>
 
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Nomor Referensi</span>
-                <span class="mob-meta-val" style="color:var(--red-primary);">#INV/KPI/2026/017</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Target Durasi</span>
-                <span class="mob-meta-val" style="color:var(--red-primary); font-weight:700;">Kurang lebih 1 Bulan</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Skema Pembayaran</span>
-                <span class="mob-meta-val">2x (DP 50% &bull; Pelunasan 50%)</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Termin 1 (DP Kickoff)</span>
-                <span class="mob-meta-val" style="color:var(--red-primary); font-weight:700;">Rp 7.000.000</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Termin 2 (Pelunasan UAT)</span>
-                <span class="mob-meta-val">Rp 7.000.000</span>
+            <!-- Compact 2-Column Termin Grid -->
+            <div class="mob-termin-grid">
+                <div class="mob-termin-card">
+                    <span class="mob-termin-lbl">TERMIN 1 (DP KICKOFF)</span>
+                    <span class="mob-termin-val" style="color:var(--red-primary);">Rp 7.000.000</span>
+                </div>
+                <div class="mob-termin-card">
+                    <span class="mob-termin-lbl">TERMIN 2 (PELUNASAN)</span>
+                    <span class="mob-termin-val">Rp 7.000.000</span>
+                </div>
             </div>
         </div>
 
-        <!-- Clean Mobile Phase List -->
+        <!-- Clean Mobile Phase Cards -->
         <div class="mob-sec-heading">RINCIAN 4 PHASE PENGEMBANGAN</div>
 
-        <div class="mob-phase-item">
-            <div class="mob-phase-head">
-                <div class="mob-phase-name">Phase 1: Website Publik &amp; CMS (Minggu 1)</div>
-                <div class="mob-phase-cost">Rp 3.500.000</div>
+        <div class="mob-phase-card">
+            <div class="mob-phase-top">
+                <span class="mob-phase-pill">PHASE 1 &bull; MINGGU 1</span>
+                <span class="mob-phase-price">Rp 3.500.000</span>
             </div>
-            <ul class="mob-phase-bullets">
-                <li>Website publik dua bahasa (Indonesia &amp; Inggris).</li>
+            <div class="mob-phase-title">Website Publik &amp; CMS Bilingual</div>
+            <ul class="mob-phase-list">
+                <li>Website publik bilingual (Indonesia &amp; Inggris).</li>
                 <li>CMS draf, review, approval, publish &amp; arsip.</li>
                 <li>Design system Apple HIG Merah-Putih &amp; Form aspirasi.</li>
             </ul>
         </div>
 
-        <div class="mob-phase-item">
-            <div class="mob-phase-head">
-                <div class="mob-phase-name">Phase 2: Portal MVP (Minggu 2)</div>
-                <div class="mob-phase-cost">Rp 4.500.000</div>
+        <div class="mob-phase-card">
+            <div class="mob-phase-top">
+                <span class="mob-phase-pill">PHASE 2 &bull; MINGGU 2</span>
+                <span class="mob-phase-price">Rp 4.500.000</span>
             </div>
-            <ul class="mob-phase-bullets">
+            <div class="mob-phase-title">Portal MVP &amp; Task Management</div>
+            <ul class="mob-phase-list">
                 <li>Login MFA Authenticator &amp; 5 tingkat kerahasiaan.</li>
-                <li>Task management lengkap (lifecycle, review &amp; bukti).</li>
-                <li>Upload dokumen kerja berklasifikasi &amp; audit log.</li>
+                <li>Task management terstruktur (review &amp; bukti kerja).</li>
+                <li>Penyimpanan dokumen berklasifikasi &amp; audit log.</li>
             </ul>
         </div>
 
-        <div class="mob-phase-item">
-            <div class="mob-phase-head">
-                <div class="mob-phase-name">Phase 3: Operasional Lanjutan (Minggu 3)</div>
-                <div class="mob-phase-cost">Rp 3.500.000</div>
+        <div class="mob-phase-card">
+            <div class="mob-phase-top">
+                <span class="mob-phase-pill">PHASE 3 &bull; MINGGU 3</span>
+                <span class="mob-phase-price">Rp 3.500.000</span>
             </div>
-            <ul class="mob-phase-bullets">
-                <li>Rapat, notulen terkunci &amp; voting rahasia 1-person-1-vote.</li>
+            <div class="mob-phase-title">Operasional Lanjutan &amp; Tata Kelola</div>
+            <ul class="mob-phase-list">
+                <li>Rapat, notulen terkunci &amp; voting rahasia digital.</li>
                 <li>Knowledge Base, Form builder &amp; alur aduan internal.</li>
                 <li>Laporan kinerja, serah terima &amp; modul keuangan.</li>
             </ul>
         </div>
 
-        <div class="mob-phase-item">
-            <div class="mob-phase-head">
-                <div class="mob-phase-name">Phase 4: AI &amp; Handover (Minggu 4)</div>
-                <div class="mob-phase-cost">Rp 2.500.000</div>
+        <div class="mob-phase-card">
+            <div class="mob-phase-top">
+                <span class="mob-phase-pill">PHASE 4 &bull; MINGGU 4</span>
+                <span class="mob-phase-price">Rp 2.500.000</span>
             </div>
-            <ul class="mob-phase-bullets">
+            <div class="mob-phase-title">AI Terkendali, Hardening &amp; Serah Terima</div>
+            <ul class="mob-phase-list">
                 <li>AI Assistant terkendali (sitasi sumber &amp; konfirmasi manusia).</li>
-                <li>Pengujian otorisasi, AI leakage, mobile &amp; UAT.</li>
-                <li>Hardening keamanan &amp; serah terima aset 100%.</li>
+                <li>Pengujian keamanan (otorisasi &amp; AI leakage) serta UAT.</li>
+                <li>Hardening server, deployment &amp; serah terima aset 100%.</li>
             </ul>
         </div>
 
         <!-- Bank & Payment Section Clean -->
-        <div class="mob-bank-section">
-            <div class="mob-client-label">REKENING TRANSFER RESMI:</div>
-            <div style="font-size:0.86rem; color:var(--text-dark); margin:4px 0 2px 0;">
-                <strong>Bank Mandiri</strong> &bull; a.n. Daru Fahmaa Muliawan
+        <div class="mob-bank-card">
+            <div class="mob-bank-label">REKENING TRANSFER RESMI</div>
+            <div class="mob-bank-name">Bank Mandiri &bull; a.n. Daru Fahmaa Muliawan</div>
+            <div class="mob-bank-acc-box">
+                <span class="mob-acc-number">1550010616962</span>
+                <button class="mob-copy-btn" onclick="copyBankAcc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Salin Rek
+                </button>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="bank-acc-bold">1550010616962</span>
-                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REK</button>
-            </div>
-            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:14px; text-align:center;">
+            <div class="mob-footer-info">
                 Penyedia: <strong>Dar Dev (Daru Fahmaa Muliawan)</strong><br>
-                WhatsApp Resmi: 081311506025
+                WhatsApp Resmi: 081311506025 &bull; Dokumen Digital Terverifikasi
             </div>
         </div>
 
