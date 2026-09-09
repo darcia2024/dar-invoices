@@ -1,6 +1,46 @@
 const STATE_KEY = "dar-invoices:billing-state";
 
+const defaultDebts = [
+  {
+    id: "debt-teh-umi",
+    type: "piutang",
+    name: "Teh Umi",
+    phone: "",
+    amount: 200000,
+    paid: 0,
+    date: "2026-09-09",
+    due: "",
+    notes: "Project bikin Website",
+    createdAt: 1788950000000
+  },
+  {
+    id: "debt-vendra",
+    type: "piutang",
+    name: "Vendra",
+    phone: "",
+    amount: 250000,
+    paid: 0,
+    date: "2026-09-09",
+    due: "",
+    notes: "Membetulkan handphone (Service HP)",
+    createdAt: 1788951000000
+  },
+  {
+    id: "debt-azzam",
+    type: "hutang",
+    name: "Azzam",
+    phone: "",
+    amount: 145000,
+    paid: 0,
+    date: "2026-09-09",
+    due: "",
+    notes: "Bayar rumah di Mesir bulan September",
+    createdAt: 1788952000000
+  }
+];
+
 const defaultState = {
+  debts: defaultDebts,
   paymentStatuses: {
     almadroj: "UNPAID",
     markaz: "PAID",
@@ -40,7 +80,7 @@ function mergeState(state) {
   return {
     customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
     deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
-    debts: state && Array.isArray(state.debts) ? state.debts : [],
+    debts: state && Array.isArray(state.debts) && state.debts.length > 0 ? state.debts : defaultDebts,
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),

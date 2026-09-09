@@ -2754,12 +2754,14 @@
             if (state.netProfits) {
                 Object.assign(netProfits, state.netProfits);
             }
-            if (Array.isArray(state.debts)) {
+            if (Array.isArray(state.debts) && state.debts.length > 0) {
                 debts = state.debts;
                 localStorage.setItem('dar-debts-records', JSON.stringify(debts));
-                if (document.body.dataset.view === 'debt') {
-                    renderDebtUI();
-                }
+                renderDebtUI();
+            } else if (!debts || debts.length === 0) {
+                debts = defaultInitialDebts;
+                localStorage.setItem('dar-debts-records', JSON.stringify(debts));
+                renderDebtUI();
             }
         }
 
@@ -2797,6 +2799,7 @@
             updatePaymentBadges();
             renderProfitUI();
             calculateFinancials();
+            renderDebtUI();
         }
 
         async function persistBillingState() {
@@ -3151,7 +3154,8 @@
                     const parsed = JSON.parse(stored);
                     if (Array.isArray(parsed) && parsed.length > 0) {
                         const hasSample = parsed.some(d => d.id === 'debt-sample-1' || d.id === 'debt-sample-2');
-                        if (!hasSample) return parsed;
+                        const hasReal = parsed.some(d => d.id === 'debt-teh-umi' || d.id === 'debt-vendra' || d.id === 'debt-azzam');
+                        if (!hasSample && hasReal) return parsed;
                     }
                 }
                 localStorage.setItem('dar-debts-records', JSON.stringify(defaultInitialDebts));
@@ -3162,6 +3166,10 @@
         })();
 
         let activeDebtFilter = 'all';
+
+        setTimeout(() => {
+            renderDebtUI();
+        }, 50);
 
         function getDebtStatus(debt) {
             const paid = Number(debt.paid) || 0;
