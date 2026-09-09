@@ -29,9 +29,10 @@ async function request(method, body, passcode = 'test-pin') {
     assert.equal(updated.code,200);
     assert.equal(updated.data.customInvoices[0].id,'custom-test');
     assert.deepEqual(updated.data.deletedInvoiceIds,['markaz']);
-    await request('PUT',{customInvoices:[],deletedInvoiceIds:[]});
+    await request('PUT',{customInvoices:[],deletedInvoiceIds:[],debts:[{id:'debt-1',name:'Budi',amount:500000}]});
     const restored = await request('GET');
     assert.deepEqual(restored.data.customInvoices,[]);
     assert.deepEqual(restored.data.deletedInvoiceIds,[]);
-    console.log('PASS: text parsing, escaping, API authorization, metadata round-trip, and legacy-save preservation');
+    assert.equal(restored.data.debts[0].name,'Budi');
+    console.log('PASS: text parsing, escaping, API authorization, metadata round-trip, debts round-trip, and legacy-save preservation');
 })().catch(error => {console.error(error);process.exitCode=1;});

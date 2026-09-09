@@ -1272,6 +1272,7 @@
         <nav aria-label="Navigasi utama">
             <button class="sidebar-link active" data-view="board" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true">▦</span> Invoice</button>
             <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true">▤</span> Laporan keuangan</button>
+            <button class="sidebar-link" data-view="debt" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true">⚖</span> Hutang &amp; Piutang</button>
             <button class="sidebar-link mobile-lock" onclick="lockAdminDashboard()">Kunci</button>
         </nav>
         <div class="sidebar-note"><span>Catatan workspace</span><p>Status pembayaran dan profit bisa dikelola langsung dari kartu invoice.</p></div>
@@ -1381,6 +1382,76 @@
                     <!-- Dynamic rendering by JS -->
                 </tbody>
             </table>
+        </div>
+
+        <!-- Hutang & Piutang (Debts & Receivables) Section -->
+        <div id="debtSection">
+            <!-- Debt Tools & Actions -->
+            <div class="debt-toolbar">
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <button class="create-invoice-btn" onclick="openDebtComposer()">+ Catat Hutang / Piutang</button>
+                    <div class="debt-filter-pills">
+                        <button class="month-pill-btn active" data-debt-filter="all" onclick="setDebtFilter('all', this)">SEMUA</button>
+                        <button class="month-pill-btn" data-debt-filter="piutang" onclick="setDebtFilter('piutang', this)">🟢 PIUTANG (Hak Tagih)</button>
+                        <button class="month-pill-btn" data-debt-filter="hutang" onclick="setDebtFilter('hutang', this)">🔴 HUTANG (Kewajiban)</button>
+                        <button class="month-pill-btn" data-debt-filter="unpaid" onclick="setDebtFilter('unpaid', this)">BELUM LUNAS</button>
+                        <button class="month-pill-btn" data-debt-filter="settled" onclick="setDebtFilter('settled', this)">LUNAS</button>
+                    </div>
+                </div>
+
+                <div class="debt-search-box">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="search" id="debtSearchInput" class="search-input" aria-label="Cari catatan hutang atau piutang" placeholder="Cari nama, keperluan, kontak…" oninput="filterDebts()">
+                </div>
+            </div>
+
+            <!-- Debt Stats Bar -->
+            <div class="debt-stats-bar">
+                <div class="stat-card debt-piutang-stat">
+                    <div class="stat-icon" style="background:#065f46; color:#fff;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    </div>
+                    <div>
+                        <div class="stat-info-title">Total Piutang Aktif (Uang di Orang)</div>
+                        <div id="statActivePiutang" class="stat-info-val" style="color: #065f46;">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card debt-hutang-stat">
+                    <div class="stat-icon" style="background:#991b1b; color:#fff;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
+                    </div>
+                    <div>
+                        <div class="stat-info-title">Total Hutang Aktif (Kewajiban Gue)</div>
+                        <div id="statActiveHutang" class="stat-info-val" style="color: #991b1b;">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card debt-net-stat">
+                    <div class="stat-icon" style="background:#1e3a8a; color:#fff;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
+                    <div>
+                        <div class="stat-info-title">Posisi Saldo Bersih (Piutang - Hutang)</div>
+                        <div id="statNetDebt" class="stat-info-val" style="color: #1e3a8a;">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card debt-done-stat">
+                    <div class="stat-icon" style="background:#524c3e; color:#fff;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <div>
+                        <div class="stat-info-title">Riwayat Selesai (Lunas)</div>
+                        <div id="statSettledDebt" class="stat-info-val" style="color: #524c3e;">0 Catatan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Debt Cards List Container -->
+            <div id="debtCardList" class="debt-card-list">
+                <!-- Dynamically populated by JS -->
+            </div>
         </div>
 
         <!-- Invoice Cards Grid -->
@@ -2393,6 +2464,90 @@
 
     </main>
 
+    <!-- DIALOG COMPOSER: TAMBAH / EDIT HUTANG PIUTANG -->
+    <dialog id="debtComposerDialog" class="invoice-manager-dialog" aria-labelledby="debtDialogTitle">
+        <div class="manager-heading">
+            <h2 id="debtDialogTitle">Catat Hutang / Piutang</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('debtComposerDialog').close()">×</button>
+        </div>
+        <div class="manager-content">
+            <p>Pilih jenis pencatatan, masukkan identitas pihak terkait, serta nominal transaksi.</p>
+            <form id="debtForm" onsubmit="handleDebtFormSubmit(event)">
+                <input type="hidden" id="debtEditId" value="">
+                
+                <label>Jenis Transaksi:</label>
+                <div class="type-selector-group">
+                    <label class="type-selector-card selected-piutang" id="typeLabelPiutang" onclick="selectDebtType('piutang')">
+                        <input type="radio" name="debtType" id="debtTypePiutang" value="piutang" checked>
+                        <div style="font-size: 13px;">🟢 Piutang</div>
+                        <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;">Orang ngutang ke gue (Hak tagih)</div>
+                    </label>
+                    <label class="type-selector-card" id="typeLabelHutang" onclick="selectDebtType('hutang')">
+                        <input type="radio" name="debtType" id="debtTypeHutang" value="hutang">
+                        <div style="font-size: 13px;">🔴 Hutang</div>
+                        <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;">Gue ngutang ke orang (Kewajiban)</div>
+                    </label>
+                </div>
+
+                <div class="draft-fields">
+                    <label>Nama Pihak / Rekan
+                        <input type="text" id="debtName" required placeholder="Contoh: Ahmad, Vendor Hosting, Rudi">
+                    </label>
+                    <label>No. WhatsApp / Kontak (Opsional)
+                        <input type="tel" id="debtPhone" placeholder="Contoh: 08123456789">
+                    </label>
+                    <label>Total Nominal (Rp)
+                        <input type="number" id="debtAmount" min="1" step="1" required placeholder="Contoh: 1500000">
+                    </label>
+                    <label>Sudah Dibayar / Dicicil Awal (Rp)
+                        <input type="number" id="debtPaid" min="0" step="1" value="0" required placeholder="0">
+                    </label>
+                    <label>Tanggal Transaksi
+                        <input type="date" id="debtDate" required>
+                    </label>
+                    <label>Jatuh Tempo / Janji Bayar (Opsional)
+                        <input type="date" id="debtDue">
+                    </label>
+                    <label class="wide-field">Keterangan / Keperluan
+                        <textarea id="debtNotes" rows="2" required placeholder="Contoh: Pinjaman dana talangan tiket pesawat, jasa desain logo, dll."></textarea>
+                    </label>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('debtComposerDialog').close()">Batal</button>
+                    <button type="submit" class="create-invoice-btn">Simpan Catatan</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- DIALOG PAYMENT / CICILAN -->
+    <dialog id="debtPaymentDialog" class="invoice-manager-dialog" aria-labelledby="debtPaymentTitle">
+        <div class="manager-heading">
+            <h2 id="debtPaymentTitle">Catat Pembayaran / Cicilan</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('debtPaymentDialog').close()">×</button>
+        </div>
+        <div class="manager-content">
+            <div id="debtPaymentInfo" style="background:#fffdf6; border:1px solid #e2dccf; border-radius:10px; padding:14px; margin-bottom:16px; font-size:12px; line-height:1.7;">
+                <!-- Filled dynamically -->
+            </div>
+            <form id="debtPaymentForm" onsubmit="handleDebtPaymentSubmit(event)">
+                <input type="hidden" id="paymentDebtId" value="">
+                <label>Nominal Pembayaran / Cicilan Tambahan (Rp):
+                    <input type="number" id="debtPaymentInput" min="1" step="1" required placeholder="Masukkan nominal pembayaran...">
+                </label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap; gap:10px;">
+                    <button type="button" class="debt-action-btn btn-settle" id="quickSettleBtn" onclick="quickSettleCurrentDebt()">
+                        ✓ Lunaskan Penuh Seketika
+                    </button>
+                    <div style="display:flex; gap:8px;">
+                        <button type="button" class="month-pill-btn" onclick="document.getElementById('debtPaymentDialog').close()">Batal</button>
+                        <button type="submit" class="create-invoice-btn">Simpan Pembayaran</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
     <!-- Toast Component -->
     <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
 
@@ -2599,10 +2754,18 @@
             if (state.netProfits) {
                 Object.assign(netProfits, state.netProfits);
             }
+            if (Array.isArray(state.debts)) {
+                debts = state.debts;
+                localStorage.setItem('dar-debts-records', JSON.stringify(debts));
+                if (document.body.dataset.view === 'debt') {
+                    renderDebtUI();
+                }
+            }
         }
 
         function saveLocalBillingState() {
             saveInvoiceMetadata();
+            localStorage.setItem('dar-debts-records', JSON.stringify(debts));
             Object.entries(paymentStatuses).forEach(([id, status]) => {
                 localStorage.setItem("status_" + id, status);
             });
@@ -2652,7 +2815,8 @@
                         dpAmounts,
                         netProfits,
                         customInvoices,
-                        deletedInvoiceIds
+                        deletedInvoiceIds,
+                        debts
                     })
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
@@ -2937,9 +3101,495 @@
             renderInvoiceBoard();
         }
 
+
+        // ========================================================
+        // DEBT & RECEIVABLE (HUTANG & PIUTANG) LOGIC & STATE
+        // ========================================================
+        const defaultInitialDebts = [
+            {
+                id: "debt-sample-1",
+                type: "piutang",
+                name: "Rekan Proyek Kairo",
+                phone: "081311506025",
+                amount: 1500000,
+                paid: 500000,
+                date: "2026-09-01",
+                due: "2026-09-25",
+                notes: "Talangan sewa server VPS & lisensi modul portal santri",
+                createdAt: 1788950000000
+            },
+            {
+                id: "debt-sample-2",
+                type: "hutang",
+                name: "Vendor Desain Grafis",
+                phone: "",
+                amount: 800000,
+                paid: 0,
+                date: "2026-09-05",
+                due: "2026-09-20",
+                notes: "Jasa pembuatan ilustrasi 3D & asset branding media",
+                createdAt: 1788951000000
+            }
+        ];
+
+        let debts = (() => {
+            try {
+                const stored = localStorage.getItem('dar-debts-records');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed)) return parsed;
+                }
+                return defaultInitialDebts;
+            } catch (e) {
+                return defaultInitialDebts;
+            }
+        })();
+
+        let activeDebtFilter = 'all';
+
+        function getDebtStatus(debt) {
+            const paid = Number(debt.paid) || 0;
+            const amount = Number(debt.amount) || 0;
+            if (paid >= amount) return 'SETTLED';
+            if (paid > 0) return 'PARTIAL';
+            return 'UNPAID';
+        }
+
+        function setDebtFilter(filter, button) {
+            activeDebtFilter = filter;
+            document.querySelectorAll('[data-debt-filter]').forEach(btn => btn.classList.remove('active'));
+            if (button) button.classList.add('active');
+            renderDebtUI();
+        }
+
+        function filterDebts() {
+            renderDebtUI();
+        }
+
+        function selectDebtType(type) {
+            const radioPiutang = document.getElementById('debtTypePiutang');
+            const radioHutang = document.getElementById('debtTypeHutang');
+            const labelPiutang = document.getElementById('typeLabelPiutang');
+            const labelHutang = document.getElementById('typeLabelHutang');
+            
+            if (type === 'piutang') {
+                radioPiutang.checked = true;
+                labelPiutang.classList.add('selected-piutang');
+                labelHutang.classList.remove('selected-hutang');
+            } else {
+                radioHutang.checked = true;
+                labelHutang.classList.add('selected-hutang');
+                labelPiutang.classList.remove('selected-piutang');
+            }
+        }
+
+        function openDebtComposer(editId = null) {
+            const dialog = document.getElementById('debtComposerDialog');
+            const form = document.getElementById('debtForm');
+            const titleEl = document.getElementById('debtDialogTitle');
+            const editIdEl = document.getElementById('debtEditId');
+
+            form.reset();
+            const today = new Date().toISOString().slice(0, 10);
+
+            if (editId) {
+                const item = debts.find(d => d.id === editId);
+                if (!item) return;
+                titleEl.textContent = 'Edit Catatan Transaksi';
+                editIdEl.value = item.id;
+                selectDebtType(item.type);
+                document.getElementById('debtName').value = item.name || '';
+                document.getElementById('debtPhone').value = item.phone || '';
+                document.getElementById('debtAmount').value = item.amount || '';
+                document.getElementById('debtPaid').value = item.paid || 0;
+                document.getElementById('debtDate').value = item.date || today;
+                document.getElementById('debtDue').value = item.due || '';
+                document.getElementById('debtNotes').value = item.notes || '';
+            } else {
+                titleEl.textContent = 'Catat Hutang / Piutang';
+                editIdEl.value = '';
+                selectDebtType('piutang');
+                document.getElementById('debtDate').value = today;
+                document.getElementById('debtPaid').value = 0;
+            }
+
+            if (!dialog.open) dialog.showModal();
+        }
+
+        function handleDebtFormSubmit(event) {
+            event.preventDefault();
+            const editId = document.getElementById('debtEditId').value.trim();
+            const type = document.querySelector('input[name="debtType"]:checked').value;
+            const name = document.getElementById('debtName').value.trim();
+            const phone = document.getElementById('debtPhone').value.trim();
+            const amount = Math.round(Number(document.getElementById('debtAmount').value));
+            const paid = Math.round(Number(document.getElementById('debtPaid').value)) || 0;
+            const date = document.getElementById('debtDate').value;
+            const due = document.getElementById('debtDue').value;
+            const notes = document.getElementById('debtNotes').value.trim();
+
+            if (!name || !amount || amount <= 0) {
+                showToast("MOHON ISI NAMA DAN NOMINAL DENGAN BENAR");
+                return;
+            }
+
+            if (editId) {
+                const index = debts.findIndex(d => d.id === editId);
+                if (index !== -1) {
+                    debts[index] = {
+                        ...debts[index],
+                        type,
+                        name,
+                        phone,
+                        amount,
+                        paid,
+                        date,
+                        due,
+                        notes,
+                        updatedAt: Date.now()
+                    };
+                    showToast("CATATAN BERHASIL DIPERBARUI!");
+                }
+            } else {
+                const newItem = {
+                    id: "debt-" + crypto.randomUUID(),
+                    type,
+                    name,
+                    phone,
+                    amount,
+                    paid,
+                    date,
+                    due,
+                    notes,
+                    createdAt: Date.now()
+                };
+                debts.unshift(newItem);
+                showToast("CATATAN BERHASIL DITAMBAHKAN!");
+            }
+
+            document.getElementById('debtComposerDialog').close();
+            saveLocalBillingState();
+            renderDebtUI();
+            persistBillingState();
+        }
+
+        function deleteDebtRecord(id) {
+            const item = debts.find(d => d.id === id);
+            if (!item) return;
+            const label = item.type === 'piutang' ? 'piutang dari ' + item.name : 'hutang ke ' + item.name;
+            if (!confirm(`Hapus catatan ${label} (${formatIDR(item.amount)})?`)) return;
+
+            debts = debts.filter(d => d.id !== id);
+            saveLocalBillingState();
+            renderDebtUI();
+            persistBillingState();
+            showToast("CATATAN BERHASIL DIHAPUS");
+        }
+
+        function openDebtPaymentModal(id) {
+            const item = debts.find(d => d.id === id);
+            if (!item) return;
+
+            const remaining = Math.max(0, item.amount - (item.paid || 0));
+            document.getElementById('paymentDebtId').value = item.id;
+            
+            const isPiutang = item.type === 'piutang';
+            const title = isPiutang ? 'Catat Pelunasan / Cicilan Piutang' : 'Catat Pembayaran / Cicilan Hutang';
+            document.getElementById('debtPaymentTitle').textContent = title;
+
+            document.getElementById('debtPaymentInfo').innerHTML = `
+                <div><strong>${isPiutang ? '🟢 Pihak yang Berhutang:' : '🔴 Kewajiban Hutang Kepada:'}</strong> ${escapeInvoiceText(item.name)}</div>
+                <div><strong>Keperluan:</strong> ${escapeInvoiceText(item.notes)}</div>
+                <div><strong>Total Transaksi:</strong> ${formatIDR(item.amount)}</div>
+                <div><strong>Sudah Dibayar:</strong> ${formatIDR(item.paid || 0)}</div>
+                <div style="font-size: 13px; font-weight: 700; color: ${isPiutang ? '#065f46' : '#991b1b'}; margin-top: 4px;">
+                    Sisa ${isPiutang ? 'yang Harus Ditagih:' : 'Kewajiban Bayar:'} ${formatIDR(remaining)}
+                </div>
+            `;
+
+            document.getElementById('debtPaymentInput').value = remaining > 0 ? remaining : '';
+            document.getElementById('quickSettleBtn').textContent = `✓ Lunaskan Penuh (${formatIDR(remaining)})`;
+
+            const dialog = document.getElementById('debtPaymentDialog');
+            if (!dialog.open) dialog.showModal();
+        }
+
+        function quickSettleCurrentDebt() {
+            const id = document.getElementById('paymentDebtId').value;
+            const item = debts.find(d => d.id === id);
+            if (!item) return;
+
+            item.paid = item.amount;
+            item.updatedAt = Date.now();
+
+            document.getElementById('debtPaymentDialog').close();
+            saveLocalBillingState();
+            renderDebtUI();
+            persistBillingState();
+            showToast("TRANSAKSI BERHASIL DITANDAI LUNAS!");
+        }
+
+        function handleDebtPaymentSubmit(event) {
+            event.preventDefault();
+            const id = document.getElementById('paymentDebtId').value;
+            const item = debts.find(d => d.id === id);
+            if (!item) return;
+
+            const additional = Math.round(Number(document.getElementById('debtPaymentInput').value)) || 0;
+            if (additional <= 0) {
+                showToast("MASUKKAN NOMINAL PEMBAYARAN");
+                return;
+            }
+
+            item.paid = Math.min(item.amount, (item.paid || 0) + additional);
+            item.updatedAt = Date.now();
+
+            document.getElementById('debtPaymentDialog').close();
+            saveLocalBillingState();
+            renderDebtUI();
+            persistBillingState();
+            showToast("PEMBAYARAN CICILAN BERHASIL DICATAT!");
+        }
+
+        function toggleDebtSettle(id) {
+            const item = debts.find(d => d.id === id);
+            if (!item) return;
+
+            if ((item.paid || 0) >= item.amount) {
+                // If settled, reset to 0
+                item.paid = 0;
+                showToast("STATUS DIUBAH MENJADI BELUM LUNAS");
+            } else {
+                // Mark full
+                item.paid = item.amount;
+                showToast("TRANSAKSI BERHASIL DILUNASI!");
+            }
+
+            item.updatedAt = Date.now();
+            saveLocalBillingState();
+            renderDebtUI();
+            persistBillingState();
+        }
+
+        function copyDebtWaScript(id) {
+            const item = debts.find(d => d.id === id);
+            if (!item) return;
+
+            const remaining = Math.max(0, item.amount - (item.paid || 0));
+            const status = getDebtStatus(item);
+            let msg = '';
+
+            if (item.type === 'piutang') {
+                if (status === 'SETTLED') {
+                    msg = `Halo ${item.name}, terima kasih banyak ya! Pembayaran untuk ${item.notes} sebesar ${formatIDR(item.amount)} sudah lunas tercatat. Semoga berkah dan sehat sukses selalu! 🙏✨`;
+                } else {
+                    const dueText = item.due ? ` (target jatuh tempo: ${item.due})` : '';
+                    msg = `Halo ${item.name}, semoga sehat selalu ya. 🙏✨
+
+Sekadar mengingatkan catatan terkait ${item.notes}:
+💰 Total: ${formatIDR(item.amount)}
+${(item.paid || 0) > 0 ? `💳 Sudah dicicil: ${formatIDR(item.paid)}
+👉 Sisa yang belum: ${formatIDR(remaining)}
+` : `👉 Sisa yang belum: ${formatIDR(remaining)}
+`}${dueText}
+
+Nanti kalau sudah ada kelonggaran, bisa ditransfer ke rekening resmi:
+🏦 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+
+Terima kasih banyak sebelumnya ya! 😊🤝`;
+                }
+            } else {
+                if (status === 'SETTLED') {
+                    msg = `Halo ${item.name}, alhamdulillah kewajiban pembayaran/hutang saya untuk ${item.notes} sebesar ${formatIDR(item.amount)} sudah lunas saya bayarkan ya. Terima kasih banyak atas kepercayaan dan bantuannya selama ini! 🙏✨`;
+                } else {
+                    msg = `Halo ${item.name}, terima kasih banyak atas kesabarannya ya. 🙏✨
+
+Kewajiban hutang saya untuk ${item.notes}:
+💰 Total: ${formatIDR(item.amount)}
+${(item.paid || 0) > 0 ? `💳 Sudah saya cicil: ${formatIDR(item.paid)}
+👉 Sisa kewajiban saya: ${formatIDR(remaining)}
+` : `👉 Sisa kewajiban saya: ${formatIDR(remaining)}
+`}
+InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. Terima kasih banyak ya! 🙏😊`;
+                }
+            }
+
+            navigator.clipboard.writeText(msg).then(() => {
+                showToast("SCRIPT PESAN WA BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function renderDebtUI() {
+            const listEl = document.getElementById('debtCardList');
+            if (!listEl) return;
+
+            // 1. Calculate and update stats
+            let activePiutang = 0;
+            let activeHutang = 0;
+            let settledCount = 0;
+            let settledAmount = 0;
+
+            debts.forEach(item => {
+                const remaining = Math.max(0, item.amount - (item.paid || 0));
+                const status = getDebtStatus(item);
+                if (status === 'SETTLED') {
+                    settledCount++;
+                    settledAmount += item.amount;
+                } else {
+                    if (item.type === 'piutang') {
+                        activePiutang += remaining;
+                    } else {
+                        activeHutang += remaining;
+                    }
+                }
+            });
+
+            const net = activePiutang - activeHutang;
+
+            const statPiutangEl = document.getElementById('statActivePiutang');
+            const statHutangEl = document.getElementById('statActiveHutang');
+            const statNetEl = document.getElementById('statNetDebt');
+            const statSettledEl = document.getElementById('statSettledDebt');
+
+            if (statPiutangEl) statPiutangEl.textContent = formatIDR(activePiutang);
+            if (statHutangEl) statHutangEl.textContent = formatIDR(activeHutang);
+
+            if (statNetEl) {
+                if (net >= 0) {
+                    statNetEl.textContent = '+ ' + formatIDR(net);
+                    statNetEl.style.color = '#065f46';
+                } else {
+                    statNetEl.textContent = '- ' + formatIDR(Math.abs(net));
+                    statNetEl.style.color = '#991b1b';
+                }
+            }
+
+            if (statSettledEl) {
+                statSettledEl.textContent = `${settledCount} Catatan (${formatIDR(settledAmount)})`;
+            }
+
+            // 2. Filter records
+            const query = (document.getElementById('debtSearchInput')?.value || '').toLowerCase().trim();
+            const todayStr = new Date().toISOString().slice(0, 10);
+
+            const filtered = debts.filter(item => {
+                const status = getDebtStatus(item);
+
+                // Type filter
+                if (activeDebtFilter === 'piutang' && item.type !== 'piutang') return false;
+                if (activeDebtFilter === 'hutang' && item.type !== 'hutang') return false;
+                if (activeDebtFilter === 'unpaid' && status === 'SETTLED') return false;
+                if (activeDebtFilter === 'settled' && status !== 'SETTLED') return false;
+
+                // Search query
+                if (query) {
+                    const haystack = [item.name, item.notes, item.phone || '', item.type, item.date, item.due || ''].join(' ').toLowerCase();
+                    if (!haystack.includes(query)) return false;
+                }
+
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="debt-empty-state">
+                        <p style="margin:0 0 6px; font-weight: 600; font-size: 14px; color: #272722;">Belum ada catatan hutang atau piutang yang cocok.</p>
+                        <p style="margin:0; font-size: 12px; color: #625c4f;">Klik tombol <strong>"+ Catat Hutang / Piutang"</strong> di atas untuk menambahkan catatan baru.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort: Unsettled first, then newest
+            filtered.sort((a, b) => {
+                const aSettled = getDebtStatus(a) === 'SETTLED';
+                const bSettled = getDebtStatus(b) === 'SETTLED';
+                if (aSettled !== bSettled) return aSettled ? 1 : -1;
+                return (b.createdAt || 0) - (a.createdAt || 0);
+            });
+
+            listEl.innerHTML = filtered.map(item => {
+                const status = getDebtStatus(item);
+                const remaining = Math.max(0, item.amount - (item.paid || 0));
+                const isPiutang = item.type === 'piutang';
+
+                let statusBadgeHtml = '';
+                if (status === 'SETTLED') {
+                    statusBadgeHtml = `<span class="debt-status-pill debt-status-settled">🟢 Lunas</span>`;
+                } else if (status === 'PARTIAL') {
+                    statusBadgeHtml = `<span class="debt-status-pill debt-status-partial">🟡 Dicicil (${formatIDR(item.paid)})</span>`;
+                } else {
+                    statusBadgeHtml = `<span class="debt-status-pill debt-status-unpaid">🔴 Belum Lunas</span>`;
+                }
+
+                const isOverdue = item.due && item.due < todayStr && status !== 'SETTLED';
+
+                return `
+                    <div class="debt-item-card ${isPiutang ? 'type-piutang' : 'type-hutang'}">
+                        <div class="debt-item-main">
+                            <div class="debt-header-badges">
+                                <span class="debt-type-badge ${isPiutang ? 'badge-piutang' : 'badge-hutang'}">
+                                    ${isPiutang ? '🟢 Piutang (Hak Tagih)' : '🔴 Hutang (Kewajiban)'}
+                                </span>
+                                ${statusBadgeHtml}
+                            </div>
+                            <div class="debt-person-name">${escapeInvoiceText(item.name)}</div>
+                            <div class="debt-notes">${escapeInvoiceText(item.notes)}</div>
+                            <div class="debt-meta-tags">
+                                <span class="debt-meta-tag">📅 Transaksi: ${escapeInvoiceText(item.date)}</span>
+                                ${item.due ? `<span class="debt-meta-tag ${isOverdue ? 'overdue' : ''}">⏳ Jatuh Tempo: ${escapeInvoiceText(item.due)}${isOverdue ? ' (Lewat Tempo!)' : ''}</span>` : ''}
+                                ${item.phone ? `<span class="debt-meta-tag">📞 ${escapeInvoiceText(item.phone)}</span>` : ''}
+                            </div>
+                        </div>
+
+                        <div class="debt-amount-col">
+                            <div class="debt-amount-label">TOTAL TRANSAKSI</div>
+                            <div class="debt-amount-total">${formatIDR(item.amount)}</div>
+                            <div class="debt-amount-remaining" style="color: ${status === 'SETTLED' ? '#047857' : isPiutang ? '#065f46' : '#991b1b'};">
+                                ${status === 'SETTLED' ? '✓ Sudah Lunas' : `Sisa: <span>${formatIDR(remaining)}</span>`}
+                            </div>
+                        </div>
+
+                        <div class="debt-item-actions">
+                            <button class="debt-action-btn btn-pay" onclick="openDebtPaymentModal('${item.id}')" title="Catat pembayaran atau cicilan">
+                                💳 Bayar / Cicil
+                            </button>
+                            <button class="debt-action-btn ${status === 'SETTLED' ? '' : 'btn-settle'}" onclick="toggleDebtSettle('${item.id}')" title="Ubah status lunas / belum">
+                                ${status === 'SETTLED' ? '↺ Batal Lunas' : '✓ Tandai Lunas'}
+                            </button>
+                            <button class="debt-action-btn btn-wa" onclick="copyDebtWaScript('${item.id}')" title="Salin pesan WhatsApp santun">
+                                📲 Salin WA
+                            </button>
+                            <button class="debt-action-btn" onclick="openDebtComposer('${item.id}')" title="Edit rincian catatan">
+                                ✏️ Edit
+                            </button>
+                            <button class="debt-action-btn btn-delete" onclick="deleteDebtRecord('${item.id}')" title="Hapus catatan ini">
+                                🗑
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function setWorkspaceView(view) {
             document.body.dataset.view = view;
-            document.getElementById('workspaceTitle').textContent = view === 'report' ? 'Laporan keuangan' : 'Invoice';
+            if (view === 'report') {
+                document.getElementById('workspaceTitle').textContent = 'Laporan keuangan';
+                const sub = document.querySelector('.portal-subtitle');
+                if (sub) sub.textContent = 'Ringkasan performa omset, biaya operasional, dan keuntungan bersih.';
+            } else if (view === 'debt') {
+                document.getElementById('workspaceTitle').textContent = 'Hutang & Piutang';
+                const sub = document.querySelector('.portal-subtitle');
+                if (sub) sub.textContent = 'Pencatatan uang yang harus ditagih (piutang) dan kewajiban bayar (hutang).';
+                renderDebtUI();
+            } else {
+                document.getElementById('workspaceTitle').textContent = 'Invoice';
+                const sub = document.querySelector('.portal-subtitle');
+                if (sub) sub.textContent = 'Tagihan tertata, pendapatan terpantau.';
+            }
             document.querySelectorAll('[data-view].sidebar-link').forEach(button => {
                 button.classList.toggle('active', button.dataset.view === view);
                 button.setAttribute('aria-pressed', String(button.dataset.view === view));

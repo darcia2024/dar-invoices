@@ -206,3 +206,285 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
     .dev-contact-btn { white-space: normal; text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* ========================================================
+   DEBT & RECEIVABLE (HUTANG & PIUTANG) MODULE STYLES
+   ======================================================== */
+#debtSection { display: none; }
+body[data-view="debt"] #debtSection { display: block; }
+body[data-view="debt"] .invoice-grid,
+body[data-view="debt"] .revenue-report-box,
+body[data-view="debt"] .filter-section,
+body[data-view="debt"] .invoice-tools,
+body[data-view="debt"] .stats-bar {
+    display: none !important;
+}
+
+.debt-stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.stat-card.debt-piutang-stat { background: #d4eedb; }
+.stat-card.debt-hutang-stat { background: #fcdbd3; }
+.stat-card.debt-net-stat { background: #dce7f9; }
+.stat-card.debt-done-stat { background: #ede8d8; }
+
+.debt-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.debt-filter-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.debt-search-box {
+    flex: 1;
+    min-width: 240px;
+    max-width: 380px;
+    position: relative;
+}
+.debt-search-box .search-input {
+    width: 100%;
+}
+
+.debt-card-list {
+    display: grid;
+    gap: 12px;
+}
+.debt-empty-state {
+    padding: 38px 20px;
+    text-align: center;
+    background: #fffdf6;
+    border: 1px dashed #cfc7b4;
+    border-radius: 14px;
+    color: #686150;
+    font-size: 13px;
+    line-height: 1.7;
+}
+.debt-item-card {
+    background: #fffdf5;
+    border: 1px solid #dfd8c8;
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    transition: border-color .15s ease;
+}
+.debt-item-card:hover {
+    border-color: #baa78e;
+}
+.debt-item-card.type-piutang {
+    border-left: 5px solid #2e7d32;
+}
+.debt-item-card.type-hutang {
+    border-left: 5px solid #c62828;
+}
+
+.debt-item-main {
+    flex: 1;
+    min-width: 250px;
+}
+.debt-header-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+.debt-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.4px;
+}
+.badge-piutang {
+    background: #d1fae5;
+    color: #065f46;
+}
+.badge-hutang {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.debt-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+.debt-status-unpaid { background: #fef2f2; color: #991b1b; }
+.debt-status-partial { background: #fef3c7; color: #92400e; }
+.debt-status-settled { background: #ecfdf5; color: #047857; }
+
+.debt-person-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #24241f;
+    margin: 2px 0 4px;
+}
+.debt-notes {
+    font-size: 12px;
+    color: #555146;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+.debt-meta-tags {
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+    color: #797466;
+    flex-wrap: wrap;
+}
+.debt-meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.debt-meta-tag.overdue {
+    color: #c62828;
+    font-weight: 700;
+}
+
+.debt-amount-col {
+    text-align: right;
+    min-width: 170px;
+}
+.debt-amount-label {
+    font-size: 10px;
+    color: #706b5d;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+.debt-amount-total {
+    font-size: 16px;
+    font-weight: 800;
+    color: #24241f;
+    font-variant-numeric: tabular-nums;
+}
+.debt-amount-remaining {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 3px;
+    color: #5c584c;
+}
+.debt-amount-remaining span {
+    font-weight: 700;
+}
+
+.debt-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.debt-action-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 7px;
+    border: 1px solid #d5cebe;
+    background: #faf8ee;
+    color: #272722;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.debt-action-btn:hover {
+    background: #eae5d4;
+}
+.debt-action-btn.btn-pay {
+    background: #272722;
+    color: #fff;
+    border-color: #272722;
+}
+.debt-action-btn.btn-pay:hover {
+    background: #3f3f37;
+}
+.debt-action-btn.btn-settle {
+    background: #2e7d32;
+    color: #fff;
+    border-color: #2e7d32;
+}
+.debt-action-btn.btn-settle:hover {
+    background: #256628;
+}
+.debt-action-btn.btn-wa {
+    background: #1b8a43;
+    color: #fff;
+    border-color: #1b8a43;
+}
+.debt-action-btn.btn-wa:hover {
+    background: #166e35;
+}
+.debt-action-btn.btn-delete {
+    color: #991b1b;
+    border-color: transparent;
+    background: transparent;
+}
+.debt-action-btn.btn-delete:hover {
+    background: #fee2e2;
+}
+
+.type-selector-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 6px 0 14px;
+}
+.type-selector-card {
+    border: 1.5px solid #d7cfbc;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    background: #fff;
+    text-align: center;
+    transition: all .15s ease;
+}
+.type-selector-card input[type="radio"] {
+    display: none;
+}
+.type-selector-card.selected-piutang {
+    border-color: #16a34a;
+    background: #f0fdf4;
+    color: #065f46;
+    font-weight: 700;
+}
+.type-selector-card.selected-hutang {
+    border-color: #dc2626;
+    background: #fef2f2;
+    color: #991b1b;
+    font-weight: 700;
+}
+
+@media (max-width: 850px) {
+    .debt-stats-bar { grid-template-columns: 1fr 1fr; }
+    .debt-item-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .debt-amount-col { text-align: left; }
+    .debt-item-actions { width: 100%; justify-content: flex-start; }
+}
+@media (max-width: 600px) {
+    .debt-stats-bar { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .debt-toolbar { flex-direction: column; align-items: stretch; }
+    .debt-search-box { max-width: none; }
+    .debt-filter-pills { width: 100%; }
+}

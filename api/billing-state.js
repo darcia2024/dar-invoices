@@ -40,6 +40,7 @@ function mergeState(state) {
   return {
     customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
     deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
+    debts: state && Array.isArray(state.debts) ? state.debts : [],
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),
