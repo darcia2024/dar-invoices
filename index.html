@@ -3107,28 +3107,40 @@
         // ========================================================
         const defaultInitialDebts = [
             {
-                id: "debt-sample-1",
+                id: "debt-teh-umi",
                 type: "piutang",
-                name: "Rekan Proyek Kairo",
-                phone: "081311506025",
-                amount: 1500000,
-                paid: 500000,
-                date: "2026-09-01",
-                due: "2026-09-25",
-                notes: "Talangan sewa server VPS & lisensi modul portal santri",
+                name: "Teh Umi",
+                phone: "",
+                amount: 200000,
+                paid: 0,
+                date: "2026-09-09",
+                due: "",
+                notes: "Project bikin Website",
                 createdAt: 1788950000000
             },
             {
-                id: "debt-sample-2",
-                type: "hutang",
-                name: "Vendor Desain Grafis",
+                id: "debt-vendra",
+                type: "piutang",
+                name: "Vendra",
                 phone: "",
-                amount: 800000,
+                amount: 250000,
                 paid: 0,
-                date: "2026-09-05",
-                due: "2026-09-20",
-                notes: "Jasa pembuatan ilustrasi 3D & asset branding media",
+                date: "2026-09-09",
+                due: "",
+                notes: "Membetulkan handphone (Service HP)",
                 createdAt: 1788951000000
+            },
+            {
+                id: "debt-azzam",
+                type: "hutang",
+                name: "Azzam",
+                phone: "",
+                amount: 145000,
+                paid: 0,
+                date: "2026-09-09",
+                due: "",
+                notes: "Bayar rumah di Mesir bulan September",
+                createdAt: 1788952000000
             }
         ];
 
@@ -3137,8 +3149,12 @@
                 const stored = localStorage.getItem('dar-debts-records');
                 if (stored) {
                     const parsed = JSON.parse(stored);
-                    if (Array.isArray(parsed)) return parsed;
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        const hasSample = parsed.some(d => d.id === 'debt-sample-1' || d.id === 'debt-sample-2');
+                        if (!hasSample) return parsed;
+                    }
                 }
+                localStorage.setItem('dar-debts-records', JSON.stringify(defaultInitialDebts));
                 return defaultInitialDebts;
             } catch (e) {
                 return defaultInitialDebts;
