@@ -11,19 +11,22 @@
     
     <style>
         :root {
-            --bg-canvas: #f8fafc;
+            --bg-canvas: #fafafa;
             --bg-card: #ffffff;
-            --navy-primary: #0e2a47;      /* Royal International Navy */
-            --navy-hover: #081b30;
-            --navy-deep: #051221;
-            --navy-subtle: #f0f4f9;
-            --gold-accent: #c28e2b;      /* Al-Azhar Gold */
-            --gold-light: #dfb253;
-            --text-dark: #0f172a;
-            --text-muted: #475569;
-            --text-light: #94a3b8;
-            --border-light: #e2e8f0;
-            --border-subtle: #f1f5f9;
+            /* Official Hamasah Brand Colors */
+            --brand-gold: #c89304;         /* Rich Brand Gold */
+            --brand-gold-vibrant: #e5ad0c; /* Vibrant Gold Accent */
+            --brand-gold-dark: #a17400;   /* Deep Gold for Text Contrast */
+            --brand-charcoal: #232226;    /* Dark Charcoal Onyx */
+            --brand-charcoal-light: #373638;
+            --gold-subtle: #fdfaf2;
+            --gold-border: #fef08a;
+            
+            --text-dark: #18181b;
+            --text-muted: #52525b;
+            --text-light: #a1a1aa;
+            --border-light: #e4e4e7;
+            --border-subtle: #f4f4f5;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
         }
 
@@ -38,7 +41,7 @@
             font-weight: 400; /* Plus Jakarta Sans Reguler */
             background-color: var(--bg-canvas);
             color: var(--text-dark);
-            line-height: 1.65;
+            line-height: 1.6;
             padding: 24px 16px;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
@@ -53,8 +56,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #0b1727;
-            background-image: radial-gradient(circle at top center, #162a42 0%, #08101a 100%);
+            background-color: #121214;
+            background-image: radial-gradient(circle at top center, #26241f 0%, #0d0d0f 100%);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -72,11 +75,11 @@
 
         .cover-card {
             background-color: #ffffff;
-            border-top: 5px solid var(--navy-primary);
+            border-top: 5px solid var(--brand-gold-vibrant);
             border-radius: 12px;
-            max-width: 470px;
+            max-width: 460px;
             width: 100%;
-            padding: 34px 30px;
+            padding: 32px 28px;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
             position: relative;
@@ -94,10 +97,11 @@
             40%, 60% { transform: translate3d(6px, 0, 0); }
         }
 
-        .cover-shield-icon {
-            width: 44px;
-            height: 50px;
-            margin: 0 auto 12px auto;
+        .cover-logo-img {
+            height: 68px;
+            width: auto;
+            object-fit: contain;
+            margin: 0 auto 14px auto;
             display: block;
         }
 
@@ -107,17 +111,17 @@
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--navy-primary);
-            border: 1px solid var(--navy-primary);
+            color: var(--brand-gold-dark);
+            border: 1px solid var(--brand-gold-vibrant);
             padding: 2px 10px;
             border-radius: 4px;
             margin-bottom: 12px;
         }
 
         .cover-title {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            color: var(--text-dark);
+            color: var(--brand-charcoal);
             margin-bottom: 4px;
             letter-spacing: -0.01em;
         }
@@ -126,21 +130,21 @@
             font-size: 0.8rem;
             font-weight: 400;
             color: var(--text-muted);
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .cover-recipient-box {
             padding: 12px 14px;
             border-top: 1px solid var(--border-light);
             border-bottom: 1px solid var(--border-light);
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .cover-recipient-label {
             font-size: 0.65rem;
             font-weight: 700;
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 2px;
@@ -181,14 +185,14 @@
             font-weight: 700;
             letter-spacing: 0.35em;
             text-align: center;
-            color: var(--navy-primary);
+            color: var(--brand-charcoal);
             outline: none;
             transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
-            border-color: var(--navy-primary);
-            box-shadow: 0 0 0 3px rgba(14, 42, 71, 0.12);
+            border-color: var(--brand-gold-vibrant);
+            box-shadow: 0 0 0 3px rgba(229, 173, 12, 0.18);
         }
 
         .passcode-error {
@@ -203,7 +207,7 @@
         .cover-open-btn {
             width: 100%;
             height: 44px;
-            background-color: var(--navy-primary);
+            background-color: var(--brand-charcoal);
             color: #ffffff;
             border: none;
             border-radius: 6px;
@@ -221,19 +225,19 @@
         }
 
         .cover-open-btn:hover {
-            background-color: var(--navy-hover);
+            background-color: var(--brand-gold-dark);
         }
 
         /* ----------------------------------------------------
            TOP CONTROL ACTION BAR (DESKTOP)
         ---------------------------------------------------- */
         .action-bar {
-            max-width: 920px;
+            max-width: 900px;
             margin: 0 auto 16px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 8px 0;
         }
 
         .action-title {
@@ -245,7 +249,7 @@
         }
 
         .action-title strong {
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             font-weight: 700;
         }
 
@@ -256,7 +260,7 @@
 
         .btn {
             font-family: var(--font-sans);
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 600;
             padding: 7px 14px;
             border-radius: 6px;
@@ -280,38 +284,38 @@
         }
 
         .btn-primary {
-            background: var(--navy-primary);
-            border: 1px solid var(--navy-primary);
+            background: var(--brand-charcoal);
+            border: 1px solid var(--brand-charcoal);
             color: #ffffff;
         }
 
         .btn-primary:hover {
-            background: var(--navy-hover);
-            border-color: var(--navy-hover);
+            background: var(--brand-gold-dark);
+            border-color: var(--brand-gold-dark);
         }
 
         /* ----------------------------------------------------
-           MAIN CLEAN DESKTOP DOCUMENT CONTAINER (NO BOXES)
+           MAIN CLEAN DESKTOP DOCUMENT (NO BOXES)
         ---------------------------------------------------- */
         .invoice-container {
-            max-width: 920px;
+            max-width: 900px;
             margin: 0 auto;
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-            padding: 44px 50px;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+            padding: 40px 48px;
             display: flex;
             flex-direction: column;
-            gap: 34px;
+            gap: 30px;
         }
 
         /* Header Row */
         .header-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding-bottom: 22px;
-            border-bottom: 1.5px solid var(--navy-primary);
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--brand-gold-vibrant);
         }
 
         .brand-block {
@@ -320,24 +324,25 @@
             gap: 16px;
         }
 
-        .brand-logo-svg {
-            width: 46px;
-            height: 52px;
+        .brand-logo-img {
+            height: 56px;
+            width: auto;
+            object-fit: contain;
             flex-shrink: 0;
         }
 
         .brand-title {
             font-size: 1.25rem;
             font-weight: 800;
-            color: var(--text-dark);
+            color: var(--brand-charcoal);
             line-height: 1.25;
             letter-spacing: -0.01em;
         }
 
         .brand-sub {
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             font-weight: 500;
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             margin-top: 2px;
         }
 
@@ -351,7 +356,7 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             color: #ffffff;
-            background: var(--navy-primary);
+            background: var(--brand-charcoal);
             padding: 3px 10px;
             border-radius: 4px;
             text-transform: uppercase;
@@ -359,14 +364,14 @@
         }
 
         .header-ref-number {
-            font-size: 1rem;
+            font-size: 0.98rem;
             font-weight: 800;
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             letter-spacing: 0.02em;
         }
 
         .header-date-text {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             margin-top: 2px;
         }
@@ -376,7 +381,7 @@
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 36px;
-            padding-bottom: 22px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border-light);
         }
 
@@ -385,14 +390,14 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             margin-bottom: 6px;
         }
 
         .client-name-bold {
             font-size: 1.15rem;
             font-weight: 800; /* Bold */
-            color: var(--text-dark);
+            color: var(--brand-charcoal);
             line-height: 1.35;
         }
 
@@ -430,32 +435,32 @@
         .section-wrap {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .section-heading {
-            font-size: 1rem;
+            font-size: 0.96rem;
             font-weight: 800;
-            color: var(--text-dark);
+            color: var(--brand-charcoal);
             letter-spacing: -0.01em;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             border-bottom: 1px solid var(--border-light);
         }
 
         .sec-tag {
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             font-weight: 800;
         }
 
         .section-desc {
-            font-size: 0.86rem;
+            font-size: 0.85rem;
             font-weight: 400; /* Reguler */
             color: var(--text-muted);
-            line-height: 1.65;
+            line-height: 1.6;
         }
 
         /* Clean Tables */
@@ -472,17 +477,17 @@
             text-transform: uppercase;
             letter-spacing: 0.06em;
             color: var(--text-muted);
-            padding: 10px 12px;
+            padding: 10px 10px;
             border-bottom: 1.5px solid var(--border-light);
         }
 
         .clean-table td {
-            padding: 12px 12px;
+            padding: 11px 10px;
             border-bottom: 1px solid var(--border-subtle);
             font-weight: 400; /* Reguler */
             color: var(--text-dark);
             vertical-align: top;
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
         .clean-table tr:last-child td {
@@ -491,61 +496,61 @@
 
         .phase-col {
             font-weight: 700 !important;
-            color: var(--navy-primary);
-            width: 115px;
+            color: var(--brand-charcoal);
+            width: 110px;
             white-space: nowrap;
         }
 
         .durasi-col {
-            width: 160px;
+            width: 150px;
             color: var(--text-muted);
             text-align: left;
         }
 
         .price-col {
             font-weight: 800 !important; /* Bold */
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             text-align: right;
-            width: 140px;
+            width: 135px;
             white-space: nowrap;
         }
 
-        /* Section Entry Rows */
-        .entry-group {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        /* Scope Cards / Entries (Ringkas & Clean) */
+        .scope-grid-ringkas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 24px;
+            margin-top: 4px;
         }
 
-        .scope-item {
-            padding-bottom: 16px;
+        .scope-card-ringkas {
+            padding-bottom: 14px;
             border-bottom: 1px solid var(--border-subtle);
         }
 
-        .scope-item:last-child {
+        .scope-card-ringkas:nth-last-child(-n+2) {
             border-bottom: none;
-            padding-bottom: 0;
         }
 
-        .scope-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 6px;
-        }
-
-        .scope-title {
-            font-size: 0.94rem;
-            font-weight: 700;
-            color: var(--text-dark);
+        .scope-head-ringkas {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            margin-bottom: 4px;
         }
 
-        .scope-title span {
-            color: var(--navy-primary);
-            font-weight: 800;
+        .scope-num-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--brand-gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .scope-name-ringkas {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--brand-charcoal);
         }
 
         .clean-bullet-list {
@@ -556,12 +561,12 @@
 
         .clean-bullet-list li {
             position: relative;
-            padding-left: 16px;
-            margin-bottom: 5px;
-            font-size: 0.83rem;
+            padding-left: 14px;
+            margin-bottom: 4px;
+            font-size: 0.81rem;
             font-weight: 400; /* Reguler */
             color: var(--text-muted);
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
         .clean-bullet-list li strong {
@@ -572,8 +577,8 @@
         .clean-bullet-list li::before {
             content: "•";
             position: absolute;
-            left: 2px;
-            color: var(--navy-primary);
+            left: 0;
+            color: var(--brand-gold-vibrant);
             font-weight: bold;
         }
 
@@ -581,7 +586,7 @@
         .two-column-flow {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 28px;
+            gap: 24px;
         }
 
         /* Signature Grid */
@@ -589,7 +594,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 36px;
-            padding-top: 14px;
+            padding-top: 12px;
             border-top: 1px solid var(--border-light);
         }
 
@@ -598,13 +603,13 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--navy-primary);
-            margin-bottom: 10px;
+            color: var(--brand-gold-dark);
+            margin-bottom: 8px;
         }
 
         .sign-row {
             display: flex;
-            font-size: 0.83rem;
+            font-size: 0.82rem;
             margin-bottom: 4px;
         }
 
@@ -615,10 +620,10 @@
         }
 
         .sign-space {
-            height: 60px;
+            height: 54px;
             border-bottom: 1px dashed var(--border-light);
-            margin-top: 10px;
-            margin-bottom: 8px;
+            margin-top: 8px;
+            margin-bottom: 6px;
         }
 
         /* Bottom Payment & Issuer */
@@ -626,8 +631,8 @@
             display: grid;
             grid-template-columns: 1.1fr 1fr;
             gap: 36px;
-            padding-top: 20px;
-            border-top: 1.5px solid var(--navy-primary);
+            padding-top: 18px;
+            border-top: 1.5px solid var(--brand-gold-vibrant);
         }
 
         .bottom-title {
@@ -635,14 +640,14 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--navy-primary);
+            color: var(--brand-gold-dark);
             margin-bottom: 6px;
         }
 
         .bank-details-clean, .issuer-clean {
-            font-size: 0.84rem;
+            font-size: 0.83rem;
             font-weight: 400; /* Reguler */
-            line-height: 1.6;
+            line-height: 1.55;
             color: var(--text-muted);
         }
 
@@ -656,8 +661,8 @@
 
         .copy-pill-btn {
             background: transparent;
-            border: 1px solid var(--navy-primary);
-            color: var(--navy-primary);
+            border: 1px solid var(--brand-charcoal);
+            color: var(--brand-charcoal);
             font-family: var(--font-sans);
             font-size: 0.68rem;
             font-weight: 700;
@@ -669,12 +674,12 @@
         }
 
         .copy-pill-btn:hover {
-            background: var(--navy-primary);
+            background: var(--brand-charcoal);
             color: #ffffff;
         }
 
         /* ----------------------------------------------------
-           DEDICATED CLEAN MOBILE VIEW (NO BOXES, PLUS JAKARTA SANS REGULER)
+           DEDICATED CLEAN MOBILE VIEW (NO BOXES, RINGKAS & ELEGAN)
         ---------------------------------------------------- */
         .mobile-view {
             display: none;
@@ -709,7 +714,7 @@
                 align-items: center;
                 justify-content: space-between;
                 padding-bottom: 14px;
-                margin-bottom: 16px;
+                margin-bottom: 14px;
                 border-bottom: 1px solid var(--border-light);
             }
 
@@ -719,16 +724,22 @@
                 gap: 10px;
             }
 
+            .mob-logo-img {
+                height: 38px;
+                width: auto;
+                object-fit: contain;
+            }
+
             .mob-brand-title {
                 font-size: 0.92rem;
                 font-weight: 800;
-                color: var(--text-dark);
+                color: var(--brand-charcoal);
                 line-height: 1.25;
             }
 
             .mob-brand-sub {
                 font-size: 0.72rem;
-                color: var(--navy-primary);
+                color: var(--brand-gold-dark);
                 font-weight: 600;
             }
 
@@ -753,22 +764,22 @@
             }
 
             .mob-btn-primary {
-                background: var(--navy-primary);
+                background: var(--brand-charcoal);
                 color: #ffffff;
-                border-color: var(--navy-primary);
+                border-color: var(--brand-charcoal);
             }
 
             /* Client Header */
             .mob-header-section {
                 padding-bottom: 4px;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
 
             .mob-client-label {
                 font-size: 0.68rem;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
-                color: var(--navy-primary);
+                color: var(--brand-gold-dark);
                 font-weight: 600;
                 margin-bottom: 4px;
             }
@@ -776,7 +787,7 @@
             .mob-client-name {
                 font-size: 1.25rem;
                 font-weight: 800; /* Bold */
-                color: var(--text-dark);
+                color: var(--brand-charcoal);
                 line-height: 1.3;
                 margin-bottom: 3px;
             }
@@ -786,15 +797,15 @@
                 font-weight: 400; /* Reguler */
                 color: var(--text-muted);
                 line-height: 1.45;
-                margin-bottom: 14px;
+                margin-bottom: 12px;
             }
 
             /* Total Price Section (Separated & Prominent) */
             .mob-total-section {
                 padding: 14px 0;
-                border-top: 1.5px solid var(--navy-primary);
-                border-bottom: 1.5px solid var(--navy-primary);
-                margin: 14px 0;
+                border-top: 1.5px solid var(--brand-gold-vibrant);
+                border-bottom: 1.5px solid var(--brand-gold-vibrant);
+                margin: 12px 0;
             }
 
             .mob-total-label {
@@ -809,7 +820,7 @@
             .mob-total-price {
                 font-size: 1.75rem;
                 font-weight: 800; /* Bold */
-                color: var(--navy-primary);
+                color: var(--brand-gold-dark);
                 line-height: 1.1;
                 margin-bottom: 6px;
                 letter-spacing: -0.01em;
@@ -818,7 +829,7 @@
             .mob-perk-text {
                 font-size: 0.76rem;
                 font-weight: 600;
-                color: #047857;
+                color: #16a34a;
                 line-height: 1.4;
             }
 
@@ -826,7 +837,7 @@
             .mob-meta-list {
                 display: flex;
                 flex-direction: column;
-                margin: 14px 0 10px 0;
+                margin: 12px 0 8px 0;
             }
 
             .mob-meta-row {
@@ -834,7 +845,7 @@
                 justify-content: space-between;
                 align-items: center;
                 font-size: 0.81rem;
-                padding: 7px 0;
+                padding: 6px 0;
                 border-bottom: 1px solid var(--border-subtle);
             }
 
@@ -855,8 +866,8 @@
 
             /* Termin Breakdown (Prices Separated & Distinct) */
             .mob-termin-block {
-                padding: 8px 0;
-                margin-bottom: 16px;
+                padding: 6px 0;
+                margin-bottom: 14px;
                 border-bottom: 1px solid var(--border-light);
             }
 
@@ -885,14 +896,14 @@
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
-                color: var(--navy-primary);
-                margin: 22px 0 10px 0;
+                color: var(--brand-gold-dark);
+                margin: 20px 0 10px 0;
                 padding-bottom: 6px;
                 border-bottom: 1px solid var(--border-light);
             }
 
             .mob-scope-item {
-                padding: 14px 0;
+                padding: 12px 0;
                 border-bottom: 1px solid var(--border-light);
             }
 
@@ -902,30 +913,23 @@
 
             .mob-scope-top {
                 display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                gap: 12px;
-                margin-bottom: 6px;
-            }
-
-            .mob-scope-info {
-                flex: 1;
+                align-items: center;
+                gap: 6px;
+                margin-bottom: 4px;
             }
 
             .mob-scope-step {
-                font-size: 0.7rem;
-                font-weight: 600;
-                color: var(--navy-primary);
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: var(--brand-gold-dark);
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
-                margin-bottom: 2px;
-                display: block;
             }
 
             .mob-scope-title {
-                font-size: 0.92rem;
+                font-size: 0.9rem;
                 font-weight: 700;
-                color: var(--text-dark);
+                color: var(--brand-charcoal);
                 line-height: 1.35;
             }
 
@@ -938,11 +942,11 @@
             .mob-scope-bullets li {
                 position: relative;
                 padding-left: 14px;
-                margin-bottom: 5px;
-                font-size: 0.79rem;
+                margin-bottom: 4px;
+                font-size: 0.78rem;
                 font-weight: 400; /* Reguler */
                 color: var(--text-muted);
-                line-height: 1.5;
+                line-height: 1.48;
             }
 
             .mob-scope-bullets li:last-child {
@@ -952,16 +956,16 @@
             .mob-scope-bullets li::before {
                 content: "•";
                 position: absolute;
-                left: 2px;
-                color: var(--navy-primary);
+                left: 0;
+                color: var(--brand-gold-vibrant);
                 font-weight: 700;
             }
 
             /* Clean Payment & Rekening Section (No Boxes) */
             .mob-bank-section {
-                padding-top: 18px;
+                padding-top: 16px;
                 border-top: 1px solid var(--border-light);
-                margin-top: 22px;
+                margin-top: 20px;
             }
 
             .mob-bank-label {
@@ -969,12 +973,12 @@
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
-                color: var(--navy-primary);
+                color: var(--brand-gold-dark);
                 margin-bottom: 4px;
             }
 
             .mob-bank-name {
-                font-size: 0.86rem;
+                font-size: 0.85rem;
                 color: var(--text-dark);
                 font-weight: 400; /* Reguler */
                 margin-bottom: 8px;
@@ -991,7 +995,7 @@
                 padding: 10px 0;
                 border-top: 1px solid var(--border-subtle);
                 border-bottom: 1px solid var(--border-subtle);
-                margin-bottom: 14px;
+                margin-bottom: 12px;
             }
 
             .mob-acc-number {
@@ -1003,7 +1007,7 @@
             }
 
             .mob-copy-btn {
-                background: var(--navy-primary);
+                background: var(--brand-charcoal);
                 color: #ffffff;
                 border: none;
                 font-family: var(--font-sans);
@@ -1018,7 +1022,7 @@
                 font-size: 0.75rem;
                 font-weight: 400; /* Reguler */
                 color: var(--text-muted);
-                line-height: 1.55;
+                line-height: 1.5;
                 text-align: center;
             }
 
@@ -1087,7 +1091,7 @@
                 padding: 20px 24px !important;
             }
 
-            .clean-table, .sign-grid, .scope-item {
+            .clean-table, .sign-grid, .scope-card-ringkas {
                 page-break-inside: avoid;
             }
         }
@@ -1098,19 +1102,7 @@
     <!-- PASSCODE SECURITY COVER OVERLAY -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card" id="coverCard">
-            <!-- Shield SVG -->
-            <svg class="cover-shield-icon" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="hiShieldCover" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stop-color="#163b65"/>
-                        <stop offset="0.55" stop-color="#0e2a47"/>
-                        <stop offset="1" stop-color="#051221"/>
-                    </linearGradient>
-                </defs>
-                <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#hiShieldCover)"/>
-                <circle cx="22" cy="17" r="6" fill="#c28e2b"/>
-                <path d="M12 36C12 28 17 25 22 25C27 25 32 28 32 36C32 40 22 44 22 44C22 44 12 40 12 36Z" fill="#fff"/>
-            </svg>
+            <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Hamasah International Logo" class="cover-logo-img">
 
             <div class="classified-stamp">OFFICIAL PROPOSAL &amp; INVOICE</div>
 
@@ -1121,7 +1113,7 @@
                 <div class="cover-recipient-label">DITUJUKAN KEPADA:</div>
                 <div class="cover-recipient-name">Hamasah International</div>
                 <div class="cover-recipient-org">Layanan Studi Al-Azhar Kairo &amp; Pendampingan Santri Mesir</div>
-                <div style="font-size: 0.8rem; color: var(--navy-primary); margin-top: 4px; font-weight:700;">
+                <div style="font-size: 0.8rem; color: var(--brand-gold-dark); margin-top: 4px; font-weight:700;">
                     REF: #INV/HI/2026/018 &bull; TOTAL Rp 15.000.000 (3x Pembayaran)
                 </div>
             </div>
@@ -1168,18 +1160,7 @@
         <!-- Top Header Row -->
         <div class="header-row">
             <div class="brand-block">
-                <svg class="brand-logo-svg" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="hiShieldMain" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0" stop-color="#163b65"/>
-                            <stop offset="0.55" stop-color="#0e2a47"/>
-                            <stop offset="1" stop-color="#051221"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#hiShieldMain)"/>
-                    <circle cx="22" cy="17" r="6" fill="#c28e2b"/>
-                    <path d="M12 36C12 28 17 25 22 25C27 25 32 28 32 36C32 40 22 44 22 44C22 44 12 40 12 36Z" fill="#fff"/>
-                </svg>
+                <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Logo Hamasah International" class="brand-logo-img">
                 <div>
                     <h1 class="brand-title">Pengembangan Digital Ecosystem Hamasah International</h1>
                     <div class="brand-sub">Platform Web Terpadu: Publik, Registrasi, Wali, Akademik &amp; Administrasi</div>
@@ -1217,333 +1198,195 @@
                     </tr>
                     <tr>
                         <td class="meta-label">Estimasi Pengerjaan:</td>
-                        <td class="meta-value" style="color:var(--navy-primary); font-weight:700;">4–6 Minggu</td>
+                        <td class="meta-value" style="color:var(--brand-gold-dark); font-weight:700;">4–6 Minggu</td>
                     </tr>
                     <tr>
                         <td class="meta-label">Skema Pembayaran:</td>
-                        <td class="meta-value" style="color:var(--navy-primary);">3x Pembayaran (50% / 30% / 20%)</td>
+                        <td class="meta-value" style="color:var(--brand-gold-dark);">3x Pembayaran (50% / 30% / 20%)</td>
                     </tr>
                     <tr>
                         <td class="meta-label">Total Nilai Proyek:</td>
-                        <td class="meta-value" style="font-weight: 800; color: var(--navy-primary); font-size: 1.05rem;">Rp 15.000.000</td>
+                        <td class="meta-value" style="font-weight: 800; color: var(--brand-gold-dark); font-size: 1.05rem;">Rp 15.000.000</td>
                     </tr>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 1: DESKRIPSI PEKERJAAN -->
+        <!-- SECTION 1: DESKRIPSI RINGKAS -->
         <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">1.</span> Deskripsi Pekerjaan</h2>
+            <h2 class="section-heading"><span class="sec-tag">1.</span> Ringkasan Pekerjaan</h2>
             <p class="section-desc">
-                Pengembangan Digital Ecosystem Hamasah International berupa platform berbasis web yang mengintegrasikan kebutuhan informasi publik, registrasi calon santri, layanan akademik, monitoring wali santri, operasional internal, serta administrasi keuangan dalam satu sistem terpadu.
-            </p>
-            <p class="section-desc">
-                Sistem dirancang sebagai web application terintegrasi dalam satu domain, dengan pembagian akses dan tampilan berdasarkan jenis pengguna. Platform mencakup area publik dan portal internal yang saling terhubung melalui satu sistem data dan autentikasi aman.
+                Pengembangan ekosistem web terpadu satu pintu untuk <strong>Hamasah International</strong> yang mengintegrasikan pusat informasi publik, sistem registrasi &amp; tracking calon santri, portal monitoring wali santri di Kairo, portal pembelajaran digital (LMS santri), serta modul administrasi keuangan &amp; generator invoice/kuitansi digital.
             </p>
         </div>
 
-        <!-- SECTION 2: NILAI PROYEK & SKEMA PEMBAYARAN -->
+        <!-- SECTION 2: NILAI PROYEK & 3 TERMIN PEMBAYARAN -->
         <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">2.</span> Nilai Proyek &amp; Skema Pembayaran</h2>
+            <h2 class="section-heading"><span class="sec-tag">2.</span> Skema Pembayaran (3x Termin Bertahap)</h2>
             <p class="section-desc">
-                Nilai total pengembangan sistem Digital Ecosystem Hamasah International adalah <strong>Rp 15.000.000</strong> (All-In sesuai ruang lingkup). Pembayaran dibagi ke dalam 3 termin bertahap berbasis pencapaian milestone:
+                Total investasi pengembangan sistem adalah <strong>Rp 15.000.000</strong> (All-In sesuai ruang lingkup yang disepakati):
             </p>
             <table class="clean-table">
                 <thead>
                     <tr>
                         <th class="phase-col">TERMIN</th>
-                        <th>DESKRIPSI &amp; MILESTONE DELIVERABLE</th>
-                        <th class="durasi-col">PERSENTASE</th>
+                        <th>DESKRIPSI &amp; MILESTONE PENGERJAAN</th>
+                        <th class="durasi-col">SKEMA</th>
                         <th class="price-col">NOMINAL</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="phase-col">Termin 1</td>
-                        <td>
-                            <strong>Tanda Jadi &amp; Kickoff Project:</strong> Setup project repository, database architecture, UI/UX design system, website publik, struktur autentikasi, serta development modul registrasi awal.
-                        </td>
+                        <td><strong>Kickoff &amp; Setup Awal:</strong> Inisiasi repositori, struktur database, UI/UX design, website publik &amp; modul registrasi awal.</td>
                         <td class="durasi-col">50% saat Kickoff</td>
                         <td class="price-col">Rp 7.500.000</td>
                     </tr>
                     <tr>
                         <td class="phase-col">Termin 2</td>
-                        <td>
-                            <strong>Review Modul Utama:</strong> Dibayarkan setelah modul utama tersedia untuk peninjauan (review), mencakup portal internal, registrasi &amp; tracking, portal keluarga/wali, portal akademik/LMS, dashboard admin operasional, dan integrasi database utama.
-                        </td>
-                        <td class="durasi-col">30% saat Review Modul</td>
+                        <td><strong>Review Modul Utama:</strong> Kesiapan modul inti untuk diuji (portal internal, registrasi, portal wali, portal akademik &amp; admin).</td>
+                        <td class="durasi-col">30% saat Review</td>
                         <td class="price-col">Rp 4.500.000</td>
                     </tr>
                     <tr>
                         <td class="phase-col">Termin 3</td>
-                        <td>
-                            <strong>Finalisasi &amp; Handover:</strong> Dibayarkan setelah finalisasi fitur, security testing, deployment server production, pelatihan penggunaan (training), penyerahan source code dan database penuh.
-                        </td>
+                        <td><strong>Finalisasi &amp; Handover:</strong> Testing keamanan, deployment server live, pelatihan admin, dan penyerahan source code 100%.</td>
                         <td class="durasi-col">20% saat Serah Terima</td>
                         <td class="price-col">Rp 3.000.000</td>
                     </tr>
                     <tr style="border-top: 2px solid var(--text-dark);">
-                        <td colspan="2" style="font-weight: 800; text-transform: uppercase;">TOTAL KESELURUHAN (ALL-IN)</td>
-                        <td class="durasi-col" style="font-weight: 700; color: var(--navy-primary);">100% Selesai</td>
-                        <td class="price-col" style="font-size: 1.15rem; font-weight: 800; color: var(--navy-primary);">Rp 15.000.000</td>
+                        <td colspan="2" style="font-weight: 800; text-transform: uppercase;">TOTAL INVESTASI PENGEMBANGAN</td>
+                        <td class="durasi-col" style="font-weight: 700; color: var(--brand-gold-dark);">100% Selesai</td>
+                        <td class="price-col" style="font-size: 1.15rem; font-weight: 800; color: var(--brand-gold-dark);">Rp 15.000.000</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- SECTION 3: ESTIMASI WAKTU PENGERJAAN -->
+        <!-- SECTION 3: RINCIAN RUANG LINGKUP (RINGKAS & PADAT) -->
         <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">3.</span> Estimasi Waktu Pengerjaan</h2>
+            <h2 class="section-heading"><span class="sec-tag">3.</span> Ruang Lingkup Sistem (Ringkasan 6 Pilar Utama)</h2>
             <p class="section-desc">
-                Estimasi pengerjaan proyek adalah <strong>4–6 Minggu</strong> kalender kerja. Waktu pengerjaan terhitung efektif setelah:
+                Pekerjaan mencakup 13 kebutuhan spesifikasi teknis yang dirangkum ke dalam 6 pilar fungsional terpadu:
             </p>
-            <ul class="clean-bullet-list">
-                <li>Pembayaran Termin pertama (DP Kickoff 50%) diterima oleh Dar Dev.</li>
-                <li>Materi, konten awal, logo, serta aset identitas Hamasah International telah diserahkan.</li>
-                <li>Data awal yang diperlukan untuk konfigurasi struktur sistem telah tersedia.</li>
-                <li>Ruang lingkup kerja utama (scope of work) telah disepakati bersama.</li>
-            </ul>
-            <p class="section-desc" style="font-style: italic; font-size: 0.8rem; color: var(--text-light); margin-top: 4px;">
-                *Catatan: Estimasi waktu dapat disesuaikan apabila terdapat penambahan fitur atau perubahan scope di luar kesepakatan awal selama proses development.
-            </p>
-        </div>
 
-        <!-- SECTION 4: RUANG LINGKUP PEKERJAAN (13 MODUL RINCI) -->
-        <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">4.</span> Ruang Lingkup Pekerjaan (13 Poin Rinci)</h2>
-            
-            <div class="entry-group">
+            <div class="scope-grid-ringkas">
                 
-                <!-- 1. Website Publik -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.1</span> Website Publik Hamasah International</div>
+                <!-- Pilar 1 -->
+                <div class="scope-card-ringkas">
+                    <div class="scope-head-ringkas">
+                        <span class="scope-num-badge">Pilar 01</span>
+                        <h3 class="scope-name-ringkas">Website Publik &amp; CMS Berita</h3>
                     </div>
-                    <p class="section-desc">Pengembangan website publik sebagai pusat informasi resmi Hamasah International yang kredibel dan modern, meliputi:</p>
                     <ul class="clean-bullet-list">
-                        <li><strong>Identitas Lembaga:</strong> Profil resmi, visi misi, nilai lembaga, dan rekam jejak Hamasah International.</li>
-                        <li><strong>Informasi Studi Al-Azhar:</strong> Panduan jalur masuk, informasi fakultas, jenjang studi, dan kehidupan santri di Kairo, Mesir.</li>
-                        <li><strong>Program Pendampingan:</strong> Detail program pembinaan, asrama, musyrif, tahfidz, talaqqi, dan bimbingan akademik.</li>
-                        <li><strong>Biaya &amp; Layanan:</strong> Rincian paket pendampingan, informasi biaya transparan, serta fasilitas santri.</li>
-                        <li><strong>Berita, Kegiatan &amp; Kontak:</strong> Dokumentasi aktivitas santri di Kairo, artikel publikasi, formulir kontak, dan integrasi tombol WhatsApp resmi.</li>
-                        <li><strong>Desain Responsif &amp; CMS:</strong> Tampilan optimal di smartphone, tablet, dan desktop dilengkapi CMS sederhana untuk update berita.</li>
+                        <li>Profil resmi Hamasah, info studi Al-Azhar &amp; biaya pendampingan.</li>
+                        <li>Integrasi formulir kontak &amp; WhatsApp resmi interaktif.</li>
+                        <li>CMS ramah pengguna untuk update artikel, pengumuman &amp; dokumentasi.</li>
                     </ul>
                 </div>
 
-                <!-- 2. Sistem Registrasi -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.2</span> Sistem Registrasi Calon Santri &amp; Tracking Keberangkatan</div>
+                <!-- Pilar 2 -->
+                <div class="scope-card-ringkas">
+                    <div class="scope-head-ringkas">
+                        <span class="scope-num-badge">Pilar 02</span>
+                        <h3 class="scope-name-ringkas">Registrasi &amp; Tracking Keberangkatan</h3>
                     </div>
-                    <p class="section-desc">Pengembangan modul pendaftaran digital calon santri dengan alur bertahap terstruktur:</p>
                     <ul class="clean-bullet-list">
-                        <li><strong>Formulir &amp; Akun Pendaftar:</strong> Form pendaftaran online terstruktur dan pembuatan akun mandiri calon santri.</li>
-                        <li><strong>Upload &amp; Validasi Berkas:</strong> Pengunggahan dokumen persyaratan (paspor, ijazah, transkrip, surat izin) beserta status verifikasi validitas berkas.</li>
-                        <li><strong>Tracking Tahapan Keberangkatan:</strong> Visualisasi status proses bertahap: <em>Registrasi → Verifikasi Berkas → Pembekalan → Visa / Tiket → Siap Berangkat</em>.</li>
-                        <li><strong>Informasi Kloter &amp; Pembekalan:</strong> Dashboard pendaftar yang memuat jadwal pembekalan, informasi kloter keberangkatan, dan panduan teknis.</li>
+                        <li>Formulir pendaftaran calon santri online &amp; akun mandiri pendaftar.</li>
+                        <li>Unggah dokumen persyaratan (paspor, ijazah) &amp; validasi status berkas.</li>
+                        <li>Visual tracking 5 tahap: <em>Registrasi → Verifikasi → Pembekalan → Visa/Tiket → Berangkat</em>.</li>
                     </ul>
                 </div>
 
-                <!-- 3. Portal Keluarga / Wali Santri -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.3</span> Portal Keluarga / Wali Santri (Monitoring Jarak Jauh)</div>
+                <!-- Pilar 3 -->
+                <div class="scope-card-ringkas">
+                    <div class="scope-head-ringkas">
+                        <span class="scope-num-badge">Pilar 03</span>
+                        <h3 class="scope-name-ringkas">Portal Keluarga / Wali Santri</h3>
                     </div>
-                    <p class="section-desc">Dashboard khusus bagi orang tua / wali santri untuk memantau perkembangan putra-putrinya selama berada di Mesir secara transparan dan aman:</p>
                     <ul class="clean-bullet-list">
-                        <li><strong>Data Santri &amp; Pendamping:</strong> Informasi identitas santri, detail kamar asrama, dan profil musyrif / pembimbing yang bertugas.</li>
-                        <li><strong>Monitoring Perkembangan &amp; Presensi:</strong> Catatan aktivitas santri, presensi kegiatan harian / mingguan, capaian akademik, dan evaluasi hafalan (tahfidz).</li>
-                        <li><strong>Catatan Musyrif &amp; Rapor Digital:</strong> Rekap perkembangan santri berkala, penerbitan rapor digital, serta fitur simpan / cetak rapor dalam format PDF resmi.</li>
-                        <li><strong>Pesan Kasih / Doa Wali:</strong> Fitur interaksi pengiriman pesan atau doa dari wali santri yang tersimpan pada riwayat laporan.</li>
-                        <li><strong>Akses Terisolasi:</strong> Setiap wali santri hanya memiliki izin akses data terbatas pada anak yang bersangkutan.</li>
+                        <li>Monitoring aktivitas harian anak di Kairo, asrama, dan profil musyrif.</li>
+                        <li>Presensi, catatan tahfidz/hafalan santri, serta fitur kirim pesan doa.</li>
+                        <li>Penerbitan rekap perkembangan santri &amp; Rapor Digital berformat PDF resmi.</li>
                     </ul>
                 </div>
 
-                <!-- 4. Portal Akademik & LMS -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.4</span> Portal Pembelajaran Digital &amp; LMS Santri</div>
+                <!-- Pilar 4 -->
+                <div class="scope-card-ringkas">
+                    <div class="scope-head-ringkas">
+                        <span class="scope-num-badge">Pilar 04</span>
+                        <h3 class="scope-name-ringkas">Portal Akademik &amp; LMS Pembelajaran</h3>
                     </div>
-                    <p class="section-desc">Portal akademik responsif untuk memfasilitasi proses belajar dan pendampingan kurikulum santri di Kairo:</p>
                     <ul class="clean-bullet-list">
-                        <li><strong>Dashboard Akademik:</strong> Tinjauan daftar program/kelas yang diikuti, roadmap kurikulum, dan perkembangan studi pribadi santri.</li>
-                        <li><strong>Repositori Materi &amp; Talaqqi:</strong> Distribusi video materi pembelajaran, modul dokumen PDF, rangkuman kitab / diktat muqarrar, dan arsip talaqqi syeikh.</li>
-                        <li><strong>Progress Belajar:</strong> Pelacakan persentase materi yang telah selesai dipelajari dengan penanda status tuntas.</li>
-                        <li><strong>Multi-Device:</strong> Dapat diakses secara lancar melalui smartphone maupun laptop santri.</li>
+                        <li>Dashboard akademik santri, video talaqqi syeikh, &amp; repositori modul PDF.</li>
+                        <li>Roadmap kurikulum Al-Azhar, pelacakan progress, &amp; arsip materi studi.</li>
+                        <li>Desain fleksibel mobile-first untuk kenyamanan akses smartphone santri.</li>
                     </ul>
                 </div>
 
-                <!-- 5. Portal Operasional / Admin Hamasah -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.5</span> Portal Operasional &amp; Manajemen Admin Pusat</div>
+                <!-- Pilar 5 -->
+                <div class="scope-card-ringkas">
+                    <div class="scope-head-ringkas">
+                        <span class="scope-num-badge">Pilar 05</span>
+                        <h3 class="scope-name-ringkas">Operasional Admin &amp; Generator Invoice</h3>
                     </div>
-                    <p class="section-desc">Dashboard komprehensif untuk pengurus dan staf operasional Hamasah International:</p>
                     <ul class="clean-bullet-list">
-                        <li><strong>Manajemen Data Terpusat:</strong> Pengelolaan basis data santri, calon pendaftar, akun wali, akun musyrif, dan staf.</li>
-                        <li><strong>Approval &amp; Status Registrasi:</strong> Pembaruan tahapan keberangkatan, validasi berkas fisik/digital, dan penentuan kloter santri.</li>
-                        <li><strong>Input Nilai &amp; Laporan Perkembangan:</strong> Pengelolaan evaluasi musyrif, presensi, catatan hafalan, serta generate rapor digital.</li>
-                        <li><strong>Pencarian &amp; Filter Canggih:</strong> Pencarian cepat berbasis nama, kloter, asrama, status pendaftaran, dan periode studi.</li>
+                        <li>Dashboard pengurus: kelola santri, calon santri, wali, musyrif &amp; kloter.</li>
+                        <li>Administrative ledger pencatatan riwayat transaksi &amp; status tagihan.</li>
+                        <li>Generator invoice &amp; kuitansi otomatis ber-PDF dengan nomor referensi unik.</li>
                     </ul>
                 </div>
 
-                <!-- 6. Sistem Keuangan Dasar -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.6</span> Sistem Keuangan Dasar (Administrative Ledger)</div>
+                <!-- Pilar 6 -->
+                <div class="scope-card-ringkas">
+                    <div class="scope-head-ringkas">
+                        <span class="scope-num-badge">Pilar 06</span>
+                        <h3 class="scope-name-ringkas">Keamanan RBAC, Setup &amp; Handover</h3>
                     </div>
-                    <p class="section-desc">Modul pencatatan administrasi pembayaran operasional santri:</p>
                     <ul class="clean-bullet-list">
-                        <li><strong>Buku Besar Administratif:</strong> Pencatatan data pembayaran santri (nominal, tanggal transaksi, jenis transaksi, dan catatan khusus).</li>
-                        <li><strong>Riwayat &amp; Status Tagihan:</strong> Tracking status pembayaran (Lunas, Belum Lunas, Menunggu Verifikasi) per santri atau per periode.</li>
-                        <li><strong>Filter &amp; Rekapitulasi:</strong> Filter pencatatan berdasarkan santri, kloter, jenis layanan, dan rentang tanggal.</li>
-                        <li><em>*Catatan: Sistem bersifat administrative ledger operasional, bukan sistem akuntansi multi-ledger/perpajakan penuh.</em></li>
-                    </ul>
-                </div>
-
-                <!-- 7. Generator Invoice & Kuitansi Digital -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.7</span> Generator Invoice &amp; Kuitansi Digital Otomatis</div>
-                    </div>
-                    <p class="section-desc">Penerbitan dokumen bukti finansial resmi yang terstandarisasi:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Dokumen Resmi Otomatis:</strong> Generate invoice tagihan dan kuitansi pembayaran dengan identitas resmi Hamasah International.</li>
-                        <li><strong>Atribut Lengkap:</strong> Nomor referensi unik otomatis, nama santri, nama wali, nominal terbilang, tanggal, rincian pembayaran, dan tanda tangan digital.</li>
-                        <li><strong>Format Cetak / PDF:</strong> Kemudahan cetak langsung atau unduh PDF beresolusi tinggi yang siap dikirimkan kepada orang tua santri via WhatsApp / Email.</li>
-                        <li><strong>Verifikasi Kode Unik:</strong> Kode verifikasi untuk memvalidasi keaslian dokumen kuitansi yang diterbitkan lembaga.</li>
-                    </ul>
-                </div>
-
-                <!-- 8. Authentication & Role-Based Access -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.8</span> Autentikasi &amp; Role-Based Access Control (RBAC 5 Tingkat)</div>
-                    </div>
-                    <p class="section-desc">Sistem pengamanan login modern dengan pembagian hak akses terisolasi ketat:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Role 1: Admin / Pimpinan Lembaga:</strong> Akses penuh seluruh modul, konfigurasi sistem, keuangan, dan data pengguna.</li>
-                        <li><strong>Role 2: Staf Operasional:</strong> Pengelolaan data pendaftar, validasi berkas, informasi kloter, dan konten website.</li>
-                        <li><strong>Role 3: Musyrif / Pembimbing Asrama:</strong> Input perkembangan harian, presensi, catatan talaqqi, dan evaluasi santri dampingan.</li>
-                        <li><strong>Role 4: Santri:</strong> Akses portal akademik LMS, materi talaqqi, tugas, dan jadwal kegiatan pribadi.</li>
-                        <li><strong>Role 5: Wali Santri:</strong> Akses portal keluarga khusus pemantauan rapor, presensi, dan tagihan putra-putrinya saja.</li>
-                    </ul>
-                </div>
-
-                <!-- 9. Database & Backend System -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.9</span> Database Relasional &amp; Arsitektur Backend Skalabel</div>
-                    </div>
-                    <p class="section-desc">Fondasi arsitektur data terstruktur yang andal dan siap untuk ekspansi masa depan:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Struktur Relasional:</strong> Manajemen tabel terhubung untuk User, Santri, Wali, Musyrif, Pendaftar, Berkas, Akademik, Materi, Laporan, Pembayaran, Invoice, Kuitansi, dan Berita.</li>
-                        <li><strong>Keamanan Data:</strong> Enkripsi data sensitif, hashing password standar industri, dan proteksi SQL Injection &amp; XSS.</li>
-                        <li><strong>Skalabilitas Masa Depan:</strong> Dirancang modular sehingga fitur tambahan (misal modul travel/visa lanjutan) dapat dihubungkan dengan mulus.</li>
-                    </ul>
-                </div>
-
-                <!-- 10. CMS Berita & Informasi -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.10</span> CMS Publikasi Berita &amp; Informasi Lembaga</div>
-                    </div>
-                    <p class="section-desc">Pengelolaan konten website yang mudah digunakan oleh admin non-teknis:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Manajemen Artikel:</strong> Tambah, edit, arsip, dan hapus artikel atau pengumuman resmi.</li>
-                        <li><strong>Kategori &amp; Media:</strong> Pengelompokan kategori (Pendidikan, Kegiatan Santri, Info Al-Azhar, Keberangkatan) serta upload gambar thumbnail.</li>
-                        <li><strong>Alur Penerbitan:</strong> Simpan draf, tentukan penulis, tanggal publikasi, dan tayangkan ke website publik secara instan.</li>
-                    </ul>
-                </div>
-
-                <!-- 11. UI/UX & Responsive Design -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.11</span> UI/UX Design System Custom &amp; Mobile-First</div>
-                    </div>
-                    <p class="section-desc">Antarmuka eksklusif yang dirancang khusus mencerminkan wibawa lembaga internasional:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Desain Khas Hamasah:</strong> Palet warna resmi Royal Navy dan Al-Azhar Gold yang berkarakter, anggun, dan profesional.</li>
-                        <li><strong>Responsive &amp; Mobile-First:</strong> Tata letak yang sangat nyaman diakses dari smartphone wali santri maupun laptop admin.</li>
-                        <li><strong>State Interaktif Lengkap:</strong> Desain lengkap mencakup form validation, loading indicator, empty state, notifikasi feedback, dan transisi halus.</li>
-                    </ul>
-                </div>
-
-                <!-- 12. Deployment & Setup Production -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.12</span> Deployment &amp; Setup Server Production</div>
-                    </div>
-                    <p class="section-desc">Proses peluncuran sistem ke lingkungan live internet publik:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Setup Server &amp; Database:</strong> Konfigurasi environment server production berkecepatan tinggi dan database cloud.</li>
-                        <li><strong>Domain &amp; SSL Security:</strong> Setup domain resmi Hamasah International, konfigurasi DNS, dan aktivasi sertifikat enkripsi HTTPS (SSL).</li>
-                        <li><strong>Pengujian Produksi:</strong> Verifikasi fungsi akhir di server live (cross-browser testing &amp; functional audit) sebelum go-live resmi.</li>
-                    </ul>
-                </div>
-
-                <!-- 13. Training & Handover -->
-                <div class="scope-item">
-                    <div class="scope-header-row">
-                        <div class="scope-title"><span>4.13</span> Pelatihan Staf (Training) &amp; Serah Terima Aset 100%</div>
-                    </div>
-                    <p class="section-desc">Jaminan kemandirian operasional tim Hamasah International setelah sistem selesai:</p>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Sesi Training Penggunaan:</strong> Pelatihan langsung pengoperasian dashboard untuk staf admin dan pengurus lembaga.</li>
-                        <li><strong>Panduan Penggunaan (Manual Guide):</strong> Penjelasan alur kerja operasional, panduan registrasi, dan kelola laporan santri.</li>
-                        <li><strong>Penyerahan Aset Penuh:</strong> Serah terima source code project lengkap, akses repository, akses database, serta hak akses deployment.</li>
+                        <li>Autentikasi 5 role (Admin, Staf, Musyrif, Santri, Wali) terisolasi aman.</li>
+                        <li>Setup database cloud, hosting server production, domain &amp; SSL HTTPS.</li>
+                        <li>Sesi training pengoperasian staf &amp; serah terima 100% source code sistem.</li>
                     </ul>
                 </div>
 
             </div>
         </div>
 
-        <!-- SECTION 5: KETENTUAN KHUSUS, GARANSI & HAK CIPTA -->
+        <!-- SECTION 4: KETENTUAN KHUSUS & GARANSI -->
         <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">5.</span> Batasan Lingkup, Garansi &amp; Hak Kepemilikan</h2>
+            <h2 class="section-heading"><span class="sec-tag">4.</span> Ketentuan, Garansi &amp; Hak Kepemilikan</h2>
             
             <div class="two-column-flow">
                 <div>
-                    <h3 style="font-size:0.86rem; font-weight:700; color:var(--text-dark); margin-bottom:6px;">Yang Tidak Termasuk (Exclusions):</h3>
-                    <p class="section-desc" style="margin-bottom:6px;">Kecuali disepakati secara tertulis terpisah, biaya berikut berada di luar penawaran ini:</p>
+                    <h3 style="font-size:0.84rem; font-weight:700; color:var(--brand-charcoal); margin-bottom:4px;">Yang Tidak Termasuk (Exclusions):</h3>
                     <ul class="clean-bullet-list">
-                        <li>Biaya langganan Domain &amp; VPS/Server Cloud premium tahunan.</li>
-                        <li>Biaya integrasi WhatsApp Business API berbayar (Meta / BSP).</li>
-                        <li>Biaya gateway pembayaran pihak ketiga &amp; biaya transaksi per-transaksi.</li>
-                        <li>Biaya token/API AI pihak ketiga jika diintegrasikan di kemudian hari.</li>
-                        <li>Aplikasi native smartphone (Android APK di PlayStore / iOS di AppStore).</li>
-                        <li>Software accounting pembukuan penuh, integrasi perbankan langsung, atau ERP kompleks.</li>
+                        <li>Biaya sewa domain &amp; server VPS tahunan dari provider pihak ketiga.</li>
+                        <li>Biaya WhatsApp Business API berbayar (Meta BSP) &amp; payment gateway fee.</li>
+                        <li>Aplikasi mobile native (PlayStore/AppStore) dan software akuntansi penuh.</li>
                     </ul>
                 </div>
 
                 <div>
-                    <h3 style="font-size:0.86rem; font-weight:700; color:var(--text-dark); margin-bottom:6px;">Ketentuan Perubahan Scope:</h3>
-                    <p class="section-desc">
-                        Permintaan penambahan fitur baru atau modifikasi alur kerja besar di luar 13 modul yang telah disepakati akan diperlakukan sebagai <strong>Additional Development / Change Request</strong> yang memiliki estimasi penyesuaian biaya, waktu, dan milestone tersendiri.
-                    </p>
-
-                    <h3 style="font-size:0.86rem; font-weight:700; color:var(--text-dark); margin-top:14px; margin-bottom:6px;">Garansi, Dukungan Teknis &amp; Hak Kepemilikan:</h3>
+                    <h3 style="font-size:0.84rem; font-weight:700; color:var(--brand-charcoal); margin-bottom:4px;">Garansi &amp; Hak Cipta 100%:</h3>
                     <ul class="clean-bullet-list">
-                        <li><strong>Garansi Bug Fixing:</strong> Perbaikan error teknis yang berasal dari implementasi kode sistem secara gratis pasca-launch.</li>
-                        <li><strong>Bantuan Teknis:</strong> Dukungan konsultasi teknis selama masa transisi adopsi sistem oleh pengurus.</li>
-                        <li><strong>Hak Kepemilikan 100%:</strong> Setelah pelunasan selesai, Hamasah International memegang hak penuh atas source code, basis data, dan aset digital yang telah dibangun.</li>
+                        <li><strong>Garansi Bug Fixing:</strong> Perbaikan error teknis kode gratis pasca-launch.</li>
+                        <li><strong>Bantuan Teknis:</strong> Dukungan konsultasi operasional bagi tim admin.</li>
+                        <li><strong>Kepemilikan Penuh:</strong> Source code &amp; basis data 100% diserahkan ke Hamasah International setelah pelunasan.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- SECTION 6: PENERIMAAN PROPOSAL & TANDA TANGAN -->
+        <!-- SECTION 5: TANDA TANGAN -->
         <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">6.</span> Persetujuan &amp; Penerimaan Dokumen</h2>
-            <p class="section-desc">
-                Dengan menyetujui dokumen ini, pihak Hamasah International menyetujui ruang lingkup 13 modul pekerjaan, estimasi durasi 4–6 minggu, total nilai pengembangan Rp 15.000.000, serta skema 3x pembayaran bertahap.
-            </p>
+            <h2 class="section-heading"><span class="sec-tag">5.</span> Penerimaan &amp; Pengesahan</h2>
             <div class="sign-grid">
                 <div>
                     <div class="sign-col-title">Untuk Hamasah International</div>
                     <div class="sign-row">
                         <span class="sign-label">Lembaga:</span>
-                        <span style="font-weight:700; color:var(--text-dark);">Hamasah International</span>
+                        <span style="font-weight:700; color:var(--brand-charcoal);">Hamasah International</span>
                     </div>
                     <div class="sign-row">
                         <span class="sign-label">Jabatan:</span>
@@ -1560,7 +1403,7 @@
                     <div class="sign-col-title">Untuk Dar Dev (Penyedia)</div>
                     <div class="sign-row">
                         <span class="sign-label">Nama:</span>
-                        <span style="font-weight:700; color:var(--text-dark);">Daru Fahmaa Muliawan</span>
+                        <span style="font-weight:700; color:var(--brand-charcoal);">Daru Fahmaa Muliawan</span>
                     </div>
                     <div class="sign-row">
                         <span class="sign-label">Jabatan:</span>
@@ -1570,7 +1413,7 @@
                         <span class="sign-label">Tanggal:</span>
                         <span style="font-weight:500; color:var(--text-dark);">9 September 2026</span>
                     </div>
-                    <div class="sign-space" style="display:flex; align-items:flex-end; justify-content:center; font-size:0.78rem; color:var(--navy-primary); padding-bottom:2px;">
+                    <div class="sign-space" style="display:flex; align-items:flex-end; justify-content:center; font-size:0.76rem; color:var(--brand-gold-dark); padding-bottom:2px;">
                         [ DIGITAL VERIFIED &bull; DAR DEV ]
                     </div>
                 </div>
@@ -1593,7 +1436,7 @@
             <div>
                 <div class="bottom-title">PENERBIT &amp; KONSULTAN PENGEMBANG</div>
                 <div class="issuer-clean">
-                    <strong style="color:var(--text-dark);">Dar Dev (Daru Fahmaa Muliawan)</strong><br>
+                    <strong style="color:var(--brand-charcoal);">Dar Dev (Daru Fahmaa Muliawan)</strong><br>
                     Digital Product &amp; System Development<br>
                     WhatsApp Resmi: 081311506025
                 </div>
@@ -1608,18 +1451,7 @@
         <!-- Mobile Top Bar -->
         <div class="mob-top-bar">
             <div class="mob-brand-group">
-                <svg width="22" height="25" viewBox="0 0 44 50" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="hiShieldMob" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0" stop-color="#163b65"/>
-                            <stop offset="0.55" stop-color="#0e2a47"/>
-                            <stop offset="1" stop-color="#051221"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M9 4Q4 4 4 9L4 23C4 36 11 44 22 47C33 44 40 36 40 23L40 9Q40 4 35 4Z" fill="url(#hiShieldMob)"/>
-                    <circle cx="22" cy="17" r="6" fill="#c28e2b"/>
-                    <path d="M12 36C12 28 17 25 22 25C27 25 32 28 32 36C32 40 22 44 22 44C22 44 12 40 12 36Z" fill="#fff"/>
-                </svg>
+                <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Logo Hamasah" class="mob-logo-img">
                 <div>
                     <div class="mob-brand-title">Hamasah International</div>
                     <div class="mob-brand-sub">#INV/HI/2026/018</div>
@@ -1655,11 +1487,11 @@
         <div class="mob-meta-list">
             <div class="mob-meta-row">
                 <span class="mob-meta-label">Nomor Referensi</span>
-                <span class="mob-meta-val" style="color:var(--navy-primary);">#INV/HI/2026/018</span>
+                <span class="mob-meta-val" style="color:var(--brand-gold-dark);">#INV/HI/2026/018</span>
             </div>
             <div class="mob-meta-row">
                 <span class="mob-meta-label">Estimasi Pengerjaan</span>
-                <span class="mob-meta-val" style="color:var(--navy-primary); font-weight:700;">4–6 Minggu</span>
+                <span class="mob-meta-val" style="color:var(--brand-gold-dark); font-weight:700;">4–6 Minggu</span>
             </div>
             <div class="mob-meta-row">
                 <span class="mob-meta-label">Skema Pembayaran</span>
@@ -1671,130 +1503,84 @@
         <div class="mob-termin-block">
             <div class="mob-termin-row">
                 <span class="mob-termin-name">Termin 1 (DP Kickoff 50%)</span>
-                <span class="mob-termin-amount" style="color:var(--navy-primary);">Rp 7.500.000</span>
+                <span class="mob-termin-amount" style="color:var(--brand-gold-dark);">Rp 7.500.000</span>
             </div>
             <div class="mob-termin-row">
                 <span class="mob-termin-name">Termin 2 (Review Modul 30%)</span>
-                <span class="mob-termin-amount" style="color:var(--navy-primary);">Rp 4.500.000</span>
+                <span class="mob-termin-amount" style="color:var(--brand-gold-dark);">Rp 4.500.000</span>
             </div>
             <div class="mob-termin-row">
                 <span class="mob-termin-name">Termin 3 (Finalisasi &amp; Handover 20%)</span>
-                <span class="mob-termin-amount" style="color:var(--navy-primary);">Rp 3.000.000</span>
+                <span class="mob-termin-amount" style="color:var(--brand-gold-dark);">Rp 3.000.000</span>
             </div>
         </div>
 
-        <!-- Clean Mobile Scope List -->
-        <div class="mob-sec-heading">RUANG LINGKUP PEKERJAAN (13 MODUL)</div>
+        <!-- Clean Mobile Scope List (Ringkas) -->
+        <div class="mob-sec-heading">RINGKASAN RUANG LINGKUP PEKERJAAN</div>
 
         <div class="mob-scope-item">
             <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 1</span>
-                    <div class="mob-scope-title">Website Publik Hamasah International</div>
-                </div>
+                <span class="mob-scope-step">01.</span>
+                <div class="mob-scope-title">Website Publik &amp; CMS Berita</div>
             </div>
             <ul class="mob-scope-bullets">
-                <li>Profil lembaga, info studi Al-Azhar Kairo &amp; program santri.</li>
-                <li>Biaya layanan, info keberangkatan, kontak &amp; WhatsApp resmi.</li>
-                <li>Responsive design &amp; CMS sederhana artikel berita.</li>
+                <li>Profil resmi, info studi Al-Azhar Kairo, biaya &amp; WhatsApp resmi.</li>
+                <li>CMS mandiri untuk publikasi berita, pengumuman &amp; kegiatan santri.</li>
             </ul>
         </div>
 
         <div class="mob-scope-item">
             <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 2</span>
-                    <div class="mob-scope-title">Sistem Registrasi Calon Santri</div>
-                </div>
+                <span class="mob-scope-step">02.</span>
+                <div class="mob-scope-title">Registrasi Calon Santri &amp; Tracking</div>
             </div>
             <ul class="mob-scope-bullets">
-                <li>Form pendaftaran digital &amp; akun mandiri pendaftar.</li>
-                <li>Upload &amp; verifikasi kelengkapan berkas persyaratan.</li>
-                <li>Tracking tahapan: <em>Registrasi → Verifikasi → Pembekalan → Visa/Tiket → Berangkat</em>.</li>
+                <li>Pendaftaran digital online, akun mandiri, &amp; verifikasi berkas paspor/ijazah.</li>
+                <li>Tracking tahapan: <em>Registrasi → Berkas → Pembekalan → Visa → Berangkat</em>.</li>
             </ul>
         </div>
 
         <div class="mob-scope-item">
             <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 3</span>
-                    <div class="mob-scope-title">Portal Keluarga / Wali Santri</div>
-                </div>
+                <span class="mob-scope-step">03.</span>
+                <div class="mob-scope-title">Portal Keluarga / Wali Santri</div>
             </div>
             <ul class="mob-scope-bullets">
-                <li>Monitoring aktivitas harian anak di Kairo, asrama &amp; musyrif.</li>
-                <li>Presensi, capaian tahfidz/hafalan &amp; catatan pembimbing.</li>
-                <li>Rapor digital (PDF resmi) &amp; fitur kirim pesan/doa dari wali.</li>
+                <li>Monitoring aktivitas harian anak di Mesir, asrama, musyrif &amp; tahfidz.</li>
+                <li>Rapor digital berkala (PDF resmi) &amp; fitur kirim pesan doa dari wali.</li>
             </ul>
         </div>
 
         <div class="mob-scope-item">
             <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 4</span>
-                    <div class="mob-scope-title">Portal Pembelajaran &amp; LMS Santri</div>
-                </div>
+                <span class="mob-scope-step">04.</span>
+                <div class="mob-scope-title">Portal Pembelajaran &amp; LMS Santri</div>
             </div>
             <ul class="mob-scope-bullets">
-                <li>Dashboard akademik santri, video talaqqi &amp; modul PDF.</li>
-                <li>Roadmap pembelajaran, progress belajar &amp; arsip materi.</li>
-                <li>Responsif optimal untuk smartphone maupun laptop santri.</li>
+                <li>Dashboard materi talaqqi syeikh, video pembelajaran &amp; modul PDF.</li>
+                <li>Roadmap kurikulum, status progres belajar, &amp; mobile-friendly.</li>
             </ul>
         </div>
 
         <div class="mob-scope-item">
             <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 5</span>
-                    <div class="mob-scope-title">Portal Operasional &amp; Admin Hamasah</div>
-                </div>
+                <span class="mob-scope-step">05.</span>
+                <div class="mob-scope-title">Operasional Admin &amp; Generator Invoice</div>
             </div>
             <ul class="mob-scope-bullets">
-                <li>Manajemen data santri, calon pendaftar, wali &amp; musyrif.</li>
-                <li>Approval status registrasi, kloter &amp; rapor perkembangan.</li>
-                <li>Filter pencarian cepat &amp; pengaturan hak akses sistem.</li>
+                <li>Kelola basis data santri, wali, musyrif, kloter &amp; ledger tagihan.</li>
+                <li>Generator invoice &amp; kuitansi otomatis berformat PDF resmi.</li>
             </ul>
         </div>
 
         <div class="mob-scope-item">
             <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 6 &amp; 7</span>
-                    <div class="mob-scope-title">Keuangan Dasar, Invoice &amp; Kuitansi Digital</div>
-                </div>
+                <span class="mob-scope-step">06.</span>
+                <div class="mob-scope-title">Keamanan RBAC, Setup &amp; Handover</div>
             </div>
             <ul class="mob-scope-bullets">
-                <li>Administrative ledger pencatatan riwayat transaksi &amp; tagihan.</li>
-                <li>Generator invoice &amp; kuitansi resmi otomatis ber-PDF.</li>
-                <li>Nomor referensi unik &amp; kode verifikasi keabsahan dokumen.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 8 – 10</span>
-                    <div class="mob-scope-title">Autentikasi RBAC, Database &amp; CMS Berita</div>
-                </div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>5 tingkat hak akses (Admin, Staf, Musyrif, Santri, Wali).</li>
-                <li>Database relasional terstruktur dan siap ekspansi masa depan.</li>
-                <li>CMS artikel pengumuman &amp; berita kegiatan santri di Kairo.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <div class="mob-scope-info">
-                    <span class="mob-scope-step">Modul 11 – 13</span>
-                    <div class="mob-scope-title">UI/UX, Deployment, Training &amp; Handover</div>
-                </div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Desain kustom eksklusif, mobile-first &amp; tema Al-Azhar.</li>
-                <li>Setup server production, domain setup, HTTPS/SSL security.</li>
-                <li>Training staf admin, penyerahan source code &amp; database 100%.</li>
+                <li>Autentikasi 5 role terisolasi, setup server production &amp; domain SSL.</li>
+                <li>Pelatihan staf admin &amp; serah terima 100% source code sistem.</li>
             </ul>
         </div>
 
