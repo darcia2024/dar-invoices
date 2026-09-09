@@ -2444,6 +2444,60 @@
                     <span>Buka invoice Hamasah International</span>
                 </a>
             </div>
+
+            <!-- PT Permana Group Sejahtera (PGS Tour & Travel) Card -->
+            <div class="invoice-card" id="card-pgstour" data-id="pgstour" data-month="2026-09" data-amount="9000000" data-client="pt permana group sejahtera pgs tour travel website resmi arsitektur nextjs turbopack typescript redesign uxi mobile first galeri interaktif whatsapp conversion seo vercel cloud subtotal 10jt diskon 1jt total 9jt 9.000.000 #inv/pgs/2026/09/001 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">PGS Tour &amp; Travel</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('pgstour')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/PGS/2026/09/001 &bull; PT Permana Group Sejahtera</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Pengembangan &amp; Redesign Website Resmi PGS Tour &amp; Travel (7 Halaman: Beranda, Tentang Kami, Katalog Paket, Detail Umroh Mahabbah, Layanan Visa, Galeri, Kemitraan, Konsultasi). Next.js &amp; TypeScript Ultra-Fast, Mobile-First UX/UI, Galeri Masonry Lightbox, Integrasi WhatsApp Conversion &amp; SEO Engine, Cloud Deployment Vercel &amp; SSL. Garansi 30 Hari. Subtotal Rp 10.000.000, Diskon Promo Rp 1.000.000, Total Tagihan Rp 9.000.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/pgstour</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/pgstour')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptPgstour()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET WEBSITE PGS TOUR:</span>
+                            <span class="fin-val">Rp 9.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
+                            <span class="fin-val" id="costValPgstour">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValPgstour">Rp 9.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('pgstour')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/pgstour" class="action-btn">
+                    <span>Buka invoice PGS Tour &amp; Travel</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2656,7 +2710,9 @@
             ifdony: "UNPAID",
             ibrahim: "UNPAID",
             kpi: "UNPAID",
-            tehumi: "DP"
+            tehumi: "DP",
+            hamasahinternational: "UNPAID",
+            pgstour: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2695,7 +2751,9 @@
             ifdony: 500000,
             ibrahim: 1100000,
             kpi: 14000000,
-            tehumi: 300000
+            tehumi: 300000,
+            hamasahinternational: 15000000,
+            pgstour: 9000000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2741,7 +2799,8 @@
             { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 },
             { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 14000000 },
             { id: "tehumi", name: "Teh Umi (Media Baca Terproteksi)", month: "2026-09", monthLabel: "September 2026", gross: 300000 },
-            { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 }
+            { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 },
+            { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 9000000 }
         ];
 
         function formatIDR(num) {
@@ -4207,6 +4266,55 @@ Dokumen rincian lengkap beserta ketentuan garansi dan hak kepemilikan dapat diak
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA HAMASAH INTERNATIONAL BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptPgstour() {
+            const waScript = `Kepada Yth.
+Manajemen / Owner PGS Tour & Travel
+PT Permana Group Sejahtera
+Di Tempat
+
+Salam hormat,
+Semoga Bapak/Ibu senantiasa dalam keadaan sehat dan lancar dalam menjalankan aktivitas.
+
+Berikut kami lampirkan dokumen Invoice & Rincian Pekerjaan (Scope of Work) untuk proyek Pengembangan & Redesign Website Resmi PGS Tour & Travel:
+
+📄 No. Invoice: INV/PGS/2026/09/001
+📅 Tanggal Terbit: 10 September 2026
+⏳ Jatuh Tempo: 17 September 2026
+🔗 Link Invoice Online: https://temantiket.com/pgstour
+🔑 Kode Akses Dokumen: 0001 (atau 050900)
+
+📋 Rincian Pekerjaan & Layanan:
+1. Arsitektur & Pengembangan Website Resmi (7 Halaman: Beranda, Tentang Kami, Katalog Paket, Detail Umroh Mahabbah, Layanan Visa, Galeri, Kemitraan & Konsultasi) - Next.js Turbopack & TypeScript Ultra-Fast
+2. Redesign UX/UI & Optimalisasi Mobile-First (Layout Simetris HP, Kartu Paket Visa Modern, Trust Strip Jarak Hotel)
+3. Sistem Galeri Interaktif & Bug Stabilization (Responsive Masonry, Fullscreen Lightbox, Fallback WebP/JPEG Anti-Blank)
+4. Integrasi Konversi, Branding & SEO Engine (Direct WhatsApp Auto Chat, Favicon Multi-Resolusi, Meta SEO & Sitemap)
+5. Cloud Deployment & Production Setup (Vercel Global CDN, GitHub Sync, SSL HTTPS) - FREE / BONUS
+
+💰 Ringkasan Biaya:
+• Subtotal: Rp 10.000.000
+• Diskon Kerja Sama / Launch Promo: (Rp 1.000.000)
+• Total Tagihan: Rp 9.000.000
+(Terbilang: Sembilan Juta Rupiah)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Termasuk garansi pemeliharaan teknis & perbaikan minor selama 30 hari kalender. Mohon bukti transfer dikirimkan via WhatsApp untuk konfirmasi serah terima berkas final dan repositori.
+
+Terima kasih banyak atas kerja sama dan kepercayaan yang diberikan.
+
+Hormat kami,
+Daru Fahmaa Muliawan (Dar Dev)
+Web & Digital Specialist`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA PGS TOUR BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

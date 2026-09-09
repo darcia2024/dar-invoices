@@ -44,6 +44,9 @@
     { "source": "/tehumi", "destination": "/tehumi" },
     { "source": "/teh-umi", "destination": "/tehumi" },
     { "source": "/ereader-tehumi", "destination": "/tehumi" },
-    { "source": "/e-reader-tehumi", "destination": "/tehumi" }
+    { "source": "/e-reader-tehumi", "destination": "/tehumi" },
+    { "source": "/hamasahinternational", "destination": "/hamasahinternational" },
+    { "source": "/pgstour", "destination": "/pgstour" },
+    { "source": "/pgs", "destination": "/pgstour" }
   ]
 }
