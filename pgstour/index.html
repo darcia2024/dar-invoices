@@ -4,31 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Invoice #INV/PGS/2026/09/001 - PGS Tour &amp; Travel</title>
-    <!-- Google Fonts: Plus Jakarta Sans (400, 500, 600, 700) -->
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-canvas: #f7f6f2;
+            /* Warm Editorial Atmosphere */
+            --bg-canvas: #f6f5f0;
             --bg-paper: #ffffff;
             
-            /* Logo Inspired Palette (Navy & Vibrant Azure) */
-            --navy-deep: #162c54;         /* Deep Royal Blue from Kaaba / Arch */
-            --navy-midnight: #0f1e38;
-            --azure-accent: #0284c7;       /* Sky Blue from Logo Arch */
-            --azure-subtle: #f0f9ff;
-            --gold-accent: #c49638;        /* Subtle Warm Accent */
+            /* PGS Tour & Travel Royal Palette */
+            --navy-primary: #112544;      /* Executive Deep Sapphire */
+            --navy-midnight: #0a1629;
+            --navy-soft: #1d3964;
+            --azure-brand: #0284c7;       /* Logo Arch Sky Blue */
+            --azure-light: #f0f9ff;
+            --azure-border: #bae6fd;
             
-            --text-main: #1e293b;
+            --green-bonus: #15803d;
+            --green-subtle: #f0fdf4;
+            
+            --text-title: #0f1c30;
+            --text-body: #334155;
             --text-muted: #64748b;
-            --text-subtle: #94a3b8;
+            --text-light: #94a3b8;
             
-            --border-hairline: #e8e5dc;
-            --border-subtle: #f1efe9;
+            --border-hairline: #eae7de;
+            --border-subtle: #f3f1eb;
             
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Space Mono', monospace;
         }
 
         * {
@@ -41,15 +48,18 @@
             font-family: var(--font-sans);
             font-weight: 400;
             background-color: var(--bg-canvas);
-            color: var(--text-main);
+            background-image: 
+                radial-gradient(at 15% 15%, rgba(2, 132, 199, 0.03) 0px, transparent 50%),
+                radial-gradient(at 85% 85%, rgba(17, 37, 68, 0.03) 0px, transparent 50%);
+            color: var(--text-body);
             line-height: 1.6;
-            padding: 32px 20px;
+            padding: 40px 20px;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
         }
 
         /* ----------------------------------------------------
-           SECURITY COVER OVERLAY
+           SECURITY PASSCODE COVER OVERLAY
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -57,8 +67,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #0b172a;
-            background-image: radial-gradient(circle at top center, #1b345f 0%, #07101d 100%);
+            background-color: #0b1524;
+            background-image: radial-gradient(circle at 50% 30%, #162c4e 0%, #080f1a 100%);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -76,12 +86,12 @@
 
         .cover-card {
             background-color: #ffffff;
-            border-radius: 16px;
+            border-radius: 20px;
             max-width: 440px;
             width: 100%;
-            padding: 36px 32px;
+            padding: 40px 34px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.45);
             position: relative;
         }
 
@@ -96,101 +106,117 @@
             40%, 60% { transform: translate3d(6px, 0, 0); }
         }
 
-        .cover-logo-img {
-            height: 74px;
-            width: auto;
-            object-fit: contain;
-            margin: 0 auto 12px auto;
-            display: block;
+        .cover-logo-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px auto;
+            border-radius: 18px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.15);
+            border: 1px solid #f1f5f9;
         }
 
-        .cover-pill {
+        .cover-logo-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .cover-badge {
             display: inline-block;
             font-size: 0.68rem;
             font-weight: 600;
-            letter-spacing: 0.08em;
-            color: var(--azure-accent);
-            background: var(--azure-subtle);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--azure-brand);
+            background: var(--azure-light);
             padding: 3px 12px;
             border-radius: 20px;
             margin-bottom: 12px;
         }
 
         .cover-title {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--navy-deep);
-            letter-spacing: -0.01em;
+            color: var(--navy-primary);
+            letter-spacing: -0.02em;
             margin-bottom: 4px;
         }
 
         .cover-subtitle {
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
-        .cover-recipient-meta {
-            padding: 12px 14px;
-            border-top: 1px solid var(--border-hairline);
-            border-bottom: 1px solid var(--border-hairline);
-            margin-bottom: 20px;
+        .cover-recipient-block {
+            padding: 14px 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 22px;
             text-align: left;
         }
 
-        .cover-recipient-label {
+        .cover-recipient-caption {
             font-size: 0.65rem;
             font-weight: 600;
-            color: var(--azure-accent);
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
+            color: var(--azure-brand);
         }
 
         .cover-recipient-name {
-            font-size: 0.96rem;
+            font-size: 0.98rem;
             font-weight: 700;
-            color: var(--navy-deep);
-            margin-top: 1px;
+            color: var(--navy-primary);
+            margin-top: 2px;
         }
 
-        .cover-recipient-detail {
+        .cover-recipient-meta {
             font-size: 0.78rem;
             color: var(--text-muted);
         }
 
         .passcode-wrapper {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .passcode-label {
-            font-size: 0.74rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 6px;
+            color: var(--text-title);
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
         }
 
         .passcode-input {
             width: 100%;
-            height: 42px;
-            border: 1px solid var(--border-hairline);
-            border-radius: 8px;
-            padding: 0 14px;
-            font-size: 1.2rem;
-            letter-spacing: 0.3em;
+            height: 46px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 0 16px;
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
             text-align: center;
-            color: var(--navy-deep);
+            color: var(--navy-primary);
             outline: none;
-            background: #fafaf8;
+            background: #fcfcfc;
             transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
-            border-color: var(--azure-accent);
+            border-color: var(--azure-brand);
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            box-shadow: 0 0 0 3.5px rgba(2, 132, 199, 0.15);
         }
 
         .passcode-error {
@@ -204,65 +230,65 @@
 
         .cover-open-btn {
             width: 100%;
-            height: 42px;
-            background-color: var(--navy-deep);
+            height: 46px;
+            background-color: var(--navy-primary);
             color: #ffffff;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: var(--font-sans);
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background 0.15s ease;
+            transition: background 0.15s ease, transform 0.1s ease;
         }
 
         .cover-open-btn:hover {
             background-color: var(--navy-midnight);
+            transform: translateY(-1px);
         }
 
         /* ----------------------------------------------------
-           TOP ACTION BAR (Clean & Floating)
+           FLOATING ACTION BAR (Pill / Island Style)
         ---------------------------------------------------- */
-        .action-bar {
+        .action-bar-wrapper {
             max-width: 860px;
-            margin: 0 auto 16px auto;
+            margin: 0 auto 20px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 4px;
             flex-wrap: wrap;
             gap: 12px;
         }
 
-        .action-title {
+        .action-brand-tag {
             font-size: 0.82rem;
             color: var(--text-muted);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
-        .action-title strong {
-            color: var(--navy-deep);
+        .action-brand-tag strong {
+            color: var(--navy-primary);
             font-weight: 600;
         }
 
-        .btn-group {
-            display: flex;
+        .action-btn-group {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
         }
 
-        .btn {
+        .action-btn {
             font-family: var(--font-sans);
             font-size: 0.76rem;
             font-weight: 500;
-            padding: 7px 14px;
-            border-radius: 8px;
+            padding: 8px 15px;
+            border-radius: 999px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -271,460 +297,527 @@
             text-decoration: none;
             border: 1px solid var(--border-hairline);
             background: #ffffff;
-            color: var(--text-main);
+            color: var(--text-title);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
         }
 
-        .btn:hover {
-            background: #fdfbf7;
-            border-color: #d1cdbf;
+        .action-btn:hover {
+            background: #fdfcf9;
+            border-color: #d8d4c9;
+            transform: translateY(-1px);
         }
 
-        .btn-primary {
-            background: var(--navy-deep);
+        .action-btn-primary {
+            background: var(--navy-primary);
             color: #ffffff;
-            border-color: var(--navy-deep);
+            border-color: var(--navy-primary);
         }
 
-        .btn-primary:hover {
+        .action-btn-primary:hover {
             background: var(--navy-midnight);
             border-color: var(--navy-midnight);
+            color: #ffffff;
         }
 
         /* ----------------------------------------------------
-           MAIN DOCUMENT SHEET (BOX-FREE, CLEAN & EDITORIAL)
+           MAIN DOCUMENT CANVAS (ESTETIK, LAPANG, BERKELAS)
         ---------------------------------------------------- */
         .invoice-sheet {
             max-width: 860px;
             margin: 0 auto;
             background: var(--bg-paper);
-            border: 1px solid var(--border-hairline);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
-            padding: 48px 56px;
+            border-radius: 16px;
+            border: 1px solid rgba(17, 37, 68, 0.06);
+            box-shadow: 0 24px 48px -12px rgba(17, 37, 68, 0.05), 0 0 0 1px rgba(17, 37, 68, 0.02);
+            padding: 56px 64px;
             display: flex;
             flex-direction: column;
-            gap: 36px;
+            gap: 40px;
+            position: relative;
         }
 
-        /* Header */
-        .header-row {
+        /* Top Header Presentation */
+        .header-presentation {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding-bottom: 24px;
+            padding-bottom: 32px;
             border-bottom: 1px solid var(--border-hairline);
+            gap: 24px;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
             gap: 20px;
         }
 
-        .brand-block {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .brand-logo-img {
-            height: 64px;
+        .brand-logo-frame {
+            height: 72px;
             width: auto;
             object-fit: contain;
             flex-shrink: 0;
         }
 
-        .brand-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-        }
-
-        .brand-sub {
-            font-size: 0.84rem;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-top: 2px;
-        }
-
-        .brand-legal {
-            font-size: 0.76rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .header-meta-box {
-            text-align: right;
-        }
-
-        .header-doc-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            letter-spacing: -0.01em;
-            margin-bottom: 4px;
-        }
-
-        .header-ref-number {
-            font-size: 0.88rem;
+        .brand-eyebrow {
+            font-size: 0.68rem;
             font-weight: 600;
-            color: var(--azure-accent);
-            letter-spacing: 0.01em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--azure-brand);
+            margin-bottom: 2px;
         }
 
-        .header-date-text {
+        .brand-main-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            font-size: 0.86rem;
+            font-weight: 500;
+            color: var(--text-body);
+            margin-top: 3px;
+        }
+
+        .brand-caption {
             font-size: 0.78rem;
             color: var(--text-muted);
             margin-top: 2px;
         }
 
-        /* Bilateral Meta Section (No Boxes, Clean Flow) */
-        .bilateral-section {
+        .header-meta-stack {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .meta-invoice-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .meta-invoice-number {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--azure-brand);
+            letter-spacing: 0.02em;
+        }
+
+        .meta-date-row {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .meta-date-row span {
+            color: var(--text-title);
+            font-weight: 500;
+        }
+
+        /* Bilateral Editorial Section (Parties) */
+        .parties-editorial-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 40px;
-            padding-bottom: 24px;
+            gap: 48px;
+            padding-bottom: 30px;
             border-bottom: 1px solid var(--border-subtle);
         }
 
-        .col-caption {
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--azure-accent);
-            margin-bottom: 6px;
+        .party-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .client-name {
+        .party-eyebrow {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--azure-brand);
+            margin-bottom: 4px;
+        }
+
+        .party-name {
             font-size: 1.05rem;
             font-weight: 700;
-            color: var(--navy-deep);
+            color: var(--navy-primary);
             line-height: 1.35;
         }
 
-        .client-info-text {
+        .party-detail {
             font-size: 0.82rem;
             color: var(--text-muted);
-            margin-top: 4px;
-            line-height: 1.55;
+            line-height: 1.6;
+            margin-top: 2px;
         }
 
-        .issuer-name {
-            font-size: 1.02rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-        }
-
-        .issuer-info-text {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-top: 3px;
-            line-height: 1.55;
-        }
-
-        /* Scope of Work Section (Clean Ruled Lines, No Box) */
-        .section-block {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .section-title {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-hairline);
-            display: flex;
+        .party-contact-pill {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-        }
-
-        .sow-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.84rem;
-        }
-
-        .sow-table th {
-            text-align: left;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            padding: 8px 10px;
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .sow-table th.th-num { width: 38px; }
-        .sow-table th.th-qty { width: 50px; text-align: center; }
-        .sow-table th.th-price { width: 130px; text-align: right; }
-
-        .sow-table td {
-            padding: 13px 10px;
-            border-bottom: 1px solid var(--border-subtle);
-            vertical-align: top;
-        }
-
-        .sow-table tr:last-child td {
-            border-bottom: 1px solid var(--border-hairline);
-        }
-
-        .sow-table td.td-num {
+            gap: 6px;
             font-size: 0.8rem;
             font-weight: 500;
-            color: var(--text-subtle);
+            color: var(--navy-primary);
+            margin-top: 4px;
         }
 
-        .sow-table td.td-qty {
-            text-align: center;
-            font-size: 0.82rem;
+        /* Scope of Work (Editorial Itemized Section) */
+        .sow-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-bottom: 10px;
+            border-bottom: 1.5px solid var(--navy-primary);
+        }
+
+        .section-heading-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .section-heading-meta {
+            font-size: 0.74rem;
             color: var(--text-muted);
+            letter-spacing: 0.04em;
         }
 
-        .sow-table td.td-price {
-            text-align: right;
+        .sow-items-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sow-item-row {
+            display: grid;
+            grid-template-columns: 44px 1fr auto;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            align-items: flex-start;
+        }
+
+        .sow-item-row:last-child {
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .item-number-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--azure-light);
+            color: var(--azure-brand);
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
             font-weight: 600;
-            color: var(--navy-deep);
-            font-variant-numeric: tabular-nums;
-            font-size: 0.86rem;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
         }
 
-        .item-name {
-            font-size: 0.86rem;
+        .item-core-content {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .item-headline {
+            font-size: 0.9rem;
             font-weight: 600;
-            color: var(--navy-deep);
-            margin-bottom: 3px;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        .item-bullet-list {
+        .bonus-pill-tag {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--green-bonus);
+            background: var(--green-subtle);
+            padding: 2px 8px;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+        }
+
+        .item-bullets-clean {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 3px;
         }
 
-        .item-bullet-list li {
+        .item-bullets-clean li {
             position: relative;
-            padding-left: 12px;
-            font-size: 0.79rem;
-            color: var(--text-muted);
-            line-height: 1.45;
+            padding-left: 14px;
+            font-size: 0.81rem;
+            color: var(--text-body);
+            line-height: 1.55;
         }
 
-        .item-bullet-list li::before {
+        .item-bullets-clean li::before {
             content: "•";
             position: absolute;
             left: 2px;
-            color: var(--azure-accent);
-            font-size: 0.85rem;
+            color: var(--azure-brand);
+            font-size: 0.9rem;
         }
 
-        .free-badge {
-            display: inline-block;
-            font-size: 0.68rem;
+        .item-price-column {
+            text-align: right;
+            min-width: 130px;
+            padding-top: 2px;
+        }
+
+        .item-price-val {
+            font-size: 0.92rem;
             font-weight: 600;
-            padding: 1px 6px;
-            border-radius: 4px;
-            background: #eef7f0;
-            color: #246838;
-            margin-left: 6px;
+            color: var(--navy-primary);
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
         }
 
-        /* Financial Calculation Block (Clean, Borderless, Right-Aligned) */
-        .summary-wrapper {
+        .item-price-free {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--green-bonus);
+        }
+
+        /* Financial Calculation & Grand Total */
+        .financial-closure-wrap {
             display: flex;
             justify-content: flex-end;
-            margin-top: 4px;
+            margin-top: 8px;
         }
 
-        .summary-block {
+        .financial-card {
             width: 100%;
-            max-width: 360px;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .summary-line {
+        .fin-row-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 0;
-            font-size: 0.83rem;
+            font-size: 0.84rem;
             color: var(--text-muted);
+            padding: 3px 0;
         }
 
-        .summary-line.subtotal {
-            color: var(--text-main);
+        .fin-row-line.subtotal {
+            color: var(--text-body);
             font-weight: 500;
         }
 
-        .summary-line.discount {
-            color: #166534;
+        .fin-row-line.discount {
+            color: var(--green-bonus);
+            font-weight: 500;
         }
 
-        .summary-line.total-line {
-            border-top: 1.5px solid var(--border-hairline);
-            margin-top: 6px;
-            padding-top: 10px;
-            padding-bottom: 4px;
-            color: var(--navy-deep);
+        .fin-grand-divider {
+            height: 1px;
+            background: var(--border-hairline);
+            margin: 6px 0 2px 0;
         }
 
-        .total-label {
-            font-size: 0.95rem;
+        .fin-grand-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 8px 0 2px 0;
+        }
+
+        .fin-grand-label {
+            font-size: 0.98rem;
             font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: -0.01em;
         }
 
-        .total-amount {
-            font-size: 1.28rem;
-            font-weight: 700;
-            color: var(--navy-deep);
+        .fin-grand-val {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--navy-primary);
             letter-spacing: -0.02em;
             font-variant-numeric: tabular-nums;
         }
 
-        .terbilang-text {
+        .fin-spelled-out {
             font-size: 0.78rem;
-            color: var(--text-muted);
             font-style: italic;
+            color: var(--text-muted);
             text-align: right;
             margin-top: 2px;
         }
 
-        /* Payment & Notes (Clean 2-Column, No Boxes) */
-        .details-grid {
+        /* Payment Details & Warranty (Seamless Dual Columns) */
+        .terms-payment-split {
             display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 40px;
-            padding-top: 8px;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 48px;
+            padding-top: 10px;
             border-top: 1px solid var(--border-subtle);
         }
 
-        .detail-caption {
+        .terms-block-title {
             font-size: 0.7rem;
             font-weight: 600;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--azure-accent);
+            color: var(--azure-brand);
+            margin-bottom: 10px;
+        }
+
+        .bank-mandiri-lockup {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 8px;
         }
 
-        .bank-info-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.84rem;
-            color: var(--navy-deep);
-            margin-bottom: 6px;
-        }
-
-        .mandiri-img {
-            height: 18px;
+        .bank-logo-mandiri {
+            height: 20px;
             width: auto;
             object-fit: contain;
         }
 
-        .bank-acc-display {
+        .bank-name-holder {
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+        }
+
+        .bank-account-strip {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            margin: 4px 0;
+            gap: 10px;
+            margin: 4px 0 6px 0;
             flex-wrap: wrap;
         }
 
-        .acc-number {
-            font-size: 1.02rem;
-            font-weight: 600;
-            color: var(--navy-deep);
-            letter-spacing: 0.04em;
+        .account-digits {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.06em;
         }
 
-        .copy-chip {
-            background: transparent;
-            color: var(--azure-accent);
-            border: 1px solid var(--azure-accent);
-            font-size: 0.68rem;
+        .copy-pill-button {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
             font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--azure-brand);
+            background: #ffffff;
+            color: var(--azure-brand);
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
-        .copy-chip:hover {
-            background: var(--azure-accent);
+        .copy-pill-button:hover {
+            background: var(--azure-brand);
             color: #ffffff;
         }
 
-        .notes-clean-list {
+        .bank-help-text {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+        }
+
+        .warranty-clean-items {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
             gap: 6px;
+        }
+
+        .warranty-clean-items li {
+            position: relative;
+            padding-left: 16px;
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: var(--text-body);
             line-height: 1.5;
         }
 
-        .notes-clean-list li {
-            position: relative;
-            padding-left: 14px;
-        }
-
-        .notes-clean-list li::before {
+        .warranty-clean-items li::before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: var(--azure-accent);
+            color: var(--azure-brand);
             font-size: 0.76rem;
             font-weight: bold;
         }
 
-        /* Signatures (Clean, Borderless) */
-        .sign-grid {
+        /* Signatures (Editorial Clean Closure) */
+        .signatures-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            padding-top: 14px;
+            gap: 56px;
+            padding-top: 18px;
             border-top: 1px solid var(--border-hairline);
         }
 
-        .sign-caption {
+        .sign-col-heading {
             font-size: 0.7rem;
             font-weight: 600;
-            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
             margin-bottom: 8px;
         }
 
-        .sign-field {
+        .sign-row-info {
             font-size: 0.82rem;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
-        .sign-field span {
+        .sign-row-info span {
             color: var(--text-muted);
             display: inline-block;
-            width: 70px;
+            width: 72px;
         }
 
-        .sign-field strong {
-            color: var(--navy-deep);
+        .sign-row-info strong {
+            color: var(--navy-primary);
             font-weight: 600;
         }
 
-        .sign-line-space {
-            height: 56px;
+        .signature-line-slot {
+            height: 52px;
             border-bottom: 1px dashed var(--border-hairline);
-            margin: 12px 0 6px 0;
+            margin: 12px 0 8px 0;
             display: flex;
             align-items: flex-end;
             justify-content: center;
             font-size: 0.72rem;
-            color: var(--azure-accent);
+            color: var(--azure-brand);
             letter-spacing: 0.06em;
             padding-bottom: 3px;
         }
@@ -734,23 +827,24 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: var(--navy-deep);
+            background: var(--navy-primary);
             color: #ffffff;
             padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 0.78rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 600;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
             display: none;
             z-index: 20000;
         }
 
         /* ----------------------------------------------------
-           PRINT STYLES (Clean A4 Document)
+           PRINT OPTIMIZATION (CLEAN A4 SHEET)
         ---------------------------------------------------- */
         @media print {
             body {
                 background-color: #ffffff !important;
+                background-image: none !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 -webkit-print-color-adjust: exact !important;
@@ -758,7 +852,7 @@
             }
 
             .cover-overlay,
-            .action-bar,
+            .action-bar-wrapper,
             .toast,
             button {
                 display: none !important;
@@ -768,53 +862,65 @@
                 max-width: 100% !important;
                 border: none !important;
                 box-shadow: none !important;
-                padding: 12px 16px !important;
-                gap: 24px !important;
+                padding: 16px 20px !important;
+                gap: 28px !important;
             }
 
-            .header-row {
-                border-bottom: 1px solid #162c54 !important;
+            .header-presentation {
+                border-bottom: 1.5px solid #112544 !important;
             }
         }
 
         /* ----------------------------------------------------
-           MOBILE RESPONSIVE
+           MOBILE RESPONSIVENESS
         ---------------------------------------------------- */
         @media (max-width: 768px) {
             body {
-                padding: 12px 8px;
+                padding: 16px 10px;
             }
 
             .invoice-sheet {
-                padding: 24px 18px;
+                padding: 28px 20px;
+                gap: 28px;
+            }
+
+            .header-presentation {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .header-meta-stack {
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .parties-editorial-grid {
+                grid-template-columns: 1fr;
                 gap: 24px;
             }
 
-            .header-row {
-                flex-direction: column;
+            .sow-item-row {
+                grid-template-columns: 32px 1fr;
                 gap: 14px;
             }
 
-            .header-meta-box {
+            .item-price-column {
+                grid-column: 2 / 3;
                 text-align: left;
+                padding-top: 4px;
             }
 
-            .bilateral-section {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .details-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .sign-grid {
+            .terms-payment-split {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
 
-            .summary-block {
+            .signatures-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .financial-card {
                 max-width: 100%;
             }
         }
@@ -827,54 +933,56 @@
     ---------------------------------------------------- -->
     <div class="cover-overlay" id="coverOverlay">
         <div class="cover-card" id="coverCard">
-            <img src="/pgstour/logo.png" alt="Logo PGS Tour" class="cover-logo-img">
+            <div class="cover-logo-wrapper">
+                <img src="/pgstour/logo.png" alt="Logo PGS Tour" class="cover-logo-img">
+            </div>
             
-            <div class="cover-pill">Portal Dokumen Resmi</div>
+            <div class="cover-badge">Dokumen Resmi &bull; Portal Akses</div>
             <h1 class="cover-title">Invoice &amp; Rincian Proyek</h1>
             <p class="cover-subtitle">Pengembangan &amp; Redesign Website Resmi PGS Tour &amp; Travel</p>
 
-            <div class="cover-recipient-meta">
-                <div class="cover-recipient-label">Ditujukan kepada:</div>
+            <div class="cover-recipient-block">
+                <div class="cover-recipient-caption">Ditujukan kepada:</div>
                 <div class="cover-recipient-name">PT Permana Group Sejahtera</div>
-                <div class="cover-recipient-detail">Up. Manajemen / Owner PGS Tour &bull; Serang, Banten</div>
+                <div class="cover-recipient-meta">Up. Manajemen / Owner PGS Tour &bull; Serang, Banten</div>
             </div>
 
             <div class="passcode-wrapper">
                 <div class="passcode-label">
                     <span>Masukkan PIN Akses Dokumen</span>
-                    <span style="color:var(--text-subtle); font-weight:400;">(4-6 digit)</span>
+                    <span style="color:var(--text-light); font-weight:400;">(4-6 digit)</span>
                 </div>
                 <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="••••••" autofocus onkeyup="checkCoverKey(event)">
-                <div class="passcode-error" id="passcodeError">PIN tidak sesuai. Silakan coba kembali atau hubungi penyedia.</div>
+                <div class="passcode-error" id="passcodeError">PIN salah. Silakan coba kembali atau hubungi penyedia.</div>
             </div>
 
             <button class="cover-open-btn" onclick="validateCoverPasscode()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 Buka Dokumen Invoice
             </button>
         </div>
     </div>
 
     <!-- ----------------------------------------------------
-       TOP CONTROL ACTION BAR
+       FLOATING ACTION BAR
     ---------------------------------------------------- -->
-    <div class="action-bar">
-        <div class="action-title">
+    <div class="action-bar-wrapper">
+        <div class="action-brand-tag">
             <span>Invoice:</span>
             <strong>#INV/PGS/2026/09/001</strong>
-            <span style="color:var(--text-subtle);">&bull;</span>
+            <span style="color:var(--text-light);">&bull;</span>
             <span>10 September 2026</span>
         </div>
-        <div class="btn-group">
-            <button class="btn" onclick="copyInvoiceLink()">
+        <div class="action-btn-group">
+            <button class="action-btn" onclick="copyInvoiceLink()">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                 Salin Link
             </button>
-            <button class="btn" onclick="copyBankAcc()">
+            <button class="action-btn" onclick="copyBankAcc()">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                 Salin Rekening
             </button>
-            <button class="btn btn-primary" onclick="window.print()">
+            <button class="action-btn action-btn-primary" onclick="window.print()">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 Cetak / Simpan PDF
             </button>
@@ -882,193 +990,195 @@
     </div>
 
     <!-- ----------------------------------------------------
-       INVOICE SHEET CONTAINER (CLEAN, BOX-FREE)
+       INVOICE SHEET (CLEAN, BOX-FREE, EDITORIAL)
     ---------------------------------------------------- -->
     <div class="invoice-sheet" id="invoiceSheet">
         
-        <!-- Header -->
-        <div class="header-row">
-            <div class="brand-block">
-                <img src="/pgstour/logo.png" alt="Logo PGS Tour" class="brand-logo-img">
+        <!-- Header Presentation -->
+        <div class="header-presentation">
+            <div class="brand-cluster">
+                <img src="/pgstour/logo.png" alt="PGS Tour Logo" class="brand-logo-frame">
                 <div>
-                    <h1 class="brand-title">PGS Tour &amp; Travel</h1>
-                    <div class="brand-sub">PT Permana Group Sejahtera</div>
-                    <div class="brand-legal">Biro Perjalanan Wisata &amp; Layanan Umroh Resmi &bull; Serang, Banten</div>
+                    <div class="brand-eyebrow">Dokumen Penawaran &amp; Tagihan Resmi</div>
+                    <h1 class="brand-main-title">PGS Tour &amp; Travel</h1>
+                    <div class="brand-subtitle">PT Permana Group Sejahtera</div>
+                    <div class="brand-caption">Biro Perjalanan Wisata &amp; Layanan Umroh Resmi &bull; Serang, Banten</div>
                 </div>
             </div>
 
-            <div class="header-meta-box">
-                <div class="header-doc-title">Invoice Tagihan</div>
-                <div class="header-ref-number">#INV/PGS/2026/09/001</div>
-                <div class="header-date-text">Tanggal Terbit: 10 September 2026</div>
-                <div class="header-date-text">Jatuh Tempo: 17 September 2026</div>
+            <div class="header-meta-stack">
+                <div class="meta-invoice-title">Invoice Tagihan</div>
+                <div class="meta-invoice-number">#INV/PGS/2026/09/001</div>
+                <div class="meta-date-row">Tanggal Terbit: <span>10 September 2026</span></div>
+                <div class="meta-date-row">Jatuh Tempo: <span>17 September 2026</span></div>
             </div>
         </div>
 
-        <!-- Bilateral Meta Section (Clean Flow, No Boxes) -->
-        <div class="bilateral-section">
-            <div>
-                <div class="col-caption">Ditujukan kepada:</div>
-                <div class="client-name">PT Permana Group Sejahtera (PGS Tour &amp; Travel)</div>
-                <div class="client-info-text">
+        <!-- Bilateral Editorial Grid (Client & Issuer) -->
+        <div class="parties-editorial-grid">
+            <div class="party-block">
+                <div class="party-eyebrow">Ditujukan kepada:</div>
+                <div class="party-name">PT Permana Group Sejahtera (PGS Tour &amp; Travel)</div>
+                <div class="party-detail">
                     Up. Manajemen / Owner PGS Tour<br>
                     Alamat: Serang, Banten<br>
-                    Proyek: Pengembangan &amp; Redesign Website Resmi PGS Tour &amp; Travel
+                    Proyek: Pengembangan &amp; Redesign Website Resmi
                 </div>
             </div>
 
-            <div>
-                <div class="col-caption">Dibuat oleh:</div>
-                <div class="issuer-name">Dar Dev (Daru Fahmaa Muliawan)</div>
-                <div class="issuer-info-text">
-                    Web &amp; Digital Specialist<br>
-                    WhatsApp: 081311506025
+            <div class="party-block">
+                <div class="party-eyebrow">Dibuat oleh:</div>
+                <div class="party-name">Dar Dev (Daru Fahmaa Muliawan)</div>
+                <div class="party-detail">
+                    Web &amp; Digital Specialist
+                </div>
+                <div class="party-contact-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    WhatsApp: 0813 1150 6025
                 </div>
             </div>
         </div>
 
-        <!-- Scope of Work Section -->
-        <div class="section-block">
-            <div class="section-title">
-                <span>Rincian Pekerjaan &amp; Layanan</span>
+        <!-- Scope of Work Section (Editorial Itemized Ledger) -->
+        <div class="sow-section">
+            <div class="section-header-bar">
+                <div class="section-heading-text">Rincian Pekerjaan &amp; Layanan</div>
+                <div class="section-heading-meta">5 Item Layanan &bull; All-Inclusive</div>
             </div>
 
-            <table class="sow-table">
-                <thead>
-                    <tr>
-                        <th class="th-num">No</th>
-                        <th>Rincian Layanan &amp; Manfaat</th>
-                        <th class="th-qty">Qty</th>
-                        <th class="th-price">Biaya (IDR)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Item 1 -->
-                    <tr>
-                        <td class="td-num">01</td>
-                        <td>
-                            <div class="item-name">Pembuatan Website Resmi PGS Tour (7 Halaman Lengkap)</div>
-                            <ul class="item-bullet-list">
-                                <li>Website modern berkecepatan tinggi, langsung terbuka tanpa lelet saat diakses calon jamaah.</li>
-                                <li>Mencakup 7 halaman lengkap: Beranda, Profil Perusahaan (Tentang Kami), Daftar Paket Umroh, Rincian Paket Umroh Mahabbah, Layanan Pembuatan Visa, Galeri Dokumentasi, Info Kemitraan/Agen, dan Halaman Kontak Konsultasi.</li>
-                                <li>Tampilan profesional yang membuat calon jamaah langsung percaya dan yakin sejak pertama kali membuka web.</li>
-                            </ul>
-                        </td>
-                        <td class="td-qty">1</td>
-                        <td class="td-price">Rp 5.000.000</td>
-                    </tr>
+            <div class="sow-items-list">
+                
+                <!-- Item 1 -->
+                <div class="sow-item-row">
+                    <div class="item-number-circle">01</div>
+                    <div class="item-core-content">
+                        <div class="item-headline">Pembuatan Website Resmi PGS Tour (7 Halaman Lengkap)</div>
+                        <ul class="item-bullets-clean">
+                            <li>Website modern berkecepatan tinggi, langsung terbuka tanpa lelet saat diakses calon jamaah.</li>
+                            <li>Mencakup 7 halaman lengkap: Beranda, Profil Perusahaan (Tentang Kami), Daftar Paket Umroh, Rincian Paket Umroh Mahabbah, Layanan Pembuatan Visa, Galeri Dokumentasi, Info Kemitraan/Agen, dan Halaman Kontak Konsultasi.</li>
+                            <li>Tampilan profesional yang membuat calon jamaah langsung percaya dan yakin sejak pertama kali membuka web.</li>
+                        </ul>
+                    </div>
+                    <div class="item-price-column">
+                        <div class="item-price-val">Rp 5.000.000</div>
+                    </div>
+                </div>
 
-                    <!-- Item 2 -->
-                    <tr>
-                        <td class="td-num">02</td>
-                        <td>
-                            <div class="item-name">Desain Tampilan Baru yang Nyaman &amp; Pas di Layar HP</div>
-                            <ul class="item-bullet-list">
-                                <li>Desain bernuansa travel &amp; umroh modern yang bersih, elegan, dan berkelas.</li>
-                                <li>Tampilan rapi dan presisi di semua jenis HP—tulisan tidak terpotong, tombol mudah ditekan, dan nyaman dibaca jamaah.</li>
-                                <li>Desain kartu paket umroh &amp; layanan visa yang jelas, membuat rincian harga, hotel, dan fasilitas langsung mudah dimengerti.</li>
-                                <li>Penonjolan keunggulan utama travel (seperti "Jarak Hotel Dekat ke Masjid", legalitas resmi Kemenag, dan fasilitas terbaik) agar jamaah mantap memilih PGS Tour.</li>
-                            </ul>
-                        </td>
-                        <td class="td-qty">1</td>
-                        <td class="td-price">Rp 2.500.000</td>
-                    </tr>
+                <!-- Item 2 -->
+                <div class="sow-item-row">
+                    <div class="item-number-circle">02</div>
+                    <div class="item-core-content">
+                        <div class="item-headline">Desain Tampilan Baru yang Nyaman &amp; Pas di Layar HP</div>
+                        <ul class="item-bullets-clean">
+                            <li>Desain bernuansa travel &amp; umroh modern yang bersih, elegan, dan berkelas.</li>
+                            <li>Tampilan rapi dan presisi di semua jenis HP—tulisan tidak terpotong, tombol mudah ditekan, dan nyaman dibaca jamaah.</li>
+                            <li>Desain kartu paket umroh &amp; layanan visa yang jelas, membuat rincian harga, hotel, dan fasilitas langsung mudah dimengerti.</li>
+                            <li>Penonjolan keunggulan utama travel (seperti "Jarak Hotel Dekat ke Masjid", legalitas resmi Kemenag, dan fasilitas terbaik) agar jamaah mantap memilih PGS Tour.</li>
+                        </ul>
+                    </div>
+                    <div class="item-price-column">
+                        <div class="item-price-val">Rp 2.500.000</div>
+                    </div>
+                </div>
 
-                    <!-- Item 3 -->
-                    <tr>
-                        <td class="td-num">03</td>
-                        <td>
-                            <div class="item-name">Galeri Foto Dokumentasi Jamaah yang Jernih &amp; Anti-Macet</div>
-                            <ul class="item-bullet-list">
-                                <li>Dokumentasi foto keberangkatan jamaah dan kegiatan tour tersusun rapi, estetik, dan menarik dilihat.</li>
-                                <li>Fitur klik foto untuk melihat tampilan layar penuh (fullscreen) dengan pergeseran foto yang mulus.</li>
-                                <li>Sistem kompresi gambar cerdas: foto tetap jernih dan tajam, hemat kuota internet, serta lancar dibuka di HP tanpa layar putih/blank.</li>
-                            </ul>
-                        </td>
-                        <td class="td-qty">1</td>
-                        <td class="td-price">Rp 1.500.000</td>
-                    </tr>
+                <!-- Item 3 -->
+                <div class="sow-item-row">
+                    <div class="item-number-circle">03</div>
+                    <div class="item-core-content">
+                        <div class="item-headline">Galeri Foto Dokumentasi Jamaah yang Jernih &amp; Anti-Macet</div>
+                        <ul class="item-bullets-clean">
+                            <li>Dokumentasi foto keberangkatan jamaah dan kegiatan tour tersusun rapi, estetik, dan menarik dilihat.</li>
+                            <li>Fitur klik foto untuk melihat tampilan layar penuh (fullscreen) dengan pergeseran foto yang mulus.</li>
+                            <li>Sistem kompresi gambar cerdas: foto tetap jernih dan tajam, hemat kuota internet, serta lancar dibuka di HP tanpa layar putih/blank.</li>
+                        </ul>
+                    </div>
+                    <div class="item-price-column">
+                        <div class="item-price-val">Rp 1.500.000</div>
+                    </div>
+                </div>
 
-                    <!-- Item 4 -->
-                    <tr>
-                        <td class="td-num">04</td>
-                        <td>
-                            <div class="item-name">Tombol Chat WhatsApp Otomatis &amp; Terdaftar di Google</div>
-                            <ul class="item-bullet-list">
-                                <li>Tombol konsultasi WhatsApp langsung di website dengan pesan pembuka otomatis (calon jamaah cukup klik dan langsung terhubung tanpa repot mengetik ulang nama paket yang diminati).</li>
-                                <li>Pemasangan logo icon resmi PGS Tour di tab browser dan jalan pintas layar utama HP.</li>
-                                <li>Pengaturan agar website mudah ditemukan di pencarian Google, lengkap dengan tampilan foto dan deskripsi yang rapi saat link web dibagikan ke WhatsApp dan media sosial.</li>
-                            </ul>
-                        </td>
-                        <td class="td-qty">1</td>
-                        <td class="td-price">Rp 1.000.000</td>
-                    </tr>
+                <!-- Item 4 -->
+                <div class="sow-item-row">
+                    <div class="item-number-circle">04</div>
+                    <div class="item-core-content">
+                        <div class="item-headline">Tombol Chat WhatsApp Otomatis &amp; Terdaftar di Google</div>
+                        <ul class="item-bullets-clean">
+                            <li>Tombol konsultasi WhatsApp langsung di website dengan pesan pembuka otomatis (calon jamaah cukup klik dan langsung terhubung tanpa repot mengetik ulang nama paket yang diminati).</li>
+                            <li>Pemasangan logo icon resmi PGS Tour di tab browser dan jalan pintas layar utama HP.</li>
+                            <li>Pengaturan agar website mudah ditemukan di pencarian Google, lengkap dengan tampilan foto dan deskripsi yang rapi saat link web dibagikan ke WhatsApp dan media sosial.</li>
+                        </ul>
+                    </div>
+                    <div class="item-price-column">
+                        <div class="item-price-val">Rp 1.000.000</div>
+                    </div>
+                </div>
 
-                    <!-- Item 5 -->
-                    <tr>
-                        <td class="td-num">05</td>
-                        <td>
-                            <div class="item-name">
-                                Server Cloud Cepat, Keamanan Web &amp; Pemasangan Sistem
-                                <span class="free-badge">Bonus / Gratis</span>
-                            </div>
-                            <ul class="item-bullet-list">
-                                <li>Pemasangan ke server cloud global berkecepatan tinggi agar website selalu aktif online 24 jam nonstop tanpa gangguan lelet.</li>
-                                <li>Gembok keamanan resmi (HTTPS/SSL) agar pengunjung merasa aman dan data website terlindungi dari risiko peretasan.</li>
-                                <li>Penyimpanan arsip kode sumber (source code) website yang rapi dan terjamin aman untuk jangka panjang.</li>
-                            </ul>
-                        </td>
-                        <td class="td-qty">1</td>
-                        <td class="td-price" style="color:#166534;">Rp 0</td>
-                    </tr>
-                </tbody>
-            </table>
+                <!-- Item 5 -->
+                <div class="sow-item-row">
+                    <div class="item-number-circle">05</div>
+                    <div class="item-core-content">
+                        <div class="item-headline">
+                            Server Cloud Cepat, Keamanan Web &amp; Pemasangan Sistem
+                            <span class="bonus-pill-tag">Bonus / Gratis</span>
+                        </div>
+                        <ul class="item-bullets-clean">
+                            <li>Pemasangan ke server cloud global berkecepatan tinggi agar website selalu aktif online 24 jam nonstop tanpa gangguan lelet.</li>
+                            <li>Gembok keamanan resmi (HTTPS/SSL) agar pengunjung merasa aman dan data website terlindungi dari risiko peretasan.</li>
+                            <li>Penyimpanan arsip kode sumber (source code) website yang rapi dan terjamin aman untuk jangka panjang.</li>
+                        </ul>
+                    </div>
+                    <div class="item-price-column">
+                        <div class="item-price-free">Rp 0</div>
+                    </div>
+                </div>
 
-            <!-- Financial Calculation Summary (No Box, Borderless) -->
-            <div class="summary-wrapper">
-                <div class="summary-block">
-                    <div class="summary-line subtotal">
+            </div>
+
+            <!-- Financial Calculation (Clean Right-Aligned Summary) -->
+            <div class="financial-closure-wrap">
+                <div class="financial-card">
+                    <div class="fin-row-line subtotal">
                         <span>Subtotal</span>
                         <span>Rp 10.000.000</span>
                     </div>
-                    <div class="summary-line discount">
+                    <div class="fin-row-line discount">
                         <span>Diskon Kerja Sama / Launch Promo</span>
                         <span>(Rp 1.000.000)</span>
                     </div>
-                    <div class="summary-line total-line">
-                        <span class="total-label">Total Tagihan</span>
-                        <span class="total-amount">Rp 9.000.000</span>
+                    <div class="fin-grand-divider"></div>
+                    <div class="fin-grand-row">
+                        <span class="fin-grand-label">Total Tagihan Bersih</span>
+                        <span class="fin-grand-val">Rp 9.000.000</span>
                     </div>
-                    <div class="terbilang-text">
+                    <div class="fin-spelled-out">
                         Terbilang: Sembilan Juta Rupiah.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Payment & Notes Section (Clean Flow) -->
-        <div class="details-grid">
-            <!-- Payment Details -->
+        <!-- Payment Details & Terms (Dual Minimalist Columns) -->
+        <div class="terms-payment-split">
+            <!-- Bank Mandiri Details -->
             <div>
-                <div class="detail-caption">Informasi Pembayaran</div>
-                <div class="bank-info-row">
-                    <img src="/pgstour/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri" class="mandiri-img">
-                    <span><strong>Bank Mandiri</strong> &bull; a.n. Daru Fahmaa Muliawan</span>
+                <div class="terms-block-title">Informasi Pembayaran</div>
+                <div class="bank-mandiri-lockup">
+                    <img src="/pgstour/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri" class="bank-logo-mandiri">
+                    <span class="bank-name-holder">Bank Mandiri &bull; a.n. Daru Fahmaa Muliawan</span>
                 </div>
-                <div class="bank-acc-display">
-                    <span style="font-size:0.8rem; color:var(--text-muted);">No. Rekening:</span>
-                    <span class="acc-number">1550010616962</span>
-                    <button class="copy-chip" onclick="copyBankAcc()">Salin</button>
+                <div class="bank-account-strip">
+                    <span class="account-digits">1550 0106 1696 2</span>
+                    <button class="copy-pill-button" onclick="copyBankAcc()">Salin No. Rekening</button>
                 </div>
-                <div style="font-size:0.76rem; color:var(--text-muted); margin-top:4px;">
-                    Dapat ditransfer melalui m-Banking, ATM, atau Internet Banking.
+                <div class="bank-help-text">
+                    Pembayaran dapat dilakukan melalui m-Banking, ATM, atau Internet Banking.
                 </div>
             </div>
 
-            <!-- Notes -->
+            <!-- Guarantee Notes -->
             <div>
-                <div class="detail-caption">Catatan &amp; Ketentuan</div>
-                <ul class="notes-clean-list">
+                <div class="terms-block-title">Catatan &amp; Ketentuan</div>
+                <ul class="warranty-clean-items">
                     <li>Termasuk <strong>garansi bantuan teknis dan perbaikan gratis selama 30 hari</strong> setelah website resmi aktif.</li>
                     <li>Bukti transfer pembayaran cukup difoto/discreenshot dan dikirimkan via WhatsApp untuk konfirmasi serah terima berkas website.</li>
                     <li>Hak kepemilikan penuh atas website dan seluruh datanya diserahkan 100% kepada PT Permana Group Sejahtera setelah pelunasan tagihan.</li>
@@ -1076,37 +1186,37 @@
             </div>
         </div>
 
-        <!-- Signature Section (Clean Flow) -->
-        <div class="sign-grid">
+        <!-- Signatures (Editorial Grid) -->
+        <div class="signatures-grid">
             <!-- Client Side -->
             <div>
-                <div class="sign-caption">Untuk Klien</div>
-                <div class="sign-field"><span>Nama:</span> <strong>Manajemen / Owner</strong></div>
-                <div class="sign-field"><span>Jabatan:</span> Manajemen / Direksi</div>
-                <div class="sign-field"><span>Instansi:</span> PT Permana Group Sejahtera (PGS Tour)</div>
-                <div class="sign-field"><span>Tanggal:</span> 10 September 2026</div>
-                <div class="sign-line-space"></div>
+                <div class="sign-col-heading">Untuk Klien</div>
+                <div class="sign-row-info"><span>Nama:</span> <strong>Manajemen / Owner</strong></div>
+                <div class="sign-row-info"><span>Jabatan:</span> Manajemen / Direksi</div>
+                <div class="sign-row-info"><span>Instansi:</span> PT Permana Group Sejahtera (PGS Tour)</div>
+                <div class="sign-row-info"><span>Tanggal:</span> 10 September 2026</div>
+                <div class="signature-line-slot"></div>
             </div>
 
             <!-- Provider Side -->
             <div>
-                <div class="sign-caption">Untuk Penyedia (Dar Dev)</div>
-                <div class="sign-field"><span>Nama:</span> <strong>Daru Fahmaa Muliawan</strong></div>
-                <div class="sign-field"><span>Jabatan:</span> Web &amp; Digital Specialist</div>
-                <div class="sign-field"><span>Instansi:</span> Dar Dev</div>
-                <div class="sign-field"><span>Tanggal:</span> 10 September 2026</div>
-                <div class="sign-line-space">
-                    Digital Verified &bull; Dar Dev
+                <div class="sign-col-heading">Untuk Penyedia (Dar Dev)</div>
+                <div class="sign-row-info"><span>Nama:</span> <strong>Daru Fahmaa Muliawan</strong></div>
+                <div class="sign-row-info"><span>Jabatan:</span> Web &amp; Digital Specialist</div>
+                <div class="sign-row-info"><span>Instansi:</span> Dar Dev</div>
+                <div class="sign-row-info"><span>Tanggal:</span> 10 September 2026</div>
+                <div class="signature-line-slot">
+                    [ Digital Verified &bull; Dar Dev ]
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Toast Component -->
+    <!-- Toast Notification Component -->
     <div id="toast" class="toast">Tautan berhasil disalin!</div>
 
-    <!-- Script Interactions -->
+    <!-- Interactive Scripts -->
     <script>
         const VALID_PINS = ["050900", "0001"];
         const SESSION_KEY = "pgs_invoice_unlocked";
@@ -1138,7 +1248,7 @@
             } else {
                 error.style.display = "block";
                 card.classList.remove("shake-anim");
-                void card.offsetWidth;
+                void card.offsetWidth; // Trigger reflow
                 card.classList.add("shake-anim");
                 input.value = "";
                 input.focus();
