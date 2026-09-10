@@ -781,12 +781,12 @@
         }
 
         /* ----------------------------------------------------
-           OPTIMAL & COMPACT MOBILE REDESIGN
+           CLEAN EDITORIAL MOBILE DESIGN (NO BOXES / KOTAK-KOTAK)
         ---------------------------------------------------- */
         @media (max-width: 768px) {
             body {
-                padding: 10px 8px 32px 8px;
-                background-color: #f1f5f9; /* Contrast background so white sheet looks crisp */
+                padding: 14px 10px 36px 10px;
+                background-color: #f8fafc;
             }
 
             /* Action bar spans width cleanly on mobile */
@@ -794,7 +794,7 @@
                 flex-direction: column;
                 align-items: stretch;
                 gap: 8px;
-                margin-bottom: 12px;
+                margin-bottom: 14px;
             }
 
             .action-brand-tag {
@@ -817,42 +817,44 @@
                 border-radius: 6px;
             }
 
-            /* Invoice Sheet */
+            /* Clean White Sheet without bulky cards */
             .a4-sheet {
-                border-radius: 12px;
-                box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+                border-radius: 6px;
+                box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
                 border: 1px solid #e2e8f0;
+                background: #ffffff;
             }
 
             .sheet-top {
-                padding: 16px 14px 12px 14px;
+                padding: 20px 18px 16px 18px;
             }
 
             .sheet-bottom {
-                padding: 14px 14px 20px 14px;
-                gap: 14px;
+                padding: 16px 18px 24px 18px;
+                gap: 18px;
             }
 
-            /* Header on Mobile: Logo & Inv No on Top Row, then Parties below */
+            /* Top Grid on Mobile: Logo & Inv No on Top, Parties Side-by-Side (NO BOXES) */
             .top-grid-horizontal {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px 14px;
             }
 
             .brand-inv-box {
+                grid-column: 1 / -1;
                 order: -1;
+                display: flex;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
                 width: 100%;
-                padding-bottom: 10px;
-                margin-bottom: 2px;
+                padding-bottom: 12px;
                 border-bottom: 1px solid var(--hairline);
             }
 
             .header-logo-img {
-                height: 38px;
+                height: 40px;
             }
 
             .inv-num-box {
@@ -864,33 +866,55 @@
             }
 
             .inv-num-val {
-                font-size: 0.8rem;
+                font-size: 0.82rem;
             }
 
-            /* Issuer and Billed To as neat cards */
-            .issuer-block,
-            .billed-block {
-                background: #f8fafc;
-                padding: 10px 12px;
-                border-radius: 8px;
-                border: 1px solid #f1f5f9;
+            /* Issuer and Billed To: Pure Clean Typography (Zero Boxes) */
+            .issuer-block {
+                grid-column: 1;
+                background: transparent;
+                border: none;
+                padding: 0;
                 font-size: 0.74rem;
+                line-height: 1.42;
+            }
+
+            .billed-block {
+                grid-column: 2;
+                background: transparent;
+                border: none;
+                padding: 0;
+                font-size: 0.74rem;
+                line-height: 1.42;
             }
 
             .header-col-label {
-                font-size: 0.64rem;
-                margin-bottom: 2px;
+                font-size: 0.65rem;
+                font-weight: 600;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 3px;
             }
 
             .issuer-name,
             .billed-client {
                 font-size: 0.82rem;
+                font-weight: 600;
+                color: var(--pgs-navy);
+                margin-bottom: 1px;
+            }
+
+            .issuer-details,
+            .billed-details {
+                color: var(--text-muted);
+                font-size: 0.72rem;
             }
 
             /* Invoice Wordmark & Date Row */
             .invoice-body-split {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 14px;
             }
 
             .invoice-title-col {
@@ -898,18 +922,18 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: flex-end;
-                padding-bottom: 10px;
+                padding-bottom: 8px;
                 border-bottom: 1px solid var(--hairline-subtle);
             }
 
             .invoice-main-title {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
                 line-height: 1;
             }
 
             .date-val,
             .invoice-due-sub {
-                font-size: 0.7rem;
+                font-size: 0.72rem;
                 text-align: right;
                 margin-bottom: 0;
             }
@@ -918,7 +942,7 @@
                 display: none;
             }
 
-            /* Table on Mobile: No cramped columns, full-width responsive cards */
+            /* Table on Mobile: Clean Line-by-Line (No Box Enclosures) */
             .table-head {
                 display: none;
             }
@@ -927,7 +951,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 4px;
-                padding: 10px 0;
+                padding: 11px 0;
                 border-bottom: 1px solid var(--hairline-subtle);
             }
 
@@ -939,7 +963,7 @@
             .item-cost-mobile {
                 display: inline-block;
                 font-family: var(--font-mono);
-                font-size: 0.8rem;
+                font-size: 0.82rem;
                 font-weight: 600;
                 color: var(--pgs-navy);
                 white-space: nowrap;
@@ -948,60 +972,67 @@
             .item-cost-mobile.cost-include {
                 color: var(--pgs-azure);
                 font-family: var(--font-sans);
-                font-size: 0.74rem;
+                font-size: 0.75rem;
+                font-weight: 600;
             }
 
             .item-title {
-                font-size: 0.8rem;
+                font-size: 0.82rem;
                 font-weight: 600;
                 line-height: 1.35;
             }
 
             .item-desc {
-                font-size: 0.72rem;
-                line-height: 1.4;
+                font-size: 0.73rem;
+                line-height: 1.42;
                 color: var(--text-muted);
             }
 
-            /* Totals on Mobile */
+            /* Totals on Mobile: Pure Typography (Zero Box) */
             .totals-wrapper {
-                padding-top: 6px;
+                padding-top: 10px;
             }
 
             .totals-table {
                 max-width: 100%;
-                background: #f8fafc;
-                padding: 12px 14px;
-                border-radius: 8px;
-                border: 1px solid #f1f5f9;
+                background: transparent;
+                border: none;
+                padding: 0;
             }
 
             .totals-row {
                 font-size: 0.78rem;
+                padding: 3px 0;
             }
 
             .grand-total-val {
-                font-size: 1.05rem;
+                font-size: 1.1rem;
             }
 
-            /* Payment details & Reference on Mobile */
+            /* Payment Details & Reference on Mobile: Clean Typography (Zero Box) */
             .bottom-meta {
                 grid-template-columns: 1fr;
-                gap: 10px;
-                padding-top: 10px;
+                gap: 14px;
+                padding-top: 14px;
+                border-top: 1px solid var(--hairline);
             }
 
             .meta-col {
-                background: #f8fafc;
-                padding: 11px 13px;
-                border-radius: 8px;
-                border: 1px solid #f1f5f9;
-                font-size: 0.74rem;
+                background: transparent;
+                border: none;
+                padding: 0;
+                font-size: 0.75rem;
+            }
+
+            .meta-title {
+                font-size: 0.78rem;
+                font-weight: 600;
+                margin-bottom: 3px;
             }
 
             .terms-line {
-                font-size: 0.68rem;
-                padding-top: 10px;
+                font-size: 0.7rem;
+                padding-top: 12px;
             }
         }
     </style>
