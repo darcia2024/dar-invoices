@@ -521,11 +521,22 @@
             padding-right: 8px;
         }
 
+        .item-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+        }
+
         .item-title {
             font-size: 0.81rem;
             font-weight: 500;
             color: var(--pgs-navy);
             line-height: 1.35;
+        }
+
+        .item-cost-mobile {
+            display: none;
         }
 
         .item-desc {
@@ -770,56 +781,227 @@
         }
 
         /* ----------------------------------------------------
-           MOBILE RESPONSIVENESS
+           OPTIMAL & COMPACT MOBILE REDESIGN
         ---------------------------------------------------- */
         @media (max-width: 768px) {
             body {
-                padding: 14px 8px;
+                padding: 10px 8px 32px 8px;
+                background-color: #f1f5f9; /* Contrast background so white sheet looks crisp */
+            }
+
+            /* Action bar spans width cleanly on mobile */
+            .action-bar-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+
+            .action-brand-tag {
+                justify-content: center;
+                font-size: 0.72rem;
+                text-align: center;
+            }
+
+            .action-btn-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1.25fr;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .action-btn {
+                justify-content: center;
+                padding: 8px 4px;
+                font-size: 0.7rem;
+                border-radius: 6px;
+            }
+
+            /* Invoice Sheet */
+            .a4-sheet {
+                border-radius: 12px;
+                box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+                border: 1px solid #e2e8f0;
             }
 
             .sheet-top {
-                padding: 24px 18px 16px 18px;
+                padding: 16px 14px 12px 14px;
             }
 
             .sheet-bottom {
-                padding: 20px 18px 24px 18px;
-                gap: 18px;
+                padding: 14px 14px 20px 14px;
+                gap: 14px;
             }
 
+            /* Header on Mobile: Logo & Inv No on Top Row, then Parties below */
             .top-grid-horizontal {
-                grid-template-columns: 1fr;
-                gap: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
             }
 
             .brand-inv-box {
-                align-items: flex-start;
-                text-align: left;
+                order: -1;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding-bottom: 10px;
+                margin-bottom: 2px;
+                border-bottom: 1px solid var(--hairline);
+            }
+
+            .header-logo-img {
+                height: 38px;
             }
 
             .inv-num-box {
-                text-align: left;
+                text-align: right;
             }
 
+            .inv-num-label {
+                font-size: 0.68rem;
+            }
+
+            .inv-num-val {
+                font-size: 0.8rem;
+            }
+
+            /* Issuer and Billed To as neat cards */
+            .issuer-block,
+            .billed-block {
+                background: #f8fafc;
+                padding: 10px 12px;
+                border-radius: 8px;
+                border: 1px solid #f1f5f9;
+                font-size: 0.74rem;
+            }
+
+            .header-col-label {
+                font-size: 0.64rem;
+                margin-bottom: 2px;
+            }
+
+            .issuer-name,
+            .billed-client {
+                font-size: 0.82rem;
+            }
+
+            /* Invoice Wordmark & Date Row */
             .invoice-body-split {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
             }
 
+            .invoice-title-col {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--hairline-subtle);
+            }
+
+            .invoice-main-title {
+                font-size: 1.5rem;
+                line-height: 1;
+            }
+
+            .date-val,
+            .invoice-due-sub {
+                font-size: 0.7rem;
+                text-align: right;
+                margin-bottom: 0;
+            }
+
+            .date-label {
+                display: none;
+            }
+
+            /* Table on Mobile: No cramped columns, full-width responsive cards */
             .table-head {
-                grid-template-columns: 1fr 36px 85px;
+                display: none;
             }
 
             .table-row {
-                grid-template-columns: 1fr 36px 85px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--hairline-subtle);
             }
 
-            .bottom-meta {
-                grid-template-columns: 1fr;
-                gap: 16px;
+            .table-row > .item-qty,
+            .table-row > .item-cost {
+                display: none;
+            }
+
+            .item-cost-mobile {
+                display: inline-block;
+                font-family: var(--font-mono);
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--pgs-navy);
+                white-space: nowrap;
+            }
+
+            .item-cost-mobile.cost-include {
+                color: var(--pgs-azure);
+                font-family: var(--font-sans);
+                font-size: 0.74rem;
+            }
+
+            .item-title {
+                font-size: 0.8rem;
+                font-weight: 600;
+                line-height: 1.35;
+            }
+
+            .item-desc {
+                font-size: 0.72rem;
+                line-height: 1.4;
+                color: var(--text-muted);
+            }
+
+            /* Totals on Mobile */
+            .totals-wrapper {
+                padding-top: 6px;
             }
 
             .totals-table {
                 max-width: 100%;
+                background: #f8fafc;
+                padding: 12px 14px;
+                border-radius: 8px;
+                border: 1px solid #f1f5f9;
+            }
+
+            .totals-row {
+                font-size: 0.78rem;
+            }
+
+            .grand-total-val {
+                font-size: 1.05rem;
+            }
+
+            /* Payment details & Reference on Mobile */
+            .bottom-meta {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding-top: 10px;
+            }
+
+            .meta-col {
+                background: #f8fafc;
+                padding: 11px 13px;
+                border-radius: 8px;
+                border: 1px solid #f1f5f9;
+                font-size: 0.74rem;
+            }
+
+            .terms-line {
+                font-size: 0.68rem;
+                padding-top: 10px;
             }
         }
     </style>
@@ -972,7 +1154,10 @@
                     <!-- Row 1: Pembuatan Website -->
                     <div class="table-row">
                         <div class="item-info">
-                            <div class="item-title">Pembuatan Website Resmi PGS Tour (Lengkap &amp; Siap Pakai)</div>
+                            <div class="item-title-row">
+                                <span class="item-title">Pembuatan Website Resmi PGS Tour (Lengkap &amp; Siap Pakai)</span>
+                                <span class="item-cost-mobile">Rp 1.200.000</span>
+                            </div>
                             <div class="item-desc">Website resmi yang cepat dibuka dan langsung siap untuk promosi. Mencakup 7 menu lengkap: Beranda, Paket Umroh, Visa, Profil Usaha, Galeri Jamaah, Info Kemitraan, dan Kontak.</div>
                         </div>
                         <div class="item-qty">01</div>
@@ -982,7 +1167,10 @@
                     <!-- Row 2: Desain HP -->
                     <div class="table-row">
                         <div class="item-info">
-                            <div class="item-title">Tampilan Rapi &amp; Nyaman Dibuka di Layar HP (Mobile Friendly)</div>
+                            <div class="item-title-row">
+                                <span class="item-title">Tampilan Rapi &amp; Nyaman Dibuka di Layar HP (Mobile Friendly)</span>
+                                <span class="item-cost-mobile cost-include">Include</span>
+                            </div>
                             <div class="item-desc">Tampilan otomatis menyesuaikan layar HP jenis apa saja, tulisan jelas terbaca calon jamaah, dan foto paket umroh tampil rapi tanpa berantakan.</div>
                         </div>
                         <div class="item-qty">01</div>
@@ -992,7 +1180,10 @@
                     <!-- Row 3: Tombol WhatsApp -->
                     <div class="table-row">
                         <div class="item-info">
-                            <div class="item-title">Tombol Tanya / Pesan Langsung ke WhatsApp Admin</div>
+                            <div class="item-title-row">
+                                <span class="item-title">Tombol Tanya / Pesan Langsung ke WhatsApp Admin</span>
+                                <span class="item-cost-mobile cost-include">Include</span>
+                            </div>
                             <div class="item-desc">Calon jamaah bisa langsung klik tombol konsultasi untuk chat ke WhatsApp admin/owner PGS Tour, pesan otomatis terisi sesuai paket yang ditanyakan.</div>
                         </div>
                         <div class="item-qty">01</div>
@@ -1002,7 +1193,10 @@
                     <!-- Row 4: Pengamanan & Bantuan -->
                     <div class="table-row">
                         <div class="item-info">
-                            <div class="item-title">Gembok Keamanan Website, Terdaftar di Google &amp; Bantuan 30 Hari</div>
+                            <div class="item-title-row">
+                                <span class="item-title">Gembok Keamanan Website, Terdaftar di Google &amp; Bantuan 30 Hari</span>
+                                <span class="item-cost-mobile cost-include">Include</span>
+                            </div>
                             <div class="item-desc">Pemasangan gembok pengaman (HTTPS aman), didaftarkan ke pencarian Google agar mudah ditemukan, serta gratis pendampingan teknis selama 30 hari.</div>
                         </div>
                         <div class="item-qty">01</div>
@@ -1018,7 +1212,7 @@
                             </div>
                             <div class="totals-row discount-row">
                                 <span>Diskon Promo / Kerja Sama</span>
-                                <span>-Rp 202.000</span>
+                                <span>-Rp 200.000</span>
                             </div>
                             
                             <!-- Bold Line Separator Before TOTAL -->
@@ -1026,10 +1220,10 @@
 
                             <div class="grand-total-row">
                                 <span class="grand-total-label">TOTAL</span>
-                                <span class="grand-total-val">Rp 998.000</span>
+                                <span class="grand-total-val">Rp 1.000.000</span>
                             </div>
                             <div class="terbilang-text">
-                                Terbilang: Sembilan Ratus Sembilan Puluh Delapan Ribu Rupiah.
+                                Terbilang: Satu Juta Rupiah.
                             </div>
                         </div>
                     </div>
