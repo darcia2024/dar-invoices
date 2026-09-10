@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PGS Tour &amp; Travel — Invoice &amp; Kwitansi Generator Resmi</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pgs-navy: #12284e;
+            --pgs-navy-dark: #0a172e;
+            --pgs-azure: #0284c7;
+            --pgs-azure-light: #f0f9ff;
+            --pgs-azure-border: #bae6fd;
+            
+            --status-paid-bg: #dcfce7;
+            --status-paid-text: #15803d;
+            --status-dp-bg: #e0f2fe;
+            --status-dp-text: #0369a1;
+            --status-unpaid-bg: #fef3c7;
+            --status-unpaid-text: #b45309;
+
+            --bg-studio: #f1f5f9;
+            --bg-sheet: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --text-subtle: #94a3b8;
+            --hairline: #e2e8f0;
+            --hairline-subtle: #f1f5f9;
+            --divider-dark: #12284e;
+
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            background-color: var(--bg-studio);
+            color: var(--text-dark);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           STUDIO TOP NAVIGATION BAR
+        ---------------------------------------------------- */
+        .studio-navbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--hairline);
+            padding: 12px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .studio-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .studio-logo {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .studio-brand-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--pgs-navy);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .studio-badge {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--pgs-azure);
+            background: var(--pgs-azure-light);
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .studio-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: var(--text-dark);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn:hover {
+            background: #f8fafc;
+            border-color: #9ca3af;
+        }
+
+        .btn-primary {
+            background: var(--pgs-navy);
+            color: #ffffff;
+            border-color: var(--pgs-navy);
+        }
+
+        .btn-primary:hover {
+            background: var(--pgs-navy-dark);
+            border-color: var(--pgs-navy-dark);
+            color: #ffffff;
+        }
+
+        .btn-success {
+            background: #059669;
+            color: #ffffff;
+            border-color: #059669;
+        }
+
+        .btn-success:hover {
+            background: #047857;
+            border-color: #047857;
+            color: #ffffff;
+        }
+
+        /* ----------------------------------------------------
+           STUDIO WORKSPACE: SPLIT SCREEN (FORM & PREVIEW)
+        ---------------------------------------------------- */
+        .studio-workspace {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            display: grid;
+            grid-template-columns: 460px 1fr;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        /* ----------------------------------------------------
+           FORM CONTROLS PANEL (LEFT)
+        ---------------------------------------------------- */
+        .form-panel {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid var(--hairline);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--hairline);
+            padding-bottom: 12px;
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--pgs-navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--pgs-azure);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-label {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #ffffff;
+            color: var(--text-dark);
+            outline: none;
+            transition: all 0.15s ease;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--pgs-azure);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.4;
+        }
+
+        /* Status Buttons Pill Group */
+        .status-pill-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        .status-pill-btn {
+            padding: 7px 4px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s ease;
+            color: var(--text-muted);
+        }
+
+        .status-pill-btn.active[data-status="PAID"] {
+            background: var(--status-paid-bg);
+            border-color: #86efac;
+            color: var(--status-paid-text);
+        }
+
+        .status-pill-btn.active[data-status="DP"] {
+            background: var(--status-dp-bg);
+            border-color: #7dd3fc;
+            color: var(--status-dp-text);
+        }
+
+        .status-pill-btn.active[data-status="UNPAID"] {
+            background: var(--status-unpaid-bg);
+            border-color: #fde68a;
+            color: var(--status-unpaid-text);
+        }
+
+        /* Preset Pills */
+        .preset-pills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .preset-pill {
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 4px 9px;
+            border-radius: 16px;
+            background: var(--hairline-subtle);
+            color: var(--text-dark);
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .preset-pill:hover {
+            background: var(--pgs-azure-light);
+            border-color: var(--pgs-azure-border);
+            color: var(--pgs-azure);
+        }
+
+        /* Item Row in Form */
+        .items-form-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .item-form-card {
+            background: #f8fafc;
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .item-form-top {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .item-form-bottom {
+            display: grid;
+            grid-template-columns: 70px 1fr auto auto;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .item-del-btn {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-del-btn:hover {
+            background: #fee2e2;
+        }
+
+        .include-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--pgs-azure);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .add-item-btn {
+            font-family: var(--font-sans);
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--pgs-azure);
+            background: var(--pgs-azure-light);
+            border: 1px dashed var(--pgs-azure-border);
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .add-item-btn:hover {
+            background: #e0f2fe;
+            border-color: var(--pgs-azure);
+        }
+
+        /* ----------------------------------------------------
+           PREVIEW CONTAINER (RIGHT)
+        ---------------------------------------------------- */
+        .preview-container {
+            position: sticky;
+            top: 76px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .preview-bar-tools {
+            width: 100%;
+            max-width: 780px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+        }
+
+        /* ----------------------------------------------------
+           A4 INVOICE SHEET PREVIEW (EXACT STYLING)
+        ---------------------------------------------------- */
+        .a4-sheet {
+            width: 100%;
+            max-width: 780px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        /* TOP SECTION */
+        .sheet-top {
+            padding: 26px 36px 18px 36px;
+            position: relative;
+            background: #ffffff;
+        }
+
+        .top-grid-horizontal {
+            display: grid;
+            grid-template-columns: 1.15fr 1.25fr auto;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .header-col-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 3px;
+        }
+
+        .issuer-block,
+        .billed-block {
+            font-size: 0.77rem;
+            line-height: 1.45;
+            color: var(--text-dark);
+        }
+
+        .issuer-name,
+        .billed-client {
+            font-weight: 600;
+            color: var(--pgs-navy);
+            font-size: 0.85rem;
+            margin-bottom: 1px;
+        }
+
+        .issuer-details,
+        .billed-details {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.42;
+        }
+
+        .brand-inv-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            gap: 6px;
+        }
+
+        .header-logo-img {
+            height: 46px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .inv-num-box {
+            text-align: right;
+        }
+
+        .inv-num-label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1px;
+        }
+
+        .inv-num-val {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--pgs-navy);
+            letter-spacing: 0.02em;
+        }
+
+        /* Status Badge on Invoice Sheet */
+        .invoice-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        .status-PAID {
+            background: var(--status-paid-bg);
+            color: var(--status-paid-text);
+            border: 1px solid #86efac;
+        }
+
+        .status-DP {
+            background: var(--status-dp-bg);
+            color: var(--status-dp-text);
+            border: 1px solid #7dd3fc;
+        }
+
+        .status-UNPAID {
+            background: var(--status-unpaid-bg);
+            color: var(--status-unpaid-text);
+            border: 1px solid #fde68a;
+        }
+
+        /* Hairline dividing top and bottom */
+        .sheet-divider {
+            height: 1px;
+            background-color: var(--hairline);
+            width: 100%;
+        }
+
+        /* BOTTOM SECTION */
+        .sheet-bottom {
+            padding: 22px 36px 26px 36px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .invoice-body-split {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 28px;
+        }
+
+        .invoice-title-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .invoice-main-title {
+            font-family: var(--font-sans);
+            font-size: 1.95rem;
+            font-weight: 600;
+            color: var(--pgs-navy);
+            letter-spacing: -0.025em;
+            line-height: 1.05;
+        }
+
+        .dates-right-side {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .date-item {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .date-label-txt {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .date-val-txt {
+            font-size: 0.76rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .due-item .date-val-txt {
+            color: var(--pgs-navy);
+            font-weight: 600;
+        }
+
+        /* Table */
+        .table-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-head {
+            display: grid;
+            grid-template-columns: 1fr 42px 115px;
+            gap: 12px;
+            padding-bottom: 7px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .th-right {
+            text-align: right;
+        }
+
+        .th-center {
+            text-align: center;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 42px 115px;
+            gap: 12px;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--hairline-subtle);
+            align-items: flex-start;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding-right: 8px;
+        }
+
+        .item-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .item-title {
+            font-size: 0.81rem;
+            font-weight: 500;
+            color: var(--pgs-navy);
+            line-height: 1.35;
+        }
+
+        .item-cost-mobile {
+            display: none;
+        }
+
+        .item-desc {
+            font-size: 0.73rem;
+            color: var(--text-muted);
+            line-height: 1.38;
+        }
+
+        .item-qty {
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-dark);
+            padding-top: 1px;
+        }
+
+        .item-cost {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-size: 0.81rem;
+            font-weight: 500;
+            color: var(--pgs-navy);
+            padding-top: 1px;
+            white-space: nowrap;
+        }
+
+        .cost-free,
+        .cost-include {
+            color: var(--pgs-azure);
+            font-size: 0.78rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        /* Totals Block */
+        .totals-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-top: 10px;
+            gap: 6px;
+        }
+
+        .totals-table {
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-dark);
+            padding: 3px 0;
+        }
+
+        .totals-row span:last-child {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--pgs-navy);
+        }
+
+        .totals-row.discount-row {
+            color: #15803d;
+        }
+
+        .totals-row.discount-row span:last-child {
+            color: #15803d;
+        }
+
+        .total-separator {
+            width: 100%;
+            height: 1.5px;
+            background: var(--divider-dark);
+            margin: 6px 0;
+        }
+
+        .grand-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-top: 2px;
+        }
+
+        .grand-total-label {
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--pgs-navy);
+            letter-spacing: 0.03em;
+        }
+
+        .grand-total-val {
+            font-family: var(--font-mono);
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: var(--pgs-navy);
+        }
+
+        .terbilang-text {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-style: italic;
+            text-align: right;
+            margin-top: 2px;
+        }
+
+        /* DP Breakdown Rows */
+        .dp-row {
+            color: var(--status-dp-text);
+            font-weight: 600;
+        }
+
+        .balance-row {
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        /* Bottom Metadata: Payment Details & Reference */
+        .bottom-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding-top: 14px;
+            border-top: 1px solid var(--hairline);
+        }
+
+        .meta-col {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            font-size: 0.75rem;
+            line-height: 1.45;
+        }
+
+        .meta-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+            font-size: 0.76rem;
+        }
+
+        .meta-line {
+            color: var(--text-muted);
+        }
+
+        .meta-line strong {
+            color: var(--pgs-navy);
+            font-weight: 600;
+        }
+
+        .copy-acc-btn {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            font-weight: 500;
+            padding: 1px 6px;
+            border-radius: 3px;
+            border: 1px solid var(--pgs-azure);
+            background: #ffffff;
+            color: var(--pgs-azure);
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-acc-btn:hover {
+            background: var(--pgs-azure);
+            color: #ffffff;
+        }
+
+        /* Terms Footer */
+        .terms-line {
+            font-size: 0.7rem;
+            color: var(--text-subtle);
+            padding-top: 10px;
+            border-top: 1px solid var(--hairline);
+            line-height: 1.45;
+        }
+
+        .terms-line strong {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Toast Component */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--pgs-navy);
+            color: #ffffff;
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 20000;
+        }
+
+        /* ----------------------------------------------------
+           STRICT PRINT STYLES (A4 SINGLE SHEET FIT)
+        ---------------------------------------------------- */
+        @page {
+            size: A4 portrait;
+            margin: 10mm 12mm;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .studio-navbar,
+            .form-panel,
+            .preview-bar-tools,
+            .mobile-tab-switch,
+            .toast,
+            button {
+                display: none !important;
+            }
+
+            .studio-workspace {
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .preview-container {
+                position: static !important;
+                display: block !important;
+            }
+
+            .a4-sheet {
+                max-width: 100% !important;
+                width: 100% !important;
+                border: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .sheet-top {
+                padding: 0 0 14px 0 !important;
+            }
+
+            .sheet-bottom {
+                padding: 14px 0 0 0 !important;
+            }
+
+            .table-row {
+                padding: 7px 0 !important;
+                page-break-inside: avoid !important;
+            }
+        }
+
+        /* ----------------------------------------------------
+           MOBILE RESPONSIVENESS
+        ---------------------------------------------------- */
+        .mobile-tab-switch {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .studio-workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-container {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .studio-navbar {
+                padding: 10px 14px;
+            }
+
+            .studio-brand-title span {
+                display: none;
+            }
+
+            .mobile-tab-switch {
+                display: flex;
+                background: #ffffff;
+                border-bottom: 1px solid var(--hairline);
+                position: sticky;
+                top: 57px;
+                z-index: 999;
+            }
+
+            .mobile-tab-btn {
+                flex: 1;
+                text-align: center;
+                padding: 10px;
+                font-size: 0.78rem;
+                font-weight: 600;
+                background: none;
+                border: none;
+                border-bottom: 2px solid transparent;
+                color: var(--text-muted);
+                cursor: pointer;
+            }
+
+            .mobile-tab-btn.active {
+                color: var(--pgs-navy);
+                border-bottom-color: var(--pgs-navy);
+            }
+
+            .studio-workspace {
+                padding: 12px 10px 30px 10px;
+            }
+
+            .form-panel[data-mobile-view="preview"] {
+                display: none;
+            }
+
+            .preview-container[data-mobile-view="form"] {
+                display: none;
+            }
+
+            /* Mobile Invoice Sheet Styling */
+            .a4-sheet {
+                border-radius: 6px;
+                box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+            }
+
+            .sheet-top {
+                padding: 18px 16px 14px 16px;
+            }
+
+            .sheet-bottom {
+                padding: 16px 16px 20px 16px;
+                gap: 16px;
+            }
+
+            .top-grid-horizontal {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .brand-inv-box {
+                grid-column: 1 / -1;
+                order: -1;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--hairline);
+            }
+
+            .header-logo-img {
+                height: 38px;
+            }
+
+            .issuer-block {
+                grid-column: 1;
+            }
+
+            .billed-block {
+                grid-column: 2;
+            }
+
+            .invoice-body-split {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .invoice-title-col {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-bottom: 8px;
+                border-bottom: 1px solid var(--hairline);
+            }
+
+            .invoice-main-title {
+                font-size: 1.6rem;
+            }
+
+            .dates-right-side {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
+                text-align: right;
+            }
+
+            .table-head {
+                display: none;
+            }
+
+            .table-row {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                padding: 10px 0;
+            }
+
+            .table-row > .item-qty,
+            .table-row > .item-cost {
+                display: none;
+            }
+
+            .item-cost-mobile {
+                display: inline-block;
+                font-family: var(--font-mono);
+                font-size: 0.82rem;
+                font-weight: 600;
+                color: var(--pgs-navy);
+                white-space: nowrap;
+            }
+
+            .item-cost-mobile.cost-include {
+                color: var(--pgs-azure);
+                font-family: var(--font-sans);
+                font-size: 0.75rem;
+                font-weight: 600;
+            }
+
+            .bottom-meta {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ----------------------------------------------------
+       STUDIO TOP NAVBAR
+    ---------------------------------------------------- -->
+    <header class="studio-navbar">
+        <div class="studio-brand">
+            <img src="/pgstour/logo.png" alt="PGS Tour Logo" class="studio-logo">
+            <div class="studio-brand-title">
+                <span>PGS Tour &amp; Travel</span>
+                <span class="studio-badge">Invoice Studio</span>
+            </div>
+        </div>
+
+        <div class="studio-nav-actions">
+            <a href="/pgstour" class="btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Invoice Proyek</span>
+            </a>
+            <button class="btn" onclick="resetDefaultForm()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                <span>Reset Form</span>
+            </button>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span>Cetak / PDF</span>
+            </button>
+            <button class="btn btn-success" onclick="sendWhatsAppInvoice()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <span>Kirim WA</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Tab Switcher -->
+    <div class="mobile-tab-switch">
+        <button class="mobile-tab-btn active" id="tabFormBtn" onclick="switchMobileTab('form')">📝 Formulir Invoice</button>
+        <button class="mobile-tab-btn" id="tabPreviewBtn" onclick="switchMobileTab('preview')">👁️ Lihat Preview</button>
+    </div>
+
+    <!-- ----------------------------------------------------
+       MAIN WORKSPACE
+    ---------------------------------------------------- -->
+    <main class="studio-workspace">
+        
+        <!-- LEFT PANEL: FORM BUILDER -->
+        <div class="form-panel" id="formPanel" data-mobile-view="form">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pgs-azure)" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    <span>Editor Invoice PGS Tour</span>
+                </div>
+                <button class="btn" style="padding:4px 8px; font-size:0.7rem;" onclick="generateNewInvNo()">Acak No. Baru</button>
+            </div>
+
+            <!-- SECTION 1: INVOICE IDENTIFIER & STATUS -->
+            <div class="form-section">
+                <div class="section-label">1. Identitas &amp; Status Pembayaran</div>
+                
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="input-label">Nomor Invoice</label>
+                        <input type="text" id="invNoInput" class="form-input" value="INV/PGS/2026/09/002" oninput="updateLivePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Status Tagihan</label>
+                        <div class="status-pill-group">
+                            <button type="button" class="status-pill-btn active" data-status="UNPAID" onclick="setStatus('UNPAID')">Belum</button>
+                            <button type="button" class="status-pill-btn" data-status="DP" onclick="setStatus('DP')">DP</button>
+                            <button type="button" class="status-pill-btn" data-status="PAID" onclick="setStatus('PAID')">Lunas</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="input-label">Tanggal Terbit</label>
+                        <input type="date" id="invDateInput" class="form-input" onchange="updateLivePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Jatuh Tempo</label>
+                        <input type="date" id="dueDateInput" class="form-input" onchange="updateLivePreview()">
+                    </div>
+                </div>
+
+                <!-- Input Nominal DP jika status DP -->
+                <div class="form-group" id="dpAmountGroup" style="display:none;">
+                    <label class="input-label" style="color:var(--status-dp-text);">Nominal Uang Muka (DP) yang Sudah Dibayar (Rp)</label>
+                    <input type="number" id="dpAmountInput" class="form-input" placeholder="Contoh: 10000000" oninput="updateLivePreview()">
+                </div>
+            </div>
+
+            <!-- SECTION 2: DATA JAMAAH / KLIEN -->
+            <div class="form-section">
+                <div class="section-label">2. Data Jamaah / Klien (Billed to)</div>
+                <div class="form-group">
+                    <label class="input-label">Nama Lengkap Jamaah / Pemesan</label>
+                    <input type="text" id="clientNameInput" class="form-input" value="Bpk. H. Ahmad Fauzi &amp; Keluarga" oninput="updateLivePreview()">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="input-label">No. WhatsApp Jamaah</label>
+                        <input type="tel" id="clientPhoneInput" class="form-input" value="081234567890" placeholder="08..." oninput="updateLivePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">Kota / Alamat</label>
+                        <input type="text" id="clientAddressInput" class="form-input" value="Serang, Banten" oninput="updateLivePreview()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="input-label">Keterangan Tambahan / Catatan Rombongan</label>
+                    <input type="text" id="clientNoteInput" class="form-input" value="Paket Umroh Reguler 9 Hari • Keberangkatan Oktober 2026" oninput="updateLivePreview()">
+                </div>
+            </div>
+
+            <!-- SECTION 3: RINCIAN PAKET & LAYANAN -->
+            <div class="form-section">
+                <div class="section-label">3. Rincian Paket &amp; Layanan Tour</div>
+                
+                <!-- Quick Preset Pills -->
+                <div class="preset-pills-wrap">
+                    <button type="button" class="preset-pill" onclick="addPreset('Paket Umroh Reguler 9 Hari', 'Akomodasi Hotel Bintang 4 Madinah &amp; Makkah, Tiket Saudia PP, Visa, Bus AC, Mutawwif Berpengalaman.', 1, 28500000)">+ Umroh Reguler 9H (28,5jt)</button>
+                    <button type="button" class="preset-pill" onclick="addPreset('Paket Umroh VIP Mahabbah 12 Hari', 'Hotel Bintang 5 Dekat Masjid, Fast Train Haramain, Handling VIP &amp; Perlengkapan Lengkap.', 1, 34000000)">+ VIP Mahabbah (34jt)</button>
+                    <button type="button" class="preset-pill" onclick="addPreset('Pembuatan Visa Umroh Resmi', 'Proses visa resmi muassasah Saudi, asuransi kesehatan jamaah terintegrasi.', 1, 2750000)">+ Visa Umroh (2,75jt)</button>
+                    <button type="button" class="preset-pill" onclick="addPreset('Handling Bandara &amp; Perlengkapan', 'Koper bagasi, kain ihram/mukena, buku doa, dan pengawalan bandara.', 1, 0, true)">+ Handling &amp; Koper (Include)</button>
+                    <button type="button" class="preset-pill" onclick="addPreset('City Tour Thaif &amp; Kereta Gantung', 'Wisata sejarah Thaif, naik cable car, makan nasi mandi khas Arab Saudi.', 1, 0, true)">+ Tour Thaif (Include)</button>
+                </div>
+
+                <!-- Dynamic Item List -->
+                <div class="items-form-list" id="itemsFormContainer"></div>
+
+                <button type="button" class="add-item-btn" onclick="addNewEmptyItem()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Tambah Baris Layanan Baru</span>
+                </button>
+            </div>
+
+            <!-- SECTION 4: POTONGAN & DISKON -->
+            <div class="form-section">
+                <div class="section-label">4. Diskon &amp; Potongan Promo</div>
+                <div class="form-group">
+                    <label class="input-label">Diskon Promo / Early Bird (Rp)</label>
+                    <input type="number" id="discountInput" class="form-input" value="1000000" placeholder="0" oninput="updateLivePreview()">
+                </div>
+            </div>
+
+            <!-- SECTION 5: SYARAT & KETENTUAN (TERMS) -->
+            <div class="form-section">
+                <div class="section-label">5. Syarat Pembayaran &amp; Catatan</div>
+                <div class="form-group">
+                    <label class="input-label">Teks Terms / Catatan</label>
+                    <textarea id="termsInput" class="form-textarea" oninput="updateLivePreview()">Pembayaran dapat dilakukan melalui transfer ke rekening Bank Mandiri resmi PGS Tour &amp; Travel. Bukti transfer mohon dikirimkan via WhatsApp untuk konfirmasi booking seat dan serah terima perlengkapan keberangkatan jamaah.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: REAL-TIME INVOICE PREVIEW (A4) -->
+        <div class="preview-container" id="previewContainer" data-mobile-view="preview">
+            <div class="preview-bar-tools">
+                <span><strong>Live Preview</strong> • Standar Resmi PGS Tour &amp; Travel (A4)</span>
+                <span>Ukuran Cetak Presisi</span>
+            </div>
+
+            <!-- THE EDITORIAL INVOICE SHEET -->
+            <div class="a4-sheet" id="invoiceSheet">
+                
+                <!-- TOP SECTION -->
+                <div class="sheet-top">
+                    <div class="top-grid-horizontal">
+                        
+                        <!-- Col 1: Dari / Penerbit (PGS Tour) -->
+                        <div class="issuer-block">
+                            <div class="header-col-label">Diterbitkan Oleh</div>
+                            <div class="issuer-name">PT Permana Group Sejahtera</div>
+                            <div class="issuer-details">
+                                PGS Tour &amp; Travel<br>
+                                Izin Umroh Kemenag RI<br>
+                                WhatsApp: 0813 1150 6025<br>
+                                Serang &bull; Banten, Indonesia
+                            </div>
+                        </div>
+
+                        <!-- Col 2: Ditujukan Kepada (Jamaah) -->
+                        <div class="billed-block">
+                            <div class="header-col-label">Ditujukan Kepada (Jamaah)</div>
+                            <div class="billed-client" id="previewClientName">Bpk. H. Ahmad Fauzi &amp; Keluarga</div>
+                            <div class="billed-details" id="previewClientDetails">
+                                No. WA: 081234567890<br>
+                                Serang, Banten<br>
+                                Paket Umroh Reguler 9 Hari
+                            </div>
+                        </div>
+
+                        <!-- Col 3: Logo PGS Tour & Nomor Invoice -->
+                        <div class="brand-inv-box">
+                            <img src="/pgstour/logo.png" alt="PGS Tour Logo" class="header-logo-img">
+                            <div class="inv-num-box">
+                                <div class="inv-num-label">Invoice no.</div>
+                                <div class="inv-num-val" id="previewInvNo">INV/PGS/2026/09/002</div>
+                            </div>
+                            <!-- Status Pill -->
+                            <div id="previewStatusPill" class="invoice-status-pill status-UNPAID">BELUM LUNAS</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Hairline Divider -->
+                <div class="sheet-divider"></div>
+
+                <!-- BOTTOM SECTION: INVOICE WORDMARK & TABLE -->
+                <div class="sheet-bottom">
+                    
+                    <div class="invoice-body-split">
+                        
+                        <!-- Left Column: Wordmark & Dates -->
+                        <div class="invoice-title-col">
+                            <div class="title-left-side">
+                                <div class="invoice-main-title">Invoice</div>
+                            </div>
+                            <div class="dates-right-side">
+                                <div class="date-item">
+                                    <span class="date-label-txt">Terbit:</span>
+                                    <span class="date-val-txt" id="previewDateIssued">10 Sep 2026</span>
+                                </div>
+                                <div class="date-item due-item">
+                                    <span class="date-label-txt">Jatuh tempo:</span>
+                                    <span class="date-val-txt" id="previewDateDue">17 Sep 2026</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Table & Breakdown -->
+                        <div class="table-area">
+                            
+                            <!-- Table Head -->
+                            <div class="table-head">
+                                <div>Rincian Paket &amp; Layanan</div>
+                                <div class="th-center">Qty</div>
+                                <div class="th-right">Biaya (IDR)</div>
+                            </div>
+
+                            <!-- Table Rows Rendered via JS -->
+                            <div id="previewItemsList"></div>
+
+                            <!-- Financial Summary & Total -->
+                            <div class="totals-wrapper">
+                                <div class="totals-table">
+                                    <div class="totals-row">
+                                        <span>Subtotal</span>
+                                        <span id="previewSubtotal">Rp 0</span>
+                                    </div>
+                                    <div class="totals-row discount-row" id="previewDiscountRow" style="display:none;">
+                                        <span>Diskon Promo / Early Bird</span>
+                                        <span id="previewDiscount">-Rp 0</span>
+                                    </div>
+                                    
+                                    <!-- Bold Line Separator -->
+                                    <div class="total-separator"></div>
+
+                                    <div class="grand-total-row">
+                                        <span class="grand-total-label" id="previewTotalLabel">TOTAL TAGIHAN</span>
+                                        <span class="grand-total-val" id="previewTotalAmount">Rp 0</span>
+                                    </div>
+
+                                    <!-- DP Details if active -->
+                                    <div class="totals-row dp-row" id="previewDpRow" style="display:none; padding-top:6px;">
+                                        <span>Uang Muka (DP) Diterima</span>
+                                        <span id="previewDpAmount">-Rp 0</span>
+                                    </div>
+                                    <div class="totals-row balance-row" id="previewBalanceRow" style="display:none; border-top:1px dashed var(--hairline); padding-top:6px; margin-top:4px;">
+                                        <span>SISA PELUNASAN</span>
+                                        <span id="previewBalanceAmount">Rp 0</span>
+                                    </div>
+
+                                    <div class="terbilang-text" id="previewTerbilang">
+                                        Terbilang: Nol Rupiah.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Bottom Metadata: Payment Details & Reference -->
+                    <div class="bottom-meta">
+                        <div class="meta-col">
+                            <div class="meta-title" style="display:flex;align-items:center;gap:8px;">
+                                <img src="/pgstour/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri Logo" style="height:19px;width:auto;object-fit:contain;vertical-align:middle;">
+                                <span>Rekening Resmi PGS Tour</span>
+                            </div>
+                            <div class="meta-line">Bank Mandiri &bull; a.n. Daru Fahmaa Muliawan / PGS Tour</div>
+                            <div class="meta-line">
+                                No. Rekening: <strong>1550 0106 1696 2</strong>
+                                <button class="copy-acc-btn" onclick="copyBankAcc()">Salin</button>
+                            </div>
+                            <div class="meta-line">Transfer m-Banking / ATM / Internet Banking</div>
+                        </div>
+
+                        <div class="meta-col">
+                            <div class="meta-title">Ketentuan &amp; Hak Jamaah</div>
+                            <div class="meta-line">Tiket pesawat &amp; visa terkonfirmasi resmi maskapai</div>
+                            <div class="meta-line">Perlengkapan umroh diserahkan setelah DP/Lunas</div>
+                            <div class="meta-line">Didampingi Muthawwif &amp; Tour Leader bersertifikasi</div>
+                        </div>
+                    </div>
+
+                    <!-- Terms Footer Line -->
+                    <div class="terms-line" id="previewTerms">
+                        <strong>Terms:</strong> Pembayaran dapat dilakukan melalui transfer ke rekening Bank Mandiri resmi PGS Tour &amp; Travel.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Notifikasi berhasil!</div>
+
+    <script>
+        // Items State Array
+        let items = [
+            {
+                id: 1,
+                title: "Paket Umroh Reguler 9 Hari (Akomodasi Hotel Bintang 4)",
+                desc: "Tiket Saudia Airlines PP Jakarta-Jeddah, Hotel Madinah & Makkah, Visa Umroh Resmi, Makan 3x Sehari, Bus Full AC, Muthawwif Berpengalaman.",
+                qty: 1,
+                cost: 28500000,
+                isInclude: false
+            },
+            {
+                id: 2,
+                title: "Handling Bandara & Paket Perlengkapan Jamaah",
+                desc: "Koper bagasi, tas paspor, kain ihram / mukena, sabuk, buku doa manasik, dan pengawalan boarding di Bandara Soekarno-Hatta.",
+                qty: 1,
+                cost: 0,
+                isInclude: true
+            },
+            {
+                id: 3,
+                title: "City Tour & Ziarah Kota Thaif (Termasuk Cable Car)",
+                desc: "Ziarah Masjid Abdullah bin Abbas, perkebunan mawar Thaif, mencicipi buah segar khas Thaif, dan makan siang bersama.",
+                qty: 1,
+                cost: 0,
+                isInclude: true
+            }
+        ];
+
+        let currentStatus = "UNPAID"; // "UNPAID", "DP", "PAID"
+
+        // Initialize Dates on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const dueDate = new Date();
+            dueDate.setDate(today.getDate() + 7);
+
+            document.getElementById('invDateInput').value = today.toISOString().split('T')[0];
+            document.getElementById('dueDateInput').value = dueDate.toISOString().split('T')[0];
+
+            renderFormItems();
+            updateLivePreview();
+        });
+
+        // Switch Mobile View Tab
+        function switchMobileTab(view) {
+            document.getElementById('formPanel').setAttribute('data-mobile-view', view);
+            document.getElementById('previewContainer').setAttribute('data-mobile-view', view);
+
+            document.getElementById('tabFormBtn').classList.toggle('active', view === 'form');
+            document.getElementById('tabPreviewBtn').classList.toggle('active', view === 'preview');
+
+            if (view === 'preview') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Set Payment Status
+        function setStatus(status) {
+            currentStatus = status;
+            document.querySelectorAll('.status-pill-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-status') === status);
+            });
+
+            document.getElementById('dpAmountGroup').style.display = (status === 'DP') ? 'block' : 'none';
+            updateLivePreview();
+        }
+
+        // Render Form Items
+        function renderFormItems() {
+            const container = document.getElementById('itemsFormContainer');
+            container.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'item-form-card';
+                card.innerHTML = `
+                    <div class="item-form-top">
+                        <input type="text" class="form-input" placeholder="Nama Paket / Layanan" value="${escapeHtml(item.title)}" oninput="updateItemField(${index}, 'title', this.value)">
+                        <button type="button" class="item-del-btn" title="Hapus Layanan" onclick="removeItem(${index})">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                    </div>
+                    <input type="text" class="form-input" style="font-size:0.75rem; color:#64748b;" placeholder="Deskripsi ringkas / fasilitas" value="${escapeHtml(item.desc || '')}" oninput="updateItemField(${index}, 'desc', this.value)">
+                    <div class="item-form-bottom">
+                        <div class="form-group">
+                            <label class="input-label" style="font-size:0.65rem;">Qty</label>
+                            <input type="number" class="form-input" style="padding:5px 8px; text-align:center;" min="1" value="${item.qty}" oninput="updateItemField(${index}, 'qty', parseInt(this.value) || 1)">
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label" style="font-size:0.65rem;">Harga Satuan (Rp)</label>
+                            <input type="number" class="form-input" style="padding:5px 8px;" placeholder="0" value="${item.cost}" ${item.isInclude ? 'disabled' : ''} oninput="updateItemField(${index}, 'cost', parseInt(this.value) || 0)">
+                        </div>
+                        <label class="include-checkbox-label">
+                            <input type="checkbox" ${item.isInclude ? 'checked' : ''} onchange="toggleItemInclude(${index}, this.checked)">
+                            <span>Include</span>
+                        </label>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateItemField(index, field, value) {
+            items[index][field] = value;
+            updateLivePreview();
+        }
+
+        function toggleItemInclude(index, checked) {
+            items[index].isInclude = checked;
+            if (checked) {
+                items[index].cost = 0;
+            }
+            renderFormItems();
+            updateLivePreview();
+        }
+
+        function removeItem(index) {
+            if (items.length <= 1) {
+                showToast("Minimal harus ada 1 item layanan!");
+                return;
+            }
+            items.splice(index, 1);
+            renderFormItems();
+            updateLivePreview();
+        }
+
+        function addNewEmptyItem() {
+            items.push({
+                id: Date.now(),
+                title: "Layanan Baru",
+                desc: "Fasilitas atau rincian layanan",
+                qty: 1,
+                cost: 1000000,
+                isInclude: false
+            });
+            renderFormItems();
+            updateLivePreview();
+        }
+
+        function addPreset(title, desc, qty, cost, isInclude = false) {
+            items.push({
+                id: Date.now(),
+                title: title,
+                desc: desc,
+                qty: qty,
+                cost: isInclude ? 0 : cost,
+                isInclude: isInclude
+            });
+            renderFormItems();
+            updateLivePreview();
+            showToast("Item berhasil ditambahkan!");
+        }
+
+        function generateNewInvNo() {
+            const randomCode = Math.floor(100 + Math.random() * 900);
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const newNo = `INV/PGS/${year}/${month}/${randomCode}`;
+            document.getElementById('invNoInput').value = newNo;
+            updateLivePreview();
+            showToast("Nomor invoice baru dibuat: " + newNo);
+        }
+
+        function resetDefaultForm() {
+            if (confirm("Reset formulir ke data awal?")) {
+                items = [
+                    {
+                        id: 1,
+                        title: "Paket Umroh Reguler 9 Hari (Akomodasi Hotel Bintang 4)",
+                        desc: "Tiket Saudia Airlines PP Jakarta-Jeddah, Hotel Madinah & Makkah, Visa Umroh Resmi, Makan 3x Sehari, Bus Full AC, Muthawwif Berpengalaman.",
+                        qty: 1,
+                        cost: 28500000,
+                        isInclude: false
+                    },
+                    {
+                        id: 2,
+                        title: "Handling Bandara & Paket Perlengkapan Jamaah",
+                        desc: "Koper bagasi, tas paspor, kain ihram / mukena, sabuk, buku doa manasik, dan pengawalan boarding di Bandara Soekarno-Hatta.",
+                        qty: 1,
+                        cost: 0,
+                        isInclude: true
+                    }
+                ];
+                document.getElementById('clientNameInput').value = "Bpk. H. Ahmad Fauzi & Keluarga";
+                document.getElementById('clientPhoneInput').value = "081234567890";
+                document.getElementById('clientAddressInput').value = "Serang, Banten";
+                document.getElementById('clientNoteInput').value = "Paket Umroh Reguler 9 Hari • Keberangkatan Oktober 2026";
+                document.getElementById('discountInput').value = "1000000";
+                setStatus('UNPAID');
+                renderFormItems();
+                updateLivePreview();
+                showToast("Form berhasil di-reset!");
+            }
+        }
+
+        // Live Preview Renderer
+        function updateLivePreview() {
+            const invNo = document.getElementById('invNoInput').value || 'INV/PGS/2026/09/001';
+            const clientName = document.getElementById('clientNameInput').value || '-';
+            const clientPhone = document.getElementById('clientPhoneInput').value || '-';
+            const clientAddress = document.getElementById('clientAddressInput').value || '-';
+            const clientNote = document.getElementById('clientNoteInput').value || '';
+            const rawDateIssued = document.getElementById('invDateInput').value;
+            const rawDateDue = document.getElementById('dueDateInput').value;
+            const discount = parseInt(document.getElementById('discountInput').value) || 0;
+            const dpAmount = parseInt(document.getElementById('dpAmountInput').value) || 0;
+            const termsText = document.getElementById('termsInput').value || '';
+
+            // Update Metadata Header
+            document.getElementById('previewInvNo').innerText = invNo;
+            document.getElementById('previewClientName').innerText = clientName;
+            document.getElementById('previewClientDetails').innerHTML = `
+                No. WA: ${escapeHtml(clientPhone)}<br>
+                ${escapeHtml(clientAddress)}<br>
+                ${escapeHtml(clientNote)}
+            `;
+
+            document.getElementById('previewDateIssued').innerText = formatDateIndo(rawDateIssued);
+            document.getElementById('previewDateDue').innerText = formatDateIndo(rawDateDue);
+
+            // Update Status Pill
+            const statusPill = document.getElementById('previewStatusPill');
+            statusPill.className = `invoice-status-pill status-${currentStatus}`;
+            if (currentStatus === 'PAID') {
+                statusPill.innerText = 'LUNAS (PAID)';
+            } else if (currentStatus === 'DP') {
+                statusPill.innerText = 'UANG MUKA (DP)';
+            } else {
+                statusPill.innerText = 'BELUM LUNAS';
+            }
+
+            // Calculate Subtotal & Render Items
+            let subtotal = 0;
+            const previewItemsList = document.getElementById('previewItemsList');
+            previewItemsList.innerHTML = '';
+
+            items.forEach(item => {
+                const itemTotal = item.isInclude ? 0 : (item.qty * item.cost);
+                subtotal += itemTotal;
+
+                const row = document.createElement('div');
+                row.className = 'table-row';
+                row.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-title-row">
+                            <span class="item-title">${escapeHtml(item.title)}</span>
+                            <span class="item-cost-mobile ${item.isInclude ? 'cost-include' : ''}">${item.isInclude ? 'Include' : formatRupiah(itemTotal)}</span>
+                        </div>
+                        ${item.desc ? `<div class="item-desc">${escapeHtml(item.desc)}</div>` : ''}
+                    </div>
+                    <div class="item-qty">${String(item.qty).padStart(2, '0')}</div>
+                    <div class="item-cost ${item.isInclude ? 'cost-include' : ''}">${item.isInclude ? 'Include' : formatRupiah(itemTotal)}</div>
+                `;
+                previewItemsList.appendChild(row);
+            });
+
+            // Calculate Grand Total
+            const grandTotal = Math.max(0, subtotal - discount);
+
+            document.getElementById('previewSubtotal').innerText = formatRupiah(subtotal);
+
+            // Discount row
+            const discountRow = document.getElementById('previewDiscountRow');
+            if (discount > 0) {
+                discountRow.style.display = 'flex';
+                document.getElementById('previewDiscount').innerText = `-${formatRupiah(discount)}`;
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            document.getElementById('previewTotalAmount').innerText = formatRupiah(grandTotal);
+
+            // DP Breakdown
+            const dpRow = document.getElementById('previewDpRow');
+            const balanceRow = document.getElementById('previewBalanceRow');
+
+            if (currentStatus === 'DP' && dpAmount > 0) {
+                dpRow.style.display = 'flex';
+                balanceRow.style.display = 'flex';
+                document.getElementById('previewDpAmount').innerText = `-${formatRupiah(dpAmount)}`;
+                const balance = Math.max(0, grandTotal - dpAmount);
+                document.getElementById('previewBalanceAmount').innerText = formatRupiah(balance);
+                document.getElementById('previewTerbilang').innerText = `Terbilang: ${terbilang(balance)} Rupiah (Sisa Pelunasan).`;
+            } else {
+                dpRow.style.display = 'none';
+                balanceRow.style.display = 'none';
+                document.getElementById('previewTerbilang').innerText = `Terbilang: ${terbilang(grandTotal)} Rupiah.`;
+            }
+
+            // Terms
+            document.getElementById('previewTerms').innerHTML = `<strong>Terms:</strong> ${escapeHtml(termsText)}`;
+        }
+
+        // WhatsApp Direct Sender
+        function sendWhatsAppInvoice() {
+            const clientName = document.getElementById('clientNameInput').value.trim();
+            let phone = document.getElementById('clientPhoneInput').value.trim().replace(/[^0-9]/g, '');
+            if (phone.startsWith('0')) {
+                phone = '62' + phone.substring(1);
+            }
+            if (!phone) {
+                phone = '6281311506025'; // Fallback
+            }
+
+            const invNo = document.getElementById('invNoInput').value.trim();
+            const total = document.getElementById('previewTotalAmount').innerText;
+            const dueDate = document.getElementById('previewDateDue').innerText;
+
+            let statusText = "menunggu pelunasan";
+            if (currentStatus === "PAID") statusText = "sudah LUNAS";
+            if (currentStatus === "DP") statusText = "DP telah diterima, sisa tagihan: " + document.getElementById('previewBalanceAmount').innerText;
+
+            const message = 
+`Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Yth. *${clientName}*,
+
+Berikut kami lampirkan tagihan resmi dari *PGS Tour & Travel*:
+📄 *Nomor Invoice:* ${invNo}
+💰 *Total:* ${total}
+📌 *Status:* ${statusText}
+⏳ *Jatuh Tempo:* ${dueDate}
+
+💳 *Pembayaran Transfer Bank Mandiri:*
+No. Rekening: *1550 0106 1696 2*
+A.n: *Daru Fahmaa Muliawan / PT Permana Group Sejahtera*
+
+Bukti transfer dapat dikirimkan ke chat ini untuk konfirmasi seat & berkas jamaah. Terima kasih atas kepercayaan Anda bersama PGS Tour & Travel.
+
+_Wassalamu'alaikum Warahmatullahi Wabarakatuh._`;
+
+            const encoded = encodeURIComponent(message);
+            window.open(`https://wa.me/${phone}?text=${encoded}`, '_blank');
+        }
+
+        // Helper: Format Rupiah
+        function formatRupiah(val) {
+            return 'Rp ' + Number(val).toLocaleString('id-ID');
+        }
+
+        // Helper: Format Indo Date
+        function formatDateIndo(dateStr) {
+            if (!dateStr) return '-';
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const day = parseInt(parts[2]);
+            const month = months[parseInt(parts[1]) - 1];
+            const year = parts[0];
+            return `${day} ${month} ${year}`;
+        }
+
+        // Helper: Terbilang Indonesia
+        function terbilang(n) {
+            if (n === 0) return 'Nol';
+            const angka = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+            let hasil = '';
+            if (n < 12) {
+                hasil = ' ' + angka[n];
+            } else if (n < 20) {
+                hasil = terbilang(n - 10) + ' Belas';
+            } else if (n < 100) {
+                hasil = terbilang(Math.floor(n / 10)) + ' Puluh' + terbilang(n % 10);
+            } else if (n < 200) {
+                hasil = ' Seratus' + terbilang(n - 100);
+            } else if (n < 1000) {
+                hasil = terbilang(Math.floor(n / 100)) + ' Ratus' + terbilang(n % 100);
+            } else if (n < 2000) {
+                hasil = ' Seribu' + terbilang(n - 1000);
+            } else if (n < 1000000) {
+                hasil = terbilang(Math.floor(n / 1000)) + ' Ribu' + terbilang(n % 1000);
+            } else if (n < 1000000000) {
+                hasil = terbilang(Math.floor(n / 1000000)) + ' Juta' + terbilang(n % 1000000);
+            } else if (n < 1000000000000) {
+                hasil = terbilang(Math.floor(n / 1000000000)) + ' Miliar' + terbilang(n % 1000000000);
+            }
+            return hasil.trim();
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+
+        function copyBankAcc() {
+            const acc = "1550010616962";
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(acc).then(() => {
+                    showToast("No. Rekening Mandiri PGS Tour berhasil disalin: 1550 0106 1696 2");
+                });
+            } else {
+                showToast("Rekening: 1550 0106 1696 2");
+            }
+        }
+    </script>
+</body>
+</html>
