@@ -59,6 +59,7 @@ const defaultState = {
     saudia: "UNPAID",
     tehumi: "DP",
     pgstour: "UNPAID",
+    "umrahme-dreammecca": "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -79,6 +80,7 @@ const defaultState = {
     barber: 6000000,
     saudia: 39600000,
     pgstour: 1000000,
+    "umrahme-dreammecca": 280000,
   },
 };
 

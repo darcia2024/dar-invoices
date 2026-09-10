@@ -2504,6 +2504,60 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Dreammecca - Umrahme 16 Pax Card -->
+            <div class="invoice-card" id="card-umrahme-dreammecca" data-id="umrahme-dreammecca" data-month="2026-09" data-amount="560000" data-client="dreammecca umrahme hilmy hafizh umroh eksklusif 12 hari 16 pax 16 jamaah 560000 #inv/du/2026/09/002 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Dreammecca - Umrahme (16 Pax)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('umrahme-dreammecca')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DU/2026/09/002 &bull; M. Hilmy Hafizh</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Layanan Itinerary Digital &amp; Manifest 16 Jamaah Umroh Eksklusif 12 Hari Dreammecca Tour &amp; Travel (Keberangkatan 23 September 2026). Penerbangan Direct Saudia SV817/SV820, Pullman Zamzam Makkah, Taiba Front Madinah, Kereta Cepat Haramain Express, City Tour Thaif + Cable Car Telefric. 16 Pax @ Rp 35.000 = Rp 560.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/umrahme-dreammecca</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/umrahme-dreammecca')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptUmrahmeDreammecca()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET ITINERARY (16 PAX):</span>
+                            <span class="fin-val">Rp 560.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValUmrahmeDreammecca">Rp 280.000</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValUmrahmeDreammecca">Rp 280.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('umrahme-dreammecca')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/umrahme-dreammecca" class="action-btn">
+                    <span>Buka Invoice Umrahme - Dreammecca</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2718,7 +2772,8 @@
             kpi: "UNPAID",
             tehumi: "DP",
             hamasahinternational: "UNPAID",
-            pgstour: "UNPAID"
+            pgstour: "UNPAID",
+            "umrahme-dreammecca": "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2759,7 +2814,8 @@
             kpi: 14000000,
             tehumi: 300000,
             hamasahinternational: 15000000,
-            pgstour: 1000000
+            pgstour: 1000000,
+            "umrahme-dreammecca": 280000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2812,7 +2868,8 @@
             { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 14000000 },
             { id: "tehumi", name: "Teh Umi (Media Baca Terproteksi)", month: "2026-09", monthLabel: "September 2026", gross: 300000 },
             { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 },
-            { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 }
+            { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 },
+            { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 }
         ];
 
         function formatIDR(num) {
@@ -4343,6 +4400,37 @@ Web & Digital Specialist`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA PGS TOUR BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptUmrahmeDreammecca() {
+            const waScript = `Assalamu'alaikum Warahmatullahi Wabarakatuh, Mas M. Hilmy Hafizh (Dreammecca - Umrahme). 🙏✨
+
+Berikut tautan resmi Dokumen Invoice Layanan Digital Itinerary & Manifest Jamaah:
+
+🔗 Invoice Online: https://temantiket.com/umrahme-dreammecca
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Program Umroh:
+• Paket: Umroh Eksklusif 12 Hari (23 September - 03 Oktober 2026)
+• Penerbangan: Saudia Airlines Direct CGK-JED (SV817) & MED-CGK (SV820)
+• Akomodasi: Pullman Zamzam (*5 Makkah) & Taiba Front (*5 Madinah)
+• Fasilitas: Kereta Cepat Haramain Express, City Tour Thaif + Cable Car Telefric
+
+👥 Rincian Manifest (16 Pax):
+16 Jamaah Confirmed x Rp 35.000 = Rp 560.000
+(Terbilang: Lima Ratus Enam Puluh Ribu Rupiah)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice resmi dan daftar manifest 16 jamaah dapat diakses dan diunduh langsung dalam format PDF maupun PNG pada tautan di atas. Terima kasih banyak Mas Hilmy, semoga berkah lancar perjalanannya! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA UMRAHME - DREAMMECCA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

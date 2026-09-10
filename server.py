@@ -23,6 +23,7 @@ REWRITES = {
     "/markazfiqih": "/markazfiqih/index.html",
     "/abdurrahman": "/abdurrahman/index.html",
     "/dreammecca-umrahme": "/dreammecca-umrahme/index.html",
+    "/umrahme-dreammecca": "/umrahme-dreammecca/index.html",
     "/haramain-capture": "/haramain-capture/index.html",
     "/qohiroh": "/qohiroh/index.html",
     "/zaky": "/zaky/index.html",

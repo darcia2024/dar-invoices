@@ -6,6 +6,7 @@
     { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
     { "source": "/abdurrahman", "destination": "/abdurrahman/index.html" },
     { "source": "/dreammecca-umrahme", "destination": "/dreammecca-umrahme/index.html" },
+    { "source": "/umrahme-dreammecca", "destination": "/umrahme-dreammecca/index.html" },
     { "source": "/haramain-capture", "destination": "/haramain-capture/index.html" },
     { "source": "/template", "destination": "/template/index.html" },
     { "source": "/qohiroh", "destination": "/qohiroh/index.html" },
