@@ -2346,8 +2346,8 @@
                     </div>
 
                     <div class="ref-code">
-                        <span>REF: #INV/UMI/2026/018</span>
-                        <span class="month-tag">📅 September 2026 (DP 100rb)</span>
+                        <span>REF: #INV/UMI/2026/018 &bull; Pembayaran DP Masuk 10 Sep</span>
+                        <span class="month-tag">📅 September 2026 (DP 100rb Lunas)</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3192,11 +3192,12 @@
                 name: "Teh Umi",
                 phone: "",
                 amount: 200000,
-                paid: 0,
+                paid: 100000,
                 date: "2026-09-09",
                 due: "",
-                notes: "Project bikin Website",
-                createdAt: 1788950000000
+                notes: "Project bikin Website (Pembayaran masuk Rp 100.000 tgl 10 Sep 2026)",
+                createdAt: 1788950000000,
+                updatedAt: Date.now()
             },
             {
                 id: "debt-vendra",
@@ -3243,6 +3244,21 @@
         })();
 
         let activeDebtFilter = 'all';
+
+        // Auto-sync debt-teh-umi payment in localStorage if it was previously 0
+        try {
+            const storedDebts = localStorage.getItem('dar-debts-records');
+            if (storedDebts) {
+                const parsed = JSON.parse(storedDebts);
+                const umi = parsed.find(d => d.id === 'debt-teh-umi');
+                if (umi && (umi.paid === 0 || !umi.paid)) {
+                    umi.paid = 100000;
+                    umi.notes = "Project bikin Website (Pembayaran masuk Rp 100.000 tgl 10 Sep 2026)";
+                    umi.updatedAt = Date.now();
+                    localStorage.setItem('dar-debts-records', JSON.stringify(parsed));
+                }
+            }
+        } catch (e) {}
 
         setTimeout(() => {
             renderDebtUI();

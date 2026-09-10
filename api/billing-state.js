@@ -7,11 +7,12 @@ const defaultDebts = [
     name: "Teh Umi",
     phone: "",
     amount: 200000,
-    paid: 0,
+    paid: 100000,
     date: "2026-09-09",
     due: "",
-    notes: "Project bikin Website",
-    createdAt: 1788950000000
+    notes: "Project bikin Website (Pembayaran masuk Rp 100.000 tgl 10 Sep 2026)",
+    createdAt: 1788950000000,
+    updatedAt: 1789014120000
   },
   {
     id: "debt-vendra",
@@ -56,9 +57,12 @@ const defaultState = {
     azhariyah: "UNPAID",
     barber: "UNPAID",
     saudia: "UNPAID",
+    tehumi: "DP",
     pgstour: "UNPAID",
   },
-  dpAmounts: {},
+  dpAmounts: {
+    tehumi: 100000,
+  },
   netProfits: {
     almadroj: 3500000,
     markaz: 5500000,
