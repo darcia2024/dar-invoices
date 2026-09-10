@@ -324,23 +324,32 @@
             position: relative;
         }
 
-        /* TOP SECTION: Header, Parties, Logo */
+        /* TOP SECTION: Header, Parties, Logo (Horizontal Side-by-Side) */
         .sheet-top {
-            padding: 32px 38px 20px 38px;
+            padding: 26px 36px 18px 36px;
             position: relative;
             background: #ffffff;
         }
 
-        .top-grid {
-            display: flex;
-            justify-content: space-between;
+        .top-grid-horizontal {
+            display: grid;
+            grid-template-columns: 1.15fr 1.25fr auto;
+            gap: 24px;
             align-items: flex-start;
-            margin-bottom: 20px;
         }
 
-        /* Issuer address block (Top Left) */
+        .header-col-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 3px;
+        }
+
+        /* Issuer block (Left) */
         .issuer-block {
-            font-size: 0.78rem;
+            font-size: 0.77rem;
             line-height: 1.45;
             color: var(--text-dark);
         }
@@ -348,23 +357,57 @@
         .issuer-name {
             font-weight: 600;
             color: var(--pgs-navy);
-            font-size: 0.84rem;
+            font-size: 0.85rem;
             margin-bottom: 1px;
         }
 
         .issuer-details {
             color: var(--text-muted);
-            font-size: 0.76rem;
+            font-size: 0.75rem;
+            line-height: 1.42;
         }
 
-        /* Invoice no (Top Right) */
+        /* Billed to Block (Center/Side-by-side) */
+        .billed-block {
+            font-size: 0.77rem;
+            line-height: 1.45;
+        }
+
+        .billed-client {
+            font-weight: 600;
+            color: var(--pgs-navy);
+            font-size: 0.85rem;
+            margin-bottom: 1px;
+        }
+
+        .billed-details {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.42;
+        }
+
+        /* Brand & Invoice No Box (Right) */
+        .brand-inv-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            gap: 8px;
+        }
+
+        .header-logo-img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
         .inv-num-box {
             text-align: right;
-            font-size: 0.78rem;
         }
 
         .inv-num-label {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 500;
             color: var(--text-muted);
             margin-bottom: 1px;
@@ -376,64 +419,6 @@
             font-weight: 600;
             color: var(--pgs-navy);
             letter-spacing: 0.02em;
-        }
-
-        /* Billed to Block */
-        .billed-block {
-            font-size: 0.78rem;
-            line-height: 1.45;
-            margin-bottom: 18px;
-        }
-
-        .billed-label {
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 2px;
-        }
-
-        .billed-client {
-            font-weight: 600;
-            color: var(--pgs-navy);
-            font-size: 0.84rem;
-        }
-
-        .billed-details {
-            color: var(--text-muted);
-            font-size: 0.76rem;
-        }
-
-        /* Middle Brand / Logo Row */
-        .logo-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 4px;
-        }
-
-        .logo-img {
-            height: 52px;
-            width: auto;
-            object-fit: contain;
-            display: block;
-        }
-
-        /* Right edge vertical contact line */
-        .vertical-contact {
-            position: absolute;
-            right: 22px;
-            top: 150px;
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            font-size: 0.62rem;
-            color: var(--text-subtle);
-            letter-spacing: 0.06em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            user-select: none;
         }
 
         /* Hairline dividing top and bottom */
@@ -799,8 +784,18 @@
                 gap: 18px;
             }
 
-            .vertical-contact {
-                display: none;
+            .top-grid-horizontal {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .brand-inv-box {
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .inv-num-box {
+                text-align: left;
             }
 
             .invoice-body-split {
@@ -906,47 +901,43 @@
     ---------------------------------------------------- -->
     <div class="a4-sheet" id="invoiceSheet">
         
-        <!-- TOP SECTION -->
+        <!-- TOP SECTION: Horizontal Side-by-Side Layout -->
         <div class="sheet-top">
-            
-            <!-- Vertical Rotated Line on the Right -->
-            <div class="vertical-contact">
-                <span>Dar Dev &bull; WhatsApp: 0813 1150 6025 &bull; Web &amp; Digital Specialist</span>
-            </div>
-
-            <!-- Top Grid: Issuer & Invoice no -->
-            <div class="top-grid">
+            <div class="top-grid-horizontal">
+                
+                <!-- Col 1: Dari / Issuer -->
                 <div class="issuer-block">
+                    <div class="header-col-label">Dari / Penyedia</div>
                     <div class="issuer-name">Dar Dev</div>
                     <div class="issuer-details">
                         Daru Fahmaa Muliawan<br>
                         Web &amp; Digital Specialist<br>
+                        WhatsApp: 0813 1150 6025<br>
                         Tangerang &bull; Indonesia
                     </div>
                 </div>
 
-                <div class="inv-num-box">
-                    <div class="inv-num-label">Invoice no.</div>
-                    <div class="inv-num-val">INV-PGS-001</div>
+                <!-- Col 2: Ditujukan Kepada / Client (Side-by-Side) -->
+                <div class="billed-block">
+                    <div class="header-col-label">Billed to / Klien</div>
+                    <div class="billed-client">PT Permana Group Sejahtera</div>
+                    <div class="billed-details">
+                        Up. Manajemen / Owner PGS Tour<br>
+                        PGS Tour &amp; Travel<br>
+                        Serang, Banten
+                    </div>
                 </div>
-            </div>
 
-            <!-- Billed to Block -->
-            <div class="billed-block">
-                <div class="billed-label">Billed to</div>
-                <div class="billed-client">PT Permana Group Sejahtera</div>
-                <div class="billed-details">
-                    Up. Manajemen / Owner PGS Tour<br>
-                    PGS Tour &amp; Travel<br>
-                    Serang, Banten
+                <!-- Col 3: Logo PGS Tour & Invoice No (Side-by-Side) -->
+                <div class="brand-inv-box">
+                    <img src="/pgstour/logo.png" alt="PGS Tour Logo" class="header-logo-img">
+                    <div class="inv-num-box">
+                        <div class="inv-num-label">Invoice no.</div>
+                        <div class="inv-num-val">INV-PGS-001</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Middle Logo Row -->
-            <div class="logo-row">
-                <img src="/pgstour/logo.png" alt="PGS Tour Logo" class="logo-img">
             </div>
-
         </div>
 
         <!-- Hairline Divider -->
