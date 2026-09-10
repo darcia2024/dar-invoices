@@ -203,109 +203,6 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Fixed desktop width rules for pristine PNG exports regardless of device screen */
-        .export-clean-capture {
-            box-shadow: none !important;
-            margin: 0 !important;
-            background-color: #ffffff !important;
-        }
-
-        .export-clean-capture.a4-sheet {
-            width: 800px !important;
-            max-width: 800px !important;
-            min-width: 800px !important;
-            display: flex !important;
-        }
-
-        .export-clean-capture.kwitansi-sheet {
-            width: 820px !important;
-            max-width: 820px !important;
-            min-width: 820px !important;
-            display: block !important;
-        }
-
-        .export-clean-capture .kwitansi-inner-wrapper {
-            display: grid !important;
-            grid-template-columns: 165px 1fr !important;
-        }
-
-        .export-clean-capture .kwitansi-stub {
-            display: flex !important;
-            flex-direction: column !important;
-            padding: 16px 12px !important;
-        }
-
-        .export-clean-capture .kw-header-row {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-        }
-
-        .export-clean-capture .kw-brand-left {
-            display: flex !important;
-            flex-direction: row !important;
-        }
-
-        .export-clean-capture .kw-title-right {
-            text-align: right !important;
-        }
-
-        .export-clean-capture .kw-row {
-            display: grid !important;
-            grid-template-columns: 145px 1fr !important;
-        }
-
-        .export-clean-capture .kw-footer-row {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-between !important;
-            align-items: flex-end !important;
-        }
-
-        .export-clean-capture .kw-signature-box {
-            width: 190px !important;
-            text-align: center !important;
-        }
-
-        .export-clean-capture .top-grid-horizontal {
-            display: grid !important;
-            grid-template-columns: 1.2fr 1.2fr 1fr !important;
-        }
-
-        .export-clean-capture .brand-inv-box {
-            order: unset !important;
-            flex-direction: column !important;
-            align-items: flex-end !important;
-            border-bottom: none !important;
-            padding-bottom: 0 !important;
-        }
-
-        .export-clean-capture .table-head {
-            display: grid !important;
-            grid-template-columns: 32px 1fr 50px 110px 120px !important;
-        }
-
-        .export-clean-capture .table-row {
-            display: grid !important;
-            grid-template-columns: 32px 1fr 50px 110px 120px !important;
-            padding: 8px 0 !important;
-        }
-
-        .export-clean-capture .table-row > .item-qty,
-        .export-clean-capture .table-row > .item-cost {
-            display: block !important;
-        }
-
-        .export-clean-capture .item-cost-mobile {
-            display: none !important;
-        }
-
-        .export-clean-capture .bottom-meta {
-            display: grid !important;
-            grid-template-columns: 1.3fr 1fr !important;
-        }
-
         .btn-success:hover {
             background: #047857;
             border-color: #047857;
@@ -2415,7 +2312,7 @@
                 btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg><span>Memproses...</span>`;
             }
 
-            showToast("📸 Sedang merender gambar PNG resolusi tinggi...");
+            showToast("📸 Sedang mengunduh PNG ukuran asli preview...");
 
             try {
                 const isKwitansi = (docMode === 'kwitansi');
@@ -2426,40 +2323,45 @@
                 const cleanDocNum = docNumRaw.replace(/[^a-zA-Z0-9_-]/g, '_');
                 const filename = `${isKwitansi ? 'KWITANSI' : 'INVOICE'}_${cleanDocNum}.png`;
 
-                // Offscreen wrapper to ensure clean desktop layout regardless of mobile screen
+                // Ukuran asli persis seperti yang tampil di preview (Kwitansi 820px, Invoice 780px)
+                const originalWidth = isKwitansi ? 820 : 780;
+
                 const wrapper = document.createElement('div');
                 wrapper.style.position = 'fixed';
                 wrapper.style.left = '-9999px';
                 wrapper.style.top = '0';
-                wrapper.style.width = isKwitansi ? '820px' : '800px';
+                wrapper.style.width = originalWidth + 'px';
                 wrapper.style.zIndex = '-9999';
                 wrapper.style.backgroundColor = '#ffffff';
 
+                // Clone target langsung dengan gaya asli 100% (tidak merusak struktur kolom tabel)
                 const clone = target.cloneNode(true);
-                clone.classList.add('export-clean-capture');
                 clone.style.display = isKwitansi ? 'block' : 'flex';
+                clone.style.width = originalWidth + 'px';
+                clone.style.maxWidth = originalWidth + 'px';
+                clone.style.minWidth = originalWidth + 'px';
+                clone.style.margin = '0';
+                clone.style.boxShadow = 'none';
 
                 wrapper.appendChild(clone);
                 document.body.appendChild(wrapper);
 
-                // Wait 150ms for cloned layout calculation
-                await new Promise(r => setTimeout(r, 150));
+                await new Promise(r => setTimeout(r, 120));
 
                 const canvas = await html2canvas(clone, {
-                    scale: 2, // 2x high crisp retina resolution
+                    scale: 1, // UKURAN ASLI PERSIS 1:1 SESUAI PREVIEW
+                    backgroundColor: '#ffffff',
                     useCORS: true,
                     allowTaint: true,
-                    backgroundColor: '#ffffff',
                     logging: false,
                     windowWidth: 1200
                 });
 
                 document.body.removeChild(wrapper);
 
-                // Export via Blob for reliable mobile & desktop file downloads
                 canvas.toBlob((blob) => {
                     if (!blob) {
-                        showToast("Gagal mengonversi canvas ke gambar.");
+                        showToast("Gagal mengonversi gambar.");
                         return;
                     }
                     const blobUrl = URL.createObjectURL(blob);
@@ -2470,7 +2372,7 @@
                     link.click();
                     document.body.removeChild(link);
                     setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-                    showToast("✅ Berhasil mengunduh: " + filename);
+                    showToast("✅ Berhasil mengunduh ukuran asli: " + filename);
                 }, 'image/png');
 
             } catch (err) {

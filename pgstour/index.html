@@ -1060,49 +1060,7 @@
             }
         }
 
-        /* Fixed desktop width rules for pristine PNG exports */
-        .export-clean-capture {
-            width: 800px !important;
-            max-width: 800px !important;
-            min-width: 800px !important;
-            box-shadow: none !important;
-            margin: 0 !important;
-            background-color: #ffffff !important;
-            display: flex !important;
-        }
-        .export-clean-capture .top-grid-horizontal {
-            display: grid !important;
-            grid-template-columns: 1.2fr 1.2fr 1fr !important;
-        }
-        .export-clean-capture .brand-inv-box {
-            order: unset !important;
-            flex-direction: column !important;
-            align-items: flex-end !important;
-            border-bottom: none !important;
-            padding-bottom: 0 !important;
-        }
-        .export-clean-capture .table-head {
-            display: grid !important;
-            grid-template-columns: 32px 1fr 50px 110px 120px !important;
-        }
-        .export-clean-capture .table-row {
-            display: grid !important;
-            grid-template-columns: 32px 1fr 50px 110px 120px !important;
-            padding: 8px 0 !important;
-        }
-        .export-clean-capture .table-row > .item-qty,
-        .export-clean-capture .table-row > .item-cost {
-            display: block !important;
-        }
-        .export-clean-capture .item-cost-mobile {
-            display: none !important;
-        }
-        .export-clean-capture .bottom-meta {
-            display: grid !important;
-            grid-template-columns: 1.3fr 1fr !important;
-        }
-
-    </style>
+        </style>
     <!-- html2canvas for High-Res PNG Download -->
     <script src="/pgstour/html2canvas.min.js"></script>
     <script>
@@ -1448,7 +1406,7 @@
                 btn.innerHTML = `<span>Memproses...</span>`;
             }
 
-            showToast("📸 Sedang merender gambar invoice PNG resolusi tinggi...");
+            showToast("📸 Sedang mengunduh invoice PNG ukuran asli...");
 
             try {
                 const target = document.getElementById('invoiceSheet');
@@ -1460,21 +1418,25 @@
                 wrapper.style.position = 'fixed';
                 wrapper.style.left = '-9999px';
                 wrapper.style.top = '0';
-                wrapper.style.width = '800px';
+                wrapper.style.width = '780px';
                 wrapper.style.zIndex = '-9999';
                 wrapper.style.backgroundColor = '#ffffff';
 
                 const clone = target.cloneNode(true);
-                clone.classList.add('export-clean-capture');
                 clone.style.display = 'flex';
+                clone.style.width = '780px';
+                clone.style.maxWidth = '780px';
+                clone.style.minWidth = '780px';
+                clone.style.margin = '0';
+                clone.style.boxShadow = 'none';
 
                 wrapper.appendChild(clone);
                 document.body.appendChild(wrapper);
 
-                await new Promise(r => setTimeout(r, 150));
+                await new Promise(r => setTimeout(r, 120));
 
                 const canvas = await html2canvas(clone, {
-                    scale: 2,
+                    scale: 1, // UKURAN ASLI 1:1 SESUAI PREVIEW (780px)
                     useCORS: true,
                     allowTaint: true,
                     backgroundColor: '#ffffff',
@@ -1497,7 +1459,7 @@
                     link.click();
                     document.body.removeChild(link);
                     setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-                    showToast("✅ Berhasil mengunduh: " + filename);
+                    showToast("✅ Berhasil mengunduh ukuran asli: " + filename);
                 }, 'image/png');
 
             } catch (err) {
