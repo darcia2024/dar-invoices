@@ -447,36 +447,45 @@
         .invoice-title-col {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 10px;
         }
 
-        .date-label {
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        .date-val {
-            font-size: 0.76rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-
-        /* Modern Sans 'Invoice' Title using Plus Jakarta Sans Regular/Medium */
         .invoice-main-title {
             font-family: var(--font-sans);
             font-size: 1.9rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--pgs-navy);
             letter-spacing: -0.025em;
             line-height: 1.1;
         }
 
-        .invoice-due-sub {
+        .dates-right-side {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .date-item {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .date-label-txt {
             font-size: 0.72rem;
             color: var(--text-muted);
-            margin-top: 3px;
+        }
+
+        .date-val-txt {
+            font-size: 0.76rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .due-item .date-val-txt {
+            color: var(--pgs-navy);
+            font-weight: 600;
         }
 
         /* Right Column: Table */
@@ -911,10 +920,10 @@
                 font-size: 0.72rem;
             }
 
-            /* Invoice Wordmark & Date Row */
+            /* Invoice Wordmark & Date Row (Precise & Aesthetic) */
             .invoice-body-split {
                 grid-template-columns: 1fr;
-                gap: 14px;
+                gap: 12px;
             }
 
             .invoice-title-col {
@@ -922,24 +931,38 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: flex-end;
-                padding-bottom: 8px;
-                border-bottom: 1px solid var(--hairline-subtle);
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--hairline);
             }
 
             .invoice-main-title {
-                font-size: 1.6rem;
+                font-size: 1.65rem;
                 line-height: 1;
             }
 
-            .date-val,
-            .invoice-due-sub {
-                font-size: 0.72rem;
+            .dates-right-side {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
                 text-align: right;
-                margin-bottom: 0;
             }
 
-            .date-label {
-                display: none;
+            .date-item {
+                font-size: 0.72rem;
+                display: flex;
+                align-items: baseline;
+                gap: 5px;
+            }
+
+            .date-label-txt {
+                font-size: 0.68rem;
+                color: var(--text-muted);
+            }
+
+            .date-val-txt {
+                font-size: 0.72rem;
+                color: var(--text-dark);
             }
 
             /* Table on Mobile: Clean Line-by-Line (No Box Enclosures) */
@@ -1163,13 +1186,21 @@
             
             <div class="invoice-body-split">
                 
-                <!-- Left Column: Date & Clean Modern Sans 'Invoice' Wordmark -->
+                <!-- Left Column: Wordmark & Date Information -->
                 <div class="invoice-title-col">
-                    <div class="date-label">Date</div>
-                    <div class="date-val">10 September 2026</div>
-
-                    <div class="invoice-main-title">Invoice</div>
-                    <div class="invoice-due-sub">Jatuh tempo: 17 Sep 2026</div>
+                    <div class="title-left-side">
+                        <div class="invoice-main-title">Invoice</div>
+                    </div>
+                    <div class="dates-right-side">
+                        <div class="date-item">
+                            <span class="date-label-txt">Terbit:</span>
+                            <span class="date-val-txt">10 Sep 2026</span>
+                        </div>
+                        <div class="date-item due-item">
+                            <span class="date-label-txt">Jatuh tempo:</span>
+                            <span class="date-val-txt">17 Sep 2026</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Right Column: Table & Financial Calculation -->
