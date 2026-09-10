@@ -5,37 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INVOICE #INV/DU/2026/09/002 - Dreammecca Tour & Travel</title>
     
-    <!-- Google Fonts: Cinzel (Luxury Serif) & Plus Jakarta Sans (Elite Modern Sans) & Space Mono -->
+    <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
     <!-- html2canvas for High-Res PNG Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --bg-body: #0d1522;
-            --bg-canvas: #f8f6f0;
-            --paper-card: #ffffff;
-            --navy-deep: #0a192f;
+            --bg-body: #f8fafc;
+            --sheet-bg: #ffffff;
             --navy-primary: #0f2b5c;
-            --navy-muted: #1e3a6f;
-            --gold-primary: #c5a059;
-            --gold-light: #e6c887;
-            --gold-dark: #997530;
-            --gold-bg: rgba(197, 160, 89, 0.08);
-            --gold-border: rgba(197, 160, 89, 0.35);
+            --navy-dark: #0a192f;
+            --navy-light: #2563eb;
+            --navy-subtle: #f1f5f9;
+            --gold-accent: #b48a3c;
+            --gold-soft: #fbf6ec;
+            --gold-border: #e6d3a3;
             
-            --text-dark: #0f172a;
+            --text-title: #0f172a;
             --text-body: #334155;
             --text-muted: #64748b;
-            --border-soft: #e2ded4;
-            --border-card: #ece8df;
+            --border-line: #e2e8f0;
+            --border-card: #e2e8f0;
             
-            --font-luxury: 'Cinzel', serif;
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
-            --font-mono: 'Space Mono', monospace;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
         }
 
         * {
@@ -45,22 +41,17 @@
         }
 
         body {
-            font-family: var(--font-sans);
-            font-weight: 400;
-            background-color: var(--bg-canvas);
-            background-image: 
-                radial-gradient(at 10% 10%, rgba(197, 160, 89, 0.06) 0px, transparent 50%),
-                radial-gradient(at 90% 90%, rgba(15, 43, 92, 0.04) 0px, transparent 50%);
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
             color: var(--text-body);
-            line-height: 1.6;
-            padding: 40px 20px 60px;
+            line-height: 1.5;
+            padding: 24px 16px 40px;
             -webkit-font-smoothing: antialiased;
-            position: relative;
             min-height: 100vh;
         }
 
         /* ----------------------------------------------------
-           PRESTIGE PRIVATE PORTAL (COVER SCREEN)
+           SECURITY ACCESS MODAL (CLEAN MINIMALIST WHITE)
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -68,936 +59,715 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at 50% 35%, #15243e 0%, #080f1a 100%);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(12px);
+            padding: 20px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cover-overlay.opened {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: scale(0.98) translateY(-25px);
+            transform: scale(0.98) translateY(-10px);
         }
 
         .cover-card {
-            background: rgba(14, 26, 47, 0.88);
-            border: 1px solid var(--gold-border);
-            border-radius: 20px;
-            max-width: 520px;
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 420px;
             width: 100%;
-            padding: 48px 40px;
+            padding: 36px 32px;
             text-align: center;
-            box-shadow: 
-                0 30px 60px -15px rgba(0, 0, 0, 0.65),
-                0 0 0 1px rgba(255, 255, 255, 0.05),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            backdrop-filter: blur(20px);
-            color: #ffffff;
+            box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.25);
+            border: 1px solid var(--border-line);
         }
 
-        .cover-gold-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid var(--gold-primary);
-            background: rgba(197, 160, 89, 0.12);
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-family: var(--font-luxury);
-            font-size: 0.72rem;
+        .cover-badge {
+            display: inline-block;
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--gold-light);
-            margin-bottom: 24px;
-            box-shadow: 0 0 20px rgba(197, 160, 89, 0.18);
+            color: var(--navy-primary);
+            background: var(--navy-subtle);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
         }
 
         .cover-title {
-            font-family: var(--font-luxury);
-            font-size: 1.85rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffffff 30%, #e2ded4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
         }
 
         .cover-subtitle {
-            font-size: 0.86rem;
-            color: #94a3b8;
-            margin-bottom: 28px;
-            letter-spacing: 0.02em;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
 
         .cover-recipient-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            border-radius: 12px;
-            padding: 18px 22px;
+            background: #f8fafc;
+            border: 1px solid var(--border-line);
+            border-radius: 10px;
+            padding: 12px 16px;
             text-align: left;
-            margin-bottom: 28px;
-            position: relative;
+            margin-bottom: 20px;
         }
 
         .cover-recipient-label {
             font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--gold-light);
-            margin-bottom: 4px;
-            font-family: var(--font-luxury);
+            letter-spacing: 0.08em;
+            margin-bottom: 2px;
         }
 
         .cover-recipient-name {
-            font-size: 1.12rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.01em;
+            color: var(--text-title);
         }
 
         .cover-recipient-org {
-            font-size: 0.82rem;
-            color: #cbd5e1;
-            margin-top: 2px;
+            font-size: 0.78rem;
+            color: var(--text-body);
         }
 
-        .cover-inv-num {
-            font-family: var(--font-mono);
-            font-size: 0.74rem;
-            color: #64748b;
-            margin-top: 8px;
-            display: inline-block;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 6px;
-            width: 100%;
-        }
-
-        /* Passcode Input */
         .passcode-wrapper {
-            margin: 20px 0 24px 0;
+            margin: 16px 0 20px 0;
             text-align: center;
         }
 
         .passcode-label {
             font-size: 0.72rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #94a3b8;
-            margin-bottom: 12px;
-            font-family: var(--font-luxury);
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         .passcode-input {
-            width: 200px;
-            font-family: var(--font-mono);
-            font-size: 1.7rem;
+            width: 170px;
+            font-family: var(--font-main);
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: 0.45em;
+            letter-spacing: 0.35em;
             text-align: center;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1.5px solid var(--gold-primary);
-            border-radius: 12px;
+            padding: 8px 12px;
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
             outline: none;
-            color: #ffffff;
-            box-shadow: 0 0 25px rgba(197, 160, 89, 0.15);
-            transition: all 0.25s ease;
+            color: var(--text-title);
+            transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: #f7dfa4;
-            box-shadow: 0 0 35px rgba(197, 160, 89, 0.35);
+            border-color: var(--navy-primary);
+            box-shadow: 0 0 0 3px rgba(15, 43, 92, 0.12);
         }
 
         .passcode-error {
-            color: #fb7185;
+            color: #ef4444;
             font-size: 0.74rem;
-            margin-top: 10px;
+            margin-top: 8px;
             display: none;
             font-weight: 600;
-            letter-spacing: 0.05em;
         }
 
         .cover-open-btn {
-            display: inline-flex;
+            display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            background: linear-gradient(135deg, #d4af37 0%, #aa822d 100%);
-            color: #0a192f;
+            background: var(--navy-primary);
+            color: #ffffff;
             border: none;
-            padding: 15px 24px;
-            border-radius: 12px;
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-family: var(--font-main);
+            font-size: 0.85rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
             cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 10px 25px -5px rgba(197, 160, 89, 0.45);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.2s ease;
         }
 
         .cover-open-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px -5px rgba(197, 160, 89, 0.6);
-            background: linear-gradient(135deg, #e5be48 0%, #ba9137 100%);
+            background: #1a3c78;
+            transform: translateY(-1px);
         }
 
-        .cover-open-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Shake animation for invalid PIN */
         .shake-anim {
-            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 0.35s cubic-bezier(.36,.07,.19,.97) both;
         }
 
         @keyframes shake {
             10%, 90% { transform: translate3d(-2px, 0, 0); }
-            20%, 80% { transform: translate3d(4px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-            40%, 60% { transform: translate3d(6px, 0, 0); }
+            20%, 80% { transform: translate3d(3px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
         /* ----------------------------------------------------
-           TOP FLOATING ACTION BAR
+           TOP ACTIONS BAR
         ---------------------------------------------------- */
-        .action-bar-wrapper {
-            max-width: 880px;
-            margin: 0 auto 24px auto;
+        .action-bar-wrap {
+            max-width: 780px;
+            margin: 0 auto 16px auto;
         }
 
         .action-bar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border-soft);
-            border-radius: 16px;
-            padding: 12px 20px;
+            background: #ffffff;
+            border: 1px solid var(--border-line);
+            border-radius: 12px;
+            padding: 10px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
-            box-shadow: 0 10px 30px -10px rgba(15, 43, 92, 0.07);
+            gap: 10px;
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03);
         }
 
-        .action-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.86rem;
+        .action-title {
+            font-size: 0.82rem;
             font-weight: 700;
             color: var(--navy-primary);
-            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .action-dot {
+        .action-title-dot {
             width: 8px;
             height: 8px;
             background: #10b981;
             border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
         }
 
         .btn-group {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .btn {
-            font-family: var(--font-sans);
-            font-size: 0.82rem;
+            font-family: var(--font-main);
+            font-size: 0.78rem;
             font-weight: 600;
-            padding: 9px 18px;
-            border-radius: 10px;
+            padding: 7px 14px;
+            border-radius: 8px;
             cursor: pointer;
-            border: none;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+            transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             text-decoration: none;
         }
 
         .btn-primary {
             background: var(--navy-primary);
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(15, 43, 92, 0.2);
         }
 
         .btn-primary:hover {
             background: #1a3c78;
-            transform: translateY(-1px);
         }
 
         .btn-secondary {
             background: #ffffff;
-            color: var(--navy-primary);
-            border: 1px solid var(--border-soft);
+            color: var(--text-body);
+            border-color: var(--border-line);
         }
 
         .btn-secondary:hover {
-            background: #faf8f5;
-            border-color: var(--gold-primary);
-            transform: translateY(-1px);
+            background: #f8fafc;
+            border-color: #cbd5e1;
         }
 
         .btn-png {
             background: #ffffff;
-            color: var(--gold-dark);
-            border: 1px solid rgba(197, 160, 89, 0.5);
+            color: var(--navy-primary);
+            border-color: var(--border-line);
         }
 
         .btn-png:hover {
-            background: var(--gold-bg);
-            border-color: var(--gold-primary);
-            transform: translateY(-1px);
+            background: #f8fafc;
+            border-color: var(--navy-primary);
         }
 
         /* ----------------------------------------------------
-           EXECUTIVE LUXURY INVOICE SHEET
+           OPTIMAL COMPACT A4 INVOICE SHEET (780px)
         ---------------------------------------------------- */
-        .invoice-wrapper {
-            max-width: 880px;
+        .invoice-sheet-container {
+            max-width: 780px;
             margin: 0 auto;
         }
 
         .invoice-sheet {
-            background: var(--paper-card);
-            border-radius: 20px;
-            border: 1px solid var(--border-soft);
-            box-shadow: 
-                0 25px 50px -12px rgba(15, 43, 92, 0.08),
-                0 0 0 1px rgba(197, 160, 89, 0.12);
-            overflow: hidden;
+            background: var(--sheet-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-line);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+            padding: 34px 38px;
             position: relative;
         }
 
-        /* Top Luxury Header Bar */
-        .sheet-top-banner {
-            background: linear-gradient(135deg, #0d1b2a 0%, #0f2b5c 100%);
-            color: #ffffff;
-            padding: 38px 45px 34px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sheet-top-banner::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 450px;
-            background: radial-gradient(circle at 100% 0%, rgba(197, 160, 89, 0.18), transparent 70%);
-            pointer-events: none;
-        }
-
-        .sheet-top-banner::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #c5a059 0%, #e6c887 50%, #c5a059 100%);
-        }
-
-        .banner-flex {
+        /* Top Header: Brand & Invoice Meta */
+        .header-grid {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            flex-wrap: wrap;
             gap: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-meta-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-luxury);
-            font-size: 0.72rem;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-            margin-bottom: 6px;
+            padding-bottom: 20px;
+            border-bottom: 1.5px solid var(--border-line);
+            margin-bottom: 20px;
         }
 
         .brand-title {
-            font-family: var(--font-luxury);
-            font-size: 1.95rem;
+            font-size: 1.45rem;
             font-weight: 800;
-            letter-spacing: 0.02em;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .brand-subtitle {
-            font-size: 0.84rem;
-            color: #cbd5e1;
-            margin-top: 4px;
-        }
-
-        .banner-inv-box {
-            text-align: right;
-        }
-
-        .banner-inv-label {
-            font-family: var(--font-luxury);
-            font-size: 0.74rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-        }
-
-        .banner-inv-number {
-            font-family: var(--font-mono);
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-top: 2px;
+            color: var(--navy-primary);
             letter-spacing: -0.02em;
+            line-height: 1.15;
         }
 
-        .banner-inv-date {
+        .brand-sub {
             font-size: 0.8rem;
-            color: #94a3b8;
-            margin-top: 4px;
+            color: var(--text-body);
+            font-weight: 500;
+            margin-top: 2px;
         }
 
-        .banner-due-tag {
+        .kemenag-badge {
             display: inline-block;
-            margin-top: 8px;
-            background: rgba(197, 160, 89, 0.18);
-            border: 1px solid rgba(197, 160, 89, 0.4);
-            color: var(--gold-light);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 0.72rem;
-            font-weight: 600;
+            margin-top: 6px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+            background: var(--gold-soft);
+            border: 1px solid var(--gold-border);
+            padding: 2px 8px;
+            border-radius: 4px;
             letter-spacing: 0.04em;
         }
 
-        /* Main Body Content */
-        .sheet-body {
-            padding: 40px 45px 45px;
+        .inv-meta-right {
+            text-align: right;
         }
 
-        /* Two-Column Executive Brief */
-        .executive-grid {
+        .inv-badge-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            background: var(--navy-primary);
+            padding: 3px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .inv-code {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-top: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .inv-date-line {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .inv-due-line {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: #b45309;
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* 2-Column Info Section */
+        .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 18px;
         }
 
-        .executive-card {
-            background: #faf8f5;
+        .info-box {
+            background: #f8fafc;
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 22px 24px;
-            position: relative;
+            border-radius: 8px;
+            padding: 12px 16px;
         }
 
-        .card-eyebrow {
-            font-family: var(--font-luxury);
-            font-size: 0.7rem;
+        .info-title {
+            font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--gold-dark);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
         }
 
-        .card-client-name {
-            font-size: 1.15rem;
+        .info-name {
+            font-size: 0.95rem;
             font-weight: 700;
-            color: var(--navy-deep);
+            color: var(--text-title);
             margin-bottom: 2px;
         }
 
-        .card-client-sub {
-            font-size: 0.86rem;
+        .info-detail {
+            font-size: 0.78rem;
             color: var(--text-body);
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
-        .sk-badge {
-            display: inline-block;
-            margin-top: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
+        /* Program Highlights (Compact 4-Item Row) */
+        .program-highlights-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-card {
             background: #ffffff;
-            border: 1px solid var(--border-soft);
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: var(--text-muted);
-        }
-
-        .program-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            margin-bottom: 2px;
-        }
-
-        .program-meta {
-            font-size: 0.86rem;
-            color: var(--text-body);
-            line-height: 1.5;
-        }
-
-        /* Luxury Itinerary Feature Strip */
-        .feature-strip {
-            background: #faf8f5;
-            border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 32px;
-        }
-
-        .feature-strip-title {
-            font-family: var(--font-luxury);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--gold-dark);
-            margin-bottom: 12px;
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
+        .highlight-icon {
+            font-size: 0.95rem;
+            line-height: 1;
         }
 
-        .feature-box {
-            background: #ffffff;
-            border: 1px solid var(--border-soft);
-            border-radius: 10px;
-            padding: 12px 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
+        .highlight-text {
+            font-size: 0.72rem;
+            line-height: 1.3;
+            color: var(--text-title);
         }
 
-        .feature-icon-circle {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--gold-bg);
-            border: 1px solid var(--gold-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .feature-box-content {
-            font-size: 0.76rem;
-            line-height: 1.35;
-            color: var(--navy-deep);
-        }
-
-        .feature-box-content strong {
+        .highlight-text strong {
             display: block;
-            font-weight: 700;
-            font-size: 0.78rem;
-            color: var(--navy-deep);
-            margin-bottom: 2px;
+            font-size: 0.74rem;
+            color: var(--navy-primary);
         }
 
         /* ----------------------------------------------------
-           PRESTIGE INVOICE TABLE & MANIFEST GRID
+           ITEMS TABLE & 16 PAX MANIFEST GRID
         ---------------------------------------------------- */
-        .table-container {
-            margin-bottom: 30px;
+        .table-wrap {
+            margin-bottom: 20px;
         }
 
-        .luxury-table {
+        .compact-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .luxury-table thead th {
-            font-family: var(--font-luxury);
-            font-size: 0.75rem;
+        .compact-table thead th {
+            font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--navy-deep);
-            padding: 14px 16px;
-            border-top: 1.5px solid var(--navy-deep);
-            border-bottom: 1.5px solid var(--navy-deep);
-            background: #faf8f5;
+            color: var(--navy-primary);
+            background: #f1f5f9;
+            padding: 10px 14px;
+            border-top: 1.5px solid var(--navy-primary);
+            border-bottom: 1.5px solid var(--border-line);
             text-align: left;
         }
 
-        .luxury-table thead th.col-subtotal {
+        .compact-table thead th.th-subtotal {
             text-align: right;
-            width: 180px;
-            padding-right: 18px;
+            width: 140px;
         }
 
-        .service-row td {
-            padding: 24px 16px 20px;
+        .item-row td {
+            padding: 14px 14px 16px;
+            border-bottom: 1px solid var(--border-line);
             vertical-align: top;
-            border-bottom: 1px solid var(--border-soft);
         }
 
-        .service-title {
-            font-size: 1.05rem;
+        .item-main-title {
+            font-size: 0.92rem;
             font-weight: 700;
-            color: var(--navy-deep);
-            margin-bottom: 6px;
+            color: var(--text-title);
+            margin-bottom: 3px;
         }
 
-        .service-desc {
-            font-size: 0.85rem;
+        .item-desc-text {
+            font-size: 0.78rem;
             color: var(--text-muted);
-            line-height: 1.55;
-            margin-bottom: 18px;
+            line-height: 1.45;
+            margin-bottom: 12px;
         }
 
-        /* VIP Manifest Card Grid */
-        .manifest-card-wrap {
-            background: #faf8f5;
+        /* 16 Pax Manifest Grid (Clean 2 Columns) */
+        .manifest-container {
+            background: #f8fafc;
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 18px 20px;
+            border-radius: 8px;
+            padding: 12px 14px;
         }
 
-        .manifest-header {
+        .manifest-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-soft);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-line);
         }
 
-        .manifest-header-title {
-            font-family: var(--font-luxury);
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--navy-deep);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .manifest-pax-pill {
-            font-family: var(--font-mono);
+        .manifest-bar-title {
             font-size: 0.72rem;
             font-weight: 700;
-            background: var(--navy-deep);
-            color: #ffffff;
-            padding: 3px 10px;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--navy-primary);
         }
 
-        .manifest-grid {
+        .manifest-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            background: var(--navy-primary);
+            color: #ffffff;
+            padding: 1px 7px;
+            border-radius: 4px;
+        }
+
+        .manifest-grid-2col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px 16px;
+            gap: 4px 14px;
         }
 
-        .manifest-item {
+        .manifest-entry {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: #ffffff;
-            border: 1px solid #ede8df;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            transition: all 0.15s ease;
-        }
-
-        .manifest-num {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--gold-dark);
-            background: var(--gold-bg);
-            padding: 2px 6px;
+            border: 1px solid #edf2f7;
+            padding: 4px 8px;
             border-radius: 4px;
-            min-width: 26px;
-            text-align: center;
+            font-size: 0.74rem;
         }
 
-        .manifest-name {
+        .manifest-entry-num {
+            font-weight: 700;
+            color: var(--navy-primary);
+            font-size: 0.7rem;
+            min-width: 20px;
+        }
+
+        .manifest-entry-name {
             font-weight: 600;
-            color: var(--navy-deep);
-            letter-spacing: 0.02em;
+            color: var(--text-title);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .col-subtotal-val {
+        .td-subtotal-val {
             text-align: right;
-            font-family: var(--font-mono);
-            font-size: 1.15rem;
+            font-size: 0.98rem;
             font-weight: 700;
-            color: var(--navy-deep);
-            padding-right: 18px !important;
+            color: var(--text-title);
+            padding-top: 14px !important;
         }
 
-        .rate-hint {
-            font-size: 0.74rem;
+        .rate-calc {
+            font-size: 0.72rem;
+            font-weight: 500;
             color: var(--text-muted);
-            font-weight: 400;
-            margin-top: 4px;
-            font-family: var(--font-sans);
+            margin-top: 2px;
         }
 
         /* Totals */
-        .total-row td {
-            padding: 14px 16px;
-            font-size: 0.9rem;
-            color: var(--navy-deep);
-            border-bottom: 1px solid var(--border-soft);
+        .calc-row td {
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            color: var(--text-body);
+            border-bottom: 1px solid var(--border-line);
         }
 
         .grand-total-row td {
-            padding: 18px 16px;
-            border-top: 2px solid var(--navy-deep);
-            border-bottom: 2px solid var(--navy-deep);
-            background: #faf8f5;
-        }
-
-        .grand-total-label {
-            font-family: var(--font-luxury);
-            font-size: 1rem;
+            padding: 12px 14px;
+            font-size: 1.05rem;
             font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--navy-deep);
-        }
-
-        .grand-total-value {
-            text-align: right;
-            font-family: var(--font-mono);
-            font-size: 1.45rem;
-            font-weight: 700;
             color: var(--navy-primary);
-            padding-right: 18px !important;
+            border-top: 1.5px solid var(--navy-primary);
+            border-bottom: 1.5px solid var(--navy-primary);
+            background: #f8fafc;
         }
 
-        .terbilang-box {
-            margin-top: 10px;
-            background: var(--gold-bg);
-            border: 1px dashed var(--gold-primary);
-            border-radius: 8px;
-            padding: 10px 16px;
+        .grand-total-row td.subtotal-val {
             text-align: right;
-            font-family: var(--font-luxury);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: var(--gold-dark);
-            text-transform: uppercase;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+        }
+
+        .terbilang-banner {
+            margin-top: 8px;
+            text-align: right;
+            font-size: 0.74rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
         /* ----------------------------------------------------
-           BOTTOM PAYMENT & ISSUER CARDS
+           BOTTOM COMPACT 2-COLUMN SECTION
         ---------------------------------------------------- */
         .bottom-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 32px;
-            padding-top: 28px;
-            border-top: 1px solid var(--border-soft);
+            gap: 16px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-line);
         }
 
-        .payment-card {
-            background: #faf8f5;
+        .bottom-card {
+            background: #f8fafc;
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 20px 22px;
+            border-radius: 8px;
+            padding: 12px 14px;
         }
 
-        .payment-title {
-            font-family: var(--font-luxury);
-            font-size: 0.72rem;
+        .bottom-card-title {
+            font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--navy-deep);
-            margin-bottom: 12px;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .bank-info-flex {
+        .bank-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
         }
 
-        .bank-logo {
-            height: 24px;
+        .bank-brand img {
+            height: 18px;
             width: auto;
             object-fit: contain;
         }
 
-        .bank-name {
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--navy-deep);
-        }
-
-        .account-num-box {
+        .acc-row {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #ffffff;
-            border: 1px solid var(--border-soft);
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-bottom: 8px;
+            font-size: 0.86rem;
+            color: var(--text-title);
+            margin-top: 4px;
         }
 
-        .account-num {
-            font-family: var(--font-mono);
-            font-size: 1rem;
+        .acc-number {
             font-weight: 700;
-            color: var(--navy-deep);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
         }
 
-        .copy-pill-btn {
-            font-family: var(--font-sans);
-            font-size: 0.72rem;
+        .copy-acc-btn {
+            font-family: var(--font-main);
+            font-size: 0.68rem;
             font-weight: 700;
-            background: var(--navy-deep);
+            background: var(--navy-primary);
             color: #ffffff;
             border: none;
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 4px;
             cursor: pointer;
-            margin-left: auto;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+            transition: all 0.15s ease;
         }
 
-        .copy-pill-btn:hover {
-            background: var(--gold-dark);
-        }
-
-        .issuer-card {
-            background: #faf8f5;
-            border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 20px 22px;
-        }
-
-        .issuer-title {
-            font-family: var(--font-luxury);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--navy-deep);
-            margin-bottom: 12px;
+        .copy-acc-btn:hover {
+            background: #1a3c78;
         }
 
         .issuer-name {
-            font-size: 1.05rem;
+            font-size: 0.88rem;
             font-weight: 700;
-            color: var(--navy-deep);
-            margin-bottom: 2px;
+            color: var(--text-title);
         }
 
-        .issuer-role {
-            font-size: 0.84rem;
+        .issuer-detail {
+            font-size: 0.76rem;
             color: var(--text-body);
-            line-height: 1.5;
+            line-height: 1.4;
+            margin-top: 2px;
         }
 
         .issuer-wa {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
+            gap: 4px;
+            margin-top: 4px;
+            font-size: 0.76rem;
             font-weight: 700;
             color: #059669;
-            background: #ecfdf5;
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid #a7f3d0;
+            text-decoration: none;
         }
 
-        /* Terms & Conditions */
-        .terms-box {
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-soft);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .terms-box-title {
-            font-family: var(--font-luxury);
+        /* Terms footnote */
+        .terms-note {
+            margin-top: 14px;
             font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--navy-deep);
-            margin-bottom: 6px;
+            color: var(--text-muted);
+            line-height: 1.45;
+            text-align: center;
+            border-top: 1px dashed var(--border-line);
+            padding-top: 10px;
         }
 
         /* Toast Component */
         .toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--navy-deep);
+            bottom: 20px;
+            right: 20px;
+            background: var(--navy-primary);
             color: #ffffff;
-            border: 1px solid var(--gold-primary);
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 0.84rem;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 600;
-            box-shadow: 0 15px 35px -5px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(15px);
+            transition: all 0.25s ease;
             pointer-events: none;
             z-index: 10001;
         }
@@ -1010,40 +780,40 @@
         /* Responsive Mobile */
         @media screen and (max-width: 768px) {
             body {
-                padding: 15px 12px 30px;
+                padding: 12px 10px 24px;
             }
 
-            .sheet-top-banner {
-                padding: 28px 20px 24px;
+            .invoice-sheet {
+                padding: 22px 16px;
             }
 
-            .banner-inv-box {
+            .header-grid {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .inv-meta-right {
                 text-align: left;
-                width: 100%;
             }
 
-            .sheet-body {
-                padding: 24px 18px 30px;
-            }
-
-            .executive-grid {
+            .info-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr 1fr;
                 gap: 10px;
             }
 
-            .manifest-grid {
+            .program-highlights-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .manifest-grid-2col {
                 grid-template-columns: 1fr;
-                gap: 6px;
+                gap: 4px;
             }
 
             .bottom-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
             }
 
             .btn-group {
@@ -1056,36 +826,39 @@
                 grid-column: span 2;
                 justify-content: center;
             }
-
-            .cover-card {
-                padding: 35px 20px;
-            }
         }
 
-        /* Print Media Styles */
+        /* ----------------------------------------------------
+           A4 PRINT MEDIA OPTIMIZATION (100% SINGLE PAGE COMPACT)
+        ---------------------------------------------------- */
+        @page {
+            size: A4 portrait;
+            margin: 8mm 10mm;
+        }
+
         @media print {
             body {
                 background: #ffffff !important;
                 padding: 0 !important;
+                color: #000000 !important;
             }
 
-            .cover-overlay, .action-bar-wrapper, .toast {
+            .cover-overlay, .action-bar-wrap, .toast {
                 display: none !important;
+            }
+
+            .invoice-sheet-container {
+                max-width: 100% !important;
             }
 
             .invoice-sheet {
                 border: none !important;
                 box-shadow: none !important;
                 border-radius: 0 !important;
+                padding: 0 !important;
             }
 
-            .sheet-top-banner {
-                background: #0f2b5c !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            .copy-pill-btn {
+            .copy-acc-btn {
                 display: none !important;
             }
         }
@@ -1093,274 +866,231 @@
 </head>
 <body>
 
-    <!-- PRESTIGE PRIVATE DOSSIER COVER SCREEN -->
+    <!-- CLEAN MINIMALIST PASSCODE ACCESS OVERLAY -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card">
-            
-            <div class="cover-gold-badge">
-                <span>✦</span> DREAMMECCA &bull; PRIVATE ACCESS <span>✦</span>
-            </div>
-
-            <h1 class="cover-title">DOKUMEN INVOICE RESMI</h1>
-            <div class="cover-subtitle">Layanan Digital Itinerary &bull; Umrahme Dreammecca</div>
+            <div class="cover-badge">Dokumen Resmi</div>
+            <h1 class="cover-title">Invoice Dreammecca</h1>
+            <div class="cover-subtitle">Layanan Digital Itinerary &bull; 16 Jamaah</div>
 
             <div class="cover-recipient-box">
-                <div class="cover-recipient-label">DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-label">Ditujukan Kepada:</div>
                 <div class="cover-recipient-name">M. Hilmy Hafizh</div>
                 <div class="cover-recipient-org">Direktur PT Dream Mecca Internasional</div>
-                <div class="cover-inv-num">REF CODE: #INV/DU/2026/09/002 &bull; 16 JAMAAH</div>
             </div>
 
-            <!-- Passcode Section -->
             <div class="passcode-wrapper">
-                <div class="passcode-label">MASUKKAN KODE PIN AKSES RESMI:</div>
+                <div class="passcode-label">Masukkan PIN Akses:</div>
                 <input type="text" id="passcodeInput" autocomplete="off" name="pin_code_clean" value="" class="passcode-input" maxlength="6" placeholder="••••">
-                <div id="passcodeError" class="passcode-error">Akses Ditolak &bull; Kode PIN Tidak Sesuai</div>
+                <div id="passcodeError" class="passcode-error">Kode PIN Salah. Silakan Coba Lagi.</div>
             </div>
 
             <button class="cover-open-btn" onclick="verifyPasscode()">
-                <span>BUKA DOKUMEN RESMI</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <span>Buka Invoice</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
         </div>
     </div>
 
     <!-- FLOATING TOP ACTION BAR -->
-    <div class="action-bar-wrapper">
+    <div class="action-bar-wrap">
         <div class="action-bar">
-            <div class="action-brand">
-                <span class="action-dot"></span>
+            <div class="action-title">
+                <span class="action-title-dot"></span>
                 <span>INVOICE #INV/DU/2026/09/002</span>
             </div>
             <div class="btn-group">
                 <button class="btn btn-secondary" onclick="copyBankAcc()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     Salin Rekening
                 </button>
                 <button class="btn btn-png" id="btnDownloadPNG" onclick="downloadInvoicePNG()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     Unduh PNG
                 </button>
                 <button class="btn btn-primary" onclick="window.print()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                    Cetak / PDF
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    Cetak A4 / PDF
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MAIN LUXURY INVOICE SHEET -->
-    <div class="invoice-wrapper">
+    <!-- MAIN COMPACT A4 INVOICE SHEET (BACKGROUND PUTIH) -->
+    <div class="invoice-sheet-container">
         <div class="invoice-sheet" id="invoiceSheet">
             
-            <!-- Top Banner Header -->
-            <div class="sheet-top-banner">
-                <div class="banner-flex">
-                    <div>
-                        <div class="brand-meta-badge">
-                            <span>✦</span> PT DREAM MECCA INTERNASIONAL
-                        </div>
-                        <h1 class="brand-title">DREAMMECCA</h1>
-                        <div class="brand-subtitle">Layanan Digital Itinerary &bull; Umrahme Manifest Ecosystem</div>
-                    </div>
+            <!-- Header Grid: Brand & Invoice Meta -->
+            <div class="header-grid">
+                <div>
+                    <h1 class="brand-title">DREAMMECCA</h1>
+                    <div class="brand-sub">PT Dream Mecca Internasional &bull; Tour &amp; Travel</div>
+                    <div class="kemenag-badge">SK KEMENAG RI: 16112301081560002</div>
+                </div>
 
-                    <div class="banner-inv-box">
-                        <div class="banner-inv-label">OFFICIAL INVOICE</div>
-                        <div class="banner-inv-number">#INV/DU/2026/09/002</div>
-                        <div class="banner-inv-date">Tanggal Terbit: 10 September 2026</div>
-                        <div class="banner-due-tag">Jatuh Tempo: 23 September 2026</div>
+                <div class="inv-meta-right">
+                    <span class="inv-badge-label">INVOICE TAGIHAN</span>
+                    <div class="inv-code">#INV/DU/2026/09/002</div>
+                    <div class="inv-date-line">Terbit: 10 September 2026</div>
+                    <div class="inv-due-line">Jatuh Tempo: 23 September 2026</div>
+                </div>
+            </div>
+
+            <!-- Two-Column Info Section -->
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-title">Ditujukan Kepada (Billed To):</div>
+                    <div class="info-name">M. Hilmy Hafizh</div>
+                    <div class="info-detail">
+                        Direktur PT Dream Mecca Internasional<br>
+                        Dreammecca Tour &amp; Travel (Umrahme)
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">Program Itinerary Confirmed:</div>
+                    <div class="info-name">Umroh Eksklusif 12 Hari</div>
+                    <div class="info-detail">
+                        Keberangkatan: <strong>23 Sep &ndash; 03 Okt 2026</strong><br>
+                        Penerbangan: <strong>Direct Saudia Airlines (SV817/SV820)</strong>
                     </div>
                 </div>
             </div>
 
-            <!-- Sheet Content Body -->
-            <div class="sheet-body">
+            <!-- Program Highlights Strip (4 Compact Cards) -->
+            <div class="program-highlights-row">
+                <div class="highlight-card">
+                    <span class="highlight-icon">✈️</span>
+                    <div class="highlight-text">
+                        <strong>Saudia Direct</strong>
+                        SV817 &amp; SV820 Direct
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <span class="highlight-icon">🏨</span>
+                    <div class="highlight-text">
+                        <strong>Makkah (5 Malam)</strong>
+                        Pullman Zamzam (*5)
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <span class="highlight-icon">🏨</span>
+                    <div class="highlight-text">
+                        <strong>Madinah (5 Malam)</strong>
+                        Taiba Front (*5/*4)
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <span class="highlight-icon">🚄</span>
+                    <div class="highlight-text">
+                        <strong>Kereta Cepat &amp; Thaif</strong>
+                        Haramain &amp; Telefric
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Area: Description & 16 Pax Manifest -->
+            <div class="table-wrap">
+                <table class="compact-table">
+                    <thead>
+                        <tr>
+                            <th>DESKRIPSI LAYANAN</th>
+                            <th class="th-subtotal">SUBTOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="item-row">
+                            <td>
+                                <div class="item-main-title">Layanan Digital Itinerary &amp; Manifest Buku Saku Jamaah</div>
+                                <div class="item-desc-text">
+                                    Penyusunan dokumen digital itinerary interaktif, rincian manasik &amp; ziarah, jadwal penerbangan Saudia Airlines, dan layout manifest 16 jamaah keberangkatan 23 September 2026.
+                                </div>
+
+                                <!-- 16 Named Manifest Grid (2 Kolom Compact) -->
+                                <div class="manifest-container">
+                                    <div class="manifest-bar">
+                                        <span class="manifest-bar-title">Manifest Jamaah Confirmed</span>
+                                        <span class="manifest-tag">16 Pax</span>
+                                    </div>
+                                    <div class="manifest-grid-2col">
+                                        <div class="manifest-entry"><span class="manifest-entry-num">01.</span> <span class="manifest-entry-name">SHAKIRA KIRANA PUTRI</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">02.</span> <span class="manifest-entry-name">OVIE ARIESTA</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">03.</span> <span class="manifest-entry-name">ABDUL SOBUR</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">04.</span> <span class="manifest-entry-name">ASMINAR BACHRI ABDULLAH</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">05.</span> <span class="manifest-entry-name">RISMAN ABDURRACHMAN ADAM</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">06.</span> <span class="manifest-entry-name">RIRIN FEBRINA YOSERIZAL</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">07.</span> <span class="manifest-entry-name">DEDE RIKI</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">08.</span> <span class="manifest-entry-name">BASUNI AHMAD KEMIN</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">09.</span> <span class="manifest-entry-name">SUTOYO SUYATMO SLAMET</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">10.</span> <span class="manifest-entry-name">ESTININGTYAS SHOLIKHAH</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">11.</span> <span class="manifest-entry-num">ARIFATUL KAROMAH</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">12.</span> <span class="manifest-entry-name">QORI OCTAVIANA</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">13.</span> <span class="manifest-entry-name">ZAMSUAR USMAN ASMAR</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">14.</span> <span class="manifest-entry-name">DARNIATI AMBO TANG</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">15.</span> <span class="manifest-entry-name">HATIDJAH TAHIR HASENG</span></div>
+                                        <div class="manifest-entry"><span class="manifest-entry-num">16.</span> <span class="manifest-entry-name">TASLIM YUNUS</span></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="td-subtotal-val">
+                                <div>Rp 560.000</div>
+                                <div class="rate-calc">16 pax &times; Rp 35.000</div>
+                            </td>
+                        </tr>
+
+                        <tr class="calc-row">
+                            <td style="text-align: right; font-weight: 600; color: var(--text-muted);">SUBTOTAL</td>
+                            <td style="text-align: right; font-weight: 700;">Rp 560.000</td>
+                        </tr>
+
+                        <tr class="grand-total-row">
+                            <td>TOTAL TAGIHAN</td>
+                            <td class="subtotal-val">Rp 560.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="terbilang-banner">
+                    # Lima Ratus Enam Puluh Ribu Rupiah #
+                </div>
+            </div>
+
+            <!-- Bottom Section: Payments & Issuer -->
+            <div class="bottom-grid">
                 
-                <!-- Executive Client & Program Details Grid -->
-                <div class="executive-grid">
-                    <div class="executive-card">
-                        <div class="card-eyebrow">
-                            <span>✦</span> DITUJUKAN KEPADA (BILLED TO)
-                        </div>
-                        <div class="card-client-name">M. Hilmy Hafizh</div>
-                        <div class="card-client-sub">
-                            Direktur PT Dream Mecca Internasional<br>
-                            Dreammecca Tour &amp; Travel &bull; Umrahme
-                        </div>
-                        <div class="sk-badge">SK KEMENAG RI: 16112301081560002</div>
+                <!-- Payment Card -->
+                <div class="bottom-card">
+                    <div class="bottom-card-title">Rekening Pembayaran:</div>
+                    <div class="bank-brand">
+                        <img src="mandiri_logo.webp" alt="Mandiri Logo">
+                        <span>Bank Mandiri</span>
                     </div>
-
-                    <div class="executive-card">
-                        <div class="card-eyebrow">
-                            <span>✦</span> PROGRAM ITINERARY CONFIRMED
-                        </div>
-                        <div class="program-title">Umroh Eksklusif 12 Hari</div>
-                        <div class="program-meta">
-                            Keberangkatan: <strong>23 September &ndash; 03 Oktober 2026</strong><br>
-                            Penerbangan: <strong>Direct Saudia Airlines (SV817 &amp; SV820)</strong>
-                        </div>
-                        <div class="sk-badge" style="color: var(--navy-primary); font-weight:700;">MANIFEST: 16 JAMAAH CONFIRMED</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">
+                        a.n. <strong>Daru Fahmaa Muliawan</strong>
+                    </div>
+                    <div class="acc-row">
+                        <span class="acc-number">1550010616962</span>
+                        <button class="copy-acc-btn" onclick="copyBankAcc()">Salin Rekening</button>
                     </div>
                 </div>
 
-                <!-- Program Highlights Strip -->
-                <div class="feature-strip">
-                    <div class="feature-strip-title">
-                        <span>✈️</span> SPESIFIKASI &amp; FASILITAS EKSEKUTIF ITINERARY
-                    </div>
-                    <div class="feature-grid">
-                        <div class="feature-box">
-                            <div class="feature-icon-circle">✈️</div>
-                            <div class="feature-box-content">
-                                <strong>Direct Saudia</strong>
-                                SV817 CGKJED &amp; SV820 MEDCGK
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-icon-circle">🏨</div>
-                            <div class="feature-box-content">
-                                <strong>Hotel Makkah (5M)</strong>
-                                Pullman Zamzam / Prestige Ajyad (*5)
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-icon-circle">🏨</div>
-                            <div class="feature-box-content">
-                                <strong>Hotel Madinah (5M)</strong>
-                                Taiba Front / Ansar Golden (*5/*4)
-                            </div>
-                        </div>
-                        <div class="feature-box">
-                            <div class="feature-icon-circle">🚄</div>
-                            <div class="feature-box-content">
-                                <strong>Kereta Cepat &amp; Thaif</strong>
-                                Haramain Railway &amp; Telefric
-                            </div>
-                        </div>
+                <!-- Issuer Card -->
+                <div class="bottom-card">
+                    <div class="bottom-card-title">Penerbit Dokumen:</div>
+                    <div class="issuer-name">Daru Fahmaa Muliawan</div>
+                    <div class="issuer-detail">Web Developer &amp; Digital Itinerary Designer</div>
+                    <div>
+                        <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa">
+                            <span>WA: 081311506025</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Table Container -->
-                <div class="table-container">
-                    <table class="luxury-table">
-                        <thead>
-                            <tr>
-                                <th>DESKRIPSI LAYANAN</th>
-                                <th class="col-subtotal">SUBTOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="service-row">
-                                <td>
-                                    <div class="service-title">Layanan Digital Itinerary &amp; Manifest Buku Saku Jamaah</div>
-                                    <div class="service-desc">
-                                        Penyusunan dan penerbitan dokumen digital itinerary interaktif, jadwal ziarah, rincian penerbangan Saudia Airlines, serta layout manifest 16 jamaah keberangkatan 23 September 2026.
-                                    </div>
+            </div>
 
-                                    <!-- VIP Manifest Grid (16 Pax) -->
-                                    <div class="manifest-card-wrap">
-                                        <div class="manifest-header">
-                                            <div class="manifest-header-title">
-                                                <span>✦</span> MANIFEST CONFIRMED (16 JAMAAH)
-                                            </div>
-                                            <div class="manifest-pax-pill">16 PESERTA</div>
-                                        </div>
-                                        <div class="manifest-grid">
-                                            <div class="manifest-item"><span class="manifest-num">01</span><span class="manifest-name">SHAKIRA KIRANA PUTRI</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">02</span><span class="manifest-name">OVIE ARIESTA</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">03</span><span class="manifest-name">ABDUL SOBUR</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">04</span><span class="manifest-name">ASMINAR BACHRI ABDULLAH</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">05</span><span class="manifest-name">RISMAN ABDURRACHMAN ADAM</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">06</span><span class="manifest-name">RIRIN FEBRINA YOSERIZAL</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">07</span><span class="manifest-name">DEDE RIKI</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">08</span><span class="manifest-name">BASUNI AHMAD KEMIN</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">09</span><span class="manifest-name">SUTOYO SUYATMO SLAMET</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">10</span><span class="manifest-name">ESTININGTYAS SHOLIKHAH</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">11</span><span class="manifest-name">ARIFATUL KAROMAH</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">12</span><span class="manifest-name">QORI OCTAVIANA</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">13</span><span class="manifest-name">ZAMSUAR USMAN ASMAR</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">14</span><span class="manifest-name">DARNIATI AMBO TANG</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">15</span><span class="manifest-name">HATIDJAH TAHIR HASENG</span></div>
-                                            <div class="manifest-item"><span class="manifest-num">16</span><span class="manifest-name">TASLIM YUNUS</span></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="col-subtotal-val">
-                                    <div>Rp 560.000</div>
-                                    <div class="rate-hint">16 pax &times; Rp 35.000</div>
-                                </td>
-                            </tr>
-
-                            <tr class="total-row">
-                                <td style="text-align: right; font-weight: 600; letter-spacing: 0.05em; font-family:var(--font-luxury); font-size:0.8rem; color:var(--text-muted);">SUBTOTAL</td>
-                                <td class="col-subtotal-val" style="font-size: 1.05rem;">Rp 560.000</td>
-                            </tr>
-
-                            <tr class="grand-total-row">
-                                <td class="grand-total-label">TOTAL PEMBAYARAN</td>
-                                <td class="grand-total-value">Rp 560.000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="terbilang-box">
-                        # lima ratus enam puluh ribu rupiah #
-                    </div>
-                </div>
-
-                <!-- Bottom Section: Payments & Issuer -->
-                <div class="bottom-grid">
-                    
-                    <!-- Payments Block -->
-                    <div class="payment-card">
-                        <div class="payment-title">
-                            <span>✦</span> REKENING PEMBAYARAN RESMI
-                        </div>
-                        <div class="bank-info-flex">
-                            <img src="mandiri_logo.webp" alt="Bank Mandiri" class="bank-logo">
-                            <div class="bank-name">Bank Mandiri</div>
-                        </div>
-                        <div style="font-size: 0.84rem; color: var(--text-body); margin-bottom: 6px;">
-                            Atas Nama: <strong>Daru Fahmaa Muliawan</strong>
-                        </div>
-                        <div class="account-num-box">
-                            <span class="account-num">1550010616962</span>
-                            <button class="copy-pill-btn" onclick="copyBankAcc()">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                Salin
-                            </button>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); font-style: italic;">
-                            Jatuh tempo pelunasan sebelum keberangkatan (23 September 2026).
-                        </div>
-                    </div>
-
-                    <!-- Issuer Block -->
-                    <div class="issuer-card">
-                        <div class="issuer-title">
-                            <span>✦</span> PENERBIT INVOICE &amp; DESAINER
-                        </div>
-                        <div class="issuer-name">Daru Fahmaa Muliawan</div>
-                        <div class="issuer-role">
-                            Digital Specialist &amp; Web Developer<br>
-                            Kota Tangerang, Banten
-                        </div>
-                        <div>
-                            <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa" style="text-decoration:none;">
-                                <span>WA: 081311506025</span>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Terms -->
-                <div class="terms-box">
-                    <div class="terms-box-title">KETENTUAN LAYANAN &bull; TERMS &amp; CONDITIONS</div>
-                    <p>1. Tagihan penerbitan layanan digital itinerary dan buku saku manifest 16 jamaah keberangkatan 23 September 2026 sebesar <strong>Rp 35.000 &times; 16 pax = Rp 560.000</strong>.</p>
-                    <p>2. Konfirmasi transfer dapat dikirimkan langsung melalui WhatsApp kepada Daru Fahmaa Muliawan untuk serah terima dokumen final.</p>
-                </div>
-
+            <!-- Terms footnote -->
+            <div class="terms-note">
+                Tagihan layanan digital itinerary &amp; manifest 16 jamaah keberangkatan 23 September 2026 (Rp 35.000 &times; 16 pax = Rp 560.000). Konfirmasi pembayaran dikirimkan via WhatsApp.
             </div>
 
         </div>
@@ -1388,7 +1118,7 @@
                 errorEl.style.display = "block";
                 const card = document.querySelector(".cover-card");
                 card.classList.add("shake-anim");
-                setTimeout(() => card.classList.remove("shake-anim"), 400);
+                setTimeout(() => card.classList.remove("shake-anim"), 350);
             }
         }
 
@@ -1398,7 +1128,7 @@
             }
         });
 
-        // RE-LOCK ON VISIBILITY CHANGE / BLUR
+        // Auto relock on blur / tab leave
         window.addEventListener("visibilitychange", function() {
             if (document.hidden) {
                 lockDocument();
@@ -1416,7 +1146,7 @@
         function copyBankAcc() {
             const accNo = "1550010616962";
             navigator.clipboard.writeText(accNo).then(() => {
-                showToast("Nomor Rekening 1550010616962 (Bank Mandiri) telah disalin!");
+                showToast("Nomor Rekening 1550010616962 (Bank Mandiri) berhasil disalin!");
             }).catch(() => {
                 showToast("Silakan salin manual: 1550010616962");
             });
@@ -1431,7 +1161,7 @@
             }, 3000);
         }
 
-        // High resolution PNG download using html2canvas
+        // High resolution PNG download using html2canvas (Exact 780px A4 Width)
         async function downloadInvoicePNG() {
             if (typeof html2canvas === 'undefined') {
                 showToast("Library gambar belum selesai dimuat, silakan coba lagi.");
@@ -1445,7 +1175,7 @@
                 btn.innerHTML = `<span>Memproses...</span>`;
             }
 
-            showToast("📸 Sedang menyiapkan file gambar PNG...");
+            showToast("📸 Sedang mengunduh Invoice PNG ukuran asli...");
 
             try {
                 const target = document.getElementById('invoiceSheet');
@@ -1457,27 +1187,27 @@
                 wrapper.style.position = 'fixed';
                 wrapper.style.left = '-9999px';
                 wrapper.style.top = '0';
-                wrapper.style.width = '880px';
+                wrapper.style.width = '780px';
                 wrapper.style.zIndex = '-9999';
-                wrapper.style.backgroundColor = '#f8f6f0';
+                wrapper.style.backgroundColor = '#ffffff';
 
                 const clone = target.cloneNode(true);
-                clone.style.width = '880px';
-                clone.style.maxWidth = '880px';
-                clone.style.minWidth = '880px';
+                clone.style.width = '780px';
+                clone.style.maxWidth = '780px';
+                clone.style.minWidth = '780px';
                 clone.style.margin = '0';
                 clone.style.boxShadow = 'none';
 
                 wrapper.appendChild(clone);
                 document.body.appendChild(wrapper);
 
-                await new Promise(r => setTimeout(r, 150));
+                await new Promise(r => setTimeout(r, 120));
 
                 const canvas = await html2canvas(clone, {
-                    scale: 2, // 2x Retina Resolution
+                    scale: 2, // 2x Retina Scale
                     useCORS: true,
                     allowTaint: true,
-                    backgroundColor: '#f8f6f0',
+                    backgroundColor: '#ffffff',
                     logging: false,
                     windowWidth: 1200
                 });
