@@ -884,22 +884,22 @@
                 </div>
             </div>
 
-            <!-- Summary Bar (Hairline, Clean Minimalist) -->
+            <!-- Summary Bar (Hairline, Clean Minimalist with Outline Icons) -->
             <div class="itinerary-summary-bar">
                 <div class="summary-item">
-                    <span>✈️</span>
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
                     <span>Penerbangan: <strong>Saudia Direct CGKJED / MEDCGK</strong></span>
                 </div>
                 <div class="summary-item">
-                    <span>🏨</span>
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
                     <span>Hotel Makkah (5N): <strong>Pullman Zamzam (*5)</strong></span>
                 </div>
                 <div class="summary-item">
-                    <span>🏨</span>
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
                     <span>Hotel Madinah (5N): <strong>Taiba Front (*5/*4)</strong></span>
                 </div>
                 <div class="summary-item">
-                    <span>🚄</span>
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="3" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m16 19 2 3"/><circle cx="9" cy="15" r="1"/><circle cx="15" cy="15" r="1"/></svg>
                     <span>Fasilitas: <strong>Kereta Cepat Haramain &amp; Telefric Thaif</strong></span>
                 </div>
             </div>
@@ -1089,7 +1089,7 @@
                 btn.innerHTML = `<span>Memproses...</span>`;
             }
 
-            showToast("📸 Sedang menyiapkan Invoice PNG...");
+            showToast("Sedang menyiapkan Invoice PNG...");
 
             try {
                 const target = document.getElementById('invoiceSheet');
@@ -1142,7 +1142,7 @@
                     link.click();
                     document.body.removeChild(link);
                     URL.revokeObjectURL(blobUrl);
-                    showToast("✅ Berhasil mengunduh Invoice PNG!");
+                    showToast("Berhasil mengunduh Invoice PNG!");
                 }, 'image/png');
 
             } catch (err) {
