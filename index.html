@@ -2446,7 +2446,7 @@
             </div>
 
             <!-- PT Permana Group Sejahtera (PGS Tour & Travel) Card -->
-            <div class="invoice-card" id="card-pgstour" data-id="pgstour" data-month="2026-09" data-amount="9000000" data-client="pt permana group sejahtera pgs tour travel website resmi arsitektur nextjs turbopack typescript redesign uxi mobile first galeri interaktif whatsapp conversion seo vercel cloud subtotal 10jt diskon 1jt total 9jt 9.000.000 #inv/pgs/2026/09/001 september 2026">
+            <div class="invoice-card" id="card-pgstour" data-id="pgstour" data-month="2026-09" data-amount="1000000" data-client="pt permana group sejahtera pgs tour travel website resmi arsitektur nextjs turbopack typescript redesign uxi mobile first galeri interaktif whatsapp conversion seo vercel cloud subtotal 1,2jt diskon 200rb total 1jt 1.000.000 generator invoice kwitansi #inv/pgs/2026/09/001 september 2026">
                 <div>
                     <div class="card-top">
                         <div class="client-title">PGS Tour &amp; Travel</div>
@@ -2463,7 +2463,7 @@
                     </div>
                     
                     <div class="project-desc">
-                        Pembuatan Website Resmi PGS Tour &amp; Travel (7 Halaman Lengkap, Desain Tampilan Baru yang Nyaman &amp; Pas di Layar HP, Galeri Foto Dokumentasi Jamaah Jernih &amp; Anti-Macet, Tombol Chat WhatsApp Otomatis, Terdaftar di Google, Server Cloud Cepat &amp; Gembok Keamanan). Termasuk Garansi Bantuan Teknis 30 Hari. Subtotal Rp 10.000.000, Diskon Promo Rp 1.000.000, Total Tagihan Bersih Rp 9.000.000.
+                        Pembuatan Website Resmi PGS Tour &amp; Travel (7 Halaman Lengkap, Desain Tampilan Baru yang Nyaman &amp; Pas di Layar HP, Galeri Foto Dokumentasi Jamaah Jernih &amp; Anti-Macet, Tombol Chat WhatsApp Otomatis, Terdaftar di Google, Server Cloud Cepat &amp; Gembok Keamanan). Termasuk Garansi Bantuan Teknis 30 Hari. Subtotal Rp 1.200.000, Diskon Promo Rp 200.000, Total Tagihan Bersih Rp 1.000.000.
                     </div>
 
                     <div class="slug-box">
@@ -2478,7 +2478,7 @@
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
                             <span class="fin-label">OMSET WEBSITE PGS TOUR:</span>
-                            <span class="fin-val">Rp 9.000.000</span>
+                            <span class="fin-val">Rp 1.000.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL (MODAL):</span>
@@ -2487,16 +2487,22 @@
                         <div class="fin-row net-profit-row">
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
-                                <span class="net-profit-val" id="profitValPgstour">Rp 9.000.000</span>
+                                <span class="net-profit-val" id="profitValPgstour">Rp 1.000.000</span>
                                 <button class="edit-profit-btn" onclick="openProfitModal('pgstour')">✏️ Edit Profit</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <a href="/pgstour" class="action-btn">
-                    <span>Buka invoice PGS Tour &amp; Travel</span>
-                </a>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;">
+                    <a href="/pgstour" class="action-btn">
+                        <span>Buka Invoice PGS Tour (A4)</span>
+                    </a>
+                    <a href="/pgstour/generator" class="action-btn" style="background:#0284c7; border-color:#0284c7; color:#ffffff;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px; vertical-align:middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>⚡ Generator Invoice &amp; Kwitansi PGS</span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -2753,7 +2759,7 @@
             kpi: 14000000,
             tehumi: 300000,
             hamasahinternational: 15000000,
-            pgstour: 9000000
+            pgstour: 1000000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2769,6 +2775,12 @@
         const netProfits = Object.fromEntries(
             Object.entries(defaultNetProfits).map(([id, fallback]) => [id, getStoredNumber("profit_" + id, fallback)])
         );
+
+        // Auto-migrate cached draft pgstour profit to 1000000
+        if (localStorage.getItem("profit_pgstour") === "9000000") {
+            localStorage.setItem("profit_pgstour", "1000000");
+            netProfits.pgstour = 1000000;
+        }
 
         const invoiceItems = [
             { id: "almadroj", name: "Sidi Watra (Pusat Belajar Al Madroj)", month: "2026-09", monthLabel: "September 2026", gross: 3500000 },
@@ -2800,7 +2812,7 @@
             { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 14000000 },
             { id: "tehumi", name: "Teh Umi (Media Baca Terproteksi)", month: "2026-09", monthLabel: "September 2026", gross: 300000 },
             { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 },
-            { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 9000000 }
+            { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 }
         ];
 
         function formatIDR(num) {
@@ -4296,10 +4308,10 @@ Berikut kami lampirkan dokumen Invoice & Rincian Pekerjaan (Scope of Work) untuk
 5. Server Cloud Cepat, Keamanan Web & Pemasangan Sistem (Aktif 24 Jam Nonstop & Dilengkapi Gembok Keamanan HTTPS) - FREE / BONUS
 
 💰 Ringkasan Biaya:
-• Subtotal: Rp 10.000.000
-• Diskon Kerja Sama / Launch Promo: (Rp 1.000.000)
-• Total Tagihan Bersih: Rp 9.000.000
-(Terbilang: Sembilan Juta Rupiah)
+• Subtotal: Rp 1.200.000
+• Diskon Kerja Sama / Launch Promo: (Rp 200.000)
+• Total Tagihan Bersih: Rp 1.000.000
+(Terbilang: Satu Juta Rupiah)
 
 💳 Rekening Resmi Pembayaran:
 Bank Mandiri: 1550010616962

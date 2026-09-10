@@ -56,6 +56,7 @@ const defaultState = {
     azhariyah: "UNPAID",
     barber: "UNPAID",
     saudia: "UNPAID",
+    pgstour: "UNPAID",
   },
   dpAmounts: {},
   netProfits: {
@@ -73,6 +74,7 @@ const defaultState = {
     azhariyah: 7000000,
     barber: 6000000,
     saudia: 39600000,
+    pgstour: 1000000,
   },
 };
 
