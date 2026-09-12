@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Hari Ini — Daru</title>
+  <title>Update Keuangan Hari Ini — Daru</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -62,49 +62,46 @@
       <!-- Progress step indicator -->
       <div class="flex items-center gap-2 mb-6">
         <span id="stepCounter" class="text-xs font-semibold text-slate-400 tracking-wide uppercase">
-          Pertanyaan 1 dari 4
+          Pertanyaan 1 dari 4 • Keuangan
         </span>
         <div class="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden">
           <div id="progressBar" class="h-full bg-slate-900 transition-all duration-300 w-1/4"></div>
         </div>
       </div>
 
-      <!-- STEP 1: Kerjaan Utama -->
+      <!-- STEP 1: Uang Masuk Hari Ini -->
       <div id="step-1" class="step-card fade-enter">
         <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950 leading-snug">
-          Bro, hari ini lu mau fokus beresin kerjaan apa?
+          Bro, hari ini ada uang masuk atau pembayaran dari klien gak?
         </h1>
         <p class="text-sm text-slate-500 mt-2">
-          Pilih proyek aktif di bawah atau ketik kerjaan utama lu hari ini.
+          Catat transferan, DP, atau pelunasan yang sudah cair ke rekening lu hari ini.
         </p>
 
         <!-- Quick selection chips -->
         <div class="mt-5 flex flex-wrap gap-2">
-          <button type="button" onclick="selectPresetFocus('Dreammecca — Umrahme (16 Pax)')" class="preset-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Dreammecca (Umrahme)
+          <button type="button" onclick="setMoneyIn('Belum ada uang masuk hari ini')" class="money-in-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Belum ada uang masuk
           </button>
-          <button type="button" onclick="selectPresetFocus('PGS Tour — Web 7 Halaman & Generator')" class="preset-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            PGS Tour (Web & Generator)
+          <button type="button" onclick="setMoneyIn('Dreammecca lunas Rp 560.000')" class="money-in-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Dreammecca (Rp 560k)
           </button>
-          <button type="button" onclick="selectPresetFocus('Teh Umi — E-Reader Web App')" class="preset-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Teh Umi (E-Reader)
+          <button type="button" onclick="setMoneyIn('PGS Tour lunas Rp 1.000.000')" class="money-in-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            PGS Tour (Rp 1jt)
           </button>
-          <button type="button" onclick="selectPresetFocus('Yayasan Azhariyah — Platform Game Arab')" class="preset-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Azhariyah (Game Arab)
+          <button type="button" onclick="setMoneyIn('Teh Umi sisa pelunasan Rp 200.000')" class="money-in-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Teh Umi (Rp 200k)
           </button>
-          <button type="button" onclick="selectPresetFocus('Hamasah International — Portal Siswa')" class="preset-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Hamasah International
-          </button>
-          <button type="button" onclick="selectPresetFocus('KPI PPMI Mesir — Website & CMS')" class="preset-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            KPI PPMI Mesir
+          <button type="button" onclick="setMoneyIn('Umi Atiyah transfer Rp 100.000')" class="money-in-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Umi Atiyah (Rp 100k)
           </button>
         </div>
 
         <div class="mt-4">
           <input 
             type="text" 
-            id="ansFocus" 
-            placeholder="Tulis fokus kerjaan hari ini..." 
+            id="ansMoneyIn" 
+            placeholder="Ketik rincian uang masuk (atau pilih chip di atas)..." 
             class="w-full text-base border-b-2 border-slate-200 focus:border-slate-900 py-3 text-slate-900 placeholder:text-slate-400 transition bg-transparent"
             onkeydown="if(event.key === 'Enter'){ event.preventDefault(); nextStep(2); }"
             autofocus
@@ -112,7 +109,7 @@
         </div>
 
         <div class="mt-8 flex items-center justify-between">
-          <span class="text-xs text-slate-400">Tekan <kbd class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-mono text-[11px]">Enter ↵</kbd> untuk lanjut</span>
+          <span class="text-xs text-slate-400">Tekan <kbd class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-mono text-[11px]">Enter ↵</kbd></span>
           <button 
             type="button" 
             onclick="nextStep(2)" 
@@ -126,23 +123,45 @@
         </div>
       </div>
 
-      <!-- STEP 2: Langkah Nyata / Harus Ngapain -->
+      <!-- STEP 2: Tagihan yang Wajib Ditagih Hari Ini -->
       <div id="step-2" class="step-card hidden fade-enter">
         <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950 leading-snug">
-          Langkah spesifik apa yang harus lu lakuin hari ini?
+          Tagihan mana yang wajib lu tagih / follow up hari ini?
         </h1>
         <p class="text-sm text-slate-500 mt-2">
-          Biar gak bingung, tulis tindakan konkritnya (misal: kirim link invoice, beresin fitur X, tes responsive).
+          Pilih klien yang perlu lu tagih hari ini biar uangnya cepet cair.
         </p>
 
-        <div class="mt-5">
-          <textarea 
-            id="ansAction" 
-            rows="3" 
-            placeholder="Contoh: Kirim invoice ke Dreammecca, follow up pelunasan PGS Tour, dan cek proteksi e-reader Teh Umi..." 
-            class="w-full text-base border-b-2 border-slate-200 focus:border-slate-900 py-3 text-slate-900 placeholder:text-slate-400 transition bg-transparent resize-none"
-            onkeydown="if(event.key === 'Enter' && !event.shiftKey){ event.preventDefault(); nextStep(3); }"
-          ></textarea>
+        <!-- Quick invoice chips -->
+        <div class="mt-5 flex flex-wrap gap-2">
+          <button type="button" onclick="toggleBillingChip(this, 'Dreammecca (Rp 560rb)')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Dreammecca (Rp 560k)
+          </button>
+          <button type="button" onclick="toggleBillingChip(this, 'PGS Tour (Rp 1.000.000)')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            PGS Tour (Rp 1jt)
+          </button>
+          <button type="button" onclick="toggleBillingChip(this, 'Teh Umi sisa (Rp 200rb)')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Teh Umi (Sisa Rp 200k)
+          </button>
+          <button type="button" onclick="toggleBillingChip(this, 'Piutang Vendra (Rp 250rb)')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Piutang Vendra (Rp 250k)
+          </button>
+          <button type="button" onclick="toggleBillingChip(this, 'Termin Azhariyah (Rp 2jt)')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Termin Azhariyah (Rp 2jt)
+          </button>
+          <button type="button" onclick="selectNoBilling(this)" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-500 transition">
+            Gak ada yang ditagih hari ini
+          </button>
+        </div>
+
+        <div class="mt-4">
+          <input 
+            type="text" 
+            id="ansBilling" 
+            placeholder="Daftar tagihan yang mau di-follow up hari ini..." 
+            class="w-full text-base border-b-2 border-slate-200 focus:border-slate-900 py-3 text-slate-900 placeholder:text-slate-400 transition bg-transparent"
+            onkeydown="if(event.key === 'Enter'){ event.preventDefault(); nextStep(3); }"
+          >
         </div>
 
         <div class="mt-8 flex items-center justify-between">
@@ -166,39 +185,36 @@
         </div>
       </div>
 
-      <!-- STEP 3: Tagihan / Follow Up Pembayaran -->
+      <!-- STEP 3: Pengeluaran & Bayar Hutang -->
       <div id="step-3" class="step-card hidden fade-enter">
         <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950 leading-snug">
-          Ada tagihan atau invoice yang mau lu follow up hari ini?
+          Hari ini ada pengeluaran atau bayar hutang apa bro?
         </h1>
         <p class="text-sm text-slate-500 mt-2">
-          Klien mana yang perlu lu ingetin pembayarannya hari ini?
+          Catat pengeluaran operasional, jajan/ngopi, atau cicil bayar hutang (misal: Azzam Rp 145rb).
         </p>
 
-        <!-- Quick invoice chips -->
+        <!-- Quick expense chips -->
         <div class="mt-5 flex flex-wrap gap-2">
-          <button type="button" onclick="toggleBillingChip(this, 'Dreammecca Rp 560rb')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Dreammecca (Rp 560k)
+          <button type="button" onclick="setExpense('Aman, gak ada pengeluaran berarti')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Aman, gak ada pengeluaran
           </button>
-          <button type="button" onclick="toggleBillingChip(this, 'PGS Tour Rp 1.000.000')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            PGS Tour (Rp 1jt)
+          <button type="button" onclick="setExpense('Makan & ngopi harian Rp 50.000')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Makan & ngopi (Rp 50k)
           </button>
-          <button type="button" onclick="toggleBillingChip(this, 'Teh Umi sisa Rp 200rb')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Teh Umi (Sisa Rp 200k)
+          <button type="button" onclick="setExpense('Bayar hutang Azzam Rp 145.000')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Bayar hutang Azzam (Rp 145k)
           </button>
-          <button type="button" onclick="toggleBillingChip(this, 'Vendra Service HP Rp 250rb')" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            Piutang Vendra (Rp 250k)
-          </button>
-          <button type="button" onclick="selectNoBilling(this)" class="bill-chip text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-500 transition">
-            Gak ada tagihan hari ini
+          <button type="button" onclick="setExpense('Biaya server / kuota internet')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            Server & Kuota
           </button>
         </div>
 
         <div class="mt-4">
           <input 
             type="text" 
-            id="ansBilling" 
-            placeholder="Catatan tagihan / follow up hari ini..." 
+            id="ansExpense" 
+            placeholder="Tulis pengeluaran / bayar hutang hari ini..." 
             class="w-full text-base border-b-2 border-slate-200 focus:border-slate-900 py-3 text-slate-900 placeholder:text-slate-400 transition bg-transparent"
             onkeydown="if(event.key === 'Enter'){ event.preventDefault(); nextStep(4); }"
           >
@@ -225,32 +241,35 @@
         </div>
       </div>
 
-      <!-- STEP 4: Kendala / Halangan -->
+      <!-- STEP 4: Target Uang Masuk / Cashflow Goal -->
       <div id="step-4" class="step-card hidden fade-enter">
         <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950 leading-snug">
-          Ada kendala atau halangan yang bikin lu stuck gak?
+          Berapa target uang masuk yang lu kejar dalam waktu dekat?
         </h1>
         <p class="text-sm text-slate-500 mt-2">
-          Kalau lancar jaya, klik "Aman lancar" atau langsung simpan.
+          Fokus target nominal biar lu semangat beresin deliverable & follow up klien.
         </p>
 
-        <!-- Quick roadblock chips -->
+        <!-- Quick target chips -->
         <div class="mt-5 flex flex-wrap gap-2">
-          <button type="button" onclick="setRoadblock('Aman lancar, gak ada kendala.')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            ✨ Aman lancar, gak ada kendala
+          <button type="button" onclick="setTargetGoal('Target Rp 1.560.000 (Pelunasan Dreammecca + PGS Tour)')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            🎯 Rp 1.560.000 (PGS + Dreammecca)
           </button>
-          <button type="button" onclick="setRoadblock('Nunggu materi / konfirmasi dari klien.')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
-            ⏳ Nunggu respon klien
+          <button type="button" onclick="setTargetGoal('Target Rp 2.000.000 (Termin 2 Yayasan Azhariyah)')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            🎯 Rp 2.000.000 (Azhariyah)
+          </button>
+          <button type="button" onclick="setTargetGoal('Target Rp 7.500.000 (DP Hamasah International)')" class="text-xs font-medium px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-slate-400 text-slate-700 transition">
+            🎯 Rp 7.500.000 (Hamasah)
           </button>
         </div>
 
         <div class="mt-4">
           <input 
             type="text" 
-            id="ansBlocker" 
-            placeholder="Tulis kendala (atau kosongkan jika aman)..." 
+            id="ansTarget" 
+            placeholder="Tulis target uang masuk yang lagi dikejar..." 
             class="w-full text-base border-b-2 border-slate-200 focus:border-slate-900 py-3 text-slate-900 placeholder:text-slate-400 transition bg-transparent"
-            onkeydown="if(event.key === 'Enter'){ event.preventDefault(); finishUpdate(); }"
+            onkeydown="if(event.key === 'Enter'){ event.preventDefault(); finishMoneyUpdate(); }"
           >
         </div>
 
@@ -264,10 +283,10 @@
           </button>
           <button 
             type="button" 
-            onclick="finishUpdate()" 
+            onclick="finishMoneyUpdate()" 
             class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition shadow-sm"
           >
-            Simpan Update Hari Ini
+            Simpan Update Keuangan
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
             </svg>
@@ -277,35 +296,35 @@
 
     </div>
 
-    <!-- RESULT / SUMMARY SCREEN -->
+    <!-- RESULT / MONEY SUMMARY SCREEN -->
     <div id="summaryContainer" class="w-full hidden fade-enter">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium mb-4">
         <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
         </svg>
-        Update Tersimpan
+        Update Kas & Keuangan Tersimpan
       </div>
 
       <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
-        Sip bro, ini fokus kerjaan lu hari ini:
+        Status Keuangan & Tagihan Hari Ini
       </h1>
 
       <div class="mt-6 space-y-4 border-l-2 border-slate-900 pl-4 py-1">
         <div>
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Fokus Utama</div>
-          <div id="resFocus" class="text-base font-semibold text-slate-900 mt-0.5">-</div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">💰 Uang Masuk Hari Ini</div>
+          <div id="resMoneyIn" class="text-base font-semibold text-slate-900 mt-0.5">-</div>
         </div>
         <div>
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Harus Ngapain</div>
-          <div id="resAction" class="text-sm text-slate-700 mt-0.5 leading-relaxed">-</div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">🎯 Wajib Ditagih / Follow Up</div>
+          <div id="resBilling" class="text-sm text-slate-700 mt-0.5 leading-relaxed">-</div>
         </div>
         <div>
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Follow Up Tagihan</div>
-          <div id="resBilling" class="text-sm text-slate-700 mt-0.5">-</div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">💸 Pengeluaran / Bayar Hutang</div>
+          <div id="resExpense" class="text-sm text-slate-700 mt-0.5">-</div>
         </div>
         <div>
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Kendala / Catatan</div>
-          <div id="resBlocker" class="text-sm text-slate-700 mt-0.5">-</div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">🚀 Target Uang Masuk</div>
+          <div id="resTarget" class="text-sm text-slate-700 mt-0.5">-</div>
         </div>
       </div>
 
@@ -313,14 +332,14 @@
       <div class="mt-8 flex flex-wrap items-center gap-3">
         <button 
           type="button" 
-          onclick="copyUpdateToClipboard()" 
+          onclick="copyMoneyUpdateToClipboard()" 
           id="copyBtn"
           class="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium rounded-lg transition"
         >
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
           </svg>
-          <span id="copyBtnText">Salin Teks Update</span>
+          <span id="copyBtnText">Salin Rekap Kas</span>
         </button>
 
         <button 
@@ -344,11 +363,11 @@
 
   <!-- Minimal Footer -->
   <footer class="w-full max-w-xl mx-auto px-6 pb-8 text-center text-xs text-slate-300">
-    Fokus harian sederhana tanpa distraksi • Data tersimpan otomatis di browser
+    Fokus keuangan harian Daru • Data tersimpan otomatis di browser
   </footer>
 
   <script>
-    const STORAGE_KEY = 'dar_daily_update_v2';
+    const STORAGE_KEY = 'dar_daily_money_update_v1';
 
     // Format current date in Indonesian
     function initHeaderDate() {
@@ -360,26 +379,17 @@
 
     // Step navigation
     function nextStep(step) {
-      if (step === 2) {
-        const val = document.getElementById('ansFocus').value.trim();
-        if (!val) {
-          alert('Isi dulu kerjaan fokus lu hari ini bro.');
-          document.getElementById('ansFocus').focus();
-          return;
-        }
-      }
-
       document.querySelectorAll('.step-card').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById(`step-${step}`);
       if (target) {
         target.classList.remove('hidden');
-        document.getElementById('stepCounter').textContent = `Pertanyaan ${step} dari 4`;
+        document.getElementById('stepCounter').textContent = `Pertanyaan ${step} dari 4 • Keuangan`;
         document.getElementById('progressBar').style.width = `${(step / 4) * 100}%`;
 
         // Auto focus appropriate input
-        if (step === 2) document.getElementById('ansAction').focus();
-        if (step === 3) document.getElementById('ansBilling').focus();
-        if (step === 4) document.getElementById('ansBlocker').focus();
+        if (step === 2) document.getElementById('ansBilling').focus();
+        if (step === 3) document.getElementById('ansExpense').focus();
+        if (step === 4) document.getElementById('ansTarget').focus();
       }
     }
 
@@ -388,16 +398,15 @@
       const target = document.getElementById(`step-${step}`);
       if (target) {
         target.classList.remove('hidden');
-        document.getElementById('stepCounter').textContent = `Pertanyaan ${step} dari 4`;
+        document.getElementById('stepCounter').textContent = `Pertanyaan ${step} dari 4 • Keuangan`;
         document.getElementById('progressBar').style.width = `${(step / 4) * 100}%`;
       }
     }
 
-    // Presets
-    function selectPresetFocus(title) {
-      const input = document.getElementById('ansFocus');
-      input.value = title;
-      input.focus();
+    // Presets handlers
+    function setMoneyIn(text) {
+      document.getElementById('ansMoneyIn').value = text;
+      document.getElementById('ansMoneyIn').focus();
     }
 
     function toggleBillingChip(btn, text) {
@@ -416,7 +425,7 @@
     }
 
     function selectNoBilling(btn) {
-      document.getElementById('ansBilling').value = 'Gak ada tagihan hari ini (fokus pengerjaan)';
+      document.getElementById('ansBilling').value = 'Gak ada tagihan hari ini';
       document.querySelectorAll('.bill-chip').forEach(c => {
         c.classList.remove('bg-slate-900', 'text-white', 'border-slate-900');
         c.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
@@ -425,25 +434,30 @@
       btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
     }
 
-    function setRoadblock(text) {
-      document.getElementById('ansBlocker').value = text;
-      document.getElementById('ansBlocker').focus();
+    function setExpense(text) {
+      document.getElementById('ansExpense').value = text;
+      document.getElementById('ansExpense').focus();
+    }
+
+    function setTargetGoal(text) {
+      document.getElementById('ansTarget').value = text;
+      document.getElementById('ansTarget').focus();
     }
 
     // Save and Finish
-    function finishUpdate() {
-      const focus = document.getElementById('ansFocus').value.trim() || 'Fokus umum';
-      const action = document.getElementById('ansAction').value.trim() || 'Selesaikan deliverable utama.';
-      const billing = document.getElementById('ansBilling').value.trim() || 'Tidak ada tagihan khusus hari ini.';
-      const blocker = document.getElementById('ansBlocker').value.trim() || 'Aman lancar, tidak ada kendala.';
+    function finishMoneyUpdate() {
+      const moneyIn = document.getElementById('ansMoneyIn').value.trim() || 'Belum ada uang masuk hari ini';
+      const billing = document.getElementById('ansBilling').value.trim() || 'Tidak ada tagihan yang ditagih hari ini';
+      const expense = document.getElementById('ansExpense').value.trim() || 'Aman, tidak ada pengeluaran besar';
+      const target = document.getElementById('ansTarget').value.trim() || 'Target Rp 1.560.000 (Pelunasan Dreammecca + PGS Tour)';
 
       const data = {
         date: new Date().toISOString().split('T')[0],
         formattedDate: document.getElementById('headerDate').textContent,
-        focus,
-        action,
+        moneyIn,
         billing,
-        blocker,
+        expense,
+        target,
         updatedAt: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
       };
 
@@ -455,10 +469,10 @@
       document.getElementById('questionContainer').classList.add('hidden');
       document.getElementById('summaryContainer').classList.remove('hidden');
 
-      document.getElementById('resFocus').textContent = data.focus;
-      document.getElementById('resAction').textContent = data.action;
+      document.getElementById('resMoneyIn').textContent = data.moneyIn;
       document.getElementById('resBilling').textContent = data.billing;
-      document.getElementById('resBlocker').textContent = data.blocker;
+      document.getElementById('resExpense').textContent = data.expense;
+      document.getElementById('resTarget').textContent = data.target;
     }
 
     function editAgain() {
@@ -467,27 +481,27 @@
       prevStep(1);
     }
 
-    function copyUpdateToClipboard() {
+    function copyMoneyUpdateToClipboard() {
       const date = document.getElementById('headerDate').textContent;
-      const focus = document.getElementById('resFocus').textContent;
-      const action = document.getElementById('resAction').textContent;
+      const moneyIn = document.getElementById('resMoneyIn').textContent;
       const billing = document.getElementById('resBilling').textContent;
-      const blocker = document.getElementById('resBlocker').textContent;
+      const expense = document.getElementById('resExpense').textContent;
+      const target = document.getElementById('resTarget').textContent;
 
-      const text = `📌 *UPDATE KERJAAN DARU — ${date}*\n\n` +
-                   `🎯 *Fokus Hari Ini:*\n${focus}\n\n` +
-                   `⚡ *Harus Ngapain:*\n${action}\n\n` +
-                   `💰 *Follow Up Tagihan:*\n${billing}\n\n` +
-                   `🛡️ *Kendala / Catatan:*\n${blocker}`;
+      const text = `💰 *UPDATE KEUANGAN & KAS DARU — ${date}*\n\n` +
+                   `💵 *Uang Masuk Hari Ini:*\n${moneyIn}\n\n` +
+                   `🎯 *Wajib Ditagih / Follow Up:*\n${billing}\n\n` +
+                   `💸 *Pengeluaran / Bayar Hutang:*\n${expense}\n\n` +
+                   `🚀 *Target Uang Masuk:*\n${target}`;
 
       navigator.clipboard.writeText(text).then(() => {
         const btnText = document.getElementById('copyBtnText');
         btnText.textContent = 'Tersalin!';
         setTimeout(() => {
-          btnText.textContent = 'Salin Teks Update';
+          btnText.textContent = 'Salin Rekap Kas';
         }, 2000);
       }).catch(() => {
-        alert('Gagal menyalin teks secara otomatis.');
+        alert('Gagal menyalin teks.');
       });
     }
 
@@ -500,11 +514,10 @@
           const data = JSON.parse(saved);
           const today = new Date().toISOString().split('T')[0];
           if (data.date === today) {
-            // Fill inputs in case he wants to edit
-            document.getElementById('ansFocus').value = data.focus || '';
-            document.getElementById('ansAction').value = data.action || '';
+            document.getElementById('ansMoneyIn').value = data.moneyIn || '';
             document.getElementById('ansBilling').value = data.billing || '';
-            document.getElementById('ansBlocker').value = data.blocker || '';
+            document.getElementById('ansExpense').value = data.expense || '';
+            document.getElementById('ansTarget').value = data.target || '';
             displaySummary(data);
             return;
           }
