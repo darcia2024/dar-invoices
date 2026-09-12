@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fokus Hari Ini — Daru Tasks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #ffffff;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+    .task-row {
+      transition: all 0.15s ease;
+    }
+    .task-row:hover {
+      background-color: #fbfcfd;
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen text-slate-900 selection:bg-slate-100">
+
+  <!-- Main Container -->
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    
+    <!-- Top Navigation -->
+    <div class="flex items-center justify-between pb-6 mb-6 border-b border-slate-100">
+      <a href="/" class="inline-flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Dashboard Utama
+      </a>
+      <span id="currentDateBadge" class="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+        Memuat tanggal...
+      </span>
+    </div>
+
+    <!-- Header Section -->
+    <div class="mb-8">
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950">
+        Fokus Hari Ini
+      </h1>
+      <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">
+        Daftar kerjaan aktif yang belum selesai dan langkah spesifik yang harus kamu selesaikan hari ini.
+      </p>
+
+      <!-- Progress Summary -->
+      <div class="mt-5 p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-800 font-semibold text-sm shadow-sm" id="progressNumber">
+            0/0
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-slate-900" id="progressStatusText">Mempersiapkan tugas...</div>
+            <div class="text-xs text-slate-500" id="progressSubText">Klik lingkaran untuk menandai tugas selesai</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="resetToDefaultTasks()" class="text-xs text-slate-500 hover:text-slate-800 underline decoration-slate-300 underline-offset-4 transition-colors">
+            Reset Data Default
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Add Input -->
+    <div class="mb-6">
+      <form id="addTaskForm" onsubmit="handleAddTask(event)" class="relative">
+        <input 
+          type="text" 
+          id="newTaskInput" 
+          placeholder="+ Tambah tugas atau catatan baru hari ini (lalu tekan Enter)..." 
+          class="w-full text-sm bg-white border border-slate-200 rounded-xl px-4 py-3 pr-24 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-slate-900 placeholder:text-slate-400 transition"
+        >
+        <button 
+          type="submit" 
+          class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-medium bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition"
+        >
+          Tambah
+        </button>
+      </form>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex items-center gap-2 pb-4 mb-2 overflow-x-auto text-xs">
+      <button onclick="setFilter('all')" id="filter-all" class="px-3 py-1.5 rounded-lg font-medium transition bg-slate-900 text-white">
+        Semua (<span id="count-all">0</span>)
+      </button>
+      <button onclick="setFilter('pending')" id="filter-pending" class="px-3 py-1.5 rounded-lg font-medium transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+        Belum Selesai (<span id="count-pending">0</span>)
+      </button>
+      <button onclick="setFilter('completed')" id="filter-completed" class="px-3 py-1.5 rounded-lg font-medium transition bg-slate-100 text-slate-600 hover:bg-slate-200">
+        Selesai (<span id="count-completed">0</span>)
+      </button>
+    </div>
+
+    <!-- Task List -->
+    <div id="taskList" class="divide-y divide-slate-100 border-t border-b border-slate-100">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden py-12 text-center">
+      <div class="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mx-auto text-slate-400 mb-3">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <p class="text-sm font-medium text-slate-800">Semua tugas di filter ini sudah selesai!</p>
+      <p class="text-xs text-slate-400 mt-1">Santai dulu atau tambah tugas baru di atas.</p>
+    </div>
+
+    <!-- Quick Financial Action Note -->
+    <div class="mt-10 pt-6 border-t border-slate-100">
+      <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+        Ringkasan Tagihan yang Menunggu Ditagih / Cair
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="p-3.5 rounded-xl border border-slate-100 bg-slate-50/70">
+          <div class="text-xs text-slate-500">Tagihan Siap Ditarik (Segera)</div>
+          <div class="text-base font-bold text-slate-900 mt-0.5">Rp 1.760.000</div>
+          <div class="text-[11px] text-slate-500 mt-1 leading-snug">
+            • Dreammecca 16 pax (Rp 560rb)<br>
+            • PGS Tour Web & Generator (Rp 1jt)<br>
+            • Teh Umi E-Reader sisa (Rp 200rb)
+          </div>
+        </div>
+        <div class="p-3.5 rounded-xl border border-slate-100 bg-slate-50/70">
+          <div class="text-xs text-slate-500">Termin Proyek Berjalan</div>
+          <div class="text-base font-bold text-slate-900 mt-0.5">Rp 16.500.000</div>
+          <div class="text-[11px] text-slate-500 mt-1 leading-snug">
+            • Azhariyah Termin 2 Sep (Rp 2jt)<br>
+            • Hamasah DP 50% (Rp 7,5jt)<br>
+            • KPI PPMI DP 50% (Rp 7jt)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-12 text-center text-xs text-slate-400">
+      Dibuat simpel untuk menjaga fokus harian Daru • Data tersimpan otomatis di browser
+    </div>
+
+  </div>
+
+  <script>
+    // Default Tasks aligned with active invoices and deliverables
+    const DEFAULT_TASKS = [
+      {
+        id: 'task-dreammecca',
+        title: 'Dreammecca — Pelunasan Umrahme 16 Pax (23 Sep 2026)',
+        category: 'Tagihan & Layanan',
+        priority: 'Tinggi',
+        amount: 'Rp 560.000',
+        whatToDo: 'Kirim link invoice ke Dreammecca, konfirmasi pembayaran Rp 560.000, lalu siapkan materi pendamping digital sebelum keberangkatan 23 Sep 2026.',
+        actionLabel: 'Buka Invoice Dreammecca',
+        actionUrl: '/umrahme-dreammecca',
+        completed: false,
+        isDefault: true
+      },
+      {
+        id: 'task-pgstour',
+        title: 'PGS Tour & Travel — Follow Up Pelunasan & Serah Terima Generator',
+        category: 'Tagihan & Delivery',
+        priority: 'Tinggi',
+        amount: 'Rp 1.000.000',
+        whatToDo: 'Follow up pelunasan Rp 1.000.000 untuk paket Website 7 Halaman & Generator. Setelah lunas, serahkan link operasional generator kwitansi & invoice.',
+        actionLabel: 'Buka Invoice PGS',
+        actionUrl: '/pgstour',
+        secondaryActionLabel: 'Buka Generator',
+        secondaryActionUrl: '/pgstour/generator',
+        completed: false,
+        isDefault: true
+      },
+      {
+        id: 'task-tehumi',
+        title: 'Teh Umi — Finalisasi E-Reader & Tagih Sisa Rp 200rb',
+        category: 'Coding & Delivery',
+        priority: 'Sedang',
+        amount: 'Sisa Rp 200.000',
+        whatToDo: 'Pastikan fitur proteksi copy text e-reader sudah rapi, kirim tautan uji coba ke Teh Umi, dan follow up sisa pelunasan (DP Rp 100rb sudah masuk).',
+        actionLabel: 'Buka Info & Invoice',
+        actionUrl: '/tehumi',
+        completed: false,
+        isDefault: true
+      },
+      {
+        id: 'task-azhariyah',
+        title: 'Yayasan Azhariyah — Progres Platform Game Arab (Termin 2)',
+        category: 'Development',
+        priority: 'Sedang',
+        amount: 'Termin Sep Rp 2.000.000',
+        whatToDo: 'Periksa modul latihan kuis kata bahasa Arab anak-anak, siapkan ringkasan progres untuk Umi Elly menjelang pencairan termin kedua bulan September.',
+        actionLabel: 'Buka Invoice Azhariyah',
+        actionUrl: '/azhariyah',
+        completed: false,
+        isDefault: true
+      },
+      {
+        id: 'task-hamasah',
+        title: 'Hamasah International — Wireframe & Skema Database Portal',
+        category: 'Client Setup',
+        priority: 'Normal',
+        amount: 'DP 50% Rp 7.500.000',
+        whatToDo: 'Matangkan struktur pendaftaran online dan skema data siswa untuk dipresentasikan ke Ustadz Ifdony.',
+        actionLabel: 'Buka Invoice Hamasah',
+        actionUrl: '/hamasahinternational',
+        completed: false,
+        isDefault: true
+      },
+      {
+        id: 'task-kpi',
+        title: 'KPI PPMI Mesir — Finalisasi Desain UI & Alur Berita',
+        category: 'Client Setup',
+        priority: 'Normal',
+        amount: 'DP 50% Rp 7.000.000',
+        whatToDo: 'Review revisi layout portal penyiaran berita dan siapkan alur integrasi form CMS pengurus.',
+        actionLabel: 'Buka Invoice KPI',
+        actionUrl: '/kpi',
+        completed: false,
+        isDefault: true
+      },
+      {
+        id: 'task-piutang',
+        title: 'Follow Up Piutang Personal (Vendra Service HP Rp 250rb)',
+        category: 'Finansial Personal',
+        priority: 'Santai',
+        amount: 'Rp 250.000',
+        whatToDo: 'Kirim chat follow up santai ke Vendra terkait sisa biaya servis HP.',
+        completed: false,
+        isDefault: true
+      }
+    ];
+
+    const STORAGE_KEY = 'dar_today_tasks_v1';
+    let currentFilter = 'all';
+    let tasks = [];
+
+    // Initialize Date Display
+    function initDate() {
+      const now = new Date();
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      const formatted = now.toLocaleDateString('id-ID', options);
+      document.getElementById('currentDateBadge').textContent = formatted;
+    }
+
+    // Load Tasks
+    function loadTasks() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          tasks = JSON.parse(saved);
+        } catch (e) {
+          tasks = [...DEFAULT_TASKS];
+        }
+      } else {
+        tasks = [...DEFAULT_TASKS];
+        saveTasks();
+      }
+      render();
+    }
+
+    // Save Tasks
+    function saveTasks() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    // Toggle Task
+    function toggleTask(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        saveTasks();
+        render();
+      }
+    }
+
+    // Add New Custom Task
+    function handleAddTask(event) {
+      event.preventDefault();
+      const input = document.getElementById('newTaskInput');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const newTask = {
+        id: 'task-custom-' + Date.now(),
+        title: val,
+        category: 'Catatan Hari Ini',
+        priority: 'Normal',
+        whatToDo: 'Selesaikan tugas ini hari ini.',
+        completed: false,
+        isDefault: false
+      };
+
+      tasks.unshift(newTask);
+      saveTasks();
+      input.value = '';
+      render();
+    }
+
+    // Delete Task
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks();
+      render();
+    }
+
+    // Reset to Default Tasks
+    function resetToDefaultTasks() {
+      if (confirm('Reset daftar tugas ke fokus proyek & invoice aktif?')) {
+        tasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
+        saveTasks();
+        render();
+      }
+    }
+
+    // Filter Switcher
+    function setFilter(filter) {
+      currentFilter = filter;
+      
+      const buttons = ['all', 'pending', 'completed'];
+      buttons.forEach(btn => {
+        const el = document.getElementById(`filter-${btn}`);
+        if (btn === filter) {
+          el.className = 'px-3 py-1.5 rounded-lg font-medium transition bg-slate-900 text-white';
+        } else {
+          el.className = 'px-3 py-1.5 rounded-lg font-medium transition bg-slate-100 text-slate-600 hover:bg-slate-200';
+        }
+      });
+
+      render();
+    }
+
+    // Render Function
+    function render() {
+      const container = document.getElementById('taskList');
+      const emptyState = document.getElementById('emptyState');
+      
+      const total = tasks.length;
+      const completed = tasks.filter(t => t.completed).length;
+      const pending = total - completed;
+
+      // Update badge counts
+      document.getElementById('count-all').textContent = total;
+      document.getElementById('count-pending').textContent = pending;
+      document.getElementById('count-completed').textContent = completed;
+
+      // Update Progress Summary
+      document.getElementById('progressNumber').textContent = `${completed}/${total}`;
+      const progressText = document.getElementById('progressStatusText');
+      if (total === 0) {
+        progressText.textContent = 'Belum ada tugas hari ini';
+      } else if (completed === total) {
+        progressText.textContent = 'Mantap! Semua tugas hari ini selesai 🎉';
+      } else if (completed === 0) {
+        progressText.textContent = `${pending} tugas perlu kamu selesaikan`;
+      } else {
+        progressText.textContent = `${completed} selesai, sisa ${pending} tugas lagi`;
+      }
+
+      // Filter tasks
+      let filtered = tasks;
+      if (currentFilter === 'pending') {
+        filtered = tasks.filter(t => !t.completed);
+      } else if (currentFilter === 'completed') {
+        filtered = tasks.filter(t => t.completed);
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map(task => {
+        const isDone = task.completed;
+        const priorityColor = task.priority === 'Tinggi' 
+          ? 'bg-rose-50 text-rose-700 border-rose-100' 
+          : (task.priority === 'Sedang' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-slate-50 text-slate-600 border-slate-100');
+
+        return `
+          <div class="task-row py-4 px-2 sm:px-3 rounded-xl flex items-start gap-3.5 group">
+            <!-- Custom Clean Checkbox -->
+            <button 
+              type="button" 
+              onclick="toggleTask('${task.id}')" 
+              class="mt-1 flex-shrink-0 w-5 h-5 rounded-full border transition-all flex items-center justify-center ${
+                isDone 
+                  ? 'bg-slate-900 border-slate-900 text-white' 
+                  : 'bg-white border-slate-300 hover:border-slate-500'
+              }"
+              title="${isDone ? 'Tandai belum selesai' : 'Tandai selesai'}"
+            >
+              ${isDone ? `
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+              ` : ''}
+            </button>
+
+            <!-- Task Content -->
+            <div class="flex-grow min-w-0">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <span class="text-[11px] font-medium px-2 py-0.5 rounded border ${priorityColor}">
+                  ${task.priority || 'Normal'}
+                </span>
+                <span class="text-[11px] font-medium text-slate-400">
+                  ${task.category}
+                </span>
+                ${task.amount ? `
+                  <span class="text-[11px] font-semibold text-slate-700 ml-auto sm:ml-0 bg-slate-100 px-2 py-0.5 rounded">
+                    ${task.amount}
+                  </span>
+                ` : ''}
+              </div>
+
+              <!-- Title -->
+              <h2 
+                onclick="toggleTask('${task.id}')"
+                class="text-sm font-semibold cursor-pointer select-none transition ${
+                  isDone ? 'text-slate-400 line-through' : 'text-slate-900'
+                }"
+              >
+                ${escapeHtml(task.title)}
+              </h2>
+
+              <!-- Harus Ngapain (Action Step) -->
+              <div class="mt-2 text-xs leading-relaxed ${isDone ? 'text-slate-400' : 'text-slate-600'}">
+                <span class="font-semibold text-slate-800 ${isDone ? 'line-through text-slate-400' : ''}">Harus ngapain:</span>
+                ${escapeHtml(task.whatToDo || 'Selesaikan item ini.')}
+              </div>
+
+              <!-- Quick Action Links -->
+              ${(task.actionUrl || task.secondaryActionUrl) ? `
+                <div class="mt-3 flex flex-wrap items-center gap-2 pt-1">
+                  ${task.actionUrl ? `
+                    <a 
+                      href="${task.actionUrl}" 
+                      target="_blank" 
+                      class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition"
+                    >
+                      ${escapeHtml(task.actionLabel || 'Buka Link')}
+                      <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                      </svg>
+                    </a>
+                  ` : ''}
+                  ${task.secondaryActionUrl ? `
+                    <a 
+                      href="${task.secondaryActionUrl}" 
+                      target="_blank" 
+                      class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition"
+                    >
+                      ${escapeHtml(task.secondaryActionLabel || 'Link Tambahan')}
+                      <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                      </svg>
+                    </a>
+                  ` : ''}
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Delete / Remove Action -->
+            <button 
+              type="button" 
+              onclick="deleteTask('${task.id}')" 
+              class="opacity-40 hover:opacity-100 text-slate-400 hover:text-rose-500 p-1 transition"
+              title="Hapus tugas ini"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Init
+    initDate();
+    loadTasks();
+  </script>
+</body>
+</html>

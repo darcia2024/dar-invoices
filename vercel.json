@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/today", "destination": "/today/index.html" },
     { "source": "/almadroj", "destination": "/almadroj/index.html" },
     { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
     { "source": "/abdurrahman", "destination": "/abdurrahman/index.html" },

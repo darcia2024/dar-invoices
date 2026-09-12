@@ -1270,6 +1270,7 @@
         <a class="workspace-brand" href="/">DAR<span>Invoices</span></a>
         <p class="sidebar-caption">Workspace</p>
         <nav aria-label="Navigasi utama">
+            <a href="/today" class="sidebar-link" style="text-decoration:none; display:flex; align-items:center; gap:8px;"><span aria-hidden="true">🎯</span> Fokus Hari Ini</a>
             <button class="sidebar-link active" data-view="board" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true">▦</span> Invoice</button>
             <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true">▤</span> Laporan keuangan</button>
             <button class="sidebar-link" data-view="debt" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true">⚖</span> Hutang &amp; Piutang</button>
@@ -1290,6 +1291,7 @@
         </div>
 
         <div class="invoice-tools">
+            <a href="/today" class="month-pill-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">🎯 Fokus Hari Ini</a>
             <button class="create-invoice-btn" onclick="openInvoiceComposer()">+ Buat invoice</button>
             <button class="month-pill-btn" onclick="openInvoiceTrash()">Sampah <span id="trashCount">0</span></button>
             <span class="invoice-sync-state" role="status"></span>
