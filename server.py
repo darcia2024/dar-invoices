@@ -11,6 +11,11 @@ PORT = 3000
 
 REWRITES = {
     "/today": "/today/index.html",
+    "/mochi": "/mochi/index.html",
+    "/mochi-cafe": "/mochi/index.html",
+    "/kael-mochi": "/mochi/index.html",
+    "/mochicafe": "/mochi/index.html",
+    "/kael": "/mochi/index.html",
     "/almadroj": "/almadroj/index.html",
     "/": "/index.html",
     "/saudia": "/saudia/index.html",

@@ -2573,6 +2573,60 @@
                     <span>Buka Invoice Umrahme - Dreammecca</span>
                 </a>
             </div>
+
+            <!-- KAEL - Mochi Cafe n Resto Card -->
+            <div class="invoice-card" id="card-mochi" data-id="mochi" data-month="2026-09" data-amount="750000" data-client="mochi cafe n resto kael paket ultimate pos kasir tenant 750000 #inv/kael/2026/09/001 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Mochi Cafe n Resto (KAEL)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('mochi')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/KAEL/2026/09/001 &bull; Tenant F&amp;B</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        KAEL Paket Ultimate &bull; Sistem Kasir (POS), Menu Digital &amp; Manajemen Pemesanan Tenant Mochi Cafe n Resto. Manajemen Meja, Antrean Pesanan, Integrasi QRIS, Laporan Omset Real-time, Multi-Role Login &amp; Cloud Database Backup. Total Biaya: Rp 750.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/mochi</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/mochi')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptMochi()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">OMSET PAKET ULTIMATE:</span>
+                            <span class="fin-val">Rp 750.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValMochi">Rp 150.000</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValMochi">Rp 600.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('mochi')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/mochi" class="action-btn">
+                    <span>Buka Invoice KAEL - Mochi Cafe</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2788,7 +2842,8 @@
             tehumi: "DP",
             hamasahinternational: "UNPAID",
             pgstour: "UNPAID",
-            "umrahme-dreammecca": "UNPAID"
+            "umrahme-dreammecca": "UNPAID",
+            mochi: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2830,7 +2885,8 @@
             tehumi: 300000,
             hamasahinternational: 15000000,
             pgstour: 1000000,
-            "umrahme-dreammecca": 280000
+            "umrahme-dreammecca": 280000,
+            mochi: 600000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2884,7 +2940,8 @@
             { id: "tehumi", name: "Teh Umi (Media Baca Terproteksi)", month: "2026-09", monthLabel: "September 2026", gross: 300000 },
             { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 },
             { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 },
-            { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 }
+            { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 },
+            { id: "mochi", name: "Mochi Cafe n Resto (KAEL Paket Ultimate)", month: "2026-09", monthLabel: "September 2026", gross: 750000 }
         ];
 
         function formatIDR(num) {
@@ -4446,6 +4503,34 @@ Dokumen invoice resmi dan rincian manifest 16 jamaah dapat diakses dan diunduh l
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA UMRAHME - DREAMMECCA BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptMochi() {
+            const waScript = `Halo Mochi Cafe n Resto! 🙏✨
+
+Berikut kami sampaikan tautan invoice resmi KAEL Paket Ultimate untuk sistem pemesanan & kasir tenant Mochi Cafe n Resto:
+
+🔗 Invoice Online: https://temantiket.com/mochi
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Layanan & Modul:
+• Paket: KAEL Paket Ultimate (Tenant Mochi Cafe n Resto)
+• Modul: Point of Sale (POS), Menu Digital, Manajemen Meja & Antrean Pesanan
+• Fitur: Integrasi Pembayaran QRIS, Rekap Harian & Omset Real-time, Multi-Role Login
+• Total Tagihan: Rp 750.000
+(Terbilang: Tujuh Ratus Lima Puluh Ribu Rupiah)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice resmi dapat diakses dan diunduh langsung dalam format PDF maupun gambar PNG pada tautan di atas. Terima kasih banyak atas kepercayaannya bermitra dengan KAEL! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA MOCHI CAFE (KAEL) BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

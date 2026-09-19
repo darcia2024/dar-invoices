@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/today", "destination": "/today/index.html" },
+    { "source": "/mochi", "destination": "/mochi/index.html" },
+    { "source": "/mochi-cafe", "destination": "/mochi/index.html" },
+    { "source": "/kael-mochi", "destination": "/mochi/index.html" },
+    { "source": "/mochicafe", "destination": "/mochi/index.html" },
+    { "source": "/kael", "destination": "/mochi/index.html" },
     { "source": "/almadroj", "destination": "/almadroj/index.html" },
     { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
     { "source": "/abdurrahman", "destination": "/abdurrahman/index.html" },

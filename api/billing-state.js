@@ -60,6 +60,7 @@ const defaultState = {
     tehumi: "DP",
     pgstour: "UNPAID",
     "umrahme-dreammecca": "UNPAID",
+    mochi: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -81,6 +82,7 @@ const defaultState = {
     saudia: 39600000,
     pgstour: 1000000,
     "umrahme-dreammecca": 280000,
+    mochi: 600000,
   },
 };
 
