@@ -3,27 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INVOICE #INV/KAEL/2026/09/001 - Mochi Cafe n Resto (Paket Ultimate)</title>
+    <title>INVOICE #INV/KAEL/2026/09/001 — Mochi Cafe n Resto (Paket Ultimate)</title>
     
-    <!-- Google Fonts: Plus Jakarta Sans Regular, Medium, SemiBold, Bold -->
+    <!-- Apple SF Pro Fallback & Google Inter Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- html2canvas for High-Res PNG Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
+        /* ----------------------------------------------------
+           MATERIAL 3 TOKENS & APPLE SF PRO TYPOGRAPHY
+        ---------------------------------------------------- */
         :root {
-            --font-family: 'Plus Jakarta Sans', sans-serif;
-            --text-main: #0f172a;
-            --text-secondary: #334155;
-            --text-light: #64748b;
-            --text-muted: #94a3b8;
-            --line-color: #e2e8f0;
-            --line-subtle: #f1f5f9;
-            --brand-color: #0f172a;
-            --accent-emerald: #059669;
+            /* Apple Font Stack (SF Pro Display / SF Pro Text) */
+            --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Inter", -apple-system-headline, system-ui, sans-serif;
+            
+            /* Material 3 Tonal Color Palette */
+            --m3-primary: #0f172a;
+            --m3-primary-hover: #1e293b;
+            --m3-on-primary: #ffffff;
+            --m3-primary-container: #e2e8f0;
+            --m3-on-primary-container: #0f172a;
+            
+            --m3-surface: #ffffff;
+            --m3-surface-container-low: #f8fafc;
+            --m3-surface-container: #f1f5f9;
+            --m3-surface-container-high: #e2e8f0;
+            --m3-surface-variant: #f8fafc;
+            
+            --m3-outline: #cbd5e1;
+            --m3-outline-variant: #e2e8f0;
+            --m3-outline-subtle: #f1f5f9;
+            
+            --m3-on-surface: #0f172a;
+            --m3-on-surface-variant: #475569;
+            --m3-on-surface-muted: #64748b;
+            
+            --m3-emerald: #059669;
+            --m3-emerald-container: #ecfdf5;
+            --m3-on-emerald: #065f46;
+            
+            /* Material 3 Shapes */
+            --m3-shape-corner-xs: 4px;
+            --m3-shape-corner-sm: 8px;
+            --m3-shape-corner-md: 12px;
+            --m3-shape-corner-lg: 16px;
+            --m3-shape-corner-xl: 20px;
+            --m3-shape-corner-2xl: 24px;
+            --m3-shape-corner-full: 9999px;
+            
+            /* Elevation */
+            --m3-elevation-1: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+            --m3-elevation-2: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+            --m3-elevation-3: 0 12px 32px rgba(15, 23, 42, 0.12), 0 4px 8px rgba(15, 23, 42, 0.04);
         }
 
         * {
@@ -33,159 +68,183 @@
         }
 
         body {
-            font-family: var(--font-family);
+            font-family: var(--font-apple);
             font-weight: 400;
             background-color: #ffffff;
-            color: var(--text-main);
+            color: var(--m3-on-surface);
             line-height: 1.5;
-            padding: 30px 20px 50px;
+            padding: 24px 20px 50px;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
+            letter-spacing: -0.01em;
         }
 
         /* ----------------------------------------------------
-           SECURITY ACCESS SCREEN (CLEAN, BORDERLESS, MINIMAL)
+           M3 DIALOG: SECURITY ACCESS SCREEN (PIN: 0001 / 050900)
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
         }
 
         .cover-overlay.opened {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: translateY(-8px);
+            transform: scale(0.96);
         }
 
         .cover-card {
-            background: #ffffff;
-            border-radius: 14px;
-            max-width: 390px;
+            background: var(--m3-surface);
+            border-radius: 28px; /* M3 Extra Large dialog radius */
+            max-width: 400px;
             width: 100%;
-            padding: 36px 30px;
+            padding: 36px 32px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--m3-elevation-3);
+            border: 1px solid var(--m3-outline-variant);
+        }
+
+        .cover-m3-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--m3-shape-corner-full);
+            background: var(--m3-surface-container);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+            color: var(--m3-on-surface);
         }
 
         .cover-brand-eyebrow {
             font-size: 0.72rem;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--text-light);
-            margin-bottom: 8px;
+            color: var(--m3-on-surface-muted);
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
         .cover-title {
-            font-size: 1.35rem;
+            font-size: 1.45rem;
             font-weight: 700;
-            color: var(--brand-color);
-            letter-spacing: -0.01em;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.025em; /* Apple display tracking */
             margin-bottom: 4px;
         }
 
         .cover-subtitle {
-            font-size: 0.84rem;
-            color: var(--text-light);
+            font-size: 0.85rem;
+            color: var(--m3-on-surface-variant);
             margin-bottom: 22px;
         }
 
         .cover-recipient-meta {
-            padding: 12px 0;
-            border-top: 1px solid var(--line-color);
-            border-bottom: 1px solid var(--line-color);
+            padding: 14px 18px;
+            background: var(--m3-surface-container-low);
+            border-radius: var(--m3-shape-corner-lg);
+            border: 1px solid var(--m3-outline-variant);
             text-align: left;
-            margin-bottom: 22px;
+            margin-bottom: 24px;
         }
 
         .cover-recipient-meta small {
             display: block;
             font-size: 0.68rem;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-light);
+            letter-spacing: 0.06em;
+            color: var(--m3-on-surface-muted);
             font-weight: 600;
         }
 
         .cover-recipient-meta strong {
             display: block;
-            font-size: 0.96rem;
+            font-size: 1rem;
             font-weight: 600;
-            color: var(--text-main);
+            color: var(--m3-on-surface);
             margin-top: 2px;
+            letter-spacing: -0.015em;
         }
 
         .cover-recipient-meta span {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+            font-size: 0.82rem;
+            color: var(--m3-on-surface-variant);
         }
 
         .passcode-wrapper {
-            margin: 10px 0 18px 0;
+            margin: 12px 0 20px 0;
         }
 
         .passcode-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
+            font-size: 0.78rem;
+            color: var(--m3-on-surface-variant);
+            margin-bottom: 10px;
+            font-weight: 500;
         }
 
         .passcode-input {
-            width: 160px;
-            font-family: var(--font-family);
-            font-size: 1.4rem;
+            width: 170px;
+            font-family: var(--font-apple);
+            font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: 0.35em;
             text-align: center;
-            padding: 8px 12px;
-            border: 1.5px solid var(--line-color);
-            border-radius: 8px;
-            background: #ffffff;
-            color: var(--text-main);
+            padding: 10px 14px;
+            border: 1.5px solid var(--m3-outline);
+            border-radius: var(--m3-shape-corner-full);
+            background: var(--m3-surface-container-low);
+            color: var(--m3-on-surface);
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
 
         .passcode-input:focus {
-            border-color: var(--brand-color);
-            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+            border-color: var(--m3-primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08);
         }
 
         .passcode-error {
             color: #dc2626;
-            font-size: 0.74rem;
-            margin-top: 6px;
+            font-size: 0.76rem;
+            margin-top: 8px;
             display: none;
+            font-weight: 500;
         }
 
         .cover-open-btn {
             width: 100%;
-            font-family: var(--font-family);
-            font-size: 0.85rem;
+            font-family: var(--font-apple);
+            font-size: 0.88rem;
             font-weight: 600;
-            padding: 11px 16px;
-            background: var(--brand-color);
-            color: #ffffff;
+            padding: 13px 20px;
+            background: var(--m3-primary);
+            color: var(--m3-on-primary);
             border: none;
-            border-radius: 8px;
+            border-radius: var(--m3-shape-corner-full);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            letter-spacing: -0.01em;
+            box-shadow: var(--m3-elevation-1);
         }
 
         .cover-open-btn:hover {
-            background: #1e293b;
+            background: var(--m3-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--m3-elevation-2);
         }
 
         .shake-anim {
@@ -200,28 +259,43 @@
         }
 
         /* ----------------------------------------------------
-           TOP ACTION BAR (CLEAN, NO HEAVY BOXES)
+           M3 TOP APP / ACTION BAR (TONAL PILL CONTAINER)
         ---------------------------------------------------- */
         .action-bar-wrap {
-            max-width: 780px;
-            margin: 0 auto 20px auto;
+            max-width: 800px;
+            margin: 0 auto 24px auto;
         }
 
         .action-bar {
+            background: var(--m3-surface-container-low);
+            border: 1px solid var(--m3-outline-variant);
+            border-radius: var(--m3-shape-corner-full);
+            padding: 8px 14px 8px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--line-color);
         }
 
-        .action-title {
-            font-size: 0.82rem;
+        .action-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.84rem;
             font-weight: 600;
-            color: var(--brand-color);
-            letter-spacing: 0.02em;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.01em;
+        }
+
+        .action-brand-badge {
+            font-size: 0.68rem;
+            font-weight: 600;
+            background: var(--m3-primary);
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: var(--m3-shape-corner-full);
+            letter-spacing: 0.04em;
         }
 
         .btn-group {
@@ -230,98 +304,107 @@
             flex-wrap: wrap;
         }
 
-        .btn {
-            font-family: var(--font-family);
-            font-size: 0.78rem;
-            font-weight: 500;
-            padding: 7px 13px;
-            border-radius: 6px;
+        /* M3 Button Styles with Apple Typography */
+        .m3-btn {
+            font-family: var(--font-apple);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: var(--m3-shape-corner-full);
             cursor: pointer;
-            border: 1px solid var(--line-color);
-            background: #ffffff;
-            color: var(--text-main);
-            transition: all 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
             display: inline-flex;
             align-items: center;
             gap: 6px;
             text-decoration: none;
+            letter-spacing: -0.01em;
+            border: none;
         }
 
-        .btn:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
+        /* Filled Button */
+        .m3-btn-filled {
+            background: var(--m3-primary);
+            color: var(--m3-on-primary);
+            box-shadow: var(--m3-elevation-1);
         }
 
-        .btn-primary {
-            background: var(--brand-color);
-            color: #ffffff;
-            border-color: var(--brand-color);
+        .m3-btn-filled:hover {
+            background: var(--m3-primary-hover);
+            box-shadow: var(--m3-elevation-2);
         }
 
-        .btn-primary:hover {
-            background: #1e293b;
-            border-color: #1e293b;
+        /* Tonal Button */
+        .m3-btn-tonal {
+            background: var(--m3-surface);
+            color: var(--m3-on-surface);
+            border: 1px solid var(--m3-outline);
+        }
+
+        .m3-btn-tonal:hover {
+            background: var(--m3-surface-container);
+            border-color: var(--m3-on-surface-variant);
         }
 
         /* ----------------------------------------------------
-           INVOICE A4 SHEET (AIRY, ELEGANT, BORDERLESS EDITORIAL)
+           INVOICE A4 SHEET (MATERIAL 3 CONTAINERS + APPLE TYPO)
         ---------------------------------------------------- */
         .invoice-sheet-container {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .invoice-sheet {
             background: #ffffff;
-            padding: 10px 0 0 0;
             position: relative;
         }
 
-        /* Header Area */
-        .header-section {
+        /* Header Card */
+        .header-card {
+            background: var(--m3-surface-container-low);
+            border: 1px solid var(--m3-outline-variant);
+            border-radius: var(--m3-shape-corner-2xl);
+            padding: 28px 28px 24px 28px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 20px;
-            padding-bottom: 22px;
-            border-bottom: 1.5px solid var(--brand-color);
-            margin-bottom: 24px;
-        }
-
-        .company-brand-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .company-name {
-            font-size: 1.45rem;
-            font-weight: 700;
-            color: var(--brand-color);
-            letter-spacing: 0.02em;
-            line-height: 1.2;
-        }
-
-        .company-badge {
-            font-size: 0.68rem;
-            font-weight: 600;
-            background: #f1f5f9;
-            color: #475569;
-            padding: 2px 7px;
-            border-radius: 4px;
-            letter-spacing: 0.04em;
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.03em; /* Apple SF Pro tight tracking */
+            line-height: 1.1;
         }
 
         .company-subtitle {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            margin-top: 4px;
+            font-size: 0.86rem;
+            color: var(--m3-on-surface-variant);
+            margin-top: 6px;
+            line-height: 1.45;
         }
 
-        .company-legal {
-            font-size: 0.74rem;
-            color: var(--text-light);
-            margin-top: 2px;
+        .header-chips-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .m3-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: var(--m3-shape-corner-full);
+            background: var(--m3-surface);
+            border: 1px solid var(--m3-outline-variant);
+            color: var(--m3-on-surface-variant);
         }
 
         .header-meta-right {
@@ -329,342 +412,352 @@
         }
 
         .invoice-main-title {
-            font-size: 1.45rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.025em;
+            line-height: 1.1;
         }
 
         .invoice-meta-number {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--brand-color);
-            margin-top: 2px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--m3-primary);
+            margin-top: 4px;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.01em;
         }
 
         .invoice-meta-date {
             font-size: 0.78rem;
-            color: var(--text-light);
-            margin-top: 3px;
+            color: var(--m3-on-surface-muted);
+            margin-top: 4px;
         }
 
-        /* Client & Tenant Metadata Section (Clean Typography, No Boxes) */
-        .client-program-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 30px;
-            margin-bottom: 22px;
+        .invoice-status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: var(--m3-shape-corner-full);
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            margin-top: 8px;
+            letter-spacing: 0.04em;
         }
 
-        .client-col {
-            flex: 1;
+        /* 2-Column M3 Client & Service Cards */
+        .client-program-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
-        .program-col {
-            flex: 1;
-            text-align: right;
+        .meta-card {
+            background: var(--m3-surface-container-low);
+            border: 1px solid var(--m3-outline-variant);
+            border-radius: var(--m3-shape-corner-xl);
+            padding: 18px 20px;
         }
 
-        .section-label {
+        .meta-card-label {
             font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-light);
+            letter-spacing: 0.06em;
+            color: var(--m3-on-surface-muted);
             margin-bottom: 4px;
         }
 
-        .client-name {
-            font-size: 1.1rem;
+        .meta-card-title {
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 2px;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
         }
 
-        .client-desc {
+        .meta-card-desc {
             font-size: 0.84rem;
-            color: var(--text-secondary);
+            color: var(--m3-on-surface-variant);
             line-height: 1.45;
         }
 
-        .program-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 2px;
-        }
-
-        .program-desc {
-            font-size: 0.84rem;
-            color: var(--text-secondary);
-            line-height: 1.45;
-        }
-
-        /* Summary Bar (Hairline, Clean Minimalist with Outline Icons) */
-        .system-summary-bar {
-            padding: 10px 0;
-            border-top: 1px solid var(--line-color);
-            border-bottom: 1px solid var(--line-color);
-            margin-bottom: 24px;
+        /* Highlight Summary M3 Assist Bar */
+        .system-assist-bar {
+            background: var(--m3-surface);
+            border: 1px solid var(--m3-outline-variant);
+            border-radius: var(--m3-shape-corner-full);
+            padding: 10px 18px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
+            align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
+            font-size: 0.78rem;
+            color: var(--m3-on-surface-variant);
         }
 
-        .summary-item {
+        .assist-item {
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .summary-icon {
-            color: var(--text-light);
+        .assist-icon {
+            color: var(--m3-on-surface);
             flex-shrink: 0;
         }
 
         /* ----------------------------------------------------
-           TABLE COMPACT & CLEAN (HAIRLINES, NO HEAVY BOXES)
+           M3 SERVICE CONTAINER & FEATURE PILLS
         ---------------------------------------------------- */
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 12px;
+        .service-container-card {
+            background: var(--m3-surface-container-low);
+            border: 1px solid var(--m3-outline-variant);
+            border-radius: var(--m3-shape-corner-2xl);
+            padding: 24px 26px;
+            margin-bottom: 20px;
         }
 
-        .invoice-table th {
-            font-size: 0.72rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-light);
-            padding: 10px 0;
-            border-bottom: 1px solid var(--text-main);
-            text-align: left;
-        }
-
-        .invoice-table th.th-right {
-            text-align: right;
-        }
-
-        .item-row td {
-            padding: 18px 0 16px 0;
-            vertical-align: top;
-            border-bottom: 1px solid var(--line-color);
-        }
-
-        .service-heading {
-            font-size: 0.98rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 6px;
-        }
-
-        .service-text {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 14px;
-        }
-
-        /* Feature List (Clean 2-Column Minimal Grid) */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 16px;
-            padding-top: 4px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 7px;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .feature-bullet {
-            color: var(--accent-emerald);
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .item-subtotal-cell {
-            text-align: right;
-            padding-top: 18px !important;
-            white-space: nowrap;
-        }
-
-        .item-amount {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .item-calc-detail {
-            font-size: 0.74rem;
-            color: var(--text-light);
-            margin-top: 3px;
-        }
-
-        /* Table Calculation Rows */
-        .subtotal-calc-row td {
-            padding: 10px 0;
-            font-size: 0.84rem;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--line-color);
-        }
-
-        .total-highlight-row td {
-            padding: 14px 0;
-            border-top: 1.5px solid var(--text-main);
-            border-bottom: 1.5px solid var(--text-main);
-        }
-
-        .total-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--brand-color);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .total-figure {
-            text-align: right;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--brand-color);
-            letter-spacing: -0.01em;
-            white-space: nowrap;
-        }
-
-        .terbilang-text {
-            text-align: right;
-            font-size: 0.76rem;
-            font-style: italic;
-            color: var(--text-light);
-            margin-top: 6px;
-        }
-
-        /* ----------------------------------------------------
-           BOTTOM INFORMATION: PAYMENTS & ISSUER (NO BOXES)
-        ---------------------------------------------------- */
-        .bottom-section {
+        .service-header-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 40px;
-            padding-top: 20px;
-            margin-top: 16px;
-            border-top: 1px solid var(--line-color);
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--m3-outline-variant);
         }
 
-        .payment-col {
-            flex: 1;
+        .service-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.02em;
         }
 
-        .issuer-col {
-            flex: 1;
-            text-align: right;
-        }
-
-        .bottom-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-light);
-            margin-bottom: 6px;
-        }
-
-        .bank-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .bank-name-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--brand-color);
-        }
-
-        .bank-details {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            line-height: 1.45;
-        }
-
-        .bank-acc-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .service-lead {
+            font-size: 0.85rem;
+            color: var(--m3-on-surface-variant);
             margin-top: 4px;
+            line-height: 1.5;
         }
 
-        .acc-number-text {
-            font-size: 0.94rem;
-            font-weight: 600;
-            color: var(--text-main);
-            letter-spacing: 0.04em;
+        .service-price-block {
+            text-align: right;
+            white-space: nowrap;
         }
 
-        .copy-link-btn {
-            font-family: var(--font-family);
-            font-size: 0.72rem;
-            color: #2563eb;
-            background: none;
-            border: none;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            cursor: pointer;
-            padding: 0;
-            font-weight: 500;
+        .service-price-val {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--m3-on-surface);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.025em;
         }
 
-        .copy-link-btn:hover {
-            color: #1d4ed8;
-        }
-
-        .issuer-name-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .issuer-desc-text {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            line-height: 1.45;
+        .service-price-unit {
+            font-size: 0.74rem;
+            color: var(--m3-on-surface-muted);
             margin-top: 2px;
         }
 
-        .issuer-wa-link {
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--accent-emerald);
-            text-decoration: none;
+        /* M3 Feature Pills Grid */
+        .feature-pills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 14px;
+            padding-top: 18px;
+        }
+
+        .feature-pill-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #ffffff;
+            border: 1px solid var(--m3-outline-subtle);
+            border-radius: var(--m3-shape-corner-md);
+            font-size: 0.8rem;
+            color: var(--m3-on-surface-variant);
+            line-height: 1.35;
+        }
+
+        .feature-icon-bullet {
+            color: var(--m3-emerald);
+            flex-shrink: 0;
+        }
+
+        /* ----------------------------------------------------
+           TOTAL HIGHLIGHT M3 CARD
+        ---------------------------------------------------- */
+        .total-summary-card {
+            background: var(--m3-primary);
+            color: #ffffff;
+            border-radius: var(--m3-shape-corner-2xl);
+            padding: 22px 28px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            box-shadow: var(--m3-elevation-2);
+        }
+
+        .total-left-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+        }
+
+        .total-left-subtitle {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .total-right-block {
+            text-align: right;
+        }
+
+        .total-amount-display {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.03em; /* Apple SF Pro prominent figure */
+            font-variant-numeric: tabular-nums;
+            color: #ffffff;
+        }
+
+        .total-terbilang-text {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            font-style: italic;
             margin-top: 4px;
-            display: inline-block;
         }
 
-        .issuer-wa-link:hover {
-            text-decoration: underline;
+        /* ----------------------------------------------------
+           BOTTOM INFORMATION: PAYMENTS & ISSUER M3 CARDS
+        ---------------------------------------------------- */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
-        .footer-note {
-            margin-top: 26px;
-            padding-top: 14px;
-            border-top: 1px solid var(--line-subtle);
+        .bottom-card {
+            background: var(--m3-surface-container-low);
+            border: 1px solid var(--m3-outline-variant);
+            border-radius: var(--m3-shape-corner-xl);
+            padding: 20px 22px;
+        }
+
+        .bottom-card-label {
             font-size: 0.72rem;
-            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--m3-on-surface-muted);
+            margin-bottom: 6px;
+        }
+
+        .bank-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.015em;
+        }
+
+        .bank-owner {
+            font-size: 0.84rem;
+            color: var(--m3-on-surface-variant);
+            margin-top: 2px;
+        }
+
+        .acc-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .acc-number-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--m3-on-surface);
+            letter-spacing: 0.04em;
+            font-variant-numeric: tabular-nums;
+            background: #ffffff;
+            padding: 4px 10px;
+            border-radius: var(--m3-shape-corner-md);
+            border: 1px solid var(--m3-outline-variant);
+        }
+
+        .copy-pill-btn {
+            font-family: var(--font-apple);
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--m3-primary);
+            background: var(--m3-surface);
+            border: 1px solid var(--m3-outline);
+            padding: 5px 12px;
+            border-radius: var(--m3-shape-corner-full);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--m3-surface-container);
+            border-color: var(--m3-primary);
+        }
+
+        .issuer-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--m3-on-surface);
+            letter-spacing: -0.015em;
+        }
+
+        .issuer-desc {
+            font-size: 0.84rem;
+            color: var(--m3-on-surface-variant);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        .issuer-wa-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--m3-emerald);
+            background: var(--m3-emerald-container);
+            padding: 5px 12px;
+            border-radius: var(--m3-shape-corner-full);
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.15s ease;
+        }
+
+        .issuer-wa-chip:hover {
+            background: #d1fae5;
+        }
+
+        /* Footer Note */
+        .footer-terms {
             text-align: center;
+            font-size: 0.76rem;
+            color: var(--m3-on-surface-muted);
+            padding-top: 12px;
+            border-top: 1px solid var(--m3-outline-subtle);
+            line-height: 1.5;
         }
 
         /* Toast Component */
@@ -672,17 +765,19 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: var(--brand-color);
+            background: var(--m3-primary);
             color: #ffffff;
-            padding: 10px 18px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: var(--m3-shape-corner-full);
             font-size: 0.82rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            font-weight: 500;
+            box-shadow: var(--m3-elevation-3);
             opacity: 0;
             transform: translateY(12px);
-            transition: all 0.25s ease;
+            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
             pointer-events: none;
             z-index: 10001;
+            letter-spacing: -0.01em;
         }
 
         .toast.show {
@@ -698,50 +793,71 @@
                 padding: 16px 12px 30px;
             }
 
-            .header-section {
+            .action-bar {
+                border-radius: var(--m3-shape-corner-xl);
+                padding: 12px 14px;
+            }
+
+            .header-card {
                 flex-direction: column;
-                gap: 12px;
+                gap: 16px;
+                padding: 22px 20px;
+                border-radius: var(--m3-shape-corner-xl);
             }
 
             .header-meta-right {
                 text-align: left;
             }
 
-            .client-program-section {
-                flex-direction: column;
-                gap: 14px;
+            .client-program-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
 
-            .program-col {
+            .system-assist-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                border-radius: var(--m3-shape-corner-xl);
+                gap: 8px;
+            }
+
+            .service-header-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .service-price-block {
                 text-align: left;
             }
 
-            .feature-grid {
+            .feature-pills-grid {
                 grid-template-columns: 1fr;
             }
 
-            .bottom-section {
+            .total-summary-card {
                 flex-direction: column;
-                gap: 20px;
+                align-items: flex-start;
+                padding: 20px 22px;
+                border-radius: var(--m3-shape-corner-xl);
             }
 
-            .issuer-col {
+            .total-right-block {
                 text-align: left;
             }
 
-            .system-summary-bar {
-                flex-direction: column;
-                gap: 8px;
+            .bottom-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
         }
 
         /* ----------------------------------------------------
-           PRINT STYLES (EXACT COMPACT A4 FIT)
+           PRINT STYLES (A4 COMPACT PERFECT FIT)
         ---------------------------------------------------- */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 10mm 12mm;
+                margin: 8mm 10mm;
             }
 
             body {
@@ -761,8 +877,18 @@
                 margin: 0;
             }
 
-            .invoice-sheet {
-                padding: 0;
+            .header-card,
+            .meta-card,
+            .service-container-card,
+            .bottom-card {
+                border-color: #cbd5e1 !important;
+                background: #ffffff !important;
+            }
+
+            .total-summary-card {
+                background: #0f172a !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
             * {
@@ -774,15 +900,18 @@
 </head>
 <body>
 
-    <!-- SECURITY ACCESS SCREEN (PIN: 0001 / 050900) -->
+    <!-- M3 DIALOG: SECURITY ACCESS SCREEN (PIN: 0001 / 050900) -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card">
+            <div class="cover-m3-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
             <div class="cover-brand-eyebrow">KAEL &bull; F&amp;B Ecosystem</div>
             <h1 class="cover-title">Invoice Resmi Tenant</h1>
-            <div class="cover-subtitle">Sistem Pemesanan &amp; Manajemen POS F&amp;B</div>
+            <div class="cover-subtitle">Sistem Pemesanan &amp; Manajemen Kasir POS F&amp;B</div>
 
             <div class="cover-recipient-meta">
-                <small>Tenant / Pelanggan</small>
+                <small>Tenant Partner</small>
                 <strong>Mochi Cafe n Resto</strong>
                 <span>Paket Ultimate &bull; Rp 750.000</span>
             </div>
@@ -790,7 +919,7 @@
             <div class="passcode-wrapper">
                 <div class="passcode-label">Masukkan PIN Akses:</div>
                 <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" inputmode="numeric" placeholder="••••" autofocus>
-                <div id="passcodeError" class="passcode-error">PIN belum tepat. Gunakan PIN 0001</div>
+                <div id="passcodeError" class="passcode-error">PIN belum sesuai. Gunakan PIN 0001</div>
             </div>
 
             <button type="button" class="cover-open-btn" onclick="verifyPasscode()">
@@ -799,22 +928,23 @@
         </div>
     </div>
 
-    <!-- TOP ACTION BAR -->
+    <!-- M3 ACTION BAR (TONAL PILL CONTAINER) -->
     <div class="action-bar-wrap">
         <div class="action-bar">
-            <div class="action-title">
-                KAEL &bull; Invoice Mochi Cafe n Resto
+            <div class="action-brand">
+                <span>KAEL</span>
+                <span class="action-brand-badge">Mochi Cafe n Resto</span>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-primary" onclick="window.print()">
+                <button type="button" class="m3-btn m3-btn-filled" onclick="window.print()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect width="12" height="8" x="6" y="14"></rect></svg>
                     Cetak PDF (A4)
                 </button>
-                <button type="button" class="btn" id="btnDownloadPng" onclick="downloadPngExact()">
+                <button type="button" class="m3-btn m3-btn-tonal" id="btnDownloadPng" onclick="downloadPngExact()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
                     Unduh PNG
                 </button>
-                <button type="button" class="btn" onclick="shareWhatsApp()">
+                <button type="button" class="m3-btn m3-btn-tonal" onclick="shareWhatsApp()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     Kirim WhatsApp
                 </button>
@@ -822,182 +952,180 @@
         </div>
     </div>
 
-    <!-- INVOICE SHEET -->
+    <!-- INVOICE SHEET CONTAINER -->
     <div class="invoice-sheet-container">
         <div class="invoice-sheet" id="invoiceSheet">
 
-            <!-- Header Section -->
-            <div class="header-section">
+            <!-- M3 HEADER CARD -->
+            <div class="header-card">
                 <div>
-                    <div class="company-brand-row">
-                        <h1 class="company-name">KAEL</h1>
-                        <span class="company-badge">F&amp;B ECOSYSTEM</span>
+                    <h1 class="company-name">KAEL</h1>
+                    <div class="company-subtitle">Ekosistem Digital Kasir, Pemesanan Menu &amp; Manajemen Tenant F&amp;B</div>
+                    <div class="header-chips-row">
+                        <span class="m3-chip">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                            Tenant Ecosystem
+                        </span>
+                        <span class="m3-chip">Indonesia</span>
+                        <span class="m3-chip">Multi-Device Cloud</span>
                     </div>
-                    <div class="company-subtitle">Layanan Sistem Kasir, Pemesanan Digital &amp; Manajemen Tenant F&amp;B</div>
-                    <div class="company-legal">Tenant Partner Ecosystem &bull; Indonesia</div>
                 </div>
 
                 <div class="header-meta-right">
                     <div class="invoice-main-title">INVOICE</div>
                     <div class="invoice-meta-number">#INV/KAEL/2026/09/001</div>
                     <div class="invoice-meta-date">Tanggal Terbit: 19 September 2026</div>
-                    <div class="invoice-meta-date" style="color: var(--brand-color); font-weight: 500;">Jatuh Tempo: 26 September 2026</div>
+                    <div class="invoice-meta-date" style="color: var(--m3-primary); font-weight: 600;">Jatuh Tempo: 26 September 2026</div>
+                    <div>
+                        <span class="invoice-status-chip">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #dc2626; display: inline-block;"></span>
+                            BELUM LUNAS
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Client & Program Section (Typographic Layout) -->
-            <div class="client-program-section">
-                <div class="client-col">
-                    <div class="section-label">Ditujukan Kepada Tenant</div>
-                    <div class="client-name">Mochi Cafe n Resto</div>
-                    <div class="client-desc">
-                        Tenant F&amp;B Partner<br>
+            <!-- M3 2-COLUMN RECIPIENT & PACKAGE CARDS -->
+            <div class="client-program-grid">
+                <div class="meta-card">
+                    <div class="meta-card-label">Ditujukan Kepada Tenant</div>
+                    <div class="meta-card-title">Mochi Cafe n Resto</div>
+                    <div class="meta-card-desc">
+                        Mitra Tenant F&amp;B Partner<br>
                         Pengelola Mochi Cafe n Resto
                     </div>
                 </div>
 
-                <div class="program-col">
-                    <div class="section-label">Layanan / Paket Terpilih</div>
-                    <div class="program-name">Paket Ultimate KAEL</div>
-                    <div class="program-desc">
-                        Full Module POS &amp; Order Management<br>
+                <div class="meta-card">
+                    <div class="meta-card-label">Paket Layanan Terpilih</div>
+                    <div class="meta-card-title">Paket Ultimate KAEL</div>
+                    <div class="meta-card-desc">
+                        Full Module POS, Menu Digital &amp; Kasir<br>
                         Periode Layanan: September 2026
                     </div>
                 </div>
             </div>
 
-            <!-- System Highlights Summary Bar (Hairline, Clean Minimalist with Outline Icons) -->
-            <div class="system-summary-bar">
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            <!-- M3 ASSIST HIGHLIGHT BAR -->
+            <div class="system-assist-bar">
+                <div class="assist-item">
+                    <svg class="assist-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
                     <span>Sistem: <strong>Point of Sale (POS) Kasir</strong></span>
                 </div>
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
-                    <span>Pemesanan: <strong>Menu Digital &amp; Order</strong></span>
+                <div class="assist-item">
+                    <svg class="assist-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                    <span>Pemesanan: <strong>Katalog Menu Digital</strong></span>
                 </div>
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>User: <strong>Multi-Device (Kasir/Kitchen)</strong></span>
+                <div class="assist-item">
+                    <svg class="assist-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Multi-Role: <strong>Kasir, Barista &amp; Owner</strong></span>
                 </div>
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                <div class="assist-item">
+                    <svg class="assist-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
                     <span>Laporan: <strong>Cloud Real-time &amp; QRIS</strong></span>
                 </div>
             </div>
 
-            <!-- Table: Service Description -->
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th>Deskripsi Layanan &amp; Modul</th>
-                        <th class="th-right">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="item-row">
-                        <td>
-                            <div class="service-heading">KAEL &bull; Paket Ultimate (Tenant Mochi Cafe n Resto)</div>
-                            <div class="service-text">
-                                Aktivasi lisensi penuh ekosistem digital KAEL untuk operasional tenant Mochi Cafe n Resto, mencakup integrasi sistem kasir, katalog menu interaktif, manajemen meja, dan rekap finansial terintegrasi.
-                            </div>
-
-                            <!-- Feature 2-Column Minimal Grid -->
-                            <div class="feature-grid">
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Point of Sale (POS) Kasir F&amp;B responsif &amp; cepat</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Menu digital &amp; pemesanan Dine-in / Takeaway</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Manajemen nomor meja &amp; flow antrean dapur</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Laporan penjualan harian, shift kasir &amp; grafik omset</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Integrasi pembayaran QRIS &amp; multi-channel kasir</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Multi-role login: Kasir, Barista/Kitchen &amp; Owner</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Cloud database backup &amp; sinkronisasi otomatis</span>
-                                </div>
-                                <div class="feature-item">
-                                    <svg class="feature-bullet" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Priority technical support &amp; update berkala</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="item-subtotal-cell">
-                            <div class="item-amount">Rp 750.000</div>
-                            <div class="item-calc-detail">Paket Ultimate (1 Tenant)</div>
-                        </td>
-                    </tr>
-
-                    <!-- Subtotal Calculation Row -->
-                    <tr class="subtotal-calc-row">
-                        <td>Subtotal Biaya Layanan</td>
-                        <td style="text-align: right; font-weight: 600; color: var(--text-main);">Rp 750.000</td>
-                    </tr>
-
-                    <!-- Total Row Highlight -->
-                    <tr class="total-highlight-row">
-                        <td class="total-title">Total Tagihan</td>
-                        <td class="total-figure">Rp 750.000</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Terbilang Nominal -->
-            <div class="terbilang-text">
-                Terbilang: # Tujuh Ratus Lima Puluh Ribu Rupiah #
-            </div>
-
-            <!-- Bottom Section: Payments & Issuer (No Boxes) -->
-            <div class="bottom-section">
-                
-                <!-- Payment Column -->
-                <div class="payment-col">
-                    <div class="bottom-label">Rekening Pembayaran Resmi</div>
-                    <div class="bank-line">
-                        <span class="bank-name-text">Bank Mandiri</span>
+            <!-- M3 SERVICE CONTAINER CARD -->
+            <div class="service-container-card">
+                <div class="service-header-row">
+                    <div>
+                        <div class="service-title">KAEL Paket Ultimate &bull; Tenant Mochi Cafe n Resto</div>
+                        <div class="service-lead">
+                            Aktivasi lisensi penuh ekosistem digital KAEL untuk operasional tenant Mochi Cafe n Resto, mencakup integrasi sistem kasir, katalog menu interaktif, manajemen meja, dan rekap finansial terintegrasi.
+                        </div>
                     </div>
-                    <div class="bank-details">
-                        Atas Nama: <strong>Daru Fahmaa Muliawan</strong>
-                    </div>
-                    <div class="bank-acc-row">
-                        <span class="acc-number-text">1550010616962</span>
-                        <button type="button" class="copy-link-btn" onclick="copyBankAcc()">Salin Nomor Rekening</button>
+                    <div class="service-price-block">
+                        <div class="service-price-val">Rp 750.000</div>
+                        <div class="service-price-unit">Paket Ultimate (1 Tenant)</div>
                     </div>
                 </div>
 
-                <!-- Issuer Column -->
-                <div class="issuer-col">
-                    <div class="bottom-label">Penerbit Dokumen</div>
-                    <div class="issuer-name-text">KAEL &bull; Daru Fahmaa Muliawan</div>
-                    <div class="issuer-desc-text">
+                <!-- M3 Feature Pills Grid -->
+                <div class="feature-pills-grid">
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Point of Sale (POS) Kasir F&amp;B responsif &amp; cepat</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Menu digital &amp; pemesanan Dine-in / Takeaway</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Manajemen nomor meja &amp; flow antrean dapur</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Laporan penjualan harian, shift kasir &amp; grafik omset</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Integrasi pembayaran QRIS &amp; multi-channel kasir</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Multi-role login: Kasir, Barista/Kitchen &amp; Owner</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Cloud database backup &amp; sinkronisasi otomatis</span>
+                    </div>
+                    <div class="feature-pill-item">
+                        <svg class="feature-icon-bullet" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Priority technical support &amp; update berkala</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOTAL SUMMARY M3 CARD -->
+            <div class="total-summary-card">
+                <div>
+                    <div class="total-left-title">Total Tagihan Layanan</div>
+                    <div class="total-left-subtitle">Paket Ultimate &bull; Pembayaran Penuh (100%)</div>
+                </div>
+                <div class="total-right-block">
+                    <div class="total-amount-display">Rp 750.000</div>
+                    <div class="total-terbilang-text"># Tujuh Ratus Lima Puluh Ribu Rupiah #</div>
+                </div>
+            </div>
+
+            <!-- BOTTOM M3 2-COLUMN CARDS: PAYMENTS & ISSUER -->
+            <div class="bottom-grid">
+                
+                <!-- Payment Card -->
+                <div class="bottom-card">
+                    <div class="bottom-card-label">Rekening Pembayaran Resmi</div>
+                    <div class="bank-title">Bank Mandiri</div>
+                    <div class="bank-owner">Atas Nama: <strong>Daru Fahmaa Muliawan</strong></div>
+                    <div class="acc-row">
+                        <span class="acc-number-text">1550010616962</span>
+                        <button type="button" class="copy-pill-btn" onclick="copyBankAcc()">
+                            Salin Rekening
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Issuer Card -->
+                <div class="bottom-card">
+                    <div class="bottom-card-label">Penerbit Dokumen</div>
+                    <div class="issuer-title">KAEL &bull; Daru Fahmaa Muliawan</div>
+                    <div class="issuer-desc">
                         F&amp;B Digital System &amp; Web Platform<br>
                         Kota Tangerang, Banten
                     </div>
-                    <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa-link">
-                        WA: 081311506025
-                    </a>
+                    <div>
+                        <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa-chip">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            WhatsApp: 081311506025
+                        </a>
+                    </div>
                 </div>
 
             </div>
 
             <!-- Footer terms -->
-            <div class="footer-note">
+            <div class="footer-terms">
                 Invoice resmi aktivasi layanan KAEL Paket Ultimate untuk tenant Mochi Cafe n Resto. Konfirmasi pembayaran dapat dikirimkan melalui WhatsApp dengan menyertakan bukti transfer.
             </div>
 
@@ -1096,7 +1224,7 @@
             const target = document.getElementById("invoiceSheet");
 
             try {
-                const targetWidth = target.offsetWidth || 780;
+                const targetWidth = target.offsetWidth || 800;
 
                 const canvas = await html2canvas(target, {
                     scale: 2,
