@@ -11,6 +11,9 @@ PORT = 3000
 
 REWRITES = {
     "/today": "/today/index.html",
+    "/athifa": "/athifa/index.html",
+    "/mba-athifa": "/athifa/index.html",
+    "/cover-athifa": "/athifa/index.html",
     "/mochi": "/mochi/index.html",
     "/mochi-cafe": "/mochi/index.html",
     "/kael-mochi": "/mochi/index.html",

@@ -2637,6 +2637,60 @@
                     <span>Buka Invoice KAEL - Mochi Cafe</span>
                 </a>
             </div>
+
+            <!-- Mba Athifa - Desain Cover Buku Card -->
+            <div class="invoice-card" id="card-athifa" data-id="athifa" data-month="2026-09" data-amount="250000" data-client="mba athifa athifa desain cover buku sampul buku editorial 250000 #inv/dar/2026/09/017 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Mba Athifa (Cover Buku)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('athifa')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DAR/2026/09/017 &bull; Desain Sampul</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Jasa Desain Cover Buku Profesional &bull; Full Cover (Front, Spine &amp; Back Cover), Master File Siap Cetak (300 DPI CMYK PDF), File Digital E-Book/Web (RGB PNG/JPG), serta 3D Realistic Book Mockup. Total: Rp 250.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/athifa</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/athifa')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptAthifa()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 250.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValAthifa">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValAthifa">Rp 250.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('athifa')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/athifa" class="action-btn">
+                    <span>Buka Invoice Mba Athifa</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2853,7 +2907,8 @@
             hamasahinternational: "UNPAID",
             pgstour: "UNPAID",
             "umrahme-dreammecca": "UNPAID",
-            mochi: "UNPAID"
+            mochi: "UNPAID",
+            athifa: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2896,7 +2951,8 @@
             hamasahinternational: 15000000,
             pgstour: 1000000,
             "umrahme-dreammecca": 280000,
-            mochi: 600000
+            mochi: 600000,
+            athifa: 250000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -2951,7 +3007,8 @@
             { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 },
             { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 },
             { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 },
-            { id: "mochi", name: "Mochi Cafe n Resto (KAEL Paket Ultimate)", month: "2026-09", monthLabel: "September 2026", gross: 750000 }
+            { id: "mochi", name: "Mochi Cafe n Resto (KAEL Paket Ultimate)", month: "2026-09", monthLabel: "September 2026", gross: 750000 },
+            { id: "athifa", name: "Mba Athifa (Desain Cover Buku)", month: "2026-09", monthLabel: "September 2026", gross: 250000 }
         ];
 
         function formatIDR(num) {
@@ -4541,6 +4598,33 @@ Dokumen invoice resmi dapat diakses dan diunduh langsung dalam format PDF maupun
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA MOCHI CAFE (KAEL) BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptAthifa() {
+            const waScript = `Halo Mba Athifa! 🙏✨
+
+Berikut kami sampaikan invoice resmi untuk pengerjaan Desain Cover Buku:
+
+🔗 Invoice Online: https://temantiket.com/athifa
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Layanan Desain:
+• Proyek: Desain Cover Buku (Front, Spine & Back Cover)
+• Spesifikasi: File Siap Cetak (300 DPI CMYK PDF) + File Digital E-Book (RGB JPG/PNG) + 3D Book Mockup
+• Total Biaya: Rp 250.000
+(Terbilang: Dua Ratus Lima Puluh Ribu Rupiah - Pembayaran Penuh)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada link di atas. Terima kasih banyak Mba Athifa! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA MBA ATHIFA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

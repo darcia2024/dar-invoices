@@ -3,6 +3,9 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/today", "destination": "/today/index.html" },
+    { "source": "/athifa", "destination": "/athifa/index.html" },
+    { "source": "/mba-athifa", "destination": "/athifa/index.html" },
+    { "source": "/cover-athifa", "destination": "/athifa/index.html" },
     { "source": "/mochi", "destination": "/mochi/index.html" },
     { "source": "/mochi-cafe", "destination": "/mochi/index.html" },
     { "source": "/kael-mochi", "destination": "/mochi/index.html" },
