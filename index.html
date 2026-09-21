@@ -1471,13 +1471,23 @@
 
         <!-- Invoice Cards Grid -->
         <div id="invoiceGrid" class="invoice-grid" aria-label="Invoice menurut status pembayaran">
-            <div class="invoice-card" id="card-almadroj" data-id="almadroj" data-month="2026-09" data-amount="3500000" data-client="sidi watra pusat belajar al madroj al madraj bimbel standard september 2026 inv/alm/2026/016">
+            <div class="invoice-card" id="card-almadroj" data-id="almadroj" data-month="2026-09" data-amount="3700000" data-client="sidi watra pusat belajar al madroj al madraj bimbel standard september 2026 inv/alm/2026/016 almadroj-edu.com">
                 <div>
                     <div class="card-top"><div class="client-title">Sidi Watra · Pusat Belajar Al Madroj</div><div class="status-badge-group"><span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('almadroj')">Belum lunas</span></div></div>
                     <div class="ref-code">REF: INV/ALM/2026/016 <span class="month-tag">September 2026</span></div>
-                    <p class="project-desc">Platform bimbel Paket Standard: portal mahasiswa, payment gateway, video ber-watermark, Admin Master & PJ Uploader. Termin 50% / 30% / 20%.</p>
-                    <div class="slug-box"><div class="btn-row-flex"><button class="slug-copy-btn" onclick="copySlug(new URL('/almadroj', location.href).href)">Salin link</button></div></div>
-                    <div class="financial-breakdown-box"><div class="fin-row"><span class="fin-label">TOTAL INVOICE</span><span class="fin-val">Rp 3.500.000</span></div><div class="fin-row"><span class="fin-label">BIAYA OPERASIONAL</span><span class="fin-val" id="costValAlmadroj">Rp 0</span></div><div class="fin-row"><span class="fin-label">PROFIT (ESTIMASI)</span><div class="net-profit-flex"><span class="net-profit-val" id="profitValAlmadroj">Rp 3.500.000</span><button class="edit-profit-btn" onclick="openProfitModal('almadroj')">Edit profit</button></div></div></div>
+                    <p class="project-desc">Platform bimbel Paket Standard + Registrasi Domain Resmi .COM 2 Tahun (almadroj-edu.com). Portal siswa/guru, payment gateway, video watermark, Admin Master & PJ Uploader. Termin 50% / 30% / 20%.</p>
+                    <div class="slug-box">
+                        <span class="slug-url">/almadroj</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug(new URL('/almadroj', location.href).href)">Salin link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptAlmadroj()">Salin Script WA</button>
+                        </div>
+                    </div>
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row"><span class="fin-label">TOTAL INVOICE</span><span class="fin-val">Rp 3.700.000</span></div>
+                        <div class="fin-row"><span class="fin-label">BIAYA OPERASIONAL</span><span class="fin-val" id="costValAlmadroj">Rp 200.000</span></div>
+                        <div class="fin-row"><span class="fin-label">PROFIT (ESTIMASI)</span><div class="net-profit-flex"><span class="net-profit-val" id="profitValAlmadroj">Rp 3.500.000</span><button class="edit-profit-btn" onclick="openProfitModal('almadroj')">Edit profit</button></div></div>
+                    </div>
                 </div><a class="action-btn" href="/almadroj">Buka invoice Al Madroj</a>
             </div>
             
@@ -2910,7 +2920,7 @@
         }
 
         const invoiceItems = [
-            { id: "almadroj", name: "Sidi Watra (Pusat Belajar Al Madroj)", month: "2026-09", monthLabel: "September 2026", gross: 3500000 },
+            { id: "almadroj", name: "Sidi Watra (Pusat Belajar Al Madroj)", month: "2026-09", monthLabel: "September 2026", gross: 3700000 },
             { id: "markaz", name: "Markaz Fiqih", month: "2026-07", monthLabel: "Juli 2026", gross: 8500000 },
             { id: "dreammecca", name: "Dreammecca - Umrahme", month: "2026-07", monthLabel: "Juli 2026", gross: 700000 },
             { id: "haramain-capture", name: "Haramain Capture", month: "2026-07", monthLabel: "Juli 2026", gross: 600000 },
@@ -4531,6 +4541,45 @@ Dokumen invoice resmi dapat diakses dan diunduh langsung dalam format PDF maupun
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA MOCHI CAFE (KAEL) BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptAlmadroj() {
+            const waScript = `Halo Mas Sidi Watra & Tim Pusat Belajar Al Madroj! 🙏✨
+
+Berikut kami lampirkan dokumen resmi Invoice & Rincian Anggaran Platform Website Bimbel Al Madroj (+ Domain Resmi 2 Tahun):
+
+🔗 Link Invoice Online: https://temantiket.com/almadroj
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Layanan:
+1. Core Platform Bimbel (Paket Standard): Rp 3.500.000
+   • Portal Siswa & Pengajar, Manajemen Kelas & Modul
+   • Video Player Terproteksi (Watermark Dinamis Anti-Pirasi)
+   • Integrasi Payment Gateway Otomatis (QRIS, VA, E-Wallet)
+   • Dashboard Admin Master & Portal Khusus PJ Uploader
+2. Domain Internasional Resmi 2 Tahun Penuh (almadroj-edu.com): Rp 200.000
+   • Pendaftaran & pengamanan domain resmi 24 bulan berturut-turut
+   • Proteksi privasi WHOIS & integrasi DNS Cloudflare
+
+💰 Total Investasi: Rp 3.700.000
+(Terbilang: Tiga Juta Tujuh Ratus Ribu Rupiah)
+
+💳 Skema Pembayaran Fleksibel (3 Termin):
+• Termin 1 (DP 50% Kick-off & Domain): Rp 1.850.000
+• Termin 2 (Progress 30% Verifikasi Fitur): Rp 1.110.000
+• Termin 3 (Pelunasan 20% Handover & Training): Rp 740.000
+
+Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice resmi, rincian termin, serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada link di atas. Terima kasih banyak! 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA AL MADROJ BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
