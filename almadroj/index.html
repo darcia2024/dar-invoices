@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>INVOICE #INV/ALM/2026/09/016 — Al Madraj | Dars dan Bimbel Ilmu Islam</title>
     
-    <!-- ES Rebond Grotesque Custom Typography + Google Plus Jakarta Sans Fallback -->
+    <!-- ES Rebond Grotesque Typography + Google Plus Jakarta Sans Fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 
     <style>
         /* ----------------------------------------------------
-           ES REBOND GROTESQUE FONT-FACE DEFINITIONS
+           ES REBOND GROTESQUE FONT-FACE DEFINITIONS (EMBEDDED)
         ---------------------------------------------------- */
         @font-face {
             font-family: 'ES Rebond Grotesque';
@@ -59,7 +59,7 @@
         }
 
         /* ====================================================
-           AL MADRAJ BRAND DESIGN SYSTEM (almadraj-edu.com)
+           AL MADRAJ DESIGN TOKENS
            ==================================================== */
         :root {
             --font-main: "ES Rebond Grotesque", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -100,7 +100,7 @@
 
             /* Shadows */
             --shadow-brand: 0 8px 24px -4px rgba(0, 109, 119, 0.12), 0 2px 8px -2px rgba(0, 109, 119, 0.06);
-            --shadow-card: 0 2px 12px -2px rgba(19, 42, 36, 0.05);
+            --shadow-card: 0 2px 10px -2px rgba(19, 42, 36, 0.05);
             --shadow-float: 0 16px 36px -8px rgba(0, 109, 119, 0.16);
         }
 
@@ -108,13 +108,14 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: var(--font-main);
             background-color: #f4faf6;
             color: var(--text-body);
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
         }
@@ -125,7 +126,7 @@
         }
 
         /* ----------------------------------------------------
-           STICKY NAVBAR (SESUAI ALMADRAJ-EDU.COM)
+           STICKY NAVBAR (DESKTOP)
         ---------------------------------------------------- */
         .site-header {
             position: sticky;
@@ -141,7 +142,7 @@
         .header-inner {
             max-width: 1180px;
             margin: 0 auto;
-            height: 68px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -158,13 +159,13 @@
         }
 
         .brand-logo-img {
-            height: 36px;
+            height: 34px;
             width: auto;
             object-fit: contain;
         }
 
         .brand-logo-text {
-            font-size: 1.18rem;
+            font-size: 1.15rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: var(--brand-teal);
@@ -173,7 +174,7 @@
         .brand-pill-tag {
             font-size: 0.72rem;
             font-weight: 700;
-            padding: 3px 9px;
+            padding: 2px 8px;
             border-radius: var(--radius-pill);
             background: var(--brand-green-light);
             color: var(--brand-green);
@@ -184,23 +185,23 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .btn-brand-primary {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             background: var(--brand-teal);
             color: #ffffff;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            padding: 9px 18px;
+            padding: 8px 16px;
             border-radius: var(--radius-pill);
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 109, 119, 0.22);
+            box-shadow: 0 3px 12px rgba(0, 109, 119, 0.22);
             transition: all 0.18s ease;
             text-decoration: none;
         }
@@ -213,12 +214,12 @@
         .btn-brand-secondary {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             background: #ffffff;
             color: var(--brand-teal);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            padding: 9px 16px;
+            padding: 8px 14px;
             border-radius: var(--radius-pill);
             border: 1px solid var(--brand-teal-subtle);
             cursor: pointer;
@@ -234,12 +235,12 @@
         .btn-brand-ghost {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: transparent;
             color: var(--text-muted);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 8px 12px;
+            padding: 7px 12px;
             border-radius: var(--radius-pill);
             border: 1px solid transparent;
             cursor: pointer;
@@ -253,16 +254,16 @@
         }
 
         /* ----------------------------------------------------
-           MAIN CONTENT WRAPPER
+           PAGE LAYOUT WRAPPER
         ---------------------------------------------------- */
         .page-container {
-            max-width: 1100px;
-            margin: 36px auto 72px;
+            max-width: 1040px;
+            margin: 28px auto 64px;
             padding: 0 20px;
         }
 
         /* ----------------------------------------------------
-           HERO SECTION (AL MADRAJ SIGNATURE STYLE)
+           DESKTOP HERO BANNER (HIDDEN ON MOBILE)
         ---------------------------------------------------- */
         .hero-banner {
             position: relative;
@@ -270,8 +271,8 @@
             border: 1px solid var(--brand-teal-border);
             border-radius: var(--radius-2xl);
             overflow: hidden;
-            padding: 44px 40px;
-            margin-bottom: 28px;
+            padding: 38px 36px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow-card);
         }
 
@@ -280,7 +281,7 @@
             top: 0;
             right: 0;
             bottom: 0;
-            width: 60%;
+            width: 55%;
             background-image: url('/almadroj/al-madraj-header.png');
             background-repeat: no-repeat;
             background-position: right center;
@@ -295,19 +296,19 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 680px;
+            max-width: 640px;
         }
 
         .hero-eyebrow-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 8px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
 
         .hero-eyebrow {
-            font-size: 0.73rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.16em;
@@ -315,9 +316,9 @@
         }
 
         .hero-badge-tag {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 3px 10px;
+            padding: 2px 9px;
             border-radius: var(--radius-pill);
             background: #ffffff;
             color: var(--brand-teal);
@@ -325,12 +326,12 @@
         }
 
         .hero-title {
-            font-size: clamp(2.2rem, 4vw, 3.4rem);
+            font-size: clamp(2rem, 3.6vw, 3rem);
             font-weight: 400;
             line-height: 1.05;
             letter-spacing: -0.04em;
             color: var(--brand-teal);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .hero-title strong {
@@ -338,28 +339,28 @@
         }
 
         .hero-lead {
-            font-size: 1.02rem;
-            line-height: 1.55;
+            font-size: 0.95rem;
+            line-height: 1.5;
             color: var(--text-muted);
-            margin-bottom: 22px;
+            margin-bottom: 18px;
         }
 
         .hero-chips-bar {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .hero-chip {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid var(--brand-teal-border);
-            padding: 6px 13px;
+            padding: 5px 12px;
             border-radius: var(--radius-pill);
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 600;
             color: var(--text-body);
         }
@@ -369,14 +370,14 @@
         }
 
         /* ----------------------------------------------------
-           INVOICE CARD CONTAINER (AESTHETIC PAPER SHEET)
+           INVOICE CARD CONTAINER (PAPER SHEET)
         ---------------------------------------------------- */
         .invoice-card-wrapper {
             background: var(--surface-white);
             border: 1px solid var(--border-card);
             border-radius: var(--radius-2xl);
             box-shadow: var(--shadow-brand);
-            padding: 44px;
+            padding: 40px;
             position: relative;
         }
 
@@ -384,16 +385,16 @@
         .invoice-meta-grid {
             display: grid;
             grid-template-columns: 1.3fr 1fr;
-            gap: 32px;
-            padding-bottom: 32px;
+            gap: 28px;
+            padding-bottom: 28px;
             border-bottom: 1px solid var(--border-hairline);
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .meta-col-left {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .brand-meta-badge {
@@ -403,12 +404,12 @@
         }
 
         .brand-meta-badge img {
-            height: 42px;
+            height: 38px;
             width: auto;
         }
 
         .brand-meta-title {
-            font-size: 1.45rem;
+            font-size: 1.35rem;
             font-weight: 800;
             letter-spacing: -0.03em;
             color: var(--brand-teal);
@@ -416,39 +417,39 @@
         }
 
         .brand-meta-desc {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 500;
         }
 
         .client-info-box {
-            margin-top: 14px;
-            padding: 16px 20px;
+            margin-top: 10px;
+            padding: 14px 18px;
             background: var(--brand-teal-light);
             border: 1px solid var(--brand-teal-border);
             border-radius: var(--radius-xl);
         }
 
         .client-eyebrow {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: var(--brand-green);
-            margin-bottom: 4px;
-        }
-
-        .client-name {
-            font-size: 1.12rem;
-            font-weight: 800;
-            color: var(--text-title);
             margin-bottom: 3px;
         }
 
+        .client-name {
+            font-size: 1.08rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 2px;
+        }
+
         .client-address {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .meta-col-right {
@@ -456,15 +457,15 @@
             flex-direction: column;
             align-items: flex-end;
             text-align: right;
-            gap: 8px;
+            gap: 6px;
         }
 
         .doc-title-badge {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 800;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: var(--radius-pill);
             background: var(--brand-teal-surface);
             color: var(--brand-teal);
@@ -472,7 +473,7 @@
         }
 
         .invoice-number-display {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: var(--text-title);
@@ -480,7 +481,7 @@
         }
 
         .meta-row {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
@@ -492,21 +493,21 @@
         .status-unpaid-chip {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
+            gap: 5px;
+            padding: 4px 12px;
             border-radius: var(--radius-pill);
             background: #fef2f2;
             color: #b91c1c;
             border: 1px solid #fecaca;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 700;
             letter-spacing: 0.04em;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .status-dot-red {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: #ef4444;
             animation: pulseDot 2s infinite ease-in-out;
@@ -518,29 +519,29 @@
         }
 
         /* ----------------------------------------------------
-           DOMAIN HIGHLIGHT NOTIFICATION (2 TAHUN)
+           DOMAIN HIGHLIGHT CARD
         ---------------------------------------------------- */
         .domain-feature-card {
             background: linear-gradient(135deg, #f0fdf4 0%, #e6f6ee 100%);
             border: 1px solid #b9ddc3;
             border-radius: var(--radius-xl);
-            padding: 20px 24px;
-            margin-bottom: 32px;
+            padding: 16px 20px;
+            margin-bottom: 26px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 16px;
         }
 
         .domain-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .domain-icon-circle {
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: #ffffff;
             border: 1px solid #a2cfb2;
@@ -548,12 +549,12 @@
             align-items: center;
             justify-content: center;
             color: var(--brand-teal);
-            box-shadow: 0 2px 8px rgba(0, 109, 119, 0.08);
+            box-shadow: 0 2px 6px rgba(0, 109, 119, 0.08);
             flex-shrink: 0;
         }
 
         .domain-title-text {
-            font-size: 1.05rem;
+            font-size: 0.98rem;
             font-weight: 800;
             color: var(--text-title);
             margin-bottom: 2px;
@@ -562,28 +563,28 @@
         .domain-title-text strong {
             color: var(--brand-teal);
             font-family: monospace;
-            font-size: 1.1rem;
+            font-size: 1.02rem;
             background: #ffffff;
-            padding: 2px 8px;
+            padding: 1px 7px;
             border-radius: 6px;
             border: 1px solid #cfe0d6;
         }
 
         .domain-sub-desc {
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
         }
 
         .domain-duration-tag {
             background: var(--brand-green);
             color: #ffffff;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: var(--radius-pill);
-            font-size: 0.8rem;
+            font-size: 0.76rem;
             font-weight: 700;
             white-space: nowrap;
             letter-spacing: 0.02em;
-            box-shadow: 0 2px 8px rgba(36, 125, 72, 0.25);
+            box-shadow: 0 2px 6px rgba(36, 125, 72, 0.2);
         }
 
         /* ----------------------------------------------------
@@ -593,18 +594,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .section-heading {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 800;
             color: var(--brand-teal);
             letter-spacing: -0.02em;
         }
 
         .section-subtext {
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 600;
             color: var(--text-muted);
         }
@@ -614,13 +615,13 @@
             border: 1px solid var(--border-card);
             border-radius: var(--radius-xl);
             overflow: hidden;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
         }
 
         .invoice-table thead {
@@ -630,8 +631,8 @@
 
         .invoice-table th {
             text-align: left;
-            padding: 14px 20px;
-            font-size: 0.76rem;
+            padding: 12px 18px;
+            font-size: 0.74rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -656,7 +657,7 @@
         }
 
         .invoice-table td {
-            padding: 20px;
+            padding: 18px;
             vertical-align: top;
         }
 
@@ -666,7 +667,7 @@
         }
 
         .item-main-title {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: var(--text-title);
             margin-bottom: 4px;
@@ -677,9 +678,9 @@
         }
 
         .item-tag {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            padding: 2px 8px;
+            padding: 2px 7px;
             border-radius: var(--radius-pill);
             background: var(--brand-teal-surface);
             color: var(--brand-teal);
@@ -687,42 +688,42 @@
         }
 
         .item-lead-text {
-            font-size: 0.83rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.45;
             margin-bottom: 10px;
         }
 
         .features-grid-mini {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 8px 16px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 6px 14px;
             margin-top: 8px;
         }
 
         .feature-item-mini {
             display: flex;
             align-items: flex-start;
-            gap: 7px;
-            font-size: 0.8rem;
+            gap: 6px;
+            font-size: 0.78rem;
             color: var(--text-body);
         }
 
         .feature-item-mini svg {
             color: var(--brand-green);
             flex-shrink: 0;
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .row-price-amount {
-            font-size: 1.15rem;
+            font-size: 1.12rem;
             font-weight: 800;
             color: var(--text-title);
             font-feature-settings: "tnum";
         }
 
         .row-price-sub {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             font-weight: 600;
             margin-top: 2px;
@@ -734,26 +735,26 @@
         .total-banner-box {
             background: linear-gradient(135deg, #006d77 0%, #00565e 100%);
             border-radius: var(--radius-xl);
-            padding: 28px 34px;
+            padding: 24px 28px;
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-            margin-bottom: 32px;
-            box-shadow: 0 10px 24px -4px rgba(0, 109, 119, 0.3);
+            gap: 18px;
+            margin-bottom: 26px;
+            box-shadow: 0 8px 22px -4px rgba(0, 109, 119, 0.28);
         }
 
         .total-box-left-title {
-            font-size: 1.25rem;
+            font-size: 1.18rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .total-box-left-sub {
-            font-size: 0.84rem;
-            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.88);
         }
 
         .total-box-right {
@@ -761,7 +762,7 @@
         }
 
         .total-nominal-grand {
-            font-size: clamp(2rem, 3.5vw, 2.7rem);
+            font-size: clamp(1.9rem, 3.2vw, 2.5rem);
             font-weight: 800;
             letter-spacing: -0.03em;
             font-feature-settings: "tnum";
@@ -770,10 +771,10 @@
         }
 
         .total-terbilang-text {
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 600;
             color: var(--brand-gold);
-            margin-top: 6px;
+            margin-top: 5px;
             letter-spacing: 0.02em;
         }
 
@@ -784,40 +785,40 @@
             background: #ffffff;
             border: 1px solid var(--border-card);
             border-radius: var(--radius-xl);
-            padding: 28px;
+            padding: 24px 26px;
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 28px;
+            gap: 24px;
             align-items: center;
             box-shadow: var(--shadow-card);
         }
 
         .bank-left-desc h3 {
-            font-size: 1.15rem;
+            font-size: 1.08rem;
             font-weight: 800;
             color: var(--brand-teal);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .bank-left-desc p {
-            font-size: 0.83rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .bank-account-box {
             background: var(--brand-teal-light);
             border: 1px solid var(--brand-teal-border);
             border-radius: var(--radius-lg);
-            padding: 18px 22px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 14px;
         }
 
         .bank-name-tag {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             color: var(--brand-green);
@@ -826,7 +827,7 @@
         }
 
         .bank-acc-num {
-            font-size: 1.28rem;
+            font-size: 1.22rem;
             font-weight: 800;
             color: var(--text-title);
             letter-spacing: 0.04em;
@@ -835,7 +836,7 @@
         }
 
         .bank-holder-name {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             font-weight: 600;
         }
@@ -845,8 +846,8 @@
             color: var(--brand-teal);
             border: 1px solid var(--brand-teal-subtle);
             border-radius: var(--radius-pill);
-            padding: 8px 16px;
-            font-size: 0.78rem;
+            padding: 8px 15px;
+            font-size: 0.76rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
@@ -863,16 +864,23 @@
            FOOTER NOTES
         ---------------------------------------------------- */
         .invoice-footer-notes {
-            margin-top: 36px;
-            padding-top: 24px;
+            margin-top: 30px;
+            padding-top: 20px;
             border-top: 1px solid var(--border-hairline);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            font-size: 0.78rem;
+            gap: 14px;
+            font-size: 0.76rem;
             color: var(--text-caption);
             flex-wrap: wrap;
+        }
+
+        /* ----------------------------------------------------
+           MOBILE-ONLY BOTTOM FLOATING ACTION BAR
+        ---------------------------------------------------- */
+        .mobile-bottom-bar {
+            display: none; /* Desktop hidden */
         }
 
         /* ----------------------------------------------------
@@ -895,53 +903,53 @@
         }
 
         .gate-card-box {
-            max-width: 440px;
+            max-width: 420px;
             width: 100%;
             background: #ffffff;
             border: 1px solid var(--brand-teal-border);
             border-radius: var(--radius-2xl);
-            padding: 36px;
+            padding: 32px 26px;
             box-shadow: var(--shadow-float);
             text-align: center;
         }
 
         .gate-brand-logo {
-            height: 52px;
+            height: 48px;
             width: auto;
-            margin: 0 auto 16px;
+            margin: 0 auto 14px;
             display: block;
         }
 
         .gate-eyebrow {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.14em;
             color: var(--brand-green);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .gate-title {
-            font-size: 1.45rem;
+            font-size: 1.35rem;
             font-weight: 800;
             color: var(--brand-teal);
             letter-spacing: -0.02em;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .gate-desc {
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            margin-bottom: 24px;
-            line-height: 1.5;
+            margin-bottom: 20px;
+            line-height: 1.45;
         }
 
         .pin-input-field {
             width: 100%;
-            padding: 14px 18px;
+            padding: 13px 16px;
             border-radius: var(--radius-pill);
             border: 1.5px solid var(--brand-teal-border);
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             letter-spacing: 0.35em;
             text-align: center;
             font-weight: 800;
@@ -949,7 +957,7 @@
             background: var(--surface-subtle);
             outline: none;
             transition: all 0.2s ease;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .pin-input-field:focus {
@@ -960,22 +968,22 @@
 
         .gate-error-msg {
             color: #dc2626;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .gate-submit-btn {
             width: 100%;
-            padding: 13px;
+            padding: 12px;
             border-radius: var(--radius-pill);
             background: var(--brand-teal);
             color: #ffffff;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 800;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0, 109, 119, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 109, 119, 0.25);
             transition: all 0.18s ease;
         }
 
@@ -988,22 +996,23 @@
         ---------------------------------------------------- */
         .toast-popup {
             position: fixed;
-            bottom: 28px;
+            bottom: 84px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translateX(-50%) translateY(40px);
             background: #10251d;
             color: #ffffff;
             border: 1px solid var(--brand-green);
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: var(--radius-pill);
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 0.02em;
             box-shadow: var(--shadow-float);
             z-index: 9999;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             opacity: 0;
             pointer-events: none;
+            white-space: nowrap;
         }
 
         .toast-popup.show {
@@ -1011,51 +1020,379 @@
             opacity: 1;
         }
 
-        /* ----------------------------------------------------
-           RESPONSIVE BREAKPOINTS
-        ---------------------------------------------------- */
-        @media (max-width: 860px) {
-            .page-container {
+        /* ====================================================
+           SPECIAL MOBILE REDESIGN (MAX-WIDTH: 768px)
+           Ultra-Compact, App-Like, Non-Bulky, Clean Experience
+           ==================================================== */
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: 78px; /* space for bottom bar */
+                background-color: #f7faf8;
+            }
+
+            /* 1. Header is super clean & compact */
+            .site-header {
+                height: 52px;
+            }
+            .header-inner {
+                height: 52px;
                 padding: 0 14px;
-                margin: 20px auto 48px;
+            }
+            .brand-logo-img {
+                height: 28px;
+            }
+            .brand-logo-text {
+                font-size: 1.05rem;
+            }
+            .brand-pill-tag {
+                font-size: 0.65rem;
+                padding: 2px 7px;
+            }
+            .nav-actions {
+                display: none; /* Hidden on mobile; moved to bottom bar */
+            }
+            .mobile-header-right {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .mobile-lock-btn {
+                background: #f0f7f3;
+                border: 1px solid #cfe0d6;
+                color: var(--brand-teal);
+                padding: 6px 10px;
+                border-radius: var(--radius-pill);
+                font-size: 0.72rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                cursor: pointer;
             }
 
+            /* 2. Hero banner is completely removed on mobile to show invoice immediately */
+            .hero-banner {
+                display: none !important;
+            }
+
+            /* 3. Page Container is snug */
+            .page-container {
+                margin: 12px auto 24px;
+                padding: 0 12px;
+            }
+
+            /* 4. Invoice Paper Card */
             .invoice-card-wrapper {
-                padding: 24px 18px;
+                padding: 18px 14px;
+                border-radius: 18px;
+                box-shadow: 0 2px 14px rgba(0, 109, 119, 0.06);
             }
 
+            /* 5. Top Meta Grid: stacked cleanly */
             .invoice-meta-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 16px;
+                padding-bottom: 18px;
+                margin-bottom: 18px;
+            }
+
+            .brand-meta-badge img {
+                height: 32px;
+            }
+            .brand-meta-title {
+                font-size: 1.15rem;
+            }
+            .brand-meta-desc {
+                font-size: 0.74rem;
+            }
+
+            .client-info-box {
+                margin-top: 6px;
+                padding: 12px 14px;
+                border-radius: 12px;
+            }
+            .client-eyebrow {
+                font-size: 0.65rem;
+            }
+            .client-name {
+                font-size: 0.98rem;
+            }
+            .client-address {
+                font-size: 0.74rem;
+                line-height: 1.4;
             }
 
             .meta-col-right {
-                align-items: flex-start;
+                align-items: stretch;
+                text-align: left;
+                background: var(--surface-subtle);
+                border: 1px solid var(--border-card);
+                border-radius: 12px;
+                padding: 12px 14px;
+                gap: 5px;
+            }
+            .doc-title-badge {
+                align-self: flex-start;
+                font-size: 0.68rem;
+                padding: 2px 8px;
+            }
+            .invoice-number-display {
+                font-size: 1.12rem;
+            }
+            .meta-row {
+                font-size: 0.74rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            /* 6. Domain 2 Tahun Feature Card */
+            .domain-feature-card {
+                padding: 12px 14px;
+                margin-bottom: 18px;
+                border-radius: 14px;
+                gap: 12px;
+            }
+            .domain-icon-circle {
+                width: 34px;
+                height: 34px;
+            }
+            .domain-icon-circle svg {
+                width: 18px;
+                height: 18px;
+            }
+            .domain-title-text {
+                font-size: 0.86rem;
+            }
+            .domain-title-text strong {
+                font-size: 0.9rem;
+                padding: 1px 5px;
+            }
+            .domain-sub-desc {
+                font-size: 0.72rem;
+            }
+            .domain-duration-tag {
+                font-size: 0.7rem;
+                padding: 4px 9px;
+            }
+
+            /* 7. Section Header */
+            .section-header-row {
+                margin-bottom: 10px;
+            }
+            .section-heading {
+                font-size: 0.96rem;
+            }
+            .section-subtext {
+                font-size: 0.7rem;
+            }
+
+            /* 8. TABLE TO MODERN MODULAR CARDS (MOBILE RESHAPE) */
+            .invoice-table-wrap {
+                border: none;
+                background: transparent;
+                margin-bottom: 16px;
+            }
+            .invoice-table {
+                display: block;
+                width: 100%;
+            }
+            .invoice-table thead {
+                display: none; /* Hide desktop table headers */
+            }
+            .invoice-table tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+            }
+            .invoice-table tbody tr {
+                display: flex;
+                flex-direction: column;
+                background: #ffffff;
+                border: 1px solid var(--border-card);
+                border-radius: 14px;
+                padding: 14px;
+                box-shadow: 0 1px 4px rgba(19, 42, 36, 0.04);
+            }
+            .invoice-table td {
+                padding: 0 !important;
+                border: none !important;
+            }
+            .invoice-table td:nth-child(2) {
+                display: none; /* Hide Qty column on mobile card */
+            }
+            .invoice-table td.col-price {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 12px;
+                padding-top: 10px !important;
+                border-top: 1px dashed var(--border-hairline) !important;
                 text-align: left;
             }
-
-            .domain-feature-card {
-                flex-direction: column;
-                align-items: flex-start;
+            .invoice-table td.col-price::before {
+                content: "Subtotal:";
+                font-size: 0.72rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--text-muted);
             }
 
+            .item-main-title {
+                font-size: 0.9rem;
+                line-height: 1.35;
+                margin-bottom: 4px;
+            }
+            .item-tag {
+                font-size: 0.65rem;
+                padding: 2px 6px;
+            }
+            .item-lead-text {
+                font-size: 0.76rem;
+                margin-bottom: 8px;
+                line-height: 1.4;
+            }
+            .features-grid-mini {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                margin-top: 6px;
+            }
+            .feature-item-mini {
+                font-size: 0.74rem;
+                line-height: 1.35;
+            }
+            .row-price-amount {
+                font-size: 1.05rem;
+            }
+            .row-price-sub {
+                font-size: 0.68rem;
+                margin-top: 0;
+            }
+
+            /* 9. Total Banner Box */
             .total-banner-box {
                 flex-direction: column;
-                align-items: flex-start;
-                padding: 22px;
+                align-items: stretch;
+                padding: 16px 18px;
+                border-radius: 14px;
+                margin-bottom: 18px;
+                gap: 12px;
             }
-
+            .total-box-left-title {
+                font-size: 1rem;
+            }
+            .total-box-left-sub {
+                font-size: 0.74rem;
+            }
             .total-box-right {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+                padding-top: 10px;
                 text-align: left;
             }
-
-            .bank-info-panel {
-                grid-template-columns: 1fr;
+            .total-nominal-grand {
+                font-size: 1.7rem;
+            }
+            .total-terbilang-text {
+                font-size: 0.72rem;
+                margin-top: 0;
             }
 
+            /* 10. Bank Info Panel */
+            .bank-info-panel {
+                grid-template-columns: 1fr;
+                padding: 16px 14px;
+                border-radius: 14px;
+                gap: 14px;
+            }
+            .bank-left-desc h3 {
+                font-size: 0.98rem;
+            }
+            .bank-left-desc p {
+                font-size: 0.74rem;
+                line-height: 1.4;
+            }
             .bank-account-box {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
+                padding: 14px;
+                border-radius: 12px;
+                gap: 12px;
+            }
+            .bank-name-tag {
+                font-size: 0.68rem;
+            }
+            .bank-acc-num {
+                font-size: 1.25rem;
+            }
+            .bank-holder-name {
+                font-size: 0.74rem;
+            }
+            .btn-copy-acc {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                font-size: 0.78rem;
+            }
+
+            /* 11. Footer notes */
+            .invoice-footer-notes {
+                margin-top: 20px;
+                padding-top: 14px;
+                font-size: 0.7rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 6px;
+            }
+
+            /* 12. Bottom Floating Action Bar */
+            .mobile-bottom-bar {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 90;
+                background: rgba(255, 255, 255, 0.97);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border-top: 1px solid var(--brand-teal-border);
+                padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+                gap: 8px;
+                box-shadow: 0 -4px 18px rgba(0, 109, 119, 0.08);
+            }
+
+            .btn-mob-action {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                min-height: 42px;
+                border-radius: var(--radius-pill);
+                font-size: 0.78rem;
+                font-weight: 700;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                transition: transform 0.15s ease;
+            }
+            .btn-mob-primary {
+                background: var(--brand-teal);
+                color: #ffffff;
+                box-shadow: 0 3px 10px rgba(0, 109, 119, 0.25);
+            }
+            .btn-mob-secondary {
+                background: #ffffff;
+                color: var(--brand-teal);
+                border: 1px solid var(--brand-teal-subtle);
+            }
+            .btn-mob-action:active {
+                transform: scale(0.97);
             }
         }
 
@@ -1071,10 +1408,12 @@
             body {
                 background: #ffffff !important;
                 color: #000000 !important;
+                padding-bottom: 0 !important;
             }
 
             .site-header,
             .hero-banner,
+            .mobile-bottom-bar,
             .security-gate-overlay,
             .toast-popup,
             .no-print {
@@ -1138,6 +1477,7 @@
                     <span class="brand-pill-tag">Bimbel Masisir</span>
                 </a>
 
+                <!-- Desktop Nav Actions -->
                 <div class="nav-actions no-print">
                     <button class="btn-brand-primary" onclick="window.print()">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
@@ -1156,13 +1496,21 @@
                         <span>Kunci</span>
                     </button>
                 </div>
+
+                <!-- Mobile Header Right (Compact Lock) -->
+                <div class="mobile-header-right no-print">
+                    <button class="mobile-lock-btn" onclick="lockDocument()">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span>Kunci</span>
+                    </button>
+                </div>
             </div>
         </header>
 
         <!-- PAGE BODY CONTAINER -->
         <main class="page-container">
 
-            <!-- HERO BRAND BANNER (MIRRORING ALMADRAJ-EDU.COM) -->
+            <!-- DESKTOP HERO BRAND BANNER (HIDDEN ON MOBILE) -->
             <section class="hero-banner no-print">
                 <div class="hero-bg-overlay"></div>
                 <div class="hero-content">
@@ -1218,16 +1566,17 @@
                     <div class="meta-col-right">
                         <div class="doc-title-badge">Invoice Resmi</div>
                         <div class="invoice-number-display">#INV/ALM/2026/09/016</div>
-                        <div class="meta-row">Tanggal Terbit: <strong>06 September 2026</strong></div>
-                        <div class="meta-row">Jatuh Tempo: <strong>20 September 2026</strong></div>
-                        <div class="meta-row">Status Dokumen: 
+                        <div class="meta-row"><span>Tanggal Terbit:</span> <strong>06 September 2026</strong></div>
+                        <div class="meta-row"><span>Jatuh Tempo:</span> <strong>20 September 2026</strong></div>
+                        <div class="meta-row">
+                            <span>Status:</span>
                             <span class="status-unpaid-chip">
                                 <span class="status-dot-red"></span>
                                 BELUM LUNAS
                             </span>
                         </div>
-                        <div class="meta-row" style="margin-top: 6px;">
-                            Penyedia: <strong>DAR Invoices (Daru Fahmaa Muliawan)</strong>
+                        <div class="meta-row" style="margin-top: 4px;">
+                            <span>Penyedia:</span> <strong>DAR Invoices</strong>
                         </div>
                     </div>
                 </div>
@@ -1236,19 +1585,19 @@
                 <div class="domain-feature-card">
                     <div class="domain-left">
                         <div class="domain-icon-circle">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                         </div>
                         <div>
                             <div class="domain-title-text">Domain Internasional Resmi: <strong>almadroj-edu.com</strong></div>
-                            <div class="domain-sub-desc">Pendaftaran dan perlindungan domain penuh 24 bulan (2 tahun berturut-turut) termasuk DNS Cloudflare &amp; SSL aktif.</div>
+                            <div class="domain-sub-desc">Pendaftaran dan perlindungan domain 24 bulan penuh (2 tahun) termasuk DNS Cloudflare &amp; SSL aktif.</div>
                         </div>
                     </div>
                     <div class="domain-duration-tag">
-                        Aktif 2 Tahun Penuh
+                        Aktif 2 Tahun
                     </div>
                 </div>
 
-                <!-- BREAKDOWN TABLE -->
+                <!-- BREAKDOWN TABLE / CARDS -->
                 <div class="section-header-row">
                     <h2 class="section-heading">Rincian Paket Pengembangan &amp; Layanan</h2>
                     <span class="section-subtext">2 Komponen Pekerjaan</span>
@@ -1382,6 +1731,23 @@
 
             </div>
         </main>
+
+        <!-- MOBILE-ONLY BOTTOM FLOATING ACTION BAR -->
+        <nav class="mobile-bottom-bar no-print" aria-label="Aksi Mobile">
+            <button class="btn-mob-action btn-mob-primary" onclick="window.print()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                <span>Cetak / PDF</span>
+            </button>
+            <button class="btn-mob-action btn-mob-secondary" id="btnDownloadPngMob" onclick="downloadInvoicePng()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Unduh PNG</span>
+            </button>
+            <button class="btn-mob-action btn-mob-secondary" onclick="copyWaScriptLocal()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>Salin WA</span>
+            </button>
+        </nav>
+
     </div>
 
     <!-- TOAST POPUP NOTIFICATION -->
@@ -1444,7 +1810,7 @@
 
         function copyBankAccount() {
             navigator.clipboard.writeText("1550010616962").then(() => {
-                showToast("Nomor Rekening Mandiri (1550010616962) Berhasil Disalin!");
+                showToast("Rekening Mandiri (1550010616962) Berhasil Disalin!");
             }).catch(() => {
                 showToast("Salin manual: 1550010616962");
             });
@@ -1486,10 +1852,13 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada t
 
         async function downloadInvoicePng() {
             const sheet = document.getElementById("invoiceSheet");
-            const btn = document.getElementById("btnDownloadPng");
-            const originalText = btn.innerHTML;
+            const btnDesktop = document.getElementById("btnDownloadPng");
+            const btnMobile = document.getElementById("btnDownloadPngMob");
+            const origDesktop = btnDesktop ? btnDesktop.innerHTML : "";
+            const origMobile = btnMobile ? btnMobile.innerHTML : "";
             
-            btn.innerHTML = "<span>Sedang Menyimpan...</span>";
+            if (btnDesktop) btnDesktop.innerHTML = "<span>Menyimpan...</span>";
+            if (btnMobile) btnMobile.innerHTML = "<span>Menyimpan...</span>";
             showToast("Sedang merender gambar PNG resolusi tinggi...");
 
             try {
@@ -1509,7 +1878,8 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada t
                 console.error("Gagal download PNG:", err);
                 showToast("Gagal membuat PNG, silakan gunakan Cetak PDF.");
             } finally {
-                btn.innerHTML = originalText;
+                if (btnDesktop) btnDesktop.innerHTML = origDesktop;
+                if (btnMobile) btnMobile.innerHTML = origMobile;
             }
         }
     </script>
