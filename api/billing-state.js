@@ -62,9 +62,11 @@ const defaultState = {
     "umrahme-dreammecca": "UNPAID",
     mochi: "UNPAID",
     athifa: "UNPAID",
+    kpi: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
+    kpi: 7100000,
   },
   netProfits: {
     almadroj: 3500000,
@@ -85,6 +87,7 @@ const defaultState = {
     "umrahme-dreammecca": 280000,
     mochi: 600000,
     athifa: 250000,
+    kpi: 14000000,
   },
 };
 
