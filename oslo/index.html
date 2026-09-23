@@ -187,6 +187,10 @@
             border: 1px solid rgba(194, 154, 91, 0.3);
         }
 
+        .hero-mobile-visual-frame {
+            display: none;
+        }
+
         .hero-bg-overlay {
             position: absolute;
             top: 0;
@@ -732,27 +736,133 @@
         }
 
         @media (max-width: 768px) {
+            .page-container {
+                padding: 14px 12px 100px;
+            }
+
+            /* 1. Mobile Hero Banner with Architectural Image */
             .hero-banner {
+                display: block !important;
+                padding: 0;
+                background: #ffffff;
+                border: 1px solid var(--color-border);
+                border-radius: 12px;
+                overflow: hidden;
+                margin-bottom: 18px;
+                box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05);
+            }
+
+            .hero-mobile-visual-frame {
+                display: block;
+                width: 100%;
+                height: 200px;
+                position: relative;
+                overflow: hidden;
+                background: #f1f5f9;
+            }
+
+            .hero-mobile-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 30%;
+                display: block;
+            }
+
+            .hero-mobile-badge {
+                position: absolute;
+                bottom: 10px;
+                left: 12px;
+                background: rgba(15, 23, 42, 0.88);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                color: #ffffff;
+                font-size: 0.68rem;
+                font-weight: 500;
+                letter-spacing: 0.04em;
+                padding: 4px 10px;
+                border-radius: 4px;
+            }
+
+            .hero-bg-overlay {
                 display: none !important;
             }
 
-            .page-container {
-                padding: 12px 10px 90px;
+            .hero-content {
+                padding: 18px 16px 20px;
+                max-width: 100%;
             }
 
+            .hero-project-tag {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+
+            .hero-title {
+                font-size: 1.25rem;
+                line-height: 1.3;
+                margin-bottom: 8px;
+            }
+
+            .hero-desc {
+                font-size: 0.8rem;
+                line-height: 1.55;
+                margin-bottom: 14px;
+            }
+
+            .hero-meta-list {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                padding-top: 10px;
+                border-top: 1px solid var(--color-border-subtle);
+                font-size: 0.74rem;
+            }
+
+            /* 2. Mobile Invoice Card Wrapper */
             .invoice-card-wrapper {
-                padding: 22px 18px;
-                border-radius: 10px;
+                padding: 24px 18px;
+                border-radius: 12px;
             }
 
             .invoice-meta-section {
                 flex-direction: column;
-                gap: 16px;
+                gap: 18px;
+                padding-bottom: 20px;
+                margin-bottom: 22px;
+            }
+
+            .meta-client-block {
+                margin-top: 14px;
+            }
+
+            .client-name {
+                font-size: 1.1rem;
             }
 
             .meta-right-block {
                 text-align: left;
                 align-items: flex-start;
+                padding-top: 14px;
+                border-top: 1px dashed var(--color-border);
+                width: 100%;
+            }
+
+            .doc-title {
+                font-size: 1.55rem;
+            }
+
+            /* 3. Developer Narrative Mobile */
+            .developer-narrative-section {
+                padding-bottom: 20px;
+                margin-bottom: 22px;
+            }
+
+            .narrative-quote {
+                font-size: 0.82rem;
+                padding-left: 12px;
+                margin-bottom: 16px;
+                line-height: 1.55;
             }
 
             .values-editorial-row {
@@ -760,37 +870,121 @@
                 gap: 14px;
             }
 
+            /* 4. Service Overview Mobile */
             .service-overview-section {
                 flex-direction: column;
-                gap: 8px;
+                gap: 10px;
+                padding-bottom: 16px;
+                margin-bottom: 20px;
+            }
+
+            .service-name {
+                font-size: 1.05rem;
+                line-height: 1.35;
+            }
+
+            .service-price-text {
+                font-size: 1.55rem;
+            }
+
+            /* 5. 16-Page Structure Mobile Layout (Clean & Readable) */
+            .pages-editorial-section {
+                margin-bottom: 26px;
             }
 
             .page-list-row {
-                grid-template-columns: 60px 1fr;
-                gap: 6px;
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                padding: 12px 0;
+                border-bottom: 1px solid var(--color-border-subtle);
+            }
+
+            .page-num {
+                font-size: 0.72rem;
+                color: var(--color-secondary);
+                font-family: monospace;
+            }
+
+            .page-topic {
+                font-size: 0.85rem;
+                font-weight: 500;
+                color: var(--color-primary);
+                line-height: 1.3;
             }
 
             .page-detail {
-                grid-column: 1 / -1;
-                font-size: 0.74rem;
+                font-size: 0.76rem;
+                color: var(--color-text-muted);
+                line-height: 1.5;
+                margin-top: 1px;
+            }
+
+            /* 6. Deliverables Mobile */
+            .deliverables-editorial-section {
+                padding: 16px 0;
+                margin-bottom: 22px;
             }
 
             .deliverables-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 14px;
             }
 
+            .deliverable-title {
+                font-size: 0.82rem;
+            }
+
+            .deliverable-sub {
+                font-size: 0.74rem;
+            }
+
+            /* 7. Total Row Mobile */
+            .total-editorial-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                padding: 16px 0;
+                margin-bottom: 20px;
+            }
+
+            .total-num-large {
+                font-size: 1.75rem;
+            }
+
+            /* 8. Bank Mandiri Section Mobile */
             .payment-editorial-section {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
+                gap: 16px;
+                padding: 18px 0;
+                margin-bottom: 22px;
+            }
+
+            .bank-mandiri-img {
+                height: 28px;
+            }
+
+            .acc-number-text {
+                font-size: 1.15rem;
             }
 
             .btn-copy-clean {
                 width: 100%;
                 text-align: center;
+                padding: 11px 16px;
+                font-size: 0.8rem;
+                font-weight: 500;
+                background: var(--color-primary);
+                color: #ffffff;
+                border: 1px solid var(--color-primary);
             }
 
+            .btn-copy-clean:hover {
+                background: #1e293b;
+            }
+
+            /* 9. Header & Nav Controls Mobile */
             .nav-actions {
                 display: none;
             }
@@ -801,23 +995,27 @@
                 border: 1px solid var(--color-border);
                 padding: 6px 12px;
                 border-radius: 6px;
-                font-size: 0.72rem;
+                font-size: 0.74rem;
                 color: var(--color-text-main);
                 cursor: pointer;
             }
 
+            /* 10. Sleek Floating Bottom Bar */
             .mobile-bottom-bar {
                 display: flex;
                 position: fixed;
                 bottom: 10px;
-                left: 10px;
-                right: 10px;
-                background: rgba(15, 23, 42, 0.95);
-                backdrop-filter: blur(16px);
-                border-radius: 8px;
+                left: 12px;
+                right: 12px;
+                background: rgba(15, 23, 42, 0.94);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 10px;
                 padding: 8px;
                 z-index: 99;
-                gap: 6px;
+                gap: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             }
 
             .btn-mob-action {
@@ -825,14 +1023,16 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 4px;
-                font-size: 0.72rem;
+                gap: 6px;
+                font-family: var(--font-family);
+                font-size: 0.74rem;
                 font-weight: 500;
-                padding: 9px 4px;
+                padding: 10px 8px;
                 border-radius: 6px;
                 border: none;
                 cursor: pointer;
                 text-decoration: none;
+                white-space: nowrap;
             }
 
             .btn-mob-primary {
@@ -841,7 +1041,12 @@
             }
 
             .btn-mob-secondary {
-                background: rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.14);
+                color: #ffffff;
+            }
+
+            .btn-mob-gold {
+                background: var(--color-gold);
                 color: #ffffff;
             }
         }
@@ -941,8 +1146,12 @@
         <!-- PAGE CONTAINER -->
         <main class="page-container">
 
-            <!-- DESKTOP HERO BANNER -->
+            <!-- HERO BANNER (DESKTOP & MOBILE WITH ARCHITECTURAL VISUAL) -->
             <section class="hero-banner no-print">
+                <div class="hero-mobile-visual-frame">
+                    <img src="/oslo/oslo-header.jpg" alt="OSLO PARK Hardcover Book Catalogue" class="hero-mobile-img" onerror="this.src='oslo-header.jpg'">
+                    <div class="hero-mobile-badge">Buku Katalog Arsitektural 16 Hal</div>
+                </div>
                 <div class="hero-bg-overlay"></div>
                 <div class="hero-content">
                     <div class="hero-project-tag">Dokumen Resmi Invoice &middot; PT. Trisan Esa Cipta</div>
@@ -1173,7 +1382,7 @@
         <div class="mobile-bottom-bar no-print">
             <button type="button" class="btn-mob-action btn-mob-primary" onclick="window.print()">Cetak PDF</button>
             <button type="button" class="btn-mob-action btn-mob-secondary" onclick="downloadInvoicePng()">Unduh PNG</button>
-            <button type="button" class="btn-mob-action btn-mob-secondary" onclick="copyWaScriptLocal()">Salin WA</button>
+            <button type="button" class="btn-mob-action btn-mob-gold" onclick="copyWaScriptLocal()">Salin WA</button>
         </div>
 
     </div>
