@@ -3729,6 +3729,249 @@
             showToast("KEUNTUNGAN BERSIH BERHASIL DISIMPAN!");
         }
 
+/* =========================================================================
+           MONTHLY GOALS & MINDSET AFFIRMATION ENGINE (SULTAN TRACKER)
+        ========================================================================= */
+        const GOAL_TIER_TARGETS = {
+            '15m': 15000000,
+            '30m': 30000000,
+            '50m': 50000000
+        };
+
+        const MOTIVATIONAL_AFFIRMATIONS = [
+            "Satu closingan high-ticket lagi, target bulan ini langsung lewat. Gassken!",
+            "Klien bayar mahal bukan cuma buat desain, tapi buat ketenangan pikiran & prestige bisnis mereka. You are the solution!",
+            "Follow up penawaran hari ini! Invoice yang cair selalu berawal dari keberanian nembak harga pantas.",
+            "Konsistensi hari ini adalah saldo mutasi rekening minggu depan. Fokus ke value, uang yang bakal ngejar.",
+            "Pak Joko aja closing 1,5jt brosur premium, klien berikutnya siap deal kontrak belasan juta!",
+            "Jangan pernah diskon tanpa potong scope. Nilai karyamu adalah aset masa depan bisnismu.",
+            "Setiap pixel & layout yang lo buat bernilai rupiah. Kerjain dengan rapi, tagih dengan kepala tegak!",
+            "Kerja cerdas, portofolio berkelas, invoice lekas lunas. Rezeki mengalir deras!",
+            "Saat agensi lain perang harga murah, agensi lo dipilih karena reputasi & ketepatan janji.",
+            "Gak ada batasan buat apa yang bisa lo capai. Buka laptop, eksekusi, kirim invoice!",
+            "Desain bagus itu seni, desain solutif yang dibayar mahal itu agensi berkelas. Keep pushing!"
+        ];
+
+        const VICTORY_AFFIRMATIONS = [
+            "EDAAAN! Target bulan ini jebol! Lo resmi di level Sultan. Saatnya self-reward secangkir kopi mahal, abis itu gas ke target berikutnya! 🚀🔥",
+            "TARGET 100% TERCAPAI! Rekening senyum lebar, kerja keras berbuah manis. Proud of you, Boss!",
+            "CHAMPION ENERGY! Bukan cuma angan-angan, angka di rekening membuktikan kapabilitas lo bulan ini!",
+            "SULTAN MODE ACTIVATED! Portofolio naik kelas, revenue meroket. Sekarang waktunya rehat sejenak & rayakan kemenangan!"
+        ];
+
+        let currentAffirmationIndex = Math.floor(Math.random() * MOTIVATIONAL_AFFIRMATIONS.length);
+        let currentVictoryIndex = 0;
+        let lastReportedGoalAchieved = false;
+
+        function getSavedGoalTier() {
+            return localStorage.getItem('dar_monthly_goal_tier') || '30m';
+        }
+
+        function getSavedGoalTarget() {
+            const tier = getSavedGoalTier();
+            if (tier === 'custom') {
+                const val = parseInt(localStorage.getItem('dar_monthly_goal_custom') || '30000000', 10);
+                return isNaN(val) || val <= 0 ? 30000000 : val;
+            }
+            return GOAL_TIER_TARGETS[tier] || 30000000;
+        }
+
+        function setGoalTier(tier) {
+            if (tier === 'custom') {
+                const current = getSavedGoalTarget();
+                const input = prompt("Masukkan target pendapatan lo dalam angka (contoh: 25000000 atau 75000000):", current);
+                if (input !== null) {
+                    const parsed = parseInt(input.replace(/[^0-9]/g, ''), 10);
+                    if (!isNaN(parsed) && parsed > 0) {
+                        localStorage.setItem('dar_monthly_goal_tier', 'custom');
+                        localStorage.setItem('dar_monthly_goal_custom', parsed);
+                    }
+                }
+            } else {
+                localStorage.setItem('dar_monthly_goal_tier', tier);
+            }
+            updateTierButtonsUI();
+            calculateFinancials();
+        }
+
+        function updateTierButtonsUI() {
+            const currentTier = getSavedGoalTier();
+            ['15m', '30m', '50m', 'custom'].forEach(t => {
+                const btn = document.getElementById(t === '15m' ? 'tierBtn15' : t === '30m' ? 'tierBtn30' : t === '50m' ? 'tierBtn50' : 'tierBtnCustom');
+                if (btn) {
+                    if (t === currentTier) {
+                        btn.classList.add('active');
+                        if (t === 'custom') {
+                            const val = getSavedGoalTarget();
+                            btn.innerText = `Custom (${Math.round(val / 1000000)} Jt)`;
+                        }
+                    } else {
+                        btn.classList.remove('active');
+                        if (t === 'custom') btn.innerText = 'Custom';
+                    }
+                }
+            });
+        }
+
+        function cycleAffirmation(isManual = false) {
+            const isAchieved = lastReportedGoalAchieved;
+            const quoteEl = document.getElementById('goalAffirmationQuote');
+            if (!quoteEl) return;
+
+            if (isAchieved) {
+                currentVictoryIndex = (currentVictoryIndex + 1) % VICTORY_AFFIRMATIONS.length;
+                quoteEl.innerText = `"${VICTORY_AFFIRMATIONS[currentVictoryIndex]}"`;
+                if (isManual) triggerGoalConfetti();
+            } else {
+                currentAffirmationIndex = (currentAffirmationIndex + 1) % MOTIVATIONAL_AFFIRMATIONS.length;
+                quoteEl.innerText = `"${MOTIVATIONAL_AFFIRMATIONS[currentAffirmationIndex]}"`;
+            }
+        }
+
+        function updateMonthlyGoalTracker(monthlyMap, totalPaidGross, activeMonthFilter) {
+            updateTierButtonsUI();
+            const targetAmount = getSavedGoalTarget();
+
+            // Determine active tracking revenue and month display
+            let currentPaid = 0;
+            let monthLabelText = "";
+            let metricLabelText = "Pendapatan Masuk Periode Ini";
+
+            if (activeMonthFilter && activeMonthFilter !== 'all' && monthlyMap[activeMonthFilter]) {
+                currentPaid = monthlyMap[activeMonthFilter].paidGrossTotal;
+                monthLabelText = `(${monthlyMap[activeMonthFilter].label})`;
+                metricLabelText = `Pendapatan Masuk ${monthlyMap[activeMonthFilter].label}`;
+            } else {
+                // If 'all' is selected:
+                // Show total accumulated paid gross across all active invoices so it never falsely reads Rp 0!
+                currentPaid = totalPaidGross;
+                monthLabelText = "(Semua Bulan / Akumulasi)";
+                metricLabelText = "Total Pendapatan Diterima (Semua Bulan)";
+            }
+
+            const monthDispEl = document.getElementById('goalMonthDisplay');
+            if (monthDispEl) monthDispEl.innerText = monthLabelText;
+
+            const metricLabelEl = document.getElementById('goalMetricLabel');
+            if (metricLabelEl) metricLabelEl.innerText = metricLabelText;
+
+            const currentPaidTextEl = document.getElementById('goalCurrentPaidText');
+            if (currentPaidTextEl) currentPaidTextEl.innerText = formatIDR(currentPaid);
+
+            const targetAmountTextEl = document.getElementById('goalTargetAmountText');
+            if (targetAmountTextEl) targetAmountTextEl.innerText = `Target ${formatIDR(targetAmount)}`;
+
+            const pct = targetAmount > 0 ? (currentPaid / targetAmount) * 100 : 0;
+            const pctClamped = Math.min(100, Math.max(0, pct));
+            const pctDisplay = pct >= 100 ? `${Math.round(pct)}%` : `${pct.toFixed(1)}%`;
+
+            const fillEl = document.getElementById('goalProgressFill');
+            if (fillEl) fillEl.style.width = `${pctClamped}%`;
+
+            const pillEl = document.getElementById('goalPctPill');
+            const cardEl = document.getElementById('goalTrackerCard');
+            const iconEl = document.getElementById('goalAffirmationIcon');
+            const labelEl = document.getElementById('goalAffirmationLabel');
+            const quoteEl = document.getElementById('goalAffirmationQuote');
+            const celebrateBtn = document.getElementById('goalCelebrateBtn');
+            const subtitleEl = document.getElementById('goalSubtitle');
+
+            const isAchieved = currentPaid >= targetAmount && targetAmount > 0;
+            lastReportedGoalAchieved = isAchieved;
+
+            if (isAchieved) {
+                if (pillEl) {
+                    pillEl.className = 'goal-pct-pill achieved';
+                    pillEl.innerText = `👑 ${pctDisplay} SULTAN MODE!`;
+                }
+                if (fillEl) fillEl.classList.add('achieved');
+                if (cardEl) cardEl.classList.add('goal-achieved');
+                if (iconEl) iconEl.innerText = '👑';
+                if (labelEl) labelEl.innerText = 'LEVEL SULTAN UNLOCKED! (GOAL TERCAPAI)';
+                if (quoteEl) quoteEl.innerText = `"${VICTORY_AFFIRMATIONS[currentVictoryIndex]}"`;
+                if (celebrateBtn) celebrateBtn.style.display = 'inline-flex';
+                if (subtitleEl) {
+                    const surplus = currentPaid - targetAmount;
+                    subtitleEl.innerHTML = `<span style="color:#4ade80; font-weight:700;">🎉 LUAR BIASA!</span> Target omset jebol! Surplus pendapatan: <strong>${formatIDR(surplus)}</strong>.`;
+                }
+            } else {
+                if (pillEl) {
+                    pillEl.className = 'goal-pct-pill';
+                    pillEl.innerText = `${pctDisplay} Capai`;
+                }
+                if (fillEl) fillEl.classList.remove('achieved');
+                if (cardEl) cardEl.classList.remove('goal-achieved');
+                if (iconEl) iconEl.innerText = '🔥';
+                if (labelEl) labelEl.innerText = 'Mindset Booster Hari Ini';
+                if (quoteEl) quoteEl.innerText = `"${MOTIVATIONAL_AFFIRMATIONS[currentAffirmationIndex]}"`;
+                if (celebrateBtn) celebrateBtn.style.display = 'none';
+                if (subtitleEl) {
+                    const remaining = targetAmount - currentPaid;
+                    subtitleEl.innerHTML = `Kurang <strong style="color:var(--accent);">${formatIDR(remaining)}</strong> lagi menuju level berikutnya. Tetap fokus & gas closingan!`;
+                }
+            }
+        }
+
+        /* Pure Canvas Confetti Explosion */
+        function triggerGoalConfetti() {
+            const canvas = document.getElementById('goalConfettiCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#c99a45', '#ffd787', '#ecc178', '#ffffff', '#4ec08b', '#9db7e8', '#f59e0b'];
+
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: canvas.width / 2 + (Math.random() * 200 - 100),
+                    y: canvas.height * 0.4 + (Math.random() * 100 - 50),
+                    vx: (Math.random() - 0.5) * 16,
+                    vy: (Math.random() - 0.8) * 18,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 12,
+                    opacity: 1
+                });
+            }
+
+            let animationFrameId;
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = 0;
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.38;
+                    p.vx *= 0.98;
+                    p.rotation += p.rotationSpeed;
+                    p.opacity -= 0.009;
+
+                    if (p.opacity > 0 && p.y < canvas.height) {
+                        alive++;
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rotation * Math.PI) / 180);
+                        ctx.globalAlpha = Math.max(0, p.opacity);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.7);
+                        ctx.restore();
+                    }
+                });
+
+                if (alive > 0) {
+                    animationFrameId = requestAnimationFrame(render);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    cancelAnimationFrame(animationFrameId);
+                }
+            }
+            render();
+        }
+
         // Calculate Financial KPI Cards & Monthly Revenue Report Table
         function calculateFinancials() {
             let totalPaidGross = 0;
@@ -3810,7 +4053,11 @@
             });
 
             // Update Monthly Goals & Affirmation Tracker
-            updateMonthlyGoalTracker(monthlyMap, totalPaidGross, activeMonthFilter);
+            try {
+                updateMonthlyGoalTracker(monthlyMap, totalPaidGross, activeMonthFilter);
+            } catch (errGoal) {
+                console.warn("updateMonthlyGoalTracker error:", errGoal);
+            }
 
             // Update KPI Cards
             document.getElementById("statNetProfitTotal").innerText = formatIDR(totalNetProfitPaid);
@@ -5197,248 +5444,6 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
             if (event.key === 'Escape' && activeEditProjectId) closeProfitModal();
         });
 
-        /* =========================================================================
-           MONTHLY GOALS & MINDSET AFFIRMATION ENGINE (SULTAN TRACKER)
-        ========================================================================= */
-        const GOAL_TIER_TARGETS = {
-            '15m': 15000000,
-            '30m': 30000000,
-            '50m': 50000000
-        };
-
-        const MOTIVATIONAL_AFFIRMATIONS = [
-            "Satu closingan high-ticket lagi, target bulan ini langsung lewat. Gassken!",
-            "Klien bayar mahal bukan cuma buat desain, tapi buat ketenangan pikiran & prestige bisnis mereka. You are the solution!",
-            "Follow up penawaran hari ini! Invoice yang cair selalu berawal dari keberanian nembak harga pantas.",
-            "Konsistensi hari ini adalah saldo mutasi rekening minggu depan. Fokus ke value, uang yang bakal ngejar.",
-            "Pak Joko aja closing 1,5jt brosur premium, klien berikutnya siap deal kontrak belasan juta!",
-            "Jangan pernah diskon tanpa potong scope. Nilai karyamu adalah aset masa depan bisnismu.",
-            "Setiap pixel & layout yang lo buat bernilai rupiah. Kerjain dengan rapi, tagih dengan kepala tegak!",
-            "Kerja cerdas, portofolio berkelas, invoice lekas lunas. Rezeki mengalir deras!",
-            "Saat agensi lain perang harga murah, agensi lo dipilih karena reputasi & ketepatan janji.",
-            "Gak ada batasan buat apa yang bisa lo capai. Buka laptop, eksekusi, kirim invoice!",
-            "Desain bagus itu seni, desain solutif yang dibayar mahal itu agensi berkelas. Keep pushing!"
-        ];
-
-        const VICTORY_AFFIRMATIONS = [
-            "EDAAAN! Target bulan ini jebol! Lo resmi di level Sultan. Saatnya self-reward secangkir kopi mahal, abis itu gas ke target berikutnya! 🚀🔥",
-            "TARGET 100% TERCAPAI! Rekening senyum lebar, kerja keras berbuah manis. Proud of you, Boss!",
-            "CHAMPION ENERGY! Bukan cuma angan-angan, angka di rekening membuktikan kapabilitas lo bulan ini!",
-            "SULTAN MODE ACTIVATED! Portofolio naik kelas, revenue meroket. Sekarang waktunya rehat sejenak & rayakan kemenangan!"
-        ];
-
-        let currentAffirmationIndex = Math.floor(Math.random() * MOTIVATIONAL_AFFIRMATIONS.length);
-        let currentVictoryIndex = 0;
-        let lastReportedGoalAchieved = false;
-
-        function getSavedGoalTier() {
-            return localStorage.getItem('dar_monthly_goal_tier') || '30m';
-        }
-
-        function getSavedGoalTarget() {
-            const tier = getSavedGoalTier();
-            if (tier === 'custom') {
-                const val = parseInt(localStorage.getItem('dar_monthly_goal_custom') || '30000000', 10);
-                return isNaN(val) || val <= 0 ? 30000000 : val;
-            }
-            return GOAL_TIER_TARGETS[tier] || 30000000;
-        }
-
-        function setGoalTier(tier) {
-            if (tier === 'custom') {
-                const current = getSavedGoalTarget();
-                const input = prompt("Masukkan target pendapatan lo dalam angka (contoh: 25000000 atau 75000000):", current);
-                if (input !== null) {
-                    const parsed = parseInt(input.replace(/[^0-9]/g, ''), 10);
-                    if (!isNaN(parsed) && parsed > 0) {
-                        localStorage.setItem('dar_monthly_goal_tier', 'custom');
-                        localStorage.setItem('dar_monthly_goal_custom', parsed);
-                    }
-                }
-            } else {
-                localStorage.setItem('dar_monthly_goal_tier', tier);
-            }
-            updateTierButtonsUI();
-            calculateFinancials();
-        }
-
-        function updateTierButtonsUI() {
-            const currentTier = getSavedGoalTier();
-            ['15m', '30m', '50m', 'custom'].forEach(t => {
-                const btn = document.getElementById(t === '15m' ? 'tierBtn15' : t === '30m' ? 'tierBtn30' : t === '50m' ? 'tierBtn50' : 'tierBtnCustom');
-                if (btn) {
-                    if (t === currentTier) {
-                        btn.classList.add('active');
-                        if (t === 'custom') {
-                            const val = getSavedGoalTarget();
-                            btn.innerText = `Custom (${Math.round(val / 1000000)} Jt)`;
-                        }
-                    } else {
-                        btn.classList.remove('active');
-                        if (t === 'custom') btn.innerText = 'Custom';
-                    }
-                }
-            });
-        }
-
-        function cycleAffirmation(isManual = false) {
-            const isAchieved = lastReportedGoalAchieved;
-            const quoteEl = document.getElementById('goalAffirmationQuote');
-            if (!quoteEl) return;
-
-            if (isAchieved) {
-                currentVictoryIndex = (currentVictoryIndex + 1) % VICTORY_AFFIRMATIONS.length;
-                quoteEl.innerText = `"${VICTORY_AFFIRMATIONS[currentVictoryIndex]}"`;
-                if (isManual) triggerGoalConfetti();
-            } else {
-                currentAffirmationIndex = (currentAffirmationIndex + 1) % MOTIVATIONAL_AFFIRMATIONS.length;
-                quoteEl.innerText = `"${MOTIVATIONAL_AFFIRMATIONS[currentAffirmationIndex]}"`;
-            }
-        }
-
-        function updateMonthlyGoalTracker(monthlyMap, totalPaidGross, activeMonthFilter) {
-            updateTierButtonsUI();
-            const targetAmount = getSavedGoalTarget();
-
-            // Determine active tracking revenue and month display
-            let currentPaid = 0;
-            let monthLabelText = "";
-            let metricLabelText = "Pendapatan Masuk Periode Ini";
-
-            if (activeMonthFilter && activeMonthFilter !== 'all' && monthlyMap[activeMonthFilter]) {
-                currentPaid = monthlyMap[activeMonthFilter].paidGrossTotal;
-                monthLabelText = `(${monthlyMap[activeMonthFilter].label})`;
-                metricLabelText = `Pendapatan Masuk ${monthlyMap[activeMonthFilter].label}`;
-            } else {
-                // If 'all' is selected:
-                // Show total accumulated paid gross across all active invoices so it never falsely reads Rp 0!
-                currentPaid = totalPaidGross;
-                monthLabelText = "(Semua Bulan / Akumulasi)";
-                metricLabelText = "Total Pendapatan Diterima (Semua Bulan)";
-            }
-
-            const monthDispEl = document.getElementById('goalMonthDisplay');
-            if (monthDispEl) monthDispEl.innerText = monthLabelText;
-
-            const metricLabelEl = document.getElementById('goalMetricLabel');
-            if (metricLabelEl) metricLabelEl.innerText = metricLabelText;
-
-            const currentPaidTextEl = document.getElementById('goalCurrentPaidText');
-            if (currentPaidTextEl) currentPaidTextEl.innerText = formatIDR(currentPaid);
-
-            const targetAmountTextEl = document.getElementById('goalTargetAmountText');
-            if (targetAmountTextEl) targetAmountTextEl.innerText = `Target ${formatIDR(targetAmount)}`;
-
-            const pct = targetAmount > 0 ? (currentPaid / targetAmount) * 100 : 0;
-            const pctClamped = Math.min(100, Math.max(0, pct));
-            const pctDisplay = pct >= 100 ? `${Math.round(pct)}%` : `${pct.toFixed(1)}%`;
-
-            const fillEl = document.getElementById('goalProgressFill');
-            if (fillEl) fillEl.style.width = `${pctClamped}%`;
-
-            const pillEl = document.getElementById('goalPctPill');
-            const cardEl = document.getElementById('goalTrackerCard');
-            const iconEl = document.getElementById('goalAffirmationIcon');
-            const labelEl = document.getElementById('goalAffirmationLabel');
-            const quoteEl = document.getElementById('goalAffirmationQuote');
-            const celebrateBtn = document.getElementById('goalCelebrateBtn');
-            const subtitleEl = document.getElementById('goalSubtitle');
-
-            const isAchieved = currentPaid >= targetAmount && targetAmount > 0;
-            lastReportedGoalAchieved = isAchieved;
-
-            if (isAchieved) {
-                if (pillEl) {
-                    pillEl.className = 'goal-pct-pill achieved';
-                    pillEl.innerText = `👑 ${pctDisplay} SULTAN MODE!`;
-                }
-                if (fillEl) fillEl.classList.add('achieved');
-                if (cardEl) cardEl.classList.add('goal-achieved');
-                if (iconEl) iconEl.innerText = '👑';
-                if (labelEl) labelEl.innerText = 'LEVEL SULTAN UNLOCKED! (GOAL TERCAPAI)';
-                if (quoteEl) quoteEl.innerText = `"${VICTORY_AFFIRMATIONS[currentVictoryIndex]}"`;
-                if (celebrateBtn) celebrateBtn.style.display = 'inline-flex';
-                if (subtitleEl) {
-                    const surplus = currentPaid - targetAmount;
-                    subtitleEl.innerHTML = `<span style="color:#4ade80; font-weight:700;">🎉 LUAR BIASA!</span> Target omset jebol! Surplus pendapatan: <strong>${formatIDR(surplus)}</strong>.`;
-                }
-            } else {
-                if (pillEl) {
-                    pillEl.className = 'goal-pct-pill';
-                    pillEl.innerText = `${pctDisplay} Capai`;
-                }
-                if (fillEl) fillEl.classList.remove('achieved');
-                if (cardEl) cardEl.classList.remove('goal-achieved');
-                if (iconEl) iconEl.innerText = '🔥';
-                if (labelEl) labelEl.innerText = 'Mindset Booster Hari Ini';
-                if (quoteEl) quoteEl.innerText = `"${MOTIVATIONAL_AFFIRMATIONS[currentAffirmationIndex]}"`;
-                if (celebrateBtn) celebrateBtn.style.display = 'none';
-                if (subtitleEl) {
-                    const remaining = targetAmount - currentPaid;
-                    subtitleEl.innerHTML = `Kurang <strong style="color:var(--accent);">${formatIDR(remaining)}</strong> lagi menuju level berikutnya. Tetap fokus & gas closingan!`;
-                }
-            }
-        }
-
-        /* Pure Canvas Confetti Explosion */
-        function triggerGoalConfetti() {
-            const canvas = document.getElementById('goalConfettiCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const particles = [];
-            const colors = ['#c99a45', '#ffd787', '#ecc178', '#ffffff', '#4ec08b', '#9db7e8', '#f59e0b'];
-
-            for (let i = 0; i < 90; i++) {
-                particles.push({
-                    x: canvas.width / 2 + (Math.random() * 200 - 100),
-                    y: canvas.height * 0.4 + (Math.random() * 100 - 50),
-                    vx: (Math.random() - 0.5) * 16,
-                    vy: (Math.random() - 0.8) * 18,
-                    size: Math.random() * 8 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    rotation: Math.random() * 360,
-                    rotationSpeed: (Math.random() - 0.5) * 12,
-                    opacity: 1
-                });
-            }
-
-            let animationFrameId;
-            function render() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                let alive = 0;
-
-                particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.38;
-                    p.vx *= 0.98;
-                    p.rotation += p.rotationSpeed;
-                    p.opacity -= 0.009;
-
-                    if (p.opacity > 0 && p.y < canvas.height) {
-                        alive++;
-                        ctx.save();
-                        ctx.translate(p.x, p.y);
-                        ctx.rotate((p.rotation * Math.PI) / 180);
-                        ctx.globalAlpha = Math.max(0, p.opacity);
-                        ctx.fillStyle = p.color;
-                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.7);
-                        ctx.restore();
-                    }
-                });
-
-                if (alive > 0) {
-                    animationFrameId = requestAnimationFrame(render);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    cancelAnimationFrame(animationFrameId);
-                }
-            }
-            render();
-        }
     </script>
 </body>
 </html>
