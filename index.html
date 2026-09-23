@@ -421,6 +421,65 @@
             margin: 0;
         }
 
+        .goal-controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 12px 0 6px;
+            padding-top: 14px;
+            border-top: 1px solid #eee8da;
+        }
+
+        .goal-control-col {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .goal-control-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: #666256;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .goal-month-pills {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .goal-month-pill-btn {
+            background: transparent;
+            border: 1px solid #d7d1c2;
+            color: #514f43;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 0;
+            padding: 6px 12px;
+            cursor: pointer;
+            box-shadow: none;
+            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+        }
+
+        .goal-month-pill-btn:hover {
+            background: #e3ddce;
+            color: #272722;
+        }
+
+        .goal-month-pill-btn.active {
+            color: #fffdf5;
+            background: #292a24;
+            border-color: #292a24;
+            font-weight: 500;
+        }
+
         .goal-tiers-group {
             display: flex;
             align-items: center;
@@ -1731,7 +1790,7 @@
             </div>
         </div>
 
-        <!-- Monthly Revenue Goals & Mindset Affirmation Widget (Harmonized Pastel Bento Design) -->
+        <!-- Monthly Profit Goals & Mindset Affirmation Widget (Harmonized Pastel Bento Design) -->
         <div class="goal-tracker-card" id="goalTrackerCard">
             <div class="goal-tracker-header">
                 <div class="goal-header-left">
@@ -1741,21 +1800,34 @@
                     <div>
                         <div class="goal-tracker-badge">
                             <span class="badge-dot"></span>
-                            <span>Target Omset Bulanan</span>
+                            <span>Target Profit Bulanan</span>
                         </div>
                         <h2 class="goal-tracker-title" id="goalTitleHeading">
-                            Progress Pendapatan <span id="goalMonthDisplay">(Semua Bulan)</span>
+                            Progress Profit Bersih <span id="goalMonthDisplay">(September 2026)</span>
                         </h2>
                         <p class="goal-tracker-sub" id="goalSubtitle">
-                            Pantau percepatan omset dan capai target pendapatan setiap bulan!
+                            Pantau pencapaian profit bersih dan capai target profit setiap bulan!
                         </p>
                     </div>
                 </div>
-                <div class="goal-tiers-group" role="group" aria-label="Target Levels">
-                    <button type="button" class="goal-tier-btn" id="tierBtn15" onclick="setGoalTier('15m')">15 Jt</button>
-                    <button type="button" class="goal-tier-btn active" id="tierBtn30" onclick="setGoalTier('30m')">30 Jt</button>
-                    <button type="button" class="goal-tier-btn" id="tierBtn50" onclick="setGoalTier('50m')">50 Jt</button>
-                    <button type="button" class="goal-tier-btn" id="tierBtnCustom" onclick="setGoalTier('custom')">Custom</button>
+            </div>
+
+            <!-- Month Selection & Target Tier Controls -->
+            <div class="goal-controls-row">
+                <div class="goal-control-col">
+                    <span class="goal-control-label">Pilih Bulan:</span>
+                    <div class="goal-month-pills" id="goalMonthPills">
+                        <!-- Populated by JS: September 2026, Agustus 2026, Juli 2026, Semua Bulan -->
+                    </div>
+                </div>
+                <div class="goal-control-col">
+                    <span class="goal-control-label">Target Profit:</span>
+                    <div class="goal-tiers-group" role="group" aria-label="Target Levels">
+                        <button type="button" class="goal-tier-btn" id="tierBtn15" onclick="setGoalTier('15m')">15 Jt</button>
+                        <button type="button" class="goal-tier-btn active" id="tierBtn30" onclick="setGoalTier('30m')">30 Jt</button>
+                        <button type="button" class="goal-tier-btn" id="tierBtn50" onclick="setGoalTier('50m')">50 Jt</button>
+                        <button type="button" class="goal-tier-btn" id="tierBtnCustom" onclick="setGoalTier('custom')">Custom</button>
+                    </div>
                 </div>
             </div>
 
@@ -3784,47 +3856,83 @@
         let currentAffirmationIndex = Math.floor(Math.random() * MOTIVATIONAL_AFFIRMATIONS.length);
         let currentVictoryIndex = 0;
         let lastReportedGoalAchieved = false;
+        let goalActiveMonth = localStorage.getItem('dar_goal_active_month') || '2026-09';
 
-        function getSavedGoalTier() {
-            return localStorage.getItem('dar_monthly_goal_tier') || '30m';
+        function getSavedGoalTier(monthKey) {
+            const m = monthKey || goalActiveMonth || 'default';
+            return localStorage.getItem('dar_monthly_goal_tier_' + m) || localStorage.getItem('dar_monthly_goal_tier') || '30m';
         }
 
-        function getSavedGoalTarget() {
-            const tier = getSavedGoalTier();
+        function getSavedGoalTarget(monthKey) {
+            const m = monthKey || goalActiveMonth || 'default';
+            const tier = getSavedGoalTier(m);
             if (tier === 'custom') {
-                const val = parseInt(localStorage.getItem('dar_monthly_goal_custom') || '30000000', 10);
+                const val = parseInt(localStorage.getItem('dar_monthly_goal_custom_' + m) || localStorage.getItem('dar_monthly_goal_custom') || '30000000', 10);
                 return isNaN(val) || val <= 0 ? 30000000 : val;
             }
             return GOAL_TIER_TARGETS[tier] || 30000000;
         }
 
         function setGoalTier(tier) {
+            const m = goalActiveMonth || 'default';
             if (tier === 'custom') {
-                const current = getSavedGoalTarget();
-                const input = prompt("Masukkan target pendapatan lo dalam angka (contoh: 25000000 atau 75000000):", current);
+                const current = getSavedGoalTarget(m);
+                const input = prompt("Masukkan target profit lo dalam angka (contoh: 25000000 atau 50000000):", current);
                 if (input !== null) {
                     const parsed = parseInt(input.replace(/[^0-9]/g, ''), 10);
                     if (!isNaN(parsed) && parsed > 0) {
+                        localStorage.setItem('dar_monthly_goal_tier_' + m, 'custom');
+                        localStorage.setItem('dar_monthly_goal_custom_' + m, parsed);
                         localStorage.setItem('dar_monthly_goal_tier', 'custom');
                         localStorage.setItem('dar_monthly_goal_custom', parsed);
                     }
                 }
             } else {
+                localStorage.setItem('dar_monthly_goal_tier_' + m, tier);
                 localStorage.setItem('dar_monthly_goal_tier', tier);
             }
             updateTierButtonsUI();
             calculateFinancials();
         }
 
+        function setGoalMonth(monthKey, syncBoard = false) {
+            goalActiveMonth = monthKey;
+            localStorage.setItem('dar_goal_active_month', monthKey);
+            if (syncBoard) {
+                const targetBtn = document.querySelector(`.month-pill-btn[data-filter="${monthKey}"]`);
+                if (targetBtn) {
+                    setMonthFilter(monthKey, targetBtn);
+                    return;
+                }
+            }
+            calculateFinancials();
+        }
+
+        function renderGoalMonthPills(monthlyMap) {
+            const container = document.getElementById('goalMonthPills');
+            if (!container) return;
+
+            const availableKeys = Object.keys(monthlyMap).filter(k => k !== 'all').sort().reverse();
+            const items = [...availableKeys, 'all'];
+
+            let html = '';
+            items.forEach(mKey => {
+                const isActive = (goalActiveMonth === mKey);
+                const label = mKey === 'all' ? 'Semua Bulan' : (monthlyMap[mKey]?.label || mKey);
+                html += `<button type="button" class="goal-month-pill-btn ${isActive ? 'active' : ''}" onclick="setGoalMonth('${mKey}', true)">${label}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
         function updateTierButtonsUI() {
-            const currentTier = getSavedGoalTier();
+            const currentTier = getSavedGoalTier(goalActiveMonth);
             ['15m', '30m', '50m', 'custom'].forEach(t => {
                 const btn = document.getElementById(t === '15m' ? 'tierBtn15' : t === '30m' ? 'tierBtn30' : t === '50m' ? 'tierBtn50' : 'tierBtnCustom');
                 if (btn) {
                     if (t === currentTier) {
                         btn.classList.add('active');
                         if (t === 'custom') {
-                            const val = getSavedGoalTarget();
+                            const val = getSavedGoalTarget(goalActiveMonth);
                             btn.innerText = `Custom (${Math.round(val / 1000000)} Jt)`;
                         }
                     } else {
@@ -3850,25 +3958,34 @@
             }
         }
 
-        function updateMonthlyGoalTracker(monthlyMap, totalPaidGross, activeMonthFilter) {
+        function updateMonthlyGoalTracker(monthlyMap, totalNetProfitPaid, activeMonthFilter) {
+            // Validate goalActiveMonth
+            if (!goalActiveMonth) {
+                goalActiveMonth = localStorage.getItem('dar_goal_active_month') || '2026-09';
+            }
+            if (goalActiveMonth !== 'all' && !monthlyMap[goalActiveMonth]) {
+                const keys = Object.keys(monthlyMap).filter(k => k !== 'all').sort();
+                goalActiveMonth = keys.length > 0 ? keys[keys.length - 1] : 'all';
+            }
+
+            renderGoalMonthPills(monthlyMap);
             updateTierButtonsUI();
-            const targetAmount = getSavedGoalTarget();
+            const targetAmount = getSavedGoalTarget(goalActiveMonth);
 
-            // Determine active tracking revenue and month display
-            let currentPaid = 0;
+            // Determine active tracking profit and month display
+            let currentProfit = 0;
             let monthLabelText = "";
-            let metricLabelText = "Pendapatan Masuk Periode Ini";
+            let metricLabelText = "Profit Bersih Diterima";
 
-            if (activeMonthFilter && activeMonthFilter !== 'all' && monthlyMap[activeMonthFilter]) {
-                currentPaid = monthlyMap[activeMonthFilter].paidGrossTotal;
-                monthLabelText = `(${monthlyMap[activeMonthFilter].label})`;
-                metricLabelText = `Pendapatan Masuk ${monthlyMap[activeMonthFilter].label}`;
+            if (goalActiveMonth && goalActiveMonth !== 'all' && monthlyMap[goalActiveMonth]) {
+                currentProfit = monthlyMap[goalActiveMonth].paidNetProfitTotal;
+                monthLabelText = `(${monthlyMap[goalActiveMonth].label})`;
+                metricLabelText = `Profit Bersih Diterima (${monthlyMap[goalActiveMonth].label})`;
             } else {
                 // If 'all' is selected:
-                // Show total accumulated paid gross across all active invoices so it never falsely reads Rp 0!
-                currentPaid = totalPaidGross;
+                currentProfit = totalNetProfitPaid;
                 monthLabelText = "(Semua Bulan / Akumulasi)";
-                metricLabelText = "Total Pendapatan Diterima (Semua Bulan)";
+                metricLabelText = "Total Profit Bersih Diterima (Semua Bulan)";
             }
 
             const monthDispEl = document.getElementById('goalMonthDisplay');
@@ -3878,12 +3995,12 @@
             if (metricLabelEl) metricLabelEl.innerText = metricLabelText;
 
             const currentPaidTextEl = document.getElementById('goalCurrentPaidText');
-            if (currentPaidTextEl) currentPaidTextEl.innerText = formatIDR(currentPaid);
+            if (currentPaidTextEl) currentPaidTextEl.innerText = formatIDR(currentProfit);
 
             const targetAmountTextEl = document.getElementById('goalTargetAmountText');
             if (targetAmountTextEl) targetAmountTextEl.innerText = `Target ${formatIDR(targetAmount)}`;
 
-            const pct = targetAmount > 0 ? (currentPaid / targetAmount) * 100 : 0;
+            const pct = targetAmount > 0 ? (currentProfit / targetAmount) * 100 : 0;
             const pctClamped = Math.min(100, Math.max(0, pct));
             const pctDisplay = pct >= 100 ? `${Math.round(pct)}%` : `${pct.toFixed(1)}%`;
 
@@ -3898,7 +4015,7 @@
             const celebrateBtn = document.getElementById('goalCelebrateBtn');
             const subtitleEl = document.getElementById('goalSubtitle');
 
-            const isAchieved = currentPaid >= targetAmount && targetAmount > 0;
+            const isAchieved = currentProfit >= targetAmount && targetAmount > 0;
             lastReportedGoalAchieved = isAchieved;
 
             if (isAchieved) {
@@ -3909,12 +4026,12 @@
                 if (fillEl) fillEl.classList.add('achieved');
                 if (cardEl) cardEl.classList.add('goal-achieved');
                 if (iconEl) iconEl.innerText = '👑';
-                if (labelEl) labelEl.innerText = 'LEVEL SULTAN UNLOCKED! (GOAL TERCAPAI)';
+                if (labelEl) labelEl.innerText = 'LEVEL SULTAN UNLOCKED! (TARGET PROFIT TERCAPAI)';
                 if (quoteEl) quoteEl.innerText = `"${VICTORY_AFFIRMATIONS[currentVictoryIndex]}"`;
                 if (celebrateBtn) celebrateBtn.style.display = 'inline-flex';
                 if (subtitleEl) {
-                    const surplus = currentPaid - targetAmount;
-                    subtitleEl.innerHTML = `<span style="color:#2b6946; font-weight:600;">🎉 LUAR BIASA!</span> Target omset jebol! Surplus pendapatan: <strong>${formatIDR(surplus)}</strong>.`;
+                    const surplus = currentProfit - targetAmount;
+                    subtitleEl.innerHTML = `<span style="color:#2b6946; font-weight:600;">🎉 LUAR BIASA!</span> Target profit jebol! Surplus profit: <strong>${formatIDR(surplus)}</strong>.`;
                 }
             } else {
                 if (pillEl) {
@@ -3928,8 +4045,8 @@
                 if (quoteEl) quoteEl.innerText = `"${MOTIVATIONAL_AFFIRMATIONS[currentAffirmationIndex]}"`;
                 if (celebrateBtn) celebrateBtn.style.display = 'none';
                 if (subtitleEl) {
-                    const remaining = targetAmount - currentPaid;
-                    subtitleEl.innerHTML = `Kurang <strong style="color:#272722;">${formatIDR(remaining)}</strong> lagi menuju target berikutnya. Tetap fokus & gas closingan!`;
+                    const remaining = targetAmount - currentProfit;
+                    subtitleEl.innerHTML = `Kurang <strong style="color:#272722;">${formatIDR(remaining)}</strong> lagi menuju target profit berikutnya. Tetap fokus & gas closingan!`;
                 }
             }
         }
@@ -4076,7 +4193,7 @@
 
             // Update Monthly Goals & Affirmation Tracker
             try {
-                updateMonthlyGoalTracker(monthlyMap, totalPaidGross, activeMonthFilter);
+                updateMonthlyGoalTracker(monthlyMap, totalNetProfitPaid, activeMonthFilter);
             } catch (errGoal) {
                 console.warn("updateMonthlyGoalTracker error:", errGoal);
             }
@@ -4689,9 +4806,11 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function setMonthFilter(month, btnEl) {
             activeMonthFilter = month;
+            goalActiveMonth = month;
+            localStorage.setItem('dar_goal_active_month', month);
             
             document.querySelectorAll(".month-pill-btn").forEach(btn => btn.classList.remove("active"));
-            btnEl.classList.add("active");
+            if (btnEl) btnEl.classList.add("active");
 
             filterInvoices();
             calculateFinancials();

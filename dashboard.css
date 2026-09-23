@@ -164,11 +164,57 @@ button:active { transform: translateY(1px); }
     font-weight: 400;
     font-size: 13px;
 }
-.goal-tracker-sub {
-    font-size: 11px;
+.goal-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0 6px;
+    padding-top: 14px;
+    border-top: 1px solid #eee8da;
+}
+.goal-control-col {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.goal-control-label {
+    font-size: 10px;
+    font-weight: 500;
     color: #666256;
-    line-height: 1.5;
-    margin: 0;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+.goal-month-pills {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.goal-month-pill-btn {
+    background: transparent;
+    border: 1px solid #d7d1c2;
+    color: #514f43;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.goal-month-pill-btn:hover {
+    background: #e3ddce;
+    color: #272722;
+}
+.goal-month-pill-btn.active {
+    color: #fffdf5;
+    background: #292a24;
+    border-color: #292a24;
+    font-weight: 500;
 }
 .goal-tiers-group {
     display: flex;
@@ -490,7 +536,11 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
     .dev-contact-btn { white-space: normal; text-align: left; }
     .goal-tracker-card { padding: 16px; border-radius: 14px; }
     .goal-tracker-header { flex-direction: column; align-items: stretch; gap: 12px; }
-    .goal-tiers-group { display: flex; flex-wrap: wrap; gap: 5px; }
+    .goal-controls-row { flex-direction: column; align-items: stretch; gap: 10px; }
+    .goal-control-col { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .goal-month-pills { width: 100%; }
+    .goal-month-pill-btn { padding: 5px 9px; font-size: 9px; flex: 1 1 auto; text-align: center; }
+    .goal-tiers-group { display: flex; flex-wrap: wrap; gap: 5px; width: 100%; }
     .goal-tier-btn { padding: 6px 10px; font-size: 9px; flex: 1 1 auto; text-align: center; }
     .goal-numbers strong { font-size: 20px; }
     .goal-affirmation-box { flex-direction: column; align-items: stretch; }
