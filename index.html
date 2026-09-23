@@ -318,23 +318,30 @@
         }
 
         
-        /* Monthly Revenue Goal & Affirmations Tracker */
+        /* Monthly Revenue Goal & Affirmations Tracker (Native Executive Design) */
         .goal-tracker-card {
-            background: linear-gradient(135deg, rgba(201, 154, 69, 0.08), rgba(23, 20, 16, 0.96) 45%);
+            background: rgba(23, 20, 16, 0.94);
             border: 1px solid var(--card-border);
-            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
             padding: 22px 24px;
-            margin-bottom: 22px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .goal-tracker-card:hover {
+            border-color: rgba(201, 154, 69, 0.62);
+            border-left-color: var(--accent);
+            background: var(--card-strong);
         }
 
         .goal-tracker-card.goal-achieved {
-            border-color: rgba(201, 154, 69, 0.7);
-            background: linear-gradient(135deg, rgba(201, 154, 69, 0.18), rgba(23, 20, 16, 0.98) 55%);
-            box-shadow: 0 0 35px rgba(201, 154, 69, 0.22);
+            border-color: var(--accent);
+            border-left-color: var(--color-paid);
+            box-shadow: 0 16px 40px rgba(201, 154, 69, 0.18);
         }
 
         .goal-tracker-header {
@@ -343,134 +350,168 @@
             align-items: flex-start;
             flex-wrap: wrap;
             gap: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .goal-tracker-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: rgba(201, 154, 69, 0.12);
-            border: 1px solid rgba(201, 154, 69, 0.35);
-            color: var(--accent);
+            color: #ead8b7;
             font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.66rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-bottom: 6px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(201, 154, 69, 0.38);
+            margin-bottom: 8px;
         }
 
         .goal-tracker-badge .badge-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent);
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 8px var(--accent);
-            animation: pulseDot 1.8s infinite;
+            box-shadow: 0 0 10px rgba(201, 154, 69, 0.65);
+            animation: pulseGoldDot 1.8s infinite;
         }
 
-        @keyframes pulseDot {
+        @keyframes pulseGoldDot {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
+            50% { opacity: 0.45; transform: scale(0.85); }
         }
 
         .goal-tracker-title {
-            font-size: 1.25rem;
+            font-family: var(--font-sora);
+            font-size: 1.35rem;
             font-weight: 700;
             color: #ffffff;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 8px;
             letter-spacing: -0.01em;
+            margin-bottom: 4px;
         }
 
         .goal-tracker-sub {
-            font-size: 0.85rem;
+            font-size: 0.86rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            line-height: 1.5;
         }
 
         .goal-tiers-group {
             display: flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0, 0, 0, 0.38);
-            padding: 4px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
         }
 
         .goal-tier-btn {
-            background: transparent;
-            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
             color: var(--text-muted);
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            padding: 6px 12px;
-            border-radius: 6px;
+            letter-spacing: 0.08em;
+            padding: 7px 13px;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-transform: uppercase;
         }
 
         .goal-tier-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.06);
         }
 
         .goal-tier-btn.active {
             background: var(--accent);
             color: #000000;
-            box-shadow: 0 2px 8px rgba(201, 154, 69, 0.35);
+            border-color: var(--accent);
+            box-shadow: 0 4px 14px rgba(201, 154, 69, 0.4);
         }
 
         .goal-metrics-row {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 10px;
+            align-items: flex-end;
+            margin: 18px 0 10px 0;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 12px;
+        }
+
+        .goal-metrics-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .goal-label-mini {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
         }
 
         .goal-numbers {
             font-family: var(--font-mono);
-            font-size: 1.05rem;
-            color: #ffffff;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .goal-numbers strong {
-            color: var(--color-paid);
-            font-size: 1.35rem;
+            font-size: clamp(1.4rem, 2.5vw, 1.85rem);
             font-weight: 700;
+            color: var(--color-paid);
+            line-height: 1;
+        }
+
+        .goal-numbers .target-divider {
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        .goal-numbers .target-num {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         .goal-pct-pill {
-            background: rgba(201, 154, 69, 0.15);
-            border: 1px solid rgba(201, 154, 69, 0.4);
-            color: var(--accent);
+            background: rgba(201, 154, 69, 0.12);
+            border: 1px solid rgba(201, 154, 69, 0.38);
+            color: #ead8b7;
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 20px;
+            letter-spacing: 0.05em;
+            padding: 4px 14px;
+            border-radius: 4px;
         }
 
         .goal-pct-pill.achieved {
-            background: rgba(34, 197, 94, 0.18);
-            border-color: rgba(34, 197, 94, 0.5);
-            color: #4ade80;
+            background: var(--color-paid-bg);
+            border-color: var(--color-paid);
+            color: var(--color-paid);
+            box-shadow: 0 0 14px rgba(78, 192, 139, 0.35);
         }
 
         .goal-progress-track {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            height: 14px;
-            border-radius: 8px;
+            background: #090806;
+            border: 1px solid var(--card-border);
+            height: 10px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
             margin-bottom: 18px;
@@ -479,35 +520,22 @@
         .goal-progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #c99a45, #ecc178, #ffd787);
-            border-radius: 8px;
-            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 12px rgba(201, 154, 69, 0.6);
+            background: linear-gradient(90deg, #c99a45, #e6b86a);
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
 
         .goal-progress-fill.achieved {
-            background: linear-gradient(90deg, #22c55e, #4ade80, #ffd787);
-            box-shadow: 0 0 14px rgba(34, 197, 94, 0.6);
-        }
-
-        .goal-progress-fill::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: goalShimmer 2.2s infinite;
-        }
-
-        @keyframes goalShimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            background: linear-gradient(90deg, #4ec08b, #6ee7b7);
+            box-shadow: 0 0 14px rgba(78, 192, 139, 0.5);
         }
 
         .goal-affirmation-box {
-            background: rgba(0, 0, 0, 0.28);
-            border: 1px dashed rgba(201, 154, 69, 0.35);
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent);
+            border-radius: 6px;
             padding: 14px 18px;
             display: flex;
             align-items: center;
@@ -525,10 +553,10 @@
         }
 
         .goal-affirmation-icon {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             line-height: 1;
             flex-shrink: 0;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         .goal-affirmation-label {
@@ -536,18 +564,16 @@
             font-size: 0.62rem;
             color: var(--accent);
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             margin-bottom: 3px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .goal-affirmation-text {
-            font-size: 0.90rem;
-            color: #f1f1f1;
-            line-height: 1.5;
+            font-family: var(--font-sora);
+            font-size: 0.88rem;
+            color: #ffffff;
+            line-height: 1.55;
             font-style: italic;
         }
 
@@ -558,45 +584,41 @@
         }
 
         .goal-action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
             font-family: var(--font-mono);
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 7px 13px;
-            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 7px 14px;
+            border-radius: 4px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
         .goal-action-btn:hover {
-            background: rgba(201, 154, 69, 0.2);
+            background: rgba(255, 255, 255, 0.08);
             border-color: var(--accent);
             color: #ffffff;
         }
 
         .goal-celebrate-btn {
-            background: linear-gradient(135deg, #c99a45, #ecc178);
+            background: var(--accent);
             color: #000000;
-            font-weight: 700;
-            border: none;
+            border-color: var(--accent);
             box-shadow: 0 4px 14px rgba(201, 154, 69, 0.4);
-            animation: bounceCelebration 2.5s infinite;
+            animation: pulseGoldBtn 2s infinite;
         }
 
-        .goal-celebrate-btn:hover {
-            background: linear-gradient(135deg, #dfad52, #ffd787);
-            transform: translateY(-1px);
-        }
-
-        @keyframes bounceCelebration {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+        @keyframes pulseGoldBtn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
         #goalConfettiCanvas {
@@ -1692,7 +1714,7 @@
             </div>
         </div>
 
-        <!-- Monthly Revenue Goals & Mindset Affirmation Widget -->
+        <!-- Monthly Revenue Goals & Mindset Affirmation Widget (Executive Design) -->
         <div class="goal-tracker-card" id="goalTrackerCard">
             <div class="goal-tracker-header">
                 <div>
@@ -1701,25 +1723,28 @@
                         <span>Monthly Revenue Engine</span>
                     </div>
                     <h2 class="goal-tracker-title" id="goalTitleHeading">
-                        Target Omset Bulan Ini <span id="goalMonthDisplay" style="color: var(--accent); font-weight: 700;">(September 2026)</span>
+                        Target Omset <span id="goalMonthDisplay" style="color: var(--accent); font-weight: 700;">(Semua Bulan)</span>
                     </h2>
                     <p class="goal-tracker-sub" id="goalSubtitle">
                         Pantau percepatan omset agensi dan buka level Sultan setiap bulan!
                     </p>
                 </div>
                 <div class="goal-tiers-group" role="group" aria-label="Target Levels">
-                    <button class="goal-tier-btn" id="tierBtn15" onclick="setGoalTier('15m')">15 Jt (Engine)</button>
-                    <button class="goal-tier-btn active" id="tierBtn30" onclick="setGoalTier('30m')">30 Jt (Architect)</button>
-                    <button class="goal-tier-btn" id="tierBtn50" onclick="setGoalTier('50m')">50 Jt (Sultan)</button>
-                    <button class="goal-tier-btn" id="tierBtnCustom" onclick="setGoalTier('custom')">Custom</button>
+                    <button type="button" class="goal-tier-btn" id="tierBtn15" onclick="setGoalTier('15m')">15 Jt (Engine)</button>
+                    <button type="button" class="goal-tier-btn active" id="tierBtn30" onclick="setGoalTier('30m')">30 Jt (Architect)</button>
+                    <button type="button" class="goal-tier-btn" id="tierBtn50" onclick="setGoalTier('50m')">50 Jt (Sultan)</button>
+                    <button type="button" class="goal-tier-btn" id="tierBtnCustom" onclick="setGoalTier('custom')">Custom</button>
                 </div>
             </div>
 
             <div class="goal-metrics-row">
-                <div class="goal-numbers">
-                    <span id="goalCurrentPaidLabel">Terkumpul:</span> <strong id="goalCurrentPaidText">Rp 0</strong>
-                    <span style="color: var(--text-dim); margin: 0 4px;">/</span>
-                    <span style="color: var(--text-muted);" id="goalTargetAmountText">Target Rp 30.000.000</span>
+                <div class="goal-metrics-left">
+                    <div class="goal-label-mini" id="goalMetricLabel">Pendapatan Masuk Periode Ini</div>
+                    <div class="goal-numbers">
+                        <strong id="goalCurrentPaidText">Rp 0</strong>
+                        <span class="target-divider">/</span>
+                        <span class="target-num" id="goalTargetAmountText">Target Rp 30.000.000</span>
+                    </div>
                 </div>
                 <div>
                     <span class="goal-pct-pill" id="goalPctPill">0% Capai</span>
@@ -1739,10 +1764,10 @@
                     </div>
                 </div>
                 <div class="goal-actions-group">
-                    <button class="goal-action-btn goal-celebrate-btn" id="goalCelebrateBtn" style="display:none;" onclick="triggerGoalConfetti()">
+                    <button type="button" class="goal-action-btn goal-celebrate-btn" id="goalCelebrateBtn" style="display:none;" onclick="triggerGoalConfetti()">
                         🎉 Rayakan Kemenangan!
                     </button>
-                    <button class="goal-action-btn" onclick="cycleAffirmation(true)" title="Ganti Afirmasi Baru">
+                    <button type="button" class="goal-action-btn" onclick="cycleAffirmation(true)" title="Ganti Afirmasi Baru">
                         🎲 Acak Afirmasi
                     </button>
                 </div>
@@ -5222,7 +5247,7 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
         function setGoalTier(tier) {
             if (tier === 'custom') {
                 const current = getSavedGoalTarget();
-                const input = prompt("Masukkan target pendapatan bulanan lo (contoh: 25000000 atau 75000000):", current);
+                const input = prompt("Masukkan target pendapatan lo dalam angka (contoh: 25000000 atau 75000000):", current);
                 if (input !== null) {
                     const parsed = parseInt(input.replace(/[^0-9]/g, ''), 10);
                     if (!isNaN(parsed) && parsed > 0) {
@@ -5278,32 +5303,25 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
             // Determine active tracking revenue and month display
             let currentPaid = 0;
             let monthLabelText = "";
+            let metricLabelText = "Pendapatan Masuk Periode Ini";
 
             if (activeMonthFilter && activeMonthFilter !== 'all' && monthlyMap[activeMonthFilter]) {
                 currentPaid = monthlyMap[activeMonthFilter].paidGrossTotal;
                 monthLabelText = `(${monthlyMap[activeMonthFilter].label})`;
+                metricLabelText = `Pendapatan Masuk ${monthlyMap[activeMonthFilter].label}`;
             } else {
-                // If 'all' selected, track current calendar month or latest month in monthlyMap
-                const now = new Date();
-                const mKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-                if (monthlyMap[mKey]) {
-                    currentPaid = monthlyMap[mKey].paidGrossTotal;
-                    monthLabelText = `(${monthlyMap[mKey].label})`;
-                } else {
-                    const sortedKeys = Object.keys(monthlyMap).sort();
-                    const latestKey = sortedKeys[sortedKeys.length - 1];
-                    if (latestKey && monthlyMap[latestKey]) {
-                        currentPaid = monthlyMap[latestKey].paidGrossTotal;
-                        monthLabelText = `(${monthlyMap[latestKey].label})`;
-                    } else {
-                        currentPaid = totalPaidGross;
-                        monthLabelText = "(Total Periode)";
-                    }
-                }
+                // If 'all' is selected:
+                // Show total accumulated paid gross across all active invoices so it never falsely reads Rp 0!
+                currentPaid = totalPaidGross;
+                monthLabelText = "(Semua Bulan / Akumulasi)";
+                metricLabelText = "Total Pendapatan Diterima (Semua Bulan)";
             }
 
             const monthDispEl = document.getElementById('goalMonthDisplay');
             if (monthDispEl) monthDispEl.innerText = monthLabelText;
+
+            const metricLabelEl = document.getElementById('goalMetricLabel');
+            if (metricLabelEl) metricLabelEl.innerText = metricLabelText;
 
             const currentPaidTextEl = document.getElementById('goalCurrentPaidText');
             if (currentPaidTextEl) currentPaidTextEl.innerText = formatIDR(currentPaid);
@@ -5342,7 +5360,7 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
                 if (celebrateBtn) celebrateBtn.style.display = 'inline-flex';
                 if (subtitleEl) {
                     const surplus = currentPaid - targetAmount;
-                    subtitleEl.innerHTML = `<span style="color:#4ade80; font-weight:700;">🎉 LUAR BIASA!</span> Target bulan ini jebol! Surplus pendapatan: <strong>${formatIDR(surplus)}</strong>.`;
+                    subtitleEl.innerHTML = `<span style="color:#4ade80; font-weight:700;">🎉 LUAR BIASA!</span> Target omset jebol! Surplus pendapatan: <strong>${formatIDR(surplus)}</strong>.`;
                 }
             } else {
                 if (pillEl) {
@@ -5371,7 +5389,7 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
             canvas.height = window.innerHeight;
 
             const particles = [];
-            const colors = ['#c99a45', '#ffd787', '#ecc178', '#ffffff', '#22c55e', '#38bdf8', '#f59e0b'];
+            const colors = ['#c99a45', '#ffd787', '#ecc178', '#ffffff', '#4ec08b', '#9db7e8', '#f59e0b'];
 
             for (let i = 0; i < 90; i++) {
                 particles.push({
@@ -5395,7 +5413,7 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
                 particles.forEach(p => {
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.vy += 0.38; // gravity
+                    p.vy += 0.38;
                     p.vx *= 0.98;
                     p.rotation += p.rotationSpeed;
                     p.opacity -= 0.009;
@@ -5421,7 +5439,6 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
             }
             render();
         }
-
     </script>
 </body>
 </html>
