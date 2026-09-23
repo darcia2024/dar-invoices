@@ -177,7 +177,7 @@
 
         .brand-logo-text {
             font-size: 1.05rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             letter-spacing: -0.02em;
             line-height: 1.15;
@@ -207,7 +207,7 @@
             gap: 8px;
             font-family: var(--md-sys-font);
             font-size: 0.82rem;
-            font-weight: 600;
+            font-weight: 500;
             padding: 8px 16px;
             border-radius: var(--md-sys-shape-corner-full);
             cursor: pointer;
@@ -270,23 +270,31 @@
         ---------------------------------------------------- */
         .hero-banner {
             position: relative;
-            background: linear-gradient(135deg, #090e17 0%, #0f172a 45%, #1e293b 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #faf6ee 45%, #f4ecdc 100%);
             border-radius: var(--md-sys-shape-corner-extra-large);
-            padding: 44px 40px;
-            color: #ffffff;
+            padding: 42px 40px;
+            color: var(--md-sys-color-on-surface);
             overflow: hidden;
             margin-bottom: 28px;
-            box-shadow: var(--md-sys-elevation-3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--md-sys-elevation-2);
+            border: 1px solid rgba(194, 154, 91, 0.35);
         }
 
         .hero-bg-overlay {
             position: absolute;
-            inset: 0;
-            background-image: 
-                radial-gradient(circle at 85% 25%, rgba(194, 154, 91, 0.22) 0%, transparent 55%),
-                radial-gradient(circle at 10% 80%, rgba(5, 150, 105, 0.15) 0%, transparent 45%);
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 58%;
+            background-image: url('/oslo/oslo-header.jpg');
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: cover;
+            opacity: 0.95;
+            mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.45) 28%, black 80%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.45) 28%, black 80%);
             pointer-events: none;
+            z-index: 1;
         }
 
         .hero-content {
@@ -309,7 +317,7 @@
             align-items: center;
             gap: 6px;
             font-size: 0.72rem;
-            font-weight: 600;
+            font-weight: 500;
             padding: 5px 14px;
             border-radius: var(--md-sys-shape-corner-full);
             line-height: 1;
@@ -322,9 +330,10 @@
         }
 
         .m3-chip-tonal {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .hero-title-group {
@@ -355,23 +364,24 @@
         }
 
         .hero-title {
-            font-size: clamp(1.6rem, 3.2vw, 2.3rem);
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -0.03em;
-            color: #ffffff;
+            font-size: clamp(1.5rem, 3vw, 2.15rem);
+            font-weight: 400;
+            line-height: 1.22;
+            letter-spacing: -0.02em;
+            color: #0f172a;
         }
 
         .hero-title strong {
-            color: #f6d8a3;
-            font-weight: 700;
+            color: #8e6525;
+            font-weight: 600;
         }
 
         .hero-lead {
-            font-size: 0.95rem;
-            color: #cbd5e1;
+            font-size: 0.92rem;
+            color: #475569;
             line-height: 1.6;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
         .hero-chips-bar {
@@ -384,17 +394,19 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            padding: 7px 14px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(194, 154, 91, 0.28);
+            padding: 6px 14px;
             border-radius: var(--md-sys-shape-corner-full);
-            font-size: 0.78rem;
-            color: #e2e8f0;
+            font-size: 0.76rem;
+            color: #334155;
+            font-weight: 400;
             backdrop-filter: blur(8px);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
         }
 
         .hero-chip svg {
-            color: #f1d7a8;
+            color: #8e6525;
             flex-shrink: 0;
         }
 
@@ -444,12 +456,12 @@
             align-items: center;
             justify-content: center;
             font-size: 0.95rem;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .brand-meta-title {
             font-size: 0.88rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             letter-spacing: 0.04em;
         }
@@ -496,7 +508,7 @@
 
         .client-eyebrow {
             font-size: 0.68rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--md-sys-color-on-secondary-container);
@@ -505,7 +517,7 @@
 
         .client-name {
             font-size: 1.15rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             letter-spacing: -0.015em;
         }
@@ -527,7 +539,7 @@
 
         .invoice-doc-label {
             font-size: 2.2rem;
-            font-weight: 800;
+            font-weight: 500;
             letter-spacing: -0.04em;
             color: var(--md-sys-color-primary);
             line-height: 0.95;
@@ -536,7 +548,7 @@
 
         .invoice-doc-number {
             font-size: 0.88rem;
-            font-weight: 700;
+            font-weight: 500;
             color: var(--md-sys-color-on-secondary-container);
             letter-spacing: 0.04em;
             font-family: monospace;
@@ -559,12 +571,12 @@
 
         .date-rows-block strong {
             color: var(--md-sys-color-on-surface);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .due-date-row {
             color: var(--md-sys-color-on-secondary-container);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         /* M3 Tonal Status Badge */
@@ -578,7 +590,7 @@
             padding: 6px 14px;
             border-radius: var(--md-sys-shape-corner-full);
             font-size: 0.74rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
@@ -621,7 +633,7 @@
             align-items: center;
             gap: 8px;
             font-size: 0.78rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-secondary-container);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -663,13 +675,13 @@
             background: var(--md-sys-color-primary);
             color: #ffffff;
             font-size: 0.72rem;
-            font-weight: 800;
+            font-weight: 600;
             margin-bottom: 6px;
         }
 
         .tec-value-title {
             font-size: 0.8rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             margin-bottom: 4px;
         }
@@ -710,7 +722,7 @@
         }
 
         .spec-item strong {
-            font-weight: 600;
+            font-weight: 500;
             color: var(--md-sys-color-on-surface);
         }
 
@@ -737,8 +749,8 @@
         }
 
         .service-main-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             letter-spacing: -0.02em;
         }
@@ -758,7 +770,7 @@
 
         .service-price-num {
             font-size: 1.85rem;
-            font-weight: 800;
+            font-weight: 600;
             color: var(--md-sys-color-primary);
             letter-spacing: -0.03em;
             line-height: 1;
@@ -794,7 +806,7 @@
 
         .page-matrix-title {
             font-size: 0.78rem;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: 0.05em;
             color: var(--md-sys-color-primary);
             display: flex;
@@ -805,7 +817,7 @@
 
         .page-matrix-note {
             font-size: 0.72rem;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--md-sys-color-on-secondary-container);
             background: var(--md-sys-color-secondary-container);
             border: 1px solid var(--md-sys-color-secondary-border);
@@ -842,7 +854,7 @@
 
         .page-badge {
             font-size: 0.68rem;
-            font-weight: 700;
+            font-weight: 500;
             color: var(--md-sys-color-primary);
             background: var(--md-sys-color-surface-container);
             border: 1px solid var(--md-sys-color-outline-variant);
@@ -867,14 +879,14 @@
 
         .page-card-text strong {
             color: var(--md-sys-color-on-surface);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .tag-special-pill {
             display: inline-block;
             margin-top: 4px;
             font-size: 0.68rem;
-            font-weight: 700;
+            font-weight: 500;
             color: var(--md-sys-color-on-secondary-container);
             background: var(--md-sys-color-secondary-container);
             border: 1px solid var(--md-sys-color-secondary-border);
@@ -918,7 +930,7 @@
             align-items: center;
             justify-content: center;
             font-size: 0.74rem;
-            font-weight: 700;
+            font-weight: 600;
             flex-shrink: 0;
         }
 
@@ -931,7 +943,7 @@
         .feature-text strong {
             display: block;
             font-size: 0.82rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             margin-bottom: 2px;
         }
@@ -958,7 +970,7 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: #f1d7a8;
-            font-weight: 700;
+            font-weight: 500;
             margin-bottom: 4px;
         }
 
@@ -973,7 +985,7 @@
 
         .total-amount-display {
             font-size: 2.2rem;
-            font-weight: 800;
+            font-weight: 600;
             color: #ffffff;
             letter-spacing: -0.03em;
             line-height: 1;
@@ -994,7 +1006,7 @@
             padding: 4px 12px;
             border-radius: var(--md-sys-shape-corner-full);
             font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 0.04em;
         }
 
@@ -1015,7 +1027,7 @@
 
         .bank-header-title {
             font-size: 0.95rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             margin-bottom: 4px;
             display: flex;
@@ -1043,7 +1055,7 @@
 
         .bank-name-label {
             font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 500;
             color: var(--md-sys-color-on-secondary-container);
             letter-spacing: 0.04em;
             text-transform: uppercase;
@@ -1051,7 +1063,7 @@
 
         .bank-number-val {
             font-size: 1.25rem;
-            font-weight: 800;
+            font-weight: 600;
             color: var(--md-sys-color-primary);
             font-family: monospace;
             letter-spacing: 0.05em;
@@ -1069,7 +1081,7 @@
             color: var(--md-sys-color-on-surface);
             font-family: var(--md-sys-font);
             font-size: 0.74rem;
-            font-weight: 600;
+            font-weight: 500;
             padding: 8px 14px;
             border-radius: var(--md-sys-shape-corner-full);
             cursor: pointer;
@@ -1154,7 +1166,7 @@
 
         .gate-eyebrow {
             font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 0.08em;
             color: var(--md-sys-color-on-secondary-container);
             text-transform: uppercase;
@@ -1163,7 +1175,7 @@
 
         .gate-title {
             font-size: 1.45rem;
-            font-weight: 800;
+            font-weight: 600;
             color: var(--md-sys-color-on-surface);
             letter-spacing: -0.02em;
             margin-bottom: 8px;
@@ -1204,7 +1216,7 @@
             color: var(--md-sys-color-error);
             font-size: 0.76rem;
             margin-bottom: 12px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .gate-submit-btn {
@@ -1213,7 +1225,7 @@
             color: #ffffff;
             font-family: var(--md-sys-font);
             font-size: 0.88rem;
-            font-weight: 600;
+            font-weight: 500;
             padding: 12px 20px;
             border-radius: var(--md-sys-shape-corner-full);
             border: none;
@@ -1397,7 +1409,7 @@
                 justify-content: center;
                 gap: 5px;
                 font-size: 0.72rem;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 10px 6px;
                 border-radius: var(--md-sys-shape-corner-full);
                 border: none;
