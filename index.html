@@ -2691,6 +2691,60 @@
                     <span>Buka Invoice Mba Athifa</span>
                 </a>
             </div>
+
+            <!-- Pak Joko - OSLO Park Brosur Premium 16 Halaman Card -->
+            <div class="invoice-card" id="card-oslo" data-id="oslo" data-month="2026-09" data-amount="1500000" data-client="pak joko joko oslo park oslo park brosur premium 16 halaman booklet property perumahan 1500000 #inv/dar/2026/09/018 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Pak Joko (OSLO Park)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('oslo')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DAR/2026/09/018 &bull; Brosur Premium 16 Hal</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Paket Brosur Premium 16 Halaman (Termasuk Cover Depan &amp; Belakang) &bull; Editorial Layout &amp; Typography, High-Res Print-Ready (300 DPI CMYK PDF), Digital Web Interactive PDF, serta 3D Realistic Brochure Mockups. Total: Rp 1.500.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/oslo</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/oslo')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptOslo()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 1.500.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValOslo">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValOslo">Rp 1.500.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('oslo')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/oslo" class="action-btn">
+                    <span>Buka Invoice Pak Joko (OSLO Park)</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -2908,7 +2962,8 @@
             pgstour: "UNPAID",
             "umrahme-dreammecca": "UNPAID",
             mochi: "UNPAID",
-            athifa: "UNPAID"
+            athifa: "UNPAID",
+            oslo: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -2952,7 +3007,8 @@
             pgstour: 1000000,
             "umrahme-dreammecca": 280000,
             mochi: 600000,
-            athifa: 250000
+            athifa: 250000,
+            oslo: 1500000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -3008,7 +3064,8 @@
             { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 },
             { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 },
             { id: "mochi", name: "Mochi Cafe n Resto (KAEL Paket Ultimate)", month: "2026-09", monthLabel: "September 2026", gross: 750000 },
-            { id: "athifa", name: "Mba Athifa (Desain Cover Buku)", month: "2026-09", monthLabel: "September 2026", gross: 250000 }
+            { id: "athifa", name: "Mba Athifa (Desain Cover Buku)", month: "2026-09", monthLabel: "September 2026", gross: 250000 },
+            { id: "oslo", name: "Pak Joko (OSLO Park - Brosur Premium 16 Halaman)", month: "2026-09", monthLabel: "September 2026", gross: 1500000 }
         ];
 
         function formatIDR(num) {
@@ -4628,6 +4685,34 @@ Dokumen invoice resmi serta tombol Cetak PDF & Unduh PNG tersedia lengkap pada l
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA MBA ATHIFA BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptOslo() {
+            const waScript = `Halo Pak Joko & Tim OSLO Park! 🙏✨
+
+Berikut kami lampirkan dokumen resmi Invoice untuk pengerjaan Paket Desain Brosur Premium OSLO Park (16 Halaman incl. Cover):
+
+🔗 Invoice Online: https://temantiket.com/oslo
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Layanan & Spesifikasi:
+• Proyek: Desain Brosur Premium 16 Halaman (Termasuk Cover Depan & Belakang)
+• Lingkup: Konsep Visual & Moodboard, Master Plan & Denah Unit, Fasilitas, Spesifikasi Teknis & Peta Lokasi
+• Output: Master File Siap Cetak (300 DPI CMYK PDF) + Digital E-Brochure (Interactive PDF) + 3D Realistic Brochure Mockups
+• Total Investasi: Rp 1.500.000
+(Terbilang: Satu Juta Lima Ratus Ribu Rupiah - Pembayaran Penuh)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice interaktif resmi serta tombol Cetak Dokumen PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak atas kepercayaan dan kerjasamanya Pak Joko! 🙏🏢`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA PAK JOKO (OSLO PARK) BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

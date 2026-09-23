@@ -11,6 +11,10 @@ PORT = 3000
 
 REWRITES = {
     "/today": "/today/index.html",
+    "/oslo": "/oslo/index.html",
+    "/oslopark": "/oslo/index.html",
+    "/oslo-park": "/oslo/index.html",
+    "/pak-joko": "/oslo/index.html",
     "/athifa": "/athifa/index.html",
     "/mba-athifa": "/athifa/index.html",
     "/cover-athifa": "/athifa/index.html",

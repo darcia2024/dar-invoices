@@ -63,6 +63,7 @@ const defaultState = {
     mochi: "UNPAID",
     athifa: "UNPAID",
     kpi: "UNPAID",
+    oslo: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -88,6 +89,7 @@ const defaultState = {
     mochi: 600000,
     athifa: 250000,
     kpi: 14000000,
+    oslo: 1500000,
   },
 };
 

@@ -3,6 +3,10 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/today", "destination": "/today/index.html" },
+    { "source": "/oslo", "destination": "/oslo/index.html" },
+    { "source": "/oslopark", "destination": "/oslo/index.html" },
+    { "source": "/oslo-park", "destination": "/oslo/index.html" },
+    { "source": "/pak-joko", "destination": "/oslo/index.html" },
     { "source": "/athifa", "destination": "/athifa/index.html" },
     { "source": "/mba-athifa", "destination": "/athifa/index.html" },
     { "source": "/cover-athifa", "destination": "/athifa/index.html" },
