@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Invoice #INV/DAR/2026/09/019 — El Massa</title>
 
-    <!-- Google Fonts: Sora & Caveat for authentic handwritten signature -->
+    <!-- Google Fonts: Sora -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- html2canvas for High-Res PNG Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -16,7 +16,6 @@
     <style>
         :root {
             --font-sora: "Sora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --font-sig: "Caveat", cursive, sans-serif;
 
             /* El Massa Official Color Palette: Coklat (Chocolate Brown) & Pink (Rose Blush) */
             --color-brown-primary: #5c240e;
@@ -606,22 +605,30 @@
             font-size: 1.25rem;
         }
 
-        /* SIGNATURE SECTION */
+        /* SIGNATURE SECTION (REAL TTD DARU) */
         .editorial-signature-unit {
             align-self: flex-end;
-            margin-top: 36px;
+            margin-top: 28px;
             text-align: right;
             padding-right: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
 
-        .handwritten-sig {
-            font-family: var(--font-sig);
-            font-size: 2.7rem;
-            font-weight: 700;
-            color: var(--color-brown-primary);
-            line-height: 0.85;
-            display: inline-block;
-            margin-bottom: 8px;
+        .real-sig-wrapper {
+            display: inline-flex;
+            justify-content: flex-end;
+            margin-bottom: 2px;
+        }
+
+        .real-sig-img {
+            height: 92px;
+            max-width: 140px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(92, 36, 14, 0.12));
         }
 
         .sig-printed-name {
@@ -816,78 +823,233 @@
         }
 
         /* ----------------------------------------------------
-           RESPONSIVE (MOBILE & TABLET)
+           HIGHLY REFINED RESPONSIVE MOBILE UX (< 680px)
         ---------------------------------------------------- */
-        @media (max-width: 768px) {
+        @media (max-width: 680px) {
             .invoice-full-page {
-                padding: 24px 16px 60px;
+                padding: 16px 14px 60px;
             }
 
             .toolbar-inner {
-                padding: 12px 16px;
-                flex-direction: column;
-                align-items: stretch;
+                padding: 10px 14px;
+                gap: 10px;
             }
 
-            .toolbar-left, .toolbar-right {
+            .toolbar-left {
                 width: 100%;
                 justify-content: space-between;
             }
 
+            /* Thumb-friendly 2x2 grid for action buttons */
+            .toolbar-right {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .btn-action-chip {
+                width: 100%;
+                justify-content: center;
+                padding: 10px 8px;
+                font-size: 0.72rem;
+                border-radius: 6px;
+            }
+
+            /* Responsive Header */
             .document-header {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
-                padding-bottom: 24px;
+                align-items: stretch;
+                gap: 16px;
+                padding-bottom: 20px;
+            }
+
+            .brand-unit {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 12px;
             }
 
             .elmassa-logo-img {
-                height: 60px;
+                height: 54px;
+            }
+
+            .brand-name {
+                font-size: 1.15rem;
+            }
+
+            .brand-sub {
+                font-size: 0.68rem;
             }
 
             .invoice-title-unit {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-top: 14px;
+                border-top: 1px dashed var(--color-border-subtle);
                 text-align: left;
             }
 
             .invoice-main-heading {
-                font-size: 2.2rem;
+                font-size: 2.1rem;
+                line-height: 0.95;
             }
 
+            .invoice-meta-lines {
+                text-align: right;
+                margin-top: 0;
+                font-size: 0.72rem;
+            }
+
+            /* 1-Column Mobile Layout */
             .document-body-layout {
                 grid-template-columns: 1fr;
-                gap: 28px;
-                margin-top: 24px;
+                gap: 22px;
+                margin-top: 20px;
             }
 
             .editorial-sidebar {
                 border-bottom: 2px solid var(--color-brown-primary);
-                padding-bottom: 24px;
+                padding-bottom: 22px;
+                gap: 20px;
+            }
+
+            .mandiri-payment-card {
+                padding: 14px 16px;
+                background: var(--color-pink-light);
+            }
+
+            .mandiri-bold-number {
+                font-size: 1.15rem;
             }
 
             .sidebar-contact-list {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 16px;
-                padding-top: 16px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                padding-top: 14px;
             }
 
-            .elmassa-table thead th.th-num {
-                width: 18px;
-            }
-            .elmassa-table thead th.th-price {
-                width: 72px;
-            }
-            .elmassa-table thead th.th-total {
-                width: 85px;
+            .sidebar-contact-list .contact-entry:last-child {
+                grid-column: span 2;
             }
 
-            .editorial-summary-row {
+            /* LUXURY CARD-ROW MOBILE TABLE */
+            .elmassa-table thead {
+                display: none;
+            }
+
+            .elmassa-table tbody tr {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 11px 0;
+                border-bottom: 1px solid var(--color-border-subtle);
+                gap: 12px;
+            }
+
+            .elmassa-table tbody tr td {
+                padding: 0;
+                border: none;
+            }
+
+            .elmassa-table .td-num {
+                display: none;
+            }
+
+            .elmassa-table .td-desc {
+                flex: 1;
+                padding-left: 0;
+            }
+
+            .elmassa-table .item-title-text {
+                font-size: 0.85rem;
+                line-height: 1.3;
+            }
+
+            .elmassa-table .item-desc-text {
+                font-size: 0.72rem;
+                margin-top: 2px;
+                color: var(--color-text-muted);
+            }
+
+            .elmassa-table .td-price,
+            .elmassa-table .td-qty {
+                display: none;
+            }
+
+            .elmassa-table .td-total {
+                text-align: right;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                flex-shrink: 0;
+                gap: 2px;
+                font-size: 0.86rem;
+            }
+
+            .elmassa-table .td-total::after {
+                content: attr(data-qty);
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: var(--color-text-muted);
+            }
+
+            /* Mobile Mockup Subtotal Banner */
+            .elmassa-table .row-subtotal-mockup {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 11px 14px;
+                border-radius: 8px;
+                margin: 8px 0;
+                border: 1.5px solid var(--color-pink-border);
+                background: var(--color-pink-light);
+            }
+
+            .elmassa-table .row-subtotal-mockup td {
+                background: transparent;
+                padding: 0;
+                border: none;
+            }
+
+            .elmassa-table .row-subtotal-mockup .td-total-mockup {
+                display: flex;
                 flex-direction: column;
                 align-items: flex-end;
             }
 
+            .elmassa-table .row-subtotal-mockup .td-total-mockup::after {
+                content: "12 Item";
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: var(--color-pink-primary);
+            }
+
+            /* Summary & Signature Mobile */
+            .editorial-summary-row {
+                margin-top: 20px;
+                width: 100%;
+            }
+
             .totals-summary-box {
                 width: 100%;
+                background: var(--color-pink-light);
+                padding: 14px 16px;
+                border-radius: 8px;
+                border: 1px solid var(--color-pink-border);
+            }
+
+            .editorial-signature-unit {
+                margin-top: 24px;
+                align-self: flex-end;
+            }
+
+            .real-sig-img {
+                height: 78px;
             }
         }
 
@@ -1070,7 +1232,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 2 -->
@@ -1082,7 +1244,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 3 -->
@@ -1094,7 +1256,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 4 -->
@@ -1106,7 +1268,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 5 -->
@@ -1118,7 +1280,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 6 -->
@@ -1130,7 +1292,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 7 -->
@@ -1142,7 +1304,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 8 -->
@@ -1154,7 +1316,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 9 -->
@@ -1166,7 +1328,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 10 -->
@@ -1178,7 +1340,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 11 -->
@@ -1190,7 +1352,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 12 -->
@@ -1202,7 +1364,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 35.000</td>
+                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
                             </tr>
 
                             <!-- SUB-TOTAL DIVIDER ROW (PINK SOFT BACKGROUND) -->
@@ -1224,7 +1386,7 @@
                                 </td>
                                 <td class="td-price">Rp 35.000</td>
                                 <td class="td-qty">12</td>
-                                <td class="td-total">Rp 420.000</td>
+                                <td class="td-total" data-qty="12 × Rp 35.000">Rp 420.000</td>
                             </tr>
 
                             <!-- ITEM 14 -->
@@ -1236,7 +1398,7 @@
                                 </td>
                                 <td class="td-price">Rp 800.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 800.000</td>
+                                <td class="td-total" data-qty="1 × Rp 800.000">Rp 800.000</td>
                             </tr>
 
                             <!-- ITEM 15 -->
@@ -1248,7 +1410,7 @@
                                 </td>
                                 <td class="td-price">Rp 300.000</td>
                                 <td class="td-qty">1</td>
-                                <td class="td-total">Rp 300.000</td>
+                                <td class="td-total" data-qty="1 × Rp 300.000">Rp 300.000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1271,9 +1433,11 @@
                         </div>
                     </div>
 
-                    <!-- SIGNATURE BLOCK -->
+                    <!-- SIGNATURE BLOCK (REAL SIGNATURE DARU FAHMAA) -->
                     <div class="editorial-signature-unit">
-                        <div class="handwritten-sig">Daru Fahmaa</div>
+                        <div class="real-sig-wrapper">
+                            <img src="/elmassa/ttd_daru_brown.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="real-sig-img" onerror="this.src='ttd_daru.png'">
+                        </div>
                         <div class="sig-printed-name">Daru Fahmaa Muliawan</div>
                         <div class="sig-official-role">Lead Creative &amp; Director &middot; DAR Studio</div>
                     </div>
