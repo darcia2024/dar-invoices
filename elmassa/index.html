@@ -192,7 +192,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 24px;
-            padding-bottom: 32px;
+            padding-bottom: 28px;
             border-bottom: 2.5px solid var(--color-brown-primary);
         }
 
@@ -259,29 +259,22 @@
         }
 
         /* ----------------------------------------------------
-           BODY: 2-COLUMN LAYOUT (LEFT SIDEBAR & RIGHT TABLE)
+           METADATA BAR (INVOICE TO & DITERBITKAN OLEH)
         ---------------------------------------------------- */
-        .document-body-layout {
+        .invoice-meta-grid {
             display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 48px;
-            margin-top: 36px;
-            align-items: start;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--color-border-subtle);
         }
 
-        /* LEFT SIDEBAR */
-        .editorial-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .sidebar-block {
+        .meta-col {
             display: flex;
             flex-direction: column;
         }
 
-        .sidebar-block-title {
+        .meta-label {
             font-size: 0.72rem;
             font-weight: 800;
             letter-spacing: 0.12em;
@@ -290,154 +283,25 @@
             margin-bottom: 6px;
         }
 
-        .sidebar-client-heading {
+        .meta-title-bold {
             font-size: 1.05rem;
             font-weight: 800;
             color: var(--color-brown-primary);
-            padding-bottom: 6px;
-            border-bottom: 2px solid var(--color-brown-primary);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
 
-        .sidebar-paragraph {
-            font-size: 0.82rem;
+        .meta-sub-text {
+            font-size: 0.8rem;
             color: var(--color-text-muted);
-            line-height: 1.55;
+            line-height: 1.5;
             font-weight: 500;
         }
 
-        /* BANK MANDIRI CARD (PINK & COKLAT HIGHLIGHT) */
-        .mandiri-payment-card {
-            border: 1.5px solid var(--color-brown-primary);
-            padding: 14px;
-            background: var(--color-pink-light);
-            border-radius: 8px;
-            margin-top: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .mandiri-logo-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .mandiri-bank-logo {
-            height: 28px;
-            max-width: 140px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .mandiri-account-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .mandiri-acc-label {
-            font-size: 0.68rem;
-            font-weight: 700;
-            color: var(--color-pink-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .mandiri-bold-number {
-            font-size: 1.08rem;
-            font-weight: 800;
-            color: var(--color-brown-primary);
-            letter-spacing: 0.04em;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            padding: 2px 0;
-            transition: opacity 0.15s ease;
-        }
-
-        .mandiri-bold-number:hover {
-            color: var(--color-pink-primary);
-        }
-
-        .click-copy-icon {
-            color: var(--color-pink-primary);
-        }
-
-        .mandiri-acc-name {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--color-text-main);
-        }
-
-        .btn-copy-account {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 100%;
-            padding: 8px 12px;
-            background: var(--color-brown-primary);
-            color: var(--color-white);
-            border: 1px solid var(--color-brown-primary);
-            border-radius: 6px;
-            font-family: var(--font-sora);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 2px;
-        }
-
-        .btn-copy-account:hover {
-            background: var(--color-pink-primary);
-            border-color: var(--color-pink-primary);
-            transform: translateY(-1px);
-        }
-
-        .btn-copy-account.copied {
-            background: var(--color-pink-primary);
-            border-color: var(--color-pink-primary);
-            color: var(--color-white);
-        }
-
-        /* Sidebar Contact Icons */
-        .sidebar-contact-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-top: 8px;
-            padding-top: 20px;
-            border-top: 1px solid var(--color-border-subtle);
-        }
-
-        .contact-entry {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .contact-icon-frame {
-            width: 20px;
-            height: 20px;
-            color: var(--color-pink-primary);
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .contact-caption {
-            font-size: 0.78rem;
-            color: var(--color-text-muted);
-            line-height: 1.4;
-            font-weight: 500;
-        }
-
-        /* RIGHT MAIN CONTENT: TABLE & TOTALS */
-        .editorial-main-content {
+        /* ----------------------------------------------------
+           TABLE SECTION (FULL WIDTH)
+        ---------------------------------------------------- */
+        .table-section-area {
+            margin-top: 24px;
             display: flex;
             flex-direction: column;
         }
@@ -472,15 +336,15 @@
         }
         .elmassa-table thead th.th-price {
             text-align: right;
-            width: 95px;
+            width: 100px;
         }
         .elmassa-table thead th.th-qty {
             text-align: center;
-            width: 50px;
+            width: 55px;
         }
         .elmassa-table thead th.th-total {
             text-align: right;
-            width: 110px;
+            width: 120px;
         }
 
         .elmassa-table tbody tr {
@@ -559,14 +423,17 @@
         }
 
         /* TOTALS & SUMMARY SECTION */
-        .editorial-summary-row {
+        .totals-and-signature-grid {
             margin-top: 24px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            flex-wrap: wrap;
         }
 
         .totals-summary-box {
-            width: 280px;
+            width: 300px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -607,10 +474,7 @@
 
         /* SIGNATURE SECTION (REAL TTD DARU) */
         .editorial-signature-unit {
-            align-self: flex-end;
-            margin-top: 28px;
             text-align: right;
-            padding-right: 2px;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
@@ -623,7 +487,7 @@
         }
 
         .real-sig-img {
-            height: 92px;
+            height: 90px;
             max-width: 140px;
             width: auto;
             object-fit: contain;
@@ -648,12 +512,131 @@
         }
 
         /* ----------------------------------------------------
+           BOTTOM PAYMENT REKENING CARD (DITARUH TERAKHIR)
+        ---------------------------------------------------- */
+        .bottom-payment-section {
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 2px solid var(--color-brown-primary);
+        }
+
+        .mandiri-payment-card-full {
+            border: 1.5px solid var(--color-brown-primary);
+            background: var(--color-pink-light);
+            border-radius: 10px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mandiri-card-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mandiri-logo-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .mandiri-bank-logo {
+            height: 32px;
+            max-width: 150px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .mandiri-badge {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--color-pink-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .mandiri-account-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .mandiri-bold-number {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-brown-primary);
+            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .mandiri-bold-number:hover {
+            color: var(--color-pink-primary);
+        }
+
+        .click-copy-icon {
+            color: var(--color-pink-primary);
+        }
+
+        .mandiri-acc-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--color-text-main);
+        }
+
+        .mandiri-card-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-copy-account {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 22px;
+            background: var(--color-brown-primary);
+            color: var(--color-white);
+            border: 1.5px solid var(--color-brown-primary);
+            border-radius: 8px;
+            font-family: var(--font-sora);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(92, 36, 14, 0.15);
+        }
+
+        .btn-copy-account:hover {
+            background: var(--color-pink-primary);
+            border-color: var(--color-pink-primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-copy-account.copied {
+            background: var(--color-pink-primary);
+            border-color: var(--color-pink-primary);
+            color: var(--color-white);
+        }
+
+        /* ----------------------------------------------------
            TERMS & CONDITIONS FOOTER (PINK & BROWN PALETTE)
         ---------------------------------------------------- */
         .document-footer-terms {
-            margin-top: 48px;
-            padding-top: 20px;
-            border-top: 2px solid var(--color-brown-primary);
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid var(--color-border-subtle);
             font-size: 0.78rem;
             color: var(--color-text-muted);
             line-height: 1.6;
@@ -904,37 +887,11 @@
                 font-size: 0.72rem;
             }
 
-            /* 1-Column Mobile Layout */
-            .document-body-layout {
+            /* Meta Grid Mobile */
+            .invoice-meta-grid {
                 grid-template-columns: 1fr;
-                gap: 22px;
-                margin-top: 20px;
-            }
-
-            .editorial-sidebar {
-                border-bottom: 2px solid var(--color-brown-primary);
-                padding-bottom: 22px;
-                gap: 20px;
-            }
-
-            .mandiri-payment-card {
-                padding: 14px 16px;
-                background: var(--color-pink-light);
-            }
-
-            .mandiri-bold-number {
-                font-size: 1.15rem;
-            }
-
-            .sidebar-contact-list {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-                padding-top: 14px;
-            }
-
-            .sidebar-contact-list .contact-entry:last-child {
-                grid-column: span 2;
+                gap: 16px;
+                padding: 16px 0;
             }
 
             /* LUXURY CARD-ROW MOBILE TABLE */
@@ -1030,9 +987,11 @@
             }
 
             /* Summary & Signature Mobile */
-            .editorial-summary-row {
+            .totals-and-signature-grid {
+                flex-direction: column-reverse;
+                align-items: stretch;
+                gap: 20px;
                 margin-top: 20px;
-                width: 100%;
             }
 
             .totals-summary-box {
@@ -1044,12 +1003,34 @@
             }
 
             .editorial-signature-unit {
-                margin-top: 24px;
                 align-self: flex-end;
             }
 
             .real-sig-img {
                 height: 78px;
+            }
+
+            /* Mandiri Card Mobile (Terakhir) */
+            .mandiri-payment-card-full {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 16px;
+                gap: 16px;
+            }
+
+            .mandiri-card-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .mandiri-bold-number {
+                font-size: 1.25rem;
+            }
+
+            .btn-copy-account {
+                width: 100%;
+                padding: 12px;
             }
         }
 
@@ -1077,7 +1058,7 @@
                 margin: 0 !important;
             }
 
-            .mandiri-payment-card,
+            .mandiri-payment-card-full,
             .row-subtotal-mockup td,
             .upcoming-scope-box {
                 print-color-adjust: exact;
@@ -1146,310 +1127,287 @@
                 </div>
             </header>
 
-            <!-- 2-COLUMN BODY -->
-            <div class="document-body-layout">
-
-                <!-- LEFT SIDEBAR -->
-                <aside class="editorial-sidebar">
-
-                    <!-- INVOICE TO -->
-                    <div class="sidebar-block">
-                        <div class="sidebar-block-title">Invoice To :</div>
-                        <div class="sidebar-client-heading">El Massa Tour &amp; Travel</div>
-                        <div class="sidebar-paragraph">
-                            Indonesia<br>
-                            +62 813-1150-6025
-                        </div>
+            <!-- INVOICE METADATA: CLIENT & ISSUER INFO -->
+            <section class="invoice-meta-grid">
+                <div class="meta-col">
+                    <div class="meta-label">Invoice To :</div>
+                    <div class="meta-title-bold">El Massa Tour &amp; Travel</div>
+                    <div class="meta-sub-text">
+                        Klien Resmi &middot; Indonesia &middot; +62 813-1150-6025
                     </div>
-
-                    <!-- PAYMENT METHODS (BANK MANDIRI WITH LOGO & INTERACTIVE COPY) -->
-                    <div class="sidebar-block">
-                        <div class="sidebar-block-title">Payment Methods :</div>
-                        <div class="mandiri-payment-card">
-                            <div class="mandiri-logo-row">
-                                <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-bank-logo" onerror="this.src='mandiri_logo.webp'">
-                            </div>
-                            <div class="mandiri-account-info">
-                                <div class="mandiri-acc-label">Bank Mandiri</div>
-                                <div class="mandiri-bold-number" id="bankAccNumber" onclick="copyBankAccount()" title="Klik untuk salin no rekening">
-                                    <span>1550010616962</span>
-                                    <svg class="click-copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                                </div>
-                                <div class="mandiri-acc-name">a.n. Daru Fahmaa Muliawan</div>
-                            </div>
-                            <button type="button" class="btn-copy-account" id="btnCopyAccount" onclick="copyBankAccount()">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                                <span id="btnCopyAccountText">Salin No. Rekening</span>
-                            </button>
-                        </div>
+                </div>
+                <div class="meta-col">
+                    <div class="meta-label">Diterbitkan Oleh :</div>
+                    <div class="meta-title-bold">DAR STUDIO</div>
+                    <div class="meta-sub-text">
+                        Kota Tangerang, Banten &middot; temantiket.com &middot; +62 813-1150-6025
                     </div>
+                </div>
+            </section>
 
-                    <!-- CONTACT LIST -->
-                    <div class="sidebar-contact-list">
-                        <div class="contact-entry">
-                            <div class="contact-icon-frame">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                            </div>
-                            <div class="contact-caption">Kota Tangerang, Banten<br>Indonesia, 15119</div>
-                        </div>
+            <!-- MAIN ITEMS TABLE -->
+            <section class="table-section-area">
+                <table class="elmassa-table">
+                    <thead>
+                        <tr>
+                            <th class="th-num">#</th>
+                            <th class="th-desc">Item Description</th>
+                            <th class="th-price">Price</th>
+                            <th class="th-qty">Qty.</th>
+                            <th class="th-total">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ITEM 1 -->
+                        <tr>
+                            <td class="td-num">1</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Kain Baju Pria</div>
+                                <div class="item-desc-text">Desain visual 3D apparel kain seragam pria El Massa</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
 
-                        <div class="contact-entry">
-                            <div class="contact-icon-frame">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            </div>
-                            <div class="contact-caption">temantiket.com<br>daru.designstudio</div>
-                        </div>
+                        <!-- ITEM 2 -->
+                        <tr>
+                            <td class="td-num">2</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Tas Serut</div>
+                                <div class="item-desc-text">Mockup realistis tas serut / drawstring bag jamaah</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
 
-                        <div class="contact-entry">
-                            <div class="contact-icon-frame">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                            </div>
-                            <div class="contact-caption">+62 813-1150-6025<br>WhatsApp Verified</div>
-                        </div>
+                        <!-- ITEM 3 -->
+                        <tr>
+                            <td class="td-num">3</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Sarung Koper 26 inch</div>
+                                <div class="item-desc-text">Luggage protector cover branding identitas El Massa</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 4 -->
+                        <tr>
+                            <td class="td-num">4</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Sajadah Syal</div>
+                                <div class="item-desc-text">Sajadah travel multifungsi syal serbaguna jamaah</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 5 -->
+                        <tr>
+                            <td class="td-num">5</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Bantal Leher</div>
+                                <div class="item-desc-text">Desain bantal leher penerbangan umrah ergonomis</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 6 -->
+                        <tr>
+                            <td class="td-num">6</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Lanyard</div>
+                                <div class="item-desc-text">Tali ID card eksklusif untuk staf &amp; jamaah</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 7 -->
+                        <tr>
+                            <td class="td-num">7</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Ransel</div>
+                                <div class="item-desc-text">Ransel kabin travel umrah perlengkapan ibadah</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 8 -->
+                        <tr>
+                            <td class="td-num">8</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Kain Baju Wanita 2,5 m</div>
+                                <div class="item-desc-text">Pola motif batik seragam wanita ukuran 2,5 meter</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 9 -->
+                        <tr>
+                            <td class="td-num">9</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Kerudung Syar'i</div>
+                                <div class="item-desc-text">Hijab syar'i seragam jamaah wanita El Massa</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 10 -->
+                        <tr>
+                            <td class="td-num">10</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Mukena Travel</div>
+                                <div class="item-desc-text">Mukena travel lipat praktis dan pouch eksklusif</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 11 -->
+                        <tr>
+                            <td class="td-num">11</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Cover Mini Notebook</div>
+                                <div class="item-desc-text">Sampul buku catatan saku jamaah El Massa</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- ITEM 12 -->
+                        <tr>
+                            <td class="td-num">12</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Mockup Cover Buku Doa</div>
+                                <div class="item-desc-text">Sampul buku saku kumpulan doa &amp; panduan manasik</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
+                        </tr>
+
+                        <!-- SUB-TOTAL DIVIDER ROW (PINK SOFT BACKGROUND) -->
+                        <tr class="row-subtotal-mockup">
+                            <td colspan="2" style="padding-left:10px;">
+                                <span>SUBTOTAL 12 ITEM MOCKUP MERCHANDISE</span>
+                            </td>
+                            <td style="text-align:right;">—</td>
+                            <td style="text-align:center;">12</td>
+                            <td style="text-align:right;" class="td-total-mockup">Rp 420.000</td>
+                        </tr>
+
+                        <!-- ITEM 13 -->
+                        <tr>
+                            <td class="td-num">13</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Desain Poster / Brosur Promosi</div>
+                                <div class="item-desc-text">12 materi promosi cetak &amp; konten media sosial</div>
+                            </td>
+                            <td class="td-price">Rp 35.000</td>
+                            <td class="td-qty">12</td>
+                            <td class="td-total" data-qty="12 × Rp 35.000">Rp 420.000</td>
+                        </tr>
+
+                        <!-- ITEM 14 -->
+                        <tr>
+                            <td class="td-num">14</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Pembuatan Website Katalog</div>
+                                <div class="item-desc-text">Pembangunan landing page responsif katalog paket umrah</div>
+                            </td>
+                            <td class="td-price">Rp 800.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 800.000">Rp 800.000</td>
+                        </tr>
+
+                        <!-- ITEM 15 -->
+                        <tr>
+                            <td class="td-num">15</td>
+                            <td class="td-desc">
+                                <div class="item-title-text">Update Website Itinerary</div>
+                                <div class="item-desc-text">Pembaruan jadwal rute perjalanan &amp; fasilitas paket</div>
+                            </td>
+                            <td class="td-price">Rp 300.000</td>
+                            <td class="td-qty">1</td>
+                            <td class="td-total" data-qty="1 × Rp 300.000">Rp 300.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SUMMARY TOTALS & SIGNATURE -->
+            <section class="totals-and-signature-grid">
+                <!-- SIGNATURE BLOCK (REAL SIGNATURE DARU FAHMAA) -->
+                <div class="editorial-signature-unit">
+                    <div class="real-sig-wrapper">
+                        <img src="/elmassa/ttd_daru_brown.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="real-sig-img" onerror="this.src='ttd_daru.png'">
                     </div>
-
-                </aside>
-
-                <!-- RIGHT MAIN CONTENT: ITEMS TABLE -->
-                <div class="editorial-main-content">
-                    <table class="elmassa-table">
-                        <thead>
-                            <tr>
-                                <th class="th-num">#</th>
-                                <th class="th-desc">Item Description</th>
-                                <th class="th-price">Price</th>
-                                <th class="th-qty">Qty.</th>
-                                <th class="th-total">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- ITEM 1 -->
-                            <tr>
-                                <td class="td-num">1</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Kain Baju Pria</div>
-                                    <div class="item-desc-text">Desain visual 3D apparel kain seragam pria El Massa</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 2 -->
-                            <tr>
-                                <td class="td-num">2</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Tas Serut</div>
-                                    <div class="item-desc-text">Mockup realistis tas serut / drawstring bag jamaah</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 3 -->
-                            <tr>
-                                <td class="td-num">3</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Sarung Koper 26 inch</div>
-                                    <div class="item-desc-text">Luggage protector cover branding identitas El Massa</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 4 -->
-                            <tr>
-                                <td class="td-num">4</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Sajadah Syal</div>
-                                    <div class="item-desc-text">Sajadah travel multifungsi syal serbaguna jamaah</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 5 -->
-                            <tr>
-                                <td class="td-num">5</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Bantal Leher</div>
-                                    <div class="item-desc-text">Desain bantal leher penerbangan umrah ergonomis</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 6 -->
-                            <tr>
-                                <td class="td-num">6</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Lanyard</div>
-                                    <div class="item-desc-text">Tali ID card eksklusif untuk staf &amp; jamaah</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 7 -->
-                            <tr>
-                                <td class="td-num">7</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Ransel</div>
-                                    <div class="item-desc-text">Ransel kabin travel umrah perlengkapan ibadah</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 8 -->
-                            <tr>
-                                <td class="td-num">8</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Kain Baju Wanita 2,5 m</div>
-                                    <div class="item-desc-text">Pola motif batik seragam wanita ukuran 2,5 meter</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 9 -->
-                            <tr>
-                                <td class="td-num">9</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Kerudung Syar'i</div>
-                                    <div class="item-desc-text">Hijab syar'i seragam jamaah wanita El Massa</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 10 -->
-                            <tr>
-                                <td class="td-num">10</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Mukena Travel</div>
-                                    <div class="item-desc-text">Mukena travel lipat praktis dan pouch eksklusif</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 11 -->
-                            <tr>
-                                <td class="td-num">11</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Cover Mini Notebook</div>
-                                    <div class="item-desc-text">Sampul buku catatan saku jamaah El Massa</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- ITEM 12 -->
-                            <tr>
-                                <td class="td-num">12</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Mockup Cover Buku Doa</div>
-                                    <div class="item-desc-text">Sampul buku saku kumpulan doa &amp; panduan manasik</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 35.000">Rp 35.000</td>
-                            </tr>
-
-                            <!-- SUB-TOTAL DIVIDER ROW (PINK SOFT BACKGROUND) -->
-                            <tr class="row-subtotal-mockup">
-                                <td colspan="2" style="padding-left:10px;">
-                                    <span>SUBTOTAL 12 ITEM MOCKUP MERCHANDISE</span>
-                                </td>
-                                <td style="text-align:right;">—</td>
-                                <td style="text-align:center;">12</td>
-                                <td style="text-align:right;" class="td-total-mockup">Rp 420.000</td>
-                            </tr>
-
-                            <!-- ITEM 13 -->
-                            <tr>
-                                <td class="td-num">13</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Desain Poster / Brosur Promosi</div>
-                                    <div class="item-desc-text">12 materi promosi cetak &amp; konten media sosial</div>
-                                </td>
-                                <td class="td-price">Rp 35.000</td>
-                                <td class="td-qty">12</td>
-                                <td class="td-total" data-qty="12 × Rp 35.000">Rp 420.000</td>
-                            </tr>
-
-                            <!-- ITEM 14 -->
-                            <tr>
-                                <td class="td-num">14</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Pembuatan Website Katalog</div>
-                                    <div class="item-desc-text">Pembangunan landing page responsif katalog paket umrah</div>
-                                </td>
-                                <td class="td-price">Rp 800.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 800.000">Rp 800.000</td>
-                            </tr>
-
-                            <!-- ITEM 15 -->
-                            <tr>
-                                <td class="td-num">15</td>
-                                <td class="td-desc">
-                                    <div class="item-title-text">Update Website Itinerary</div>
-                                    <div class="item-desc-text">Pembaruan jadwal rute perjalanan &amp; fasilitas paket</div>
-                                </td>
-                                <td class="td-price">Rp 300.000</td>
-                                <td class="td-qty">1</td>
-                                <td class="td-total" data-qty="1 × Rp 300.000">Rp 300.000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- SUMMARY TOTALS -->
-                    <div class="editorial-summary-row">
-                        <div class="totals-summary-box">
-                            <div class="summary-line-item">
-                                <span class="summary-label">Sub Total :</span>
-                                <span class="summary-value">Rp 1.940.000</span>
-                            </div>
-                            <div class="summary-line-item">
-                                <span class="summary-label">Tax :</span>
-                                <span class="summary-value">0.00%</span>
-                            </div>
-                            <div class="summary-line-item final-grand-total">
-                                <span class="summary-label">Total :</span>
-                                <span class="summary-value">Rp 1.940.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SIGNATURE BLOCK (REAL SIGNATURE DARU FAHMAA) -->
-                    <div class="editorial-signature-unit">
-                        <div class="real-sig-wrapper">
-                            <img src="/elmassa/ttd_daru_brown.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="real-sig-img" onerror="this.src='ttd_daru.png'">
-                        </div>
-                        <div class="sig-printed-name">Daru Fahmaa Muliawan</div>
-                        <div class="sig-official-role">Lead Creative &amp; Director &middot; DAR Studio</div>
-                    </div>
-
+                    <div class="sig-printed-name">Daru Fahmaa Muliawan</div>
+                    <div class="sig-official-role">Lead Creative &amp; Director &middot; DAR Studio</div>
                 </div>
 
-            </div>
+                <!-- TOTALS SUMMARY -->
+                <div class="totals-summary-box">
+                    <div class="summary-line-item">
+                        <span class="summary-label">Sub Total :</span>
+                        <span class="summary-value">Rp 1.940.000</span>
+                    </div>
+                    <div class="summary-line-item">
+                        <span class="summary-label">Tax :</span>
+                        <span class="summary-value">0.00%</span>
+                    </div>
+                    <div class="summary-line-item final-grand-total">
+                        <span class="summary-label">Total :</span>
+                        <span class="summary-value">Rp 1.940.000</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REKENING BANK MANDIRI (DITARUH TERAKHIR / AT THE VERY BOTTOM) -->
+            <section class="bottom-payment-section">
+                <div class="mandiri-payment-card-full">
+                    <div class="mandiri-card-left">
+                        <div class="mandiri-logo-row">
+                            <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-bank-logo" onerror="this.src='mandiri_logo.webp'">
+                            <span class="mandiri-badge">Rekening Resmi Pembayaran</span>
+                        </div>
+                        <div class="mandiri-account-info">
+                            <div class="mandiri-bold-number" id="bankAccNumber" onclick="copyBankAccount()" title="Klik untuk salin nomor rekening">
+                                <span>1550010616962</span>
+                                <svg class="click-copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </div>
+                            <div class="mandiri-acc-name">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
+                        </div>
+                    </div>
+                    <div class="mandiri-card-right">
+                        <button type="button" class="btn-copy-account" id="btnCopyAccount" onclick="copyBankAccount()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="btnCopyAccountText">Salin No. Rekening</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             <!-- TERMS & CONDITIONS / UPCOMING SCOPE FOOTER -->
             <footer class="document-footer-terms">
                 <p>
-                    <strong>Terms &amp; Conditions :</strong> Pembayaran tagihan resmi ini ditransfer ke rekening Bank Mandiri <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan. Seluruh berkas digital master resolusi tinggi akan diserahkan setelah verifikasi pembayaran diterima.
+                    <strong>Terms &amp; Conditions :</strong> Pembayaran tagihan resmi ini ditransfer ke rekening Bank Mandiri di atas dengan nomor <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan. Seluruh berkas digital master resolusi tinggi akan diserahkan setelah verifikasi pembayaran diterima.
                 </p>
                 <div class="upcoming-scope-box">
                     <strong>Pekerjaan Lanjutan &mdash; Belum Termasuk Total Tagihan di Atas:</strong><br>
