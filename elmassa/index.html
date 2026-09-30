@@ -293,13 +293,100 @@
             font-weight: 400;
         }
 
+        .mandiri-payment-card {
+            border: 1.5px solid var(--color-black);
+            padding: 14px;
+            background: var(--color-white);
+            border-radius: 4px;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mandiri-logo-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .mandiri-bank-logo {
+            height: 28px;
+            max-width: 140px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .mandiri-account-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .mandiri-acc-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--color-mid-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .mandiri-bold-number {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--color-black);
+            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 2px 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .mandiri-bold-number:hover {
+            opacity: 0.75;
+        }
+
+        .click-copy-icon {
+            color: var(--color-mid-gray);
+        }
+
+        .mandiri-acc-name {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--color-dark-gray);
+        }
+
+        .btn-copy-account {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--color-black);
+            color: var(--color-white);
+            border: 1px solid var(--color-black);
+            border-radius: 4px;
+            font-family: var(--font-sora);
+            font-size: 0.72rem;
+            font-weight: 700;
             letter-spacing: 0.04em;
-            margin-top: 4px;
-            margin-bottom: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-top: 2px;
+        }
+
+        .btn-copy-account:hover {
+            background: var(--color-dark-gray);
+            border-color: var(--color-dark-gray);
+        }
+
+        .btn-copy-account.copied {
+            background: #111111;
+            color: #ffffff;
         }
 
         /* Sidebar Contact Icons */
@@ -867,11 +954,22 @@
                     <!-- PAYMENT METHODS -->
                     <div class="sidebar-block">
                         <div class="sidebar-block-title">Payment Methods :</div>
-                        <div class="sidebar-paragraph">
-                            <strong>Bank Mandiri</strong>
-                            <div class="mandiri-bold-number">1550010616962</div>
-                            <span>a.n. Daru Fahmaa Muliawan</span><br>
-                            <span style="font-size:0.72rem; color:var(--color-light-gray);">Transfer Bank &middot; QRIS &middot; Online</span>
+                        <div class="mandiri-payment-card">
+                            <div class="mandiri-logo-row">
+                                <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-bank-logo" onerror="this.src='mandiri_logo.webp'">
+                            </div>
+                            <div class="mandiri-account-info">
+                                <div class="mandiri-acc-label">Bank Mandiri</div>
+                                <div class="mandiri-bold-number" id="bankAccNumber" onclick="copyBankAccount()" title="Klik untuk salin no rekening">
+                                    <span>1550010616962</span>
+                                    <svg class="click-copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                </div>
+                                <div class="mandiri-acc-name">a.n. Daru Fahmaa Muliawan</div>
+                            </div>
+                            <button type="button" class="btn-copy-account" id="btnCopyAccount" onclick="copyBankAccount()">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                <span id="btnCopyAccountText">Salin No. Rekening</span>
+                            </button>
                         </div>
                     </div>
 
@@ -1222,8 +1320,17 @@
 
         function copyBankAccount() {
             const num = "1550010616962";
+            const btn = document.getElementById("btnCopyAccount");
+            const btnText = document.getElementById("btnCopyAccountText");
+
             navigator.clipboard.writeText(num).then(() => {
                 showToast("Rekening Mandiri (1550010616962) Disalin!");
+                if (btnText) btnText.innerText = "✓ Berhasil Disalin";
+                if (btn) btn.classList.add("copied");
+                setTimeout(() => {
+                    if (btnText) btnText.innerText = "Salin No. Rekening";
+                    if (btn) btn.classList.remove("copied");
+                }, 2200);
             }).catch(() => {
                 showToast("No. Rekening: 1550010616962");
             });
