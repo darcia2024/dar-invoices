@@ -3261,6 +3261,60 @@
                     <span>Buka Invoice Pak Joko (OSLO Park)</span>
                 </a>
             </div>
+
+            <!-- El Massa - Branding Merchandise, Desain & Website Katalog Card -->
+            <div class="invoice-card" id="card-elmassa" data-id="elmassa" data-month="2026-09" data-amount="1940000" data-client="el massa elmassa merchandise mockup travel umrah website katalog 1940000 #inv/dar/2026/09/019 september 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">El Massa (Merchandise &amp; Web)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('elmassa')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DAR/2026/09/019 &bull; Merchandise &amp; Web</span>
+                        <span class="month-tag">📅 September 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        12 Mockup Merchandise (@Rp 35.000 = Rp 420.000), 12 Poster/Brosur (@Rp 35.000 = Rp 420.000), Website Katalog (Rp 800.000), Update Website Itinerary (Rp 300.000). Total: Rp 1.940.000. (Catatan: Sistem Travel &amp; UmrahMe menyusul).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/elmassa</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/elmassa')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptElmassa()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 1.940.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValElmassa">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValElmassa">Rp 1.940.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('elmassa')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/elmassa" class="action-btn">
+                    <span>Buka Invoice El Massa</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -3479,7 +3533,8 @@
             "umrahme-dreammecca": "UNPAID",
             mochi: "UNPAID",
             athifa: "UNPAID",
-            oslo: "UNPAID"
+            oslo: "UNPAID",
+            elmassa: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -3524,7 +3579,8 @@
             "umrahme-dreammecca": 280000,
             mochi: 600000,
             athifa: 250000,
-            oslo: 1500000
+            oslo: 1500000,
+            elmassa: 1940000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -3581,7 +3637,8 @@
             { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 },
             { id: "mochi", name: "Mochi Cafe n Resto (KAEL Paket Ultimate)", month: "2026-09", monthLabel: "September 2026", gross: 750000 },
             { id: "athifa", name: "Mba Athifa (Desain Cover Buku)", month: "2026-09", monthLabel: "September 2026", gross: 250000 },
-            { id: "oslo", name: "Pak Joko (OSLO Park - Brosur Premium 16 Halaman)", month: "2026-09", monthLabel: "September 2026", gross: 1500000 }
+            { id: "oslo", name: "Pak Joko (OSLO Park - Brosur Premium 16 Halaman)", month: "2026-09", monthLabel: "September 2026", gross: 1500000 },
+            { id: "elmassa", name: "El Massa (Branding Merchandise, Desain & Website Katalog)", month: "2026-09", monthLabel: "September 2026", gross: 1940000 }
         ];
 
         function formatIDR(num) {
@@ -5536,6 +5593,44 @@ Dokumen invoice interaktif resmi serta tombol Cetak Dokumen PDF & Unduh PNG bere
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA PAK JOKO (OSLO PARK) BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptElmassa() {
+            const waScript = `Halo Tim El Massa! 🙏✨
+
+Berikut kami lampirkan dokumen resmi Invoice untuk pengerjaan Paket Desain Branding Merchandise, Poster/Brosur, serta Pembuatan & Update Website Katalog El Massa:
+
+🔗 Invoice Online: https://temantiket.com/elmassa
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Pekerjaan:
+1. 12 Mockup Merchandise (@ Rp 35.000): Rp 420.000
+   • Kain Baju Pria & Kain Baju Wanita (2,5 m)
+   • Tas Serut, Sarung Koper 26 inch, Sajadah Syal, Bantal Leher
+   • Lanyard, Ransel, Kerudung Syar'i, Mukena Travel
+   • Cover Mini Notebook, Cover Buku Doa
+2. 12 Desain Poster / Brosur (@ Rp 35.000): Rp 420.000
+3. Pembuatan Website Katalog: Rp 800.000
+4. Update Website Itinerary: Rp 300.000
+
+💰 TOTAL INVOICE: Rp 1.940.000
+(Terbilang: Satu Juta Sembilan Ratus Empat Puluh Ribu Rupiah)
+
+📌 Catatan Pekerjaan Lanjutan (Belum Termasuk Total):
+• Sistem Travel → Harga menyusul
+• Sistem UmrahMe → Harga menyesuaikan saat penerbitan untuk jamaah
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice interaktif resmi serta tombol Cetak Dokumen PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak atas kepercayaan dan kerjasamanya! 🙏✨`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA EL MASSA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

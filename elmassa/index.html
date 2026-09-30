@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>INVOICE #INV/DAR/2026/09/019 — El Massa (Branding Merchandise, Desain & Website Katalog)</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans Regular & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- html2canvas for High-Res PNG Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            --color-primary: #0f172a;
+            --color-primary-hover: #1e293b;
+            --color-emerald: #047857;
+            --color-emerald-soft: #ecfdf5;
+            --color-emerald-border: #a7f3d0;
+            --color-gold: #b45309;
+            --color-gold-soft: #fef3c7;
+            
+            --color-text-main: #1e293b;
+            --color-text-muted: #64748b;
+            --color-text-light: #94a3b8;
+            
+            --color-bg: #f8fafc;
+            --color-surface: #ffffff;
+            --color-border: #e2e8f0;
+            --color-border-subtle: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-weight: 400;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+
+        body.locked {
+            overflow: hidden;
+        }
+
+        /* ----------------------------------------------------
+           STICKY HEADER (MINIMALIST)
+        ---------------------------------------------------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand-link-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: #0f172a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: -0.05em;
+        }
+
+        .brand-name-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-logo-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .brand-sub-text {
+            font-size: 0.74rem;
+            color: var(--color-text-muted);
+            font-weight: 400;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-family);
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            line-height: 1;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: #ffffff;
+            border: 1px solid var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: var(--color-text-main);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-border-subtle);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--color-text-muted);
+            border: 1px solid transparent;
+        }
+
+        .btn-ghost:hover {
+            color: var(--color-primary);
+            background: var(--color-border-subtle);
+        }
+
+        /* ----------------------------------------------------
+           PAGE CONTAINER
+        ---------------------------------------------------- */
+        .page-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 28px 20px 80px;
+        }
+
+        /* ----------------------------------------------------
+           HERO BANNER
+        ---------------------------------------------------- */
+        .hero-banner {
+            position: relative;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 60%, #ecfdf5 100%);
+            border-radius: 12px;
+            padding: 34px 32px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            border: 1px solid var(--color-emerald-border);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 640px;
+        }
+
+        .hero-project-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--color-emerald);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-project-tag::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            background: var(--color-emerald);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .hero-title {
+            font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--color-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .hero-desc {
+            font-size: 0.86rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .hero-meta-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.78rem;
+            color: var(--color-text-main);
+        }
+
+        .hero-meta-item strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* ----------------------------------------------------
+           INVOICE CARD WRAPPER
+        ---------------------------------------------------- */
+        .invoice-card-wrapper {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            padding: 36px 40px;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+        }
+
+        /* Metadata Section */
+        .invoice-meta-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .meta-studio-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .meta-studio-sub {
+            font-size: 0.76rem;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+            margin-bottom: 14px;
+        }
+
+        .meta-client-block {
+            font-size: 0.82rem;
+        }
+
+        .client-label {
+            font-size: 0.7rem;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .client-name {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 1.05rem;
+        }
+
+        .client-company {
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+        }
+
+        .meta-right-block {
+            text-align: right;
+        }
+
+        .doc-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .doc-number {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-emerald);
+            font-family: monospace;
+            margin-top: 4px;
+        }
+
+        .doc-date {
+            font-size: 0.76rem;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        .doc-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            margin-top: 8px;
+        }
+
+        /* ----------------------------------------------------
+           TABLE SECTION
+        ---------------------------------------------------- */
+        .table-section {
+            margin-bottom: 28px;
+        }
+
+        .table-section-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .invoice-table th {
+            text-align: left;
+            padding: 10px 14px;
+            background: #f8fafc;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .invoice-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--color-border-subtle);
+            color: var(--color-text-main);
+            vertical-align: middle;
+        }
+
+        .invoice-table tr:hover td {
+            background-color: #fafbfc;
+        }
+
+        .col-no {
+            width: 44px;
+            text-align: center;
+            color: var(--color-text-light);
+            font-family: monospace;
+            font-size: 0.76rem;
+        }
+
+        .col-desc {
+            font-weight: 500;
+        }
+
+        .col-desc small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.72rem;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .col-qty {
+            width: 70px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .col-price {
+            width: 130px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            color: var(--color-text-muted);
+        }
+
+        .col-subtotal {
+            width: 140px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--color-primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .subtotal-divider-row td {
+            background: #f8fafc !important;
+            padding: 9px 14px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            border-top: 1px dashed var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .subtotal-divider-label {
+            color: var(--color-text-muted);
+            text-align: right;
+        }
+
+        .subtotal-divider-val {
+            text-align: right;
+            color: var(--color-emerald);
+            font-weight: 700;
+        }
+
+        /* ----------------------------------------------------
+           TOTAL CARD
+        ---------------------------------------------------- */
+        .total-editorial-row {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 10px;
+            padding: 22px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .total-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .total-desc-sub {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .total-num-block {
+            text-align: right;
+        }
+
+        .total-num-large {
+            font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .total-terbilang-text {
+            font-size: 0.74rem;
+            color: #cbd5e1;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* ----------------------------------------------------
+           CALLOUT: UPCOMING WORK (PEKERJAAN LANJUTAN)
+        ---------------------------------------------------- */
+        .upcoming-scope-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin-bottom: 24px;
+        }
+
+        .upcoming-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #92400e;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .upcoming-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #78350f;
+            margin-bottom: 8px;
+        }
+
+        .upcoming-list {
+            list-style: none;
+            display: grid;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #92400e;
+        }
+
+        .upcoming-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .upcoming-list li::before {
+            content: "•";
+            color: #f59e0b;
+            font-weight: 900;
+        }
+
+        .upcoming-list strong {
+            color: #78350f;
+        }
+
+        /* ----------------------------------------------------
+           PAYMENT SECTION (MANDIRI)
+        ---------------------------------------------------- */
+        .payment-editorial-section {
+            background: #f8fafc;
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .mandiri-branding {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bank-mandiri-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .bank-meta-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .bank-name-label {
+            font-size: 0.72rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .acc-number-text {
+            font-family: monospace;
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 0.04em;
+            line-height: 1.1;
+        }
+
+        .acc-holder-text {
+            font-size: 0.76rem;
+            color: var(--color-text-muted);
+        }
+
+        .btn-copy-clean {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-main);
+            font-family: var(--font-family);
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-copy-clean:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: #f1f5f9;
+        }
+
+        /* ----------------------------------------------------
+           DELIVERABLES LIST
+        ---------------------------------------------------- */
+        .deliverables-editorial-section {
+            padding: 18px 0;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--color-border-subtle);
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 14px;
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .deliverable-item {
+            background: #f8fafc;
+            border: 1px solid var(--color-border-subtle);
+            padding: 14px 16px;
+            border-radius: 8px;
+        }
+
+        .deliverable-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .deliverable-sub {
+            color: var(--color-text-muted);
+            font-size: 0.74rem;
+            margin-top: 3px;
+            line-height: 1.45;
+        }
+
+        /* Footer Notes */
+        .invoice-footer {
+            font-size: 0.72rem;
+            color: var(--color-text-light);
+            line-height: 1.6;
+            padding-top: 16px;
+            border-top: 1px solid var(--color-border-subtle);
+        }
+
+        /* ----------------------------------------------------
+           SECURITY GATE (MINIMALIST)
+        ---------------------------------------------------- */
+        .security-gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .gate-card-box {
+            background: #ffffff;
+            border-radius: 12px;
+            max-width: 380px;
+            width: 100%;
+            padding: 36px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--color-border);
+        }
+
+        .gate-icon-large {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 14px;
+            border-radius: 12px;
+            background: #0f172a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .gate-title {
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .gate-desc {
+            font-size: 0.78rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .pin-input-field {
+            width: 100%;
+            max-width: 180px;
+            padding: 10px;
+            font-size: 1.4rem;
+            text-align: center;
+            letter-spacing: 0.3em;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg);
+            color: var(--color-primary);
+            font-family: monospace;
+            outline: none;
+            margin: 0 auto 12px;
+            display: block;
+        }
+
+        .pin-input-field:focus {
+            border-color: var(--color-emerald);
+            background: #ffffff;
+        }
+
+        .gate-error-msg {
+            color: #dc2626;
+            font-size: 0.74rem;
+            margin-bottom: 12px;
+        }
+
+        .gate-submit-btn {
+            width: 100%;
+            background: var(--color-primary);
+            color: #ffffff;
+            font-family: var(--font-family);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ----------------------------------------------------
+           TOAST POPUP
+        ---------------------------------------------------- */
+        .toast-popup {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--color-primary);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 9px 18px;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            z-index: 10000;
+        }
+
+        .toast-popup.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ----------------------------------------------------
+           MOBILE RESPONSIVENESS
+        ---------------------------------------------------- */
+        .mobile-lock-btn {
+            display: none;
+        }
+
+        .mobile-bottom-bar {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 14px 12px 100px;
+            }
+
+            .invoice-card-wrapper {
+                padding: 22px 18px;
+            }
+
+            .invoice-meta-section {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .meta-right-block {
+                text-align: left;
+            }
+
+            .col-no {
+                display: none;
+            }
+
+            .col-price {
+                display: none;
+            }
+
+            .invoice-table td, .invoice-table th {
+                padding: 10px 8px;
+            }
+
+            .deliverables-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-editorial-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .total-num-block {
+                text-align: left;
+            }
+
+            .payment-editorial-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .btn-copy-clean {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .nav-actions {
+                display: none;
+            }
+
+            .mobile-lock-btn {
+                display: inline-block;
+                background: var(--color-border-subtle);
+                border: 1px solid var(--color-border);
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 0.74rem;
+                color: var(--color-text-main);
+                cursor: pointer;
+            }
+
+            .mobile-bottom-bar {
+                display: flex;
+                position: fixed;
+                bottom: 10px;
+                left: 12px;
+                right: 12px;
+                background: rgba(15, 23, 42, 0.94);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                border-radius: 10px;
+                padding: 8px;
+                z-index: 99;
+                gap: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            }
+
+            .btn-mob-action {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                font-family: var(--font-family);
+                font-size: 0.74rem;
+                font-weight: 500;
+                padding: 10px 8px;
+                border-radius: 6px;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                white-space: nowrap;
+            }
+
+            .btn-mob-primary {
+                background: #ffffff;
+                color: var(--color-primary);
+            }
+
+            .btn-mob-secondary {
+                background: rgba(255, 255, 255, 0.14);
+                color: #ffffff;
+            }
+
+            .btn-mob-gold {
+                background: var(--color-emerald);
+                color: #ffffff;
+            }
+        }
+
+        /* ----------------------------------------------------
+           PRINT STYLES
+        ---------------------------------------------------- */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 8mm 10mm;
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0;
+            }
+
+            .site-header,
+            .hero-banner,
+            .mobile-bottom-bar,
+            .security-gate-overlay,
+            .toast-popup,
+            .no-print {
+                display: none !important;
+            }
+
+            .page-container {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .invoice-card-wrapper {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="locked">
+
+    <!-- PIN SECURITY GATE SCREEN -->
+    <div class="security-gate-overlay" id="securityGate">
+        <div class="gate-card-box">
+            <div class="gate-icon-large">EM</div>
+            <h2 class="gate-title">Invoice El Massa</h2>
+            <p class="gate-desc">Masukkan 4-digit PIN akses keamanan untuk membuka dokumen invoice resmi El Massa Travel &amp; Umrah.</p>
+            
+            <form onsubmit="handlePinSubmit(event)">
+                <input 
+                    type="password" 
+                    id="pinInput" 
+                    class="pin-input-field" 
+                    maxlength="6" 
+                    placeholder="••••" 
+                    inputmode="numeric" 
+                    pattern="[0-9]*" 
+                    autocomplete="one-time-code"
+                    autofocus
+                >
+                <div class="gate-error-msg" id="gateError" style="display: none;">PIN salah. Silakan coba lagi.</div>
+                <button type="submit" class="gate-submit-btn">Buka Invoice</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="invoiceDocument" inert>
+
+        <!-- STICKY HEADER -->
+        <header class="site-header no-print">
+            <div class="header-inner">
+                <a href="/elmassa" class="brand-link-area">
+                    <div class="header-icon-box">EM</div>
+                    <div class="brand-name-group">
+                        <span class="brand-logo-text">EL MASSA TRAVEL</span>
+                        <span class="brand-sub-text">DAR DESIGN STUDIO &middot; #INV/DAR/2026/09/019</span>
+                    </div>
+                </a>
+
+                <div class="nav-actions">
+                    <button type="button" class="action-btn btn-secondary" onclick="window.print()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        Cetak PDF
+                    </button>
+                    <button type="button" class="action-btn btn-secondary" id="btnDownloadPng" onclick="downloadInvoicePng()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        Unduh PNG
+                    </button>
+                    <button type="button" class="action-btn btn-primary" onclick="copyWaScriptLocal()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                        Salin Pesan WA
+                    </button>
+                    <button type="button" class="action-btn btn-ghost" onclick="lockDocument()" title="Kunci Kembali">
+                        Kunci
+                    </button>
+                </div>
+
+                <button type="button" class="mobile-lock-btn" onclick="lockDocument()">Kunci</button>
+            </div>
+        </header>
+
+        <!-- PAGE CONTAINER -->
+        <main class="page-container">
+
+            <!-- HERO BANNER -->
+            <section class="hero-banner no-print">
+                <div class="hero-content">
+                    <div class="hero-project-tag">Dokumen Resmi Penagihan &middot; El Massa Travel</div>
+                    <h1 class="hero-title">
+                        EL MASSA TRAVEL &amp; UMRAH<br>
+                        Branding Merchandise, Desain &amp; Website Katalog
+                    </h1>
+                    <p class="hero-desc">
+                        Rincian anggaran untuk pembuatan 12 mockup merchandise perlengkapan jamaah, 12 poster/brosur promosi, sistem website katalog paket umrah, serta update website itinerary resmi El Massa.
+                    </p>
+                    <div class="hero-meta-list">
+                        <div class="hero-meta-item">Klien: <strong>El Massa</strong></div>
+                        <div class="hero-meta-item">Status: <strong>Menunggu Pembayaran</strong></div>
+                        <div class="hero-meta-item">Total Tagihan: <strong>Rp 1.940.000</strong></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INVOICE SHEET (FLAT & EDITORIAL) -->
+            <div class="invoice-card-wrapper" id="invoiceSheet">
+
+                <!-- TOP META -->
+                <div class="invoice-meta-section">
+                    <div>
+                        <div class="meta-studio-title">DAR DESIGN STUDIO</div>
+                        <div class="meta-studio-sub">Branding Merchandise, Desain Promosi &amp; Digital Web Development</div>
+
+                        <div class="meta-client-block">
+                            <div class="client-label">Tagihan Ditujukan Kepada:</div>
+                            <div class="client-name">El Massa</div>
+                            <div class="client-company">
+                                Travel &amp; Umrah Service
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-right-block">
+                        <div class="doc-title">INVOICE</div>
+                        <div class="doc-number">#INV/DAR/2026/09/019</div>
+                        <div class="doc-date">Tanggal Terbit: 30 September 2026</div>
+                        <div class="doc-status-badge">Status: Menunggu Pembayaran</div>
+                    </div>
+                </div>
+
+                <!-- TABLE SECTION -->
+                <div class="table-section">
+                    <div class="table-section-title">Rincian Item Pengerjaan &amp; Biaya</div>
+
+                    <table class="invoice-table">
+                        <thead>
+                            <tr>
+                                <th class="col-no">No</th>
+                                <th>Pekerjaan / Item Layanan</th>
+                                <th class="col-qty">Qty</th>
+                                <th class="col-price">Harga Satuan</th>
+                                <th class="col-subtotal">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- GROUP 1: MOCKUP MERCHANDISE -->
+                            <tr>
+                                <td class="col-no">01</td>
+                                <td class="col-desc">
+                                    Mockup Kain Baju Pria
+                                    <small>Visualisasi merchandise seragam kain ihram / batik pria</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">02</td>
+                                <td class="col-desc">
+                                    Mockup Tas Serut
+                                    <small>Desain visual tas serut perlengkapan ibadah jamaah</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">03</td>
+                                <td class="col-desc">
+                                    Mockup Sarung Koper 26 inch
+                                    <small>Visual sarung pelindung koper bagasi ukuran 26 inci</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">04</td>
+                                <td class="col-desc">
+                                    Mockup Sajadah Syal
+                                    <small>Mockup sajadah saku praktis / syal jamaah El Massa</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">05</td>
+                                <td class="col-desc">
+                                    Mockup Bantal Leher
+                                    <small>Mockup bantal leher perjalanan pesawat (flight comfort)</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">06</td>
+                                <td class="col-desc">
+                                    Mockup Lanyard
+                                    <small>Desain tali lanyard identitas &amp; ID card jamaah</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">07</td>
+                                <td class="col-desc">
+                                    Mockup Ransel
+                                    <small>Visualisasi tas ransel kabin / daypack resmi El Massa</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">08</td>
+                                <td class="col-desc">
+                                    Mockup Kain Baju Wanita 2,5 m
+                                    <small>Visualisasi kain seragam gamis / abaya wanita 2,5 meter</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">09</td>
+                                <td class="col-desc">
+                                    Mockup Kerudung Syar'i
+                                    <small>Mockup khimar / kerudung syar'i seragam jamaah wanita</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">10</td>
+                                <td class="col-desc">
+                                    Mockup Mukena Travel
+                                    <small>Mockup mukena lipat mini berbahan parasut premium</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">11</td>
+                                <td class="col-desc">
+                                    Mockup Cover Mini Notebook
+                                    <small>Desain jilid buku catatan saku jamaah</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">12</td>
+                                <td class="col-desc">
+                                    Mockup Cover Buku Doa
+                                    <small>Desain sampul buku panduan manasik &amp; doa umrah</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 35.000</td>
+                            </tr>
+                            <!-- SUBTOTAL MOCKUP -->
+                            <tr class="subtotal-divider-row">
+                                <td colspan="4" class="subtotal-divider-label">Subtotal Mockup Merchandise (12 Item):</td>
+                                <td class="subtotal-divider-val">Rp 420.000</td>
+                            </tr>
+
+                            <!-- GROUP 2: POSTER / BROSUR -->
+                            <tr>
+                                <td class="col-no">13</td>
+                                <td class="col-desc">
+                                    Poster / Brosur Promosi
+                                    <small>12 materi desain feed / flyer promosi paket perjalanan umrah</small>
+                                </td>
+                                <td class="col-qty">12</td>
+                                <td class="col-price">Rp 35.000</td>
+                                <td class="col-subtotal">Rp 420.000</td>
+                            </tr>
+                            <!-- SUBTOTAL POSTER -->
+                            <tr class="subtotal-divider-row">
+                                <td colspan="4" class="subtotal-divider-label">Subtotal Poster / Brosur Promosi (12 Desain):</td>
+                                <td class="subtotal-divider-val">Rp 420.000</td>
+                            </tr>
+
+                            <!-- GROUP 3: WEBSITE & ITINERARY -->
+                            <tr>
+                                <td class="col-no">14</td>
+                                <td class="col-desc">
+                                    Website Katalog
+                                    <small>Pembangunan platform landing page &amp; katalog online paket El Massa</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 800.000</td>
+                                <td class="col-subtotal">Rp 800.000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-no">15</td>
+                                <td class="col-desc">
+                                    Update Website Itinerary
+                                    <small>Pembaruan modul rute perjalanan, jadwal penerbangan &amp; fasilitas paket</small>
+                                </td>
+                                <td class="col-qty">1</td>
+                                <td class="col-price">Rp 300.000</td>
+                                <td class="col-subtotal">Rp 300.000</td>
+                            </tr>
+                            <!-- SUBTOTAL WEBSITE -->
+                            <tr class="subtotal-divider-row">
+                                <td colspan="4" class="subtotal-divider-label">Subtotal Website &amp; Itinerary:</td>
+                                <td class="subtotal-divider-val">Rp 1.100.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TOTAL SECTION -->
+                <div class="total-editorial-row">
+                    <div>
+                        <div class="total-title">Total Nilai Investasi Pengerjaan</div>
+                        <div class="total-desc-sub">12 Mockup + 12 Poster + Website Katalog + Update Itinerary</div>
+                    </div>
+                    <div class="total-num-block">
+                        <div class="total-num-large">Rp 1.940.000</div>
+                        <div class="total-terbilang-text">Terbilang: Satu Juta Sembilan Ratus Empat Puluh Ribu Rupiah</div>
+                    </div>
+                </div>
+
+                <!-- UPCOMING SCOPE (PEKERJAAN LANJUTAN) -->
+                <div class="upcoming-scope-card">
+                    <div class="upcoming-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        Catatan Lingkup Pengerjaan Lanjutan
+                    </div>
+                    <div class="upcoming-title">Pekerjaan Lanjutan &mdash; Belum Termasuk ke Dalam Total Invoice Ini:</div>
+                    <ul class="upcoming-list">
+                        <li>
+                            <span><strong>Sistem Travel:</strong> Harga menyusul sesuai kebutuhan modul &amp; alur pemesanan sistem.</span>
+                        </li>
+                        <li>
+                            <span><strong>Sistem UmrahMe:</strong> Harga menyesuaikan saat penerbitan dokumen resmi untuk jamaah.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- PAYMENT SECTION WITH BANK MANDIRI LOGO -->
+                <div class="payment-editorial-section">
+                    <div class="mandiri-branding">
+                        <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri" class="bank-mandiri-img" onerror="this.src='mandiri_logo.webp'">
+                        <div class="bank-meta-text">
+                            <div class="bank-name-label">Rekening Pembayaran Resmi</div>
+                            <div class="acc-number-text" id="bankAccNumber">1550010616962</div>
+                            <div class="acc-holder-text">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-copy-clean" onclick="copyBankAccount()">
+                        Salin No. Rekening
+                    </button>
+                </div>
+
+                <!-- DELIVERABLES -->
+                <div class="deliverables-editorial-section">
+                    <div class="section-label">Deliverables &amp; Layanan Termasuk</div>
+                    <div class="deliverables-grid">
+                        <div class="deliverable-item">
+                            <div class="deliverable-title">File Mockup Merchandise High-Resolution</div>
+                            <div class="deliverable-sub">12 berkas mockup fotorealistik resolusi tinggi siap dipresentasikan ke vendor produksi &amp; jamaah.</div>
+                        </div>
+                        <div class="deliverable-item">
+                            <div class="deliverable-title">Master Poster &amp; Brosur Siap Cetak &amp; Digital</div>
+                            <div class="deliverable-sub">12 desain materi promosi dalam format PDF High-Res 300 DPI dan PNG tajam untuk media sosial.</div>
+                        </div>
+                        <div class="deliverable-item">
+                            <div class="deliverable-title">Website Katalog &amp; Update Itinerary Live</div>
+                            <div class="deliverable-sub">Penyusunan kode front-end responsif dan pembaruan jadwal rute perjalanan umrah aktif.</div>
+                        </div>
+                        <div class="deliverable-item">
+                            <div class="deliverable-title">Dukungan Revisi &amp; Pendampingan Teknis</div>
+                            <div class="deliverable-sub">Penyelarasan konten, tata letak teks, dan asistensi hingga seluruh aset diterima dengan baik.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="invoice-footer">
+                    Invoice ini diterbitkan secara resmi oleh DAR DESIGN STUDIO untuk El Massa Travel. Pembayaran dapat ditransfer ke rekening Bank Mandiri di atas dengan menyertakan nomor referensi <strong>#INV/DAR/2026/09/019</strong>. Konfirmasi transfer via WhatsApp: +62 813-1150-6025.
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- FLOATING BOTTOM BAR (MOBILE ONLY) -->
+        <div class="mobile-bottom-bar no-print">
+            <button type="button" class="btn-mob-action btn-mob-primary" onclick="window.print()">Cetak PDF</button>
+            <button type="button" class="btn-mob-action btn-mob-secondary" onclick="downloadInvoicePng()">Unduh PNG</button>
+            <button type="button" class="btn-mob-action btn-mob-gold" onclick="copyWaScriptLocal()">Salin WA</button>
+        </div>
+
+    </div>
+
+    <!-- TOAST POPUP -->
+    <div class="toast-popup" id="toastBox">Teks berhasil disalin!</div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const VALID_PINS = ["0001", "050900"];
+
+        function unlockDocument() {
+            const gate = document.getElementById("securityGate");
+            const doc = document.getElementById("invoiceDocument");
+            if (gate) gate.style.display = "none";
+            if (doc) doc.removeAttribute("inert");
+            document.body.classList.remove("locked");
+            try { sessionStorage.setItem("elmassa_unlocked", "true"); } catch(e) {}
+        }
+
+        function lockDocument() {
+            const gate = document.getElementById("securityGate");
+            const doc = document.getElementById("invoiceDocument");
+            if (gate) gate.style.display = "flex";
+            if (doc) doc.setAttribute("inert", "");
+            document.body.classList.add("locked");
+            try { sessionStorage.removeItem("elmassa_unlocked"); } catch(e) {}
+            const pinIn = document.getElementById("pinInput");
+            if (pinIn) {
+                pinIn.value = "";
+                pinIn.focus();
+            }
+        }
+
+        function verifyPin() {
+            const pinIn = document.getElementById("pinInput");
+            const errEl = document.getElementById("gateError");
+            if (!pinIn) return;
+
+            const val = pinIn.value.trim();
+            if (VALID_PINS.includes(val)) {
+                if (errEl) errEl.style.display = "none";
+                unlockDocument();
+                showToast("Akses invoice berhasil dibuka!");
+            } else {
+                if (errEl) errEl.style.display = "block";
+                pinIn.classList.add("shake-anim");
+                setTimeout(() => pinIn.classList.remove("shake-anim"), 400);
+            }
+        }
+
+        function handlePinSubmit(e) {
+            e.preventDefault();
+            verifyPin();
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toastBox");
+            if (!t) return;
+            t.innerText = msg;
+            t.classList.add("show");
+            setTimeout(() => {
+                t.classList.remove("show");
+            }, 2600);
+        }
+
+        function copyBankAccount() {
+            const num = "1550010616962";
+            navigator.clipboard.writeText(num).then(() => {
+                showToast("Nomor Rekening Mandiri (1550010616962) disalin!");
+            }).catch(() => {
+                showToast("No. Rekening: 1550010616962");
+            });
+        }
+
+        function copyWaScriptLocal() {
+            const text = "Halo Tim El Massa Travel! 🙏✨\n\n" +
+                         "Berikut kami lampirkan dokumen resmi Invoice untuk pengerjaan Paket Branding Merchandise, Desain & Website Katalog El Massa:\n\n" +
+                         "🔗 Link Invoice Online: https://temantiket.com/elmassa\n" +
+                         "🔑 Kode PIN Akses: 0001 (atau 050900)\n" +
+                         "📋 No. Invoice: #INV/DAR/2026/09/019\n" +
+                         "💰 Total Tagihan: Rp 1.940.000\n" +
+                         "(Rincian: 12 Mockup Merchandise Rp 420.000 + 12 Poster/Brosur Rp 420.000 + Website Katalog Rp 800.000 + Update Itinerary Rp 300.000)\n\n" +
+                         "💳 Bank Mandiri: 1550010616962 (a.n. Daru Fahmaa Muliawan)\n\n" +
+                         "Catatan Pekerjaan Lanjutan:\n" +
+                         "• Sistem Travel → Harga menyusul\n" +
+                         "• Sistem UmrahMe → Harga menyesuaikan saat penerbitan untuk jamaah\n\n" +
+                         "Dokumen invoice interaktif dan tombol Cetak PDF dapat diakses melalui tautan di atas. Terima kasih banyak atas kerjasamanya!";
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Format pesan WhatsApp disalin!");
+            }).catch(() => {
+                showToast("Link: https://temantiket.com/elmassa");
+            });
+        }
+
+        function downloadInvoicePng() {
+            const btn = document.getElementById("btnDownloadPng");
+            const sheet = document.getElementById("invoiceSheet");
+            if (!sheet) return;
+
+            const origText = btn ? btn.innerHTML : "";
+            if (btn) btn.innerHTML = "Memproses...";
+
+            html2canvas(sheet, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false,
+                windowWidth: 1050
+            }).then(canvas => {
+                const link = document.createElement("a");
+                link.download = "Invoice-El-Massa-INV-DAR-2026-09-019.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showToast("Invoice berhasil diunduh sebagai gambar PNG!");
+                if (btn) btn.innerHTML = origText;
+            }).catch(err => {
+                console.error("Gagal generate gambar:", err);
+                showToast("Gagal mengunduh gambar. Silakan gunakan Cetak PDF.");
+                if (btn) btn.innerHTML = origText;
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                if (sessionStorage.getItem("elmassa_unlocked") === "true") {
+                    unlockDocument();
+                }
+            } catch(e) {}
+
+            const pinIn = document.getElementById("pinInput");
+            if (pinIn) {
+                pinIn.addEventListener("input", () => {
+                    if (pinIn.value.length === 4 || pinIn.value.length === 6) {
+                        verifyPin();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

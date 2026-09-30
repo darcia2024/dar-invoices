@@ -2,6 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/elmassa", "destination": "/elmassa/index.html" },
+    { "source": "/el-massa", "destination": "/elmassa/index.html" },
     { "source": "/today", "destination": "/today/index.html" },
     { "source": "/oslo", "destination": "/oslo/index.html" },
     { "source": "/oslopark", "destination": "/oslo/index.html" },

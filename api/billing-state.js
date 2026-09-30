@@ -64,6 +64,7 @@ const defaultState = {
     athifa: "UNPAID",
     kpi: "UNPAID",
     oslo: "UNPAID",
+    elmassa: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -90,6 +91,7 @@ const defaultState = {
     athifa: 250000,
     kpi: 14000000,
     oslo: 1500000,
+    elmassa: 1940000,
   },
 };
 
