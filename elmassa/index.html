@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Invoice #INV/DAR/2026/09/019 — El Massa</title>
 
-    <!-- Google Fonts: Sora (as requested) & Caveat for authentic handwritten signature -->
+    <!-- Google Fonts: Sora (as requested) & Caveat for handwritten signature -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,19 +18,16 @@
             --font-sora: "Sora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-sig: "Caveat", cursive, sans-serif;
 
-            /* Reference Color Palette */
-            --color-peach: #f2bcb0;
-            --color-coral: #e26d68;
-            --color-navy: #464b6e;
-            --color-deep-navy: #353a5a;
-            --color-sage: #70958c;
+            /* Pure Monochrome Palette */
+            --color-black: #000000;
+            --color-near-black: #111111;
+            --color-dark-gray: #333333;
+            --color-mid-gray: #666666;
+            --color-light-gray: #999999;
+            --color-border-subtle: #e5e5e5;
+            --color-border-dark: #000000;
+            --color-bg-light: #f7f7f7;
             --color-white: #ffffff;
-            --color-ink: #11141a;
-            --color-ink-muted: #5e6573;
-            --color-ink-light: #8e95a2;
-            --color-border-line: #11141a;
-            --color-border-light: #ebecee;
-            --color-bg-desk: #1e2025;
         }
 
         * {
@@ -41,14 +38,9 @@
 
         body {
             font-family: var(--font-sora);
-            background-color: var(--color-bg-desk);
-            color: var(--color-ink);
+            background-color: var(--color-white);
+            color: var(--color-black);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 16px 80px;
-            position: relative;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -58,725 +50,640 @@
         }
 
         /* ----------------------------------------------------
-           FLOATING TOP ACTIONS BAR
+           MONOCHROME TOP TOOLBAR (NON-PRINT)
         ---------------------------------------------------- */
-        .top-action-bar {
-            max-width: 900px;
+        .top-toolbar {
             width: 100%;
-            margin-bottom: 24px;
+            background: var(--color-white);
+            border-bottom: 1px solid var(--color-border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .toolbar-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
-        .bar-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .back-dashboard-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.82rem;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .back-dashboard-btn:hover {
-            background: rgba(255, 255, 255, 0.16);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-
-        .status-pill-unpaid {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            background: rgba(226, 109, 104, 0.18);
-            color: #ff9b97;
-            border: 1px solid rgba(226, 109, 104, 0.35);
-        }
-
-        .bar-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .action-chip-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 16px;
-            font-family: var(--font-sora);
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-print {
-            background: #ffffff;
-            color: #11141a;
-        }
-        .btn-print:hover {
-            background: #eef0f3;
-            transform: translateY(-1px);
-        }
-
-        .btn-png {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .btn-png:hover {
-            background: rgba(255, 255, 255, 0.22);
-            transform: translateY(-1px);
-        }
-
-        .btn-copy-wa {
-            background: #25d366;
-            color: #0b2b16;
-            font-weight: 700;
-        }
-        .btn-copy-wa:hover {
-            background: #20bd5a;
-            transform: translateY(-1px);
-        }
-
-        .btn-copy-bank {
-            background: #eab308;
-            color: #3b2800;
-            font-weight: 700;
-        }
-        .btn-copy-bank:hover {
-            background: #ca9a04;
-            transform: translateY(-1px);
-        }
-
-        /* ----------------------------------------------------
-           OUTER CANVAS (COLOR-BLOCKED ABSTRACT POSTER BORDER)
-        ---------------------------------------------------- */
-        .poster-canvas-wrapper {
-            max-width: 900px;
-            width: 100%;
-            position: relative;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.55), 0 10px 25px rgba(0, 0, 0, 0.35);
-            padding: 24px;
-            overflow: hidden;
-        }
-
-        /* Background Color Blocking Shapes */
-        .color-block-bg {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        /* Top-left Peach Block */
-        .block-peach {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 48%;
-            height: 38%;
-            background-color: var(--color-peach);
-        }
-
-        /* Top-right Coral Block */
-        .block-coral {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 52%;
-            height: 54%;
-            background-color: var(--color-coral);
-        }
-
-        /* Left-mid Slate Navy Block */
-        .block-navy {
-            position: absolute;
-            top: 36%;
-            left: 0;
-            width: 32%;
-            height: 64%;
-            background-color: var(--color-navy);
-        }
-
-        /* Bottom-left Deep Navy Wedge */
-        .block-deep-navy {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 26%;
-            height: 16%;
-            background-color: var(--color-deep-navy);
-            clip-path: polygon(0 0, 100% 100%, 0 100%);
-        }
-
-        /* Bottom-right Sage Block */
-        .block-sage {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 72%;
-            height: 48%;
-            background-color: var(--color-sage);
-        }
-
-        /* ----------------------------------------------------
-           WHITE INVOICE SHEET (INSET WITH ROUNDED CORNERS)
-        ---------------------------------------------------- */
-        .invoice-sheet {
-            position: relative;
-            z-index: 2;
-            background: #ffffff;
-            border-radius: 36px;
-            padding: 56px 48px 48px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        /* ----------------------------------------------------
-           SHEET HEADER: LOGO & INVOICE TITLE
-        ---------------------------------------------------- */
-        .sheet-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 24px;
-        }
-
-        .brand-cluster {
+        .toolbar-left {
             display: flex;
             align-items: center;
             gap: 14px;
         }
 
-        .brand-icon-logo {
+        .btn-nav-dashboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: transparent;
+            border: 1px solid var(--color-black);
+            color: var(--color-black);
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-nav-dashboard:hover {
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .mono-pill-unpaid {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-mono-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            font-family: var(--font-sora);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid var(--color-black);
+            background: var(--color-white);
+            color: var(--color-black);
+            transition: all 0.15s ease;
+        }
+
+        .btn-mono-action:hover {
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .btn-mono-action.btn-mono-primary {
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+
+        .btn-mono-action.btn-mono-primary:hover {
+            background: var(--color-dark-gray);
+            border-color: var(--color-dark-gray);
+        }
+
+        /* ----------------------------------------------------
+           FULL DOCUMENT CONTAINER (NO BOX, FULL CLEAN FLOW)
+        ---------------------------------------------------- */
+        .invoice-full-page {
+            max-width: 980px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 48px 32px 80px;
+            background: var(--color-white);
+        }
+
+        /* ----------------------------------------------------
+           HEADER SECTION (EDITORIAL MONOCHROME)
+        ---------------------------------------------------- */
+        .document-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            padding-bottom: 36px;
+            border-bottom: 2px solid var(--color-black);
+        }
+
+        .brand-unit {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-square-logo {
             width: 44px;
             height: 44px;
-            border: 2.5px solid var(--color-ink);
-            border-radius: 8px;
+            background: var(--color-black);
+            color: var(--color-white);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.05em;
         }
 
-        .brand-icon-logo::after {
-            content: "";
-            width: 14px;
-            height: 14px;
-            border-left: 2.5px solid var(--color-ink);
-            border-bottom: 2.5px solid var(--color-ink);
-            position: absolute;
-        }
-
-        .brand-text-block {
+        .brand-details {
             display: flex;
             flex-direction: column;
         }
 
-        .brand-title {
-            font-size: 1.25rem;
+        .brand-name {
+            font-size: 1.3rem;
             font-weight: 800;
             letter-spacing: 0.12em;
-            color: var(--color-ink);
+            color: var(--color-black);
             text-transform: uppercase;
             line-height: 1.1;
         }
 
-        .brand-subtitle {
+        .brand-sub {
             font-size: 0.68rem;
             font-weight: 600;
-            letter-spacing: 0.14em;
-            color: var(--color-ink-muted);
+            letter-spacing: 0.16em;
+            color: var(--color-mid-gray);
             text-transform: uppercase;
-            margin-top: 3px;
+            margin-top: 4px;
         }
 
-        .invoice-title-block {
+        .invoice-title-unit {
             text-align: right;
         }
 
-        .invoice-heading {
-            font-size: 2.4rem;
+        .invoice-main-heading {
+            font-size: 2.8rem;
             font-weight: 800;
-            color: var(--color-ink);
-            letter-spacing: -0.02em;
+            color: var(--color-black);
+            letter-spacing: -0.03em;
             line-height: 1;
+            text-transform: uppercase;
         }
 
-        .invoice-meta-sub {
-            font-size: 0.78rem;
-            color: var(--color-ink-muted);
+        .invoice-meta-lines {
+            font-size: 0.8rem;
+            color: var(--color-mid-gray);
             font-weight: 500;
-            margin-top: 8px;
-            line-height: 1.4;
+            margin-top: 10px;
+            line-height: 1.5;
         }
 
-        .invoice-meta-sub strong {
-            color: var(--color-ink);
-            font-weight: 600;
+        .invoice-meta-lines strong {
+            color: var(--color-black);
+            font-weight: 700;
         }
 
         /* ----------------------------------------------------
-           MAIN BODY: 2 COLUMNS (LEFT META & RIGHT TABLE)
+           BODY: 2-COLUMN LAYOUT (LEFT SIDEBAR & RIGHT TABLE)
         ---------------------------------------------------- */
-        .invoice-body-grid {
+        .document-body-layout {
             display: grid;
-            grid-template-columns: 210px 1fr;
-            gap: 36px;
+            grid-template-columns: 240px 1fr;
+            gap: 48px;
+            margin-top: 40px;
             align-items: start;
         }
 
         /* LEFT SIDEBAR */
-        .meta-sidebar {
+        .editorial-sidebar {
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 32px;
         }
 
-        .sidebar-section {
+        .sidebar-block {
             display: flex;
             flex-direction: column;
         }
 
-        .section-header-line {
-            font-size: 0.76rem;
+        .sidebar-block-title {
+            font-size: 0.72rem;
             font-weight: 700;
-            color: var(--color-ink);
-            letter-spacing: 0.02em;
-            margin-bottom: 4px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-mid-gray);
+            margin-bottom: 6px;
         }
 
-        .sidebar-client-name {
-            font-size: 0.95rem;
+        .sidebar-client-heading {
+            font-size: 1.05rem;
             font-weight: 800;
-            color: var(--color-ink);
-            padding-bottom: 6px;
-            border-bottom: 1.5px solid var(--color-ink);
+            color: var(--color-black);
+            padding-bottom: 8px;
+            border-bottom: 1.5px solid var(--color-black);
             margin-bottom: 10px;
         }
 
-        .sidebar-info-text {
-            font-size: 0.8rem;
-            color: var(--color-ink-muted);
-            line-height: 1.5;
+        .sidebar-paragraph {
+            font-size: 0.82rem;
+            color: var(--color-dark-gray);
+            line-height: 1.55;
             font-weight: 400;
         }
 
-        .sidebar-methods-box {
-            font-size: 0.78rem;
-            color: var(--color-ink-muted);
-            line-height: 1.45;
-        }
-
-        .sidebar-methods-box strong {
-            color: var(--color-ink);
-            font-weight: 700;
-            display: block;
+        .mandiri-bold-number {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-black);
+            letter-spacing: 0.04em;
+            margin-top: 4px;
             margin-bottom: 2px;
         }
 
-        .mandiri-acc-highlight {
-            font-size: 0.88rem;
-            font-weight: 800;
-            color: var(--color-ink);
-            letter-spacing: 0.03em;
+        /* Sidebar Contact Icons */
+        .sidebar-contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 12px;
+            padding-top: 24px;
+            border-top: 1px solid var(--color-border-subtle);
+        }
+
+        .contact-entry {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .contact-icon-frame {
+            width: 20px;
+            height: 20px;
+            color: var(--color-black);
+            flex-shrink: 0;
             margin-top: 2px;
         }
 
-        /* Bottom Icons in Sidebar */
-        .sidebar-contact-icons {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .icon-row {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
-        }
-
-        .icon-circle {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-sage);
-        }
-
-        .icon-text {
-            font-size: 0.74rem;
-            color: var(--color-ink-muted);
-            line-height: 1.35;
+        .contact-caption {
+            font-size: 0.78rem;
+            color: var(--color-mid-gray);
+            line-height: 1.4;
             font-weight: 500;
         }
 
-        /* RIGHT COLUMN: ITEMS TABLE */
-        .table-area {
+        /* RIGHT MAIN CONTENT: TABLE & TOTALS */
+        .editorial-main-content {
             display: flex;
             flex-direction: column;
         }
 
-        .clean-invoice-table {
+        .monochrome-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.82rem;
+            font-size: 0.84rem;
         }
 
-        .clean-invoice-table thead tr {
-            border-top: 1.5px solid var(--color-ink);
-            border-bottom: 1.5px solid var(--color-ink);
+        .monochrome-table thead tr {
+            border-top: 2px solid var(--color-black);
+            border-bottom: 2px solid var(--color-black);
         }
 
-        .clean-invoice-table thead th {
-            padding: 10px 0;
-            font-weight: 700;
-            color: var(--color-ink);
-            letter-spacing: 0.02em;
-            font-size: 0.82rem;
+        .monochrome-table thead th {
+            padding: 12px 0;
+            font-weight: 800;
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-black);
         }
 
-        .clean-invoice-table thead th.col-num {
-            width: 24px;
+        .monochrome-table thead th.th-num {
+            width: 28px;
             text-align: left;
         }
-        .clean-invoice-table thead th.col-desc {
+        .monochrome-table thead th.th-desc {
             text-align: left;
-            padding-left: 8px;
+            padding-left: 10px;
         }
-        .clean-invoice-table thead th.col-price {
+        .monochrome-table thead th.th-price {
             text-align: right;
-            width: 90px;
+            width: 95px;
         }
-        .clean-invoice-table thead th.col-qty {
+        .monochrome-table thead th.th-qty {
             text-align: center;
             width: 50px;
         }
-        .clean-invoice-table thead th.col-total {
+        .monochrome-table thead th.th-total {
             text-align: right;
-            width: 100px;
+            width: 110px;
         }
 
-        .clean-invoice-table tbody tr {
-            border-bottom: 1px solid var(--color-border-light);
+        .monochrome-table tbody tr {
+            border-bottom: 1px solid var(--color-border-subtle);
         }
 
-        .clean-invoice-table tbody td {
-            padding: 7px 0;
+        .monochrome-table tbody td {
+            padding: 9px 0;
             vertical-align: middle;
-            color: var(--color-ink);
+            color: var(--color-black);
         }
 
-        .cell-num {
+        .td-num {
             font-weight: 600;
-            color: var(--color-ink-muted);
-            font-size: 0.76rem;
+            color: var(--color-light-gray);
+            font-size: 0.78rem;
         }
 
-        .cell-desc {
-            padding-left: 8px;
+        .td-desc {
+            padding-left: 10px;
         }
 
-        .item-main-title {
+        .item-title-text {
             font-weight: 700;
-            color: var(--color-ink);
-            font-size: 0.82rem;
-            line-height: 1.25;
+            font-size: 0.84rem;
+            color: var(--color-black);
+            line-height: 1.3;
         }
 
-        .item-sub-note {
-            font-size: 0.68rem;
-            color: var(--color-ink-light);
-            line-height: 1.25;
+        .item-desc-text {
+            font-size: 0.72rem;
+            color: var(--color-mid-gray);
+            line-height: 1.35;
             margin-top: 1px;
         }
 
-        .cell-price {
+        .td-price {
             text-align: right;
             font-weight: 500;
-            font-size: 0.8rem;
-            color: var(--color-ink);
+            font-size: 0.82rem;
+            color: var(--color-dark-gray);
             white-space: nowrap;
         }
 
-        .cell-qty {
+        .td-qty {
             text-align: center;
             font-weight: 600;
-            font-size: 0.8rem;
-            color: var(--color-ink-muted);
+            font-size: 0.82rem;
+            color: var(--color-mid-gray);
         }
 
-        .cell-total {
+        .td-total {
             text-align: right;
             font-weight: 700;
-            font-size: 0.82rem;
-            color: var(--color-ink);
+            font-size: 0.84rem;
+            color: var(--color-black);
             white-space: nowrap;
         }
 
-        /* Divider Row for Mockup Subtotal */
-        .subtotal-divider-row td {
-            background: #fafafc;
-            padding: 8px 6px;
-            border-top: 1px dashed #d1d5db;
-            border-bottom: 1.5px solid #11141a;
-            font-weight: 700;
+        /* Mockup Subtotal Divider Row */
+        .row-subtotal-mockup td {
+            background: var(--color-bg-light);
+            padding: 9px 8px;
+            border-top: 1px dashed var(--color-border-subtle);
+            border-bottom: 2px solid var(--color-black);
+            font-weight: 800;
             font-size: 0.76rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
 
-        /* SUMMARY & TOTALS BLOCK (RIGHT-ALIGNED) */
-        .summary-signature-wrapper {
-            margin-top: 20px;
+        /* TOTALS & SUMMARY SECTION */
+        .editorial-summary-row {
+            margin-top: 24px;
             display: flex;
             justify-content: flex-end;
         }
 
-        .totals-column {
-            width: 250px;
+        .totals-summary-box {
+            width: 270px;
             display: flex;
             flex-direction: column;
-            gap: 7px;
-            font-size: 0.84rem;
+            gap: 8px;
+            font-size: 0.86rem;
         }
 
-        .totals-row {
+        .summary-line-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--color-ink);
+            color: var(--color-dark-gray);
         }
 
-        .totals-row.grand-total-row {
-            font-size: 1.05rem;
-            font-weight: 800;
-            padding-top: 8px;
-            border-top: 1.5px solid var(--color-ink);
-            margin-top: 4px;
-        }
-
-        .totals-label {
+        .summary-label {
             font-weight: 700;
         }
 
-        .totals-val {
+        .summary-value {
             font-weight: 700;
             text-align: right;
             white-space: nowrap;
         }
 
-        /* SIGNATURE SECTION (BOTTOM RIGHT) */
-        .signature-container {
+        .summary-line-item.final-grand-total {
+            font-size: 1.15rem;
+            font-weight: 800;
+            padding-top: 10px;
+            border-top: 2px solid var(--color-black);
+            margin-top: 6px;
+            color: var(--color-black);
+        }
+
+        /* SIGNATURE SECTION */
+        .editorial-signature-unit {
             align-self: flex-end;
-            margin-top: 24px;
+            margin-top: 36px;
             text-align: right;
-            padding-right: 4px;
+            padding-right: 2px;
         }
 
-        .sig-handwritten {
+        .handwritten-sig {
             font-family: var(--font-sig);
-            font-size: 2.3rem;
+            font-size: 2.6rem;
             font-weight: 700;
-            color: #2b3342;
-            line-height: 0.9;
-            transform: rotate(-3deg);
+            color: var(--color-black);
+            line-height: 0.85;
             display: inline-block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
-        .sig-name {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--color-ink);
+        .sig-printed-name {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--color-black);
             letter-spacing: 0.02em;
         }
 
-        .sig-role {
-            font-size: 0.68rem;
-            color: var(--color-ink-muted);
+        .sig-official-role {
+            font-size: 0.72rem;
+            color: var(--color-mid-gray);
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
         }
 
         /* ----------------------------------------------------
-           BOTTOM TERMS & CONDITIONS FOOTER (FULL WIDTH)
+           TERMS & CONDITIONS FOOTER (FULL WIDTH)
         ---------------------------------------------------- */
-        .sheet-footer-terms {
-            margin-top: 28px;
-            padding-top: 16px;
-            border-top: 1px solid #d1d5db;
-            font-size: 0.74rem;
-            color: var(--color-ink-muted);
-            line-height: 1.55;
+        .document-footer-terms {
+            margin-top: 48px;
+            padding-top: 20px;
+            border-top: 2px solid var(--color-black);
+            font-size: 0.78rem;
+            color: var(--color-mid-gray);
+            line-height: 1.6;
         }
 
-        .sheet-footer-terms strong {
-            color: var(--color-ink);
+        .document-footer-terms strong {
+            color: var(--color-black);
             font-weight: 700;
         }
 
-        .scope-callout {
-            margin-top: 8px;
-            background: #fff8f6;
-            border-left: 3px solid var(--color-coral);
-            padding: 8px 12px;
-            border-radius: 0 6px 6px 0;
-            font-size: 0.72rem;
-            color: #4a2825;
+        .upcoming-scope-mono-box {
+            margin-top: 14px;
+            padding: 14px 18px;
+            border: 1px solid var(--color-black);
+            background: var(--color-bg-light);
+            font-size: 0.76rem;
+            color: var(--color-dark-gray);
+            line-height: 1.6;
+        }
+
+        .upcoming-scope-mono-box strong {
+            color: var(--color-black);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         /* ----------------------------------------------------
-           PIN SECURITY OVERLAY MODAL
+           SECURITY PIN MODAL OVERLAY (MONOCHROME)
         ---------------------------------------------------- */
         .security-gate-overlay {
             position: fixed;
             inset: 0;
             z-index: 99999;
-            background: rgba(18, 20, 26, 0.92);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
 
-        .gate-modal-card {
-            background: #ffffff;
-            border-radius: 20px;
-            max-width: 380px;
+        .mono-modal-box {
+            background: var(--color-white);
+            border: 2px solid var(--color-black);
+            border-radius: 4px;
+            max-width: 390px;
             width: 100%;
-            padding: 36px 28px;
+            padding: 40px 32px;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 0, 0, 0.08);
             font-family: var(--font-sora);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
         }
 
-        .gate-icon-badge {
+        .mono-modal-icon {
             width: 52px;
             height: 52px;
-            border-radius: 14px;
-            background: var(--color-coral);
-            color: #ffffff;
+            background: var(--color-black);
+            color: var(--color-white);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
-        .gate-title {
-            font-size: 1.2rem;
+        .mono-modal-title {
+            font-size: 1.25rem;
             font-weight: 800;
-            color: #11141a;
-            margin-bottom: 6px;
+            color: var(--color-black);
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
-        .gate-desc {
-            font-size: 0.8rem;
-            color: #64748b;
-            line-height: 1.45;
-            margin-bottom: 22px;
+        .mono-modal-desc {
+            font-size: 0.82rem;
+            color: var(--color-mid-gray);
+            line-height: 1.5;
+            margin-bottom: 24px;
         }
 
-        .gate-pin-input {
+        .mono-pin-field {
             width: 100%;
-            height: 50px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1.4rem;
+            height: 52px;
+            border: 2px solid var(--color-black);
+            border-radius: 4px;
+            font-size: 1.45rem;
             font-weight: 800;
             text-align: center;
             letter-spacing: 0.35em;
-            color: #11141a;
+            color: var(--color-black);
             outline: none;
-            transition: all 0.2s ease;
-            margin-bottom: 12px;
+            transition: all 0.15s ease;
+            margin-bottom: 14px;
             font-family: var(--font-sora);
+            background: var(--color-white);
         }
 
-        .gate-pin-input:focus {
-            border-color: var(--color-coral);
-            box-shadow: 0 0 0 3px rgba(226, 109, 104, 0.2);
+        .mono-pin-field:focus {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
         }
 
-        .gate-submit-btn {
+        .mono-btn-submit {
             width: 100%;
-            height: 48px;
-            background: #11141a;
-            color: #ffffff;
+            height: 50px;
+            background: var(--color-black);
+            color: var(--color-white);
             border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.86rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             font-family: var(--font-sora);
         }
 
-        .gate-submit-btn:hover {
-            background: #272d3b;
+        .mono-btn-submit:hover {
+            background: var(--color-dark-gray);
         }
 
-        .gate-error-hint {
-            color: #e11d48;
+        .mono-error-label {
+            color: var(--color-black);
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-black);
+            padding: 6px 12px;
             font-size: 0.74rem;
-            font-weight: 600;
-            margin-top: 10px;
+            font-weight: 700;
+            margin-top: 14px;
             display: none;
         }
 
         /* ----------------------------------------------------
-           TOAST NOTIFICATION
+           TOAST NOTIFICATION (MONOCHROME)
         ---------------------------------------------------- */
         .toast-popup {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(50px);
-            background: #11141a;
-            color: #ffffff;
+            background: var(--color-black);
+            color: var(--color-white);
             padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
             z-index: 100000;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s ease;
             white-space: nowrap;
         }
 
@@ -789,76 +696,69 @@
            RESPONSIVE (MOBILE & TABLET)
         ---------------------------------------------------- */
         @media (max-width: 768px) {
-            body {
-                padding: 12px 8px 60px;
+            .invoice-full-page {
+                padding: 24px 16px 60px;
             }
 
-            .top-action-bar {
+            .toolbar-inner {
+                padding: 12px 16px;
                 flex-direction: column;
                 align-items: stretch;
             }
 
-            .bar-left, .bar-right {
+            .toolbar-left, .toolbar-right {
                 width: 100%;
                 justify-content: space-between;
             }
 
-            .poster-canvas-wrapper {
-                padding: 12px;
-                border-radius: 8px;
-            }
-
-            .invoice-sheet {
-                border-radius: 22px;
-                padding: 28px 18px 24px;
-                gap: 24px;
-            }
-
-            .sheet-header {
+            .document-header {
                 flex-direction: column;
-                gap: 16px;
+                gap: 20px;
+                padding-bottom: 24px;
             }
 
-            .invoice-title-block {
+            .invoice-title-unit {
                 text-align: left;
             }
 
-            .invoice-heading {
-                font-size: 2rem;
+            .invoice-main-heading {
+                font-size: 2.2rem;
             }
 
-            .invoice-body-grid {
+            .document-body-layout {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 28px;
+                margin-top: 24px;
             }
 
-            .meta-sidebar {
-                border-bottom: 1.5px solid var(--color-ink);
-                padding-bottom: 20px;
+            .editorial-sidebar {
+                border-bottom: 1.5px solid var(--color-black);
+                padding-bottom: 24px;
             }
 
-            .sidebar-contact-icons {
+            .sidebar-contact-list {
                 flex-direction: row;
                 flex-wrap: wrap;
                 gap: 16px;
+                padding-top: 16px;
             }
 
-            .clean-invoice-table thead th.col-num {
-                width: 16px;
+            .monochrome-table thead th.th-num {
+                width: 18px;
             }
-            .clean-invoice-table thead th.col-price {
-                width: 70px;
+            .monochrome-table thead th.th-price {
+                width: 72px;
             }
-            .clean-invoice-table thead th.col-total {
-                width: 80px;
+            .monochrome-table thead th.th-total {
+                width: 85px;
             }
 
-            .summary-signature-wrapper {
+            .editorial-summary-row {
                 flex-direction: column;
                 align-items: flex-end;
             }
 
-            .totals-column {
+            .totals-summary-box {
                 width: 100%;
             }
         }
@@ -873,317 +773,294 @@
                 margin: 0 !important;
             }
 
-            .top-action-bar,
+            .top-toolbar,
             .security-gate-overlay,
             .toast-popup {
                 display: none !important;
             }
 
-            .poster-canvas-wrapper {
-                box-shadow: none !important;
+            .invoice-full-page {
                 max-width: 100% !important;
                 width: 100% !important;
-                padding: 16px !important;
-                border-radius: 0 !important;
-                background: #ffffff !important;
-                page-break-inside: avoid;
-            }
-
-            .color-block-bg {
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-
-            .invoice-sheet {
-                box-shadow: none !important;
-                border: 1px solid #d1d5db;
-                padding: 36px 32px !important;
-                border-radius: 24px !important;
+                padding: 20px 24px !important;
+                margin: 0 !important;
             }
         }
     </style>
 </head>
 <body class="locked">
 
-    <!-- TOP ACTION TOOLBAR -->
-    <header class="top-action-bar">
-        <div class="bar-left">
-            <a href="/" class="back-dashboard-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                Dashboard
-            </a>
-            <span class="status-pill-unpaid">
-                🔴 Belum Lunas
-            </span>
-        </div>
+    <!-- MONOCHROME TOP TOOLBAR -->
+    <header class="top-toolbar">
+        <div class="toolbar-inner">
+            <div class="toolbar-left">
+                <a href="/" class="btn-nav-dashboard">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Dashboard
+                </a>
+                <span class="mono-pill-unpaid">
+                    Belum Lunas
+                </span>
+            </div>
 
-        <div class="bar-right">
-            <button type="button" class="action-chip-btn btn-print" onclick="window.print()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                Cetak PDF
-            </button>
-            <button type="button" class="action-chip-btn btn-png" id="btnDownloadPng" onclick="downloadInvoicePng()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                Unduh PNG
-            </button>
-            <button type="button" class="action-chip-btn btn-copy-bank" onclick="copyBankAccount()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                Salin Rek Mandiri
-            </button>
-            <button type="button" class="action-chip-btn btn-copy-wa" onclick="copyWaScriptLocal()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                Salin Script WA
-            </button>
+            <div class="toolbar-right">
+                <button type="button" class="btn-mono-action btn-mono-primary" onclick="window.print()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Cetak PDF
+                </button>
+                <button type="button" class="btn-mono-action" id="btnDownloadPng" onclick="downloadInvoicePng()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Unduh PNG
+                </button>
+                <button type="button" class="btn-mono-action" onclick="copyBankAccount()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    Salin Rek Mandiri
+                </button>
+                <button type="button" class="btn-mono-action" onclick="copyWaScriptLocal()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    Salin Script WA
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- POSTER CANVAS WITH COLOR-BLOCK BORDER -->
-    <main class="poster-canvas-wrapper" id="invoiceCaptureWrapper">
+    <!-- FULL DOCUMENT (NO BOX, FULL CLEAN PAGE) -->
+    <main class="invoice-full-page" id="invoiceCaptureContainer">
 
-        <!-- COLOR-BLOCK BACKGROUND SHAPES (AS IN REFERENCE) -->
-        <div class="color-block-bg">
-            <div class="block-peach"></div>
-            <div class="block-coral"></div>
-            <div class="block-navy"></div>
-            <div class="block-deep-navy"></div>
-            <div class="block-sage"></div>
-        </div>
+        <div id="invoiceDocument" inert>
 
-        <!-- PRISTINE WHITE INVOICE SHEET -->
-        <div class="invoice-sheet" id="invoiceDocument" inert>
-
-            <!-- HEADER ROW -->
-            <header class="sheet-header">
-                <div class="brand-cluster">
-                    <div class="brand-icon-logo"></div>
-                    <div class="brand-text-block">
-                        <span class="brand-title">DAR STUDIO</span>
-                        <span class="brand-subtitle">CREATIVE &amp; DIGITAL ECOSYSTEM</span>
+            <!-- DOCUMENT HEADER -->
+            <header class="document-header">
+                <div class="brand-unit">
+                    <div class="brand-square-logo">D</div>
+                    <div class="brand-details">
+                        <span class="brand-name">DAR STUDIO</span>
+                        <span class="brand-sub">Creative &amp; Digital Ecosystem</span>
                     </div>
                 </div>
 
-                <div class="invoice-title-block">
-                    <h1 class="invoice-heading">Invoice</h1>
-                    <div class="invoice-meta-sub">
-                        No. <strong>#INV/DAR/2026/09/019</strong><br>
-                        Tanggal: <strong>30/09/2026</strong>
+                <div class="invoice-title-unit">
+                    <h1 class="invoice-main-heading">Invoice</h1>
+                    <div class="invoice-meta-lines">
+                        No. Ref: <strong>#INV/DAR/2026/09/019</strong><br>
+                        Tanggal: <strong>30 September 2026</strong>
                     </div>
                 </div>
             </header>
 
             <!-- 2-COLUMN BODY -->
-            <div class="invoice-body-grid">
+            <div class="document-body-layout">
 
                 <!-- LEFT SIDEBAR -->
-                <aside class="meta-sidebar">
+                <aside class="editorial-sidebar">
 
                     <!-- INVOICE TO -->
-                    <div class="sidebar-section">
-                        <div class="section-header-line">Invoice To :</div>
-                        <div class="sidebar-client-name">El Massa Travel</div>
-                        <div class="sidebar-info-text">
+                    <div class="sidebar-block">
+                        <div class="sidebar-block-title">Invoice To :</div>
+                        <div class="sidebar-client-heading">El Massa Travel</div>
+                        <div class="sidebar-paragraph">
                             Indonesia<br>
                             +62 813-1150-6025
                         </div>
                     </div>
 
                     <!-- PAYMENT METHODS -->
-                    <div class="sidebar-section">
-                        <div class="section-header-line">Payment Methods :</div>
-                        <div class="sidebar-methods-box">
+                    <div class="sidebar-block">
+                        <div class="sidebar-block-title">Payment Methods :</div>
+                        <div class="sidebar-paragraph">
                             <strong>Bank Mandiri</strong>
-                            <div class="mandiri-acc-highlight">1550010616962</div>
+                            <div class="mandiri-bold-number">1550010616962</div>
                             <span>a.n. Daru Fahmaa Muliawan</span><br>
-                            <span style="font-size:0.72rem; color:var(--color-ink-light);">Transfer Bank &middot; QRIS &middot; Online</span>
+                            <span style="font-size:0.72rem; color:var(--color-light-gray);">Transfer Bank &middot; QRIS &middot; Online</span>
                         </div>
                     </div>
 
-                    <!-- CONTACT ICONS -->
-                    <div class="sidebar-contact-icons">
-                        <div class="icon-row">
-                            <div class="icon-circle">
+                    <!-- CONTACT LIST -->
+                    <div class="sidebar-contact-list">
+                        <div class="contact-entry">
+                            <div class="contact-icon-frame">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                             </div>
-                            <div class="icon-text">Kota Tangerang, Banten<br>Indonesia, 15119</div>
+                            <div class="contact-caption">Kota Tangerang, Banten<br>Indonesia, 15119</div>
                         </div>
 
-                        <div class="icon-row">
-                            <div class="icon-circle">
+                        <div class="contact-entry">
+                            <div class="contact-icon-frame">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             </div>
-                            <div class="icon-text">temantiket.com<br>daru.designstudio</div>
+                            <div class="contact-caption">temantiket.com<br>daru.designstudio</div>
                         </div>
 
-                        <div class="icon-row">
-                            <div class="icon-circle">
+                        <div class="contact-entry">
+                            <div class="contact-icon-frame">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                             </div>
-                            <div class="icon-text">+62 813-1150-6025<br>WhatsApp Verified</div>
+                            <div class="contact-caption">+62 813-1150-6025<br>WhatsApp Verified</div>
                         </div>
                     </div>
 
                 </aside>
 
                 <!-- RIGHT MAIN CONTENT: ITEMS TABLE -->
-                <div class="table-area">
-                    <table class="clean-invoice-table">
+                <div class="editorial-main-content">
+                    <table class="monochrome-table">
                         <thead>
                             <tr>
-                                <th class="col-num">#</th>
-                                <th class="col-desc">Item Description</th>
-                                <th class="col-price">Price</th>
-                                <th class="col-qty">Qty.</th>
-                                <th class="col-total">Total</th>
+                                <th class="th-num">#</th>
+                                <th class="th-desc">Item Description</th>
+                                <th class="th-price">Price</th>
+                                <th class="th-qty">Qty.</th>
+                                <th class="th-total">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- ITEM 1 -->
                             <tr>
-                                <td class="cell-num">1</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Kain Baju Pria</div>
-                                    <div class="item-sub-note">Desain visual 3D apparel kain seragam pria El Massa</div>
+                                <td class="td-num">1</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Kain Baju Pria</div>
+                                    <div class="item-desc-text">Desain visual 3D apparel kain seragam pria El Massa</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 2 -->
                             <tr>
-                                <td class="cell-num">2</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Tas Serut</div>
-                                    <div class="item-sub-note">Mockup realistis tas serut / drawstring bag jamaah</div>
+                                <td class="td-num">2</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Tas Serut</div>
+                                    <div class="item-desc-text">Mockup realistis tas serut / drawstring bag jamaah</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 3 -->
                             <tr>
-                                <td class="cell-num">3</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Sarung Koper 26 inch</div>
-                                    <div class="item-sub-note">Luggage protector cover branding identitas El Massa</div>
+                                <td class="td-num">3</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Sarung Koper 26 inch</div>
+                                    <div class="item-desc-text">Luggage protector cover branding identitas El Massa</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 4 -->
                             <tr>
-                                <td class="cell-num">4</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Sajadah Syal</div>
-                                    <div class="item-sub-note">Sajadah travel multifungsi syal serbaguna jamaah</div>
+                                <td class="td-num">4</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Sajadah Syal</div>
+                                    <div class="item-desc-text">Sajadah travel multifungsi syal serbaguna jamaah</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 5 -->
                             <tr>
-                                <td class="cell-num">5</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Bantal Leher</div>
-                                    <div class="item-sub-note">Desain bantal leher penerbangan umrah ergonomis</div>
+                                <td class="td-num">5</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Bantal Leher</div>
+                                    <div class="item-desc-text">Desain bantal leher penerbangan umrah ergonomis</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 6 -->
                             <tr>
-                                <td class="cell-num">6</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Lanyard</div>
-                                    <div class="item-sub-note">Tali ID card eksklusif untuk staf &amp; jamaah</div>
+                                <td class="td-num">6</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Lanyard</div>
+                                    <div class="item-desc-text">Tali ID card eksklusif untuk staf &amp; jamaah</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 7 -->
                             <tr>
-                                <td class="cell-num">7</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Ransel</div>
-                                    <div class="item-sub-note">Ransel kabin travel umrah perlengkapan ibadah</div>
+                                <td class="td-num">7</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Ransel</div>
+                                    <div class="item-desc-text">Ransel kabin travel umrah perlengkapan ibadah</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 8 -->
                             <tr>
-                                <td class="cell-num">8</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Kain Baju Wanita 2,5 m</div>
-                                    <div class="item-sub-note">Pola motif batik seragam wanita ukuran 2,5 meter</div>
+                                <td class="td-num">8</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Kain Baju Wanita 2,5 m</div>
+                                    <div class="item-desc-text">Pola motif batik seragam wanita ukuran 2,5 meter</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 9 -->
                             <tr>
-                                <td class="cell-num">9</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Kerudung Syar'i</div>
-                                    <div class="item-sub-note">Hijab syar'i seragam jamaah wanita El Massa</div>
+                                <td class="td-num">9</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Kerudung Syar'i</div>
+                                    <div class="item-desc-text">Hijab syar'i seragam jamaah wanita El Massa</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 10 -->
                             <tr>
-                                <td class="cell-num">10</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Mukena Travel</div>
-                                    <div class="item-sub-note">Mukena travel lipat praktis dan pouch eksklusif</div>
+                                <td class="td-num">10</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Mukena Travel</div>
+                                    <div class="item-desc-text">Mukena travel lipat praktis dan pouch eksklusif</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 11 -->
                             <tr>
-                                <td class="cell-num">11</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Cover Mini Notebook</div>
-                                    <div class="item-sub-note">Sampul buku catatan saku jamaah El Massa</div>
+                                <td class="td-num">11</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Cover Mini Notebook</div>
+                                    <div class="item-desc-text">Sampul buku catatan saku jamaah El Massa</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- ITEM 12 -->
                             <tr>
-                                <td class="cell-num">12</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Mockup Cover Buku Doa</div>
-                                    <div class="item-sub-note">Sampul buku saku kumpulan doa &amp; panduan manasik</div>
+                                <td class="td-num">12</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Mockup Cover Buku Doa</div>
+                                    <div class="item-desc-text">Sampul buku saku kumpulan doa &amp; panduan manasik</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 35.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 35.000</td>
                             </tr>
 
                             <!-- SUB-TOTAL DIVIDER ROW -->
-                            <tr class="subtotal-divider-row">
-                                <td colspan="2" style="padding-left:4px;">
+                            <tr class="row-subtotal-mockup">
+                                <td colspan="2" style="padding-left:10px;">
                                     <span>SUBTOTAL 12 ITEM MOCKUP MERCHANDISE</span>
                                 </td>
                                 <td style="text-align:right;">—</td>
@@ -1193,65 +1070,65 @@
 
                             <!-- ITEM 13 -->
                             <tr>
-                                <td class="cell-num">13</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Poster / Brosur Promosi</div>
-                                    <div class="item-sub-note">12 desain materi promosi cetak &amp; konten media sosial</div>
+                                <td class="td-num">13</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Desain Poster / Brosur Promosi</div>
+                                    <div class="item-desc-text">12 materi promosi cetak &amp; konten media sosial</div>
                                 </td>
-                                <td class="cell-price">Rp 35.000</td>
-                                <td class="cell-qty">12</td>
-                                <td class="cell-total">Rp 420.000</td>
+                                <td class="td-price">Rp 35.000</td>
+                                <td class="td-qty">12</td>
+                                <td class="td-total">Rp 420.000</td>
                             </tr>
 
                             <!-- ITEM 14 -->
                             <tr>
-                                <td class="cell-num">14</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Website Katalog</div>
-                                    <div class="item-sub-note">Pembangunan landing page responsif katalog paket umrah</div>
+                                <td class="td-num">14</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Pembuatan Website Katalog</div>
+                                    <div class="item-desc-text">Pembangunan landing page responsif katalog paket umrah</div>
                                 </td>
-                                <td class="cell-price">Rp 800.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 800.000</td>
+                                <td class="td-price">Rp 800.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 800.000</td>
                             </tr>
 
                             <!-- ITEM 15 -->
                             <tr>
-                                <td class="cell-num">15</td>
-                                <td class="cell-desc">
-                                    <div class="item-main-title">Update Website Itinerary</div>
-                                    <div class="item-sub-note">Pembaruan jadwal rute perjalanan &amp; fasilitas paket</div>
+                                <td class="td-num">15</td>
+                                <td class="td-desc">
+                                    <div class="item-title-text">Update Website Itinerary</div>
+                                    <div class="item-desc-text">Pembaruan jadwal rute perjalanan &amp; fasilitas paket</div>
                                 </td>
-                                <td class="cell-price">Rp 300.000</td>
-                                <td class="cell-qty">1</td>
-                                <td class="cell-total">Rp 300.000</td>
+                                <td class="td-price">Rp 300.000</td>
+                                <td class="td-qty">1</td>
+                                <td class="td-total">Rp 300.000</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <!-- SUMMARY TOTALS & SIGNATURE -->
-                    <div class="summary-signature-wrapper">
-                        <div class="totals-column">
-                            <div class="totals-row">
-                                <span class="totals-label">Sub Total :</span>
-                                <span class="totals-val">Rp 1.940.000</span>
+                    <!-- SUMMARY TOTALS -->
+                    <div class="editorial-summary-row">
+                        <div class="totals-summary-box">
+                            <div class="summary-line-item">
+                                <span class="summary-label">Sub Total :</span>
+                                <span class="summary-value">Rp 1.940.000</span>
                             </div>
-                            <div class="totals-row">
-                                <span class="totals-label">Tax :</span>
-                                <span class="totals-val">0.00%</span>
+                            <div class="summary-line-item">
+                                <span class="summary-label">Tax :</span>
+                                <span class="summary-value">0.00%</span>
                             </div>
-                            <div class="totals-row grand-total-row">
-                                <span class="totals-label">Total :</span>
-                                <span class="totals-val">Rp 1.940.000</span>
+                            <div class="summary-line-item final-grand-total">
+                                <span class="summary-label">Total :</span>
+                                <span class="summary-value">Rp 1.940.000</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- SIGNATURE BLOCK -->
-                    <div class="signature-container">
-                        <div class="sig-handwritten">Daru Fahmaa</div>
-                        <div class="sig-name">Daru Fahmaa Muliawan</div>
-                        <div class="sig-role">Lead Creative &amp; Director</div>
+                    <div class="editorial-signature-unit">
+                        <div class="handwritten-sig">Daru Fahmaa</div>
+                        <div class="sig-printed-name">Daru Fahmaa Muliawan</div>
+                        <div class="sig-official-role">Lead Creative &amp; Director</div>
                     </div>
 
                 </div>
@@ -1259,13 +1136,13 @@
             </div>
 
             <!-- TERMS & CONDITIONS / UPCOMING SCOPE FOOTER -->
-            <footer class="sheet-footer-terms">
+            <footer class="document-footer-terms">
                 <p>
-                    <strong>Terms &amp; Conditions :</strong> Pembayaran invoice ini ditujukan ke rekening Bank Mandiri <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan. Seluruh deliverable digital resolusi tinggi akan diserahkan setelah verifikasi pembayaran diterima.
+                    <strong>Terms &amp; Conditions :</strong> Pembayaran tagihan resmi ini ditransfer ke rekening Bank Mandiri <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan. Seluruh berkas digital master resolusi tinggi akan diserahkan setelah verifikasi pembayaran diterima.
                 </p>
-                <div class="scope-callout">
+                <div class="upcoming-scope-mono-box">
                     <strong>Pekerjaan Lanjutan &mdash; Belum Termasuk Total Tagihan di Atas:</strong><br>
-                    &bull; <strong>Sistem Travel:</strong> Harga menyusul sesuai kebutuhan alur &amp; modul pemesanan.<br>
+                    &bull; <strong>Sistem Travel:</strong> Harga menyusul sesuai kebutuhan alur &amp; modul pemesanan sistem.<br>
                     &bull; <strong>Sistem UmrahMe:</strong> Harga menyesuaikan saat penerbitan dokumen resmi untuk jamaah.
                 </div>
             </footer>
@@ -1274,21 +1151,21 @@
 
     </main>
 
-    <!-- SECURITY PIN MODAL OVERLAY -->
+    <!-- MONOCHROME SECURITY PIN MODAL -->
     <div class="security-gate-overlay" id="securityGate">
-        <div class="gate-modal-card">
-            <div class="gate-icon-badge">
+        <div class="mono-modal-box">
+            <div class="mono-modal-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
-            <h3 class="gate-title">Invoice Terproteksi</h3>
-            <p class="gate-desc">Masukkan 4 atau 6 digit Kode PIN Resmi untuk membuka rincian dokumen El Massa.</p>
+            <h3 class="mono-modal-title">Invoice Terproteksi</h3>
+            <p class="mono-modal-desc">Masukkan Kode PIN Resmi untuk membuka akses dokumen invoice El Massa.</p>
 
             <form onsubmit="handlePinSubmit(event)">
-                <input type="password" id="pinInput" class="gate-pin-input" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
-                <button type="submit" class="gate-submit-btn">Buka Dokumen</button>
+                <input type="password" id="pinInput" class="mono-pin-field" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
+                <button type="submit" class="mono-btn-submit">Buka Dokumen</button>
             </form>
 
-            <div class="gate-error-hint" id="gateError">Kode PIN salah. Silakan coba kembali.</div>
+            <div class="mono-error-label" id="gateError">Kode PIN tidak valid. Coba lagi.</div>
         </div>
     </div>
 
@@ -1317,13 +1194,14 @@
             if (VALID_PINS.includes(val)) {
                 if (errEl) errEl.style.display = "none";
                 unlockDocument();
-                showToast("Akses invoice berhasil dibuka!");
+                showToast("Akses invoice dibuka!");
             } else {
                 if (errEl) errEl.style.display = "block";
-                pinIn.style.borderColor = "#e11d48";
+                pinIn.style.borderColor = "#000000";
+                pinIn.style.background = "#f5f5f5";
                 setTimeout(() => {
-                    pinIn.style.borderColor = "#e2e8f0";
-                }, 600);
+                    pinIn.style.background = "#ffffff";
+                }, 400);
             }
         }
 
@@ -1339,13 +1217,13 @@
             t.classList.add("show");
             setTimeout(() => {
                 t.classList.remove("show");
-            }, 2600);
+            }, 2500);
         }
 
         function copyBankAccount() {
             const num = "1550010616962";
             navigator.clipboard.writeText(num).then(() => {
-                showToast("No. Rekening Mandiri (1550010616962) disalin!");
+                showToast("Rekening Mandiri (1550010616962) Disalin!");
             }).catch(() => {
                 showToast("No. Rekening: 1550010616962");
             });
@@ -1375,7 +1253,7 @@
                          "a.n. Daru Fahmaa Muliawan\n\n" +
                          "Dokumen invoice interaktif resmi serta tombol Cetak Dokumen PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak atas kepercayaan dan kerjasamanya! 🙏✨";
             navigator.clipboard.writeText(text).then(() => {
-                showToast("Script Pesan WA berhasil disalin!");
+                showToast("Script Pesan WA Berhasil Disalin!");
             }).catch(() => {
                 showToast("Link: https://temantiket.com/elmassa");
             });
@@ -1383,16 +1261,16 @@
 
         function downloadInvoicePng() {
             const btn = document.getElementById("btnDownloadPng");
-            const target = document.getElementById("invoiceCaptureWrapper");
+            const target = document.getElementById("invoiceCaptureContainer");
             if (!target) return;
 
             const origText = btn ? btn.innerHTML : "";
-            if (btn) btn.innerHTML = "Memproses PNG...";
+            if (btn) btn.innerHTML = "Memproses...";
 
             html2canvas(target, {
                 scale: 2,
                 useCORS: true,
-                backgroundColor: "#1e2025",
+                backgroundColor: "#ffffff",
                 logging: false,
                 windowWidth: 1050
             }).then(canvas => {
