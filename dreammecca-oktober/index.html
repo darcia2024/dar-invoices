@@ -2,13 +2,13 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INVOICE #INV/DU/2026/10/003 - Dreammecca Tour & Travel (Batch Oktober)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Invoice #INV/DU/2026/10/003 — Dreammecca Tour &amp; Travel (Batch Oktober)</title>
     
-    <!-- Google Fonts: Plus Jakarta Sans Regular, Medium, SemiBold, Bold -->
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- html2canvas for High-Res PNG Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -16,38 +16,58 @@
     <style>
         :root {
             --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            /* Dreammecca Royal Signature Palette */
+            --dm-navy: #1d2547;
+            --dm-navy-dark: #141a33;
+            --dm-navy-light: #2c3766;
+            --dm-blue-accent: #374785;
+            --dm-blue-surface: #f4f7fc;
+            --dm-blue-surface-hover: #eaf0fa;
+            --dm-blue-border: #dbe4f2;
+            --dm-blue-subtle: #edf2fa;
+
+            /* Luxury Gold & Sand Details */
+            --gold-accent: #c49a45;
+            --gold-light: #fdfaf3;
+            --gold-border: #f2e4c9;
+
+            /* Neutral Slate Tones */
             --text-main: #0f172a;
             --text-secondary: #334155;
             --text-light: #64748b;
             --text-muted: #94a3b8;
-            --line-color: #e2e8f0;
-            --line-subtle: #f1f5f9;
-            --navy-brand: #0f2b5c;
-            --navy-dark: #0a1c3d;
-            --gold-accent: #9a7b38;
-            --gold-light: #fef9ee;
-            --gold-border: #f3e5c8;
+            --bg-page: #f8fafc;
+            --card-white: #ffffff;
+
+            --shadow-subtle: 0 4px 20px -2px rgba(29, 37, 71, 0.05);
+            --shadow-card: 0 12px 36px -4px rgba(29, 37, 71, 0.08), 0 4px 12px -2px rgba(29, 37, 71, 0.03);
+            --shadow-modal: 0 25px 60px -15px rgba(20, 26, 51, 0.28);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: var(--font-family);
-            font-weight: 400;
-            background-color: #f8fafc;
+            background-color: var(--bg-page);
             color: var(--text-main);
             line-height: 1.5;
-            padding: 24px 20px 60px;
+            padding: 0 0 60px 0;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* ----------------------------------------------------
-           SECURITY ACCESS SCREEN (CLEAN, BORDERLESS, MINIMAL)
+           SECURITY ACCESS SCREEN (CLEAN, ELEGANT, BLURRED)
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -55,15 +75,15 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(20, 26, 51, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cover-overlay.opened {
@@ -75,65 +95,91 @@
 
         .cover-card {
             background: #ffffff;
-            border-radius: 16px;
-            max-width: 400px;
+            border-radius: 20px;
+            max-width: 420px;
             width: 100%;
-            padding: 38px 32px;
+            padding: 40px 34px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
-            border: 1px solid var(--line-color);
+            box-shadow: var(--shadow-modal);
+            border: 1px solid var(--dm-blue-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1d2547 0%, #374785 50%, #c49a45 100%);
+        }
+
+        .cover-logo-frame {
+            margin-bottom: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-logo-img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
         }
 
         .cover-brand-eyebrow {
-            font-size: 0.72rem;
-            letter-spacing: 0.15em;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--gold-accent);
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .cover-title {
             font-size: 1.35rem;
             font-weight: 800;
-            color: var(--navy-brand);
+            color: var(--dm-navy);
             letter-spacing: -0.02em;
             margin-bottom: 4px;
         }
 
         .cover-subtitle {
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             color: var(--text-light);
             margin-bottom: 22px;
         }
 
         .cover-recipient-meta {
             padding: 14px 16px;
-            background: var(--line-subtle);
-            border-radius: 10px;
+            background: var(--dm-blue-surface);
+            border: 1px solid var(--dm-blue-border);
+            border-radius: 12px;
             text-align: left;
             margin-bottom: 22px;
         }
 
         .cover-recipient-meta small {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--text-light);
-            font-weight: 600;
+            color: var(--dm-blue-accent);
+            font-weight: 700;
         }
 
         .cover-recipient-meta strong {
             display: block;
-            font-size: 0.98rem;
-            font-weight: 700;
-            color: var(--text-main);
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--dm-navy);
             margin-top: 2px;
         }
 
         .cover-recipient-meta span {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-secondary);
         }
 
@@ -151,22 +197,22 @@
         .passcode-input {
             width: 170px;
             font-family: var(--font-family);
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.45rem;
+            font-weight: 800;
             letter-spacing: 0.35em;
             text-align: center;
-            padding: 10px 12px;
-            border: 2px solid var(--line-color);
-            border-radius: 8px;
+            padding: 10px 14px;
+            border: 2px solid var(--dm-blue-border);
+            border-radius: 10px;
             outline: none;
             transition: all 0.2s ease;
             background: #ffffff;
-            color: var(--navy-brand);
+            color: var(--dm-navy);
         }
 
         .passcode-input:focus {
-            border-color: var(--navy-brand);
-            box-shadow: 0 0 0 3px rgba(15, 43, 92, 0.15);
+            border-color: var(--dm-navy);
+            box-shadow: 0 0 0 3px rgba(29, 37, 71, 0.15);
         }
 
         .passcode-error {
@@ -174,16 +220,16 @@
             color: #ef4444;
             font-size: 0.76rem;
             font-weight: 600;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .cover-open-btn {
             width: 100%;
-            background: var(--navy-brand);
+            background: var(--dm-navy);
             color: #ffffff;
             border: none;
             border-radius: 10px;
-            padding: 12px 18px;
+            padding: 13px 18px;
             font-family: var(--font-family);
             font-size: 0.88rem;
             font-weight: 700;
@@ -196,924 +242,1247 @@
         }
 
         .cover-open-btn:hover {
-            background: var(--navy-dark);
-            box-shadow: 0 4px 14px rgba(15, 43, 92, 0.3);
+            background: var(--dm-navy-dark);
+            box-shadow: 0 4px 14px rgba(20, 26, 51, 0.3);
+            transform: translateY(-1px);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
 
         /* ----------------------------------------------------
            TOP ACTION TOOLBAR
         ---------------------------------------------------- */
-        .action-bar-wrap {
-            max-width: 860px;
-            margin: 0 auto 20px auto;
+        .top-action-bar {
             width: 100%;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--dm-blue-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        .action-bar {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--line-color);
-            border-radius: 12px;
-            padding: 12px 18px;
+        .bar-inner {
+            max-width: 860px;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
             gap: 12px;
             flex-wrap: wrap;
         }
 
-        .action-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--navy-brand);
+        .bar-left {
             display: flex;
             align-items: center;
+            gap: 10px;
+        }
+
+        .dm-pill-badge {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
-        }
-
-        .batch-badge {
-            font-size: 0.7rem;
-            font-weight: 700;
-            background: var(--gold-light);
-            color: var(--gold-accent);
-            border: 1px solid var(--gold-border);
-            padding: 2px 8px;
+            background: var(--dm-navy);
+            color: #ffffff;
+            padding: 6px 14px;
             border-radius: 999px;
-            text-transform: uppercase;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
         }
 
-        .btn-group {
+        .dm-pill-badge img {
+            height: 16px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .bar-actions {
             display: flex;
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
         }
 
-        .btn {
+        .btn-action {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-family: var(--font-family);
+            height: 38px;
+            padding: 0 14px;
             font-size: 0.8rem;
             font-weight: 600;
+            font-family: var(--font-family);
+            border-radius: 8px;
+            border: 1px solid var(--dm-blue-border);
+            background: #ffffff;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
-            border: 1px solid transparent;
+            white-space: nowrap;
         }
 
-        .btn-secondary {
-            background: #ffffff;
-            color: var(--text-secondary);
-            border-color: var(--line-color);
+        .btn-action:hover {
+            border-color: var(--dm-navy-light);
+            background: var(--dm-blue-surface);
+            color: var(--dm-navy);
         }
 
-        .btn-secondary:hover {
-            background: var(--line-subtle);
-            color: var(--text-main);
-        }
-
-        .btn-primary {
-            background: var(--navy-brand);
+        .btn-action.btn-primary {
+            background: var(--dm-navy);
+            border-color: var(--dm-navy);
             color: #ffffff;
         }
 
-        .btn-primary:hover {
-            background: var(--navy-dark);
-        }
-
-        .btn-png {
-            background: #ffffff;
-            color: var(--navy-brand);
-            border-color: #cbd5e1;
-        }
-
-        .btn-png:hover {
-            background: #f1f5f9;
+        .btn-action.btn-primary:hover {
+            background: var(--dm-navy-dark);
+            box-shadow: 0 4px 12px rgba(29, 37, 71, 0.25);
         }
 
         /* ----------------------------------------------------
-           MAIN INVOICE CONTAINER & PAPER SHEET
+           MAIN DOCUMENT CANVAS & PAPER SHEET
         ---------------------------------------------------- */
-        .invoice-sheet-container {
+        .document-wrapper {
             max-width: 860px;
-            margin: 0 auto;
             width: 100%;
+            margin: 24px auto 0;
+            padding: 0 16px;
         }
 
         .invoice-sheet {
             background: #ffffff;
-            border: 1px solid var(--line-color);
-            border-radius: 16px;
+            border: 1px solid var(--dm-blue-border);
+            border-radius: 18px;
             padding: 44px 48px;
-            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
+            box-shadow: var(--shadow-card);
             position: relative;
+            overflow: hidden;
         }
 
-        .header-section {
+        /* Signature Dreammecca Blue Gradient Top Stripe */
+        .invoice-sheet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1d2547 0%, #2a3563 50%, #c49a45 100%);
+        }
+
+        /* ----------------------------------------------------
+           HEADER BRANDING SECTION
+        ---------------------------------------------------- */
+        .doc-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             padding-bottom: 26px;
-            border-bottom: 2px solid var(--navy-brand);
-            gap: 20px;
+            border-bottom: 1.5px solid var(--dm-blue-border);
+            gap: 24px;
         }
 
-        .company-name {
-            font-size: 1.6rem;
+        .brand-unit {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .brand-logo-frame {
+            height: 54px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-legal-name {
+            font-size: 1.25rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            color: var(--navy-brand);
+            letter-spacing: -0.01em;
+            color: var(--dm-navy);
+            line-height: 1.2;
         }
 
         .company-subtitle {
-            font-size: 0.84rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             font-weight: 600;
-            margin-top: 2px;
-        }
-
-        .company-legal {
-            font-size: 0.74rem;
-            color: var(--text-light);
             margin-top: 3px;
         }
 
-        .header-meta-right {
-            text-align: right;
-        }
-
-        .invoice-main-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-            line-height: 1;
-            letter-spacing: -0.02em;
-        }
-
-        .invoice-meta-number {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
+        .company-meta-tags {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             margin-top: 6px;
-        }
-
-        .invoice-meta-date {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 2px;
-        }
-
-        /* Client & Program Layout */
-        .client-program-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--line-color);
-        }
-
-        .section-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-light);
-            margin-bottom: 6px;
-        }
-
-        .client-name, .program-name {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text-main);
-        }
-
-        .client-desc, .program-desc {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-top: 3px;
-        }
-
-        /* Summary Badges Bar */
-        .itinerary-summary-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            padding: 14px 16px;
-            background: var(--line-subtle);
-            border-radius: 10px;
-            margin: 22px 0 26px 0;
-            border: 1px solid var(--line-color);
-        }
-
-        .summary-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .summary-icon {
-            color: var(--navy-brand);
-            flex-shrink: 0;
-        }
-
-        .summary-item strong {
-            color: var(--text-main);
-        }
-
-        /* Table */
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 24px;
-        }
-
-        .invoice-table th {
-            text-align: left;
-            padding: 10px 14px;
-            font-size: 0.76rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-light);
-            border-top: 1px solid var(--line-color);
-            border-bottom: 2px solid var(--navy-brand);
-            background: var(--line-subtle);
-        }
-
-        .invoice-table th.th-right {
-            text-align: right;
-            width: 170px;
-        }
-
-        .item-row td {
-            padding: 22px 14px;
-            vertical-align: top;
-            border-bottom: 1px solid var(--line-color);
-        }
-
-        .service-heading {
-            font-size: 1.02rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-            margin-bottom: 4px;
-        }
-
-        .service-text {
-            font-size: 0.84rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-            margin-bottom: 20px;
-        }
-
-        /* ----------------------------------------------------
-           MANIFEST LIST GROUPED BY HOTEL (CLEAN EDITORIAL)
-        ---------------------------------------------------- */
-        .manifest-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 10px;
-        }
-
-        .manifest-group-card {
-            background: #ffffff;
-            border: 1px solid var(--line-color);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .manifest-group-header {
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--line-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .manifest-hotel-name {
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-            letter-spacing: 0.02em;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .manifest-hotel-name svg {
-            color: var(--gold-accent);
-        }
-
-        .manifest-count-pill {
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 999px;
-            background: var(--gold-light);
-            color: var(--gold-accent);
-            border: 1px solid var(--gold-border);
-        }
-
-        .manifest-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            padding: 10px 14px;
-            column-gap: 20px;
-            row-gap: 6px;
-        }
-
-        .manifest-item {
-            font-size: 0.8rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            line-height: 1.4;
-        }
-
-        .manifest-idx {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            font-family: 'Space Mono', monospace;
-            width: 20px;
-            flex-shrink: 0;
-        }
-
-        .manifest-name-bold {
-            font-weight: 600;
-            color: var(--text-main);
-            letter-spacing: -0.01em;
-        }
-
-        .item-subtotal-cell {
-            text-align: right;
-            padding: 22px 14px;
-            vertical-align: top;
-            border-bottom: 1px solid var(--line-color);
-        }
-
-        .item-amount {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-            letter-spacing: -0.02em;
-        }
-
-        .item-calc-detail {
-            font-size: 0.78rem;
-            color: var(--text-light);
-            margin-top: 4px;
-            font-weight: 600;
-        }
-
-        /* Totals Rows */
-        .subtotal-calc-row td {
-            padding: 10px 14px;
-            font-size: 0.88rem;
-            border-bottom: 1px solid var(--line-color);
-        }
-
-        .total-highlight-row td {
-            padding: 14px 14px;
-            border-bottom: 2px solid var(--navy-brand);
-        }
-
-        .total-title {
-            text-align: right;
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-        }
-
-        .total-figure {
-            text-align: right;
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-            letter-spacing: -0.02em;
-        }
-
-        .terbilang-text {
-            background: var(--gold-light);
-            border: 1px dashed var(--gold-border);
-            border-radius: 8px;
-            padding: 10px 16px;
-            font-size: 0.82rem;
-            color: #78350f;
-            text-align: center;
-            font-weight: 600;
-            font-style: italic;
-            margin-bottom: 28px;
-        }
-
-        /* ----------------------------------------------------
-           PAYMENT & ISSUER SECTION (MANDIRI AT THE VERY BOTTOM)
-        ---------------------------------------------------- */
-        .bottom-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            padding-top: 20px;
-            border-top: 1px solid var(--line-color);
-            margin-bottom: 20px;
-        }
-
-        .bottom-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-
-        .payment-card-box {
-            background: #f8fafc;
-            border: 1px solid var(--line-color);
-            border-radius: 12px;
-            padding: 16px 18px;
-        }
-
-        .bank-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .bank-name-text {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--navy-brand);
-        }
-
-        .bank-details {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .bank-acc-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             flex-wrap: wrap;
         }
 
-        .acc-number-text {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.25rem;
+        .meta-pill-tag {
+            font-size: 0.7rem;
             font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: 0.04em;
-        }
-
-        .copy-link-btn {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            padding: 4px 10px;
+            background: var(--dm-blue-surface);
+            color: var(--dm-blue-accent);
+            border: 1px solid var(--dm-blue-border);
+            padding: 2px 8px;
             border-radius: 6px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: var(--navy-brand);
-            cursor: pointer;
-            transition: all 0.15s ease;
+            letter-spacing: 0.02em;
         }
 
-        .copy-link-btn:hover {
-            background: var(--navy-brand);
-            color: #ffffff;
-            border-color: var(--navy-brand);
+        .meta-pill-kemenag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-light);
         }
 
-        .issuer-name-text {
-            font-size: 1rem;
+        .invoice-title-block {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        .invoice-main-heading {
+            font-size: 1.85rem;
             font-weight: 800;
-            color: var(--text-main);
+            letter-spacing: -0.03em;
+            color: var(--dm-navy);
+            line-height: 1;
         }
 
-        .issuer-desc-text {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin: 4px 0 8px 0;
-            line-height: 1.45;
-        }
-
-        .issuer-wa-link {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--navy-brand);
-            text-decoration: none;
+        .invoice-meta-badge {
+            margin-top: 8px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            background: var(--dm-blue-surface);
+            border: 1px solid var(--dm-blue-border);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--dm-navy);
         }
 
-        .issuer-wa-link:hover {
-            text-decoration: underline;
-        }
-
-        .footer-note {
-            font-size: 0.75rem;
+        .invoice-date-row {
+            margin-top: 6px;
+            font-size: 0.78rem;
             color: var(--text-light);
             line-height: 1.5;
-            padding-top: 14px;
-            border-top: 1px solid var(--line-color);
         }
 
-        /* Toast Component */
-        .toast {
+        .invoice-date-row strong {
+            color: var(--text-main);
+        }
+
+        .due-date-text {
+            color: var(--dm-navy);
+            font-weight: 700;
+        }
+
+        /* ----------------------------------------------------
+           PARTICIPANT / METADATA SECTION
+        ---------------------------------------------------- */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--dm-blue-border);
+        }
+
+        .party-card-box {
+            background: var(--dm-blue-surface);
+            border: 1px solid var(--dm-blue-border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .party-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--dm-blue-accent);
+            margin-bottom: 6px;
+        }
+
+        .party-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--dm-navy);
+            margin-bottom: 2px;
+        }
+
+        .party-desc {
+            font-size: 0.81rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .party-tag-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            padding: 3px 9px;
+            border-radius: 6px;
+            background: #ffffff;
+            border: 1px solid var(--dm-blue-border);
+            color: var(--dm-navy);
+            font-size: 0.72rem;
+            font-weight: 700;
+            width: fit-content;
+        }
+
+        /* ----------------------------------------------------
+           HIGHLIGHT SUMMARY STATS BAR
+        ---------------------------------------------------- */
+        .stats-summary-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 22px 0 24px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border: 1px solid var(--dm-blue-border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .stat-icon-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--dm-blue-surface);
+            border: 1px solid var(--dm-blue-border);
+            color: var(--dm-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-icon-wrap svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .stat-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+        }
+
+        .stat-value {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--dm-navy);
+        }
+
+        /* ----------------------------------------------------
+           SERVICE & MANIFEST SECTION
+        ---------------------------------------------------- */
+        .service-container {
+            border: 1px solid var(--dm-blue-border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .service-header-banner {
+            background: var(--dm-blue-surface);
+            border-bottom: 1px solid var(--dm-blue-border);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .service-title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-main-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--dm-navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-sub-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .service-rate-badge {
+            background: var(--dm-navy);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .manifest-wrapper {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #ffffff;
+        }
+
+        /* Hotel Cards */
+        .hotel-bento-card {
+            border: 1px solid var(--dm-blue-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .hotel-bento-card:hover {
+            box-shadow: 0 4px 16px rgba(29, 37, 71, 0.06);
+            border-color: var(--dm-navy-light);
+        }
+
+        .hotel-card-header {
+            background: linear-gradient(145deg, #ffffff 0%, var(--dm-blue-surface) 100%);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--dm-blue-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hotel-name-block {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--dm-navy);
+            letter-spacing: -0.01em;
+        }
+
+        .hotel-name-block svg {
+            color: var(--dm-blue-accent);
+        }
+
+        .hotel-stars {
+            color: var(--gold-accent);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+        }
+
+        .hotel-pax-count {
+            background: var(--dm-navy);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+        }
+
+        .manifest-names-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 14px 16px;
+            gap: 10px 24px;
+            background: #ffffff;
+        }
+
+        .pax-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.83rem;
+            color: var(--text-main);
+            padding: 2px 0;
+        }
+
+        .pax-num-pill {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: var(--dm-blue-surface);
+            color: var(--dm-blue-accent);
+            border: 1px solid var(--dm-blue-border);
+            padding: 1px 6px;
+            border-radius: 4px;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .pax-name {
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        /* ----------------------------------------------------
+           TOTALS & CALCULATION SECTION
+        ---------------------------------------------------- */
+        .bottom-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 28px;
+            margin-top: 10px;
+            padding-bottom: 24px;
+            border-bottom: 1.5px solid var(--dm-blue-border);
+        }
+
+        .issuer-info-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .issuer-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+        }
+
+        .issuer-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--dm-navy);
+        }
+
+        .issuer-role {
+            font-size: 0.81rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .issuer-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--dm-navy);
+            text-decoration: none;
+            background: var(--dm-blue-surface);
+            border: 1px solid var(--dm-blue-border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            width: fit-content;
+            margin-top: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .issuer-wa-btn:hover {
+            background: var(--dm-blue-surface-hover);
+            border-color: var(--dm-navy-light);
+        }
+
+        .totals-block {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            padding: 3px 0;
+        }
+
+        .summary-row strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .grand-total-banner {
+            background: var(--dm-navy);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            box-shadow: 0 4px 16px rgba(29, 37, 71, 0.2);
+        }
+
+        .grand-total-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .grand-total-figure {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .terbilang-box {
+            background: var(--dm-blue-surface);
+            border: 1px dashed var(--dm-blue-border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            color: var(--dm-navy);
+            font-style: italic;
+            font-weight: 600;
+            text-align: right;
+            margin-top: 8px;
+        }
+
+        /* ----------------------------------------------------
+           BANK MANDIRI PAYMENT SECTION (AT THE BOTTOM / TERAKHIR)
+        ---------------------------------------------------- */
+        .bottom-payment-section {
+            margin-top: 28px;
+        }
+
+        .mandiri-payment-card {
+            background: linear-gradient(145deg, #ffffff 0%, var(--dm-blue-surface) 100%);
+            border: 1.5px solid var(--dm-blue-border);
+            border-radius: 14px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 4px 16px rgba(29, 37, 71, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mandiri-payment-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--dm-navy);
+        }
+
+        .mandiri-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mandiri-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mandiri-logo-img {
+            height: 24px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .mandiri-official-pill {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--dm-blue-surface);
+            border: 1px solid var(--dm-blue-border);
+            color: var(--dm-navy);
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .mandiri-account-number {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: var(--dm-navy);
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .mandiri-account-number:hover {
+            color: var(--gold-accent);
+        }
+
+        .mandiri-account-name {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .mandiri-actions-right {
+            flex-shrink: 0;
+        }
+
+        .btn-copy-account {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 42px;
+            padding: 0 18px;
+            background: var(--dm-navy);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            font-family: var(--font-family);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(29, 37, 71, 0.2);
+        }
+
+        .btn-copy-account:hover {
+            background: var(--dm-navy-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-copy-account.copied {
+            background: #15803d;
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
+        }
+
+        /* ----------------------------------------------------
+           TERMS & CONDITIONS FOOTER
+        ---------------------------------------------------- */
+        .document-footer-terms {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid var(--dm-blue-border);
+            font-size: 0.76rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .document-footer-terms strong {
+            color: var(--text-secondary);
+        }
+
+        /* ----------------------------------------------------
+           TOAST NOTIFICATION
+        ---------------------------------------------------- */
+        .toast-popup {
             position: fixed;
             bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(30px);
-            background: var(--navy-brand);
+            background: var(--dm-navy);
             color: #ffffff;
             padding: 10px 20px;
             border-radius: 999px;
             font-size: 0.82rem;
             font-weight: 600;
-            box-shadow: 0 8px 24px rgba(15, 43, 92, 0.25);
+            box-shadow: 0 8px 24px rgba(20, 26, 51, 0.25);
             pointer-events: none;
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .toast.show {
+        .toast-popup.visible {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
 
         /* ----------------------------------------------------
-           RESPONSIVE MOBILE
+           PRINT STYLES (A4 CLEAN PAPER FORMAT)
         ---------------------------------------------------- */
-        @media (max-width: 680px) {
-            .invoice-sheet {
-                padding: 26px 18px;
-            }
-
-            .header-section {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-
-            .header-meta-right {
-                text-align: left;
-            }
-
-            .client-program-section {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .manifest-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .bottom-section {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .action-bar {
-                justify-content: center;
-            }
-
-            .btn-group {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .btn {
-                flex: 1 1 45%;
-                justify-content: center;
-            }
-        }
-
-        /* Print A4 */
         @media print {
+            .top-action-bar, .cover-overlay, .toast-popup {
+                display: none !important;
+            }
+
             body {
                 background: #ffffff !important;
                 padding: 0 !important;
             }
 
-            .cover-overlay, .action-bar-wrap, .toast {
-                display: none !important;
-            }
-
-            .invoice-sheet-container {
+            .document-wrapper {
                 max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
 
             .invoice-sheet {
                 border: none !important;
                 box-shadow: none !important;
-                padding: 10px 16px !important;
+                padding: 16px 20px !important;
+                border-radius: 0 !important;
             }
 
-            .copy-link-btn {
-                display: none !important;
+            .mandiri-payment-card, .hotel-bento-card {
+                break-inside: avoid;
+            }
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE MOBILE BREAKPOINTS (< 680px)
+        ---------------------------------------------------- */
+        @media (max-width: 680px) {
+            .invoice-sheet {
+                padding: 26px 20px;
+                border-radius: 12px;
+            }
+
+            .doc-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .brand-unit {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .invoice-title-block {
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .parties-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 18px 0;
+            }
+
+            .stats-summary-bar {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin: 16px 0 20px;
+            }
+
+            .manifest-names-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .bottom-summary-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .mandiri-payment-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .btn-copy-account {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- SECURITY ACCESS MODAL SCREEN -->
+    <!-- SECURITY PASSCODE GATE OVERLAY -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card">
-            <div class="cover-brand-eyebrow">DOKUMEN RESMI</div>
-            <h1 class="cover-title">Invoice Layanan Umrahme</h1>
-            <div class="cover-subtitle">Pendamping Digital Jamaah Umrah &bull; Batch Oktober 2026 (21 Jamaah)</div>
+            
+            <div class="cover-logo-frame">
+                <img src="logo_dreammecca_blue.png" alt="Dreammecca Logo" class="cover-logo-img">
+            </div>
+
+            <div class="cover-brand-eyebrow">Dokumen Tagihan Resmi</div>
+            <h1 class="cover-title">Invoice Terproteksi</h1>
+            <p class="cover-subtitle">Layanan Sistem Digital Umrahme &middot; Batch Oktober 2026</p>
 
             <div class="cover-recipient-meta">
                 <small>Ditujukan Kepada</small>
                 <strong>M. Hilmy Hafizh</strong>
-                <span>Direktur PT Dream Mecca Internasional</span>
+                <span>PT Dream Mecca Internasional &middot; 21 Pax Jamaah</span>
             </div>
 
             <div class="passcode-wrapper">
-                <div class="passcode-label">Masukkan PIN Akses Dokumen:</div>
-                <input type="password" id="passcodeInput" autocomplete="off" class="passcode-input" maxlength="6" placeholder="••••">
-                <div id="passcodeError" class="passcode-error">Kode PIN salah, silakan coba lagi.</div>
+                <div class="passcode-label">Masukkan Kode PIN Akses :</div>
+                <input type="password" id="passcodeInput" class="passcode-input" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
+                <div class="passcode-error" id="passcodeError">Kode PIN tidak valid. Coba lagi.</div>
             </div>
 
-            <button class="cover-open-btn" onclick="verifyPasscode()">
-                <span>Buka Dokumen Invoice</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <button type="button" class="cover-open-btn" onclick="verifyPasscode()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Buka Dokumen Invoice
             </button>
         </div>
     </div>
 
-    <!-- TOP WEB CONTROLS BAR -->
-    <div class="action-bar-wrap">
-        <div class="action-bar">
-            <div class="action-title">
-                INVOICE #INV/DU/2026/10/003
-                <span class="batch-badge">Batch Oktober 2026</span>
+    <!-- TOP STICKY TOOLBAR -->
+    <header class="top-action-bar">
+        <div class="bar-inner">
+            <div class="bar-left">
+                <span class="dm-pill-badge">
+                    <img src="logo_dreammecca_blue.png" alt="Dreammecca">
+                    Dreammecca &bull; Batch Oktober
+                </span>
             </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary" onclick="copyWaScriptLocal()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <div class="bar-actions">
+                <button type="button" class="btn-action" onclick="copyWaScriptLocal()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                     Salin Script WA
                 </button>
-                <button type="button" class="btn btn-secondary" onclick="copyInvoiceLink()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <button type="button" class="btn-action" onclick="copyInvoiceLink()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     Salin Link
                 </button>
-                <button type="button" class="btn btn-png" id="btnDownloadPNG" onclick="downloadInvoicePNG()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Unduh PNG
+                <button type="button" class="btn-action" onclick="window.print()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Cetak PDF
                 </button>
-                <button type="button" class="btn btn-primary" onclick="window.print()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                    Cetak A4 / PDF
+                <button type="button" class="btn-action btn-primary" id="btnDownloadPNG" onclick="downloadInvoicePNG()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Unduh PNG
                 </button>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- MAIN INVOICE SHEET -->
-    <div class="invoice-sheet-container">
+    <!-- INVOICE SHEET -->
+    <main class="document-wrapper">
         <div class="invoice-sheet" id="invoiceSheet">
             
-            <!-- Header Section -->
-            <div class="header-section">
-                <div>
-                    <h1 class="company-name">DREAMMECCA</h1>
-                    <div class="company-subtitle">Layanan Umrahme (Pendamping Digital Jamaah Umrah) &bull; PT Dream Mecca Internasional</div>
-                    <div class="company-legal">SK Kemenag RI: 16112301081560002</div>
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="brand-unit">
+                    <div class="brand-logo-frame">
+                        <img src="logo_dreammecca_blue.png" alt="Dreammecca Tour &amp; Travel" class="brand-logo-img">
+                    </div>
+                    <div class="brand-details">
+                        <h1 class="company-legal-name">PT DREAM MECCA INTERNASIONAL</h1>
+                        <span class="company-subtitle">Layanan Umrahme (Pendamping Digital Jamaah Umrah)</span>
+                        <div class="company-meta-tags">
+                            <span class="meta-pill-tag">PPIU Terakreditasi</span>
+                            <span class="meta-pill-kemenag">SK Kemenag RI: 16112301081560002</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="header-meta-right">
-                    <div class="invoice-main-title">INVOICE</div>
-                    <div class="invoice-meta-number">#INV/DU/2026/10/003</div>
-                    <div class="invoice-meta-date">Tanggal Terbit: 01 Oktober 2026</div>
-                    <div class="invoice-meta-date" style="color: var(--navy-brand); font-weight: 600;">Jatuh Tempo: 15 Oktober 2026</div>
+                <div class="invoice-title-block">
+                    <div class="invoice-main-heading">INVOICE</div>
+                    <div class="invoice-meta-badge">#INV/DU/2026/10/003</div>
+                    <div class="invoice-date-row">
+                        Tanggal: <strong>01 Oktober 2026</strong><br>
+                        Jatuh Tempo: <span class="due-date-text">15 Oktober 2026</span>
+                    </div>
                 </div>
-            </div>
+            </header>
 
-            <!-- Client & Program Section -->
-            <div class="client-program-section">
-                <div class="client-col">
-                    <div class="section-label">Ditujukan Kepada</div>
-                    <div class="client-name">M. Hilmy Hafizh</div>
-                    <div class="client-desc">
+            <!-- PARTIES INFO -->
+            <section class="parties-grid">
+                <div class="party-card-box">
+                    <div class="party-label">Tagihan Ditujukan Kepada :</div>
+                    <div class="party-title">M. Hilmy Hafizh</div>
+                    <div class="party-desc">
                         Direktur PT Dream Mecca Internasional<br>
-                        Dreammecca Tour &amp; Travel (Umrahme)
+                        Dreammecca Tour &amp; Travel &middot; Jakarta Selatan
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Klien Resmi Terverifikasi
                     </div>
                 </div>
 
-                <div class="program-col">
-                    <div class="section-label">Program &amp; Keberangkatan</div>
-                    <div class="program-name">Umroh Batch Oktober 2026</div>
-                    <div class="program-desc">
-                        Total Peserta: 21 Jamaah Terkonfirmasi<br>
-                        Alokasi: Pullman Zamzam, Taiba Front, &amp; Al Ansr
+                <div class="party-card-box">
+                    <div class="party-label">Diterbitkan Oleh :</div>
+                    <div class="party-title">Daru Fahmaa Muliawan</div>
+                    <div class="party-desc">
+                        Web &amp; Digital Specialist &middot; TemanTiket<br>
+                        Email: darufahmaamuliawan@gmail.com
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Digital Systems Developer
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Summary Bar -->
-            <div class="itinerary-summary-bar">
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Total Jamaah: <strong>21 Pax Confirmed</strong></span>
+            <!-- STATS SUMMARY BAR -->
+            <section class="stats-summary-bar">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Total Jamaah</span>
+                        <span class="stat-value">21 Pax Confirmed</span>
+                    </div>
                 </div>
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/></svg>
-                    <span>Distribusi: <strong>3 Paket Akomodasi Hotel</strong></span>
-                </div>
-                <div class="summary-item">
-                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    <span>Layanan: <strong>Sistem Digital &amp; Buku Saku Jamaah</strong></span>
-                </div>
-            </div>
 
-            <!-- Table: Service & 21 Pax Manifest -->
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th>Deskripsi Layanan</th>
-                        <th class="th-right">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="item-row">
-                        <td>
-                            <div class="service-heading">Layanan Umrahme (Pendamping Digital Jamaah Umrah)</div>
-                            <div class="service-text">
-                                Penyusunan dan aktivasi sistem pendamping digital jamaah umrah (Umrahme), buku saku digital interaktif, panduan ibadah/ziarah &amp; manasik, informasi akomodasi/penerbangan, serta layout manifest 21 jamaah terkonfirmasi Batch Oktober 2026.
+                <div class="stat-card">
+                    <div class="stat-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Alokasi Akomodasi</span>
+                        <span class="stat-value">3 Hotel Bintang</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Program &amp; Periode</span>
+                        <span class="stat-value">Batch Oktober 2026</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SERVICE & MANIFEST BENTO -->
+            <section class="service-container">
+                <div class="service-header-banner">
+                    <div class="service-title-group">
+                        <div class="service-main-name">
+                            Layanan Umrahme (Pendamping Digital Jamaah Umrah)
+                        </div>
+                        <div class="service-sub-desc">
+                            Sistem buku saku digital interaktif, panduan ibadah/manasik, itinerary dinamis, serta layout manifest 21 jamaah.
+                        </div>
+                    </div>
+                    <div class="service-rate-badge">
+                        21 Pax &times; Rp 35.000
+                    </div>
+                </div>
+
+                <div class="manifest-wrapper">
+                    
+                    <!-- HOTEL GROUP 1: PULLMAN - ANSR GOLDEN TULIP (11 Pax) -->
+                    <div class="hotel-bento-card">
+                        <div class="hotel-card-header">
+                            <div class="hotel-name-block">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                                <span>PULLMAN &mdash; ANSR GOLDEN TULIP</span>
+                                <span class="hotel-stars">★★★★★</span>
                             </div>
+                            <span class="hotel-pax-count">11 Jamaah</span>
+                        </div>
+                        <div class="manifest-names-grid">
+                            <div class="pax-item"><span class="pax-num-pill">01</span><span class="pax-name">FITRIA SAID MAHDI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">02</span><span class="pax-name">ZAIRION ADISAR</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">03</span><span class="pax-name">WINARTI ENCAP SABANI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">04</span><span class="pax-name">MARCEL ADRIANUS WIDWIYANTO</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">05</span><span class="pax-name">HARYUDIANTO SOMAD</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">06</span><span class="pax-name">SOSI INDRIATI SOEROSO</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">07</span><span class="pax-name">BALLI PRIHATINI DEWI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">08</span><span class="pax-name">MUNI HERLIANI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">09</span><span class="pax-name">YUNANI WONGSO DIHARJO</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">10</span><span class="pax-name">TRI WARNIASIH</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">11</span><span class="pax-name">FITRIANI RUSTAMA</span></div>
+                        </div>
+                    </div>
 
-                            <!-- 21 Named Manifest Grouped by Hotel -->
-                            <div class="manifest-container">
-                                
-                                <!-- GROUP 1: PULLMAN - ANSR GOLDEN TULIP (11 Pax) -->
-                                <div class="manifest-group-card">
-                                    <div class="manifest-group-header">
-                                        <div class="manifest-hotel-name">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
-                                            PULLMAN &mdash; ANSR GOLDEN TULIP
-                                        </div>
-                                        <span class="manifest-count-pill">11 Jamaah</span>
-                                    </div>
-                                    <div class="manifest-grid">
-                                        <div class="manifest-item"><span class="manifest-idx">01.</span><span class="manifest-name-bold">FITRIA SAID MAHDI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">02.</span><span class="manifest-name-bold">ZAIRION ADISAR</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">03.</span><span class="manifest-name-bold">WINARTI ENCAP SABANI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">04.</span><span class="manifest-name-bold">MARCEL ADRIANUS WIDWIYANTO</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">05.</span><span class="manifest-name-bold">HARYUDIANTO SOMAD</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">06.</span><span class="manifest-name-bold">SOSI INDRIATI SOEROSO</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">07.</span><span class="manifest-name-bold">BALLI PRIHATINI DEWI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">08.</span><span class="manifest-name-bold">MUNI HERLIANI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">09.</span><span class="manifest-name-bold">YUNANI WONGSO DIHARJO</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">10.</span><span class="manifest-name-bold">TRI WARNIASIH</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">11.</span><span class="manifest-name-bold">FITRIANI RUSTAMA</span></div>
-                                    </div>
-                                </div>
-
-                                <!-- GROUP 2: PULLMAN - TAIBA (4 Pax) -->
-                                <div class="manifest-group-card">
-                                    <div class="manifest-group-header">
-                                        <div class="manifest-hotel-name">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
-                                            PULLMAN &mdash; TAIBA
-                                        </div>
-                                        <span class="manifest-count-pill">4 Jamaah</span>
-                                    </div>
-                                    <div class="manifest-grid">
-                                        <div class="manifest-item"><span class="manifest-idx">12.</span><span class="manifest-name-bold">MUHAMAD ARIFIN</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">13.</span><span class="manifest-name-bold">MUHAMMAD ZOUFL FIRDAUS</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">14.</span><span class="manifest-name-bold">PUJI TETRA ASTUTI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">15.</span><span class="manifest-name-bold">FAIRUZ MAWLI DYAN</span></div>
-                                    </div>
-                                </div>
-
-                                <!-- GROUP 3: SOFWAH - AL ANSR (6 Pax) -->
-                                <div class="manifest-group-card">
-                                    <div class="manifest-group-header">
-                                        <div class="manifest-hotel-name">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
-                                            SOFWAH &mdash; AL ANSR
-                                        </div>
-                                        <span class="manifest-count-pill">6 Jamaah</span>
-                                    </div>
-                                    <div class="manifest-grid">
-                                        <div class="manifest-item"><span class="manifest-idx">16.</span><span class="manifest-name-bold">NINA WAHYUNINGSIH</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">17.</span><span class="manifest-name-bold">TITIEN SOEHERMAN OKKY</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">18.</span><span class="manifest-name-bold">ADINDA AMALIA SHALEHA</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">19.</span><span class="manifest-name-bold">ABDUL MALIK YOGA FATHORI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">20.</span><span class="manifest-name-bold">KHADIJAH AKHITA NAOMI</span></div>
-                                        <div class="manifest-item"><span class="manifest-idx">21.</span><span class="manifest-name-bold">RALINKA HUMAIRA MALIK</span></div>
-                                    </div>
-                                </div>
-
+                    <!-- HOTEL GROUP 2: PULLMAN - TAIBA (4 Pax) -->
+                    <div class="hotel-bento-card">
+                        <div class="hotel-card-header">
+                            <div class="hotel-name-block">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                                <span>PULLMAN &mdash; TAIBA</span>
+                                <span class="hotel-stars">★★★★★</span>
                             </div>
-                        </td>
-                        <td class="item-subtotal-cell">
-                            <div class="item-amount">Rp 735.000</div>
-                            <div class="item-calc-detail">21 pax &times; Rp 35.000</div>
-                        </td>
-                    </tr>
-
-                    <tr class="subtotal-calc-row">
-                        <td style="text-align: right; color: var(--text-light); font-weight: 500;">Subtotal Layanan (21 Pax)</td>
-                        <td style="text-align: right; font-weight: 600; color: var(--text-main);">Rp 735.000</td>
-                    </tr>
-
-                    <tr class="total-highlight-row">
-                        <td class="total-title">Total Pembayaran</td>
-                        <td class="total-figure">Rp 735.000</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="terbilang-text">
-                # Tujuh Ratus Tiga Puluh Lima Ribu Rupiah #
-            </div>
-
-            <!-- Bottom Section: Payments & Issuer (Mandiri at the bottom) -->
-            <div class="bottom-section">
-                
-                <!-- Payment Column -->
-                <div class="payment-col">
-                    <div class="bottom-label">Rekening Pembayaran Resmi</div>
-                    <div class="payment-card-box">
-                        <div class="bank-line">
-                            <img src="mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 18px; width: auto; object-fit: contain;">
-                            <span class="bank-name-text">Bank Mandiri</span>
+                            <span class="hotel-pax-count">4 Jamaah</span>
                         </div>
-                        <div class="bank-details">
-                            Atas Nama: <strong>Daru Fahmaa Muliawan</strong>
-                        </div>
-                        <div class="bank-acc-row">
-                            <span class="acc-number-text">1550010616962</span>
-                            <button type="button" class="copy-link-btn" onclick="copyBankAcc()">Salin Nomor Rekening</button>
+                        <div class="manifest-names-grid">
+                            <div class="pax-item"><span class="pax-num-pill">12</span><span class="pax-name">MUHAMAD ARIFIN</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">13</span><span class="pax-name">MUHAMMAD ZOUFL FIRDAUS</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">14</span><span class="pax-name">PUJI TETRA ASTUTI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">15</span><span class="pax-name">FAIRUZ MAWLI DYAN</span></div>
                         </div>
                     </div>
+
+                    <!-- HOTEL GROUP 3: SOFWAH - AL ANSR (6 Pax) -->
+                    <div class="hotel-bento-card">
+                        <div class="hotel-card-header">
+                            <div class="hotel-name-block">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                                <span>SOFWAH &mdash; AL ANSR</span>
+                                <span class="hotel-stars">★★★★</span>
+                            </div>
+                            <span class="hotel-pax-count">6 Jamaah</span>
+                        </div>
+                        <div class="manifest-names-grid">
+                            <div class="pax-item"><span class="pax-num-pill">16</span><span class="pax-name">NINA WAHYUNINGSIH</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">17</span><span class="pax-name">TITIEN SOEHERMAN OKKY</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">18</span><span class="pax-name">ADINDA AMALIA SHALEHA</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">19</span><span class="pax-name">ABDUL MALIK YOGA FATHORI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">20</span><span class="pax-name">KHADIJAH AKHITA NAOMI</span></div>
+                            <div class="pax-item"><span class="pax-num-pill">21</span><span class="pax-name">RALINKA HUMAIRA MALIK</span></div>
+                        </div>
+                    </div>
+
                 </div>
+            </section>
 
-                <!-- Issuer Column -->
-                <div class="issuer-col">
-                    <div class="bottom-label">Penerbit Dokumen</div>
-                    <div class="issuer-name-text">Daru Fahmaa Muliawan</div>
-                    <div class="issuer-desc-text">
-                        Web Developer &amp; Digital Itinerary Designer<br>
-                        TemanTiket &middot; Kota Tangerang, Banten
+            <!-- TOTALS & SUMMARY -->
+            <section class="bottom-summary-grid">
+                <div class="issuer-info-block">
+                    <span class="issuer-label">Hormat Kami / Penerbit Dokumen :</span>
+                    <div class="issuer-name">Daru Fahmaa Muliawan</div>
+                    <div class="issuer-role">
+                        Web &amp; Digital Specialist &middot; TemanTiket<br>
+                        Kota Tangerang, Banten &middot; Indonesia
                     </div>
-                    <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa-link">
+                    <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa-btn">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        WhatsApp: 081311506025
+                        Hubungi WhatsApp (0813-1150-6025)
                     </a>
                 </div>
 
-            </div>
+                <div class="totals-block">
+                    <div class="summary-row">
+                        <span>Subtotal Layanan (21 Pax) :</span>
+                        <strong>Rp 735.000</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tarif Satuan :</span>
+                        <strong>Rp 35.000 / pax</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Pajak / PPN :</span>
+                        <strong>0.00% (Bebas Biaya)</strong>
+                    </div>
 
-            <!-- Footer terms -->
-            <div class="footer-note">
-                Biaya layanan Umrahme (Pendamping Digital Jamaah Umrah) untuk 21 jamaah terkonfirmasi Batch Oktober 2026 sebesar Rp 35.000 / pax. Dokumen digital interaktif dapat langsung diakses melalui tautan resmi. Bukti konfirmasi pembayaran dapat dikirimkan melalui WhatsApp.
-            </div>
+                    <div class="grand-total-banner">
+                        <span class="grand-total-label">TOTAL TAGIHAN</span>
+                        <span class="grand-total-figure">Rp 735.000</span>
+                    </div>
+
+                    <div class="terbilang-box">
+                        # Tujuh Ratus Tiga Puluh Lima Ribu Rupiah #
+                    </div>
+                </div>
+            </section>
+
+            <!-- BANK MANDIRI (DITARUH TERAKHIR / AT THE BOTTOM) -->
+            <section class="bottom-payment-section">
+                <div class="mandiri-payment-card">
+                    <div class="mandiri-info-left">
+                        <div class="mandiri-header-row">
+                            <img src="mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-logo-img">
+                            <span class="mandiri-official-pill">Rekening Resmi Pembayaran</span>
+                        </div>
+                        <div class="mandiri-account-number" onclick="copyBankAcc()" title="Klik untuk menyalin">
+                            <span>1550010616962</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </div>
+                        <div class="mandiri-account-name">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
+                    </div>
+                    <div class="mandiri-actions-right">
+                        <button type="button" class="btn-copy-account" id="btnCopyMandiri" onclick="copyBankAcc()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="btnCopyMandiriText">Salin No. Rekening</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TERMS & CONDITIONS FOOTER -->
+            <footer class="document-footer-terms">
+                <p>
+                    <strong>Ketentuan Layanan &amp; Pembayaran:</strong><br>
+                    1. Pembayaran tagihan dapat ditransfer langsung ke rekening resmi Bank Mandiri di atas: <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan.<br>
+                    2. Biaya mencakup aktivasi sistem Umrahme (Pendamping Digital Jamaah Umrah) untuk 21 jamaah terkonfirmasi Batch Oktober 2026.<br>
+                    3. Setelah transfer berhasil, bukti pembayaran dapat dikonfirmasikan melalui WhatsApp untuk verifikasi status lunas pada sistem.
+                </p>
+            </footer>
 
         </div>
+    </main>
+
+    <!-- TOAST POPUP -->
+    <div class="toast-popup" id="toastBox">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMsg">Teks berhasil disalin!</span>
     </div>
 
-    <!-- Toast Component -->
-    <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
-
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        function lockDocument() {
-            document.getElementById("coverOverlay").classList.remove("opened");
-            document.getElementById("passcodeInput").value = "";
+        function unlockDocument() {
+            const overlay = document.getElementById("coverOverlay");
+            if (overlay) overlay.classList.add("opened");
+            try { sessionStorage.setItem("dreammecca_oktober_unlocked", "true"); } catch(e) {}
         }
 
         function verifyPasscode() {
-            const input = document.getElementById("passcodeInput").value.trim();
+            const input = document.getElementById("passcodeInput");
             const errorEl = document.getElementById("passcodeError");
-            
-            const pinVal = (typeof input === "string" ? input : input.value || "").trim();
-            if (pinVal === "0001" || pinVal === "050900") {
-                document.getElementById("coverOverlay").classList.add("opened");
-                errorEl.style.display = "none";
-                document.getElementById("passcodeInput").value = "";
-                try { sessionStorage.setItem("dreammecca_oktober_unlocked", "true"); } catch(e) {}
+            if (!input) return;
+
+            const val = input.value.trim();
+            if (val === "0001" || val === "050900") {
+                unlockDocument();
+                if (errorEl) errorEl.style.display = "none";
+                showToast("Akses invoice dibuka!");
             } else {
-                errorEl.style.display = "block";
+                if (errorEl) errorEl.style.display = "block";
                 const card = document.querySelector(".cover-card");
-                card.style.animation = "shake 0.35s ease";
-                setTimeout(() => card.style.animation = "", 350);
+                if (card) {
+                    card.style.animation = "shake 0.35s ease";
+                    setTimeout(() => card.style.animation = "", 350);
+                }
             }
         }
 
@@ -1127,64 +1496,70 @@
         document.addEventListener("DOMContentLoaded", () => {
             try {
                 if (sessionStorage.getItem("dreammecca_oktober_unlocked") === "true") {
-                    document.getElementById("coverOverlay").classList.add("opened");
+                    unlockDocument();
                 }
             } catch(e) {}
         });
 
+        function showToast(msg) {
+            const toast = document.getElementById("toastBox");
+            const msgEl = document.getElementById("toastMsg");
+            if (!toast) return;
+            if (msgEl) msgEl.innerText = msg;
+            toast.classList.add("visible");
+            setTimeout(() => {
+                toast.classList.remove("visible");
+            }, 2600);
+        }
+
         function copyBankAcc() {
-            const accNo = "1550010616962";
-            navigator.clipboard.writeText(accNo).then(() => {
-                showToast("Nomor Rekening 1550010616962 (Bank Mandiri) berhasil disalin!");
+            const num = "1550010616962";
+            const btn = document.getElementById("btnCopyMandiri");
+            const btnText = document.getElementById("btnCopyMandiriText");
+
+            navigator.clipboard.writeText(num).then(() => {
+                showToast("Rekening Mandiri (1550010616962) disalin!");
+                if (btnText) btnText.innerText = "✓ Berhasil Disalin";
+                if (btn) btn.classList.add("copied");
+                setTimeout(() => {
+                    if (btnText) btnText.innerText = "Salin No. Rekening";
+                    if (btn) btn.classList.remove("copied");
+                }, 2200);
             }).catch(() => {
-                showToast("Silakan salin manual: 1550010616962");
+                showToast("No. Rekening: 1550010616962");
             });
         }
 
         function copyInvoiceLink() {
             const url = "https://temantiket.com/dreammecca-oktober";
             navigator.clipboard.writeText(url).then(() => {
-                showToast("Link invoice (" + url + ") berhasil disalin!");
+                showToast("Link invoice (" + url + ") disalin!");
             }).catch(() => {
                 showToast("Link: " + url);
             });
         }
 
         function copyWaScriptLocal() {
-            const text = "Halo Mas Hilmy & Tim Dreammecca! 🙏✨\n\n" +
-                         "Berikut kami lampirkan dokumen resmi Invoice untuk Layanan Umrahme (Pendamping Digital Jamaah Umrah) Batch Oktober 2026 (21 Pax Jamaah):\n\n" +
-                         "🔗 Link Invoice Online: https://temantiket.com/dreammecca-oktober\n" +
+            const text = "Assalamu'alaikum Warahmatullahi Wabarakatuh, Mas M. Hilmy Hafizh & Tim Dreammecca. 🙏✨\n\n" +
+                         "Berikut tautan resmi Dokumen Invoice Layanan Umrahme (Pendamping Digital Jamaah Umrah) Batch Oktober 2026 untuk 21 Jamaah Dreammecca Tour & Travel:\n\n" +
+                         "🔗 Invoice Online: https://temantiket.com/dreammecca-oktober\n" +
                          "🔑 Kode PIN Akses: 0001 (atau 050900)\n\n" +
-                         "📋 Rincian Distribusi Hotel & Jamaah:\n" +
-                         "1. PULLMAN - ANSR GOLDEN TULIP (11 Jamaah):\n" +
-                         "   • Fitria Said Mahdi, Zairion Adisar, Winarti Encap Sabani, Marcel Adrianus Widwiyanto\n" +
-                         "   • Haryudianto Somad, Sosi Indriati Soeroso, Balli Prihatini Dewi, Muni Herliani\n" +
-                         "   • Yunani Wongso Diharjo, Tri Warniasih, Fitriani Rustama\n" +
-                         "2. PULLMAN - TAIBA (4 Jamaah):\n" +
-                         "   • Muhamad Arifin, Muhammad Zoufl Firdaus, Puji Tetra Astuti, Fairuz Mawli Dyan\n" +
-                         "3. SOFWAH - AL ANSR (6 Jamaah):\n" +
-                         "   • Nina Wahyuningsih, Titien Soeherman Okky, Adinda Amalia Shaleha\n" +
-                         "   • Abdul Malik Yoga Fathori, Khadijah Akhita Naomi, Ralinka Humaira Malik\n\n" +
-                         "💰 Total Tagihan: 21 Pax × Rp 35.000 = Rp 735.000\n" +
+                         "📋 Rincian Manifest & Hotel (21 Pax):\n" +
+                         "• PULLMAN - ANSR GOLDEN TULIP: 11 Jamaah\n" +
+                         "• PULLMAN - TAIBA: 4 Jamaah\n" +
+                         "• SOFWAH - AL ANSR: 6 Jamaah\n\n" +
+                         "💰 Rincian Biaya:\n" +
+                         "Layanan Umrahme: 21 Jamaah x Rp 35.000 = Rp 735.000\n" +
                          "(Terbilang: Tujuh Ratus Tiga Puluh Lima Ribu Rupiah)\n\n" +
                          "💳 Rekening Resmi Pembayaran:\n" +
                          "Bank Mandiri: 1550010616962\n" +
                          "a.n. Daru Fahmaa Muliawan\n\n" +
-                         "Dokumen invoice interaktif serta tombol Cetak PDF & Unduh PNG resolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak! 🙏✨";
+                         "Dokumen invoice resmi serta rincian lengkap manifest tiap hotel dapat diakses dan diunduh langsung dalam format PDF maupun PNG pada tautan di atas. Terima kasih banyak Mas Hilmy & tim! 🙏✨";
             navigator.clipboard.writeText(text).then(() => {
-                showToast("Script Pesan WA Dreammecca Berhasil Disalin!");
+                showToast("Script Pesan WA Berhasil Disalin!");
             }).catch(() => {
                 showToast("Link: https://temantiket.com/dreammecca-oktober");
             });
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById("toast");
-            toast.innerText = msg;
-            toast.classList.add("show");
-            setTimeout(() => {
-                toast.classList.remove("show");
-            }, 3000);
         }
 
         async function downloadInvoicePNG() {
@@ -1199,23 +1574,23 @@
                 btn.innerHTML = `<span>Memproses...</span>`;
             }
 
-            showToast("Sedang menyiapkan Invoice PNG...");
+            showToast("Sedang menyiapkan gambar PNG resolusi tinggi...");
 
             try {
                 const target = document.getElementById('invoiceSheet');
                 if (!target) throw new Error("Elemen invoice tidak ditemukan");
 
-                const filename = "INVOICE_UMRAHME_DREAMMECCA_OKTOBER_21PAX.png";
-
                 const canvas = await html2canvas(target, {
-                    scale: 2.2,
+                    scale: 2.5,
                     useCORS: true,
                     backgroundColor: "#ffffff",
-                    logging: false
+                    logging: false,
+                    windowWidth: target.scrollWidth,
+                    windowHeight: target.scrollHeight
                 });
 
                 const link = document.createElement("a");
-                link.download = filename;
+                link.download = "Invoice-Dreammecca-Umrahme-Batch-Oktober-2026.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
                 showToast("PNG Invoice berhasil diunduh!");
@@ -1225,7 +1600,7 @@
             } finally {
                 if (btn) {
                     btn.disabled = false;
-                    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh PNG`;
+                    btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Unduh PNG`;
                 }
             }
         }
