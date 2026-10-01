@@ -4249,22 +4249,86 @@
                     dpAction.innerText = isPelunasan ? "SET CICILAN" : "SET DP";
                 }
 
-                const markBtn = card.querySelector(".mark-pelunasan-btn");
-                if (markBtn) {
-                    if (status === "PAID") {
-                        markBtn.className = "mark-pelunasan-btn is-paid";
-                        markBtn.innerHTML = "✓ Pelunasan Lunas (Klik utk Batalkan)";
-                    } else if (status === "DP") {
+                // Universal Dynamic DP & Sisa calculation for standard invoice cards
+                const finBox = card.querySelector(".financial-breakdown-box");
+                if (finBox && !isPelunasan) {
+                    let dpReceivedRow = card.querySelector(".fin-dp-received-row");
+                    let dpRemainingRow = card.querySelector(".fin-dp-remaining-row");
+
+                    if (status === "DP") {
                         const remaining = Math.max(0, item.gross - dpVal);
-                        markBtn.className = "mark-pelunasan-btn";
-                        markBtn.innerHTML = "✅ Lunaskan Sisa Cicilan (" + formatIDR(remaining) + ")";
+                        if (!dpReceivedRow) {
+                            dpReceivedRow = document.createElement("div");
+                            dpReceivedRow.className = "fin-row fin-dp-received-row";
+                            const firstRow = finBox.children[0] || finBox.firstChild;
+                            if (firstRow && firstRow.nextSibling) {
+                                finBox.insertBefore(dpReceivedRow, firstRow.nextSibling);
+                            } else {
+                                finBox.appendChild(dpReceivedRow);
+                            }
+                        }
+                        dpReceivedRow.innerHTML = `<span class="fin-label">DP SUDAH DITERIMA:</span><span class="fin-val" style="color: #305d46; font-weight: 600;">✓ ${formatIDR(dpVal)} (Diterima)</span>`;
+                        dpReceivedRow.style.display = "flex";
+
+                        if (!dpRemainingRow) {
+                            dpRemainingRow = document.createElement("div");
+                            dpRemainingRow.className = "fin-row fin-dp-remaining-row";
+                            const netProfitRow = finBox.querySelector(".net-profit-row") || finBox.lastChild;
+                            finBox.insertBefore(dpRemainingRow, netProfitRow);
+                        }
+                        dpRemainingRow.innerHTML = `<span class="fin-label">SISA HARUS DIBAYAR:</span><span class="fin-val" style="color: #814637; font-weight: 600;">${formatIDR(remaining)}</span>`;
+                        dpRemainingRow.style.display = "flex";
                     } else {
-                        markBtn.className = "mark-pelunasan-btn";
-                        markBtn.innerHTML = "✅ Tandai Pelunasan Lunas (" + formatIDR(item.gross) + ")";
+                        if (dpReceivedRow) dpReceivedRow.style.display = "none";
+                        if (dpRemainingRow) dpRemainingRow.style.display = "none";
                     }
                 }
 
-                // Dynamic breakdown update for installment/pelunasan cards
+                // Dynamic Action Button for ANY card in DP mode
+                let cardActionBar = card.querySelector(".card-action-bar");
+                let markBtn = card.querySelector(".mark-pelunasan-btn");
+                const actionBtn = card.querySelector(".action-btn");
+
+                if (status === "DP") {
+                    const remaining = Math.max(0, item.gross - dpVal);
+                    if (!cardActionBar && actionBtn) {
+                        cardActionBar = document.createElement("div");
+                        cardActionBar.className = "card-action-bar";
+                        actionBtn.parentNode.insertBefore(cardActionBar, actionBtn);
+                        cardActionBar.appendChild(actionBtn);
+                    }
+                    if (cardActionBar) {
+                        if (!markBtn) {
+                            markBtn = document.createElement("button");
+                            markBtn.type = "button";
+                            markBtn.className = "mark-pelunasan-btn";
+                            markBtn.addEventListener("click", function() {
+                                setPaymentStatus(item.id, "PAID");
+                                showToast("TAGIHAN LUNAS TOTAL: " + formatIDR(item.gross));
+                            });
+                            cardActionBar.insertBefore(markBtn, actionBtn);
+                        }
+                        markBtn.style.display = "inline-flex";
+                        markBtn.className = "mark-pelunasan-btn";
+                        markBtn.innerHTML = `✅ Lunaskan Sisa (${formatIDR(remaining)})`;
+                    }
+                } else if (status === "PAID") {
+                    if (markBtn) {
+                        if (isPelunasan) {
+                            markBtn.style.display = "inline-flex";
+                            markBtn.className = "mark-pelunasan-btn is-paid";
+                            markBtn.innerHTML = "✓ Pelunasan Lunas (Klik utk Batalkan)";
+                        } else {
+                            markBtn.style.display = "none";
+                        }
+                    }
+                } else {
+                    if (markBtn && !isPelunasan) {
+                        markBtn.style.display = "none";
+                    }
+                }
+
+                // Dynamic breakdown update for installment/pelunasan cards (like Teh Umi)
                 const cicilanRow = document.getElementById("cicilanMasukRow-" + item.id);
                 const cicilanValEl = document.getElementById("cicilanMasukVal-" + item.id);
                 const sisaValEl = document.getElementById("sisaPelunasanVal-" + item.id);
