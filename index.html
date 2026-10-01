@@ -1095,9 +1095,53 @@
             transition: all 0.2s ease;
         }
 
-        .dp-status-action:hover {
-            background: #f59e0b;
-            color: #000000;
+        .dp-history-badge {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.16);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-transform: uppercase;
+        }
+
+        .dp-history-banner {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin: 12px 0;
+            font-size: 0.76rem;
+            line-height: 1.45;
+            color: #d1fae5;
+        }
+
+        .dp-banner-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #10b981;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .dp-tag-note {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.68rem;
+            font-weight: 700;
         }
 
         .ref-code {
@@ -2608,6 +2652,7 @@
                     <div class="card-top">
                         <div class="client-title">Yayasan Azhariyah - Umi Elly (Cicilan 2 / Pelunasan)</div>
                         <div class="status-badge-group">
+                            <span class="dp-history-badge">✓ DP 3JT SUDAH LUNAS (SEP)</span>
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('azhariyah-pelunasan')">
                                 🔴 BELUM LUNAS
                             </span>
@@ -2616,11 +2661,23 @@
 
                     <div class="ref-code">
                         <span>REF: #INV/YPIA/2026/011-CICILAN2 &bull; Pelunasan</span>
-                        <span class="month-tag">📅 Oktober 2026 (Pelunasan 4JT)</span>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <span class="dp-tag-note">✓ DP Rp 3JT LUNAS (Sep)</span>
+                            <span class="month-tag">📅 Oktober 2026 (Pelunasan 4JT)</span>
+                        </div>
+                    </div>
+
+                    <div class="dp-history-banner">
+                        <div class="dp-banner-header">
+                            <span>ℹ️</span> STATUS DP &amp; CICILAN DARI BULAN SEBELUMNYA
+                        </div>
+                        <div>
+                            <strong>DP Cicilan 1 Rp 3.000.000 SUDAH LUNAS DITERIMA</strong> pada bulan <strong>September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Sisa Pelunasan Rp 4.000.000</strong> (Total Nilai Proyek: Rp 7.000.000).
+                        </div>
                     </div>
                     
                     <div class="project-desc">
-                        Sisa Pelunasan / Cicilan Tahap 2 Platform Pembelajaran Bahasa Arab Interaktif Berbasis Game (SD, SMP, SMA). Total: Rp 4.000.000.
+                        Sisa Pelunasan / Cicilan Tahap 2 Platform Pembelajaran Bahasa Arab Interaktif Berbasis Game (SD, SMP, SMA). Total Pelunasan: Rp 4.000.000.
                     </div>
 
                     <div class="slug-box">
@@ -2634,8 +2691,16 @@
                     <!-- Financial Net Profit Breakdown Box -->
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
-                            <span class="fin-label">SISA PELUNASAN:</span>
-                            <span class="fin-val">Rp 4.000.000</span>
+                            <span class="fin-label">TOTAL NILAI PROYEK:</span>
+                            <span class="fin-val" style="color: #ffffff; font-weight: 700;">Rp 7.000.000</span>
+                        </div>
+                        <div class="fin-row" style="color: #10b981;">
+                            <span class="fin-label">DP SUDAH MASUK (SEP 2026):</span>
+                            <span class="fin-val" style="color: #10b981; font-weight: 700;">✓ Rp 3.000.000 (Lunas)</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
+                            <span class="fin-val" style="color: #f59e0b; font-weight: 700;">Rp 4.000.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
@@ -2935,6 +3000,7 @@
                     <div class="card-top">
                         <div class="client-title">Abdul — Ketua KPI PPMI Mesir (Pelunasan 50%)</div>
                         <div class="status-badge-group">
+                            <span class="dp-history-badge">✓ DP 50% SUDAH LUNAS (SEP)</span>
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('kpi-pelunasan')">
                                 🔴 BELUM LUNAS
                             </span>
@@ -2943,11 +3009,23 @@
 
                     <div class="ref-code">
                         <span>REF: #INV/KPI/2026/017-PELUNASAN &bull; Tahap 2 (Pelunasan)</span>
-                        <span class="month-tag">📅 Oktober 2026 (Pelunasan 7.1JT)</span>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <span class="dp-tag-note">✓ DP 50% (7.1JT) LUNAS (Sep)</span>
+                            <span class="month-tag">📅 Oktober 2026 (Pelunasan 7.1JT)</span>
+                        </div>
+                    </div>
+
+                    <div class="dp-history-banner">
+                        <div class="dp-banner-header">
+                            <span>ℹ️</span> STATUS DP &amp; CICILAN DARI BULAN SEBELUMNYA
+                        </div>
+                        <div>
+                            <strong>DP Tahap 1 (50%) Rp 7.100.000 SUDAH LUNAS DITERIMA</strong> pada bulan <strong>September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Tahap Pelunasan Sisa 50% Rp 7.100.000</strong> (Total Nilai Proyek: Rp 14.200.000).
+                        </div>
                     </div>
                     
                     <div class="project-desc">
-                        Pelunasan 50% Tahap Akhir Pengembangan Ekosistem Digital Lengkap KPI PPMI Mesir (Operasional Rapat &amp; E-Voting, Modul Keuangan/SPJ, Arsip Kepengurusan &amp; Handover Aset). Total: Rp 7.100.000.
+                        Pelunasan 50% Tahap Akhir Pengembangan Ekosistem Digital Lengkap KPI PPMI Mesir (Operasional Rapat &amp; E-Voting, Modul Keuangan/SPJ, Arsip Kepengurusan &amp; Handover Aset). Total Pelunasan: Rp 7.100.000.
                     </div>
 
                     <div class="slug-box">
@@ -2961,8 +3039,16 @@
                     <!-- Financial Net Profit Breakdown Box -->
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
-                            <span class="fin-label">NOMINAL PELUNASAN:</span>
-                            <span class="fin-val">Rp 7.100.000</span>
+                            <span class="fin-label">TOTAL NILAI PROYEK:</span>
+                            <span class="fin-val" style="color: #ffffff; font-weight: 700;">Rp 14.200.000</span>
+                        </div>
+                        <div class="fin-row" style="color: #10b981;">
+                            <span class="fin-label">DP 50% SUDAH MASUK (SEP 2026):</span>
+                            <span class="fin-val" style="color: #10b981; font-weight: 700;">✓ Rp 7.100.000 (Lunas)</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
+                            <span class="fin-val" style="color: #f59e0b; font-weight: 700;">Rp 7.100.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
@@ -3043,6 +3129,7 @@
                     <div class="card-top">
                         <div class="client-title">Teh Umi — Media Baca (Pelunasan)</div>
                         <div class="status-badge-group">
+                            <span class="dp-history-badge">✓ DP 100RB SUDAH LUNAS (SEP)</span>
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('tehumi-pelunasan')">
                                 🔴 BELUM LUNAS
                             </span>
@@ -3051,7 +3138,19 @@
 
                     <div class="ref-code">
                         <span>REF: #INV/UMI/2026/018-PELUNASAN &bull; Pelunasan Tagihan</span>
-                        <span class="month-tag">📅 Oktober 2026 (Pelunasan 200rb)</span>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <span class="dp-tag-note">✓ DP Rp 100rb LUNAS (Sep)</span>
+                            <span class="month-tag">📅 Oktober 2026 (Pelunasan 200rb)</span>
+                        </div>
+                    </div>
+
+                    <div class="dp-history-banner">
+                        <div class="dp-banner-header">
+                            <span>ℹ️</span> STATUS DP &amp; CICILAN DARI BULAN SEBELUMNYA
+                        </div>
+                        <div>
+                            <strong>DP Termin 1 Rp 100.000 SUDAH LUNAS DITERIMA</strong> pada tanggal <strong>10 September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Sisa Pelunasan Rp 200.000</strong> (Total Nilai Kontrak: Rp 300.000).
+                        </div>
                     </div>
                     
                     <div class="project-desc">
@@ -3069,8 +3168,16 @@
                     <!-- Financial Net Profit Breakdown Box -->
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
-                            <span class="fin-label">NOMINAL PELUNASAN:</span>
-                            <span class="fin-val">Rp 200.000</span>
+                            <span class="fin-label">TOTAL NILAI PROYEK:</span>
+                            <span class="fin-val" style="color: #ffffff; font-weight: 700;">Rp 300.000</span>
+                        </div>
+                        <div class="fin-row" style="color: #10b981;">
+                            <span class="fin-label">DP SUDAH MASUK (SEP 2026):</span>
+                            <span class="fin-val" style="color: #10b981; font-weight: 700;">✓ Rp 100.000 (Lunas)</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
+                            <span class="fin-val" style="color: #f59e0b; font-weight: 700;">Rp 200.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
