@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Invoice #INV/DAR/2026/10/004 &mdash; Bang Edo (Desain Undangan Nikah)</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- html2canvas for High-Res PNG Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            /* Luxury Wedding Editorial Palette */
+            --color-primary: #1e293b;
+            --color-primary-dark: #0f172a;
+            --color-accent: #9f7551;
+            --color-gold: #b88628;
+            --color-gold-light: #fdfaf5;
+
+            /* Slate Neutral Scales */
+            --text-main: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --border-subtle: #e2e8f0;
+            --bg-page: #f8fafc;
+            --card-white: #ffffff;
+
+            --shadow-subtle: 0 2px 12px -2px rgba(30, 41, 59, 0.04);
+            --shadow-card: 0 10px 30px -4px rgba(30, 41, 59, 0.06);
+            --shadow-modal: 0 25px 60px -15px rgba(15, 23, 42, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-weight: 400;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 70px 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ----------------------------------------------------
+           SECURITY ACCESS SCREEN (REGULAR & CLEAN)
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px);
+        }
+
+        .cover-card {
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            padding: 38px 32px;
+            text-align: center;
+            box-shadow: var(--shadow-modal);
+            border: 1px solid var(--border-subtle);
+            position: relative;
+        }
+
+        .cover-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid var(--border-subtle);
+            color: var(--color-accent);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .cover-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .cover-title {
+            font-size: 1.28rem;
+            font-weight: 500;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .cover-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .cover-recipient-meta {
+            padding: 12px 14px;
+            text-align: left;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .cover-recipient-meta small {
+            display: block;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .cover-recipient-meta strong {
+            display: block;
+            font-size: 0.96rem;
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+
+        .cover-recipient-meta span {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .passcode-wrapper {
+            margin-bottom: 18px;
+        }
+
+        .passcode-label {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .passcode-input {
+            width: 100%;
+            height: 48px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: var(--color-primary);
+            outline: none;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(159, 117, 81, 0.1);
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.74rem;
+            font-weight: 400;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .cover-open-btn {
+            width: 100%;
+            height: 46px;
+            background: var(--color-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .cover-open-btn:hover {
+            background: var(--color-primary-dark);
+        }
+
+        /* ----------------------------------------------------
+           STICKY ACTION TOOLBAR
+        ---------------------------------------------------- */
+        .top-action-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .bar-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .bar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary);
+            font-size: 0.84rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .brand-badge svg {
+            color: var(--color-accent);
+        }
+
+        .bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 14px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            font-family: var(--font-main);
+            border-radius: 7px;
+            border: 1px solid var(--border-subtle);
+            background: #ffffff;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-action.btn-primary {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .btn-action.btn-primary:hover {
+            background: var(--color-primary-dark);
+        }
+
+        /* ----------------------------------------------------
+           MAIN DOCUMENT CANVAS & PAPER SHEET
+        ---------------------------------------------------- */
+        .document-wrapper {
+            max-width: 860px;
+            width: 100%;
+            margin: 24px auto 0;
+            padding: 0 16px;
+        }
+
+        .invoice-sheet {
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 44px 48px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+        }
+
+        /* Top accent line (clean, minimalist rose-gold gradient) */
+        .invoice-sheet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 48px;
+            right: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, #1e293b 0%, #9f7551 50%, #b88628 100%);
+        }
+
+        /* ----------------------------------------------------
+           HEADER BRANDING SECTION
+        ---------------------------------------------------- */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            gap: 24px;
+        }
+
+        .brand-unit {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .brand-symbol-frame {
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        .brand-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-legal-name {
+            font-size: 1.15rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: var(--color-primary);
+            line-height: 1.25;
+        }
+
+        .company-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 3px;
+        }
+
+        .company-meta-tags {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            font-size: 0.74rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .meta-tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .meta-tag-item svg {
+            color: var(--color-gold);
+        }
+
+        .invoice-title-block {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        .invoice-main-heading {
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
+        .invoice-meta-badge {
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .invoice-date-row {
+            margin-top: 6px;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .invoice-date-row strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .due-date-text {
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        /* ----------------------------------------------------
+           PARTICIPANT / METADATA SECTION (NO BOXES)
+        ---------------------------------------------------- */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .party-card-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .party-label {
+            font-size: 0.72rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .party-label svg {
+            color: var(--color-accent);
+        }
+
+        .party-title {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--color-primary);
+            margin-bottom: 3px;
+        }
+
+        .party-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .party-tag-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            color: var(--text-light);
+            font-size: 0.74rem;
+            font-weight: 400;
+        }
+
+        .party-tag-pill svg {
+            color: #10b981;
+        }
+
+        /* ----------------------------------------------------
+           HIGHLIGHT SUMMARY STATS (NO BOXES, OUTLINE STYLE)
+        ---------------------------------------------------- */
+        .stats-summary-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon-wrap {
+            color: var(--color-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-icon-wrap svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .stat-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            color: var(--text-light);
+        }
+
+        .stat-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        /* ----------------------------------------------------
+           SERVICE TABLE & DELIVERABLES (NO BOXES)
+        ---------------------------------------------------- */
+        .service-section {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .service-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            gap: 16px;
+        }
+
+        .service-header-title {
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .service-item-main {
+            padding: 20px 0 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .item-info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .item-name {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .item-name svg {
+            color: var(--color-gold);
+        }
+
+        .item-subdesc {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .item-price-col {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .item-unit-price {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .item-unit-label {
+            font-size: 0.74rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        /* Deliverables Grid */
+        .deliverables-grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 32px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-subtle);
+        }
+
+        .deliverable-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .deliverable-point svg {
+            color: var(--color-accent);
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ----------------------------------------------------
+           TOTALS & CALCULATION SECTION (CLEAN & MINIMALIST)
+        ---------------------------------------------------- */
+        .bottom-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .issuer-info-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+
+        .issuer-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .issuer-label svg {
+            color: var(--color-accent);
+        }
+
+        .issuer-name {
+            font-size: 1.02rem;
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .issuer-role {
+            font-size: 0.81rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .issuer-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--color-primary);
+            text-decoration: none;
+            margin-top: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .issuer-wa-btn svg {
+            color: #10b981;
+        }
+
+        .issuer-wa-btn:hover {
+            color: var(--color-gold);
+        }
+
+        .totals-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            padding: 2px 0;
+        }
+
+        .summary-row strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .grand-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 12px 0;
+            margin-top: 6px;
+            border-top: 1.5px solid var(--color-primary);
+            border-bottom: 1.5px solid var(--color-primary);
+        }
+
+        .grand-total-label {
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .grand-total-label svg {
+            color: var(--color-gold);
+        }
+
+        .grand-total-figure {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--color-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .terbilang-text {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-style: italic;
+            font-weight: 400;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* ----------------------------------------------------
+           BANK MANDIRI PAYMENT SECTION (AT THE BOTTOM / TERAKHIR)
+        ---------------------------------------------------- */
+        .bottom-payment-section {
+            padding-top: 24px;
+        }
+
+        .mandiri-payment-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mandiri-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mandiri-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mandiri-logo-img {
+            height: 24px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .mandiri-official-text {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mandiri-official-text svg {
+            color: var(--color-gold);
+        }
+
+        .mandiri-account-number {
+            font-size: 1.35rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            width: fit-content;
+            transition: color 0.2s ease;
+        }
+
+        .mandiri-account-number svg {
+            color: var(--text-light);
+        }
+
+        .mandiri-account-number:hover {
+            color: var(--color-accent);
+        }
+
+        .mandiri-account-number:hover svg {
+            color: var(--color-accent);
+        }
+
+        .mandiri-account-name {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .btn-copy-account {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 40px;
+            padding: 0 16px;
+            background: transparent;
+            color: var(--color-primary);
+            border: 1.5px solid var(--color-primary);
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy-account:hover {
+            background: var(--color-primary);
+            color: #ffffff;
+        }
+
+        /* ----------------------------------------------------
+           TERMS & CONDITIONS FOOTER
+        ---------------------------------------------------- */
+        .document-footer-terms {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--border-subtle);
+            font-size: 0.74rem;
+            color: var(--text-light);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .document-footer-terms strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ----------------------------------------------------
+           TOAST NOTIFICATION
+        ---------------------------------------------------- */
+        .toast-popup {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--color-primary);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+            z-index: 100000;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: all 0.25s ease;
+        }
+
+        .toast-popup.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE & PRINT MEDIA
+        ---------------------------------------------------- */
+        @media (max-width: 680px) {
+            .invoice-sheet {
+                padding: 24px 18px;
+            }
+            .doc-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .invoice-title-block {
+                align-items: flex-start;
+                text-align: left;
+            }
+            .parties-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .stats-summary-bar {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .deliverables-grid {
+                grid-template-columns: 1fr;
+            }
+            .bottom-summary-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .mandiri-payment-block {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media print {
+            .top-action-bar, .cover-overlay, .toast-popup {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+            .document-wrapper {
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+            .invoice-sheet {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURITY PASSCODE GATE OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            
+            <div class="cover-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+
+            <div class="cover-eyebrow">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Dokumen Tagihan Resmi
+            </div>
+            <h1 class="cover-title">Invoice Terproteksi</h1>
+            <p class="cover-subtitle">Desain Undangan Pernikahan Kustom &bull; Bang Edo</p>
+
+            <div class="cover-recipient-meta">
+                <small>Ditujukan Kepada</small>
+                <strong>Bang Edo</strong>
+                <span>Klien Desain Undangan Pernikahan &middot; Special Project</span>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">Masukkan Kode PIN Akses :</div>
+                <input type="password" id="passcodeInput" class="passcode-input" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
+                <div class="passcode-error" id="passcodeError">Kode PIN tidak valid. Coba lagi.</div>
+            </div>
+
+            <button type="button" class="cover-open-btn" onclick="verifyPasscode()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Buka Dokumen Invoice
+            </button>
+        </div>
+    </div>
+
+    <!-- TOP STICKY TOOLBAR -->
+    <header class="top-action-bar">
+        <div class="bar-inner">
+            <div class="bar-left">
+                <span class="brand-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span>Daru Studio &bull; Bang Edo</span>
+                </span>
+            </div>
+            <div class="bar-actions">
+                <button type="button" class="btn-action" onclick="copyWaScriptLocal()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    Salin Script WA
+                </button>
+                <button type="button" class="btn-action" onclick="copyInvoiceLink()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Salin Link
+                </button>
+                <button type="button" class="btn-action" onclick="window.print()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Cetak PDF
+                </button>
+                <button type="button" class="btn-action btn-primary" id="btnDownloadPNG" onclick="downloadInvoicePNG()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Unduh PNG
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- INVOICE SHEET -->
+    <main class="document-wrapper">
+        <div class="invoice-sheet" id="invoiceSheet">
+            
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="brand-unit">
+                    <div class="brand-symbol-frame">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="brand-details">
+                        <h1 class="company-legal-name">DARU FAHMAA MULIAWAN</h1>
+                        <span class="company-subtitle">Graphic &amp; Digital Designer &middot; Creative Wedding Invitation Specialist</span>
+                        <div class="company-meta-tags">
+                            <span class="meta-tag-item">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                                Desain Kustom Terverifikasi
+                            </span>
+                            <span class="meta-tag-item">&bull;</span>
+                            <span class="meta-tag-item">Kota Tangerang &middot; Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoice-title-block">
+                    <div class="invoice-main-heading">INVOICE</div>
+                    <div class="invoice-meta-badge">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        #INV/DAR/2026/10/004
+                    </div>
+                    <div class="invoice-date-row">
+                        Tanggal: <strong>02 Oktober 2026</strong><br>
+                        Jatuh Tempo: <span class="due-date-text">16 Oktober 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PARTIES INFO (NO BOXES, OUTLINE EMOTICONS) -->
+            <section class="parties-grid">
+                <div class="party-card-box">
+                    <div class="party-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+                        Tagihan Ditujukan Kepada :
+                    </div>
+                    <div class="party-title">Bang Edo</div>
+                    <div class="party-desc">
+                        Klien Desain Undangan Pernikahan<br>
+                        Wedding Project &middot; Special Custom Edition
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                        Klien Resmi Terverifikasi
+                    </div>
+                </div>
+
+                <div class="party-card-box">
+                    <div class="party-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        Diterbitkan Oleh :
+                    </div>
+                    <div class="party-title">Daru Fahmaa Muliawan</div>
+                    <div class="party-desc">
+                        Graphic &amp; Digital Specialist<br>
+                        Email: darufahmaamuliawan@gmail.com
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Verified Creative Designer
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATS SUMMARY (NO BOXES) -->
+            <section class="stats-summary-bar">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Jenis Layanan</span>
+                        <span class="stat-value">Desain Undangan Nikah</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Format Berkas</span>
+                        <span class="stat-value">Cetak &amp; Digital (HD)</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-label">Status Tagihan</span>
+                        <span class="stat-value">Menunggu Pembayaran</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SERVICE TABLE (NO BOXES, CLEAN EDITORIAL) -->
+            <section class="service-section">
+                <div class="service-header-row">
+                    <span class="service-header-title">Deskripsi Layanan &amp; Rincian Pekerjaan</span>
+                    <span class="service-header-title">Jumlah Biaya</span>
+                </div>
+
+                <div class="service-item-main">
+                    <div class="item-info-col">
+                        <div class="item-name">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            Paket Pembuatan Desain Undangan Pernikahan (Wedding Invitation)
+                        </div>
+                        <p class="item-subdesc">
+                            Perancangan visual eksklusif undangan pernikahan dengan konsep estetik, tipografi elegan, komposisi proporsional, serta penyesuaian detail data mempelai, tanggal akad/resepsi, dan barcode lokasi acara.
+                        </p>
+                    </div>
+                    <div class="item-price-col">
+                        <div class="item-unit-price">Rp 350.000</div>
+                        <div class="item-unit-label">1 Paket Desain Penuh</div>
+                    </div>
+                </div>
+
+                <!-- Deliverables Checklist -->
+                <div class="deliverables-grid">
+                    <div class="deliverable-point">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Konsep Desain Visual Elegan, Romantis &amp; Eksklusif</span>
+                    </div>
+                    <div class="deliverable-point">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>File Siap Cetak Resolusi Tinggi (PDF Print / 300 DPI, CMYK)</span>
+                    </div>
+                    <div class="deliverable-point">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Format Undangan Digital (PNG/JPG HD untuk WhatsApp &amp; Sosmed)</span>
+                    </div>
+                    <div class="deliverable-point">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Penyesuaian Denah Lokasi / QR Code Google Maps</span>
+                    </div>
+                    <div class="deliverable-point">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Penataan Tipografi Nama Mempelai &amp; Ayat Suci / Doa</span>
+                    </div>
+                    <div class="deliverable-point">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Revisi Minor Teks &amp; Detail hingga Siap Pakai</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOTALS & SUMMARY (NO BOXES, CLEAN EDITORIAL) -->
+            <section class="bottom-summary-grid">
+                <div class="issuer-info-block">
+                    <span class="issuer-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Hormat Saya / Desainer :
+                    </span>
+                    <div class="issuer-name">Daru Fahmaa Muliawan</div>
+                    <div class="issuer-role">
+                        Graphic &amp; Digital Specialist<br>
+                        Kota Tangerang, Banten &middot; Indonesia
+                    </div>
+                    <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        Hubungi WhatsApp (0813-1150-6025)
+                    </a>
+                </div>
+
+                <div class="totals-block">
+                    <div class="summary-row">
+                        <span>Subtotal Desain Undangan :</span>
+                        <strong>Rp 350.000</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Jumlah Paket :</span>
+                        <strong>1 Paket Penuh</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Pajak / PPN :</span>
+                        <strong>0.00% (Bebas Biaya)</strong>
+                    </div>
+
+                    <div class="grand-total-row">
+                        <span class="grand-total-label">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
+                            TOTAL TAGIHAN
+                        </span>
+                        <span class="grand-total-figure">Rp 350.000</span>
+                    </div>
+
+                    <div class="terbilang-text">
+                        # Tiga Ratus Lima Puluh Ribu Rupiah #
+                    </div>
+                </div>
+            </section>
+
+            <!-- BANK MANDIRI (DITARUH TERAKHIR / AT THE BOTTOM - NO BOXES) -->
+            <section class="bottom-payment-section">
+                <div class="mandiri-payment-block">
+                    <div class="mandiri-info-left">
+                        <div class="mandiri-header-row">
+                            <img src="data:image/webp;base64,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" alt="Bank Mandiri" class="mandiri-logo-img">
+                            <span class="mandiri-official-text">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                                Rekening Resmi Pembayaran
+                            </span>
+                        </div>
+                        <div class="mandiri-account-number" onclick="copyBankAcc()" title="Klik untuk menyalin">
+                            <span>1550010616962</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </div>
+                        <div class="mandiri-account-name">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
+                    </div>
+                    <div class="mandiri-actions-right">
+                        <button type="button" class="btn-copy-account" id="btnCopyMandiri" onclick="copyBankAcc()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="btnCopyMandiriText">Salin No. Rekening</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TERMS & CONDITIONS FOOTER -->
+            <footer class="document-footer-terms">
+                <p>
+                    <strong>Ketentuan Pembayaran &amp; Serah Terima Berkas:</strong><br>
+                    1. Pembayaran tagihan dapat ditransfer langsung ke rekening Bank Mandiri di atas: <strong>1550010616962</strong> a.n. <strong>Daru Fahmaa Muliawan</strong>.<br>
+                    2. Berkas master desain final (PDF Siap Cetak &amp; Gambar HD Digital) akan diserahkan penuh setelah konfirmasi pembayaran.<br>
+                    3. Setelah transfer berhasil, silakan kirimkan bukti pembayaran via WhatsApp untuk pencatatan status lunas.
+                </p>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- TOAST POPUP -->
+    <div class="toast-popup" id="toastBox">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMsg">Teks berhasil disalin!</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function unlockDocument() {
+            const overlay = document.getElementById("coverOverlay");
+            if (overlay) overlay.classList.add("opened");
+            try { sessionStorage.setItem("bangedo_invoice_unlocked", "true"); } catch(e) {}
+        }
+
+        function verifyPasscode() {
+            const input = document.getElementById("passcodeInput");
+            const errorEl = document.getElementById("passcodeError");
+            if (!input) return;
+
+            const val = input.value.trim();
+            if (val === "0001" || val === "050900") {
+                unlockDocument();
+                if (errorEl) errorEl.style.display = "none";
+                showToast("Akses invoice dibuka!");
+            } else {
+                if (errorEl) errorEl.style.display = "block";
+                const card = document.querySelector(".cover-card");
+                if (card) {
+                    card.style.animation = "shake 0.35s ease";
+                    setTimeout(() => card.style.animation = "", 350);
+                }
+            }
+        }
+
+        document.getElementById("passcodeInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyPasscode();
+            }
+        });
+
+        // Auto unlock check
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                if (sessionStorage.getItem("bangedo_invoice_unlocked") === "true") {
+                    unlockDocument();
+                }
+            } catch(e) {}
+        });
+
+        function showToast(msg) {
+            const box = document.getElementById("toastBox");
+            const msgEl = document.getElementById("toastMsg");
+            if (!box || !msgEl) return;
+            msgEl.textContent = msg;
+            box.classList.add("show");
+            setTimeout(() => {
+                box.classList.remove("show");
+            }, 2400);
+        }
+
+        function copyBankAcc() {
+            const acc = "1550010616962";
+            navigator.clipboard.writeText(acc).then(() => {
+                const btnText = document.getElementById("btnCopyMandiriText");
+                if (btnText) btnText.textContent = "Tersalin!";
+                showToast("No. Rekening Mandiri 1550010616962 berhasil disalin!");
+                setTimeout(() => {
+                    if (btnText) btnText.textContent = "Salin No. Rekening";
+                }, 2500);
+            }).catch(() => {
+                showToast("Gagal menyalin no. rekening.");
+            });
+        }
+
+        function copyInvoiceLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showToast("Tautan invoice berhasil disalin!");
+            }).catch(() => {
+                showToast("Gagal menyalin link.");
+            });
+        }
+
+        function copyWaScriptLocal() {
+            const scriptText = `Halo Bang Edo,
+
+Berikut rincian tagihan invoice untuk pengerjaan Desain Undangan Pernikahan (Wedding Invitation):
+
+No. Invoice: #INV/DAR/2026/10/004
+Tanggal: 02 Oktober 2026
+
+*Rincian Pekerjaan:*
+- Paket Pembuatan Desain Undangan Nikah Kustom & Eksklusif
+- Format Siap Cetak (PDF High-Res / 300 DPI CMYK)
+- Format Digital E-Invitation (JPG/PNG HD untuk WhatsApp & Sosmed)
+- Penyesuaian denah lokasi / QR code maps & data acara
+- Revisi minor hingga siap cetak
+
+*Total Tagihan:*
+*Rp 350.000*
+(Tiga Ratus Lima Puluh Ribu Rupiah)
+
+*Pembayaran Transfer Mandiri:*
+Bank Mandiri
+No. Rekening: *1550010616962*
+a.n. *Daru Fahmaa Muliawan*
+
+*Link Invoice Digital:*
+https://temantiket.com/bangedo
+(PIN Akses: 0001)
+
+Terima kasih banyak ya Bang Edo! 🙏✨`;
+
+            navigator.clipboard.writeText(scriptText).then(() => {
+                showToast("Script pesan WhatsApp berhasil disalin!");
+            }).catch(() => {
+                showToast("Gagal menyalin script WhatsApp.");
+            });
+        }
+
+        function downloadInvoicePNG() {
+            const sheet = document.getElementById("invoiceSheet");
+            const btn = document.getElementById("btnDownloadPNG");
+            if (!sheet) return;
+
+            const origText = btn ? btn.innerHTML : "";
+            if (btn) {
+                btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Memproses...`;
+                btn.style.pointerEvents = "none";
+            }
+
+            showToast("Sedang memproses gambar invoice kualitas tinggi...");
+
+            html2canvas(sheet, {
+                scale: 2.5,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: "#ffffff",
+                scrollX: 0,
+                scrollY: 0
+            }).then((canvas) => {
+                const link = document.createElement("a");
+                link.download = "Invoice_Bang_Edo_Desain_Undangan_Nikah.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showToast("Invoice berhasil diunduh sebagai PNG!");
+                if (btn) {
+                    btn.innerHTML = origText;
+                    btn.style.pointerEvents = "auto";
+                }
+            }).catch((err) => {
+                console.error("Gagal generate PNG:", err);
+                showToast("Gagal mengunduh gambar.");
+                if (btn) {
+                    btn.innerHTML = origText;
+                    btn.style.pointerEvents = "auto";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
