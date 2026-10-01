@@ -862,3 +862,97 @@ body[data-view="debt"] .stats-bar {
     .debt-search-box { max-width: none; }
     .debt-filter-pills { width: 100%; }
 }
+
+/* DP History & Pelunasan Features - Harmonized with Pastel / Cream Dashboard Theme */
+.dp-history-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 8px;
+    background: #e2ecdc;
+    color: #305d46;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    border: 0 !important;
+}
+
+.dp-history-banner {
+    background: #edf4ea;
+    border: 1px solid #cce0c7;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 12px 0 14px 0;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #264a34 !important;
+}
+
+.dp-banner-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #20442e !important;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.dp-banner-body {
+    color: #264a34 !important;
+}
+
+.card-action-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.mark-pelunasan-btn {
+    flex: 1 1 180px;
+    background: #30352b !important;
+    color: #fffdf3 !important;
+    border: 0 !important;
+    border-radius: 7px;
+    padding: 9px 13px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    letter-spacing: 0;
+    text-transform: none;
+    box-shadow: none !important;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+.mark-pelunasan-btn:hover {
+    background: #474f40 !important;
+    color: #ffffff !important;
+    transform: none !important;
+}
+
+.mark-pelunasan-btn.is-paid {
+    background: #e2ecdc !important;
+    color: #305d46 !important;
+    border: 1px solid #bedbb4 !important;
+}
+
+.mark-pelunasan-btn.is-paid:hover {
+    background: #f9ded1 !important;
+    color: #814637 !important;
+    border-color: #e5b3a1 !important;
+}
+
+.card-action-bar .action-btn {
+    flex: 1 1 120px;
+    margin-top: 0;
+}
+

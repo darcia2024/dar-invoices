@@ -1095,108 +1095,6 @@
             transition: all 0.2s ease;
         }
 
-        .dp-history-badge {
-            font-family: var(--font-mono);
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            padding: 4px 8px;
-            border-radius: 4px;
-            background: rgba(16, 185, 129, 0.16);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.45);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            text-transform: uppercase;
-        }
-
-        .dp-history-banner {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.28);
-            border-radius: 6px;
-            padding: 10px 12px;
-            margin: 12px 0;
-            font-size: 0.76rem;
-            line-height: 1.45;
-            color: #d1fae5;
-        }
-
-        .dp-banner-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: #10b981;
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .dp-tag-note {
-            background: rgba(16, 185, 129, 0.12);
-            color: #10b981;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.68rem;
-            font-weight: 700;
-        }
-
-        .card-action-bar {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-
-        .mark-pelunasan-btn {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 12px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            flex: 1 1 200px;
-            background: #10b981;
-            color: #07150e;
-            border: 1px solid #10b981;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
-        }
-
-        .mark-pelunasan-btn:hover {
-            background: #059669;
-            border-color: #059669;
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-
-        .mark-pelunasan-btn.is-paid {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
-            border: 1px solid #10b981;
-            box-shadow: none;
-        }
-
-        .mark-pelunasan-btn.is-paid:hover {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            border-color: #ef4444;
-        }
-
-        .card-action-bar .action-btn {
-            margin-top: 0;
-            flex: 1 1 160px;
-        }
-
         .ref-code {
             font-family: var(--font-mono);
             font-size: 0.72rem;
@@ -2714,17 +2612,14 @@
 
                     <div class="ref-code">
                         <span>REF: #INV/YPIA/2026/011-CICILAN2 &bull; Pelunasan</span>
-                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                            <span class="dp-tag-note">✓ DP Rp 3JT LUNAS (Sep)</span>
-                            <span class="month-tag">📅 Oktober 2026 (Pelunasan 4JT)</span>
-                        </div>
+                        <span class="month-tag">📅 Oktober 2026 (Pelunasan 4JT)</span>
                     </div>
 
                     <div class="dp-history-banner">
                         <div class="dp-banner-header">
                             <span>ℹ️</span> STATUS DP &amp; CICILAN DARI BULAN SEBELUMNYA
                         </div>
-                        <div>
+                        <div class="dp-banner-body">
                             <strong>DP Cicilan 1 Rp 3.000.000 SUDAH LUNAS DITERIMA</strong> pada bulan <strong>September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Sisa Pelunasan Rp 4.000.000</strong> (Total Nilai Proyek: Rp 7.000.000).
                         </div>
                     </div>
@@ -2745,15 +2640,15 @@
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
                             <span class="fin-label">TOTAL NILAI PROYEK:</span>
-                            <span class="fin-val" style="color: #ffffff; font-weight: 700;">Rp 7.000.000</span>
+                            <span class="fin-val" style="color: #272722; font-weight: 600;">Rp 7.000.000</span>
                         </div>
-                        <div class="fin-row" style="color: #10b981;">
+                        <div class="fin-row">
                             <span class="fin-label">DP SUDAH MASUK (SEP 2026):</span>
-                            <span class="fin-val" style="color: #10b981; font-weight: 700;">✓ Rp 3.000.000 (Lunas)</span>
+                            <span class="fin-val" style="color: #305d46; font-weight: 600;">✓ Rp 3.000.000 (Lunas)</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
-                            <span class="fin-val" style="color: #f59e0b; font-weight: 700;">Rp 4.000.000</span>
+                            <span class="fin-val" style="color: #814637; font-weight: 600;">Rp 4.000.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
@@ -3067,17 +2962,14 @@
 
                     <div class="ref-code">
                         <span>REF: #INV/KPI/2026/017-PELUNASAN &bull; Tahap 2 (Pelunasan)</span>
-                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                            <span class="dp-tag-note">✓ DP 50% (7.1JT) LUNAS (Sep)</span>
-                            <span class="month-tag">📅 Oktober 2026 (Pelunasan 7.1JT)</span>
-                        </div>
+                        <span class="month-tag">📅 Oktober 2026 (Pelunasan 7.1JT)</span>
                     </div>
 
                     <div class="dp-history-banner">
                         <div class="dp-banner-header">
                             <span>ℹ️</span> STATUS DP &amp; CICILAN DARI BULAN SEBELUMNYA
                         </div>
-                        <div>
+                        <div class="dp-banner-body">
                             <strong>DP Tahap 1 (50%) Rp 7.100.000 SUDAH LUNAS DITERIMA</strong> pada bulan <strong>September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Tahap Pelunasan Sisa 50% Rp 7.100.000</strong> (Total Nilai Proyek: Rp 14.200.000).
                         </div>
                     </div>
@@ -3098,15 +2990,15 @@
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
                             <span class="fin-label">TOTAL NILAI PROYEK:</span>
-                            <span class="fin-val" style="color: #ffffff; font-weight: 700;">Rp 14.200.000</span>
+                            <span class="fin-val" style="color: #272722; font-weight: 600;">Rp 14.200.000</span>
                         </div>
-                        <div class="fin-row" style="color: #10b981;">
+                        <div class="fin-row">
                             <span class="fin-label">DP 50% SUDAH MASUK (SEP 2026):</span>
-                            <span class="fin-val" style="color: #10b981; font-weight: 700;">✓ Rp 7.100.000 (Lunas)</span>
+                            <span class="fin-val" style="color: #305d46; font-weight: 600;">✓ Rp 7.100.000 (Lunas)</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
-                            <span class="fin-val" style="color: #f59e0b; font-weight: 700;">Rp 7.100.000</span>
+                            <span class="fin-val" style="color: #814637; font-weight: 600;">Rp 7.100.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
@@ -3201,17 +3093,14 @@
 
                     <div class="ref-code">
                         <span>REF: #INV/UMI/2026/018-PELUNASAN &bull; Pelunasan Tagihan</span>
-                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                            <span class="dp-tag-note">✓ DP Rp 100rb LUNAS (Sep)</span>
-                            <span class="month-tag">📅 Oktober 2026 (Pelunasan 200rb)</span>
-                        </div>
+                        <span class="month-tag">📅 Oktober 2026 (Pelunasan 200rb)</span>
                     </div>
 
                     <div class="dp-history-banner">
                         <div class="dp-banner-header">
                             <span>ℹ️</span> STATUS DP &amp; CICILAN DARI BULAN SEBELUMNYA
                         </div>
-                        <div>
+                        <div class="dp-banner-body">
                             <strong>DP Termin 1 Rp 100.000 SUDAH LUNAS DITERIMA</strong> pada tanggal <strong>10 September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Sisa Pelunasan Rp 200.000</strong> (Total Nilai Kontrak: Rp 300.000).
                         </div>
                     </div>
@@ -3232,15 +3121,15 @@
                     <div class="financial-breakdown-box">
                         <div class="fin-row">
                             <span class="fin-label">TOTAL NILAI PROYEK:</span>
-                            <span class="fin-val" style="color: #ffffff; font-weight: 700;">Rp 300.000</span>
+                            <span class="fin-val" style="color: #272722; font-weight: 600;">Rp 300.000</span>
                         </div>
-                        <div class="fin-row" style="color: #10b981;">
+                        <div class="fin-row">
                             <span class="fin-label">DP SUDAH MASUK (SEP 2026):</span>
-                            <span class="fin-val" style="color: #10b981; font-weight: 700;">✓ Rp 100.000 (Lunas)</span>
+                            <span class="fin-val" style="color: #305d46; font-weight: 600;">✓ Rp 100.000 (Lunas)</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
-                            <span class="fin-val" style="color: #f59e0b; font-weight: 700;">Rp 200.000</span>
+                            <span class="fin-val" style="color: #814637; font-weight: 600;">Rp 200.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
