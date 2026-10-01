@@ -1144,6 +1144,59 @@
             font-weight: 700;
         }
 
+        .card-action-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .mark-pelunasan-btn {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 12px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex: 1 1 200px;
+            background: #10b981;
+            color: #07150e;
+            border: 1px solid #10b981;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+        }
+
+        .mark-pelunasan-btn:hover {
+            background: #059669;
+            border-color: #059669;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .mark-pelunasan-btn.is-paid {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid #10b981;
+            box-shadow: none;
+        }
+
+        .mark-pelunasan-btn.is-paid:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .card-action-bar .action-btn {
+            margin-top: 0;
+            flex: 1 1 160px;
+        }
+
         .ref-code {
             font-family: var(--font-mono);
             font-size: 0.72rem;
@@ -2716,9 +2769,14 @@
                     </div>
                 </div>
 
-                <a href="/azhariyah" class="action-btn">
-                    <span>Buka Invoice Azhariyah (Pelunasan)</span>
-                </a>
+                <div class="card-action-bar">
+                    <button type="button" class="mark-pelunasan-btn" onclick="togglePaymentStatus('azhariyah-pelunasan')">
+                        ✅ Tandai Pelunasan Lunas (Rp 4.000.000)
+                    </button>
+                    <a href="/azhariyah" class="action-btn">
+                        <span>Buka Invoice</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Owner Barber Underrated Card -->
@@ -3064,9 +3122,14 @@
                     </div>
                 </div>
 
-                <a href="/kpi" class="action-btn">
-                    <span>Buka Invoice KPI (Pelunasan)</span>
-                </a>
+                <div class="card-action-bar">
+                    <button type="button" class="mark-pelunasan-btn" onclick="togglePaymentStatus('kpi-pelunasan')">
+                        ✅ Tandai Pelunasan Lunas (Rp 7.100.000)
+                    </button>
+                    <a href="/kpi" class="action-btn">
+                        <span>Buka Invoice</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Teh Umi Card (Tahap 1 - DP September) -->
@@ -3193,9 +3256,14 @@
                     </div>
                 </div>
 
-                <a href="/tehumi" class="action-btn">
-                    <span>Buka Invoice Teh Umi (Pelunasan)</span>
-                </a>
+                <div class="card-action-bar">
+                    <button type="button" class="mark-pelunasan-btn" onclick="togglePaymentStatus('tehumi-pelunasan')">
+                        ✅ Tandai Pelunasan Lunas (Rp 200.000)
+                    </button>
+                    <a href="/tehumi" class="action-btn">
+                        <span>Buka Invoice</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Hamasah International (Digital Ecosystem Terpadu) Card -->
@@ -4257,25 +4325,37 @@
                 const status = paymentStatuses[item.id] || "UNPAID";
                 const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
 
+                const isPelunasan = item.id.includes("pelunasan");
                 if (status === "PAID") {
                     pill.className = "payment-status-pill status-paid";
-                    pill.innerHTML = "<span class=\"status-dot\"></span>LUNAS";
-                    dpAction.innerText = "SET DP";
+                    pill.innerHTML = "<span class=\"status-dot\"></span>" + (isPelunasan ? "LUNAS TOTAL" : "LUNAS");
+                    dpAction.innerText = isPelunasan ? "SET CICILAN" : "SET DP";
                 } else if (status === "DP") {
                     pill.className = "payment-status-pill status-dp";
-                    pill.innerHTML = "<span class=\"status-dot\"></span>DP (" + formatIDR(dpVal) + ")";
-                    dpAction.innerText = "EDIT DP";
+                    pill.innerHTML = "<span class=\"status-dot\"></span>" + (isPelunasan ? "CICILAN (" : "DP (") + formatIDR(dpVal) + ")";
+                    dpAction.innerText = isPelunasan ? "EDIT CICILAN" : "EDIT DP";
                 } else {
                     pill.className = "payment-status-pill status-unpaid";
                     pill.innerHTML = "<span class=\"status-dot\"></span>BELUM LUNAS";
-                    dpAction.innerText = "SET DP";
+                    dpAction.innerText = isPelunasan ? "SET CICILAN" : "SET DP";
+                }
+
+                const markBtn = card.querySelector(".mark-pelunasan-btn");
+                if (markBtn) {
+                    if (status === "PAID") {
+                        markBtn.className = "mark-pelunasan-btn is-paid";
+                        markBtn.innerHTML = "✓ Pelunasan Lunas (Klik utk Batalkan)";
+                    } else {
+                        markBtn.className = "mark-pelunasan-btn";
+                        markBtn.innerHTML = "✅ Tandai Pelunasan Lunas (" + formatIDR(item.gross) + ")";
+                    }
                 }
             });
         }
 
         function renderProfitUI() {
             invoiceItems.forEach(item => {
-                const profitVal = netProfits[item.id] !== undefined ? netProfits[item.id] : (item.gross);
+                const profitVal = Math.min(item.gross, (netProfits[item.id] !== undefined ? netProfits[item.id] : item.gross));
                 const costVal = item.gross - profitVal;
 
                 // Capitalized Element ID mappings
@@ -4629,7 +4709,7 @@
             invoiceItems.forEach(item => {
                 if (deletedInvoiceIds.includes(item.id)) return;
                 const status = paymentStatuses[item.id] || "UNPAID";
-                const itemNetProfit = netProfits[item.id] !== undefined ? netProfits[item.id] : item.gross;
+                const itemNetProfit = Math.min(item.gross, (netProfits[item.id] !== undefined ? netProfits[item.id] : item.gross));
                 const itemCost = item.gross - itemNetProfit;
                 const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
 
