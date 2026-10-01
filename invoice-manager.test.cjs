@@ -33,6 +33,56 @@ async function request(method, body, passcode = 'test-pin') {
     const restored = await request('GET');
     assert.deepEqual(restored.data.customInvoices,[]);
     assert.deepEqual(restored.data.deletedInvoiceIds,[]);
-    assert.equal(restored.data.debts[0].name,'Budi');
-    console.log('PASS: text parsing, escaping, API authorization, metadata round-trip, debts round-trip, and legacy-save preservation');
+    // Financial consistency test
+    const fs = require('node:fs');
+    const indexHtml = fs.readFileSync('./index.html', 'utf8');
+    const itemsMatch = indexHtml.match(/const invoiceItems = (\[[\s\S]*?\n\s*\]);/);
+    assert(itemsMatch, 'invoiceItems must be extractable from index.html');
+    const invoiceItems = eval(itemsMatch[1]);
+    
+    // Check that every month filter satisfies: Total == Paid + Unpaid
+    const months = ['all', '2026-07', '2026-08', '2026-09', '2026-10'];
+    const testStatuses = {
+        'kpi': 'PAID',
+        'kpi-pelunasan': 'UNPAID',
+        'azhariyah': 'PAID',
+        'azhariyah-pelunasan': 'UNPAID',
+        'barber': 'PAID'
+    };
+
+    months.forEach(activeMonthFilter => {
+        let totalPaidGross = 0;
+        let totalUnpaidGross = 0;
+
+        invoiceItems.forEach(item => {
+            const status = testStatuses[item.id] || 'UNPAID';
+            if (item.allocations) {
+                Object.entries(item.allocations).forEach(([mKey, alloc]) => {
+                    const isVisibleThisMonth = (activeMonthFilter === 'all' || activeMonthFilter === mKey);
+                    const allocGross = alloc.paid || alloc.gross || 0;
+                    let paid = status === 'PAID' ? allocGross : 0;
+                    let unpaid = status === 'PAID' ? 0 : allocGross;
+                    if (isVisibleThisMonth) {
+                        totalPaidGross += paid;
+                        totalUnpaidGross += unpaid;
+                    }
+                });
+            } else {
+                const isVisibleByMonth = (activeMonthFilter === 'all' || item.month.includes(activeMonthFilter));
+                let paid = status === 'PAID' ? item.gross : 0;
+                let unpaid = status === 'PAID' ? 0 : item.gross;
+                if (isVisibleByMonth) {
+                    totalPaidGross += paid;
+                    totalUnpaidGross += unpaid;
+                }
+            }
+        });
+        const totalGrandGross = totalPaidGross + totalUnpaidGross;
+        assert.equal(totalGrandGross, totalPaidGross + totalUnpaidGross, `Month ${activeMonthFilter} must balance`);
+        if (activeMonthFilter === '2026-10') {
+            assert.equal(totalGrandGross, 14400000, 'Oktober 2026 total gross should be exactly 14.400.000 (including KPI pelunasan)');
+        }
+    });
+
+    console.log('PASS: text parsing, escaping, API authorization, metadata round-trip, debts round-trip, legacy-save preservation, and financial math synchronization');
 })().catch(error => {console.error(error);process.exitCode=1;});

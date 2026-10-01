@@ -3962,7 +3962,8 @@
             { id: "saudia", name: "Tiket Pesawat Saudia Airlines (3 Pax)", month: "2026-08", monthLabel: "Agustus 2026", gross: 39600000 },
             { id: "ifdony", name: "Ustadz Ifdony (Logo Azharuna)", month: "2026-09", monthLabel: "September 2026", gross: 500000 },
             { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 },
-            { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09", monthLabel: "September 2026", gross: 14200000 },
+            { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir (DP 50%)", month: "2026-09", monthLabel: "September 2026", gross: 7100000 },
+            { id: "kpi-pelunasan", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir (Pelunasan 50%)", month: "2026-10", monthLabel: "Oktober 2026", gross: 7100000 },
             { id: "tehumi", name: "Teh Umi (Media Baca - DP)", month: "2026-09", monthLabel: "September 2026", gross: 100000 },
             { id: "tehumi-pelunasan", name: "Teh Umi (Media Baca - Pelunasan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 200000 },
             { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 15000000 },
@@ -4525,20 +4526,45 @@
                 const itemCost = item.gross - itemNetProfit;
                 const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
 
-                if (item.allocations && status === "PAID") {
+                if (item.allocations) {
                     // Multi-month allocation handling (e.g. Barber: 3jt Aug + 3jt Sep)
-                    totalGrandGross += item.gross;
-                    
                     Object.entries(item.allocations).forEach(([mKey, alloc]) => {
                         const isVisibleThisMonth = (activeMonthFilter === "all" || activeMonthFilter === mKey);
+                        const allocGross = alloc.paid || alloc.gross || 0;
+                        const allocProfit = alloc.profit !== undefined ? alloc.profit : allocGross;
+                        let paidGross = 0;
+                        let paidNetProfit = 0;
+                        let unpaidGross = 0;
+
+                        if (status === "PAID") {
+                            paidGross = allocGross;
+                            paidNetProfit = allocProfit;
+                            unpaidGross = 0;
+                        } else if (status === "DP") {
+                            paidGross = Math.round(allocGross / 2);
+                            paidNetProfit = Math.round(allocProfit / 2);
+                            unpaidGross = allocGross - paidGross;
+                        } else {
+                            paidGross = 0;
+                            paidNetProfit = 0;
+                            unpaidGross = allocGross;
+                        }
+
                         if (isVisibleThisMonth) {
-                            totalPaidGross += alloc.paid;
-                            totalNetProfitPaid += alloc.profit;
+                            totalPaidGross += paidGross;
+                            totalNetProfitPaid += paidNetProfit;
+                            totalUnpaidGross += unpaidGross;
                         }
                         if (monthlyMap[mKey]) {
-                            monthlyMap[mKey].paidGrossTotal += alloc.paid;
-                            monthlyMap[mKey].paidNetProfitTotal += alloc.profit;
-                            monthlyMap[mKey].paidCount += 0.5;
+                            monthlyMap[mKey].paidGrossTotal += paidGross;
+                            monthlyMap[mKey].paidNetProfitTotal += paidNetProfit;
+                            if (status === "PAID") {
+                                monthlyMap[mKey].paidCount += 0.5;
+                            } else if (status === "DP") {
+                                monthlyMap[mKey].dpCount += 0.5;
+                            } else {
+                                monthlyMap[mKey].unpaidCount += 0.5;
+                            }
                         }
                     });
                 } else {
@@ -4562,7 +4588,6 @@
                     }
 
                     if (isVisibleByMonth) {
-                        totalGrandGross += item.gross;
                         totalPaidGross += paidGross;
                         totalNetProfitPaid += paidNetProfit;
                         totalUnpaidGross += unpaidGross;
@@ -4584,6 +4609,8 @@
                     }
                 }
             });
+
+            totalGrandGross = totalPaidGross + totalUnpaidGross;
 
             // Update Monthly Goals & Affirmation Tracker
             try {
