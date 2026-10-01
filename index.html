@@ -3124,12 +3124,16 @@
                             <span class="fin-val" style="color: #272722; font-weight: 600;">Rp 300.000</span>
                         </div>
                         <div class="fin-row">
-                            <span class="fin-label">DP SUDAH MASUK (SEP 2026):</span>
+                            <span class="fin-label">DP AWAL (SEP 2026):</span>
                             <span class="fin-val" style="color: #305d46; font-weight: 600;">✓ Rp 100.000 (Lunas)</span>
                         </div>
+                        <div class="fin-row" id="cicilanMasukRow-tehumi-pelunasan" style="display:flex;">
+                            <span class="fin-label">CICILAN MASUK (OKT 2026):</span>
+                            <span class="fin-val" id="cicilanMasukVal-tehumi-pelunasan" style="color: #305d46; font-weight: 600;">✓ Rp 100.000 (Diterima)</span>
+                        </div>
                         <div class="fin-row">
-                            <span class="fin-label">SISA PELUNASAN (OKT 2026):</span>
-                            <span class="fin-val" style="color: #814637; font-weight: 600;">Rp 200.000</span>
+                            <span class="fin-label">SISA TAGIHAN SAAT INI:</span>
+                            <span class="fin-val" id="sisaPelunasanVal-tehumi-pelunasan" style="color: #814637; font-weight: 600;">Rp 100.000</span>
                         </div>
                         <div class="fin-row">
                             <span class="fin-label">BIAYA OPERASIONAL:</span>
@@ -3147,7 +3151,7 @@
 
                 <div class="card-action-bar">
                     <button type="button" class="mark-pelunasan-btn" onclick="togglePaymentStatus('tehumi-pelunasan')">
-                        ✅ Tandai Pelunasan Lunas (Rp 200.000)
+                        ✅ Lunaskan Sisa Cicilan (Rp 100.000)
                     </button>
                     <a href="/tehumi" class="action-btn">
                         <span>Buka Invoice</span>
@@ -3914,6 +3918,7 @@
             kpi: "PAID",
             "kpi-pelunasan": "UNPAID",
             tehumi: "DP",
+            "tehumi-pelunasan": "DP",
             hamasahinternational: "UNPAID",
             pgstour: "UNPAID",
             "umrahme-dreammecca": "UNPAID",
@@ -3941,7 +3946,8 @@
         const defaultDpAmounts = {
             azhariyah: 3000000,
             kpi: 7100000,
-            tehumi: 100000
+            tehumi: 100000,
+            "tehumi-pelunasan": 100000
         };
 
         const defaultNetProfits = {
@@ -4170,18 +4176,32 @@
             const item = invoiceItems.find(i => i.id === id);
             if (!item) return;
 
-            const defaultDp = dpAmounts[id] !== undefined ? dpAmounts[id] : Math.round(item.gross / 2);
+            const isPelunasan = item.id.includes("pelunasan");
+            const currentDp = dpAmounts[id] !== undefined ? dpAmounts[id] : Math.round(item.gross / 2);
+            const promptMsg = isPelunasan
+                ? "Masukkan nominal cicilan yang telah dibayarkan klien untuk tagihan ini (Rp):\nContoh: ketik 100000 (jika dicicil 100rb dari total tagihan " + formatIDR(item.gross) + ")"
+                : "Masukkan Jumlah DP / Pembayaran Parsial yang telah diterima (Rp):";
             
-            const customVal = prompt("Masukkan Jumlah DP / Pembayaran Parsial yang telah diterima (Rp):", defaultDp);
+            const customVal = prompt(promptMsg, currentDp);
             if (customVal === null) return; // User cancelled
             
-            const parsedDp = parseInt(customVal);
+            const parsedDp = parseInt(customVal, 10);
             if (isNaN(parsedDp) || parsedDp < 0) {
-                showToast("NOMINAL DP TIDAK VALID!");
+                showToast("NOMINAL TIDAK VALID!");
                 return;
             }
 
-            setPaymentStatus(id, "DP", parsedDp);
+            if (parsedDp >= item.gross) {
+                setPaymentStatus(id, "PAID");
+                showToast("TAGIHAN LUNAS PENUH: " + formatIDR(item.gross));
+            } else if (parsedDp === 0) {
+                setPaymentStatus(id, "UNPAID");
+                showToast("STATUS DIKEMBALIKAN KE BELUM LUNAS");
+            } else {
+                setPaymentStatus(id, "DP", parsedDp);
+                const sisa = item.gross - parsedDp;
+                showToast("CICILAN TERCATAT: " + formatIDR(parsedDp) + " • SISA: " + formatIDR(sisa));
+            }
         }
 
         function updatePaymentBadges() {
@@ -4234,9 +4254,52 @@
                     if (status === "PAID") {
                         markBtn.className = "mark-pelunasan-btn is-paid";
                         markBtn.innerHTML = "✓ Pelunasan Lunas (Klik utk Batalkan)";
+                    } else if (status === "DP") {
+                        const remaining = Math.max(0, item.gross - dpVal);
+                        markBtn.className = "mark-pelunasan-btn";
+                        markBtn.innerHTML = "✅ Lunaskan Sisa Cicilan (" + formatIDR(remaining) + ")";
                     } else {
                         markBtn.className = "mark-pelunasan-btn";
                         markBtn.innerHTML = "✅ Tandai Pelunasan Lunas (" + formatIDR(item.gross) + ")";
+                    }
+                }
+
+                // Dynamic breakdown update for installment/pelunasan cards
+                const cicilanRow = document.getElementById("cicilanMasukRow-" + item.id);
+                const cicilanValEl = document.getElementById("cicilanMasukVal-" + item.id);
+                const sisaValEl = document.getElementById("sisaPelunasanVal-" + item.id);
+                const bannerBodyEl = card.querySelector(".dp-banner-body");
+
+                if (status === "PAID") {
+                    if (cicilanRow) cicilanRow.style.display = "none";
+                    if (sisaValEl) {
+                        sisaValEl.innerHTML = "✓ Rp 0 (LUNAS TOTAL)";
+                        sisaValEl.style.color = "#305d46";
+                    }
+                    if (bannerBodyEl && item.id === "tehumi-pelunasan") {
+                        bannerBodyEl.innerHTML = "🎉 <strong>SELURUH TAGIHAN LUNAS TOTAL!</strong> DP Rp 100.000 (Sep) + Pelunasan Rp 200.000 (Okt) telah tuntas 100% (Total Kontrak: Rp 300.000).";
+                    }
+                } else if (status === "DP") {
+                    const remaining = Math.max(0, item.gross - dpVal);
+                    if (cicilanRow) {
+                        cicilanRow.style.display = "flex";
+                        if (cicilanValEl) cicilanValEl.innerText = "✓ " + formatIDR(dpVal) + " (Diterima)";
+                    }
+                    if (sisaValEl) {
+                        sisaValEl.innerText = formatIDR(remaining);
+                        sisaValEl.style.color = remaining > 0 ? "#814637" : "#305d46";
+                    }
+                    if (bannerBodyEl && item.id === "tehumi-pelunasan") {
+                        bannerBodyEl.innerHTML = "<strong>DP Rp 100.000 (Sep) Lunas</strong> + <strong>Cicilan Masuk " + formatIDR(dpVal) + " (Okt) Diterima</strong>. Sisa tagihan yang harus dibayar saat ini tinggal <strong>" + formatIDR(remaining) + "</strong> (Total Kontrak: Rp 300.000).";
+                    }
+                } else {
+                    if (cicilanRow) cicilanRow.style.display = "none";
+                    if (sisaValEl) {
+                        sisaValEl.innerText = formatIDR(item.gross);
+                        sisaValEl.style.color = "#814637";
+                    }
+                    if (bannerBodyEl && item.id === "tehumi-pelunasan") {
+                        bannerBodyEl.innerHTML = "<strong>DP Termin 1 Rp 100.000 SUDAH LUNAS DITERIMA</strong> pada tanggal <strong>10 September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Sisa Pelunasan Rp 200.000</strong> (Total Nilai Kontrak: Rp 300.000).";
                     }
                 }
             });

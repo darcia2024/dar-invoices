@@ -59,7 +59,7 @@ const defaultState = {
     barber: "PAID",
     saudia: "UNPAID",
     tehumi: "PAID",
-    "tehumi-pelunasan": "UNPAID",
+    "tehumi-pelunasan": "DP",
     pgstour: "UNPAID",
     "umrahme-dreammecca": "UNPAID",
     mochi: "UNPAID",
@@ -74,6 +74,7 @@ const defaultState = {
   },
   dpAmounts: {
     tehumi: 100000,
+    "tehumi-pelunasan": 100000,
     kpi: 7100000,
   },
   netProfits: {
