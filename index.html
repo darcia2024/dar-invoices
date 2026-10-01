@@ -3370,6 +3370,60 @@
                     <span>Buka Invoice Mas Daus</span>
                 </a>
             </div>
+
+            <!-- Dreammecca Umrahme - Batch Oktober 2026 (21 Pax) Card -->
+            <div class="invoice-card" id="card-umrahme-dreammecca-oktober" data-id="umrahme-dreammecca-oktober" data-month="2026-10" data-amount="735000" data-client="dreammecca umrahme hilmy hafizh umroh batch oktober 21 pax 21 jamaah pullman taiba ansr sofwah 735000 #inv/du/2026/10/003 oktober 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Dreammecca - Umrahme (21 Pax)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('umrahme-dreammecca-oktober')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DU/2026/10/003 &bull; Umrahme Batch Oktober</span>
+                        <span class="month-tag">📅 Oktober 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Layanan Sistem Digital Umrahme untuk 21 Jamaah Terkonfirmasi Batch Oktober 2026 (@Rp 35.000 / pax). Alokasi: Pullman Zamzam, Taiba Front, &amp; Al Ansr. Total: Rp 735.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/dreammecca-oktober</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/dreammecca-oktober')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptDreammeccaOktober()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 735.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValUmrahmeDreammeccaOktober">Rp 367.500</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValUmrahmeDreammeccaOktober">Rp 367.500</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('umrahme-dreammecca-oktober')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/dreammecca-oktober" class="action-btn">
+                    <span>Buka Invoice Dreammecca (Oktober)</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -3590,7 +3644,8 @@
             athifa: "UNPAID",
             oslo: "UNPAID",
             elmassa: "UNPAID",
-            masdaus: "UNPAID"
+            masdaus: "UNPAID",
+            "umrahme-dreammecca-oktober": "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -3637,7 +3692,8 @@
             athifa: 250000,
             oslo: 1500000,
             elmassa: 1940000,
-            masdaus: 75000
+            masdaus: 75000,
+            "umrahme-dreammecca-oktober": 367500
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -3696,7 +3752,8 @@
             { id: "athifa", name: "Mba Athifa (Desain Cover Buku)", month: "2026-09", monthLabel: "September 2026", gross: 250000 },
             { id: "oslo", name: "Pak Joko (OSLO Park - Brosur Premium 16 Halaman)", month: "2026-09", monthLabel: "September 2026", gross: 1500000 },
             { id: "elmassa", name: "El Massa (Branding Merchandise, Desain & Website Katalog)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1940000 },
-            { id: "masdaus", name: "Mas Daus (Google AI Pro 18 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 75000 }
+            { id: "masdaus", name: "Mas Daus (Google AI Pro 18 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 75000 },
+            { id: "umrahme-dreammecca-oktober", name: "Dreammecca - Umrahme (Batch Oktober - 21 Pax)", month: "2026-10", monthLabel: "Oktober 2026", gross: 735000 }
         ];
 
         function formatIDR(num) {
@@ -5717,6 +5774,36 @@ Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi t
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA MAS DAUS BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptDreammeccaOktober() {
+            const waScript = `Assalamu'alaikum Warahmatullahi Wabarakatuh, Mas M. Hilmy Hafizh & Tim Dreammecca. 🙏✨
+
+Berikut tautan resmi Dokumen Invoice Layanan Umrahme (Pendamping Digital Jamaah Umrah) Batch Oktober 2026 untuk 21 Jamaah Dreammecca Tour & Travel:
+
+🔗 Invoice Online: https://temantiket.com/dreammecca-oktober
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian Manifest & Hotel (21 Pax):
+• PULLMAN - ANSR GOLDEN TULIP: 11 Jamaah
+• PULLMAN - TAIBA: 4 Jamaah
+• SOFWAH - AL ANSR: 6 Jamaah
+
+💰 Rincian Biaya:
+Layanan Umrahme: 21 Jamaah x Rp 35.000 = Rp 735.000
+(Terbilang: Tujuh Ratus Tiga Puluh Lima Ribu Rupiah)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice resmi serta rincian lengkap manifest tiap hotel dapat diakses dan diunduh langsung dalam format PDF maupun PNG pada tautan di atas. Terima kasih banyak Mas Hilmy & tim! 🙏✨`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA DREAMMECCA OKTOBER BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/DU/2026/10/003 - Dreammecca Tour & Travel (Batch Oktober)</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans Regular, Medium, SemiBold, Bold -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- html2canvas for High-Res PNG Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --text-main: #0f172a;
+            --text-secondary: #334155;
+            --text-light: #64748b;
+            --text-muted: #94a3b8;
+            --line-color: #e2e8f0;
+            --line-subtle: #f1f5f9;
+            --navy-brand: #0f2b5c;
+            --navy-dark: #0a1c3d;
+            --gold-accent: #9a7b38;
+            --gold-light: #fef9ee;
+            --gold-border: #f3e5c8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-weight: 400;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 24px 20px 60px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           SECURITY ACCESS SCREEN (CLEAN, BORDERLESS, MINIMAL)
+        ---------------------------------------------------- */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px);
+        }
+
+        .cover-card {
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            padding: 38px 32px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+            border: 1px solid var(--line-color);
+        }
+
+        .cover-brand-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold-accent);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cover-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .cover-subtitle {
+            font-size: 0.84rem;
+            color: var(--text-light);
+            margin-bottom: 22px;
+        }
+
+        .cover-recipient-meta {
+            padding: 14px 16px;
+            background: var(--line-subtle);
+            border-radius: 10px;
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        .cover-recipient-meta small {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .cover-recipient-meta strong {
+            display: block;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 2px;
+        }
+
+        .cover-recipient-meta span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .passcode-wrapper {
+            margin: 10px 0 20px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .passcode-input {
+            width: 170px;
+            font-family: var(--font-family);
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-align: center;
+            padding: 10px 12px;
+            border: 2px solid var(--line-color);
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.2s ease;
+            background: #ffffff;
+            color: var(--navy-brand);
+        }
+
+        .passcode-input:focus {
+            border-color: var(--navy-brand);
+            box-shadow: 0 0 0 3px rgba(15, 43, 92, 0.15);
+        }
+
+        .passcode-error {
+            display: none;
+            color: #ef4444;
+            font-size: 0.76rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        .cover-open-btn {
+            width: 100%;
+            background: var(--navy-brand);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-family: var(--font-family);
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .cover-open-btn:hover {
+            background: var(--navy-dark);
+            box-shadow: 0 4px 14px rgba(15, 43, 92, 0.3);
+        }
+
+        /* ----------------------------------------------------
+           TOP ACTION TOOLBAR
+        ---------------------------------------------------- */
+        .action-bar-wrap {
+            max-width: 860px;
+            margin: 0 auto 20px auto;
+            width: 100%;
+        }
+
+        .action-bar {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--line-color);
+            border-radius: 12px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-brand);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .batch-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--gold-light);
+            color: var(--gold-accent);
+            border: 1px solid var(--gold-border);
+            padding: 2px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        .btn-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: var(--text-secondary);
+            border-color: var(--line-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--line-subtle);
+            color: var(--text-main);
+        }
+
+        .btn-primary {
+            background: var(--navy-brand);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--navy-dark);
+        }
+
+        .btn-png {
+            background: #ffffff;
+            color: var(--navy-brand);
+            border-color: #cbd5e1;
+        }
+
+        .btn-png:hover {
+            background: #f1f5f9;
+        }
+
+        /* ----------------------------------------------------
+           MAIN INVOICE CONTAINER & PAPER SHEET
+        ---------------------------------------------------- */
+        .invoice-sheet-container {
+            max-width: 860px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .invoice-sheet {
+            background: #ffffff;
+            border: 1px solid var(--line-color);
+            border-radius: 16px;
+            padding: 44px 48px;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
+            position: relative;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 26px;
+            border-bottom: 2px solid var(--navy-brand);
+            gap: 20px;
+        }
+
+        .company-name {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--navy-brand);
+        }
+
+        .company-subtitle {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .company-legal {
+            font-size: 0.74rem;
+            color: var(--text-light);
+            margin-top: 3px;
+        }
+
+        .header-meta-right {
+            text-align: right;
+        }
+
+        .invoice-main-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .invoice-meta-number {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 6px;
+        }
+
+        .invoice-meta-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* Client & Program Layout */
+        .client-program-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            margin-bottom: 6px;
+        }
+
+        .client-name, .program-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .client-desc, .program-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-top: 3px;
+        }
+
+        /* Summary Badges Bar */
+        .itinerary-summary-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 14px 16px;
+            background: var(--line-subtle);
+            border-radius: 10px;
+            margin: 22px 0 26px 0;
+            border: 1px solid var(--line-color);
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .summary-icon {
+            color: var(--navy-brand);
+            flex-shrink: 0;
+        }
+
+        .summary-item strong {
+            color: var(--text-main);
+        }
+
+        /* Table */
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        .invoice-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            border-top: 1px solid var(--line-color);
+            border-bottom: 2px solid var(--navy-brand);
+            background: var(--line-subtle);
+        }
+
+        .invoice-table th.th-right {
+            text-align: right;
+            width: 170px;
+        }
+
+        .item-row td {
+            padding: 22px 14px;
+            vertical-align: top;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .service-heading {
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+            margin-bottom: 4px;
+        }
+
+        .service-text {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 20px;
+        }
+
+        /* ----------------------------------------------------
+           MANIFEST LIST GROUPED BY HOTEL (CLEAN EDITORIAL)
+        ---------------------------------------------------- */
+        .manifest-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .manifest-group-card {
+            background: #ffffff;
+            border: 1px solid var(--line-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .manifest-group-header {
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--line-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .manifest-hotel-name {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .manifest-hotel-name svg {
+            color: var(--gold-accent);
+        }
+
+        .manifest-count-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: var(--gold-light);
+            color: var(--gold-accent);
+            border: 1px solid var(--gold-border);
+        }
+
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 10px 14px;
+            column-gap: 20px;
+            row-gap: 6px;
+        }
+
+        .manifest-item {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            line-height: 1.4;
+        }
+
+        .manifest-idx {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            width: 20px;
+            flex-shrink: 0;
+        }
+
+        .manifest-name-bold {
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .item-subtotal-cell {
+            text-align: right;
+            padding: 22px 14px;
+            vertical-align: top;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .item-amount {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+            letter-spacing: -0.02em;
+        }
+
+        .item-calc-detail {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* Totals Rows */
+        .subtotal-calc-row td {
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .total-highlight-row td {
+            padding: 14px 14px;
+            border-bottom: 2px solid var(--navy-brand);
+        }
+
+        .total-title {
+            text-align: right;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+        }
+
+        .total-figure {
+            text-align: right;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+            letter-spacing: -0.02em;
+        }
+
+        .terbilang-text {
+            background: var(--gold-light);
+            border: 1px dashed var(--gold-border);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 0.82rem;
+            color: #78350f;
+            text-align: center;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 28px;
+        }
+
+        /* ----------------------------------------------------
+           PAYMENT & ISSUER SECTION (MANDIRI AT THE VERY BOTTOM)
+        ---------------------------------------------------- */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line-color);
+            margin-bottom: 20px;
+        }
+
+        .bottom-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .payment-card-box {
+            background: #f8fafc;
+            border: 1px solid var(--line-color);
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .bank-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .bank-name-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--navy-brand);
+        }
+
+        .bank-details {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .bank-acc-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .acc-number-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 0.04em;
+        }
+
+        .copy-link-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--navy-brand);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .copy-link-btn:hover {
+            background: var(--navy-brand);
+            color: #ffffff;
+            border-color: var(--navy-brand);
+        }
+
+        .issuer-name-text {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .issuer-desc-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 4px 0 8px 0;
+            line-height: 1.45;
+        }
+
+        .issuer-wa-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--navy-brand);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .issuer-wa-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer-note {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            padding-top: 14px;
+            border-top: 1px solid var(--line-color);
+        }
+
+        /* Toast Component */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--navy-brand);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(15, 43, 92, 0.25);
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10001;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE MOBILE
+        ---------------------------------------------------- */
+        @media (max-width: 680px) {
+            .invoice-sheet {
+                padding: 26px 18px;
+            }
+
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .header-meta-right {
+                text-align: left;
+            }
+
+            .client-program-section {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .manifest-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .action-bar {
+                justify-content: center;
+            }
+
+            .btn-group {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn {
+                flex: 1 1 45%;
+                justify-content: center;
+            }
+        }
+
+        /* Print A4 */
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+
+            .cover-overlay, .action-bar-wrap, .toast {
+                display: none !important;
+            }
+
+            .invoice-sheet-container {
+                max-width: 100% !important;
+            }
+
+            .invoice-sheet {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 10px 16px !important;
+            }
+
+            .copy-link-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURITY ACCESS MODAL SCREEN -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="cover-brand-eyebrow">DOKUMEN RESMI</div>
+            <h1 class="cover-title">Invoice Layanan Umrahme</h1>
+            <div class="cover-subtitle">Pendamping Digital Jamaah Umrah &bull; Batch Oktober 2026 (21 Jamaah)</div>
+
+            <div class="cover-recipient-meta">
+                <small>Ditujukan Kepada</small>
+                <strong>M. Hilmy Hafizh</strong>
+                <span>Direktur PT Dream Mecca Internasional</span>
+            </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">Masukkan PIN Akses Dokumen:</div>
+                <input type="password" id="passcodeInput" autocomplete="off" class="passcode-input" maxlength="6" placeholder="••••">
+                <div id="passcodeError" class="passcode-error">Kode PIN salah, silakan coba lagi.</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                <span>Buka Dokumen Invoice</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- TOP WEB CONTROLS BAR -->
+    <div class="action-bar-wrap">
+        <div class="action-bar">
+            <div class="action-title">
+                INVOICE #INV/DU/2026/10/003
+                <span class="batch-badge">Batch Oktober 2026</span>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" onclick="copyWaScriptLocal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    Salin Script WA
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="copyInvoiceLink()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Salin Link
+                </button>
+                <button type="button" class="btn btn-png" id="btnDownloadPNG" onclick="downloadInvoicePNG()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Unduh PNG
+                </button>
+                <button type="button" class="btn btn-primary" onclick="window.print()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    Cetak A4 / PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN INVOICE SHEET -->
+    <div class="invoice-sheet-container">
+        <div class="invoice-sheet" id="invoiceSheet">
+            
+            <!-- Header Section -->
+            <div class="header-section">
+                <div>
+                    <h1 class="company-name">DREAMMECCA</h1>
+                    <div class="company-subtitle">Layanan Umrahme (Pendamping Digital Jamaah Umrah) &bull; PT Dream Mecca Internasional</div>
+                    <div class="company-legal">SK Kemenag RI: 16112301081560002</div>
+                </div>
+
+                <div class="header-meta-right">
+                    <div class="invoice-main-title">INVOICE</div>
+                    <div class="invoice-meta-number">#INV/DU/2026/10/003</div>
+                    <div class="invoice-meta-date">Tanggal Terbit: 01 Oktober 2026</div>
+                    <div class="invoice-meta-date" style="color: var(--navy-brand); font-weight: 600;">Jatuh Tempo: 15 Oktober 2026</div>
+                </div>
+            </div>
+
+            <!-- Client & Program Section -->
+            <div class="client-program-section">
+                <div class="client-col">
+                    <div class="section-label">Ditujukan Kepada</div>
+                    <div class="client-name">M. Hilmy Hafizh</div>
+                    <div class="client-desc">
+                        Direktur PT Dream Mecca Internasional<br>
+                        Dreammecca Tour &amp; Travel (Umrahme)
+                    </div>
+                </div>
+
+                <div class="program-col">
+                    <div class="section-label">Program &amp; Keberangkatan</div>
+                    <div class="program-name">Umroh Batch Oktober 2026</div>
+                    <div class="program-desc">
+                        Total Peserta: 21 Jamaah Terkonfirmasi<br>
+                        Alokasi: Pullman Zamzam, Taiba Front, &amp; Al Ansr
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Bar -->
+            <div class="itinerary-summary-bar">
+                <div class="summary-item">
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Total Jamaah: <strong>21 Pax Confirmed</strong></span>
+                </div>
+                <div class="summary-item">
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/></svg>
+                    <span>Distribusi: <strong>3 Paket Akomodasi Hotel</strong></span>
+                </div>
+                <div class="summary-item">
+                    <svg class="summary-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>Layanan: <strong>Sistem Digital &amp; Buku Saku Jamaah</strong></span>
+                </div>
+            </div>
+
+            <!-- Table: Service & 21 Pax Manifest -->
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Deskripsi Layanan</th>
+                        <th class="th-right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="item-row">
+                        <td>
+                            <div class="service-heading">Layanan Umrahme (Pendamping Digital Jamaah Umrah)</div>
+                            <div class="service-text">
+                                Penyusunan dan aktivasi sistem pendamping digital jamaah umrah (Umrahme), buku saku digital interaktif, panduan ibadah/ziarah &amp; manasik, informasi akomodasi/penerbangan, serta layout manifest 21 jamaah terkonfirmasi Batch Oktober 2026.
+                            </div>
+
+                            <!-- 21 Named Manifest Grouped by Hotel -->
+                            <div class="manifest-container">
+                                
+                                <!-- GROUP 1: PULLMAN - ANSR GOLDEN TULIP (11 Pax) -->
+                                <div class="manifest-group-card">
+                                    <div class="manifest-group-header">
+                                        <div class="manifest-hotel-name">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                                            PULLMAN &mdash; ANSR GOLDEN TULIP
+                                        </div>
+                                        <span class="manifest-count-pill">11 Jamaah</span>
+                                    </div>
+                                    <div class="manifest-grid">
+                                        <div class="manifest-item"><span class="manifest-idx">01.</span><span class="manifest-name-bold">FITRIA SAID MAHDI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">02.</span><span class="manifest-name-bold">ZAIRION ADISAR</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">03.</span><span class="manifest-name-bold">WINARTI ENCAP SABANI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">04.</span><span class="manifest-name-bold">MARCEL ADRIANUS WIDWIYANTO</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">05.</span><span class="manifest-name-bold">HARYUDIANTO SOMAD</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">06.</span><span class="manifest-name-bold">SOSI INDRIATI SOEROSO</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">07.</span><span class="manifest-name-bold">BALLI PRIHATINI DEWI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">08.</span><span class="manifest-name-bold">MUNI HERLIANI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">09.</span><span class="manifest-name-bold">YUNANI WONGSO DIHARJO</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">10.</span><span class="manifest-name-bold">TRI WARNIASIH</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">11.</span><span class="manifest-name-bold">FITRIANI RUSTAMA</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- GROUP 2: PULLMAN - TAIBA (4 Pax) -->
+                                <div class="manifest-group-card">
+                                    <div class="manifest-group-header">
+                                        <div class="manifest-hotel-name">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                                            PULLMAN &mdash; TAIBA
+                                        </div>
+                                        <span class="manifest-count-pill">4 Jamaah</span>
+                                    </div>
+                                    <div class="manifest-grid">
+                                        <div class="manifest-item"><span class="manifest-idx">12.</span><span class="manifest-name-bold">MUHAMAD ARIFIN</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">13.</span><span class="manifest-name-bold">MUHAMMAD ZOUFL FIRDAUS</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">14.</span><span class="manifest-name-bold">PUJI TETRA ASTUTI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">15.</span><span class="manifest-name-bold">FAIRUZ MAWLI DYAN</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- GROUP 3: SOFWAH - AL ANSR (6 Pax) -->
+                                <div class="manifest-group-card">
+                                    <div class="manifest-group-header">
+                                        <div class="manifest-hotel-name">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
+                                            SOFWAH &mdash; AL ANSR
+                                        </div>
+                                        <span class="manifest-count-pill">6 Jamaah</span>
+                                    </div>
+                                    <div class="manifest-grid">
+                                        <div class="manifest-item"><span class="manifest-idx">16.</span><span class="manifest-name-bold">NINA WAHYUNINGSIH</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">17.</span><span class="manifest-name-bold">TITIEN SOEHERMAN OKKY</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">18.</span><span class="manifest-name-bold">ADINDA AMALIA SHALEHA</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">19.</span><span class="manifest-name-bold">ABDUL MALIK YOGA FATHORI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">20.</span><span class="manifest-name-bold">KHADIJAH AKHITA NAOMI</span></div>
+                                        <div class="manifest-item"><span class="manifest-idx">21.</span><span class="manifest-name-bold">RALINKA HUMAIRA MALIK</span></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td class="item-subtotal-cell">
+                            <div class="item-amount">Rp 735.000</div>
+                            <div class="item-calc-detail">21 pax &times; Rp 35.000</div>
+                        </td>
+                    </tr>
+
+                    <tr class="subtotal-calc-row">
+                        <td style="text-align: right; color: var(--text-light); font-weight: 500;">Subtotal Layanan (21 Pax)</td>
+                        <td style="text-align: right; font-weight: 600; color: var(--text-main);">Rp 735.000</td>
+                    </tr>
+
+                    <tr class="total-highlight-row">
+                        <td class="total-title">Total Pembayaran</td>
+                        <td class="total-figure">Rp 735.000</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="terbilang-text">
+                # Tujuh Ratus Tiga Puluh Lima Ribu Rupiah #
+            </div>
+
+            <!-- Bottom Section: Payments & Issuer (Mandiri at the bottom) -->
+            <div class="bottom-section">
+                
+                <!-- Payment Column -->
+                <div class="payment-col">
+                    <div class="bottom-label">Rekening Pembayaran Resmi</div>
+                    <div class="payment-card-box">
+                        <div class="bank-line">
+                            <img src="mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 18px; width: auto; object-fit: contain;">
+                            <span class="bank-name-text">Bank Mandiri</span>
+                        </div>
+                        <div class="bank-details">
+                            Atas Nama: <strong>Daru Fahmaa Muliawan</strong>
+                        </div>
+                        <div class="bank-acc-row">
+                            <span class="acc-number-text">1550010616962</span>
+                            <button type="button" class="copy-link-btn" onclick="copyBankAcc()">Salin Nomor Rekening</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issuer Column -->
+                <div class="issuer-col">
+                    <div class="bottom-label">Penerbit Dokumen</div>
+                    <div class="issuer-name-text">Daru Fahmaa Muliawan</div>
+                    <div class="issuer-desc-text">
+                        Web Developer &amp; Digital Itinerary Designer<br>
+                        TemanTiket &middot; Kota Tangerang, Banten
+                    </div>
+                    <a href="https://wa.me/6281311506025" target="_blank" class="issuer-wa-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        WhatsApp: 081311506025
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Footer terms -->
+            <div class="footer-note">
+                Biaya layanan Umrahme (Pendamping Digital Jamaah Umrah) untuk 21 jamaah terkonfirmasi Batch Oktober 2026 sebesar Rp 35.000 / pax. Dokumen digital interaktif dapat langsung diakses melalui tautan resmi. Bukti konfirmasi pembayaran dapat dikirimkan melalui WhatsApp.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast Component -->
+    <div id="toast" class="toast">Nomor rekening Bank Mandiri berhasil disalin!</div>
+
+    <script>
+        function lockDocument() {
+            document.getElementById("coverOverlay").classList.remove("opened");
+            document.getElementById("passcodeInput").value = "";
+        }
+
+        function verifyPasscode() {
+            const input = document.getElementById("passcodeInput").value.trim();
+            const errorEl = document.getElementById("passcodeError");
+            
+            const pinVal = (typeof input === "string" ? input : input.value || "").trim();
+            if (pinVal === "0001" || pinVal === "050900") {
+                document.getElementById("coverOverlay").classList.add("opened");
+                errorEl.style.display = "none";
+                document.getElementById("passcodeInput").value = "";
+                try { sessionStorage.setItem("dreammecca_oktober_unlocked", "true"); } catch(e) {}
+            } else {
+                errorEl.style.display = "block";
+                const card = document.querySelector(".cover-card");
+                card.style.animation = "shake 0.35s ease";
+                setTimeout(() => card.style.animation = "", 350);
+            }
+        }
+
+        document.getElementById("passcodeInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verifyPasscode();
+            }
+        });
+
+        // Auto unlock check
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                if (sessionStorage.getItem("dreammecca_oktober_unlocked") === "true") {
+                    document.getElementById("coverOverlay").classList.add("opened");
+                }
+            } catch(e) {}
+        });
+
+        function copyBankAcc() {
+            const accNo = "1550010616962";
+            navigator.clipboard.writeText(accNo).then(() => {
+                showToast("Nomor Rekening 1550010616962 (Bank Mandiri) berhasil disalin!");
+            }).catch(() => {
+                showToast("Silakan salin manual: 1550010616962");
+            });
+        }
+
+        function copyInvoiceLink() {
+            const url = "https://temantiket.com/dreammecca-oktober";
+            navigator.clipboard.writeText(url).then(() => {
+                showToast("Link invoice (" + url + ") berhasil disalin!");
+            }).catch(() => {
+                showToast("Link: " + url);
+            });
+        }
+
+        function copyWaScriptLocal() {
+            const text = "Halo Mas Hilmy & Tim Dreammecca! 🙏✨\n\n" +
+                         "Berikut kami lampirkan dokumen resmi Invoice untuk Layanan Umrahme (Pendamping Digital Jamaah Umrah) Batch Oktober 2026 (21 Pax Jamaah):\n\n" +
+                         "🔗 Link Invoice Online: https://temantiket.com/dreammecca-oktober\n" +
+                         "🔑 Kode PIN Akses: 0001 (atau 050900)\n\n" +
+                         "📋 Rincian Distribusi Hotel & Jamaah:\n" +
+                         "1. PULLMAN - ANSR GOLDEN TULIP (11 Jamaah):\n" +
+                         "   • Fitria Said Mahdi, Zairion Adisar, Winarti Encap Sabani, Marcel Adrianus Widwiyanto\n" +
+                         "   • Haryudianto Somad, Sosi Indriati Soeroso, Balli Prihatini Dewi, Muni Herliani\n" +
+                         "   • Yunani Wongso Diharjo, Tri Warniasih, Fitriani Rustama\n" +
+                         "2. PULLMAN - TAIBA (4 Jamaah):\n" +
+                         "   • Muhamad Arifin, Muhammad Zoufl Firdaus, Puji Tetra Astuti, Fairuz Mawli Dyan\n" +
+                         "3. SOFWAH - AL ANSR (6 Jamaah):\n" +
+                         "   • Nina Wahyuningsih, Titien Soeherman Okky, Adinda Amalia Shaleha\n" +
+                         "   • Abdul Malik Yoga Fathori, Khadijah Akhita Naomi, Ralinka Humaira Malik\n\n" +
+                         "💰 Total Tagihan: 21 Pax × Rp 35.000 = Rp 735.000\n" +
+                         "(Terbilang: Tujuh Ratus Tiga Puluh Lima Ribu Rupiah)\n\n" +
+                         "💳 Rekening Resmi Pembayaran:\n" +
+                         "Bank Mandiri: 1550010616962\n" +
+                         "a.n. Daru Fahmaa Muliawan\n\n" +
+                         "Dokumen invoice interaktif serta tombol Cetak PDF & Unduh PNG resolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak! 🙏✨";
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Script Pesan WA Dreammecca Berhasil Disalin!");
+            }).catch(() => {
+                showToast("Link: https://temantiket.com/dreammecca-oktober");
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            toast.innerText = msg;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        async function downloadInvoicePNG() {
+            if (typeof html2canvas === 'undefined') {
+                showToast("Library gambar belum selesai dimuat, silakan coba lagi.");
+                return;
+            }
+
+            const btn = document.getElementById('btnDownloadPNG');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>Memproses...</span>`;
+            }
+
+            showToast("Sedang menyiapkan Invoice PNG...");
+
+            try {
+                const target = document.getElementById('invoiceSheet');
+                if (!target) throw new Error("Elemen invoice tidak ditemukan");
+
+                const filename = "INVOICE_UMRAHME_DREAMMECCA_OKTOBER_21PAX.png";
+
+                const canvas = await html2canvas(target, {
+                    scale: 2.2,
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    logging: false
+                });
+
+                const link = document.createElement("a");
+                link.download = filename;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showToast("PNG Invoice berhasil diunduh!");
+            } catch(e) {
+                console.error("Gagal export PNG:", e);
+                showToast("Gagal export gambar. Silakan gunakan tombol Cetak PDF.");
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh PNG`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

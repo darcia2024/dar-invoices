@@ -66,6 +66,7 @@ const defaultState = {
     oslo: "UNPAID",
     elmassa: "UNPAID",
     masdaus: "UNPAID",
+    "umrahme-dreammecca-oktober": "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -94,6 +95,7 @@ const defaultState = {
     oslo: 1500000,
     elmassa: 1940000,
     masdaus: 75000,
+    "umrahme-dreammecca-oktober": 367500,
   },
 };
 

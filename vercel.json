@@ -2,6 +2,10 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/dreammecca-oktober", "destination": "/dreammecca-oktober/index.html" },
+    { "source": "/dreammecca-october", "destination": "/dreammecca-oktober/index.html" },
+    { "source": "/dreammecca-10", "destination": "/dreammecca-oktober/index.html" },
+    { "source": "/umrahme-oktober", "destination": "/dreammecca-oktober/index.html" },
     { "source": "/masdaus", "destination": "/masdaus/index.html" },
     { "source": "/mas-daus", "destination": "/masdaus/index.html" },
     { "source": "/google-ai", "destination": "/masdaus/index.html" },
