@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Invoice #INV/DAR/2026/10/002 — Mas Daus (Google AI Pro 18 Bulan)</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- html2canvas for High-Res PNG Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --color-bg-page: #f8fafc;
+            --color-slate-900: #0f172a;
+            --color-slate-800: #1e293b;
+            --color-slate-700: #334155;
+            --color-slate-600: #475569;
+            --color-slate-500: #64748b;
+            --color-slate-400: #94a3b8;
+            --color-slate-200: #e2e8f0;
+            --color-slate-100: #f1f5f9;
+            --color-slate-50: #f8fafc;
+            --color-white: #ffffff;
+
+            /* Google & Gemini Tech Palette */
+            --color-google-blue: #4285f4;
+            --color-google-red: #ea4335;
+            --color-google-yellow: #fbbc05;
+            --color-google-green: #34a853;
+            --color-gemini-purple: #7c3aed;
+            --color-gemini-cyan: #06b6d4;
+
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            --shadow-subtle: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+            --shadow-card: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+            --shadow-modal: 0 25px 60px -15px rgba(15, 23, 42, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg-page);
+            color: var(--color-slate-800);
+            min-height: 100vh;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 70px 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.locked {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           STICKY ACTION TOOLBAR
+        ---------------------------------------------------- */
+        .top-action-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--color-slate-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .bar-inner {
+            max-width: 860px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .bar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .google-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-slate-900);
+            color: var(--color-white);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .google-pill svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: var(--font-main);
+            border-radius: 8px;
+            border: 1px solid var(--color-slate-200);
+            background: var(--color-white);
+            color: var(--color-slate-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-slate-400);
+            background: var(--color-slate-50);
+            color: var(--color-slate-900);
+        }
+
+        .btn-action.btn-primary {
+            background: var(--color-slate-900);
+            border-color: var(--color-slate-900);
+            color: var(--color-white);
+        }
+
+        .btn-action.btn-primary:hover {
+            background: var(--color-slate-800);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+
+        /* ----------------------------------------------------
+           MAIN DOCUMENT CANVAS
+        ---------------------------------------------------- */
+        .document-wrapper {
+            max-width: 860px;
+            width: 100%;
+            margin: 24px auto 0;
+            padding: 0 16px;
+        }
+
+        .invoice-sheet {
+            background: var(--color-white);
+            border: 1px solid var(--color-slate-200);
+            border-radius: 16px;
+            padding: 44px 48px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle Google Accent Top Border */
+        .invoice-sheet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4285f4 0%, #7c3aed 25%, #ea4335 50%, #fbbc05 75%, #34a853 100%);
+        }
+
+        /* ----------------------------------------------------
+           DOCUMENT HEADER
+        ---------------------------------------------------- */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--color-slate-200);
+            gap: 20px;
+        }
+
+        .brand-unit {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .ai-logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid var(--color-slate-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .ai-logo-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .brand-text-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--color-slate-900);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gemini-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+            color: #4f46e5;
+            border: 1px solid #c7d2fe;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .brand-sub {
+            font-size: 0.82rem;
+            color: var(--color-slate-500);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .invoice-title-block {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .invoice-main-heading {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--color-slate-900);
+            line-height: 1.1;
+        }
+
+        .invoice-meta-list {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: var(--color-slate-600);
+            line-height: 1.6;
+        }
+
+        .invoice-meta-list strong {
+            color: var(--color-slate-900);
+            font-weight: 700;
+        }
+
+        /* ----------------------------------------------------
+           PARTICIPANT / METADATA SECTION
+        ---------------------------------------------------- */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            padding: 26px 0;
+            border-bottom: 1px solid var(--color-slate-200);
+        }
+
+        .party-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .party-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-slate-400);
+            margin-bottom: 8px;
+        }
+
+        .party-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            margin-bottom: 4px;
+        }
+
+        .party-desc {
+            font-size: 0.83rem;
+            color: var(--color-slate-600);
+            line-height: 1.55;
+        }
+
+        .party-tag-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: var(--color-slate-100);
+            color: var(--color-slate-700);
+            font-size: 0.75rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        /* ----------------------------------------------------
+           TABLE OF SERVICES
+        ---------------------------------------------------- */
+        .table-wrap {
+            margin-top: 24px;
+            overflow-x: auto;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        .invoice-table thead tr {
+            background: var(--color-slate-50);
+            border-top: 1px solid var(--color-slate-200);
+            border-bottom: 2px solid var(--color-slate-300);
+        }
+
+        .invoice-table thead th {
+            padding: 12px 14px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-slate-600);
+            text-align: left;
+        }
+
+        .invoice-table thead th.th-num { width: 44px; text-align: center; }
+        .invoice-table thead th.th-desc { width: auto; }
+        .invoice-table thead th.th-price { width: 140px; text-align: right; }
+        .invoice-table thead th.th-qty { width: 110px; text-align: center; }
+        .invoice-table thead th.th-total { width: 150px; text-align: right; }
+
+        .invoice-table tbody tr {
+            border-bottom: 1px solid var(--color-slate-200);
+            transition: background 0.15s ease;
+        }
+
+        .invoice-table tbody tr:hover {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .invoice-table tbody td {
+            padding: 18px 14px;
+            vertical-align: top;
+            color: var(--color-slate-700);
+        }
+
+        .invoice-table .td-num {
+            text-align: center;
+            font-weight: 700;
+            color: var(--color-slate-400);
+        }
+
+        .item-main-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge-duration {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            padding: 2px 8px;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+        }
+
+        .item-feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .item-feature-list li {
+            font-size: 0.81rem;
+            color: var(--color-slate-600);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            line-height: 1.45;
+        }
+
+        .feature-bullet {
+            color: var(--color-google-blue);
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .invoice-table .td-price {
+            text-align: right;
+            font-weight: 600;
+            color: var(--color-slate-700);
+            font-family: var(--font-main);
+        }
+
+        .invoice-table .td-qty {
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-slate-700);
+        }
+
+        .invoice-table .td-total {
+            text-align: right;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            font-size: 0.95rem;
+        }
+
+        /* ----------------------------------------------------
+           TOTALS & SIGNATURE SECTION
+        ---------------------------------------------------- */
+        .bottom-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            margin-top: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--color-slate-200);
+        }
+
+        .signature-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .sig-label {
+            font-size: 0.75rem;
+            color: var(--color-slate-500);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .sig-image-frame {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .sig-image {
+            height: 64px;
+            width: auto;
+            object-fit: contain;
+            filter: contrast(110%);
+        }
+
+        .sig-signer-name {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+        }
+
+        .sig-signer-role {
+            font-size: 0.78rem;
+            color: var(--color-slate-500);
+        }
+
+        .totals-block {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            color: var(--color-slate-600);
+            padding: 4px 0;
+        }
+
+        .summary-row strong {
+            color: var(--color-slate-800);
+            font-weight: 600;
+        }
+
+        .summary-row.grand-total-row {
+            border-top: 2px solid var(--color-slate-300);
+            margin-top: 6px;
+            padding-top: 14px;
+            font-size: 1.15rem;
+            color: var(--color-slate-900);
+        }
+
+        .summary-row.grand-total-row strong {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            letter-spacing: -0.02em;
+        }
+
+        .spelled-amount-box {
+            background: var(--color-slate-50);
+            border: 1px dashed var(--color-slate-300);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            color: var(--color-slate-600);
+            line-height: 1.45;
+            margin-top: 8px;
+        }
+
+        .spelled-amount-box strong {
+            color: var(--color-slate-900);
+            font-style: italic;
+        }
+
+        /* ----------------------------------------------------
+           BANK MANDIRI PAYMENT SECTION (AT THE BOTTOM / TERAKHIR)
+        ---------------------------------------------------- */
+        .bottom-payment-section {
+            margin-top: 28px;
+        }
+
+        .mandiri-payment-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 1.5px solid var(--color-slate-300);
+            border-radius: 14px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mandiri-payment-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #003d79; /* Mandiri Blue */
+        }
+
+        .mandiri-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mandiri-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mandiri-logo-img {
+            height: 26px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .mandiri-official-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .mandiri-account-number {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: var(--color-slate-900);
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .mandiri-account-number:hover {
+            color: var(--color-google-blue);
+        }
+
+        .mandiri-account-name {
+            font-size: 0.82rem;
+            color: var(--color-slate-600);
+            font-weight: 600;
+        }
+
+        .mandiri-actions-right {
+            flex-shrink: 0;
+        }
+
+        .btn-copy-account {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 42px;
+            padding: 0 18px;
+            background: #003d79;
+            color: var(--color-white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 61, 121, 0.25);
+        }
+
+        .btn-copy-account:hover {
+            background: #002b55;
+            transform: translateY(-1px);
+        }
+
+        .btn-copy-account.copied {
+            background: #15803d;
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
+        }
+
+        /* ----------------------------------------------------
+           TERMS & CONDITIONS FOOTER
+        ---------------------------------------------------- */
+        .document-footer-terms {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid var(--color-slate-200);
+            font-size: 0.76rem;
+            color: var(--color-slate-500);
+            line-height: 1.6;
+        }
+
+        .document-footer-terms strong {
+            color: var(--color-slate-700);
+        }
+
+        /* ----------------------------------------------------
+           SECURITY PIN MODAL
+        ---------------------------------------------------- */
+        .security-gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-box {
+            background: var(--color-white);
+            border-radius: 16px;
+            border: 1px solid var(--color-slate-200);
+            box-shadow: var(--shadow-modal);
+            max-width: 400px;
+            width: 100%;
+            padding: 34px 30px;
+            text-align: center;
+        }
+
+        .modal-icon-badge {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #eff6ff 0%, #f1f5f9 100%);
+            border: 1px solid var(--color-slate-200);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .modal-icon-badge svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .modal-desc {
+            font-size: 0.83rem;
+            color: var(--color-slate-500);
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .pin-field {
+            width: 100%;
+            height: 52px;
+            border: 2px solid var(--color-slate-300);
+            border-radius: 10px;
+            font-size: 1.45rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 0.35em;
+            color: var(--color-slate-900);
+            outline: none;
+            transition: all 0.2s ease;
+            margin-bottom: 14px;
+            font-family: var(--font-main);
+            background: var(--color-slate-50);
+        }
+
+        .pin-field:focus {
+            border-color: var(--color-google-blue);
+            background: var(--color-white);
+            box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.15);
+        }
+
+        .btn-modal-submit {
+            width: 100%;
+            height: 48px;
+            background: var(--color-slate-900);
+            color: var(--color-white);
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-submit:hover {
+            background: var(--color-slate-800);
+        }
+
+        .error-label {
+            display: none;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--color-google-red);
+            margin-top: 10px;
+        }
+
+        /* ----------------------------------------------------
+           TOAST NOTIFICATION
+        ---------------------------------------------------- */
+        .toast-popup {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--color-slate-900);
+            color: var(--color-white);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-popup.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ----------------------------------------------------
+           PRINT STYLES
+        ---------------------------------------------------- */
+        @media print {
+            .top-action-bar, .security-gate-overlay, .toast-popup {
+                display: none !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+
+            .document-wrapper {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .invoice-sheet {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 16px 20px !important;
+                border-radius: 0 !important;
+            }
+
+            .mandiri-payment-card {
+                border: 1px solid #cbd5e1 !important;
+                break-inside: avoid;
+            }
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE MOBILE BREAKPOINTS (< 680px)
+        ---------------------------------------------------- */
+        @media (max-width: 680px) {
+            .invoice-sheet {
+                padding: 26px 20px;
+                border-radius: 12px;
+            }
+
+            .doc-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .invoice-title-block {
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .parties-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                padding: 20px 0;
+            }
+
+            /* Responsive Table -> Card rows */
+            .invoice-table thead {
+                display: none;
+            }
+
+            .invoice-table tbody tr {
+                display: flex;
+                flex-direction: column;
+                padding: 16px 0;
+                gap: 10px;
+            }
+
+            .invoice-table tbody td {
+                padding: 0;
+            }
+
+            .invoice-table .td-num {
+                display: none;
+            }
+
+            .invoice-table .td-price,
+            .invoice-table .td-qty {
+                display: none;
+            }
+
+            .invoice-table .td-total {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                font-size: 1.05rem;
+                padding-top: 6px;
+                border-top: 1px dashed var(--color-slate-200);
+            }
+
+            .invoice-table .td-total::before {
+                content: attr(data-mobile-label);
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--color-slate-500);
+            }
+
+            .bottom-summary-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .signature-block {
+                order: 2;
+                align-items: flex-start;
+                padding-top: 12px;
+                border-top: 1px solid var(--color-slate-200);
+            }
+
+            .totals-block {
+                order: 1;
+            }
+
+            .mandiri-payment-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .mandiri-actions-right {
+                width: 100%;
+            }
+
+            .btn-copy-account {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .bar-inner {
+                justify-content: center;
+            }
+
+            .bar-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn-action {
+                flex: 1 1 45%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="locked">
+
+    <!-- TOP STICKY TOOLBAR -->
+    <header class="top-action-bar">
+        <div class="bar-inner">
+            <div class="bar-left">
+                <span class="google-pill">
+                    <!-- Google 4-color "G" SVG -->
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    Google AI Pro
+                </span>
+            </div>
+            <div class="bar-actions">
+                <button type="button" class="btn-action" onclick="copyWaScriptLocal()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    Salin Script WA
+                </button>
+                <button type="button" class="btn-action" onclick="copyInvoiceLink()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Salin Link
+                </button>
+                <button type="button" class="btn-action" onclick="downloadPDF()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Cetak PDF
+                </button>
+                <button type="button" class="btn-action btn-primary" onclick="downloadHighResPNG()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Unduh PNG
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- INVOICE SHEET -->
+    <main class="document-wrapper" id="invoiceDocument" inert>
+        <div class="invoice-sheet" id="invoiceSheetCapture">
+            
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="brand-unit">
+                    <div class="ai-logo-icon">
+                        <!-- Google 4-Color Logo SVG -->
+                        <svg viewBox="0 0 24 24" width="28" height="28">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text-block">
+                        <div class="brand-name">
+                            Google AI Pro
+                            <span class="gemini-badge">Gemini Advanced</span>
+                        </div>
+                        <span class="brand-sub">Langganan Resmi &middot; Invoice Pembelian</span>
+                    </div>
+                </div>
+
+                <div class="invoice-title-block">
+                    <h1 class="invoice-main-heading">INVOICE</h1>
+                    <div class="invoice-meta-list">
+                        No. Ref: <strong>#INV/DAR/2026/10/002</strong><br>
+                        Tanggal: <strong>01 Oktober 2026</strong>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PARTIES INFO -->
+            <section class="parties-grid">
+                <div class="party-col">
+                    <div class="party-label">Tagihan Ditujukan Kepada :</div>
+                    <div class="party-title">Mas Daus</div>
+                    <div class="party-desc">
+                        Pengguna Layanan Google AI Pro 18 Bulan<br>
+                        Aktivasi &amp; Lisensi Cloud Workspace
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Akun Personal Terverifikasi
+                    </div>
+                </div>
+
+                <div class="party-col">
+                    <div class="party-label">Diterbitkan Oleh :</div>
+                    <div class="party-title">Daru Fahmaa Muliawan</div>
+                    <div class="party-desc">
+                        Digital Product &amp; Tech Solutions<br>
+                        Email: darufahmaamuliawan@gmail.com &middot; TemanTiket
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Penyedia Lisensi Resmi
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="table-wrap">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th class="th-num">#</th>
+                            <th class="th-desc">Rincian Layanan / Produk</th>
+                            <th class="th-price">Harga Satuan</th>
+                            <th class="th-qty">Durasi / Qty</th>
+                            <th class="th-total">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-num">1</td>
+                            <td class="td-desc">
+                                <div class="item-main-title">
+                                    Paket Langganan Google AI Pro
+                                    <span class="badge-duration">18 Bulan Aktif</span>
+                                </div>
+                                <ul class="item-feature-list">
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Akses Model AI Unggulan:</strong> Gemini Advanced 1.5 Pro &amp; model generasi terbaru dengan batas konteks ultra besar.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Penyimpanan Cloud 2.000 GB (2 TB):</strong> Kapasitas lega untuk Google Drive, Gmail, dan Google Foto resolusi penuh.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Integrasi Gemini di Google Workspace:</strong> Asisten pintar langsung di dalam Google Dokumen, Spreadsheet, Slide, dan Gmail.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Garansi &amp; Layanan Penuh:</strong> Masa aktif 18 bulan penuh terhitung sejak tanggal aktivasi akun.</span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="td-price">Rp 75.000</td>
+                            <td class="td-qty">18 Bulan</td>
+                            <td class="td-total" data-mobile-label="Total (18 Bulan)">Rp 75.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TOTALS & SIGNATURE -->
+            <section class="bottom-summary-grid">
+                <div class="signature-block">
+                    <div class="sig-label">Hormat Kami,</div>
+                    <div class="sig-image-frame">
+                        <img src="/masdaus/ttd_daru.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="sig-image" onerror="this.src='ttd_daru.png'">
+                    </div>
+                    <div class="sig-signer-name">Daru Fahmaa Muliawan</div>
+                    <div class="sig-signer-role">Digital Product Specialist &middot; TemanTiket</div>
+                </div>
+
+                <div class="totals-block">
+                    <div class="summary-row">
+                        <span>Subtotal :</span>
+                        <strong>Rp 75.000</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Pajak / PPN :</span>
+                        <strong>0.00% (Bebas Biaya)</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Biaya Administrasi :</span>
+                        <strong>Rp 0</strong>
+                    </div>
+                    <div class="summary-row grand-total-row">
+                        <span>TOTAL TAGIHAN :</span>
+                        <strong>Rp 75.000</strong>
+                    </div>
+                    <div class="spelled-amount-box">
+                        Terbilang: <strong>Tujuh Puluh Lima Ribu Rupiah</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BANK MANDIRI (DITARUH TERAKHIR / AT THE BOTTOM) -->
+            <section class="bottom-payment-section">
+                <div class="mandiri-payment-card">
+                    <div class="mandiri-info-left">
+                        <div class="mandiri-header-row">
+                            <img src="/masdaus/mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-logo-img" onerror="this.src='mandiri_logo.webp'">
+                            <span class="mandiri-official-pill">Rekening Resmi Pembayaran</span>
+                        </div>
+                        <div class="mandiri-account-number" id="mandiriAccNumber" onclick="copyBankAccount()" title="Klik untuk menyalin">
+                            <span>1550010616962</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </div>
+                        <div class="mandiri-account-name">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
+                    </div>
+                    <div class="mandiri-actions-right">
+                        <button type="button" class="btn-copy-account" id="btnCopyAccount" onclick="copyBankAccount()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="btnCopyAccountText">Salin No. Rekening</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TERMS & CONDITIONS FOOTER -->
+            <footer class="document-footer-terms">
+                <p>
+                    <strong>Ketentuan &amp; Tata Cara Aktivasi:</strong><br>
+                    1. Pembayaran tagihan dapat ditransfer langsung ke rekening Bank Mandiri di atas dengan nomor <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan.<br>
+                    2. Setelah pembayaran berhasil, konfirmasi dapat dikirimkan melalui WhatsApp agar proses aktivasi atau penyerahan kredensial Google AI Pro 18 Bulan segera diproses.<br>
+                    3. Masa berlaku langganan aktif penuh selama 18 bulan terhitung sejak akun diserahterimakan.
+                </p>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- SECURITY PIN MODAL OVERLAY -->
+    <div class="security-gate-overlay" id="securityGate">
+        <div class="modal-box">
+            <div class="modal-icon-badge">
+                <svg viewBox="0 0 24 24" width="30" height="30">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+            </div>
+            <h3 class="modal-title">Invoice Terproteksi</h3>
+            <p class="modal-desc">Masukkan Kode PIN Resmi untuk membuka akses dokumen invoice Mas Daus.</p>
+
+            <form onsubmit="handlePinSubmit(event)">
+                <input type="password" id="pinInput" class="pin-field" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
+                <button type="submit" class="btn-modal-submit">Buka Dokumen</button>
+            </form>
+
+            <div class="error-label" id="gateError">Kode PIN tidak valid. Coba lagi.</div>
+        </div>
+    </div>
+
+    <!-- TOAST POPUP -->
+    <div class="toast-popup" id="toastBox">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMsg">Teks berhasil disalin!</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const VALID_PINS = ["0001", "050900"];
+
+        function unlockDocument() {
+            const gate = document.getElementById("securityGate");
+            const doc = document.getElementById("invoiceDocument");
+            if (gate) gate.style.display = "none";
+            if (doc) doc.removeAttribute("inert");
+            document.body.classList.remove("locked");
+            try { sessionStorage.setItem("masdaus_unlocked", "true"); } catch(e) {}
+        }
+
+        function verifyPin() {
+            const pinIn = document.getElementById("pinInput");
+            const errEl = document.getElementById("gateError");
+            if (!pinIn) return;
+
+            const val = pinIn.value.trim();
+            if (VALID_PINS.includes(val)) {
+                if (errEl) errEl.style.display = "none";
+                unlockDocument();
+                showToast("Akses invoice dibuka!");
+            } else {
+                if (errEl) errEl.style.display = "block";
+                pinIn.style.borderColor = "#ea4335";
+                pinIn.style.background = "#fff1f2";
+                setTimeout(() => {
+                    pinIn.style.background = "#f8fafc";
+                    pinIn.style.borderColor = "#cbd5e1";
+                }, 1000);
+            }
+        }
+
+        function handlePinSubmit(e) {
+            e.preventDefault();
+            verifyPin();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toastBox");
+            const msgEl = document.getElementById("toastMsg");
+            if (!toast) return;
+            if (msgEl) msgEl.innerText = msg;
+            toast.classList.add("visible");
+            setTimeout(() => {
+                toast.classList.remove("visible");
+            }, 2600);
+        }
+
+        function copyInvoiceLink() {
+            const url = "https://temantiket.com/masdaus";
+            navigator.clipboard.writeText(url).then(() => {
+                showToast("Link invoice (" + url + ") disalin!");
+            }).catch(() => {
+                showToast("Link: " + url);
+            });
+        }
+
+        function copyBankAccount() {
+            const num = "1550010616962";
+            const btn = document.getElementById("btnCopyAccount");
+            const btnText = document.getElementById("btnCopyAccountText");
+
+            navigator.clipboard.writeText(num).then(() => {
+                showToast("Rekening Mandiri (1550010616962) disalin!");
+                if (btnText) btnText.innerText = "✓ Berhasil Disalin";
+                if (btn) btn.classList.add("copied");
+                setTimeout(() => {
+                    if (btnText) btnText.innerText = "Salin No. Rekening";
+                    if (btn) btn.classList.remove("copied");
+                }, 2200);
+            }).catch(() => {
+                showToast("No. Rekening: 1550010616962");
+            });
+        }
+
+        function copyWaScriptLocal() {
+            const text = "Halo Mas Daus! 🙏✨\n\n" +
+                         "Berikut kami lampirkan dokumen resmi Invoice untuk pembelian paket langganan Google AI Pro 18 Bulan:\n\n" +
+                         "🔗 Invoice Online: https://temantiket.com/masdaus\n" +
+                         "🔑 Kode PIN Akses: 0001 (atau 050900)\n\n" +
+                         "📋 Rincian Produk:\n" +
+                         "• Layanan: Paket Langganan Google AI Pro (Gemini Advanced & 2 TB Cloud Storage)\n" +
+                         "• Durasi: 18 Bulan Penuh\n" +
+                         "• Total Tagihan: Rp 75.000\n" +
+                         "(Terbilang: Tujuh Puluh Lima Ribu Rupiah)\n\n" +
+                         "💳 Rekening Resmi Pembayaran:\n" +
+                         "Bank Mandiri: 1550010616962\n" +
+                         "a.n. Daru Fahmaa Muliawan\n\n" +
+                         "Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak! 🙏✨";
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Script Pesan WA Berhasil Disalin!");
+            }).catch(() => {
+                showToast("Link: https://temantiket.com/masdaus");
+            });
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+
+        function downloadHighResPNG() {
+            const captureEl = document.getElementById("invoiceSheetCapture");
+            if (!captureEl) return;
+
+            showToast("Sedang membuat gambar PNG resolusi tinggi...");
+
+            html2canvas(captureEl, {
+                scale: 2.5,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false,
+                windowWidth: captureEl.scrollWidth,
+                windowHeight: captureEl.scrollHeight
+            }).then(canvas => {
+                const link = document.createElement("a");
+                link.download = "Invoice-MasDaus-GoogleAIPro-INV-DAR-2026-10-002.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showToast("PNG berhasil diunduh!");
+            }).catch(err => {
+                console.error("Gagal generate PNG:", err);
+                showToast("Gagal mengunduh gambar. Silakan coba Cetak PDF.");
+            });
+        }
+
+        // Auto unlock check
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                if (sessionStorage.getItem("masdaus_unlocked") === "true") {
+                    unlockDocument();
+                }
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>

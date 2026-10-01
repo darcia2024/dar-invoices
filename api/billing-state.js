@@ -65,6 +65,7 @@ const defaultState = {
     kpi: "UNPAID",
     oslo: "UNPAID",
     elmassa: "UNPAID",
+    masdaus: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -92,6 +93,7 @@ const defaultState = {
     kpi: 14000000,
     oslo: 1500000,
     elmassa: 1940000,
+    masdaus: 75000,
   },
 };
 

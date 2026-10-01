@@ -10,6 +10,9 @@ if hasattr(sys.stdout, 'reconfigure'):
 PORT = 3000
 
 REWRITES = {
+    "/masdaus": "/masdaus/index.html",
+    "/mas-daus": "/masdaus/index.html",
+    "/google-ai": "/masdaus/index.html",
     "/elmassa": "/elmassa/index.html",
     "/el-massa": "/elmassa/index.html",
     "/today": "/today/index.html",
