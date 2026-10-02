@@ -3704,6 +3704,60 @@
                     <span>Buka Invoice Bang Edo</span>
                 </a>
             </div>
+
+            <!-- Ibu Erna - Visa Entry Student Mesir Card -->
+            <div class="invoice-card" id="card-erna" data-id="erna" data-month="2026-10" data-amount="1200000" data-client="ibu erna erna visa entry student kairo mesir pelajar ongkir fisik 1200000 1200k 1.2jt #inv/ves/2026/017 oktober 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Ibu Erna (Visa Entry Student Mesir)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('erna')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/VES/2026/017 &bull; Visa Entry Student Mesir</span>
+                        <span class="month-tag">📅 Oktober 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Layanan Pengurusan Visa Entry Pelajar / Mahasiswa ke Mesir (Rp 1.150.000) + Layanan Pengiriman &amp; Ongkos Kirim Fisik Visa ke Alamat (Rp 50.000). Total All-In: Rp 1.200.000 (Akses Langsung Tanpa Password).
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/erna</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/erna')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptErna()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 1.200.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValErna">Rp 700.000</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValErna">Rp 500.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('erna')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/erna" class="action-btn">
+                    <span>Buka Invoice Ibu Erna</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -3928,7 +3982,8 @@
             elmassa: "UNPAID",
             masdaus: "UNPAID",
             "umrahme-dreammecca-oktober": "UNPAID",
-            bangedo: "UNPAID"
+            bangedo: "UNPAID",
+            erna: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -3981,7 +4036,8 @@
             elmassa: 1940000,
             masdaus: 75000,
             "umrahme-dreammecca-oktober": 367500,
-            bangedo: 350000
+            bangedo: 350000,
+            erna: 500000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -4045,7 +4101,8 @@
             { id: "elmassa", name: "El Massa (Branding Merchandise, Desain & Website Katalog)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1940000 },
             { id: "masdaus", name: "Mas Daus (Google AI Pro 18 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 75000 },
             { id: "umrahme-dreammecca-oktober", name: "Dreammecca - Umrahme (Batch Oktober - 21 Pax)", month: "2026-10", monthLabel: "Oktober 2026", gross: 735000 },
-            { id: "bangedo", name: "Bang Edo (Desain Undangan Nikah)", month: "2026-10", monthLabel: "Oktober 2026", gross: 350000 }
+            { id: "bangedo", name: "Bang Edo (Desain Undangan Nikah)", month: "2026-10", monthLabel: "Oktober 2026", gross: 350000 },
+            { id: "erna", name: "Ibu Erna (Visa Entry Student Mesir)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 }
         ];
 
         function formatIDR(num) {
@@ -6290,6 +6347,37 @@ Terima kasih banyak ya Bang Edo! 🙏✨`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT WA BANG EDO BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptErna() {
+            const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Ibu Erna. 🙏✨
+
+Berikut rincian resmi Invoice Layanan Pembuatan Visa Entry Student (Visa Pelajar Mesir) untuk ananda:
+
+🔗 Invoice Online: https://temantiket.com/erna
+*(Dokumen terbuka langsung tanpa perlu PIN / password)*
+
+📋 Rincian Layanan & Fasilitas All-In:
+1. Layanan Pengurusan & Penerbitan Visa Entry Student Mesir (Pendaftaran berkas, pengawalan, & pemrosesan resmi ke Kedutaan)
+2. Verifikasi & Pengecekan Kelengkapan Berkas (Paspor, Pasfoto latar putih, Tadaruj Dirasi)
+3. Layanan Pengiriman & Ongkos Kirim (Ongkir) Dokumen Fisik: Paspor & stiker visa fisik yang telah selesai akan dikirimkan langsung ke alamat tujuan via kurir express berasuransi (lengkap dengan nomor resi pelacakan).
+
+⏱️ Estimasi Pengerjaan: Sekitar 1 Minggu kerja (apabila alur kedutaan normal lancar)
+
+💰 Total Tagihan (All-In Termasuk Ongkir): Rp 1.200.000
+(Terbilang: Satu Juta Dua Ratus Ribu Rupiah)
+
+💳 Rekening Pembayaran Resmi:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice resmi dan rincian lengkap dapat langsung dilihat dan diunduh dalam format PDF pada tautan di atas. Terima kasih banyak atas kepercayaan Ibu Erna. Semoga proses pengurusan visa ananda lancar dan berkah selalu. 🙏😊`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA IBU ERNA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

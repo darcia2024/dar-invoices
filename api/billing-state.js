@@ -71,6 +71,7 @@ const defaultState = {
     masdaus: "UNPAID",
     "umrahme-dreammecca-oktober": "UNPAID",
     bangedo: "UNPAID",
+    erna: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -106,6 +107,7 @@ const defaultState = {
     masdaus: 75000,
     "umrahme-dreammecca-oktober": 367500,
     bangedo: 350000,
+    erna: 500000,
   },
 };
 

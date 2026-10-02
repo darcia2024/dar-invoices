@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>INVOICE #INV/VES/2026/017 - Ibu Erna (Visa Entry Student Mesir)</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #f1f5f9;
+            --bg-card: #ffffff;
+            --navy-primary: #0f172a; /* Midnight Dark Slate */
+            --navy-light: #1e293b;
+            --blue-accent: #0284c7;  /* Sky Accent */
+            --blue-light: #e0f2fe;   /* Soft Highlight */
+            --green-accent: #16a34a;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.45;
+            padding: 24px 16px;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           TOP CONTROL BAR
+        ---------------------------------------------------- */
+        .action-bar {
+            max-width: 900px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .action-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--blue-accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid var(--border-light);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            border-color: var(--navy-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #1e293b;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f8fafc;
+        }
+
+        /* ----------------------------------------------------
+           MAIN INVOICE CONTAINER (DESKTOP)
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sidebar Kiri Minimalis */
+        .sidebar-left {
+            width: 56px;
+            background-color: #f8fafc;
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--navy-primary);
+            opacity: 0.9;
+        }
+
+        .vertical-brand-name {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Main Content Panel */
+        .main-panel {
+            flex-grow: 1;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            border-bottom: 1.5px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        .inv-date-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .billed-to-box {
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+
+        .billed-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .top-right-logo-box {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .all-in-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        /* Table Architecture */
+        .table-area {
+            margin-bottom: 24px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--navy-primary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--navy-primary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .section-header-banner {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 10px 14px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .col-qty {
+            text-align: center;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 80px;
+        }
+
+        .col-unit-price {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 130px;
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 140px;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            font-size: 0.88rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+            color: var(--navy-primary);
+            font-weight: bold;
+        }
+
+        .grand-total {
+            border-top: 2px solid var(--navy-primary);
+            border-bottom: 2px solid var(--navy-primary);
+            font-weight: 700;
+            background: #f8fafc;
+        }
+
+        .grand-total td {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            padding: 14px 10px;
+            color: var(--navy-primary);
+        }
+
+        /* Scope Breakdown Box */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .scope-card-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .scope-card-list svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 18px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 18px;
+            margin-bottom: 16px;
+        }
+
+        .bottom-block-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .bottom-block-content {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .copy-pill-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            color: var(--navy-primary);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--navy-primary);
+            color: #ffffff;
+        }
+
+        /* Terms & Notes Box */
+        .terms-container {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-light);
+            padding: 14px 16px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            border-radius: 8px;
+        }
+
+        .terms-title {
+            font-weight: 800;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        /* Display controllers between Desktop & Mobile View */
+        .mobile-invoice-view {
+            display: none;
+        }
+
+        /* ----------------------------------------------------
+           DEDICATED NATIVE-FEEL MOBILE INVOICE (< 768px)
+        ---------------------------------------------------- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px 8px 36px 8px;
+                background-color: #0b1120;
+                color: #0f172a;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 400;
+            }
+
+            /* Hide Desktop Structure on Mobile */
+            .desktop-only-view {
+                display: none !important;
+            }
+
+            /* Display Mobile Specific Optimized Layout */
+            .mobile-invoice-view {
+                display: block;
+                max-width: 520px;
+                margin: 0 auto;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 400;
+            }
+
+            .mobile-invoice-view * {
+                font-family: 'Plus Jakarta Sans', sans-serif !important;
+            }
+
+            /* Mobile Sticky Top App Bar */
+            .mob-top-bar {
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 14px;
+                padding: 10px 14px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                margin-bottom: 12px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            }
+
+            .mob-top-left {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .mob-top-title {
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #ffffff;
+                line-height: 1.25;
+            }
+
+            .mob-top-sub {
+                font-size: 0.68rem;
+                font-weight: 400;
+                color: #94a3b8;
+            }
+
+            .mob-actions {
+                display: flex;
+                gap: 6px;
+            }
+
+            .mob-btn {
+                background: #1e293b;
+                color: #f1f5f9;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                padding: 7px 11px;
+                border-radius: 8px;
+                font-size: 0.7rem;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+            }
+
+            .mob-btn-primary {
+                background: #0284c7;
+                border-color: #0284c7;
+                color: #ffffff;
+            }
+
+            /* Main Digital Receipt Card */
+            .mob-bill-card {
+                background: #ffffff;
+                border-radius: 18px;
+                overflow: hidden;
+                box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+                border: 1px solid #e2e8f0;
+            }
+
+            /* Card Header Dark Hero Banner */
+            .mob-hero-header {
+                background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+                color: #ffffff;
+                padding: 22px 18px;
+                position: relative;
+            }
+
+            .mob-hero-category {
+                font-size: 0.74rem;
+                font-weight: 500;
+                color: #7dd3fc;
+                margin-bottom: 6px;
+                letter-spacing: 0.02em;
+            }
+
+            .mob-hero-amount-label {
+                font-size: 0.64rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #94a3b8;
+                margin-bottom: 4px;
+                font-weight: 500;
+            }
+
+            .mob-hero-amount-val {
+                font-size: 2.1rem;
+                font-weight: 800 !important;
+                color: #ffffff;
+                line-height: 1.15;
+                margin-bottom: 4px;
+                letter-spacing: -0.5px;
+            }
+
+            .mob-hero-spelled {
+                font-size: 0.72rem;
+                font-weight: 400;
+                color: #93c5fd;
+            }
+
+            .mob-hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                background: rgba(2, 132, 199, 0.25);
+                border: 1px solid rgba(56, 189, 248, 0.4);
+                color: #bae6fd;
+                padding: 3px 8px;
+                border-radius: 20px;
+                font-size: 0.64rem;
+                font-weight: 600;
+                margin-top: 8px;
+            }
+
+            /* Recipient & Meta Strip */
+            .mob-meta-strip {
+                background: #f8fafc;
+                border-bottom: 1px solid #e2e8f0;
+                padding: 12px 16px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .mob-meta-col label {
+                display: block;
+                font-size: 0.62rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                color: #64748b;
+                margin-bottom: 2px;
+                letter-spacing: 0.04em;
+            }
+
+            .mob-meta-col span {
+                display: block;
+                font-size: 0.84rem;
+                font-weight: 500;
+                color: #0f172a;
+            }
+
+            .mob-meta-col span.mob-client-name {
+                font-size: 0.92rem;
+                font-weight: 700 !important;
+                color: #0f172a;
+            }
+
+            .mob-meta-col small {
+                font-size: 0.7rem;
+                font-weight: 400;
+                color: #64748b;
+            }
+
+            /* Main Card Body */
+            .mob-body {
+                padding: 16px;
+            }
+
+            /* Section Title */
+            .mob-section-heading {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: #64748b;
+                margin-bottom: 8px;
+            }
+
+            .mob-section-heading svg {
+                color: #0284c7;
+            }
+
+            /* Service Summary Block */
+            .mob-service-card {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+
+            .mob-service-title {
+                font-size: 0.9rem;
+                font-weight: 700;
+                color: #0f172a;
+                margin-bottom: 2px;
+            }
+
+            .mob-service-sub {
+                font-size: 0.72rem;
+                font-weight: 400;
+                color: #64748b;
+                margin-bottom: 10px;
+            }
+
+            .mob-checklist {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+            }
+
+            .mob-checklist li {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                font-size: 0.76rem;
+                font-weight: 400;
+                color: #334155;
+                line-height: 1.45;
+            }
+
+            .mob-checklist li svg {
+                flex-shrink: 0;
+                color: #16a34a;
+                margin-top: 2px;
+            }
+
+            /* Key Value Price Breakdown rows */
+            .mob-calc-card {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 12px 14px;
+                margin-bottom: 14px;
+            }
+
+            .mob-calc-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 7px 0;
+                font-size: 0.78rem;
+                font-weight: 400;
+                color: #475569;
+                border-bottom: 1px dashed #e2e8f0;
+            }
+
+            .mob-calc-row:last-child {
+                border-bottom: none;
+                padding-top: 10px;
+                font-weight: 700 !important;
+                color: #0f172a;
+                font-size: 0.95rem;
+            }
+
+            .mob-calc-row:last-child .val {
+                font-weight: 800 !important;
+            }
+
+            .mob-calc-row .val {
+                font-weight: 600;
+                color: #0f172a;
+            }
+
+            /* Requirements & SLA Dual Grid */
+            .mob-grid-dual {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+
+            .mob-subcard {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 12px 14px;
+            }
+
+            .mob-subcard-title {
+                font-size: 0.7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #475569;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            /* Bank Card */
+            .mob-bank-card {
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                border-radius: 14px;
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+
+            .mob-bank-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+
+            .mob-bank-brand {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .mob-bank-brand img {
+                height: 18px;
+                width: auto;
+            }
+
+            .mob-bank-brand span {
+                font-size: 0.85rem;
+                font-weight: 700;
+                color: #166534;
+            }
+
+            .mob-acc-box {
+                background: #ffffff;
+                border: 1px solid #bbf7d0;
+                border-radius: 10px;
+                padding: 10px 12px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 8px;
+            }
+
+            .mob-acc-info {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .mob-acc-label {
+                font-size: 0.6rem;
+                color: #64748b;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+
+            .mob-acc-num {
+                font-family: 'Space Mono', monospace !important;
+                font-size: 1.12rem;
+                font-weight: 700;
+                color: #0f172a;
+                letter-spacing: 0.5px;
+            }
+
+            .mob-acc-holder {
+                font-size: 0.74rem;
+                color: #475569;
+                font-weight: 500;
+            }
+
+            .mob-copy-btn {
+                background: #16a34a;
+                color: #ffffff;
+                border: none;
+                border-radius: 6px;
+                padding: 7px 12px;
+                font-size: 0.7rem;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                transition: background 0.15s ease;
+            }
+
+            .mob-copy-btn:hover {
+                background: #15803d;
+            }
+
+            .mob-pay-hint {
+                font-size: 0.68rem;
+                font-weight: 500;
+                color: #15803d;
+                text-align: center;
+            }
+
+            /* Terms Accordion / Notes */
+            .mob-notes-box {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 10px;
+                padding: 10px 12px;
+                font-size: 0.7rem;
+                font-weight: 400;
+                color: #64748b;
+                line-height: 1.45;
+                margin-bottom: 12px;
+            }
+
+            /* Issuer Info Footer */
+            .mob-footer {
+                text-align: center;
+                padding-top: 8px;
+                font-size: 0.68rem;
+                font-weight: 400;
+                color: #64748b;
+            }
+
+            .mob-footer strong {
+                color: #0f172a;
+            }
+
+            .toast {
+                left: 12px;
+                right: 12px;
+                bottom: 14px;
+                padding: 10px 14px;
+                font-size: 0.74rem;
+                text-align: center;
+                border-radius: 8px;
+            }
+        }
+
+        /* Print Optimization */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm;
+            }
+            body { background: #ffffff !important; padding: 0 !important; font-size: 10.5px !important; }
+            .action-bar, .mob-top-bar, .copy-pill-btn, .toast { display: none !important; }
+            .mobile-invoice-view { display: none !important; }
+            .desktop-only-view { display: flex !important; }
+            .invoice-container { box-shadow: none !important; border: none !important; max-width: 100% !important; }
+            .sidebar-left { background-color: #f8fafc !important; border-right: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
+            .section-header-banner { background-color: #0f172a !important; color: #ffffff !important; -webkit-print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================================================
+         1. DESKTOP / PRINT VIEW
+         ========================================================================= -->
+    <div class="desktop-only-view">
+        <div style="width: 100%;">
+            <!-- TOP CONTROL BAR -->
+            <div class="action-bar">
+                <div class="action-title">
+                    <span></span> INVOICE #INV/VES/2026/017 &mdash; Ibu Erna (Visa Entry Student Mesir)
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="copyBankAcc()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Salin Rekening
+                    </button>
+                    <button class="btn btn-primary" onclick="downloadPDF()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download PDF
+                    </button>
+                    <button class="btn btn-primary" style="background:#0f172a; border-color:#0f172a;" onclick="window.print()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Cetak / Print
+                    </button>
+                </div>
+            </div>
+
+            <!-- MAIN INVOICE CONTAINER -->
+            <div class="invoice-container">
+                
+                <!-- Sidebar Kiri Minimalis -->
+                <div class="sidebar-left">
+                    <div class="vertical-invoice-title">invoice</div>
+                    <div class="vertical-brand-name">TEMANTIKET</div>
+                </div>
+
+                <!-- Main Content Right -->
+                <div class="main-panel">
+                    
+                    <div>
+                        <!-- Header Meta Row -->
+                        <div class="invoice-header-row">
+                            <div class="top-left-meta">
+                                <div class="inv-num-label">Invoice No. #INV/VES/2026/017</div>
+                                <div class="inv-date-label">02 Oktober 2026</div>
+
+                                <div class="billed-to-box">
+                                    <div class="billed-title">BILLED TO // DITUJUKAN KEPADA:</div>
+                                    <div class="billed-content">
+                                        <strong style="font-size: 1.05rem; color: #0f172a;">Ibu Erna</strong><br>
+                                        Layanan: <span style="color: var(--text-muted);">Visa Entry Student Mesir (Ananda Mahasiswa / Pelajar Baru)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="top-right-logo-box">
+                                <div style="font-size:0.84rem; font-weight:700; color:var(--navy-primary); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 2px;">Visa Entry Student Mesir</div>
+                                <div style="font-size:0.76rem; font-weight:400; color:var(--text-muted); margin-bottom: 6px;">Temantiket &bull; Layanan Visa Pelajar Mesir</div>
+                                <div class="all-in-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Termasuk Jasa &amp; Ongkir Fisik
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scope Breakdown Table -->
+                        <div class="table-area">
+                            <table class="margarita-table">
+                                <thead>
+                                    <tr>
+                                        <th>DESKRIPSI LAYANAN PENGURUSAN VISA &amp; PENGIRIMAN</th>
+                                        <th class="col-qty">QTY</th>
+                                        <th class="col-unit-price">HARGA SATUAN</th>
+                                        <th class="col-subtotal">SUBTOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <!-- BANNER BAGIAN I -->
+                                    <tr>
+                                        <td colspan="4" style="padding:0; border-bottom:none;">
+                                            <div class="section-header-banner">
+                                                <span>PEMBUATAN VISA ENTRY STUDENT MESIR (PAKET LENGKAP ALL-IN)</span>
+                                                <span>Subtotal: Rp 1.200.000</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- ITEM 1: Jasa Visa -->
+                                    <tr>
+                                        <td>
+                                            <div class="item-title">
+                                                1. Pengurusan &amp; Penerbitan Visa Entry Student Mesir (Pelajar Kairo)
+                                            </div>
+                                            <ul class="bullet-list">
+                                                <li><strong>Administrasi &amp; Proses Kedutaan:</strong> Pendaftaran, penyerahan berkas, pengawalan, dan pemrosesan visa entry pelajar ke Kedutaan Besar Republik Arab Mesir.</li>
+                                                <li><strong>Validasi Dokumen Persyaratan:</strong> Verifikasi Paspor, Pasfoto terbaru (background putih), serta Tadaruj Dirasi / surat keterangan studi.</li>
+                                                <li><strong>Estimasi Pengerjaan:</strong> Sekitar <strong>1 Minggu kerja</strong> <em>(apabila alur pemrosesan kedutaan berjalan normal lancar)</em>.</li>
+                                            </ul>
+                                        </td>
+                                        <td class="col-qty" style="font-weight: 500; color: #0f172a;">1 Pemohon</td>
+                                        <td class="col-unit-price" style="font-weight: 500; color: #0f172a;">Rp 1.150.000</td>
+                                        <td class="col-subtotal" style="font-weight: 600; color: #0f172a;">
+                                            Rp 1.150.000
+                                        </td>
+                                    </tr>
+
+                                    <!-- ITEM 2: Pengiriman Fisik & Ongkir -->
+                                    <tr>
+                                        <td>
+                                            <div class="item-title">
+                                                2. Pengiriman &amp; Ongkos Kirim (Ongkir) Dokumen Fisik ke Alamat
+                                            </div>
+                                            <ul class="bullet-list">
+                                                <li><strong>Pengiriman Fisik Aman &amp; Berasuransi:</strong> Paspor asli dengan visa entry yang telah selesai diterbitkan akan dikirimkan langsung ke alamat domisili Ibu Erna melalui ekspedisi kurir express terpercaya.</li>
+                                                <li><strong>Nomor Resi &amp; Pelacakan Real-Time:</strong> Bukti resi pengiriman akan diberikan segera setelah paket dikirim untuk pemantauan posisi kiriman.</li>
+                                            </ul>
+                                        </td>
+                                        <td class="col-qty" style="font-weight: 500; color: #0f172a;">1 Paket</td>
+                                        <td class="col-unit-price" style="font-weight: 500; color: #0f172a;">Rp 50.000</td>
+                                        <td class="col-subtotal" style="font-weight: 600; color: #0f172a;">
+                                            Rp 50.000
+                                        </td>
+                                    </tr>
+
+                                    <!-- GRAND TOTAL ROW -->
+                                    <tr class="table-totals-row grand-total">
+                                        <td colspan="3" style="font-weight: 700; color: #0f172a;">TOTAL TAGIHAN RESMI // GRAND TOTAL</td>
+                                        <td class="col-subtotal" style="font-size:1.15rem; font-weight:800; color: #0f172a;">Rp 1.200.000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:6px;">
+                                // satu juta dua ratus ribu rupiah (all-in termasuk pengurusan &amp; ongkir fisik) //
+                            </div>
+                        </div>
+
+                        <!-- HIGHLIGHTS & SPECIFICATION CARDS -->
+                        <div class="scope-breakdown-box">
+                            <div class="scope-card">
+                                <div class="scope-card-title">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                    <span>SYARAT &amp; DOKUMEN PERSYARATAN</span>
+                                </div>
+                                <ul class="scope-card-list">
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span><strong>Paspor Asli / Dokumen:</strong> Masa berlaku paspor minimal 6 bulan.</span>
+                                    </li>
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span><strong>Pasfoto Terbaru:</strong> Foto berwarna dengan latar belakang (background) putih.</span>
+                                    </li>
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span><strong>Tadaruj Dirasi:</strong> Surat Keterangan Riwayat Jenjang Studi / Belajar di Mesir.</span>
+                                    </li>
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span><strong>Alamat Pengiriman:</strong> Alamat lengkap domisili penerima untuk pengiriman fisik paspor &amp; visa.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="scope-card">
+                                <div class="scope-card-title">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <span>ESTIMASI PENGERJAAN &amp; SLA</span>
+                                </div>
+                                <ul class="scope-card-list">
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                        <span><strong>Waktu Pengerjaan:</strong> Estimasi sekitar <strong>1 Minggu kerja</strong> <em>(apabila alur kedutaan normal)</em>.</span>
+                                    </li>
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span><strong>Status Layanan:</strong> Official Verified Student Visa All-In Package.</span>
+                                    </li>
+                                    <li>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                                        <span><strong>Pengiriman Aman:</strong> Langsung dikirim via ekspedisi express berpelacak begitu visa selesai.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Section Grid -->
+                    <div>
+                        <div class="bottom-section-grid">
+                            <!-- Left: Payments Info -->
+                            <div>
+                                <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
+                                <div class="bottom-block-content">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                        <img src="/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 16px; width: auto; object-fit: contain;">
+                                        <strong style="font-size: 0.92rem; color: #0f172a;">Bank Mandiri</strong>
+                                    </div>
+                                    <div style="margin-bottom: 2px; color: var(--text-muted);">
+                                        Account Name: <strong style="color: #0f172a;">Daru Fahmaa Muliawan</strong>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;">
+                                        <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.92rem; color: #0f172a;">1550010616962</strong></span>
+                                        <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Issuer Details -->
+                            <div>
+                                <div class="bottom-block-title">ISSUER &amp; TRAVEL AGENT</div>
+                                <div class="bottom-block-content">
+                                    <strong style="color:#0f172a;">Temantiket Travel Agent</strong><br>
+                                    <strong style="color:var(--navy-primary);">Layanan Visa &amp; Tiket Pesawat Mesir</strong><br>
+                                    <span style="color:var(--text-muted);">WhatsApp: 081311506025</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions Section -->
+                        <div class="terms-container">
+                            <div class="terms-title">KETENTUAN LAYANAN VISA ENTRY STUDENT MESIR (ALL-IN)</div>
+                            <div>
+                                &ndash; <strong>Kelengkapan Berkas:</strong> Pemohon wajib melengkapi dokumen persyaratan (Paspor, Pasfoto latar putih, Tadaruj Dirasi, dan Alamat Tujuan).<br>
+                                &ndash; <strong>Proses Kedutaan:</strong> Estimasi pemrosesan sekitar 1 minggu bergantung pada kelancaran operasional Kedutaan.<br>
+                                &ndash; <strong>Pengiriman Fisik:</strong> Biaya ongkos kirim fisik sampai ke alamat sudah termasuk (include) di dalam total tagihan Rp 1.200.000.<br>
+                                &ndash; <strong>Konfirmasi Pembayaran:</strong> Transfer tagihan dapat ditujukan ke rekening Bank Mandiri resmi tertera di atas.
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         2. DEDICATED NATIVE-STYLE MOBILE VIEW (< 768px)
+         ========================================================================= -->
+    <div class="mobile-invoice-view">
+        
+        <!-- Mobile Top App Bar -->
+        <div class="mob-top-bar">
+            <div class="mob-top-left">
+                <div>
+                    <div class="mob-top-title">Temantiket Travel Agent</div>
+                    <div class="mob-top-sub">Invoice #INV/VES/2026/017</div>
+                </div>
+            </div>
+            <div class="mob-actions">
+                <button class="mob-btn" onclick="copyBankAcc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Rekening
+                </button>
+                <button class="mob-btn mob-btn-primary" onclick="downloadPDF()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Main Receipt Card -->
+        <div class="mob-bill-card">
+            
+            <!-- Hero Header -->
+            <div class="mob-hero-header">
+                <div class="mob-hero-category">Layanan Visa Entry Student Mesir</div>
+                <div class="mob-hero-amount-label">TOTAL TAGIHAN RESMI (ALL-IN)</div>
+                <div class="mob-hero-amount-val">Rp 1.200.000</div>
+                <div class="mob-hero-spelled">Satu juta dua ratus ribu rupiah</div>
+                <div class="mob-hero-badge">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Termasuk Jasa &amp; Ongkir Fisik ke Alamat
+                </div>
+            </div>
+
+            <!-- Recipient & Meta Strip -->
+            <div class="mob-meta-strip">
+                <div class="mob-meta-col">
+                    <label>DITUJUKAN KEPADA</label>
+                    <span class="mob-client-name">Ibu Erna</span>
+                    <small>Ananda Mahasiswa Baru Mesir</small>
+                </div>
+                <div class="mob-meta-col" style="text-align: right;">
+                    <label>TANGGAL INVOICE</label>
+                    <span>02 Okt 2026</span>
+                    <small>Ref: #017</small>
+                </div>
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="mob-body">
+                
+                <!-- Layanan Card -->
+                <div class="mob-section-heading">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    RINCIAN LAYANAN &amp; ONGKIR
+                </div>
+                <div class="mob-service-card">
+                    <div class="mob-service-title">Pengurusan Visa Entry Student + Ongkir Fisik</div>
+                    <div class="mob-service-sub">Paket lengkap terpadu hingga visa &amp; paspor sampai di rumah</div>
+                    <ul class="mob-checklist">
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Jasa Pengurusan Visa:</strong> Pendaftaran, penyerahan &amp; pengawalan berkas ke Kedutaan Mesir hingga visa resmi diterbitkan.</span>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Verifikasi Berkas:</strong> Pengecekan paspor, pasfoto background putih, &amp; Tadaruj Dirasi.</span>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Ongkir Fisik ke Alamat:</strong> Pengiriman paspor &amp; stiker visa fisik via ekspedisi express berasuransi langsung ke alamat Ibu Erna setelah visa selesai.</span>
+                        </li>
+                        <li>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Nomor Resi:</strong> Update nomor resi kurir pengiriman secara real-time.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Price Breakdown Calculation Card -->
+                <div class="mob-calc-card">
+                    <div class="mob-calc-row">
+                        <span>Jasa Pengurusan Visa Pelajar Mesir</span>
+                        <span class="val">Rp 1.150.000</span>
+                    </div>
+                    <div class="mob-calc-row">
+                        <span>Ongkos Kirim Dokumen Fisik ke Alamat</span>
+                        <span class="val">Rp 50.000</span>
+                    </div>
+                    <div class="mob-calc-row">
+                        <span>TOTAL TAGIHAN (ALL-IN)</span>
+                        <span class="val" style="color:#0f172a;">Rp 1.200.000</span>
+                    </div>
+                </div>
+
+                <!-- Requirements & SLA Cards -->
+                <div class="mob-grid-dual">
+                    <div class="mob-subcard">
+                        <div class="mob-subcard-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                            DOKUMEN PERSYARATAN
+                        </div>
+                        <ul class="mob-checklist">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Paspor Asli / Scan (Masa berlaku min. 6 bulan)</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Pasfoto Terbaru Berwarna (Background Putih)</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Tadaruj Dirasi (Surat Jenjang Studi Mesir)</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Alamat Lengkap Tujuan Pengiriman Paket</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mob-subcard">
+                        <div class="mob-subcard-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            ESTIMASI &amp; SLA
+                        </div>
+                        <ul class="mob-checklist">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Estimasi Pengerjaan: ~1 Minggu kerja (alur kedutaan lancar)</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Pengiriman kurir express begitu visa selesai diterbitkan</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bank Card -->
+                <div class="mob-bank-card">
+                    <div class="mob-bank-header">
+                        <div class="mob-bank-brand">
+                            <img src="/mandiri_logo.webp" alt="Bank Mandiri">
+                            <span>Bank Mandiri Resmi</span>
+                        </div>
+                    </div>
+                    <div class="mob-acc-box">
+                        <div class="mob-acc-info">
+                            <div class="mob-acc-label">NOMOR REKENING RESMI</div>
+                            <div class="mob-acc-num">1550010616962</div>
+                            <div class="mob-acc-holder">a.n. Daru Fahmaa Muliawan</div>
+                        </div>
+                        <button class="mob-copy-btn" onclick="copyBankAcc()">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            SALIN
+                        </button>
+                    </div>
+                    <div class="mob-pay-hint">
+                        Silakan transfer sesuai total tagihan Rp 1.200.000 ke rekening resmi di atas.
+                    </div>
+                </div>
+
+                <!-- Terms & Issuer Notes -->
+                <div class="mob-notes-box">
+                    <strong>Ketentuan Layanan:</strong> Berkas segera diproses ke kedutaan setelah persyaratan lengkap diterima. Dokumen fisik paspor &amp; visa akan langsung dikirimkan ke alamat Ibu Erna dengan konfirmasi nomor resi pengiriman.
+                </div>
+
+                <!-- Footer -->
+                <div class="mob-footer">
+                    <strong>Temantiket Travel Agent &bull; Layanan Visa &amp; Tiket Pesawat Mesir</strong><br>
+                    WhatsApp: 081311506025 &bull; Tangsel, Banten
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
+    <script>
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri Berhasil Disalin!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>
