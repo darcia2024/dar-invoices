@@ -109,7 +109,7 @@ const defaultState = {
     "umrahme-dreammecca-oktober": 367500,
     bangedo: 350000,
     erna: 500000,
-    "underrated-ai": 1800000,
+    "underrated-ai": 450000,
   },
 };
 
