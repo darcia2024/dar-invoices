@@ -86,6 +86,9 @@
     { "source": "/bu-erna", "destination": "/buerna/index.html" },
     { "source": "/ibu-erna", "destination": "/buerna/index.html" },
     { "source": "/erna", "destination": "/buerna/index.html" },
-    { "source": "/visa-erna", "destination": "/buerna/index.html" }
+    { "source": "/visa-erna", "destination": "/buerna/index.html" },
+    { "source": "/underrated-ai", "destination": "/underrated-ai/index.html" },
+    { "source": "/barber-ai", "destination": "/underrated-ai/index.html" },
+    { "source": "/ai-underrated", "destination": "/underrated-ai/index.html" }
   ]
 }

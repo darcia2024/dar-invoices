@@ -80,7 +80,7 @@ async function request(method, body, passcode = 'test-pin') {
         const totalGrandGross = totalPaidGross + totalUnpaidGross;
         assert.equal(totalGrandGross, totalPaidGross + totalUnpaidGross, `Month ${activeMonthFilter} must balance`);
         if (activeMonthFilter === '2026-10') {
-            assert.equal(totalGrandGross, 15600000, 'Oktober 2026 total gross should be exactly 15.600.000 (including KPI pelunasan & Ibu Erna)');
+            assert.equal(totalGrandGross, 17600000, 'Oktober 2026 total gross should be exactly 17.600.000 (including KPI pelunasan, Ibu Erna & Underrated AI)');
         }
     });
 

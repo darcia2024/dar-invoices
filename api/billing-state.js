@@ -72,6 +72,7 @@ const defaultState = {
     "umrahme-dreammecca-oktober": "UNPAID",
     bangedo: "UNPAID",
     erna: "UNPAID",
+    "underrated-ai": "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -108,6 +109,7 @@ const defaultState = {
     "umrahme-dreammecca-oktober": 367500,
     bangedo: 350000,
     erna: 500000,
+    "underrated-ai": 1800000,
   },
 };
 
