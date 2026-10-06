@@ -73,6 +73,7 @@ const defaultState = {
     bangedo: "UNPAID",
     erna: "UNPAID",
     "underrated-ai": "UNPAID",
+    masakbar: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -110,6 +111,7 @@ const defaultState = {
     bangedo: 350000,
     erna: 500000,
     "underrated-ai": 450000,
+    masakbar: 100000,
   },
 };
 

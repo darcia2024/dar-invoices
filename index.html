@@ -3812,6 +3812,60 @@
                     <span>Buka Penawaran AI Underrated</span>
                 </a>
             </div>
+
+            <!-- Mas Akbar - Pembelian Google AI Pro 18 Bulan Card -->
+            <div class="invoice-card" id="card-masakbar" data-id="masakbar" data-month="2026-10" data-amount="100000" data-client="mas akbar masakbar google ai pro gemini advanced 18 bulan 100000 100k #inv/dar/2026/10/003 oktober 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Mas Akbar (Google AI Pro 18 Bulan)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('masakbar')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DAR/2026/10/003 &bull; Google AI Pro 18 Bulan</span>
+                        <span class="month-tag">📅 Oktober 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Paket Google AI Pro 18 Bulan (Cloud Storage 5 TB, Akses Antigravity &amp; Multi-Model Gemini). Non-Garansi (As-Is). Total: Rp 100.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/masakbar</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/masakbar')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptMasakbar()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 100.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValMasakbar">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValMasakbar">Rp 100.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('masakbar')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/masakbar" class="action-btn">
+                    <span>Buka Invoice Mas Akbar</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -4038,7 +4092,8 @@
             "umrahme-dreammecca-oktober": "UNPAID",
             bangedo: "UNPAID",
             erna: "UNPAID",
-            "underrated-ai": "UNPAID"
+            "underrated-ai": "UNPAID",
+            masakbar: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -4093,7 +4148,8 @@
             "umrahme-dreammecca-oktober": 367500,
             bangedo: 350000,
             erna: 500000,
-            "underrated-ai": 450000
+            "underrated-ai": 450000,
+            masakbar: 100000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -4159,7 +4215,8 @@
             { id: "umrahme-dreammecca-oktober", name: "Dreammecca - Umrahme (Batch Oktober - 21 Pax)", month: "2026-10", monthLabel: "Oktober 2026", gross: 735000 },
             { id: "bangedo", name: "Bang Edo (Desain Undangan Nikah)", month: "2026-10", monthLabel: "Oktober 2026", gross: 350000 },
             { id: "erna", name: "Ibu Erna (Visa Entry Student Mesir)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 },
-            { id: "underrated-ai", name: "Owner Barber Underrated (Add-on AI Smart System)", month: "2026-10", monthLabel: "Oktober 2026", gross: 500000 }
+            { id: "underrated-ai", name: "Owner Barber Underrated (Add-on AI Smart System)", month: "2026-10", monthLabel: "Oktober 2026", gross: 500000 },
+            { id: "masakbar", name: "Mas Akbar (Google AI Pro 18 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 100000 }
         ];
 
         function formatIDR(num) {
@@ -6343,6 +6400,37 @@ Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi t
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA MAS DAUS BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptMasakbar() {
+            const waScript = `Halo Mas Akbar! 🙏✨
+
+Berikut kami lampirkan dokumen resmi Invoice untuk pembelian paket langganan Google AI Pro 18 Bulan:
+
+🔗 Invoice Online: https://temantiket.com/masakbar
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian & Spesifikasi Lengkap:
+• Layanan: Paket Langganan Google AI Pro (18 Bulan)
+• Kapasitas Cloud: 5 TB (5.000 GB Google Storage untuk Drive, Gmail, & Photos)
+• Akses Antigravity: Terbuka akses lingkungan Google Antigravity (Agentic AI IDE & Coding AI)
+• Multi-Model Gemini: Akses ke banyak model (Gemini Advanced, Gemini 1.5 Pro 2M Token, Flash, dll)
+• Integrasi Workspace: Gemini di Dokumen, Spreadsheet, Slide, dan Gmail
+• Klausul Garansi: NON-GARANSI (Tanpa Garansi / No Warranty / As-Is setelah serah terima akun)
+• Total Tagihan: Rp 100.000
+(Terbilang: Seratus Ribu Rupiah)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak! 🙏✨`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA MAS AKBAR BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
