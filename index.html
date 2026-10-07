@@ -4144,10 +4144,6 @@
                 debts = state.debts;
                 localStorage.setItem('dar-debts-records', JSON.stringify(debts));
                 renderDebtUI();
-            } else if (!debts || debts.length === 0) {
-                debts = defaultInitialDebts;
-                localStorage.setItem('dar-debts-records', JSON.stringify(debts));
-                renderDebtUI();
             }
         }
 
@@ -4225,13 +4221,10 @@
 
         function togglePaymentStatus(id) {
             const current = paymentStatuses[id] || "UNPAID";
-            let next = "UNPAID";
-            if (current === "UNPAID") {
-                next = "PAID";
-            } else if (current === "DP") {
-                next = "PAID";
-            } else {
-                next = "UNPAID";
+            let next = "PAID";
+            if (current === "PAID") {
+                // Undoing "lunas" falls back to the instalment already recorded, not to zero.
+                next = id.includes("pelunasan") && (dpAmounts[id] || 0) > 0 ? "DP" : "UNPAID";
             }
             setPaymentStatus(id, next);
         }
@@ -4401,6 +4394,10 @@
                 } else {
                     if (markBtn && !isPelunasan) {
                         markBtn.style.display = "none";
+                    } else if (markBtn) {
+                        markBtn.style.display = "inline-flex";
+                        markBtn.className = "mark-pelunasan-btn";
+                        markBtn.innerHTML = `✅ Tandai Pelunasan Lunas (${formatIDR(item.gross)})`;
                     }
                 }
 
@@ -4487,6 +4484,12 @@
                 return;
             }
 
+            const editedItem = invoiceItems.find(i => i.id === activeEditProjectId);
+            if (editedItem && inputVal > editedItem.gross) {
+                showToast("KEUNTUNGAN BERSIH TIDAK BOLEH MELEBIHI TOTAL INVOICE (" + formatIDR(editedItem.gross) + ")");
+                return;
+            }
+
             netProfits[activeEditProjectId] = inputVal;
 
             renderProfitUI();
@@ -4529,7 +4532,7 @@
         let currentAffirmationIndex = Math.floor(Math.random() * MOTIVATIONAL_AFFIRMATIONS.length);
         let currentVictoryIndex = 0;
         let lastReportedGoalAchieved = false;
-        let goalActiveMonth = localStorage.getItem('dar_goal_active_month') || '2026-09';
+        let goalActiveMonth = localStorage.getItem('dar_goal_active_month') || (d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'))(new Date());
 
         function getSavedGoalTier(monthKey) {
             const m = monthKey || goalActiveMonth || 'default';
@@ -4634,7 +4637,7 @@
         function updateMonthlyGoalTracker(monthlyMap, totalNetProfitPaid, activeMonthFilter) {
             // Validate goalActiveMonth
             if (!goalActiveMonth) {
-                goalActiveMonth = localStorage.getItem('dar_goal_active_month') || '2026-09';
+                goalActiveMonth = localStorage.getItem('dar_goal_active_month') || (d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'))(new Date());
             }
             if (goalActiveMonth !== 'all' && !monthlyMap[goalActiveMonth]) {
                 const keys = Object.keys(monthlyMap).filter(k => k !== 'all').sort();
@@ -4994,10 +4997,10 @@
                 const stored = localStorage.getItem('dar-debts-records');
                 if (stored) {
                     const parsed = JSON.parse(stored);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
+                    // Only replace the old demo records; anything else (including an emptied list) is the user's real data.
+                    if (Array.isArray(parsed)) {
                         const hasSample = parsed.some(d => d.id === 'debt-sample-1' || d.id === 'debt-sample-2');
-                        const hasReal = parsed.some(d => d.id === 'debt-teh-umi' || d.id === 'debt-vendra' || d.id === 'debt-azzam');
-                        if (!hasSample && hasReal) return parsed;
+                        if (!hasSample) return parsed;
                     }
                 }
                 localStorage.setItem('dar-debts-records', JSON.stringify(defaultInitialDebts));
@@ -5027,6 +5030,10 @@
         setTimeout(() => {
             renderDebtUI();
         }, 50);
+
+        function localDateKey(date = new Date()) {
+            return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+        }
 
         function getDebtStatus(debt) {
             const paid = Number(debt.paid) || 0;
@@ -5071,7 +5078,7 @@
             const editIdEl = document.getElementById('debtEditId');
 
             form.reset();
-            const today = new Date().toISOString().slice(0, 10);
+            const today = localDateKey();
 
             if (editId) {
                 const item = debts.find(d => d.id === editId);
@@ -5358,7 +5365,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
             // 2. Filter records
             const query = (document.getElementById('debtSearchInput')?.value || '').toLowerCase().trim();
-            const todayStr = new Date().toISOString().slice(0, 10);
+            const todayStr = localDateKey();
 
             const filtered = debts.filter(item => {
                 const status = getDebtStatus(item);

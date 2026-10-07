@@ -2162,3 +2162,25 @@ body[data-view="debt"] .stats-bar {
 
 /* no pinch / double-tap zoom on phones */
 html, body { touch-action: manipulation; }
+
+/* Mobile audit pass: readable badges, finger-sized secondary buttons, 16px form fields (no iOS focus zoom) */
+@media (max-width: 600px) {
+    .dp-status-action { font-size: 11px; min-height: 32px; padding: 6px 10px; border-radius: 8px; }
+    .edit-profit-btn { font-size: 11.5px; min-height: 34px; padding: 6px 11px; border-radius: 8px; }
+    .dp-history-badge, .dp-banner-header { font-size: 11px; }
+    .payment-status-pill { font-size: 11px; }
+    .debt-type-badge, .debt-status-pill { font-size: 11px; padding: 4px 8px; }
+    .debt-meta-tag { font-size: 11.5px; }
+    .portal-badge, .goal-affirmation-label, .dev-title { font-size: 11px; }
+
+    dialog input:not([type="radio"]):not([type="checkbox"]),
+    dialog textarea, dialog select,
+    .modal-card input, .modal-card textarea,
+    #profitModalInput { font-size: 16px !important; min-height: 44px; }
+    dialog textarea, .modal-card textarea { min-height: 88px; }
+    .modal-input-label, dialog label { font-size: 12px; }
+    dialog { max-height: 90dvh; overflow-y: auto; overscroll-behavior: contain; }
+}
+@media (max-width: 600px) {
+    .goal-tracker-header span, .month-tag { font-size: 11px; }
+}
