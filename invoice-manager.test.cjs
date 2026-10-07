@@ -33,6 +33,11 @@ async function request(method, body, passcode = 'test-pin') {
     const restored = await request('GET');
     assert.deepEqual(restored.data.customInvoices,[]);
     assert.deepEqual(restored.data.deletedInvoiceIds,[]);
+    // Permanently deleted invoices round-trip, and an emptied debt list stays empty
+    await request('PUT',{deletedInvoiceIds:['markaz'],purgedInvoiceIds:['markaz'],debts:[]});
+    const purged = await request('GET');
+    assert.deepEqual(purged.data.purgedInvoiceIds,['markaz']);
+    assert.deepEqual(purged.data.debts,[]);
     // Financial consistency test
     const fs = require('node:fs');
     const indexHtml = fs.readFileSync('./index.html', 'utf8');
@@ -84,5 +89,5 @@ async function request(method, body, passcode = 'test-pin') {
         }
     });
 
-    console.log('PASS: text parsing, escaping, API authorization, metadata round-trip, debts round-trip, legacy-save preservation, and financial math synchronization');
+    console.log('PASS: text parsing, escaping, API authorization, metadata round-trip, debts round-trip, legacy-save preservation, permanent delete, and financial math synchronization');
 })().catch(error => {console.error(error);process.exitCode=1;});

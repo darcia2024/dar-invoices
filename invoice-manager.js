@@ -1,5 +1,8 @@
 let customInvoices = [];
 let deletedInvoiceIds = [];
+// Built-in invoices that were permanently deleted. They stay in deletedInvoiceIds so every
+// existing "is hidden" check keeps working, but they no longer appear in the trash.
+let purgedInvoiceIds = [];
 let invoiceSyncMessage = '';
 let invoiceMetadataPending = false;
 
@@ -13,12 +16,13 @@ function escapeInvoiceText(value) {
 }
 
 function saveInvoiceMetadata() {
-    localStorage.setItem('dar-invoice-metadata', JSON.stringify({customInvoices, deletedInvoiceIds, pending:invoiceMetadataPending}));
+    localStorage.setItem('dar-invoice-metadata', JSON.stringify({customInvoices, deletedInvoiceIds, purgedInvoiceIds, pending:invoiceMetadataPending}));
 }
 
 function applyInvoiceMetadata(state) {
     if (!invoiceMetadataPending && Array.isArray(state.customInvoices)) customInvoices = state.customInvoices;
     if (!invoiceMetadataPending && Array.isArray(state.deletedInvoiceIds)) deletedInvoiceIds = state.deletedInvoiceIds;
+    if (!invoiceMetadataPending && Array.isArray(state.purgedInvoiceIds)) purgedInvoiceIds = state.purgedInvoiceIds;
     syncCustomInvoices();
 }
 
@@ -76,7 +80,7 @@ function refreshInvoiceControls() {
             card.appendChild(button);
         }
     });
-    document.getElementById('trashCount').textContent = deletedInvoiceIds.length;
+    document.getElementById('trashCount').textContent = trashedInvoiceIds().length;
 }
 
 function managerDialog(title) {
@@ -116,27 +120,77 @@ function confirmDeleteInvoice(id) {
     content.appendChild(button);
 }
 
+function trashedInvoiceIds() {
+    return deletedInvoiceIds.filter(id => !purgedInvoiceIds.includes(id));
+}
+
+function purgeInvoices(ids) {
+    ids.forEach(id => {
+        if (customInvoices.some(item => item.id === id)) {
+            // Own invoices are removed completely, together with their payment data.
+            customInvoices = customInvoices.filter(item => item.id !== id);
+            deletedInvoiceIds = deletedInvoiceIds.filter(deleted => deleted !== id);
+            delete paymentStatuses[id];
+            delete dpAmounts[id];
+            delete netProfits[id];
+            ['status_', 'dp_', 'profit_'].forEach(prefix => localStorage.removeItem(prefix + id));
+        } else if (!purgedInvoiceIds.includes(id)) {
+            // Built-in invoices live in the page source; hide them for good instead.
+            purgedInvoiceIds.push(id);
+        }
+    });
+    invoiceMetadataPending = true;
+    syncCustomInvoices();
+    filterInvoices();
+    persistBillingState();
+    openInvoiceTrash();
+}
+
 function openInvoiceTrash() {
     const content = managerDialog('Sampah invoice');
-    if (!deletedInvoiceIds.length) content.textContent = 'Belum ada invoice di Sampah.';
-    deletedInvoiceIds.forEach(id => {
+    const ids = trashedInvoiceIds();
+    if (!ids.length) {
+        content.textContent = 'Belum ada invoice di Sampah.';
+        return;
+    }
+    ids.forEach(id => {
+        const item = invoiceItems.find(candidate => candidate.id === id);
         const row = document.createElement('div');
         row.className = 'trash-row';
         const name = document.createElement('span');
-        name.textContent = invoiceItems.find(item => item.id === id)?.name || id;
-        const button = document.createElement('button');
-        button.className = 'month-pill-btn';
-        button.textContent = 'Pulihkan';
-        button.onclick = () => {
+        name.className = 'trash-name';
+        name.textContent = item?.name || id;
+        const actions = document.createElement('div');
+        actions.className = 'trash-actions';
+        const restore = document.createElement('button');
+        restore.className = 'month-pill-btn';
+        restore.textContent = 'Pulihkan';
+        restore.onclick = () => {
             deletedInvoiceIds = deletedInvoiceIds.filter(deleted => deleted !== id);
             invoiceMetadataPending = true;
             filterInvoices();
             persistBillingState();
             openInvoiceTrash();
         };
-        row.append(name, button);
+        const purge = document.createElement('button');
+        purge.className = 'month-pill-btn purge-invoice-btn';
+        purge.textContent = 'Hapus permanen';
+        purge.onclick = () => {
+            if (!confirm(`Hapus permanen invoice ${item?.name || id}? Tindakan ini tidak bisa dibatalkan.`)) return;
+            purgeInvoices([id]);
+        };
+        actions.append(restore, purge);
+        row.append(name, actions);
         content.appendChild(row);
     });
+    const emptyAll = document.createElement('button');
+    emptyAll.className = 'create-invoice-btn purge-all-btn';
+    emptyAll.textContent = `Kosongkan Sampah (${ids.length})`;
+    emptyAll.onclick = () => {
+        if (!confirm(`Hapus permanen ${ids.length} invoice di Sampah? Tindakan ini tidak bisa dibatalkan.`)) return;
+        purgeInvoices(ids);
+    };
+    content.appendChild(emptyAll);
 }
 
 function openInvoiceComposer() {

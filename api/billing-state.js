@@ -121,7 +121,9 @@ function mergeState(state) {
   return {
     customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
     deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
-    debts: state && Array.isArray(state.debts) && state.debts.length > 0 ? state.debts : defaultDebts,
+    purgedInvoiceIds: state && Array.isArray(state.purgedInvoiceIds) ? state.purgedInvoiceIds : [],
+    // An empty list is the user's choice; only seed the defaults when debts were never saved.
+    debts: state && Array.isArray(state.debts) ? state.debts : defaultDebts,
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),
