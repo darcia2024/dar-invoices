@@ -2052,3 +2052,42 @@ body[data-view="debt"] .stats-bar {
     .revenue-table tr.grand-row td { font-size: 14px; }
     .revenue-table tr.grand-row td:first-child { font-size: 13px; letter-spacing: 0.02em; }
 }
+
+/* Mobile: give dense sections room to breathe */
+@media (max-width: 600px) {
+    /* the profit-target card is about invoices, not hutang/piutang: don't stack it above the debt list */
+    body[data-view="debt"] .goal-tracker-card { display: none; }
+
+    /* "2 Catatan (Rp 395.000)" must wrap instead of being cut off */
+    .debt-stats-bar .stat-info-val {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    /* goal card: more air between its blocks */
+    .goal-tracker-header { gap: 12px; margin-bottom: 14px; padding-bottom: 14px; }
+    .goal-controls-row { gap: 16px; margin-bottom: 18px; }
+    .goal-control-col { gap: 8px; }
+    .goal-metrics-row { margin-bottom: 10px; gap: 10px; flex-wrap: wrap; }
+    .goal-progress-track { margin-bottom: 16px; }
+    .goal-affirmation-box { gap: 12px; }
+    .goal-tracker-sub { line-height: 1.55; }
+
+    /* gaps between stacked blocks across views */
+    .stats-bar, .debt-stats-bar { margin-bottom: 20px; }
+    .goal-tracker-card { margin-bottom: 20px; }
+    .debt-toolbar { gap: 12px; margin-bottom: 18px; }
+    .debt-item-card { gap: 14px; }
+    #debtCardList, .debt-card-list { gap: 14px; }
+}
+
+/* Outline nav icons (inherit text color) */
+.sidebar-link .nav-icon { display: block; flex-shrink: 0; }
+.sidebar-link span { display: inline-flex; align-items: center; line-height: 0; }
+@media (max-width: 600px) {
+    .workspace-sidebar nav .sidebar-link span { display: inline-flex !important; }
+    .workspace-sidebar nav .sidebar-link .nav-icon { width: 20px; height: 20px; }
+}
