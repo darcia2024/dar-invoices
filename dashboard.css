@@ -1939,3 +1939,116 @@ body[data-view="debt"] .stats-bar {
     margin-top: 0;
 }
 
+
+/* Mobile: debt stat cards must stay 2-up (base rule above is declared after the earlier media blocks) */
+@media (max-width: 850px) {
+    .debt-stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+}
+@media (max-width: 600px) {
+    .debt-stats-bar .stat-info-title { font-size: 11px; line-height: 1.3; overflow-wrap: anywhere; }
+    .debt-stats-bar .stat-info-val { font-size: clamp(14px, 4.2vw, 18px) !important; }
+}
+
+/* Mobile: hutang & piutang cards — stack cleanly, full-width children */
+@media (max-width: 850px) {
+    .debt-item-card {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: 12px;
+    }
+    .debt-item-main { flex: 0 0 auto; min-width: 0; width: 100%; }
+    .debt-amount-col {
+        width: 100%;
+        min-width: 0;
+        text-align: left;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: #f6f2e6;
+    }
+    .debt-item-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .debt-action-btn { justify-content: center; min-height: 42px; font-size: 12px; padding: 8px 10px; border-radius: 10px; }
+    .debt-action-btn.btn-pay { grid-column: 1 / -1; }
+    .debt-action-btn.btn-delete { border-color: #e4cfcb; background: #fff8f6; }
+}
+@media (max-width: 600px) {
+    .debt-amount-label { font-size: 11px; }
+    .debt-amount-total { font-size: 18px; font-weight: 600; }
+    .debt-amount-remaining { font-size: 13px; }
+}
+
+/* Mobile: nav as a 4-up tab grid so every section is visible without sideways scrolling */
+@media (max-width: 600px) {
+    .workspace-sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        overflow: visible;
+        margin-inline: 0;
+        padding: 0;
+    }
+    .workspace-sidebar nav .sidebar-link {
+        flex-direction: column;
+        justify-content: center;
+        gap: 3px;
+        min-height: 54px;
+        padding: 7px 4px;
+        border-radius: 12px;
+        font-size: 11px;
+        line-height: 1.15;
+        text-align: center;
+        white-space: normal;
+        width: auto;
+    }
+    .workspace-sidebar nav .sidebar-link span { font-size: 16px !important; line-height: 1; }
+}
+
+/* Mobile: monthly report table becomes one card per month (no sideways scrolling) */
+@media (max-width: 600px) {
+    .revenue-report-box { overflow: visible; padding: 16px 14px; }
+    .revenue-table { min-width: 0 !important; width: 100%; display: block; font-size: 13px; }
+    .revenue-table thead { display: none; }
+    .revenue-table tbody { display: grid; gap: 10px; }
+    .revenue-table tr {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        border: 1px solid #e2dccb;
+        border-radius: 14px;
+        background: #fffdf5;
+        overflow: hidden;
+    }
+    .revenue-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        padding: 9px 14px !important;
+        border: 0 !important;
+        border-top: 1px solid #efe9d9 !important;
+        text-align: right !important;
+        font-size: 13px;
+        white-space: normal;
+    }
+    .revenue-table td::before {
+        content: attr(data-label);
+        flex: 0 0 auto;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: #6d6759;
+        text-align: left;
+    }
+    .revenue-table td:first-child {
+        border-top: 0 !important;
+        background: #f1ecdc;
+        font-weight: 700;
+        font-size: 14px;
+        text-align: left !important;
+    }
+    .revenue-table td:first-child::before { display: none; }
+    .revenue-table tr.grand-row td { font-size: 14px; }
+    .revenue-table tr.grand-row td:first-child { font-size: 13px; letter-spacing: 0.02em; }
+}

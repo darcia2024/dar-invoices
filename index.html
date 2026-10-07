@@ -4793,8 +4793,7 @@
                 if (deletedInvoiceIds.includes(item.id)) return;
                 const status = paymentStatuses[item.id] || "UNPAID";
                 const itemNetProfit = Math.min(item.gross, (netProfits[item.id] !== undefined ? netProfits[item.id] : item.gross));
-                const itemCost = item.gross - itemNetProfit;
-                const dpVal = dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2);
+                const dpVal = Math.min(item.gross, Math.max(0, dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2)));
 
                 if (item.allocations) {
                     // Multi-month allocation handling (e.g. Barber: 3jt Aug + 3jt Sep)
@@ -4828,12 +4827,13 @@
                         if (monthlyMap[mKey]) {
                             monthlyMap[mKey].paidGrossTotal += paidGross;
                             monthlyMap[mKey].paidNetProfitTotal += paidNetProfit;
+                            monthlyMap[mKey].costTotal += Math.max(0, paidGross - paidNetProfit);
                             if (status === "PAID") {
-                                monthlyMap[mKey].paidCount += 0.5;
+                                monthlyMap[mKey].paidCount += 1;
                             } else if (status === "DP") {
-                                monthlyMap[mKey].dpCount += 0.5;
+                                monthlyMap[mKey].dpCount += 1;
                             } else {
-                                monthlyMap[mKey].unpaidCount += 0.5;
+                                monthlyMap[mKey].unpaidCount += 1;
                             }
                         }
                     });
@@ -4849,7 +4849,7 @@
                         unpaidGross = 0;
                     } else if (status === "DP") {
                         paidGross = dpVal;
-                        paidNetProfit = Math.round((dpVal / item.gross) * itemNetProfit);
+                        paidNetProfit = item.gross > 0 ? Math.round((dpVal / item.gross) * itemNetProfit) : 0;
                         unpaidGross = item.gross - dpVal;
                     } else {
                         paidGross = 0;
@@ -4868,8 +4868,8 @@
                     if (monthlyMap[mKey]) {
                         monthlyMap[mKey].paidGrossTotal += paidGross;
                         monthlyMap[mKey].paidNetProfitTotal += paidNetProfit;
+                        monthlyMap[mKey].costTotal += Math.max(0, paidGross - paidNetProfit);
                         if (status === "PAID") {
-                            monthlyMap[mKey].costTotal += (itemCost < 0 ? 0 : itemCost);
                             monthlyMap[mKey].paidCount += 1;
                         } else if (status === "DP") {
                             monthlyMap[mKey].dpCount += 1;
@@ -4913,22 +4913,22 @@
 
                 tableHTML += `
                     <tr>
-                        <td>📅 ${row.label}</td>
-                        <td style="color: var(--color-paid); font-weight: 700;">${statusLabel}</td>
-                        <td>${formatIDR(row.paidGrossTotal)}</td>
-                        <td style="color: var(--text-dim);">${formatIDR(row.costTotal)}</td>
-                        <td style="text-align: right; color: var(--color-paid); font-weight: 700;">${formatIDR(row.paidNetProfitTotal)}</td>
+                        <td data-label="Periode">📅 ${row.label}</td>
+                        <td data-label="Jml lunas" style="color: var(--color-paid); font-weight: 700;">${statusLabel}</td>
+                        <td data-label="Omset gross">${formatIDR(row.paidGrossTotal)}</td>
+                        <td data-label="Biaya operasional" style="color: var(--text-dim);">${formatIDR(row.costTotal)}</td>
+                        <td data-label="Keuntungan bersih" style="text-align: right; color: var(--color-paid); font-weight: 700;">${formatIDR(row.paidNetProfitTotal)}</td>
                     </tr>
                 `;
             });
 
             tableHTML += `
                 <tr class="grand-row">
-                    <td>TOTAL REKAPITULASI BERSIH</td>
-                    <td style="color: var(--text-dim); font-size: 0.76rem;">Paid Only</td>
-                    <td style="color: #ffffff;">${formatIDR(sumReportGross)}</td>
-                    <td style="color: var(--text-dim);">${formatIDR(sumReportCost)}</td>
-                    <td style="text-align: right; color: var(--color-paid); font-size: 1.15rem;">${formatIDR(sumReportProfit)}</td>
+                    <td data-label="Total">TOTAL REKAPITULASI BERSIH</td>
+                    <td data-label="Jml lunas" style="color: var(--text-dim); font-size: 0.76rem;">Paid Only</td>
+                    <td data-label="Omset gross" style="color: #ffffff;">${formatIDR(sumReportGross)}</td>
+                    <td data-label="Biaya operasional" style="color: var(--text-dim);">${formatIDR(sumReportCost)}</td>
+                    <td data-label="Keuntungan bersih" style="text-align: right; color: var(--color-paid); font-size: 1.15rem;">${formatIDR(sumReportProfit)}</td>
                 </tr>
             `;
 
@@ -5095,13 +5095,18 @@
             const name = document.getElementById('debtName').value.trim();
             const phone = document.getElementById('debtPhone').value.trim();
             const amount = Math.round(Number(document.getElementById('debtAmount').value));
-            const paid = Math.round(Number(document.getElementById('debtPaid').value)) || 0;
+            const paid = Math.max(0, Math.round(Number(document.getElementById('debtPaid').value)) || 0);
             const date = document.getElementById('debtDate').value;
             const due = document.getElementById('debtDue').value;
             const notes = document.getElementById('debtNotes').value.trim();
 
             if (!name || !amount || amount <= 0) {
                 showToast("MOHON ISI NAMA DAN NOMINAL DENGAN BENAR");
+                return;
+            }
+
+            if (paid > amount) {
+                showToast("NOMINAL DIBAYAR TIDAK BOLEH MELEBIHI TOTAL TRANSAKSI");
                 return;
             }
 
