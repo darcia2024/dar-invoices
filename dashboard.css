@@ -2117,9 +2117,6 @@ body[data-view="debt"] .stats-bar {
         gap: 4px;
         padding: 4px;
         margin: 0 0 14px;
-        position: sticky;
-        top: 142px;
-        z-index: 30;
         background: #ece7d8;
         border: 1px solid #ddd6c4;
         border-radius: 14px;
@@ -2147,7 +2144,7 @@ body[data-view="debt"] .stats-bar {
     body[data-view="report"] .board-tabs,
     body[data-view="debt"] .board-tabs { display: none; }
 
-    .invoice-grid { scroll-margin-top: 210px; }
+    .invoice-grid { scroll-margin-top: 160px; }
     .invoice-grid[data-tab="UNPAID"] #column-DP,
     .invoice-grid[data-tab="UNPAID"] #column-PAID,
     .invoice-grid[data-tab="DP"] #column-UNPAID,
@@ -2162,3 +2159,6 @@ body[data-view="debt"] .stats-bar {
         html, body { overflow-x: clip; }
     }
 }
+
+/* no pinch / double-tap zoom on phones */
+html, body { touch-action: manipulation; }

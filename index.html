@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <title>DAR INVOICES | Official Billing & Revenue Portal</title>
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1483,6 +1483,7 @@
         /* Responsive mobile styling is maintained in /dashboard.css */
     </style>
     <link rel="stylesheet" href="/dashboard.css">
+<script>['gesturestart','gesturechange','gestureend'].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault();},{passive:false});});</script>
 </head>
 <body>
 
@@ -5540,7 +5541,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const grid = document.getElementById('invoiceGrid');
             if (grid && window.matchMedia('(max-width: 600px)').matches) {
                 const tabs = document.getElementById('boardTabs');
-                const stickyOffset = tabs ? tabs.getBoundingClientRect().height + 154 : 210;
+                const stickyOffset = tabs ? tabs.getBoundingClientRect().height + 150 : 200;
                 window.scrollTo({ top: Math.max(0, grid.getBoundingClientRect().top + window.scrollY - stickyOffset), behavior: 'smooth' });
             }
         }
