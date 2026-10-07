@@ -1409,10 +1409,10 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
 @media (max-width: 600px) {
     body { padding: 10px 14px calc(56px + env(safe-area-inset-bottom)); }
 
-    /* Sticky compact header */
+    /* Compact header (scrolls with the page) */
     .workspace-sidebar {
-        position: sticky;
-        inset: 8px auto auto 0;
+        position: static;
+        inset: auto;
         width: 100%;
         z-index: 40;
         margin-bottom: 14px;
@@ -2144,7 +2144,7 @@ body[data-view="debt"] .stats-bar {
     body[data-view="report"] .board-tabs,
     body[data-view="debt"] .board-tabs { display: none; }
 
-    .invoice-grid { scroll-margin-top: 160px; }
+    .invoice-grid { scroll-margin-top: 70px; }
     .invoice-grid[data-tab="UNPAID"] #column-DP,
     .invoice-grid[data-tab="UNPAID"] #column-PAID,
     .invoice-grid[data-tab="DP"] #column-UNPAID,
