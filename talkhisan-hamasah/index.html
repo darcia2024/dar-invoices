@@ -3,53 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PENAWARAN & INVOICE #INV/SYMP-HMS/2026/10/004 — Layout Modul Talkhisan Hamasah (Tafsir & Hadis Idady 1-3)</title>
+    <title>SYMP Studio &mdash; Penawaran &amp; Invoice Layout Modul Talkhisan Hamasah (#INV/SYMP-HMS/2026/10/004)</title>
     
     <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --paper: #FBFAF8;
-            --paper-card: #FFFFFF;
-            --ink: #1E1717;
-            --ink-muted: #5F5452;
-            --ink-soft: #8C7E7C;
-            --red: #A01414;
-            --red-dark: #7B0E0E;
-            --red-light: #FCE9E6;
-            --red-subtle: #FDF4F2;
-            --red-line: #F6D3CF;
-            --line: #E7DDD8;
-            --line-light: #F0EAE6;
-            --navy-badge: #1B2430;
+            --bg-body: #F7F5F1;
+            --bg-card: #FFFFFF;
+            --bg-subtle: #FAF9F6;
+            --bg-muted: #F2EFE9;
+            
+            --ink: #1C1917;         /* Warm Charcoal */
+            --ink-secondary: #57534E;
+            --ink-muted: #78716C;
+            --ink-light: #A8A29E;
+            
+            --symp-crimson: #941717;     /* Elegant Deep Crimson */
+            --symp-crimson-dark: #741010;
+            --symp-crimson-soft: #FDF2F0;
+            --symp-crimson-border: #F6CECE;
+            
+            --border-light: #E7E3DC;
+            --border-subtle: #F0ECE6;
+            --border-dark: #292524;
             
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-mono: 'Space Mono', monospace;
+            
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            background-color: var(--bg-body);
+            color: var(--ink);
+            font-size: 15px;
         }
 
         body {
             font-family: var(--font-sans);
-            font-size: 15px;
+            font-weight: 400;
             line-height: 1.6;
+            background-color: var(--bg-body);
             color: var(--ink);
-            background-color: #EFE9E4;
-            padding: 40px 16px 80px 16px;
+            padding: 32px 16px 80px 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
         }
 
         /* ----------------------------------------------------
-           SECURITY PASSCODE COVER SCREEN
+           SECURITY PASSCODE MODAL (DOSSIER MINIMALIS)
         ---------------------------------------------------- */
         .cover-overlay {
             position: fixed;
@@ -57,116 +73,115 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #151010;
-            background-image: radial-gradient(#2A1F1F 1px, transparent 1px);
-            background-size: 22px 22px;
+            background-color: rgba(28, 25, 23, 0.88);
+            backdrop-filter: blur(8px);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 16px;
+            transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
         }
 
         .cover-overlay.opened {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: scale(0.98) translateY(-25px);
+            transform: scale(0.98);
         }
 
         .cover-card {
-            background-color: var(--paper);
-            border: 2px solid var(--red);
-            border-radius: 12px;
-            max-width: 500px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            max-width: 440px;
             width: 100%;
-            padding: 36px 32px;
+            padding: 36px 28px;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
             position: relative;
         }
 
         .shake-anim {
-            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 0.38s cubic-bezier(.36,.07,.19,.97) both;
         }
 
         @keyframes shake {
             10%, 90% { transform: translate3d(-2px, 0, 0); }
-            20%, 80% { transform: translate3d(4px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-            40%, 60% { transform: translate3d(6px, 0, 0); }
+            20%, 80% { transform: translate3d(3px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+            40%, 60% { transform: translate3d(5px, 0, 0); }
         }
 
-        .cover-badge-top {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--red-light);
-            color: var(--red);
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 99px;
-            margin-bottom: 20px;
-            border: 1px solid var(--red-line);
-        }
-
-        .cover-logo-wrapper {
-            margin-bottom: 20px;
+        .cover-emblem-wrap {
+            margin-bottom: 18px;
             display: flex;
             justify-content: center;
         }
 
-        .cover-logo-wrapper img {
-            height: 48px;
+        .cover-emblem-img {
+            height: 90px;
             width: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 18px rgba(148, 23, 23, 0.2);
             display: block;
         }
 
-        .cover-recipient-box {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 16px;
-            text-align: left;
-            margin-bottom: 24px;
-        }
-
-        .cover-recipient-sub {
-            font-size: 0.7rem;
+        .cover-badge {
+            display: inline-block;
+            font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--ink-soft);
-            margin-bottom: 4px;
+            color: var(--symp-crimson);
+            background: var(--symp-crimson-soft);
+            padding: 4px 12px;
+            border-radius: 99px;
+            border: 1px solid var(--symp-crimson-border);
+            margin-bottom: 16px;
         }
 
-        .cover-recipient-name {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--ink);
-            line-height: 1.3;
+        .cover-dest-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            text-align: left;
+            margin-bottom: 22px;
         }
 
-        .cover-recipient-org {
-            font-size: 0.82rem;
+        .cover-dest-label {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--ink-muted);
+            margin-bottom: 3px;
+        }
+
+        .cover-dest-name {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.35;
+        }
+
+        .cover-dest-client {
+            font-size: 0.8rem;
+            color: var(--ink-secondary);
             margin-top: 2px;
         }
 
-        .cover-ref-num {
-            font-family: var(--font-mono);
-            font-size: 0.76rem;
-            font-weight: 700;
-            color: var(--red);
+        .cover-dest-meta {
             margin-top: 8px;
             padding-top: 8px;
-            border-top: 1px dashed var(--line);
+            border-top: 1px dashed var(--border-light);
             display: flex;
             justify-content: space-between;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            color: var(--symp-crimson);
+            font-weight: 700;
         }
 
         .passcode-wrapper {
@@ -176,20 +191,20 @@
         .passcode-label {
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--ink-muted);
             margin-bottom: 8px;
         }
 
         .passcode-input {
-            width: 220px;
-            height: 48px;
-            background: #FFFFFF;
-            border: 2px solid var(--line);
-            border-radius: 8px;
+            width: 190px;
+            height: 46px;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-sm);
             font-family: var(--font-mono);
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             letter-spacing: 0.35em;
             text-align: center;
@@ -199,49 +214,51 @@
         }
 
         .passcode-input:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 4px var(--red-light);
+            border-color: var(--symp-crimson);
+            box-shadow: 0 0 0 3px var(--symp-crimson-soft);
         }
 
         .passcode-error {
-            color: var(--red);
-            font-size: 0.75rem;
+            color: var(--symp-crimson);
+            font-size: 0.72rem;
             font-weight: 700;
             margin-top: 8px;
             display: none;
         }
 
-        .cover-open-btn {
+        .cover-submit-btn {
             width: 100%;
-            height: 48px;
-            background: var(--red);
+            height: 46px;
+            background: var(--ink);
             color: #FFFFFF;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             font-family: var(--font-sans);
-            font-size: 0.88rem;
-            font-weight: 800;
-            letter-spacing: 0.05em;
+            font-size: 0.84rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 20px rgba(160, 20, 20, 0.25);
+            gap: 8px;
+            transition: background 0.2s ease, transform 0.15s ease;
         }
 
-        .cover-open-btn:hover {
-            background: var(--red-dark);
-            transform: translateY(-1px);
+        .cover-submit-btn:hover {
+            background: var(--symp-crimson);
+        }
+
+        .cover-submit-btn:active {
+            transform: scale(0.99);
         }
 
         /* ----------------------------------------------------
-           TOP ACTION BAR
+           TOP TOOLBAR / ACTION BAR
         ---------------------------------------------------- */
-        .action-bar-container {
-            max-width: 960px;
+        .toolbar-wrapper {
+            max-width: 900px;
             margin: 0 auto 16px auto;
             display: flex;
             justify-content: space-between;
@@ -250,164 +267,161 @@
             flex-wrap: wrap;
         }
 
-        .action-bar-meta {
-            font-size: 0.82rem;
+        .toolbar-title {
+            font-size: 0.8rem;
             font-weight: 600;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .action-bar-meta .badge-code {
+        .toolbar-pill {
             font-family: var(--font-mono);
-            background: #FFFFFF;
-            border: 1px solid var(--line);
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
             padding: 3px 8px;
             border-radius: 4px;
             color: var(--ink);
-            font-weight: 700;
         }
 
-        .action-btn-group {
+        .toolbar-buttons {
             display: flex;
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
         }
 
-        .tool-btn {
+        .btn-tool {
             font-family: var(--font-sans);
             font-size: 0.78rem;
-            font-weight: 700;
+            font-weight: 600;
             padding: 8px 14px;
-            border-radius: 6px;
-            border: 1px solid var(--line);
-            background: #FFFFFF;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            background: var(--bg-card);
             color: var(--ink);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             text-decoration: none;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
-        .tool-btn:hover {
+        .btn-tool:hover {
             border-color: var(--ink);
-            background: #FAF7F5;
-            transform: translateY(-1px);
+            background: #FFFFFF;
         }
 
-        .tool-btn.btn-red {
-            background: var(--red);
-            border-color: var(--red);
+        .btn-tool:active {
+            transform: scale(0.98);
+        }
+
+        .btn-tool.btn-primary {
+            background: var(--ink);
+            border-color: var(--ink);
             color: #FFFFFF;
         }
 
-        .tool-btn.btn-red:hover {
-            background: var(--red-dark);
-            border-color: var(--red-dark);
+        .btn-tool.btn-primary:hover {
+            background: var(--symp-crimson);
+            border-color: var(--symp-crimson);
         }
 
         /* ----------------------------------------------------
-           MAIN DOCUMENT CANVAS
+           MAIN DOCUMENT CONTAINER (EDITORIAL MINIMALIST)
         ---------------------------------------------------- */
-        .document-wrapper {
-            max-width: 960px;
+        .doc-container {
+            max-width: 900px;
             margin: 0 auto;
-            background: var(--paper);
-            border: 1px solid #D8CFC8;
-            border-radius: 12px;
-            box-shadow: 0 16px 45px rgba(30, 23, 23, 0.08);
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
             overflow: hidden;
         }
 
-        /* Header Accent Top Bar */
-        .doc-top-stripe {
-            height: 6px;
-            background: linear-gradient(90deg, var(--red) 0%, var(--red-dark) 100%);
-        }
-
-        .doc-inner {
-            padding: 44px 48px;
+        .doc-body {
+            padding: 44px 44px;
         }
 
         /* ----------------------------------------------------
-           HEADER & METADATA SECTION
+           EDITORIAL HEADER (BRAND + EMBLEM + META)
         ---------------------------------------------------- */
-        .doc-header {
+        .doc-header-grid {
             display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 32px;
+            grid-template-columns: auto 1fr auto;
+            gap: 24px;
             padding-bottom: 32px;
-            border-bottom: 1px solid var(--line);
-            align-items: start;
+            border-bottom: 1px solid var(--border-light);
+            align-items: center;
         }
 
-        .studio-brand-box {
+        .brand-emblem-img {
+            height: 74px;
+            width: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 14px rgba(148, 23, 23, 0.15);
+            display: block;
+        }
+
+        .brand-text-col {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 4px;
         }
 
-        .studio-brand-logo {
-            height: 44px;
-            width: auto;
-            max-width: 220px;
-            object-fit: contain;
-            object-position: left;
-        }
-
-        .studio-eyebrow {
-            font-size: 0.72rem;
+        .brand-kicker {
+            font-size: 0.68rem;
             font-weight: 800;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--red);
+            color: var(--symp-crimson);
         }
 
-        .studio-title-main {
-            font-size: 1.85rem;
+        .brand-title {
+            font-size: 1.65rem;
             font-weight: 800;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.03em;
             line-height: 1.15;
             color: var(--ink);
         }
 
-        .studio-subtitle {
-            font-size: 0.95rem;
-            color: var(--ink-muted);
-            margin-top: 4px;
-            line-height: 1.45;
+        .brand-desc {
+            font-size: 0.88rem;
+            color: var(--ink-secondary);
+            line-height: 1.4;
         }
 
-        .doc-meta-card {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 20px 24px;
-            min-width: 280px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+        .meta-box-header {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            min-width: 250px;
         }
 
-        .meta-row {
+        .meta-line {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            padding: 7px 0;
-            border-bottom: 1px solid var(--line-light);
-            font-size: 0.82rem;
+            padding: 5px 0;
+            font-size: 0.78rem;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
-        .meta-row:last-child {
+        .meta-line:last-child {
             border-bottom: none;
             padding-bottom: 0;
         }
 
-        .meta-label {
-            color: var(--ink-soft);
-            font-weight: 600;
+        .meta-lbl {
+            color: var(--ink-muted);
+            font-weight: 500;
         }
 
         .meta-val {
@@ -416,79 +430,78 @@
             text-align: right;
         }
 
-        .meta-val.val-mono {
+        .meta-val.mono {
             font-family: var(--font-mono);
-            color: var(--red);
+            color: var(--symp-crimson);
         }
 
-        .status-pill-unpaid {
+        .badge-status {
             display: inline-block;
-            background: #FFF3CD;
-            color: #856404;
-            border: 1px solid #FFEEBA;
-            font-size: 0.7rem;
+            background: #FEF3C7;
+            color: #92400E;
+            font-size: 0.66rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 3px 8px;
+            padding: 2px 7px;
             border-radius: 4px;
         }
 
         /* ----------------------------------------------------
-           CLIENT & ISSUER DETAILS
+           BENTO PARTIES ROW (KLIEN & STUDIO)
         ---------------------------------------------------- */
-        .parties-grid {
+        .parties-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 18px;
             margin: 28px 0;
         }
 
         .party-card {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 20px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
         }
 
         .party-tag {
-            font-size: 0.68rem;
-            font-weight: 800;
-            letter-spacing: 0.16em;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 8px;
+            color: var(--symp-crimson);
+            margin-bottom: 6px;
         }
 
         .party-name {
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: var(--ink);
             margin-bottom: 4px;
         }
 
-        .party-desc {
-            font-size: 0.83rem;
-            color: var(--ink-muted);
-            line-height: 1.5;
+        .party-info {
+            font-size: 0.82rem;
+            color: var(--ink-secondary);
+            line-height: 1.45;
         }
 
-        .party-contact-list {
+        .party-contacts {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px dashed var(--line);
+            border-top: 1px dashed var(--border-light);
             font-size: 0.78rem;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
         }
 
         /* ----------------------------------------------------
-           HIGHLIGHT BANNER (HERO PRICING SUMMARY)
+           EDITORIAL SUMMARY BANNER (WARM MINIMALIST)
         ---------------------------------------------------- */
-        .hero-pricing-banner {
-            background: var(--red);
+        .summary-banner {
+            background: var(--ink);
             color: #FFFFFF;
-            border-radius: 10px;
-            padding: 30px 32px;
+            border-radius: var(--radius-md);
+            padding: 26px 28px;
             margin-bottom: 32px;
             display: grid;
             grid-template-columns: 1fr auto;
@@ -496,546 +509,523 @@
             align-items: center;
         }
 
-        .hero-banner-left h3 {
-            font-size: 0.78rem;
-            font-weight: 800;
-            letter-spacing: 0.2em;
+        .summary-left-kicker {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--red-light);
+            color: #D6D3D1;
             margin-bottom: 6px;
         }
 
-        .hero-banner-left .hero-banner-title {
-            font-size: 1.5rem;
+        .summary-left-title {
+            font-size: 1.35rem;
             font-weight: 800;
+            letter-spacing: -0.02em;
             line-height: 1.25;
-            letter-spacing: -0.015em;
+            color: #FFFFFF;
         }
 
-        .hero-banner-left .hero-banner-desc {
-            font-size: 0.88rem;
-            color: #FCE9E6;
+        .summary-left-desc {
+            font-size: 0.84rem;
+            color: #A8A29E;
             margin-top: 6px;
             line-height: 1.5;
         }
 
-        .hero-banner-right {
+        .summary-right-total {
             text-align: right;
-            border-left: 1px solid rgba(255, 255, 255, 0.25);
+            border-left: 1px solid #44403C;
             padding-left: 28px;
         }
 
-        .hero-price-label {
-            font-size: 0.7rem;
+        .summary-total-label {
+            font-size: 0.68rem;
             font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--red-light);
+            color: #D6D3D1;
         }
 
-        .hero-price-val {
+        .summary-total-num {
             font-family: var(--font-mono);
-            font-size: 2.1rem;
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
             line-height: 1.1;
             margin: 4px 0;
+            color: #FFFFFF;
             white-space: nowrap;
         }
 
-        .hero-price-sub {
-            font-size: 0.78rem;
-            color: #FCE9E6;
+        .summary-total-sub {
+            font-size: 0.74rem;
+            color: #A8A29E;
         }
 
         /* ----------------------------------------------------
-           SECTION TITLES
+           SECTION TITLE BAR (MINIMALIST DIVIDER)
         ---------------------------------------------------- */
-        .section-heading-wrap {
+        .section-header {
             margin: 36px 0 16px 0;
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            border-bottom: 2px solid var(--ink);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-dark);
         }
 
-        .section-heading-wrap.alt-red {
-            border-bottom-color: var(--red);
+        .section-header.crimson {
+            border-bottom-color: var(--symp-crimson);
         }
 
-        .section-main-title {
-            font-size: 1.15rem;
+        .section-title {
+            font-size: 0.96rem;
             font-weight: 800;
-            letter-spacing: -0.01em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             color: var(--ink);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .section-sub-tag {
-            font-size: 0.72rem;
+        .section-tag {
+            font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--red);
+            color: var(--symp-crimson);
         }
 
         /* ----------------------------------------------------
-           3 PILAR LAYANAN (YANG KAMI KERJAKAN)
+           3 PILLARS / YANG DIKERJAKAN
         ---------------------------------------------------- */
         .pillars-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 28px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .pillar-card {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 22px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 22px 18px;
             display: flex;
             flex-direction: column;
-            position: relative;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .pillar-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-            border-color: var(--red-line);
+            border-color: var(--ink);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
         }
 
         .pillar-num {
             font-family: var(--font-mono);
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            color: var(--red);
+            color: var(--symp-crimson);
             line-height: 1;
             margin-bottom: 8px;
         }
 
-        .pillar-title {
-            font-size: 1.1rem;
+        .pillar-head {
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--ink);
             margin-bottom: 12px;
             letter-spacing: -0.01em;
         }
 
-        .pillar-features {
+        .pillar-items {
             list-style: none;
             padding: 0;
-            margin: 0;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        .pillar-features li {
-            font-size: 0.82rem;
-            line-height: 1.45;
+        .pillar-items li {
             padding-top: 10px;
-            border-top: 1px solid var(--line-light);
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.8rem;
+            line-height: 1.45;
         }
 
-        .pillar-features li:first-child {
+        .pillar-items li:first-child {
             border-top: none;
             padding-top: 0;
         }
 
-        .pillar-features li strong {
+        .pillar-items li strong {
             display: block;
-            font-size: 0.86rem;
             color: var(--ink);
             font-weight: 700;
             margin-bottom: 2px;
         }
 
-        .pillar-features li span {
-            color: var(--ink-muted);
-            font-size: 0.78rem;
+        .pillar-items li span {
+            color: var(--ink-secondary);
+            font-size: 0.76rem;
             display: block;
         }
 
-        .deliverable-strip {
-            background: var(--red-subtle);
-            border: 1px solid var(--red-line);
-            border-radius: 8px;
-            padding: 14px 18px;
+        .deliverable-banner {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
             margin-bottom: 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
+            font-size: 0.84rem;
         }
 
-        .deliverable-strip-text {
-            font-size: 0.86rem;
-            font-weight: 600;
-            color: var(--ink);
-        }
-
-        .deliverable-strip-text strong {
-            color: var(--red);
+        .deliverable-banner strong {
+            color: var(--symp-crimson);
             font-weight: 800;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-right: 8px;
         }
 
         .deliverable-pill {
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 700;
             background: #FFFFFF;
-            border: 1px solid var(--red-line);
-            color: var(--red);
-            padding: 4px 12px;
+            border: 1px solid var(--border-light);
+            color: var(--ink);
+            padding: 3px 10px;
             border-radius: 99px;
             white-space: nowrap;
         }
 
         /* ----------------------------------------------------
-           BENCHMARK STATS (BUKTI HADIS IDADY 1)
+           BENCHMARK BUKTI (HADIS IDADY 1)
         ---------------------------------------------------- */
-        .proof-box {
-            background: var(--red);
-            color: #FFFFFF;
-            border-radius: 10px;
-            padding: 32px;
+        .proof-container {
+            background: var(--symp-crimson-soft);
+            border: 1px solid var(--symp-crimson-border);
+            border-radius: var(--radius-md);
+            padding: 26px 28px;
             margin-bottom: 32px;
         }
 
-        .proof-header {
+        .proof-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .proof-tag {
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 800;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--red-light);
+            color: var(--symp-crimson);
             margin-bottom: 4px;
         }
 
-        .proof-title {
-            font-size: 1.45rem;
+        .proof-heading {
+            font-size: 1.35rem;
             font-weight: 800;
-            letter-spacing: -0.015em;
+            color: var(--ink);
+            letter-spacing: -0.02em;
         }
 
         .proof-desc {
-            font-size: 0.88rem;
-            color: var(--red-light);
-            max-width: 620px;
+            font-size: 0.84rem;
+            color: var(--ink-secondary);
             margin-top: 4px;
-            line-height: 1.5;
+            max-width: 580px;
+            line-height: 1.45;
         }
 
-        .proof-stats-grid {
+        .btn-preview-sample {
+            background: #FFFFFF;
+            border: 1px solid var(--symp-crimson-border);
+            color: var(--symp-crimson);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preview-sample:hover {
+            background: var(--symp-crimson);
+            color: #FFFFFF;
+            border-color: var(--symp-crimson);
+        }
+
+        .proof-metrics-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            padding-top: 22px;
+            gap: 16px;
+            border-top: 1px solid rgba(148, 23, 23, 0.18);
+            padding-top: 18px;
         }
 
-        .stat-item b {
+        .metric-cell b {
             font-family: var(--font-mono);
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 800;
             line-height: 1;
-            letter-spacing: -0.03em;
+            color: var(--symp-crimson);
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .stat-item span {
-            font-size: 0.82rem;
-            color: #FCE9E6;
+        .metric-cell span {
+            font-size: 0.78rem;
+            color: var(--ink-secondary);
             line-height: 1.35;
             display: block;
             font-weight: 500;
         }
 
-        .proof-footer-action {
-            margin-top: 22px;
-            padding-top: 18px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.82rem;
-            color: var(--red-light);
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .proof-preview-btn {
-            background: #FFFFFF;
-            color: var(--red);
-            font-size: 0.78rem;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .proof-preview-btn:hover {
-            background: var(--red-light);
-            transform: translateY(-1px);
-        }
-
         /* ----------------------------------------------------
-           MATRIX 6 MODUL TABLE & DETAIL
+           MATRIX KURIKULUM 6 MODUL
         ---------------------------------------------------- */
-        .matrix-container {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 24px;
+        .matrix-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 22px 24px;
             margin-bottom: 32px;
         }
 
-        .matrix-intro-text {
-            font-size: 0.88rem;
-            color: var(--ink-muted);
-            margin-bottom: 20px;
+        .matrix-lead {
+            font-size: 0.84rem;
+            color: var(--ink-secondary);
+            margin-bottom: 18px;
             line-height: 1.5;
+        }
+
+        .matrix-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .matrix-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.86rem;
+            font-size: 0.84rem;
+            min-width: 540px;
         }
 
         .matrix-table th {
             text-align: left;
-            padding: 12px 14px;
-            background: #FAF7F5;
-            color: var(--ink-soft);
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
+            padding: 10px 14px;
+            background: var(--bg-subtle);
+            color: var(--ink-muted);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            border-bottom: 2px solid var(--line);
-        }
-
-        .matrix-table th.text-center,
-        .matrix-table td.text-center {
-            text-align: center;
-        }
-
-        .matrix-table th.text-right,
-        .matrix-table td.text-right {
-            text-align: right;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .matrix-table td {
             padding: 14px;
-            border-bottom: 1px solid var(--line-light);
+            border-bottom: 1px solid var(--border-subtle);
             color: var(--ink);
         }
 
         .matrix-table tr:hover td {
-            background: #FCFBF9;
+            background: var(--bg-subtle);
         }
 
-        .matrix-badge-done {
+        .badge-done {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            background: var(--red);
+            gap: 4px;
+            background: var(--symp-crimson);
             color: #FFFFFF;
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 4px;
-            letter-spacing: 0.05em;
-        }
-
-        .matrix-badge-queue {
-            display: inline-block;
-            background: #F1EFEA;
-            color: var(--ink-muted);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 4px;
         }
 
-        .matrix-row-level {
-            font-weight: 800;
-            color: var(--ink);
+        .badge-queue {
+            display: inline-block;
+            background: var(--bg-muted);
+            color: var(--ink-muted);
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
         }
 
         /* ----------------------------------------------------
-           INVOICE FINANCIAL BREAKDOWN (TABEL TAGIHAN & TERMIN)
+           TABEL INVOICE / RINCIAN TAGIHAN RESMI
         ---------------------------------------------------- */
-        .invoice-table-card {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
+        .invoice-card-table {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
             overflow: hidden;
             margin-bottom: 32px;
         }
 
-        .table-standard {
+        .inv-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .inv-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
+            min-width: 580px;
         }
 
-        .table-standard th {
-            background: #FAF7F5;
-            color: var(--ink-soft);
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
+        .inv-table th {
+            background: var(--bg-subtle);
+            color: var(--ink-muted);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            padding: 14px 18px;
+            padding: 12px 18px;
             text-align: left;
-            border-bottom: 2px solid var(--line);
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .table-standard td {
+        .inv-table td {
             padding: 16px 18px;
-            border-bottom: 1px solid var(--line-light);
+            border-bottom: 1px solid var(--border-subtle);
             vertical-align: top;
         }
 
-        .item-name {
-            font-weight: 800;
+        .item-title {
+            font-weight: 700;
             color: var(--ink);
-            font-size: 0.94rem;
+            font-size: 0.92rem;
         }
 
-        .item-spec {
+        .item-details {
             font-size: 0.78rem;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
             margin-top: 4px;
             line-height: 1.45;
         }
 
-        .item-spec-bullet {
-            margin-top: 4px;
-            padding-left: 14px;
+        .item-bullet {
+            margin-top: 3px;
+            padding-left: 12px;
             position: relative;
         }
 
-        .item-spec-bullet::before {
+        .item-bullet::before {
             content: "•";
             position: absolute;
             left: 0;
-            color: var(--red);
+            color: var(--symp-crimson);
             font-weight: bold;
         }
 
-        .total-section {
-            background: #FAF7F5;
-            border-top: 2px solid var(--line);
-            padding: 24px;
+        .calc-footer {
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border-light);
+            padding: 22px 24px;
             display: grid;
-            grid-template-columns: 1fr 340px;
+            grid-template-columns: 1fr 320px;
             gap: 24px;
         }
 
-        .total-terbilang-box {
+        .terbilang-card {
             background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 16px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
         }
 
-        .terbilang-label {
-            font-size: 0.68rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
+        .terbilang-lbl {
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--ink-soft);
+            color: var(--ink-muted);
             margin-bottom: 4px;
         }
 
-        .terbilang-text {
-            font-size: 0.92rem;
-            font-weight: 700;
+        .terbilang-val {
+            font-size: 0.88rem;
+            font-weight: 600;
             color: var(--ink);
             font-style: italic;
         }
 
-        .total-calc-box {
+        .calc-rows {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .calc-row {
+        .calc-row-item {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            font-size: 0.88rem;
-            color: var(--ink-muted);
+            font-size: 0.84rem;
+            color: var(--ink-secondary);
         }
 
-        .calc-row.grand-total-row {
-            border-top: 2px solid var(--line);
-            padding-top: 12px;
+        .calc-row-item.total-final {
+            border-top: 1px solid var(--border-dark);
+            padding-top: 10px;
             margin-top: 4px;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--ink);
         }
 
-        .calc-row.grand-total-row .val {
+        .calc-row-item.total-final .val-accent {
             font-family: var(--font-mono);
-            font-size: 1.45rem;
-            color: var(--red);
+            font-size: 1.4rem;
+            color: var(--symp-crimson);
         }
 
-        /* Payment Terms Split Box */
-        .payment-terms-grid {
+        /* ----------------------------------------------------
+           TERMIN PEMBAYARAN (DUA TAHAP)
+        ---------------------------------------------------- */
+        .terms-split-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin: 28px 0;
+            margin: 24px 0 32px 0;
         }
 
-        .term-card {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
+        .term-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
             padding: 20px;
             position: relative;
         }
 
-        .term-card.highlight {
-            border-color: var(--red);
-            background: var(--red-subtle);
+        .term-box.active-dp {
+            border-color: var(--symp-crimson-border);
+            background: var(--symp-crimson-soft);
         }
 
-        .term-badge {
+        .term-badge-tag {
             display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 800;
+            font-size: 0.66rem;
+            font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             padding: 3px 8px;
@@ -1043,316 +1033,316 @@
             margin-bottom: 8px;
         }
 
-        .term-badge.badge-dp {
-            background: var(--red);
+        .term-badge-tag.badge-red {
+            background: var(--symp-crimson);
             color: #FFFFFF;
         }
 
-        .term-badge.badge-final {
-            background: #E2DBD6;
+        .term-badge-tag.badge-neutral {
+            background: var(--bg-muted);
             color: var(--ink);
         }
 
-        .term-title {
-            font-size: 0.98rem;
-            font-weight: 800;
+        .term-heading {
+            font-size: 0.94rem;
+            font-weight: 700;
             color: var(--ink);
             margin-bottom: 4px;
         }
 
-        .term-amount {
+        .term-sum {
             font-family: var(--font-mono);
             font-size: 1.35rem;
             font-weight: 800;
-            color: var(--red);
+            color: var(--symp-crimson);
             margin-bottom: 6px;
         }
 
-        .term-desc {
+        .term-expl {
             font-size: 0.78rem;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
             line-height: 1.45;
         }
 
         /* ----------------------------------------------------
-           ALUR PROSES & KETENTUAN KERJA
+           ALUR PROSES & KETENTUAN (4 STEPS)
         ---------------------------------------------------- */
-        .process-steps-grid {
+        .process-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 14px;
+            margin-bottom: 24px;
         }
 
-        .process-step-item {
-            background: #FFFFFF;
-            border: 1px solid var(--line);
-            border-radius: 8px;
+        .process-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
             padding: 18px 16px;
         }
 
-        .step-num {
+        .process-num {
             font-family: var(--font-mono);
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 800;
-            color: var(--red);
+            color: var(--symp-crimson);
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .step-title {
+        .process-title {
             font-size: 0.88rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--ink);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             line-height: 1.3;
         }
 
-        .step-desc {
+        .process-text {
             font-size: 0.76rem;
-            color: var(--ink-muted);
+            color: var(--ink-secondary);
             line-height: 1.45;
         }
 
-        .terms-clause-grid {
+        .clauses-bento {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            background: #FAF7F5;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 20px;
+            gap: 14px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
             margin-bottom: 32px;
         }
 
-        .clause-item h4 {
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.16em;
+        .clause-col h4 {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 6px;
+            color: var(--symp-crimson);
+            margin-bottom: 4px;
         }
 
-        .clause-item p {
-            font-size: 0.8rem;
-            color: var(--ink);
+        .clause-col p {
+            font-size: 0.78rem;
+            color: var(--ink-secondary);
             line-height: 1.45;
         }
 
         /* ----------------------------------------------------
-           REKENING PEMBAYARAN BOX
+           BANK REKENING SECTION
         ---------------------------------------------------- */
-        .bank-info-card {
-            background: #FFFFFF;
-            border: 2px solid var(--line);
-            border-radius: 10px;
-            padding: 28px;
+        .bank-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 24px;
             margin-bottom: 32px;
             display: grid;
             grid-template-columns: auto 1fr auto;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
         }
 
-        .bank-logo-box img {
-            height: 40px;
+        .bank-logo img {
+            height: 38px;
             width: auto;
             display: block;
         }
 
-        .bank-details-box {
+        .bank-content {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
 
-        .bank-details-label {
-            font-size: 0.7rem;
-            font-weight: 800;
+        .bank-label {
+            font-size: 0.68rem;
+            font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--ink-soft);
+            color: var(--ink-muted);
         }
 
-        .bank-acc-num-flex {
+        .bank-acc-flex {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            align-items: baseline;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
-        .bank-acc-num {
+        .bank-acc-code {
             font-family: var(--font-mono);
-            font-size: 1.45rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--ink);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
 
-        .bank-acc-name {
-            font-size: 0.86rem;
-            color: var(--ink-muted);
+        .bank-acc-holder {
+            font-size: 0.84rem;
+            color: var(--ink-secondary);
             font-weight: 600;
         }
 
-        .bank-btn-action {
+        .bank-actions {
             display: flex;
-            flex-direction: column;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         /* ----------------------------------------------------
-           AUTHORIZATION SIGNATURE SECTION
+           SIGNATURE SECTION
         ---------------------------------------------------- */
-        .sign-grid {
+        .signature-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 36px;
             margin-top: 36px;
-            padding-top: 28px;
-            border-top: 1px solid var(--line);
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
         }
 
-        .sign-box {
+        .sign-col {
             display: flex;
             flex-direction: column;
         }
 
-        .sign-role-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.16em;
+        .sign-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--ink-soft);
-            margin-bottom: 8px;
+            color: var(--ink-muted);
+            margin-bottom: 6px;
         }
 
-        .sign-entity {
-            font-size: 0.94rem;
-            font-weight: 800;
+        .sign-org {
+            font-size: 0.92rem;
+            font-weight: 700;
             color: var(--ink);
         }
 
-        .sign-img-wrapper {
-            height: 80px;
+        .sign-image-box {
+            height: 75px;
             display: flex;
             align-items: center;
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
-        .sign-img-wrapper img {
-            height: 75px;
+        .sign-image-box img {
+            height: 68px;
             width: auto;
             display: block;
         }
 
-        .sign-line {
-            width: 220px;
+        .sign-divider-line {
+            width: 200px;
             height: 1px;
-            background: var(--ink);
+            background: var(--border-dark);
             margin-bottom: 6px;
         }
 
-        .sign-name {
-            font-size: 0.92rem;
-            font-weight: 800;
+        .sign-signer-name {
+            font-size: 0.88rem;
+            font-weight: 700;
             color: var(--ink);
         }
 
-        .sign-title {
-            font-size: 0.76rem;
+        .sign-signer-role {
+            font-size: 0.74rem;
             color: var(--ink-muted);
         }
 
         /* ----------------------------------------------------
-           FOOTER NOTE
+           FOOTER
         ---------------------------------------------------- */
-        .doc-footer-note {
-            margin-top: 36px;
-            padding-top: 18px;
-            border-top: 1px dashed var(--line);
+        .doc-footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.76rem;
-            color: var(--ink-soft);
+            font-size: 0.74rem;
+            color: var(--ink-muted);
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .doc-footer-note strong {
+        .doc-footer strong {
             color: var(--ink);
         }
 
         /* ----------------------------------------------------
-           SAMPLE MINDMAP MODAL / LIGHTBOX
+           MINDMAP LIGHTBOX
         ---------------------------------------------------- */
-        .modal-mindmap-overlay {
+        .mindmap-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(18, 14, 14, 0.88);
+            background: rgba(28, 25, 23, 0.88);
             backdrop-filter: blur(8px);
             z-index: 20000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px;
+            padding: 20px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
-        .modal-mindmap-overlay.active {
+        .mindmap-modal.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .modal-mindmap-content {
+        .mindmap-modal-card {
             background: #FFFFFF;
-            border-radius: 12px;
-            max-width: 820px;
+            border-radius: var(--radius-lg);
+            max-width: 800px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             padding: 24px;
             position: relative;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
         }
 
-        .modal-close-btn {
+        .modal-x-btn {
             position: absolute;
             top: 16px;
             right: 16px;
-            background: #FAF7F5;
-            border: 1px solid var(--line);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
             border-radius: 50%;
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: var(--ink);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
             transition: all 0.2s ease;
         }
 
-        .modal-close-btn:hover {
-            background: var(--red);
+        .modal-x-btn:hover {
+            background: var(--symp-crimson);
             color: #FFFFFF;
-            border-color: var(--red);
+            border-color: var(--symp-crimson);
         }
 
-        .modal-mindmap-content img {
+        .mindmap-modal-card img {
             width: 100%;
             height: auto;
-            border-radius: 8px;
-            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
             margin-top: 12px;
             display: block;
         }
@@ -1366,19 +1356,19 @@
             right: 24px;
             background: var(--ink);
             color: #FFFFFF;
-            padding: 12px 22px;
-            border-radius: 8px;
-            font-size: 0.84rem;
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px);
+            transform: translateY(8px);
             transition: all 0.25s ease;
             z-index: 99999;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .toast.show {
@@ -1388,132 +1378,231 @@
         }
 
         /* ----------------------------------------------------
-           MOBILE RESPONSIVENESS
+           MOBILE COMPACT & OPTIMAL RESPONSIVENESS (< 768px)
         ---------------------------------------------------- */
-        @media screen and (max-width: 820px) {
+        @media screen and (max-width: 768px) {
             body {
-                padding: 14px 8px 60px 8px;
-                background-color: #F5EFEB;
+                padding: 12px 10px 50px 10px;
+                background-color: var(--bg-body);
+                font-size: 14px;
             }
 
-            .doc-inner {
-                padding: 24px 18px;
+            .doc-container {
+                border-radius: var(--radius-md);
             }
 
-            .doc-header {
+            .doc-body {
+                padding: 22px 16px;
+            }
+
+            /* Header Lockup Compact */
+            .doc-header-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 16px;
+                padding-bottom: 22px;
+                text-align: left;
             }
 
-            .doc-meta-card {
+            .brand-emblem-img {
+                height: 60px;
+            }
+
+            .brand-title {
+                font-size: 1.35rem;
+                letter-spacing: -0.02em;
+            }
+
+            .meta-box-header {
                 min-width: 100%;
+                padding: 12px 14px;
             }
 
-            .parties-grid {
+            /* Parties Bento Compact */
+            .parties-row {
                 grid-template-columns: 1fr;
-                gap: 14px;
+                gap: 12px;
+                margin: 20px 0;
             }
 
-            .hero-pricing-banner {
+            .party-card {
+                padding: 14px 16px;
+            }
+
+            /* Summary Banner Compact */
+            .summary-banner {
                 grid-template-columns: 1fr;
-                gap: 18px;
-                padding: 22px 20px;
+                gap: 16px;
+                padding: 18px 18px;
+                margin-bottom: 24px;
             }
 
-            .hero-banner-right {
+            .summary-left-title {
+                font-size: 1.18rem;
+            }
+
+            .summary-right-total {
                 text-align: left;
                 border-left: none;
-                border-top: 1px solid rgba(255, 255, 255, 0.25);
+                border-top: 1px solid #44403C;
                 padding-left: 0;
-                padding-top: 16px;
+                padding-top: 14px;
             }
 
+            .summary-total-num {
+                font-size: 1.7rem;
+            }
+
+            /* Pillars Grid Compact */
             .pillars-grid {
                 grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .proof-stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 18px;
-            }
-
-            .payment-terms-grid {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .process-steps-grid {
-                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
 
-            .terms-clause-grid {
-                grid-template-columns: 1fr;
+            .pillar-card {
+                padding: 16px 14px;
+            }
+
+            /* Benchmark Proof Compact */
+            .proof-container {
+                padding: 18px 16px;
+            }
+
+            .proof-heading {
+                font-size: 1.15rem;
+            }
+
+            .proof-metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 14px;
             }
 
-            .total-section {
-                grid-template-columns: 1fr;
-                gap: 18px;
+            .metric-cell b {
+                font-size: 1.85rem;
             }
 
-            .bank-info-card {
+            /* Matrix Table Compact */
+            .matrix-box {
+                padding: 16px 14px;
+            }
+
+            .matrix-table {
+                font-size: 0.78rem;
+            }
+
+            .matrix-table th,
+            .matrix-table td {
+                padding: 10px 8px;
+            }
+
+            /* Terms & Calc Compact */
+            .terms-split-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 18px 0 24px 0;
+            }
+
+            .term-box {
+                padding: 16px 14px;
+            }
+
+            .calc-footer {
                 grid-template-columns: 1fr;
                 gap: 16px;
-                text-align: left;
+                padding: 16px;
             }
 
-            .bank-btn-action {
-                flex-direction: row;
-                flex-wrap: wrap;
+            /* Process & Clauses Compact */
+            .process-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
-            .sign-grid {
+            .process-card {
+                padding: 14px 12px;
+            }
+
+            .clauses-bento {
                 grid-template-columns: 1fr;
-                gap: 28px;
+                gap: 12px;
+                padding: 14px 16px;
             }
 
-            .action-bar-container {
+            /* Bank Card Compact */
+            .bank-card {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 16px;
+            }
+
+            .bank-acc-code {
+                font-size: 1.25rem;
+            }
+
+            .bank-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .bank-actions .btn-tool {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Signature Compact */
+            .signature-row {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin-top: 26px;
+            }
+
+            /* Toolbar Compact */
+            .toolbar-wrapper {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 10px;
             }
 
-            .action-btn-group {
-                justify-content: stretch;
+            .toolbar-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
             }
 
-            .action-btn-group .tool-btn {
-                flex: 1;
+            .toolbar-buttons .btn-tool {
+                padding: 8px 10px;
+                font-size: 0.74rem;
                 justify-content: center;
+            }
+
+            /* Passcode Card Mobile */
+            .cover-card {
+                padding: 24px 18px;
+                max-width: 94vw;
+            }
+
+            .cover-emblem-img {
+                height: 72px;
             }
         }
 
-        @media screen and (max-width: 480px) {
-            .proof-stats-grid {
+        @media screen and (max-width: 420px) {
+            .process-row {
                 grid-template-columns: 1fr;
             }
 
-            .process-steps-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-item b {
-                font-size: 2.2rem;
-            }
-
-            .hero-price-val {
-                font-size: 1.8rem;
+            .proof-metrics-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
         }
 
         /* ----------------------------------------------------
-           PRINT STYLES
+           PRINT OPTIMIZATION
         ---------------------------------------------------- */
         @media print {
             @page {
                 size: A4;
-                margin: 8mm 10mm;
+                margin: 10mm 12mm;
             }
             body {
                 background: #FFFFFF !important;
@@ -1521,24 +1610,25 @@
                 color: #000000 !important;
             }
             .cover-overlay,
-            .action-bar-container,
-            .proof-preview-btn,
-            .bank-btn-action,
-            .modal-mindmap-overlay,
+            .toolbar-wrapper,
+            .btn-preview-sample,
+            .bank-actions,
+            .mindmap-modal,
             .toast {
                 display: none !important;
             }
-            .document-wrapper {
+            .doc-container {
                 border: none !important;
                 box-shadow: none !important;
                 max-width: 100% !important;
                 border-radius: 0 !important;
             }
-            .doc-inner {
+            .doc-body {
                 padding: 0 !important;
             }
-            .hero-pricing-banner,
-            .proof-box {
+            .summary-banner {
+                background: #1C1917 !important;
+                color: #FFFFFF !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
@@ -1548,168 +1638,159 @@
 <body>
 
     <!-- ----------------------------------------------------
-         SECURITY PASSCODE COVER OVERLAY (DOSSIER RAHASIA)
+         SECURITY PASSCODE COVER SCREEN (DOSSIER MINIMALIS)
     ---------------------------------------------------- -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card" id="coverCard">
-            <div class="cover-badge-top">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                <span>Dokumen Resmi &middot; SYMP Studio</span>
+            
+            <div class="cover-emblem-wrap">
+                <img src="symp_logo.png" alt="SYMP Studio Emblem" class="cover-emblem-img">
             </div>
 
-            <div class="cover-logo-wrapper">
-                <img src="symp_logo.png" alt="SYMP Studio Logo">
-            </div>
+            <span class="cover-badge">Dokumen Resmi &middot; SYMP Studio</span>
 
-            <div class="cover-recipient-box">
-                <div class="cover-recipient-sub">DOKUMEN DITUJUKAN KEPADA:</div>
-                <div class="cover-recipient-name">Ustadz Ifdony / Tim Kurikulum</div>
-                <div class="cover-recipient-org">Lembaga Hamasah International</div>
-                <div class="cover-ref-num">
+            <div class="cover-dest-box">
+                <div class="cover-dest-label">DITUJUKAN KEPADA:</div>
+                <div class="cover-dest-name">Ustadz Ifdony / Tim Kurikulum</div>
+                <div class="cover-dest-client">Hamasah International</div>
+                <div class="cover-dest-meta">
                     <span>REF: #INV/SYMP-HMS/2026/10/004</span>
-                    <span>Tgl: 07 Okt 2026</span>
+                    <span>07 OKT 2026</span>
                 </div>
             </div>
 
             <div class="passcode-wrapper">
-                <div class="passcode-label">Masukkan PIN Akses Resmi:</div>
+                <div class="passcode-label">Masukkan PIN Akses:</div>
                 <input type="text" id="passcodeInput" class="passcode-input" maxlength="6" autocomplete="off" placeholder="&bull; &bull; &bull; &bull;">
-                <div id="passcodeError" class="passcode-error">[ KODE PIN SALAH &mdash; SILAKAN COBA LAGI ]</div>
+                <div id="passcodeError" class="passcode-error">[ PIN TIDAK TEPAT &mdash; SILAKAN COBA LAGI ]</div>
             </div>
 
-            <button class="cover-open-btn" onclick="verifyPasscode()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                <span>Buka Penawaran &amp; Invoice</span>
+            <button class="cover-submit-btn" onclick="verifyPasscode()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                <span>Buka Dokumen Resmi</span>
             </button>
         </div>
     </div>
 
     <!-- ----------------------------------------------------
-         TOP ACTION BAR
+         TOP TOOLBAR / ACTION BAR
     ---------------------------------------------------- -->
-    <div class="action-bar-container">
-        <div class="action-bar-meta">
-            <span>DOKUMEN PENAWARAN &amp; INVOICE</span>
-            <span class="badge-code">#INV/SYMP-HMS/2026/10/004</span>
+    <div class="toolbar-wrapper">
+        <div class="toolbar-title">
+            <span>DOKUMEN RESMI</span>
+            <span class="toolbar-pill">#INV/SYMP-HMS/2026/10/004</span>
         </div>
-        <div class="action-btn-group">
-            <button class="tool-btn" onclick="copyBankAcc()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <div class="toolbar-buttons">
+            <button class="btn-tool" onclick="copyBankAcc()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 <span>Salin Rekening</span>
             </button>
-            <button class="tool-btn" onclick="openMindmapModal()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                <span>Lihat Contoh Mind Map</span>
+            <button class="btn-tool" onclick="openMindmapModal()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                <span>Sampel Mind Map</span>
             </button>
-            <a href="Penawaran-Layout-Talkhisan-Hamasah.pdf" class="tool-btn" target="_blank" download>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                <span>Unduh Proposal PDF</span>
+            <a href="Penawaran-Layout-Talkhisan-Hamasah.pdf" class="btn-tool" target="_blank" download>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Unduh PDF</span>
             </a>
-            <button class="tool-btn btn-red" onclick="window.print()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <span>Cetak Invoice</span>
+            <button class="btn-tool btn-primary" onclick="window.print()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span>Cetak</span>
             </button>
         </div>
     </div>
 
     <!-- ----------------------------------------------------
-         MAIN DOCUMENT CANVAS
+         MAIN DOCUMENT
     ---------------------------------------------------- -->
-    <main class="document-wrapper">
-        <div class="doc-top-stripe"></div>
-        <div class="doc-inner">
+    <main class="doc-container">
+        <div class="doc-body">
 
-            <!-- HEADER -->
-            <header class="doc-header">
-                <div class="studio-brand-box">
-                    <img src="symp_logo.png" alt="SYMP Studio Logo" class="studio-brand-logo">
-                    <div>
-                        <div class="studio-eyebrow">Penawaran &middot; SYMP Studio</div>
-                        <h1 class="studio-title-main">Layout &amp; Desain Modul Talkhisan</h1>
-                        <p class="studio-subtitle">Modul <strong>Tafsir</strong> dan <strong>Hadis</strong>, Jenjang Idady 1 sampai 3 &mdash; Disiapkan untuk Hamasah.</p>
-                    </div>
+            <!-- EDITORIAL HEADER -->
+            <header class="doc-header-grid">
+                <img src="symp_logo.png" alt="SYMP Studio Emblem" class="brand-emblem-img">
+
+                <div class="brand-text-col">
+                    <span class="brand-kicker">SYMP Studio &middot; Penawaran &amp; Invoice</span>
+                    <h1 class="brand-title">Layout &amp; Desain Modul Talkhisan</h1>
+                    <p class="brand-desc">Modul <strong>Tafsir</strong> dan <strong>Hadis</strong>, Jenjang Idady 1 sampai 3 &mdash; Disiapkan untuk Hamasah.</p>
                 </div>
 
-                <div class="doc-meta-card">
-                    <div class="meta-row">
-                        <span class="meta-label">Nomor Invoice</span>
-                        <span class="meta-val val-mono">#INV/SYMP-HMS/2026/10/004</span>
+                <div class="meta-box-header">
+                    <div class="meta-line">
+                        <span class="meta-lbl">No. Invoice</span>
+                        <span class="meta-val mono">#INV/SYMP-HMS/2026/10/004</span>
                     </div>
-                    <div class="meta-row">
-                        <span class="meta-label">Tanggal Terbit</span>
+                    <div class="meta-line">
+                        <span class="meta-lbl">Tanggal Terbit</span>
                         <span class="meta-val">07 Oktober 2026</span>
                     </div>
-                    <div class="meta-row">
-                        <span class="meta-label">Berlaku Sampai</span>
+                    <div class="meta-line">
+                        <span class="meta-lbl">Masa Berlaku</span>
                         <span class="meta-val">21 Oktober 2026</span>
                     </div>
-                    <div class="meta-row">
-                        <span class="meta-label">Status Tagihan</span>
-                        <span class="meta-val"><span class="status-pill-unpaid">MENUNGGU DP 50%</span></span>
-                    </div>
-                    <div class="meta-row">
-                        <span class="meta-label">Mata Uang</span>
-                        <span class="meta-val">IDR (Rupiah)</span>
+                    <div class="meta-line">
+                        <span class="meta-lbl">Status Tagihan</span>
+                        <span class="meta-val"><span class="badge-status">MENUNGGU DP 50%</span></span>
                     </div>
                 </div>
             </header>
 
-            <!-- PARTIES -->
-            <section class="parties-grid">
+            <!-- PARTIES BENTO ROW -->
+            <section class="parties-row">
                 <div class="party-card">
                     <div class="party-tag">Diterbitkan Oleh (Penyedia)</div>
                     <div class="party-name">SYMP Studio</div>
-                    <div class="party-desc">Studio Desain &amp; Tata Letak Editorial Buku / Modul Pendidikan Islam.</div>
-                    <div class="party-contact-list">
+                    <div class="party-info">Studio Desain &amp; Tata Letak Editorial Buku / Modul Pendidikan Islam.</div>
+                    <div class="party-contacts">
                         <div><strong>PIC:</strong> Daru Fahmaa Muliawan</div>
-                        <div><strong>WhatsApp:</strong> 0813 1150 6025 (wa.me/6281311506025)</div>
+                        <div><strong>WhatsApp:</strong> 0813 1150 6025</div>
                     </div>
                 </div>
 
                 <div class="party-card">
                     <div class="party-tag">Ditujukan Kepada (Klien)</div>
                     <div class="party-name">Ustadz Ifdony / Tim Kurikulum</div>
-                    <div class="party-desc">Lembaga Pendidikan &amp; Dakwah Hamasah International.</div>
-                    <div class="party-contact-list">
-                        <div><strong>Proyek:</strong> Pembuatan Tata Letak 6 Modul Talkhisan</div>
-                        <div><strong>Keperluan:</strong> Bahan Cetak Modul Ujian &amp; Belajar Santri</div>
+                    <div class="party-info">Lembaga Hamasah International.</div>
+                    <div class="party-contacts">
+                        <div><strong>Keperluan:</strong> 6 Modul Talkhisan (Tafsir &amp; Hadis)</div>
+                        <div><strong>Target Output:</strong> File A4 Siap Cetak (Print-Ready)</div>
                     </div>
                 </div>
             </section>
 
-            <!-- HERO SUMMARY BANNER -->
-            <section class="hero-pricing-banner">
-                <div class="hero-banner-left">
-                    <h3>Paket Penuh &middot; 6 Modul Talkhisan</h3>
-                    <div class="hero-banner-title">Layout &amp; Desain Modul Talkhisan yang Mudah Dihafal</div>
-                    <div class="hero-banner-desc">Layanan profesional tata letak A4 print-ready dengan visualisasi terstruktur, skema warna tetap tiap bagian, tabel mufradat, dan mind map ringkas per bahasan.</div>
+            <!-- EDITORIAL SUMMARY BANNER -->
+            <section class="summary-banner">
+                <div>
+                    <div class="summary-left-kicker">Paket Lengkap &middot; 6 Modul Talkhisan</div>
+                    <div class="summary-left-title">Tata Letak Editorial yang Rapi, Mudah Dipahami &amp; Dihafal</div>
+                    <div class="summary-left-desc">Format A4 siap cetak dengan penataan visual terstruktur, tabel mufradat kata &amp; makna, pembedaan warna tiap elemen nash, serta mind map ringkas per bahasan.</div>
                 </div>
-                <div class="hero-banner-right">
-                    <div class="hero-price-label">Total Nilai Penawaran</div>
-                    <div class="hero-price-val">Rp 2.100.000</div>
-                    <div class="hero-price-sub">Tarif: Rp 350.000 / modul &times; 6 Modul</div>
+                <div class="summary-right-total">
+                    <div class="summary-total-label">Total Nilai Penawaran</div>
+                    <div class="summary-total-num">Rp 2.100.000</div>
+                    <div class="summary-total-sub">Tarif: Rp 350.000 / modul &times; 6 Modul</div>
                 </div>
             </section>
 
-            <!-- YANG KAMI KERJAKAN (3 PILAR) -->
+            <!-- STANDAR LAYANAN: 3 PILAR UTAMA -->
             <section>
-                <div class="section-heading-wrap alt-red">
-                    <div class="section-main-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <div class="section-header crimson">
+                    <div class="section-title">
                         <span>Standar Layanan &mdash; Yang Kami Kerjakan</span>
                     </div>
-                    <span class="section-sub-tag">3 Nilai Utama</span>
+                    <span class="section-tag">3 Nilai Utama</span>
                 </div>
 
                 <div class="pillars-grid">
                     <!-- 1 RAPI -->
                     <div class="pillar-card">
                         <div class="pillar-num">01</div>
-                        <h3 class="pillar-title">Rapi</h3>
-                        <ul class="pillar-features">
+                        <h3 class="pillar-head">Rapi</h3>
+                        <ul class="pillar-items">
                             <li>
                                 <strong>Layout Ulang Seluruh Modul</strong>
-                                <span>Tipografi, warna, hierarki teks, dan jarak baris yang konsisten.</span>
+                                <span>Tipografi Plus Jakarta Sans, hierarki teks dan jarak yang konsisten.</span>
                             </li>
                             <li>
                                 <strong>Footer Lembaga</strong>
@@ -1717,7 +1798,7 @@
                             </li>
                             <li>
                                 <strong>Header Dipertahankan</strong>
-                                <span>Isi naskah tetap utuh, tampilan diserasikan dengan gaya visual modern.</span>
+                                <span>Isi naskah tetap utuh, tampilan diserasikan secara visual.</span>
                             </li>
                         </ul>
                     </div>
@@ -1725,19 +1806,19 @@
                     <!-- 2 MUDAH DIPAHAMI -->
                     <div class="pillar-card">
                         <div class="pillar-num">02</div>
-                        <h3 class="pillar-title">Mudah Dipahami</h3>
-                        <ul class="pillar-features">
+                        <h3 class="pillar-head">Mudah Dipahami</h3>
+                        <ul class="pillar-items">
                             <li>
                                 <strong>Warna Tetap Tiap Bagian</strong>
                                 <span>Pembedaan warna visual untuk Nash, Perawi, Mufradat, Syarah, dan Faedah.</span>
                             </li>
                             <li>
                                 <strong>Tabel Mufradat</strong>
-                                <span>Kolom kata Arab dan makna terjemahan tertata berdampingan rapi.</span>
+                                <span>Kolom kata dan makna tersusun rapi berdampingan.</span>
                             </li>
                             <li>
                                 <strong>Pembahasan Utuh</strong>
-                                <span>Satu kesatuan tema tidak terpotong canggung antar-halaman.</span>
+                                <span>Tidak terpotong antar-halaman untuk kenyamanan membaca.</span>
                             </li>
                         </ul>
                     </div>
@@ -1745,365 +1826,358 @@
                     <!-- 3 MUDAH DIHAFAL -->
                     <div class="pillar-card">
                         <div class="pillar-num">03</div>
-                        <h3 class="pillar-title">Mudah Dihafal</h3>
-                        <ul class="pillar-features">
+                        <h3 class="pillar-head">Mudah Dihafal</h3>
+                        <ul class="pillar-items">
                             <li>
                                 <strong>Mind Map Ringkas</strong>
-                                <span>Disediakan di akhir tiap bahasan, isi pelajaran terlihat dalam sekali pandang.</span>
+                                <span>Di akhir tiap bahasan, isi pelajaran terlihat dalam sekali pandang.</span>
                             </li>
                             <li>
                                 <strong>Tiga Poin Hafalan</strong>
-                                <span>Intisari dan kaidah penting bernomor untuk mempercepat hafalan.</span>
+                                <span>Intisari dan kaidah penting bernomor untuk hafalan santri.</span>
                             </li>
                             <li>
                                 <strong>Teks Dicek Identik</strong>
-                                <span>Naskah Arab dan tanda harakat diperiksa satu per satu sesuai naskah asli.</span>
+                                <span>Teks Arab dan harakat disamakan teliti dengan naskah asli.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="deliverable-strip">
-                    <div class="deliverable-strip-text">
-                        <strong>Hasil Akhir:</strong> File PDF A4 Siap Cetak (Print-Ready High Quality) + Termasuk Revisi 2&times; per modul.
-                    </div>
-                    <span class="deliverable-pill">Bebas Revisi 2&times; Per Modul</span>
+                <div class="deliverable-banner">
+                    <div><strong>Hasil Akhir:</strong> PDF A4 Siap Cetak (Print-Ready) &middot; Bebas revisi 2&times; per modul.</div>
+                    <span class="deliverable-pill">Revisi 2&times; Termasuk</span>
                 </div>
             </section>
 
-            <!-- BUKTI / BENCHMARK HADIS IDADY 1 -->
-            <section class="proof-box">
-                <div class="proof-header">
+            <!-- BENCHMARK BUKTI HADIS IDADY 1 -->
+            <section class="proof-container">
+                <div class="proof-top">
                     <div>
                         <div class="proof-tag">Bukti Kualitas Nyata</div>
-                        <h2 class="proof-title">Sudah Dikerjakan: Hadis Idady 1</h2>
-                        <p class="proof-desc">Satu modul penuh telah rampung dikerjakan sebagai standar mutu dan acuan visual, dengan seluruh isi yang diperiksa satu per satu terhadap naskah aslinya.</p>
+                        <h2 class="proof-heading">Sudah Dikerjakan: Hadis Idady 1</h2>
+                        <p class="proof-desc">Satu modul penuh telah rampung dikerjakan sebagai standar mutu dan acuan visual, dengan seluruh isi diperiksa satu per satu terhadap naskah aslinya.</p>
                     </div>
-                    <button class="proof-preview-btn" onclick="openMindmapModal()">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <button class="btn-preview-sample" onclick="openMindmapModal()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         <span>Lihat Contoh Mind Map</span>
                     </button>
                 </div>
 
-                <div class="proof-stats-grid">
-                    <div class="stat-item">
+                <div class="proof-metrics-grid">
+                    <div class="metric-cell">
                         <b>7</b>
-                        <span>Hadis dalam satu modul lengkap</span>
+                        <span>Hadis dalam 1 modul utuh</span>
                     </div>
-                    <div class="stat-item">
+                    <div class="metric-cell">
                         <b>7</b>
-                        <span>Mind map ringkas per bahasan</span>
+                        <span>Mind map ringkas terstruktur</span>
                     </div>
-                    <div class="stat-item">
+                    <div class="metric-cell">
                         <b>278</b>
                         <span>Paragraf dicek teliti satu per satu</span>
                     </div>
-                    <div class="stat-item">
+                    <div class="metric-cell">
                         <b>0</b>
-                        <span>Teks Arab maupun harakat yang hilang</span>
+                        <span>Teks atau harakat yang hilang</span>
                     </div>
-                </div>
-
-                <div class="proof-footer-action">
-                    <div>Status modul Hadis Idady 1 siap dipresentasikan dan diperlihatkan kapan saja sebagai benchmark.</div>
-                    <div style="font-weight:700;">SYMP Studio &times; Hamasah</div>
                 </div>
             </section>
 
             <!-- MATRIX 6 MODUL -->
-            <section class="matrix-container">
-                <div class="section-heading-wrap" style="margin-top:0;">
-                    <div class="section-main-title">
-                        <span>Matrix Kurikulum 6 Modul Talkhisan</span>
+            <section class="matrix-box">
+                <div class="section-header" style="margin-top:0;">
+                    <div class="section-title">
+                        <span>Matrix 6 Modul Talkhisan</span>
                     </div>
-                    <span class="section-sub-tag">2 Maddah &times; 3 Tingkat</span>
+                    <span class="section-tag">2 Maddah &times; 3 Tingkat</span>
                 </div>
 
-                <p class="matrix-intro-text">
-                    <strong>1 Modul = 1 Maddah di 1 Tingkat.</strong> Modul <em>Hadis Idady 1</em> telah rampung sebagai benchmark visual. Kelima modul berikutnya akan menggunakan pola desain, tipografi, dan sistem mind map yang seragam dengan jumlah halaman mengikuti naskah masing-masing.
+                <p class="matrix-lead">
+                    <strong>1 Modul = 1 Maddah di 1 Tingkat.</strong> Modul <em>Hadis Idady 1</em> telah selesai sebagai benchmark. Modul lainnya menggunakan pola desain seragam dengan jumlah halaman mengikuti naskah materi.
                 </p>
 
-                <table class="matrix-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 140px;">Tingkatan</th>
-                            <th>Maddah Tafsir</th>
-                            <th>Maddah Hadis</th>
-                            <th class="text-right">Biaya / Modul</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="matrix-row-level">Idady 1</td>
-                            <td>
-                                <div><strong>Modul 01 &middot; Tafsir Idady 1</strong></div>
-                                <span class="matrix-badge-queue" style="margin-top:4px;">Dalam Antrean Pengerjaan</span>
-                            </td>
-                            <td>
-                                <div><strong>Modul 02 &middot; Hadis Idady 1</strong></div>
-                                <span class="matrix-badge-done" style="margin-top:4px;">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    Sudah Selesai Dikerjakan (Benchmark)
-                                </span>
-                            </td>
-                            <td class="text-right" style="font-family: var(--font-mono); font-weight: 700;">Rp 350.000 / modul</td>
-                        </tr>
-                        <tr>
-                            <td class="matrix-row-level">Idady 2</td>
-                            <td>
-                                <div><strong>Modul 03 &middot; Tafsir Idady 2</strong></div>
-                                <span class="matrix-badge-queue" style="margin-top:4px;">Dalam Antrean Pengerjaan</span>
-                            </td>
-                            <td>
-                                <div><strong>Modul 04 &middot; Hadis Idady 2</strong></div>
-                                <span class="matrix-badge-queue" style="margin-top:4px;">Dalam Antrean Pengerjaan</span>
-                            </td>
-                            <td class="text-right" style="font-family: var(--font-mono); font-weight: 700;">Rp 350.000 / modul</td>
-                        </tr>
-                        <tr>
-                            <td class="matrix-row-level">Idady 3</td>
-                            <td>
-                                <div><strong>Modul 05 &middot; Tafsir Idady 3</strong></div>
-                                <span class="matrix-badge-queue" style="margin-top:4px;">Dalam Antrean Pengerjaan</span>
-                            </td>
-                            <td>
-                                <div><strong>Modul 06 &middot; Hadis Idady 3</strong></div>
-                                <span class="matrix-badge-queue" style="margin-top:4px;">Dalam Antrean Pengerjaan</span>
-                            </td>
-                            <td class="text-right" style="font-family: var(--font-mono); font-weight: 700;">Rp 350.000 / modul</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="matrix-table-wrap">
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 120px;">Tingkatan</th>
+                                <th>Maddah Tafsir</th>
+                                <th>Maddah Hadis</th>
+                                <th style="text-align: right; width: 150px;">Tarif / Modul</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Idady 1</strong></td>
+                                <td>
+                                    <div>Modul 01 &middot; Tafsir Idady 1</div>
+                                    <span class="badge-queue" style="margin-top:3px;">Antrean Pengerjaan</span>
+                                </td>
+                                <td>
+                                    <div>Modul 02 &middot; Hadis Idady 1</div>
+                                    <span class="badge-done" style="margin-top:3px;">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        Selesai 100% (Benchmark)
+                                    </span>
+                                </td>
+                                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 350.000</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Idady 2</strong></td>
+                                <td>
+                                    <div>Modul 03 &middot; Tafsir Idady 2</div>
+                                    <span class="badge-queue" style="margin-top:3px;">Antrean Pengerjaan</span>
+                                </td>
+                                <td>
+                                    <div>Modul 04 &middot; Hadis Idady 2</div>
+                                    <span class="badge-queue" style="margin-top:3px;">Antrean Pengerjaan</span>
+                                </td>
+                                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 350.000</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Idady 3</strong></td>
+                                <td>
+                                    <div>Modul 05 &middot; Tafsir Idady 3</div>
+                                    <span class="badge-queue" style="margin-top:3px;">Antrean Pengerjaan</span>
+                                </td>
+                                <td>
+                                    <div>Modul 06 &middot; Hadis Idady 3</div>
+                                    <span class="badge-queue" style="margin-top:3px;">Antrean Pengerjaan</span>
+                                </td>
+                                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 350.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- TABEL RINCIAN TAGIHAN RESMI -->
-            <section class="invoice-table-card">
-                <div style="padding: 20px 24px 0 24px;">
-                    <div class="section-heading-wrap" style="margin: 0 0 16px 0;">
-                        <div class="section-main-title">
+            <section class="invoice-card-table">
+                <div style="padding: 18px 20px 0 20px;">
+                    <div class="section-header" style="margin: 0 0 14px 0;">
+                        <div class="section-title">
                             <span>Rincian Tagihan &amp; Spesifikasi Biaya</span>
                         </div>
-                        <span class="section-sub-tag">Itemized Billing</span>
+                        <span class="section-tag">Itemized Invoice</span>
                     </div>
                 </div>
 
-                <table class="table-standard">
-                    <thead>
-                        <tr>
-                            <th style="width: 55px;">No</th>
-                            <th>Deskripsi Layanan &amp; Deliverables</th>
-                            <th style="width: 90px; text-align: center;">Jumlah</th>
-                            <th style="width: 140px; text-align: right;">Tarif</th>
-                            <th style="width: 160px; text-align: right;">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="font-family: var(--font-mono); font-weight: 700; color: var(--red);">01</td>
-                            <td>
-                                <div class="item-name">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 1)</div>
-                                <div class="item-spec">
-                                    Termasuk 2 modul: <em>Tafsir Idady 1</em> dan <em>Hadis Idady 1</em>.
-                                    <div class="item-spec-bullet">Modul Hadis Idady 1 telah selesai 100% dan siap serah terima sebagai standar panduan.</div>
-                                    <div class="item-spec-bullet">Dilengkapi sistem mind map ringkas di akhir tiap bahasan + tabel mufradat kata &amp; makna.</div>
-                                </div>
-                            </td>
-                            <td style="text-align: center; font-weight: 700;">2 Modul</td>
-                            <td style="text-align: right; font-family: var(--font-mono);">Rp 350.000</td>
-                            <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 700.000</td>
-                        </tr>
+                <div class="inv-table-wrap">
+                    <table class="inv-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">No</th>
+                                <th>Layanan &amp; Deliverables</th>
+                                <th style="width: 80px; text-align: center;">Jumlah</th>
+                                <th style="width: 130px; text-align: right;">Tarif</th>
+                                <th style="width: 150px; text-align: right;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--symp-crimson);">01</td>
+                                <td>
+                                    <div class="item-title">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 1)</div>
+                                    <div class="item-details">
+                                        Termasuk 2 modul: <em>Tafsir Idady 1</em> dan <em>Hadis Idady 1</em>.
+                                        <div class="item-bullet">Modul Hadis Idady 1 telah rampung 100% dan siap serah terima sebagai standar.</div>
+                                        <div class="item-bullet">Dilengkapi sistem mind map ringkas di akhir tiap bahasan + tabel mufradat kata &amp; makna.</div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center; font-weight: 700;">2 Modul</td>
+                                <td style="text-align: right; font-family: var(--font-mono);">Rp 350.000</td>
+                                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 700.000</td>
+                            </tr>
 
-                        <tr>
-                            <td style="font-family: var(--font-mono); font-weight: 700; color: var(--red);">02</td>
-                            <td>
-                                <div class="item-name">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 2)</div>
-                                <div class="item-spec">
-                                    Termasuk 2 modul: <em>Tafsir Idady 2</em> dan <em>Hadis Idady 2</em>.
-                                    <div class="item-spec-bullet">Penerapan konsistensi warna tetap (Nash, Perawi, Mufradat, Syarah, Faedah).</div>
-                                    <div class="item-spec-bullet">Footer resmi Hamasah di seluruh lembar + pemeriksaan harakat Arab teliti.</div>
-                                </div>
-                            </td>
-                            <td style="text-align: center; font-weight: 700;">2 Modul</td>
-                            <td style="text-align: right; font-family: var(--font-mono);">Rp 350.000</td>
-                            <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 700.000</td>
-                        </tr>
+                            <tr>
+                                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--symp-crimson);">02</td>
+                                <td>
+                                    <div class="item-title">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 2)</div>
+                                    <div class="item-details">
+                                        Termasuk 2 modul: <em>Tafsir Idady 2</em> dan <em>Hadis Idady 2</em>.
+                                        <div class="item-bullet">Penerapan konsistensi warna tetap (Nash, Perawi, Mufradat, Syarah, Faedah).</div>
+                                        <div class="item-bullet">Footer resmi Hamasah di seluruh lembar + pemeriksaan harakat Arab teliti.</div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center; font-weight: 700;">2 Modul</td>
+                                <td style="text-align: right; font-family: var(--font-mono);">Rp 350.000</td>
+                                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 700.000</td>
+                            </tr>
 
-                        <tr>
-                            <td style="font-family: var(--font-mono); font-weight: 700; color: var(--red);">03</td>
-                            <td>
-                                <div class="item-name">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 3)</div>
-                                <div class="item-spec">
-                                    Termasuk 2 modul: <em>Tafsir Idady 3</em> dan <em>Hadis Idady 3</em>.
-                                    <div class="item-spec-bullet">Penyusunan 3 poin hafalan bernomor per pelajaran untuk memudahkan hafalan santri.</div>
-                                    <div class="item-spec-bullet">Output master file PDF A4 print-ready resolusi tinggi + hak 2x revisi.</div>
-                                </div>
-                            </td>
-                            <td style="text-align: center; font-weight: 700;">2 Modul</td>
-                            <td style="text-align: right; font-family: var(--font-mono);">Rp 350.000</td>
-                            <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 700.000</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <tr>
+                                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--symp-crimson);">03</td>
+                                <td>
+                                    <div class="item-title">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 3)</div>
+                                    <div class="item-details">
+                                        Termasuk 2 modul: <em>Tafsir Idady 3</em> dan <em>Hadis Idady 3</em>.
+                                        <div class="item-bullet">Penyusunan 3 poin hafalan bernomor per pelajaran untuk memudahkan hafalan santri.</div>
+                                        <div class="item-bullet">Output master file PDF A4 print-ready resolusi tinggi + hak 2x revisi.</div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center; font-weight: 700;">2 Modul</td>
+                                <td style="text-align: right; font-family: var(--font-mono);">Rp 350.000</td>
+                                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">Rp 700.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <div class="total-section">
-                    <div class="total-terbilang-box">
-                        <div class="terbilang-label">Terbilang (Dalam Huruf):</div>
-                        <div class="terbilang-text">&ldquo;Dua Juta Seratus Ribu Rupiah&rdquo;</div>
+                <div class="calc-footer">
+                    <div class="terbilang-card">
+                        <div class="terbilang-lbl">Terbilang (Dalam Huruf):</div>
+                        <div class="terbilang-val">&ldquo;Dua Juta Seratus Ribu Rupiah&rdquo;</div>
                     </div>
 
-                    <div class="total-calc-box">
-                        <div class="calc-row">
+                    <div class="calc-rows">
+                        <div class="calc-row-item">
                             <span>Subtotal (6 Modul):</span>
                             <span style="font-family: var(--font-mono); font-weight: 700;">Rp 2.100.000</span>
                         </div>
-                        <div class="calc-row">
-                            <span>Biaya Tambahan / Revisi 2&times;:</span>
-                            <span style="font-family: var(--font-mono); font-weight: 700; color: #16a34a;">Termasuk (Rp 0)</span>
+                        <div class="calc-row-item">
+                            <span>Revisi 2&times; per modul:</span>
+                            <span style="font-family: var(--font-mono); font-weight: 700; color: #16A34A;">Termasuk (Rp 0)</span>
                         </div>
-                        <div class="calc-row">
-                            <span>Pajak (PPN):</span>
-                            <span style="font-family: var(--font-mono); font-weight: 700;">Rp 0 (Non-PPN)</span>
-                        </div>
-                        <div class="calc-row grand-total-row">
+                        <div class="calc-row-item total-final">
                             <span>TOTAL KESELURUHAN:</span>
-                            <span class="val">Rp 2.100.000</span>
+                            <span class="val-accent">Rp 2.100.000</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- TERMIN PEMBAYARAN DUA TAHAP -->
+            <!-- TERMIN PEMBAYARAN -->
             <section>
-                <div class="section-heading-wrap">
-                    <div class="section-main-title">
+                <div class="section-header">
+                    <div class="section-title">
                         <span>Termin &amp; Skema Pembayaran</span>
                     </div>
-                    <span class="section-sub-tag">50% DP &middot; 50% Pelunasan</span>
+                    <span class="section-tag">50% DP &middot; 50% Pelunasan</span>
                 </div>
 
-                <div class="payment-terms-grid">
-                    <div class="term-card highlight">
-                        <span class="term-badge badge-dp">TAHAP 1 &mdash; UANG MUKA (DP 50%)</span>
-                        <h4 class="term-title">Saat Persetujuan Penawaran</h4>
-                        <div class="term-amount">Rp 1.050.000</div>
-                        <p class="term-desc">Dibayarkan saat konfirmasi penawaran kerja sama sebagai tanda jadi pengerjaan dan alokasi jadwal studio.</p>
+                <div class="terms-split-grid">
+                    <div class="term-box active-dp">
+                        <span class="term-badge-tag badge-red">TAHAP 1 &mdash; DP 50%</span>
+                        <h4 class="term-heading">Saat Persetujuan Penawaran</h4>
+                        <div class="term-sum">Rp 1.050.000</div>
+                        <p class="term-expl">Dibayarkan saat konfirmasi kerja sama untuk mengunci jadwal studio dan memulai pengerjaan.</p>
                     </div>
 
-                    <div class="term-card">
-                        <span class="term-badge badge-final">TAHAP 2 &mdash; PELUNASAN (50%)</span>
-                        <h4 class="term-title">Sebelum Serah Terima Final</h4>
-                        <div class="term-amount">Rp 1.050.000</div>
-                        <p class="term-desc">Dibayarkan setelah seluruh modul selesai direview dan disetujui, sebelum serah terima file PDF siap cetak final.</p>
+                    <div class="term-box">
+                        <span class="term-badge-tag badge-neutral">TAHAP 2 &mdash; PELUNASAN 50%</span>
+                        <h4 class="term-heading">Sebelum Serah Terima Final</h4>
+                        <div class="term-sum">Rp 1.050.000</div>
+                        <p class="term-expl">Dibayarkan setelah seluruh modul selesai direview dan disetujui, sebelum serah terima file cetak final.</p>
                     </div>
                 </div>
             </section>
 
             <!-- ALUR PROSES KERJA (4 LANGKAH) -->
             <section>
-                <div class="section-heading-wrap alt-red">
-                    <div class="section-main-title">
+                <div class="section-header crimson">
+                    <div class="section-title">
                         <span>Alur Pengerjaan &mdash; Empat Langkah</span>
                     </div>
-                    <span class="section-sub-tag">Workflow Studio</span>
+                    <span class="section-tag">Alur Kerja</span>
                 </div>
 
-                <div class="process-steps-grid">
-                    <div class="process-step-item">
-                        <div class="step-num">1</div>
-                        <div class="step-title">Setuju &amp; Uang Muka</div>
-                        <div class="step-desc">Konfirmasi penawaran dan pembayaran DP 50% untuk mengunci timeline pengerjaan.</div>
+                <div class="process-row">
+                    <div class="process-card">
+                        <div class="process-num">1</div>
+                        <div class="process-title">Setuju &amp; Uang Muka</div>
+                        <div class="process-text">Konfirmasi penawaran dan pembayaran DP 50% untuk mengunci timeline.</div>
                     </div>
 
-                    <div class="process-step-item">
-                        <div class="step-num">2</div>
-                        <div class="step-title">Kirim Bahan Materi</div>
-                        <div class="step-desc">Penyerahan aset logo, alamat website, Instagram lembaga, serta naskah materi final.</div>
+                    <div class="process-card">
+                        <div class="process-num">2</div>
+                        <div class="process-title">Kirim Bahan Materi</div>
+                        <div class="process-text">Penyerahan aset logo, web, Instagram lembaga, serta naskah materi final.</div>
                     </div>
 
-                    <div class="process-step-item">
-                        <div class="step-num">3</div>
-                        <div class="step-title">Satu Modul Dinilai Dulu</div>
-                        <div class="step-desc">Modul awal dipresentasikan terlebih dahulu agar arahan desain dan format disepakati pasti.</div>
+                    <div class="process-card">
+                        <div class="process-num">3</div>
+                        <div class="process-title">Satu Modul Dinilai Dulu</div>
+                        <div class="process-text">Modul awal dipresentasikan terlebih dahulu agar arahan desain disepakati pasti.</div>
                     </div>
 
-                    <div class="process-step-item">
-                        <div class="step-num">4</div>
-                        <div class="step-title">Revisi &amp; Serah Terima</div>
-                        <div class="step-desc">Modul lainnya dikerjakan, proses revisi (maks. 2&times;), pelunasan, lalu penyerahan file A4 PDF final.</div>
+                    <div class="process-card">
+                        <div class="process-num">4</div>
+                        <div class="process-title">Revisi &amp; Serah Terima</div>
+                        <div class="process-text">Modul lain dikerjakan, revisi (maks. 2&times;), pelunasan, lalu penyerahan file cetak PDF.</div>
                     </div>
                 </div>
 
                 <!-- KETENTUAN KHUSUS -->
-                <div class="terms-clause-grid">
-                    <div class="clause-item">
+                <div class="clauses-bento">
+                    <div class="clause-col">
                         <h4>Ketentuan Pembayaran</h4>
-                        <p>Uang muka 50% saat disetujui, dan pelunasan 50% dilakukan sebelum seluruh file final A4 diserahkan.</p>
+                        <p>Uang muka 50% saat disetujui, pelunasan 50% sebelum seluruh file final A4 diserahkan.</p>
                     </div>
-                    <div class="clause-item">
+                    <div class="clause-col">
                         <h4>Waktu Pengerjaan</h4>
                         <p>&plusmn;2 hari kerja per modul, dihitung sejak uang muka masuk dan seluruh bahan materi diterima lengkap.</p>
                     </div>
-                    <div class="clause-item">
+                    <div class="clause-col">
                         <h4>Ketentuan Halaman</h4>
-                        <p>Jumlah halaman mengikuti naskah. Bila sebuah modul memiliki ketebalan jauh melebihi benchmark Hadis Idady 1, akan dikonfirmasi terlebih dahulu.</p>
+                        <p>Jumlah halaman mengikuti naskah. Bila ada modul yang ketebalannya jauh melebihi acuan Hadis Idady 1, akan dikonfirmasi terlebih dahulu.</p>
                     </div>
                 </div>
             </section>
 
             <!-- REKENING PEMBAYARAN RESMI -->
-            <section class="bank-info-card">
-                <div class="bank-logo-box">
+            <section class="bank-card">
+                <div class="bank-logo">
                     <img src="mandiri_logo.webp" alt="Bank Mandiri Logo">
                 </div>
 
-                <div class="bank-details-box">
-                    <div class="bank-details-label">REKENING RESMI PEMBAYARAN:</div>
-                    <div class="bank-acc-num-flex">
-                        <span class="bank-acc-num">1550010616962</span>
-                        <span class="bank-acc-name">&mdash; a.n. Daru Fahmaa Muliawan</span>
+                <div class="bank-content">
+                    <div class="bank-label">REKENING RESMI PEMBAYARAN:</div>
+                    <div class="bank-acc-flex">
+                        <span class="bank-acc-code">1550010616962</span>
+                        <span class="bank-acc-holder">&mdash; a.n. Daru Fahmaa Muliawan</span>
                     </div>
-                    <div style="font-size: 0.78rem; color: var(--ink-soft);">Bank Mandiri Kantor Cabang Indonesia</div>
+                    <div style="font-size: 0.74rem; color: var(--ink-muted);">Bank Mandiri Kantor Cabang Indonesia</div>
                 </div>
 
-                <div class="bank-btn-action">
-                    <button class="tool-btn btn-red" onclick="copyBankAcc()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        <span>Salin No. Rekening</span>
+                <div class="bank-actions">
+                    <button class="btn-tool btn-primary" onclick="copyBankAcc()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span>Salin Rekening</span>
                     </button>
-                    <a href="https://wa.me/6281311506025?text=Halo%20Daru%20(SYMP%20Studio),%20kami%20telah%20meninjau%20dokumen%20penawaran%20dan%20invoice%20Talkhisan%20Hamasah%20(No.%20%23INV/SYMP-HMS/2026/10/004)%20senilai%20Rp%202.100.000%20dan%20ingin%20mengonfirmasi%20pembayaran%20DP%2050%25." class="tool-btn" target="_blank">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        <span>Konfirmasi via WhatsApp</span>
+                    <a href="https://wa.me/6281311506025?text=Halo%20Daru%20(SYMP%20Studio),%20kami%20telah%20meninjau%20dokumen%20penawaran%20dan%20invoice%20Talkhisan%20Hamasah%20(No.%20%23INV/SYMP-HMS/2026/10/004)%20senilai%20Rp%202.100.000%20dan%20ingin%20mengonfirmasi%20pembayaran%20DP%2050%25." class="btn-tool" target="_blank">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>Konfirmasi WA</span>
                     </a>
                 </div>
             </section>
 
             <!-- TANDA TANGAN & PENGESAHAN -->
-            <section class="sign-grid">
-                <div class="sign-box">
-                    <div class="sign-role-title">Disiapkan &amp; Diterbitkan Oleh:</div>
-                    <div class="sign-entity">SYMP Studio</div>
-                    <div class="sign-img-wrapper">
+            <section class="signature-row">
+                <div class="sign-col">
+                    <div class="sign-label">Disiapkan &amp; Diterbitkan Oleh:</div>
+                    <div class="sign-org">SYMP Studio</div>
+                    <div class="sign-image-box">
                         <img src="ttd_daru.png" alt="Tanda Tangan Daru Fahmaa Muliawan">
                     </div>
-                    <div class="sign-line"></div>
-                    <div class="sign-name">Daru Fahmaa Muliawan</div>
-                    <div class="sign-title">Lead Designer &middot; SYMP Studio</div>
+                    <div class="sign-divider-line"></div>
+                    <div class="sign-signer-name">Daru Fahmaa Muliawan</div>
+                    <div class="sign-signer-role">Lead Designer &middot; SYMP Studio</div>
                 </div>
 
-                <div class="sign-box">
-                    <div class="sign-role-title">Diterima &amp; Disetujui Oleh:</div>
-                    <div class="sign-entity">Hamasah International</div>
-                    <div class="sign-img-wrapper" style="align-items:flex-end;">
-                        <span style="font-size: 0.76rem; color: var(--ink-soft); font-style: italic;">(Persetujuan digital atau konfirmasi via WhatsApp)</span>
+                <div class="sign-col">
+                    <div class="sign-label">Diterima &amp; Disetujui Oleh:</div>
+                    <div class="sign-org">Hamasah International</div>
+                    <div class="sign-image-box" style="align-items:flex-end;">
+                        <span style="font-size: 0.74rem; color: var(--ink-muted); font-style: italic;">(Persetujuan digital via konfirmasi WhatsApp)</span>
                     </div>
-                    <div class="sign-line"></div>
-                    <div class="sign-name">Ustadz Ifdony / Tim Kurikulum</div>
-                    <div class="sign-title">Klien &middot; Hamasah International</div>
+                    <div class="sign-divider-line"></div>
+                    <div class="sign-signer-name">Ustadz Ifdony / Tim Kurikulum</div>
+                    <div class="sign-signer-role">Klien &middot; Hamasah International</div>
                 </div>
             </section>
 
-            <!-- FOOTER NOTE -->
-            <footer class="doc-footer-note">
+            <!-- FOOTER -->
+            <footer class="doc-footer">
                 <div>SYMP Studio &middot; Penawaran &amp; Invoice berlaku sampai <strong>21 Oktober 2026</strong>.</div>
                 <div>Dokumen Komersial Resmi &middot; Halaman 1 dari 1</div>
             </footer>
@@ -2112,15 +2186,15 @@
     </main>
 
     <!-- ----------------------------------------------------
-         MODAL LIGHTBOX: CONTOH MIND MAP
+         LIGHTBOX MODAL: SAMPEL MIND MAP
     ---------------------------------------------------- -->
-    <div id="mindmapModal" class="modal-mindmap-overlay" onclick="closeMindmapModalOnOverlay(event)">
-        <div class="modal-mindmap-content">
-            <button class="modal-close-btn" onclick="closeMindmapModal()">&times;</button>
-            <div style="font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); margin-bottom: 4px;">Contoh Benchmark Hadis Idady 1</div>
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ink); margin-bottom: 6px;">Visualisasi Mind Map Ringkas Per Bahasan</h3>
-            <p style="font-size: 0.84rem; color: var(--ink-muted); margin-bottom: 12px; line-height: 1.45;">
-                Dirancang agar santri dapat melihat intisari hadis, silsilah perawi, mufradat, dan poin hafalan dalam satu kali pandang tanpa merasa terbebani naskah tebal.
+    <div id="mindmapModal" class="mindmap-modal" onclick="closeMindmapOnBackdrop(event)">
+        <div class="mindmap-modal-card">
+            <button class="modal-x-btn" onclick="closeMindmapModal()">&times;</button>
+            <div style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--symp-crimson); margin-bottom: 4px;">Contoh Benchmark Hadis Idady 1</div>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--ink); margin-bottom: 4px;">Visualisasi Mind Map Ringkas Per Bahasan</h3>
+            <p style="font-size: 0.8rem; color: var(--ink-secondary); margin-bottom: 10px; line-height: 1.45;">
+                Dirancang agar santri dapat melihat intisari hadis, silsilah perawi, mufradat, dan poin hafalan dalam satu kali pandang.
             </p>
             <img src="contoh_mindmap.png" alt="Contoh Mind Map Modul Talkhisan">
         </div>
@@ -2130,12 +2204,12 @@
          TOAST NOTIFICATION
     ---------------------------------------------------- -->
     <div id="toast" class="toast">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        <span id="toastMsg">Berhasil menyalin nomor rekening!</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toastMsg">Nomor rekening Mandiri berhasil disalin!</span>
     </div>
 
     <!-- ----------------------------------------------------
-         JAVASCRIPT LOGIC
+         SCRIPTS
     ---------------------------------------------------- -->
     <script>
         const VALID_PINS = ["0001", "050900"];
@@ -2160,14 +2234,13 @@
             } else {
                 error.style.display = "block";
                 card.classList.remove("shake-anim");
-                void card.offsetWidth; // trigger reflow
+                void card.offsetWidth;
                 card.classList.add("shake-anim");
                 input.value = "";
                 input.focus();
             }
         }
 
-        // Auto verify on 4 or 6 digit typing
         const passcodeInput = document.getElementById("passcodeInput");
         if (passcodeInput) {
             passcodeInput.addEventListener("input", function(e) {
@@ -2186,7 +2259,6 @@
             });
         }
 
-        // Check URL parameter ?pin=... or existing session
         window.addEventListener("DOMContentLoaded", () => {
             const urlParams = new URLSearchParams(window.location.search);
             const pinParam = urlParams.get("pin");
@@ -2202,13 +2274,12 @@
             }
         });
 
-        // Copy Account Number
         function copyBankAcc() {
             const bankAcc = "1550010616962";
             navigator.clipboard.writeText(bankAcc).then(() => {
-                showToast("Nomor Rekening Mandiri (1550010616962) Berhasil Disalin!");
+                showToast("Rekening Mandiri 1550010616962 Berhasil Disalin!");
             }).catch(() => {
-                showToast("Nomor Rekening: 1550010616962 (Bank Mandiri)");
+                showToast("1550010616962 (Bank Mandiri a.n. Daru Fahmaa Muliawan)");
             });
         }
 
@@ -2220,10 +2291,9 @@
             toast.classList.add("show");
             setTimeout(() => {
                 toast.classList.remove("show");
-            }, 3000);
+            }, 2800);
         }
 
-        // Mindmap Modal
         function openMindmapModal() {
             const modal = document.getElementById("mindmapModal");
             if (modal) modal.classList.add("active");
@@ -2234,7 +2304,7 @@
             if (modal) modal.classList.remove("active");
         }
 
-        function closeMindmapModalOnOverlay(e) {
+        function closeMindmapOnBackdrop(e) {
             if (e.target.id === "mindmapModal") {
                 closeMindmapModal();
             }
