@@ -799,6 +799,16 @@
             line-height: 1.5;
         }
 
+        .matrix-desktop-wrap,
+        .inv-desktop-wrap {
+            display: block;
+        }
+
+        .matrix-mobile-cards,
+        .inv-mobile-cards {
+            display: none;
+        }
+
         .matrix-table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -1471,18 +1481,203 @@
                 font-size: 1.85rem;
             }
 
-            /* Matrix Table Compact */
+            /* Hide Desktop Tables on Mobile */
+            .matrix-desktop-wrap,
+            .inv-desktop-wrap {
+                display: none !important;
+            }
+
+            /* Matrix Mobile Cards */
             .matrix-box {
                 padding: 16px 14px;
             }
 
-            .matrix-table {
-                font-size: 0.78rem;
+            .matrix-mobile-cards {
+                display: flex !important;
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .matrix-table th,
-            .matrix-table td {
-                padding: 10px 8px;
+            .matrix-level-card {
+                background: #FFFFFF;
+                border: 1px solid var(--line);
+                border-radius: var(--radius-sm);
+                padding: 12px 14px;
+            }
+
+            .matrix-level-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid var(--line);
+                padding-bottom: 8px;
+                margin-bottom: 8px;
+            }
+
+            .matrix-level-badge {
+                font-size: 0.8rem;
+                font-weight: 800;
+                color: var(--ink);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .matrix-level-rate {
+                font-family: var(--font-mono);
+                font-size: 0.74rem;
+                font-weight: 700;
+                color: var(--red);
+            }
+
+            .matrix-maddah-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .matrix-maddah-item {
+                background: var(--paper);
+                border: 1px solid var(--line);
+                border-radius: 4px;
+                padding: 8px 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .matrix-maddah-type {
+                font-size: 0.62rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--mute);
+            }
+
+            .matrix-maddah-name {
+                font-size: 0.76rem;
+                font-weight: 700;
+                color: var(--ink);
+                line-height: 1.25;
+            }
+
+            /* Invoice Items Mobile Cards */
+            .invoice-card-table {
+                border-radius: var(--radius-sm);
+            }
+
+            .inv-mobile-cards {
+                display: flex !important;
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px 12px 16px 12px;
+                background: #FFFFFF;
+            }
+
+            .inv-card-item {
+                background: var(--paper);
+                border: 1px solid var(--line);
+                border-radius: var(--radius-sm);
+                padding: 14px 14px;
+            }
+
+            .inv-card-item-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 8px;
+            }
+
+            .inv-card-badge-row {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .inv-card-num {
+                font-family: var(--font-mono);
+                font-size: 0.85rem;
+                font-weight: 800;
+                color: #FFFFFF;
+                background: var(--red);
+                padding: 2px 7px;
+                border-radius: 4px;
+                line-height: 1.2;
+            }
+
+            .inv-card-qty {
+                font-size: 0.72rem;
+                font-weight: 800;
+                color: var(--ink);
+                background: #FFFFFF;
+                border: 1px solid var(--line);
+                padding: 2px 8px;
+                border-radius: 4px;
+                white-space: nowrap;
+            }
+
+            .inv-card-price-col {
+                text-align: right;
+            }
+
+            .inv-card-unit {
+                font-size: 0.66rem;
+                color: var(--mute);
+                font-family: var(--font-mono);
+                font-weight: 600;
+            }
+
+            .inv-card-total {
+                font-family: var(--font-mono);
+                font-size: 1.12rem;
+                font-weight: 800;
+                color: var(--red);
+                line-height: 1.2;
+            }
+
+            .inv-card-title {
+                font-size: 0.92rem;
+                font-weight: 800;
+                color: var(--ink);
+                line-height: 1.35;
+                margin-bottom: 6px;
+            }
+
+            .inv-card-specs {
+                border-top: 1px dashed var(--line);
+                padding-top: 8px;
+                margin-top: 6px;
+            }
+
+            .inv-card-subtitle {
+                font-size: 0.76rem;
+                color: var(--mute);
+                margin-bottom: 6px;
+            }
+
+            .inv-card-bullets {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .inv-card-bullets li {
+                font-size: 0.76rem;
+                color: var(--ink);
+                line-height: 1.45;
+                padding-left: 12px;
+                position: relative;
+            }
+
+            .inv-card-bullets li::before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: var(--red);
+                font-weight: bold;
             }
 
             /* Terms & Calc Compact */
@@ -1889,7 +2084,8 @@
                     <strong>Satu modul = satu maddah di satu tingkat.</strong> Tiga tingkat, dua maddah. Hadis Idady 1 sudah dikerjakan. Modul lainnya memakai pola yang sama, dengan jumlah halaman sesuai naskahnya.
                 </p>
 
-                <div class="matrix-table-wrap">
+                <!-- Desktop Matrix Table -->
+                <div class="matrix-desktop-wrap matrix-table-wrap">
                     <table class="matrix-table">
                         <thead>
                             <tr>
@@ -1942,6 +2138,66 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Mobile Matrix Cards -->
+                <div class="matrix-mobile-cards">
+                    <div class="matrix-level-card">
+                        <div class="matrix-level-header">
+                            <span class="matrix-level-badge">Idady 1</span>
+                            <span class="matrix-level-rate">Rp 350.000 / modul</span>
+                        </div>
+                        <div class="matrix-maddah-grid">
+                            <div class="matrix-maddah-item">
+                                <span class="matrix-maddah-type">Maddah Tafsir</span>
+                                <div class="matrix-maddah-name">01 &middot; Tafsir Idady 1</div>
+                                <span class="badge-queue">Antrean</span>
+                            </div>
+                            <div class="matrix-maddah-item">
+                                <span class="matrix-maddah-type">Maddah Hadis</span>
+                                <div class="matrix-maddah-name">02 &middot; Hadis Idady 1</div>
+                                <span class="badge-done">Sudah dikerjakan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="matrix-level-card">
+                        <div class="matrix-level-header">
+                            <span class="matrix-level-badge">Idady 2</span>
+                            <span class="matrix-level-rate">Rp 350.000 / modul</span>
+                        </div>
+                        <div class="matrix-maddah-grid">
+                            <div class="matrix-maddah-item">
+                                <span class="matrix-maddah-type">Maddah Tafsir</span>
+                                <div class="matrix-maddah-name">03 &middot; Tafsir Idady 2</div>
+                                <span class="badge-queue">Antrean</span>
+                            </div>
+                            <div class="matrix-maddah-item">
+                                <span class="matrix-maddah-type">Maddah Hadis</span>
+                                <div class="matrix-maddah-name">04 &middot; Hadis Idady 2</div>
+                                <span class="badge-queue">Antrean</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="matrix-level-card">
+                        <div class="matrix-level-header">
+                            <span class="matrix-level-badge">Idady 3</span>
+                            <span class="matrix-level-rate">Rp 350.000 / modul</span>
+                        </div>
+                        <div class="matrix-maddah-grid">
+                            <div class="matrix-maddah-item">
+                                <span class="matrix-maddah-type">Maddah Tafsir</span>
+                                <div class="matrix-maddah-name">05 &middot; Tafsir Idady 3</div>
+                                <span class="badge-queue">Antrean</span>
+                            </div>
+                            <div class="matrix-maddah-item">
+                                <span class="matrix-maddah-type">Maddah Hadis</span>
+                                <div class="matrix-maddah-name">06 &middot; Hadis Idady 3</div>
+                                <span class="badge-queue">Antrean</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- TABEL HARGA & RINCIAN TAGIHAN -->
@@ -1955,7 +2211,8 @@
                     </div>
                 </div>
 
-                <div class="inv-table-wrap">
+                <!-- Desktop Invoice Table -->
+                <div class="inv-desktop-wrap inv-table-wrap">
                     <table class="inv-table">
                         <thead>
                             <tr>
@@ -2013,6 +2270,81 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Mobile Invoice Cards (Sleek, Readable, No Cut-Offs) -->
+                <div class="inv-mobile-cards">
+                    <!-- Item 01 -->
+                    <div class="inv-card-item">
+                        <div class="inv-card-item-header">
+                            <div class="inv-card-badge-row">
+                                <span class="inv-card-num">01</span>
+                                <span class="inv-card-qty">2 Modul</span>
+                            </div>
+                            <div class="inv-card-price-col">
+                                <div class="inv-card-unit">@ Rp 350.000</div>
+                                <div class="inv-card-total">Rp 700.000</div>
+                            </div>
+                        </div>
+
+                        <div class="inv-card-title">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 1)</div>
+
+                        <div class="inv-card-specs">
+                            <div class="inv-card-subtitle">Termasuk 2 modul: <em>Tafsir Idady 1</em> dan <em>Hadis Idady 1</em>.</div>
+                            <ul class="inv-card-bullets">
+                                <li>Hadis Idady 1 sudah dikerjakan penuh sebagai standar mutu.</li>
+                                <li>Dilengkapi mind map ringkas di akhir tiap bahasan + tabel mufradat berdampingan.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 02 -->
+                    <div class="inv-card-item">
+                        <div class="inv-card-item-header">
+                            <div class="inv-card-badge-row">
+                                <span class="inv-card-num">02</span>
+                                <span class="inv-card-qty">2 Modul</span>
+                            </div>
+                            <div class="inv-card-price-col">
+                                <div class="inv-card-unit">@ Rp 350.000</div>
+                                <div class="inv-card-total">Rp 700.000</div>
+                            </div>
+                        </div>
+
+                        <div class="inv-card-title">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 2)</div>
+
+                        <div class="inv-card-specs">
+                            <div class="inv-card-subtitle">Termasuk 2 modul: <em>Tafsir Idady 2</em> dan <em>Hadis Idady 2</em>.</div>
+                            <ul class="inv-card-bullets">
+                                <li>Warna tetap tiap bagian (Nash, perawi, mufradat, syarah, faedah).</li>
+                                <li>Footer lembaga lengkap + teks Arab dicek identik dengan naskah.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 03 -->
+                    <div class="inv-card-item">
+                        <div class="inv-card-item-header">
+                            <div class="inv-card-badge-row">
+                                <span class="inv-card-num">03</span>
+                                <span class="inv-card-qty">2 Modul</span>
+                            </div>
+                            <div class="inv-card-price-col">
+                                <div class="inv-card-unit">@ Rp 350.000</div>
+                                <div class="inv-card-total">Rp 700.000</div>
+                            </div>
+                        </div>
+
+                        <div class="inv-card-title">Layout &amp; Desain Modul Talkhisan Tafsir &amp; Hadis (Idady 3)</div>
+
+                        <div class="inv-card-specs">
+                            <div class="inv-card-subtitle">Termasuk 2 modul: <em>Tafsir Idady 3</em> dan <em>Hadis Idady 3</em>.</div>
+                            <ul class="inv-card-bullets">
+                                <li>Tiga poin hafalan bernomor untuk intisari pelajaran.</li>
+                                <li>File master PDF A4 siap cetak + hak 2x revisi per modul.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="calc-footer">
