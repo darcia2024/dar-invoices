@@ -1820,6 +1820,14 @@
             </div>
         </div>
 
+        <!-- Mobile status tabs: jump straight to Belum lunas / DP / Lunas without scrolling -->
+        <div class="board-tabs" id="boardTabs" role="tablist" aria-label="Filter status pembayaran">
+            <button type="button" role="tab" data-tab="ALL" onclick="setBoardTab('ALL')">Semua <b data-count="ALL">0</b></button>
+            <button type="button" role="tab" data-tab="UNPAID" onclick="setBoardTab('UNPAID')">Belum lunas <b data-count="UNPAID">0</b></button>
+            <button type="button" role="tab" data-tab="DP" onclick="setBoardTab('DP')">DP <b data-count="DP">0</b></button>
+            <button type="button" role="tab" data-tab="PAID" onclick="setBoardTab('PAID')">Lunas <b data-count="PAID">0</b></button>
+        </div>
+
         <!-- Invoice Cards Grid -->
         <div id="invoiceGrid" class="invoice-grid" aria-label="Invoice menurut status pembayaran">
             <div class="invoice-card" id="card-almadroj" data-id="almadroj" data-month="2026-09" data-amount="3700000" data-client="sidi watra pusat belajar al madroj al madraj bimbel standard september 2026 inv/alm/2026/016 almadroj-edu.com">
@@ -5498,6 +5506,43 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 column.querySelector('.board-count').textContent = count;
                 column.querySelector('.board-empty').hidden = count > 0;
             });
+            updateBoardTabs();
+        }
+
+        let activeBoardTab = 'ALL';
+        try { activeBoardTab = localStorage.getItem('dar_board_tab') || 'ALL'; } catch (e) {}
+
+        function updateBoardTabs() {
+            const grid = document.getElementById('invoiceGrid');
+            if (!grid) return;
+            grid.dataset.tab = activeBoardTab;
+            let total = 0;
+            ['UNPAID', 'DP', 'PAID'].forEach(status => {
+                const column = document.getElementById('column-' + status);
+                const n = column ? Number(column.querySelector('.board-count').textContent) || 0 : 0;
+                total += n;
+                const badge = document.querySelector('#boardTabs [data-count="' + status + '"]');
+                if (badge) badge.textContent = n;
+            });
+            const all = document.querySelector('#boardTabs [data-count="ALL"]');
+            if (all) all.textContent = total;
+            document.querySelectorAll('#boardTabs [data-tab]').forEach(btn => {
+                const on = btn.dataset.tab === activeBoardTab;
+                btn.classList.toggle('active', on);
+                btn.setAttribute('aria-selected', String(on));
+            });
+        }
+
+        function setBoardTab(tab) {
+            activeBoardTab = tab;
+            try { localStorage.setItem('dar_board_tab', tab); } catch (e) {}
+            updateBoardTabs();
+            const grid = document.getElementById('invoiceGrid');
+            if (grid && window.matchMedia('(max-width: 600px)').matches) {
+                const tabs = document.getElementById('boardTabs');
+                const stickyOffset = tabs ? tabs.getBoundingClientRect().height + 154 : 210;
+                window.scrollTo({ top: Math.max(0, grid.getBoundingClientRect().top + window.scrollY - stickyOffset), behavior: 'smooth' });
+            }
         }
 
         function setMonthFilter(month, btnEl) {
