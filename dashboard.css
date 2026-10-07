@@ -1401,6 +1401,142 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
         grid-template-columns: 1fr;
     }
 }
+
+/* ========================================================
+   MOBILE POLISH — readable type, 44px touch targets,
+   sticky nav, tighter toolbar (phones only)
+   ======================================================== */
+@media (max-width: 600px) {
+    body { padding: 10px 14px calc(56px + env(safe-area-inset-bottom)); }
+
+    /* Sticky compact header */
+    .workspace-sidebar {
+        position: sticky;
+        inset: 8px auto auto 0;
+        width: 100%;
+        z-index: 40;
+        margin-bottom: 14px;
+        padding: 10px 12px 8px;
+        gap: 8px;
+        box-shadow: 0 6px 18px rgba(40, 36, 20, 0.08);
+    }
+    .workspace-brand { font-size: 20px; }
+    .workspace-brand span { font-size: 12px !important; }
+    .mobile-lock-btn { min-height: 34px; padding: 6px 12px; font-size: 12px; border-radius: 9px; }
+    .sidebar-link { min-height: 40px; padding: 8px 14px; font-size: 12.5px; }
+    .sidebar-link span { font-size: 13px !important; }
+    .workspace-sidebar-top { flex-direction: row; justify-content: space-between; align-items: center; }
+    .workspace-brand { padding: 0 !important; }
+    .workspace-sidebar nav { scroll-snap-type: x proximity; margin-inline: -4px; padding-inline: 4px; }
+    .sidebar-link { scroll-snap-align: start; }
+
+    /* Header */
+    .portal-header { margin-bottom: 14px; }
+    .portal-badge { font-size: 10.5px; }
+    .portal-title { font-size: 26px; }
+    .portal-subtitle { font-size: 13px; }
+
+    /* Toolbar: primary action full width, secondary in pairs */
+    .invoice-tools {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .invoice-tools .create-invoice-btn,
+    .invoice-tools .month-pill-btn {
+        min-height: 46px;
+        font-size: 13px;
+        border-radius: 12px;
+        justify-content: center;
+        width: 100%;
+    }
+    .invoice-tools .create-invoice-btn[onclick] { grid-column: 1 / -1; order: 1; }
+    .invoice-tools a.create-invoice-btn { order: 2; }
+    .invoice-tools .month-pill-btn[onclick*="Trash"] { order: 3; }
+    .invoice-tools .month-pill-btn[onclick*="persist"] { order: 4; grid-column: 1 / -1; }
+    .invoice-tools .invoice-sync-state { order: 5; grid-column: 1 / -1; font-size: 12px; padding: 0; }
+    .invoice-tools .invoice-sync-state:empty { display: none; }
+
+    /* KPI cards */
+    .stats-bar { gap: 10px; }
+    .stat-card { padding: 14px 13px; min-height: 104px; border-radius: 16px; }
+    .stat-icon { height: 28px; width: 28px; min-height: 28px; min-width: 28px; }
+    .stat-icon svg { width: 14px; height: 14px; }
+    .stat-info-title { font-size: 11px; letter-spacing: 0.02em; }
+    .stat-info-val { font-size: clamp(15px, 4.6vw, 19px) !important; }
+
+    /* Goal tracker */
+    .goal-tracker-card { padding: 16px 14px; border-radius: 16px; }
+    .goal-tracker-card, .goal-controls-row, .goal-control-col, .goal-tiers-group { min-width: 0; max-width: 100%; }
+    .goal-tracker-title { font-size: 16px; }
+    .goal-tracker-sub { font-size: 12.5px; }
+    .goal-control-label { font-size: 11px; }
+    .goal-month-pills { margin-inline: -14px; padding-inline: 14px; }
+    .goal-month-pill-btn { font-size: 12px; min-height: 38px; padding: 8px 14px; border-radius: 20px; }
+    .goal-tiers-group { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+    .goal-tier-btn { font-size: 12px; min-height: 40px; border-radius: 10px; }
+    .goal-label-mini { font-size: 11px; }
+    .goal-numbers strong { font-size: 19px; }
+    .target-num { font-size: 12.5px; }
+    .goal-pct-pill { font-size: 11.5px; padding: 4px 9px; }
+    .goal-progress-track { height: 9px; }
+    .goal-affirmation-box { padding: 12px 13px; border-radius: 12px; }
+    .goal-affirmation-label { font-size: 10.5px; }
+    .goal-affirmation-text { font-size: 12.5px; }
+    .goal-actions-group { justify-content: stretch; }
+    .goal-action-btn { flex: 1; font-size: 12px; min-height: 38px; border-radius: 9px; }
+
+    /* Filters */
+    .filter-title { font-size: 11px; }
+    .month-pills-group { margin-inline: -14px; padding-inline: 14px; }
+    .month-pill-btn { font-size: 12.5px; min-height: 40px; padding: 8px 15px; }
+    .search-input { font-size: 16px; min-height: 46px; border-radius: 12px; } /* 16px stops iOS zoom */
+
+    /* Invoice cards */
+    .board-heading { font-size: 15px; }
+    .board-count { font-size: 11.5px; }
+    .invoice-card { padding: 16px 14px; border-radius: 16px; gap: 12px; }
+    .client-title { font-size: 15.5px; }
+    .payment-status-pill { font-size: 10.5px; padding: 5px 9px; min-height: 28px; }
+    .dp-history-badge { font-size: 10.5px; padding: 4px 8px; }
+    .ref-code { font-size: 11.5px; }
+    .month-tag { font-size: 10.5px; padding: 3px 7px; }
+    .project-desc { font-size: 13px; line-height: 1.6; }
+    .btn-row-flex { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .slug-copy-btn { min-height: 44px; font-size: 12px; border-radius: 10px; }
+    .financial-breakdown-box { gap: 7px; padding-top: 12px; }
+    .fin-label { font-size: 11px; }
+    .fin-val { font-size: 13.5px; }
+    .net-profit-val { font-size: 14.5px; }
+    .edit-profit-btn { font-size: 11px; padding: 5px 9px; min-height: 28px; }
+    .card-action-bar { gap: 8px; }
+    .action-btn, .mark-pelunasan-btn { min-height: 46px; font-size: 13px; border-radius: 11px; }
+
+    /* Hutang & piutang */
+    .debt-toolbar .create-invoice-btn { min-height: 46px; font-size: 13px; border-radius: 12px; }
+    .debt-filter-pills { margin-inline: -14px; padding-inline: 14px; }
+    .debt-filter-pills .month-pill-btn { font-size: 12.5px; min-height: 40px; }
+    .debt-action-btn { min-height: 40px; font-size: 12px; padding: 8px 13px; }
+    .debt-stats-bar .stat-card { min-height: 104px; padding: 14px 13px; border-radius: 16px; }
+    .debt-stats-bar .stat-info-val { font-size: clamp(15px, 4.6vw, 19px) !important; }
+    .debt-item-card { padding: 15px 14px; border-radius: 14px; }
+
+    /* Report */
+    .revenue-table { font-size: 12px; }
+
+    /* Footer / overlays */
+    .dev-contact-btn { min-height: 46px; font-size: 12.5px; }
+    .modal-card { max-width: 94vw; max-height: 90vh; overflow-y: auto; }
+    .modal-title { font-size: 16px; }
+    .toast { font-size: 12.5px; bottom: calc(14px + env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 380px) {
+    body { padding-inline: 10px; }
+    .goal-tier-btn { font-size: 11px; }
+    .portal-title { font-size: 23px; }
+    .btn-row-flex { grid-template-columns: 1fr; }
+}
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
 /* ========================================================
