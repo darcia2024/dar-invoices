@@ -1496,7 +1496,10 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
     .board-heading { font-size: 15px; }
     .board-count { font-size: 11.5px; }
     .invoice-card { padding: 16px 14px; border-radius: 16px; gap: 12px; }
-    .client-title { font-size: 15.5px; }
+    .card-top { flex-direction: column !important; align-items: stretch !important; gap: 8px; }
+    .client-title { font-size: 15.5px; min-width: 0; width: 100%; overflow-wrap: anywhere; word-break: normal; }
+    .status-badge-group { justify-content: flex-start; flex-wrap: wrap; min-width: 0; max-width: 100%; }
+    .status-badge-group > * { max-width: 100%; }
     .payment-status-pill { font-size: 10.5px; padding: 5px 9px; min-height: 28px; }
     .dp-history-badge { font-size: 10.5px; padding: 4px 8px; }
     .ref-code { font-size: 11.5px; }
@@ -1510,7 +1513,7 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
     .net-profit-val { font-size: 14.5px; }
     .edit-profit-btn { font-size: 11px; padding: 5px 9px; min-height: 28px; }
     .card-action-bar { gap: 8px; }
-    .action-btn, .mark-pelunasan-btn { min-height: 46px; font-size: 13px; border-radius: 11px; }
+    .action-btn, .mark-pelunasan-btn { flex: 0 0 auto; min-height: 46px; font-size: 13px; border-radius: 11px; }
 
     /* Hutang & piutang */
     .debt-toolbar .create-invoice-btn { min-height: 46px; font-size: 13px; border-radius: 12px; }
