@@ -92,6 +92,11 @@
     { "source": "/ai-underrated", "destination": "/underrated-ai/index.html" },
     { "source": "/masakbar", "destination": "/masakbar/index.html" },
     { "source": "/mas-akbar", "destination": "/masakbar/index.html" },
-    { "source": "/akbar", "destination": "/masakbar/index.html" }
+    { "source": "/akbar", "destination": "/masakbar/index.html" },
+    { "source": "/talkhisan-hamasah", "destination": "/talkhisan-hamasah/index.html" },
+    { "source": "/talkhisan", "destination": "/talkhisan-hamasah/index.html" },
+    { "source": "/modul-hamasah", "destination": "/talkhisan-hamasah/index.html" },
+    { "source": "/penawaran-hamasah", "destination": "/talkhisan-hamasah/index.html" },
+    { "source": "/hamasah-modul", "destination": "/talkhisan-hamasah/index.html" }
   ]
 }

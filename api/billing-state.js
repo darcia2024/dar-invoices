@@ -74,6 +74,7 @@ const defaultState = {
     erna: "UNPAID",
     "underrated-ai": "UNPAID",
     masakbar: "UNPAID",
+    "talkhisan-hamasah": "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -112,6 +113,7 @@ const defaultState = {
     erna: 500000,
     "underrated-ai": 450000,
     masakbar: 100000,
+    "talkhisan-hamasah": 2100000,
   },
 };
 
