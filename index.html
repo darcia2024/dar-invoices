@@ -1480,174 +1480,7 @@
             opacity: 1;
         }
 
-        @media screen and (max-width: 768px) {
-            body {
-                padding: 22px 12px 50px 12px;
-            }
-
-            .portal-header {
-                padding: 22px 18px;
-                margin-bottom: 16px;
-            }
-
-            .portal-title {
-                font-size: 2.15rem;
-                line-height: 1;
-            }
-
-            .portal-badge {
-                font-size: 0.58rem;
-                padding: 6px 10px;
-                letter-spacing: 0.08em;
-            }
-
-            .goal-tracker-card {
-                padding: 18px 16px;
-                margin-bottom: 18px;
-            }
-
-            .goal-tracker-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-
-            .goal-tiers-group {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 4px;
-            }
-
-            .goal-tier-btn {
-                padding: 6px 4px;
-                font-size: 0.65rem;
-                text-align: center;
-            }
-
-            .goal-metrics-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
-            }
-
-            .goal-numbers {
-                font-size: 0.95rem;
-            }
-
-            .goal-numbers strong {
-                font-size: 1.15rem;
-            }
-
-            .goal-affirmation-box {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-
-            .goal-actions-group {
-                justify-content: flex-end;
-            }
-
-            .stats-bar {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-
-            .stat-card {
-                grid-template-columns: 1fr;
-                padding: 14px;
-                gap: 10px;
-            }
-
-            .stat-info-val {
-                font-size: 0.96rem;
-                white-space: normal;
-            }
-
-            .filter-section {
-                padding: 16px;
-            }
-
-            .filter-row-top,
-            .filter-subrow {
-                align-items: stretch;
-            }
-
-            .month-pills-group {
-                width: 100%;
-            }
-
-            .month-pill-btn {
-                flex: 1 1 120px;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-
-            .invoice-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .invoice-card {
-                padding: 18px;
-            }
-
-            .client-title {
-                font-size: 1.05rem;
-            }
-
-            .card-top {
-                flex-direction: column;
-            }
-
-            .status-badge-group {
-                align-items: flex-start;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .slug-box {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-
-            .btn-row-flex {
-                width: 100%;
-            }
-
-            .slug-copy-btn {
-                flex: 1;
-                text-align: center;
-                padding: 8px;
-            }
-
-            .dev-footer-card {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 24px 20px;
-            }
-
-            .dev-info-left {
-                flex-direction: column;
-                text-align: center;
-                gap: 12px;
-            }
-
-            .dev-contact-btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .toast {
-                left: 14px;
-                right: 14px;
-                bottom: 14px;
-                text-align: center;
-            }
-        }
+        /* Responsive mobile styling is maintained in /dashboard.css */
     </style>
     <link rel="stylesheet" href="/dashboard.css">
 </head>
@@ -1699,10 +1532,16 @@
     </div>
 
     <aside class="workspace-sidebar">
-        <a class="workspace-brand" href="/">DAR<span>Invoices</span></a>
+        <div class="workspace-sidebar-top">
+            <a class="workspace-brand" href="/">DAR<span>Invoices</span></a>
+            <button class="mobile-lock-btn" onclick="lockAdminDashboard()" aria-label="Kunci workspace">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Kunci</span>
+            </button>
+        </div>
         <p class="sidebar-caption">Workspace</p>
         <nav aria-label="Navigasi utama">
-            <a href="/today" class="sidebar-link" style="text-decoration:none; display:flex; align-items:center; gap:8px; font-weight:600; color:#24241f;"><span aria-hidden="true">⚡</span> Update Today</a>
+            <a href="/today" class="sidebar-link" style="text-decoration:none;"><span aria-hidden="true">⚡</span> Update Today</a>
             <button class="sidebar-link active" data-view="board" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true">▦</span> Invoice</button>
             <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true">▤</span> Laporan keuangan</button>
             <button class="sidebar-link" data-view="debt" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true">⚖</span> Hutang &amp; Piutang</button>
@@ -1723,7 +1562,7 @@
                     <h1 class="portal-title" id="workspaceTitle">Invoice</h1>
                     <p class="portal-subtitle">Tagihan tertata, pendapatan terpantau.</p>
                 </div>
-                <div>
+                <div class="portal-header-action">
                     <a href="/today" class="create-invoice-btn" style="background:#1e293b; color:#ffffff; font-size:12px; font-weight:600; padding:10px 16px; border-radius:8px; display:inline-flex; align-items:center; gap:7px; text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,0.12);">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                         Update Today

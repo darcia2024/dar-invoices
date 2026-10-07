@@ -46,6 +46,8 @@ button, a { transition: background .18s ease, color .18s ease; }
 button:active { transform: translateY(1px); }
 :focus-visible { outline: 2px solid #584272 !important; outline-offset: 4px; }
 .workspace-sidebar { position: fixed; inset: 16px auto 16px 16px; width: 202px; background: #faf9f3; border-radius: 18px; padding: 28px 16px 18px; display: flex; flex-direction: column; z-index: 10; }
+.workspace-sidebar-top { display: flex; flex-direction: column; }
+.mobile-lock-btn { display: none; }
 .workspace-brand { display: flex; align-items: baseline; gap: 7px; color: #24241f; text-decoration: none; font-size: 25px; font-weight: 700; letter-spacing: -1.3px; padding: 0 12px 40px; }
 .workspace-brand span { font-size: 13px; font-weight: 400; letter-spacing: -.3px; }
 .sidebar-caption { padding: 0 12px 12px; color: #686458; font-size: 11px; }
@@ -492,59 +494,912 @@ body[data-view="report"] .invoice-grid, body[data-view="report"] .filter-subrow 
 .modal-btn-cancel { background: #e8e2d4; color: #37342b; border: 0; }
 .modal-btn-confirm { background: #30352b; color: #fff; border: 0; }
 .toast { background: #30342b; color: #fffdf3; border: 0; border-radius: 10px; font-size: 11px; letter-spacing: 0; max-width: calc(100vw - 32px); }
+/* ========================================================
+   RESPONSIVE DESIGN SYSTEM (MOBILE, TABLET, DESKTOP)
+   ======================================================== */
+
 @media (min-width: 1600px) { body { padding-right: 48px; } }
+
 @media (max-width: 1150px) {
     body { padding: 24px 20px 40px 214px; }
     .workspace-sidebar { width: 178px; padding-inline: 10px; }
-    .stats-bar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .stat-card { min-height: 125px; }
     .stat-info-val { font-size: 24px; }
-    .invoice-grid { gap: 10px; }
-    .invoice-card { padding: 13px; }
+    .invoice-grid { gap: 12px; }
+    .invoice-card { padding: 15px; }
     .fin-row { flex-wrap: wrap; }
 }
+
 @media (max-width: 850px) {
-    body { padding: 20px 16px 40px; }
-    .workspace-sidebar { position: static; width: 100%; padding: 14px 16px; margin-bottom: 24px; border-radius: 12px; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
-    .workspace-brand { padding: 0; font-size: 21px; }
-    .workspace-sidebar nav { display: flex; gap: 5px; }
-    .sidebar-link { padding: 9px; margin: 0; width: auto; font-size: 10px; }
-    .mobile-lock { display: block; }
-    .sidebar-caption, .sidebar-note, .sidebar-account, .sidebar-link span { display: none; }
-    .stat-info-val { font-size: 25px; }
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    body {
+        padding: 16px 16px 48px;
+    }
+    .workspace-sidebar {
+        position: static;
+        width: 100%;
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        border-radius: 14px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .workspace-sidebar-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .workspace-brand {
+        padding: 0;
+        font-size: 20px;
+    }
+    .workspace-sidebar nav {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .workspace-sidebar nav::-webkit-scrollbar {
+        display: none;
+    }
+    .sidebar-link {
+        padding: 8px 12px;
+        margin: 0;
+        width: auto;
+        font-size: 11px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-height: 36px;
+        border-radius: 20px;
+    }
+    .sidebar-link span {
+        display: inline-block;
+        font-size: 13px;
+    }
+    .sidebar-caption, .sidebar-note, .sidebar-account {
+        display: none;
+    }
+    .sidebar-link.mobile-lock {
+        display: none;
+    }
+    .mobile-lock-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #403d32;
+        background: #eee8d8;
+        border: 1px solid #ddd7c6;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .stats-bar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+    .stat-card {
+        padding: 16px 14px;
+        min-height: 105px;
+    }
+    .stat-info-val {
+        font-size: clamp(16px, 2.5vw, 22px);
+    }
+    .invoice-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .debt-stats-bar {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .debt-item-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .debt-amount-col {
+        text-align: left;
+    }
+    .debt-item-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }
+
 @media (max-width: 600px) {
-    .workspace-brand span { display: none; }
-    .portal-title { font-size: 27px; }
-    .stats-bar { gap: 9px; }
-    .stat-card { padding: 15px; min-height: 145px; }
-    .stat-info-val { font-size: 19px; letter-spacing: -.8px; }
-    .stat-info-title { font-size: 9px; }
-    .invoice-grid { grid-template-columns: 1fr; gap: 25px; }
-    .invoice-card { padding: 19px; }
-    .filter-row-top { align-items: flex-start; }
-    .month-pill-btn { padding: 9px 11px; }
-    .client-title { font-size: 15px; }
-    .project-desc { font-size: 12px; }
-    .slug-copy-btn, .dp-status-action, .edit-profit-btn, .action-btn { min-height: 40px; font-size: 11px; }
-    .payment-status-pill { min-height: 36px; font-size: 10px; }
-    .sidebar-link { min-height: 42px; }
-    .fin-label, .ref-code { font-size: 10px; }
-    .cover-card { padding: 28px; }
-    .cover-title { font-size: 29px; }
-    .dev-footer-card { align-items: flex-start; gap: 18px; }
-    .dev-contact-btn { white-space: normal; text-align: left; }
-    .goal-tracker-card { padding: 16px; border-radius: 14px; }
-    .goal-tracker-header { flex-direction: column; align-items: stretch; gap: 12px; }
-    .goal-controls-row { flex-direction: column; align-items: stretch; gap: 10px; }
-    .goal-control-col { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .goal-month-pills { width: 100%; }
-    .goal-month-pill-btn { padding: 5px 9px; font-size: 9px; flex: 1 1 auto; text-align: center; }
-    .goal-tiers-group { display: flex; flex-wrap: wrap; gap: 5px; width: 100%; }
-    .goal-tier-btn { padding: 6px 10px; font-size: 9px; flex: 1 1 auto; text-align: center; }
-    .goal-numbers strong { font-size: 20px; }
-    .goal-affirmation-box { flex-direction: column; align-items: stretch; }
-    .goal-actions-group { justify-content: flex-end; }
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    body {
+        padding: 12px 12px 50px;
+    }
+
+    /* --- Sidebar / Header Mobile App Layout --- */
+    .workspace-sidebar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 14px 10px;
+        margin-bottom: 16px;
+        border-radius: 14px;
+        gap: 10px;
+        background: #faf9f3;
+        border: 1px solid #ded7c6;
+    }
+    .workspace-sidebar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .workspace-brand {
+        padding: 0;
+        font-size: 19px;
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+    }
+    .workspace-brand span {
+        display: inline !important;
+        font-size: 11px;
+        color: #666256;
+    }
+    .mobile-lock-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 11px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #433f33;
+        background: #eae4d5;
+        border: 1px solid #dcd4c2;
+        border-radius: 7px;
+    }
+    .workspace-sidebar nav {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        width: 100%;
+        padding-bottom: 2px;
+    }
+    .workspace-sidebar nav::-webkit-scrollbar {
+        display: none;
+    }
+    .sidebar-link {
+        padding: 7px 12px;
+        font-size: 11px;
+        font-weight: 500;
+        border-radius: 20px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #eae5d8;
+        color: #454238;
+        border: 1px solid transparent;
+    }
+    .sidebar-link span {
+        display: inline-block !important;
+        font-size: 12px;
+    }
+    .sidebar-link.active {
+        background: #272722;
+        color: #fffdf5;
+        border-color: #272722;
+        font-weight: 600;
+    }
+    .sidebar-link.mobile-lock {
+        display: none;
+    }
+
+    /* --- Portal Title & Header --- */
+    .portal-header {
+        margin: 0 0 14px;
+        padding: 0;
+    }
+    .portal-badge {
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+    .portal-title {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.7px;
+        line-height: 1.2;
+        margin-bottom: 4px;
+    }
+    .portal-subtitle {
+        font-size: 11.5px;
+        line-height: 1.45;
+        color: #666256;
+    }
+    .portal-header-action {
+        display: none !important;
+    }
+
+    /* --- Invoice Tools Toolbar --- */
+    .invoice-tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 0 16px;
+        align-items: stretch;
+        width: 100%;
+    }
+    .invoice-tools .create-invoice-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 9px 12px;
+        font-size: 11.5px;
+        font-weight: 600;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .invoice-tools .month-pill-btn {
+        padding: 9px 12px;
+        font-size: 11px;
+        min-height: 38px;
+        border-radius: 8px;
+        flex: 0 0 auto;
+    }
+    .invoice-sync-state {
+        width: 100%;
+        max-width: 100%;
+        font-size: 10.5px;
+        padding-top: 2px;
+        line-height: 1.4;
+    }
+
+    /* --- Executive KPI Stats Bar --- */
+    .stats-bar {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    .stat-card {
+        padding: 12px 11px;
+        min-height: 92px;
+        border-radius: 13px;
+        gap: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .stat-icon {
+        height: 24px;
+        width: 24px;
+        min-height: 24px;
+        min-width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .stat-icon svg {
+        width: 12px;
+        height: 12px;
+    }
+    .stat-info-title {
+        font-size: 9.5px;
+        font-weight: 500;
+        margin-bottom: 2px;
+        line-height: 1.25;
+    }
+    .stat-info-val {
+        font-size: clamp(12.5px, 3.8vw, 16px) !important;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+    }
+
+    /* --- Monthly Goal Tracker --- */
+    .goal-tracker-card {
+        padding: 14px 13px;
+        border-radius: 14px;
+        margin-bottom: 16px;
+    }
+    .goal-tracker-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    .goal-header-left {
+        gap: 9px;
+    }
+    .goal-icon-badge {
+        height: 23px;
+        width: 23px;
+        min-width: 23px;
+        margin-top: 2px;
+    }
+    .goal-icon-badge svg {
+        width: 11px;
+        height: 11px;
+    }
+    .goal-tracker-title {
+        font-size: 14.5px;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+        margin-bottom: 2px;
+    }
+    .goal-tracker-sub {
+        font-size: 10.5px;
+        line-height: 1.45;
+    }
+
+    .goal-controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    .goal-control-col {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+    .goal-control-label {
+        font-size: 9.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #514f43;
+    }
+    .goal-month-pills {
+        display: flex;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        gap: 5px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        width: 100%;
+        padding-bottom: 2px;
+    }
+    .goal-month-pills::-webkit-scrollbar {
+        display: none;
+    }
+    .goal-month-pill-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 6px 10px;
+        font-size: 9.5px;
+        font-weight: 500;
+        border-radius: 16px;
+        min-height: 30px;
+    }
+    .goal-tiers-group {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        width: 100%;
+    }
+    .goal-tier-btn {
+        padding: 6px 2px;
+        font-size: 9.5px;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 7px;
+        min-height: 30px;
+    }
+
+    .goal-metrics-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+    .goal-label-mini {
+        font-size: 9px;
+        margin-bottom: 2px;
+    }
+    .goal-numbers {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+    .goal-numbers strong {
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .target-divider {
+        font-size: 11px;
+    }
+    .target-num {
+        font-size: 10.5px;
+    }
+    .goal-pct-pill {
+        font-size: 9.5px;
+        padding: 3px 7px;
+        border-radius: 5px;
+        white-space: nowrap;
+    }
+
+    .goal-progress-track {
+        height: 7px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .goal-affirmation-box {
+        padding: 9px 11px;
+        border-radius: 9px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .goal-affirmation-content {
+        gap: 8px;
+    }
+    .goal-affirmation-icon {
+        font-size: 13px;
+    }
+    .goal-affirmation-label {
+        font-size: 8.5px;
+        margin-bottom: 1px;
+    }
+    .goal-affirmation-text {
+        font-size: 10.5px;
+        line-height: 1.45;
+    }
+    .goal-actions-group {
+        justify-content: flex-end;
+        gap: 5px;
+        width: 100%;
+    }
+    .goal-action-btn {
+        font-size: 9.5px;
+        padding: 5px 9px;
+        border-radius: 6px;
+        min-height: 28px;
+    }
+
+    /* --- Filter & Search Section --- */
+    .filter-section {
+        margin-bottom: 16px;
+        padding: 0;
+    }
+    .filter-row-top {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+    .filter-title {
+        font-size: 9.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+    .month-pills-group {
+        display: flex;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        gap: 6px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        width: 100%;
+        padding-bottom: 3px;
+    }
+    .month-pills-group::-webkit-scrollbar {
+        display: none;
+    }
+    .month-pill-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 7px 13px;
+        font-size: 10px;
+        font-weight: 500;
+        border-radius: 20px;
+        min-height: 34px;
+    }
+
+    .filter-subrow {
+        width: 100%;
+    }
+    .search-box {
+        width: 100%;
+        position: relative;
+    }
+    .search-input {
+        width: 100%;
+        font-size: 13px;
+        padding: 11px 12px 11px 36px;
+        border-radius: 9px;
+        min-height: 42px;
+    }
+    .search-icon {
+        left: 12px;
+        width: 14px;
+        height: 14px;
+    }
+
+    /* --- Invoice Grid & Cards --- */
+    .invoice-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        width: 100%;
+    }
+    .board-column {
+        width: 100%;
+    }
+    .board-heading {
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 0 0 8px;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border-bottom: 1px solid #ded8c8;
+        color: #2e2c24;
+    }
+    .board-count {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 8px;
+    }
+    .board-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .invoice-card {
+        padding: 14px 13px;
+        border-radius: 13px;
+        gap: 10px;
+        border: 1px solid #ded7c6;
+        background: #fffdf5;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        width: 100%;
+    }
+    .card-top {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+    .client-title {
+        font-size: 13.5px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: #24241f;
+        flex: 1;
+        word-break: break-word;
+    }
+    .status-badge-group {
+        flex-shrink: 0;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+    .payment-status-pill {
+        font-size: 9px;
+        font-weight: 600;
+        padding: 4px 7px;
+        border-radius: 5px;
+        min-height: 26px;
+    }
+    .dp-history-badge {
+        font-size: 8.5px;
+        padding: 3px 6px;
+    }
+
+    .ref-code {
+        font-size: 9.5px;
+        color: #666256;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    .month-tag {
+        font-size: 9px;
+        padding: 2px 5px;
+    }
+    .project-desc {
+        font-size: 11px;
+        line-height: 1.55;
+        color: #514d41;
+        margin-bottom: 8px;
+    }
+
+    .slug-box {
+        margin: 0 0 8px;
+        width: 100%;
+    }
+    .btn-row-flex {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        width: 100%;
+    }
+    .slug-copy-btn {
+        width: 100%;
+        min-height: 36px;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 7px 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: #faf7eb !important;
+        color: #454032 !important;
+        border: 1px solid #d7d0c0;
+    }
+
+    .financial-breakdown-box {
+        padding-top: 8px;
+        margin-top: 2px;
+        border-top: 1px solid #eae4d4;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .fin-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+    }
+    .fin-label {
+        font-size: 9.5px;
+        font-weight: 500;
+        color: #6d6759;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+    }
+    .fin-val {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #24241f;
+    }
+    .net-profit-flex {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .net-profit-val {
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #305d46;
+    }
+    .edit-profit-btn {
+        font-size: 9.5px;
+        padding: 3px 6px;
+        background: #ede6d7;
+        border-radius: 4px;
+    }
+
+    .card-action-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 8px;
+        width: 100%;
+    }
+    .action-btn,
+    .mark-pelunasan-btn {
+        width: 100%;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 7px;
+        padding: 9px;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    /* --- Debt & Receivables Section --- */
+    .debt-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+    .debt-toolbar .create-invoice-btn {
+        width: 100%;
+        min-height: 38px;
+        font-size: 11.5px;
+        justify-content: center;
+    }
+    .debt-filter-pills {
+        display: flex;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        gap: 5px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        width: 100%;
+        padding-bottom: 2px;
+    }
+    .debt-filter-pills::-webkit-scrollbar {
+        display: none;
+    }
+    .debt-filter-pills .month-pill-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 7px 11px;
+        font-size: 10px;
+        border-radius: 18px;
+        min-height: 32px;
+    }
+    .debt-search-box {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+    }
+
+    .debt-stats-bar {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    .debt-stats-bar .stat-card {
+        padding: 12px 11px;
+        min-height: 92px;
+        border-radius: 13px;
+        gap: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .debt-stats-bar .stat-info-val {
+        font-size: clamp(12.5px, 3.8vw, 16px) !important;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .debt-item-card {
+        padding: 13px 12px;
+        border-radius: 11px;
+        gap: 8px;
+    }
+    .debt-item-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    .debt-action-btn {
+        min-height: 34px;
+        padding: 6px 10px;
+        font-size: 10.5px;
+    }
+
+    /* --- Laporan Keuangan Section --- */
+    .revenue-report-box {
+        padding: 14px 10px;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .revenue-table {
+        min-width: 540px;
+        font-size: 10.5px;
+    }
+    .revenue-table th,
+    .revenue-table td {
+        padding: 9px 8px;
+    }
+
+    /* --- Dev Footer Card --- */
+    .dev-footer-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 18px 12px;
+        margin-top: 24px;
+        gap: 10px;
+    }
+    .dev-info-left {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 6px;
+    }
+    .dev-contact-btn {
+        width: 100%;
+        min-height: 38px;
+        justify-content: center;
+        font-size: 10.5px;
+    }
+
+    /* --- Modals & Cover Card --- */
+    .cover-card {
+        padding: 24px 18px;
+        border-radius: 16px;
+        max-width: 92vw;
+    }
+    .cover-title {
+        font-size: 24px;
+        letter-spacing: -1px;
+        margin-bottom: 12px;
+    }
+    .cover-open-btn {
+        min-height: 42px;
+        font-size: 12px;
+    }
+
+    .modal-card {
+        max-width: 92vw;
+        padding: 20px 16px;
+        border-radius: 14px;
+    }
+    .modal-title {
+        font-size: 14px;
+    }
+
+    .toast {
+        left: 12px;
+        right: 12px;
+        bottom: 14px;
+        font-size: 10.5px;
+        padding: 11px 14px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 380px) {
+    body {
+        padding: 10px 8px 44px;
+    }
+    .portal-title {
+        font-size: 20px;
+    }
+    .stat-card {
+        padding: 10px 8px;
+    }
+    .stat-info-val {
+        font-size: 12px !important;
+    }
+    .goal-tier-btn {
+        font-size: 8.5px;
+        padding: 5px 1px;
+    }
+    .btn-row-flex {
+        grid-template-columns: 1fr;
+    }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
@@ -850,18 +1705,7 @@ body[data-view="debt"] .stats-bar {
     font-weight: 500;
 }
 
-@media (max-width: 850px) {
-    .debt-stats-bar { grid-template-columns: 1fr 1fr; }
-    .debt-item-card { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .debt-amount-col { text-align: left; }
-    .debt-item-actions { width: 100%; justify-content: flex-start; }
-}
-@media (max-width: 600px) {
-    .debt-stats-bar { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .debt-toolbar { flex-direction: column; align-items: stretch; }
-    .debt-search-box { max-width: none; }
-    .debt-filter-pills { width: 100%; }
-}
+/* Debt responsive styles are consolidated in the main responsive section */
 
 /* DP History & Pelunasan Features - Harmonized with Pastel / Cream Dashboard Theme */
 .dp-history-badge {
