@@ -1669,7 +1669,7 @@
                 <div class="section-label">5. Syarat Pembayaran &amp; Catatan</div>
                 <div class="form-group">
                     <label class="input-label">Teks Terms / Catatan</label>
-                    <textarea id="termsInput" class="form-textarea" oninput="updateLivePreview()">Pembayaran dapat dilakukan melalui transfer ke rekening Bank Mandiri resmi PGS Tour &amp; Travel. Bukti transfer mohon dikirimkan via WhatsApp untuk konfirmasi booking seat dan serah terima perlengkapan keberangkatan jamaah.</textarea>
+                    <textarea id="termsInput" class="form-textarea" oninput="updateLivePreview()">Pembayaran hanya melalui transfer ke rekening resmi Bank BCA PT. Permana Group Sejahtera (No. Rekening: 5411 42 2071). Bukti transfer mohon dikirimkan via WhatsApp untuk konfirmasi booking seat dan serah terima perlengkapan keberangkatan jamaah.</textarea>
                 </div>
             </div>
         </div>
@@ -1795,16 +1795,22 @@
                     <!-- Bottom Metadata -->
                     <div class="bottom-meta">
                         <div class="meta-col">
-                            <div class="meta-title" style="display:flex;align-items:center;gap:7px;">
-                                <img src="/pgstour/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri Logo" style="height:18px;width:auto;object-fit:contain;vertical-align:middle;">
-                                <span>Rekening Resmi PGS Tour</span>
+                            <div class="meta-title" style="display:flex;align-items:center;gap:7px;margin-bottom:6px;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" fill="#dc2626"/><rect x="6" y="10.5" width="12" height="3" rx="1.5" fill="#ffffff"/></svg>
+                                <span style="font-size:0.73rem;font-weight:800;letter-spacing:0.03em;color:#1e293b;">PEMBAYARAN HANYA MELALUI</span>
                             </div>
-                            <div class="meta-line">Bank Mandiri &bull; a.n. Daru Fahmaa Muliawan / PGS Tour</div>
-                            <div class="meta-line">
-                                No. Rekening: <strong>1550 0106 1696 2</strong>
+                            <div class="meta-line" style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                                <img src="/pgstour/bca_logo.png" onerror="this.onerror=null; this.src='/bca_logo.png';" alt="Bank BCA Logo" style="height:21px;width:auto;object-fit:contain;vertical-align:middle;">
+                                <div>
+                                    <div style="font-size:0.67rem;color:var(--text-muted);line-height:1.2;">Rekening Pembayaran:</div>
+                                    <div style="font-size:0.78rem;font-weight:700;color:var(--text-main);">PT. Permana Group Sejahtera</div>
+                                </div>
+                            </div>
+                            <div class="meta-line" style="margin-top:3px;">
+                                No. Rekening: <strong style="font-size:0.95rem;letter-spacing:0.04em;color:#00529c;">5411 42 2071</strong>
                                 <button class="copy-acc-btn" onclick="copyBankAcc()">Salin</button>
                             </div>
-                            <div class="meta-line">Transfer m-Banking / ATM / Internet Banking</div>
+                            <div class="meta-line" style="font-size:0.65rem;color:var(--text-subtle);">Transfer m-Banking BCA / ATM / KlikBCA / Antar Bank</div>
                         </div>
 
                         <div class="meta-col">
@@ -1816,7 +1822,7 @@
                     </div>
 
                     <div class="terms-line" id="previewTerms">
-                        <strong>Terms:</strong> Pembayaran dapat dilakukan melalui transfer ke rekening Bank Mandiri resmi PGS Tour &amp; Travel.
+                        <strong>Terms:</strong> Pembayaran hanya melalui transfer ke rekening resmi Bank BCA PT. Permana Group Sejahtera (5411 42 2071).
                     </div>
                 </div>
             </div>
@@ -1904,7 +1910,7 @@
                                     <span class="kw-amount-val" id="kwAmountVal">27.500.000,-</span>
                                 </div>
                                 <div style="font-size:0.66rem; color:var(--text-muted); margin-top:4px;">
-                                    Status: <strong id="kwStatusLabel" style="color:var(--status-paid-text);">LUNAS (Transfer Bank Mandiri)</strong>
+                                    Status: <strong id="kwStatusLabel" style="color:var(--status-paid-text);">LUNAS (Transfer Bank BCA)</strong>
                                 </div>
                             </div>
 
@@ -2285,7 +2291,7 @@
             const kwStatusLabel = document.getElementById('kwStatusLabel');
             if (currentStatus === 'PAID') {
                 kwStatusLabel.style.color = '#15803d';
-                kwStatusLabel.innerText = 'LUNAS (Transfer Bank Mandiri)';
+                kwStatusLabel.innerText = 'LUNAS (Transfer Bank BCA)';
             } else if (currentStatus === 'DP') {
                 kwStatusLabel.style.color = '#0369a1';
                 kwStatusLabel.innerText = 'UANG MUKA / DP TERIMA';
@@ -2412,7 +2418,7 @@ Berikut adalah konfirmasi *KWITANSI RESMI* dari *PGS Tour & Travel*:
 📝 *Untuk Pembayaran:* ${note}
 📌 *Status:* LUNAS / DITERIMA
 
-Pembayaran telah terverifikasi ke rekening resmi Bank Mandiri PT Permana Group Sejahtera. Terima kasih atas kepercayaan Anda bersama kami.
+Pembayaran telah terverifikasi ke rekening resmi Bank BCA PT. Permana Group Sejahtera. Terima kasih atas kepercayaan Anda bersama kami.
 
 _Wassalamu'alaikum Warahmatullahi Wabarakatuh._`;
             } else {
@@ -2430,9 +2436,10 @@ Berikut kami lampirkan tagihan resmi dari *PGS Tour & Travel*:
 📌 *Status:* ${statusText}
 ⏳ *Jatuh Tempo:* ${dueDate}
 
-💳 *Pembayaran Transfer Bank Mandiri:*
-No. Rekening: *1550 0106 1696 2*
-A.n: *Daru Fahmaa Muliawan / PT Permana Group Sejahtera*
+💳 *Pembayaran Hanya Melalui:*
+Bank BCA (Rekening Pembayaran)
+No. Rekening: *5411 42 2071*
+A.n: *PT. Permana Group Sejahtera*
 
 Bukti transfer dapat dikirimkan ke chat ini untuk konfirmasi seat & perlengkapan jamaah. Terima kasih atas kerja sama Anda.
 
@@ -2486,13 +2493,13 @@ _Wassalamu'alaikum Warahmatullahi Wabarakatuh._`;
         }
 
         function copyBankAcc() {
-            const acc = "1550010616962";
+            const acc = "5411422071";
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(acc).then(() => {
-                    showToast("No. Rekening Mandiri PGS Tour disalin: 1550 0106 1696 2");
+                    showToast("No. Rekening BCA disalin: 5411 42 2071 (PT. Permana Group Sejahtera)");
                 });
             } else {
-                showToast("Rekening: 1550 0106 1696 2");
+                showToast("Rekening BCA: 5411 42 2071");
             }
         }
     </script>
