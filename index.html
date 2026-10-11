@@ -3715,6 +3715,60 @@
                 </a>
             </div>
 
+            <!-- Mas Akbar - Pembelian Canva Pro 3 Bulan Card -->
+            <div class="invoice-card" id="card-masakbar2" data-id="masakbar2" data-month="2026-10" data-amount="50000" data-client="mas akbar masakbar2 masakabar2 canva pro 3 bulan desain 50000 50k #inv/dar/2026/10/005 oktober 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Mas Akbar (Canva Pro 3 Bulan)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('masakbar2')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/DAR/2026/10/005 &bull; Canva Pro 3 Bulan</span>
+                        <span class="month-tag">📅 Oktober 2026</span>
+                    </div>
+                    
+                    <div class="project-desc">
+                        Paket Langganan Canva Pro 3 Bulan (Akses Full Template, Brand Kit &amp; AI Magic Studio). Non-Garansi (As-Is). Total: Rp 50.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/masakbar2</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/masakbar2')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptMasakbar2()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 50.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValMasakbar2">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValMasakbar2">Rp 50.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('masakbar2')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/masakbar2" class="action-btn">
+                    <span>Buka Invoice Canva Mas Akbar</span>
+                </a>
+            </div>
+
             <!-- Hamasah - Layout Modul Talkhisan Tafsir & Hadis Idady 1-3 Card -->
             <div class="invoice-card" id="card-talkhisan-hamasah" data-id="talkhisan-hamasah" data-month="2026-10" data-amount="2100000" data-client="hamasah talkhisan ustadz ifdony layout desain modul tafsir hadis idady 1 2 3 2100000 2.1jt #inv/symp-hms/2026/10/004 oktober 2026">
                 <div>
@@ -3996,6 +4050,7 @@
             erna: "UNPAID",
             "underrated-ai": "UNPAID",
             masakbar: "UNPAID",
+            masakbar2: "UNPAID",
             "talkhisan-hamasah": "UNPAID"
         };
 
@@ -4053,6 +4108,7 @@
             erna: 500000,
             "underrated-ai": 450000,
             masakbar: 100000,
+            masakbar2: 50000,
             "talkhisan-hamasah": 2100000
         };
 
@@ -4121,6 +4177,7 @@
             { id: "erna", name: "Ibu Erna (Visa Entry Student Mesir)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 },
             { id: "underrated-ai", name: "Owner Barber Underrated (Add-on AI Smart System)", month: "2026-10", monthLabel: "Oktober 2026", gross: 500000 },
             { id: "masakbar", name: "Mas Akbar (Google AI Pro 18 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 100000 },
+            { id: "masakbar2", name: "Mas Akbar (Canva Pro 3 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 50000 },
             { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 2100000 }
         ];
 
@@ -6386,6 +6443,37 @@ Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi t
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA MAS AKBAR BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptMasakbar2() {
+            const waScript = `Halo Mas Akbar! 🙏✨
+
+Berikut kami lampirkan dokumen resmi Invoice untuk pembelian paket langganan Canva Pro 3 Bulan:
+
+🔗 Invoice Online: https://temantiket.com/masakbar2
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Rincian & Spesifikasi Lengkap:
+• Layanan: Paket Langganan Canva Pro (3 Bulan)
+• Akses Aset Pro: 100M+ stok foto, video, font, dan template premium tanpa watermark
+• AI Magic Studio™: Magic Resize, Background Remover 1-klik, Magic Eraser, Magic Switch
+• Brand Kit & Cloud: Penyimpanan cloud 1 TB, simpan palet warna & logo tim
+• Export Resolusi Tinggi: Unduh format PNG Transparan, SVG Vektor, dan PDF Cetak
+• Klausul Garansi: NON-GARANSI (Tanpa Garansi / No Warranty / As-Is setelah serah terima)
+• Total Tagihan: Rp 50.000
+(Terbilang: Lima Puluh Ribu Rupiah)
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak! 🙏✨`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA CANVA MAS AKBAR BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

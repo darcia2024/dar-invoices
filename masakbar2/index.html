@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Invoice #INV/DAR/2026/10/005 — Mas Akbar (Canva Pro 3 Bulan)</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- html2canvas for High-Res PNG Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --color-bg-page: #f8fafc;
+            --color-slate-900: #0f172a;
+            --color-slate-800: #1e293b;
+            --color-slate-700: #334155;
+            --color-slate-600: #475569;
+            --color-slate-500: #64748b;
+            --color-slate-400: #94a3b8;
+            --color-slate-200: #e2e8f0;
+            --color-slate-100: #f1f5f9;
+            --color-slate-50: #f8fafc;
+            --color-white: #ffffff;
+
+            /* Canva Pro Signature Palette */
+            --color-canva-teal: #00c4cc;
+            --color-canva-purple: #7d2ae8;
+            --color-canva-blue: #0056f4;
+            --gradient-canva: linear-gradient(135deg, #00c4cc 0%, #7d2ae8 100%);
+            --gradient-canva-subtle: linear-gradient(135deg, rgba(0, 196, 204, 0.08) 0%, rgba(125, 42, 232, 0.08) 100%);
+
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            --shadow-subtle: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+            --shadow-card: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+            --shadow-modal: 0 25px 60px -15px rgba(15, 23, 42, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg-page);
+            color: var(--color-slate-800);
+            min-height: 100vh;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 70px 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.locked {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           STICKY ACTION TOOLBAR
+        ---------------------------------------------------- */
+        .top-action-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--color-slate-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .bar-inner {
+            max-width: 860px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .bar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .canva-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-slate-900);
+            color: var(--color-white);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .canva-pill svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: var(--font-main);
+            border-radius: 8px;
+            border: 1px solid var(--color-slate-200);
+            background: var(--color-white);
+            color: var(--color-slate-700);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-action:hover {
+            border-color: var(--color-slate-400);
+            background: var(--color-slate-50);
+            color: var(--color-slate-900);
+        }
+
+        .btn-action.btn-primary {
+            background: var(--color-slate-900);
+            border-color: var(--color-slate-900);
+            color: var(--color-white);
+        }
+
+        .btn-action.btn-primary:hover {
+            background: var(--color-slate-800);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+        }
+
+        /* ----------------------------------------------------
+           MAIN DOCUMENT CANVAS
+        ---------------------------------------------------- */
+        .document-wrapper {
+            max-width: 860px;
+            width: 100%;
+            margin: 24px auto 0;
+            padding: 0 16px;
+        }
+
+        .invoice-sheet {
+            background: var(--color-white);
+            border: 1px solid var(--color-slate-200);
+            border-radius: 16px;
+            padding: 44px 48px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Canva Top Accent */
+        .invoice-sheet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00c4cc 0%, #7d2ae8 50%, #0056f4 100%);
+        }
+
+        /* ----------------------------------------------------
+           DOCUMENT HEADER
+        ---------------------------------------------------- */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--color-slate-200);
+            gap: 20px;
+        }
+
+        .brand-unit {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .canva-logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--gradient-canva);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(125, 42, 232, 0.25);
+        }
+
+        .canva-logo-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .brand-text-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--color-slate-900);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .canva-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 100%);
+            color: #7d2ae8;
+            border: 1px solid #ddd6fe;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .brand-sub {
+            font-size: 0.82rem;
+            color: var(--color-slate-500);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .invoice-title-block {
+            text-align: right;
+        }
+
+        .invoice-main-heading {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--color-slate-900);
+            line-height: 1.1;
+        }
+
+        .invoice-meta-list {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: var(--color-slate-600);
+            line-height: 1.6;
+        }
+
+        .invoice-meta-list strong {
+            color: var(--color-slate-900);
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        /* ----------------------------------------------------
+           PARTIES INFORMATION (GRID)
+        ---------------------------------------------------- */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            padding: 26px 0;
+            border-bottom: 1px solid var(--color-slate-200);
+        }
+
+        .party-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .party-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+            color: var(--color-slate-500);
+            margin-bottom: 4px;
+        }
+
+        .party-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+        }
+
+        .party-desc {
+            font-size: 0.82rem;
+            color: var(--color-slate-600);
+            line-height: 1.5;
+        }
+
+        .party-tag-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #0369a1;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 6px;
+            padding: 2px 8px;
+            width: fit-content;
+            margin-top: 6px;
+        }
+
+        /* ----------------------------------------------------
+           HIGHLIGHT BENTO FEATURES
+        ---------------------------------------------------- */
+        .features-bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 24px 0 20px;
+        }
+
+        .bento-card {
+            background: #fafafc;
+            border: 1px solid var(--color-slate-200);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: border-color 0.2s ease;
+        }
+
+        .bento-card:hover {
+            border-color: #cbd5e1;
+        }
+
+        .bento-icon-wrap {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bento-icon-wrap svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .icon-teal {
+            background: #e0f7fa;
+            color: #00838f;
+        }
+
+        .icon-purple {
+            background: #f3e8ff;
+            color: #7d2ae8;
+        }
+
+        .icon-blue {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .bento-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-slate-500);
+        }
+
+        .bento-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            line-height: 1.25;
+        }
+
+        .bento-desc {
+            font-size: 0.74rem;
+            color: var(--color-slate-600);
+            line-height: 1.45;
+        }
+
+        /* ----------------------------------------------------
+           ITEMS TABLE
+        ---------------------------------------------------- */
+        .table-wrap {
+            margin-top: 14px;
+            border: 1px solid var(--color-slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.84rem;
+        }
+
+        .invoice-table thead {
+            background: var(--color-slate-50);
+            border-bottom: 1px solid var(--color-slate-200);
+        }
+
+        .invoice-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--color-slate-500);
+            font-weight: 700;
+        }
+
+        .invoice-table th.th-num { width: 44px; text-align: center; }
+        .invoice-table th.th-price { width: 120px; text-align: right; }
+        .invoice-table th.th-qty { width: 100px; text-align: center; }
+        .invoice-table th.th-total { width: 130px; text-align: right; }
+
+        .invoice-table tbody tr {
+            border-bottom: 1px solid var(--color-slate-200);
+        }
+
+        .invoice-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .invoice-table td {
+            padding: 18px 16px;
+            vertical-align: top;
+            color: var(--color-slate-700);
+        }
+
+        .invoice-table td.td-num {
+            text-align: center;
+            font-weight: 700;
+            color: var(--color-slate-400);
+            font-family: var(--font-mono);
+        }
+
+        .invoice-table td.td-price,
+        .invoice-table td.td-total {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--color-slate-900);
+        }
+
+        .invoice-table td.td-qty {
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-slate-700);
+        }
+
+        .item-main-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge-duration {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: #ede9fe;
+            color: #6d28d9;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid #ddd6fe;
+        }
+
+        .badge-no-warranty {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid #fecaca;
+        }
+
+        .item-feature-list {
+            list-style: none;
+            margin: 10px 0 0 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.79rem;
+            color: var(--color-slate-600);
+        }
+
+        .item-feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.45;
+        }
+
+        .feature-bullet {
+            color: #7d2ae8;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .warranty-disclaimer-box {
+            margin-top: 14px;
+            padding: 12px 14px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .warranty-title-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: #b45309;
+            font-size: 0.77rem;
+        }
+
+        .warranty-title-row svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* ----------------------------------------------------
+           TOTALS & SIGNATURE SECTION
+        ---------------------------------------------------- */
+        .bottom-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 32px;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--color-slate-200);
+        }
+
+        .signature-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .sig-label {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--color-slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sig-image-frame {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            margin: 2px 0;
+        }
+
+        .sig-image {
+            max-height: 64px;
+            width: auto;
+            object-fit: contain;
+            filter: contrast(1.1);
+        }
+
+        .sig-signer-name {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+        }
+
+        .sig-signer-role {
+            font-size: 0.78rem;
+            color: var(--color-slate-500);
+        }
+
+        .totals-block {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            color: var(--color-slate-600);
+            padding: 4px 0;
+        }
+
+        .summary-row strong {
+            color: var(--color-slate-800);
+            font-weight: 600;
+        }
+
+        .summary-row.grand-total-row {
+            border-top: 2px solid var(--color-slate-300);
+            margin-top: 6px;
+            padding-top: 14px;
+            font-size: 1.15rem;
+            color: var(--color-slate-900);
+        }
+
+        .summary-row.grand-total-row strong {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            letter-spacing: -0.02em;
+        }
+
+        .spelled-amount-box {
+            background: var(--color-slate-50);
+            border: 1px dashed var(--color-slate-300);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            color: var(--color-slate-600);
+            line-height: 1.45;
+            margin-top: 8px;
+        }
+
+        .spelled-amount-box strong {
+            color: var(--color-slate-900);
+            font-style: italic;
+        }
+
+        /* ----------------------------------------------------
+           BANK MANDIRI PAYMENT SECTION (BOTTOM)
+        ---------------------------------------------------- */
+        .bottom-payment-section {
+            margin-top: 28px;
+        }
+
+        .mandiri-payment-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 1.5px solid var(--color-slate-300);
+            border-radius: 14px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mandiri-payment-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #003d79;
+        }
+
+        .mandiri-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mandiri-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mandiri-logo-img {
+            height: 26px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .mandiri-official-pill {
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .mandiri-account-number {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: var(--color-slate-900);
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .mandiri-account-number:hover {
+            color: #003d79;
+        }
+
+        .mandiri-account-name {
+            font-size: 0.82rem;
+            color: var(--color-slate-600);
+            font-weight: 600;
+        }
+
+        .mandiri-actions-right {
+            flex-shrink: 0;
+        }
+
+        .btn-copy-account {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 42px;
+            padding: 0 18px;
+            background: #003d79;
+            color: var(--color-white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 61, 121, 0.25);
+        }
+
+        .btn-copy-account:hover {
+            background: #002b55;
+            transform: translateY(-1px);
+        }
+
+        .btn-copy-account.copied {
+            background: #15803d;
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
+        }
+
+        /* ----------------------------------------------------
+           TERMS & CONDITIONS FOOTER
+        ---------------------------------------------------- */
+        .document-footer-terms {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid var(--color-slate-200);
+            font-size: 0.76rem;
+            color: var(--color-slate-500);
+            line-height: 1.6;
+        }
+
+        .document-footer-terms strong {
+            color: var(--color-slate-700);
+        }
+
+        /* ----------------------------------------------------
+           SECURITY PIN MODAL
+        ---------------------------------------------------- */
+        .security-gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--color-white);
+            border: 1px solid var(--color-slate-200);
+            border-radius: 20px;
+            max-width: 420px;
+            width: 100%;
+            padding: 34px 28px;
+            text-align: center;
+            box-shadow: var(--shadow-modal);
+            position: relative;
+        }
+
+        .modal-icon-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: var(--gradient-canva);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 6px 18px rgba(125, 42, 232, 0.25);
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--color-slate-900);
+            margin-bottom: 6px;
+        }
+
+        .modal-desc {
+            font-size: 0.84rem;
+            color: var(--color-slate-500);
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .pin-field {
+            width: 100%;
+            height: 48px;
+            border: 1.5px solid var(--color-slate-200);
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            letter-spacing: 0.3em;
+            color: var(--color-slate-900);
+            outline: none;
+            transition: all 0.2s ease;
+            background: var(--color-slate-50);
+        }
+
+        .pin-field:focus {
+            border-color: #7d2ae8;
+            background: var(--color-white);
+            box-shadow: 0 0 0 3px rgba(125, 42, 232, 0.15);
+        }
+
+        .btn-modal-submit {
+            margin-top: 14px;
+            width: 100%;
+            height: 46px;
+            background: var(--color-slate-900);
+            color: var(--color-white);
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-main);
+        }
+
+        .btn-modal-submit:hover {
+            background: var(--color-slate-800);
+        }
+
+        .error-label {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: #dc2626;
+            display: none;
+            font-weight: 600;
+        }
+
+        /* ----------------------------------------------------
+           TOAST NOTIFICATION
+        ---------------------------------------------------- */
+        .toast-popup {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--color-slate-900);
+            color: var(--color-white);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .toast-popup.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ----------------------------------------------------
+           PRINT MEDIA STYLES
+        ---------------------------------------------------- */
+        @media print {
+            .top-action-bar,
+            .security-gate-overlay,
+            .toast-popup {
+                display: none !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+
+            .document-wrapper {
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .invoice-sheet {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 16px 20px !important;
+                border-radius: 0 !important;
+            }
+
+            .mandiri-payment-card {
+                border: 1px solid #cbd5e1 !important;
+                break-inside: avoid;
+            }
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE MOBILE BREAKPOINTS (< 680px)
+        ---------------------------------------------------- */
+        @media (max-width: 680px) {
+            .invoice-sheet {
+                padding: 26px 20px;
+                border-radius: 12px;
+            }
+
+            .doc-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .invoice-title-block {
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .parties-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                padding: 20px 0;
+            }
+
+            .features-bento-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin: 18px 0 14px;
+            }
+
+            /* Responsive Table -> Card rows */
+            .invoice-table thead {
+                display: none;
+            }
+
+            .invoice-table tbody tr {
+                display: flex;
+                flex-direction: column;
+                padding: 16px 0;
+                gap: 10px;
+            }
+
+            .invoice-table tbody td {
+                padding: 0;
+            }
+
+            .invoice-table .td-num {
+                display: none;
+            }
+
+            .invoice-table .td-price,
+            .invoice-table .td-qty {
+                display: none;
+            }
+
+            .invoice-table .td-total {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                font-size: 1.05rem;
+                padding-top: 6px;
+                border-top: 1px dashed var(--color-slate-200);
+            }
+
+            .invoice-table .td-total::before {
+                content: attr(data-mobile-label);
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--color-slate-500);
+            }
+
+            .bottom-summary-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .signature-block {
+                order: 2;
+                align-items: flex-start;
+                padding-top: 12px;
+                border-top: 1px solid var(--color-slate-200);
+            }
+
+            .totals-block {
+                order: 1;
+            }
+
+            .mandiri-payment-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .mandiri-actions-right {
+                width: 100%;
+            }
+
+            .btn-copy-account {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .bar-inner {
+                justify-content: center;
+            }
+
+            .bar-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn-action {
+                flex: 1 1 45%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="locked">
+
+    <!-- TOP STICKY TOOLBAR -->
+    <header class="top-action-bar">
+        <div class="bar-inner">
+            <div class="bar-left">
+                <span class="canva-pill">
+                    <!-- Canva Gradient Icon -->
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" fill="url(#pillCanvaGrad)"/>
+                        <path d="M14.5 9.2C13.8 8.4 12.8 8 11.6 8C9.2 8 7.3 9.9 7.3 12.5C7.3 15.1 9.2 17 11.8 17C13.2 17 14.4 16.3 15 15.1" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="pillCanvaGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00C4CC"/>
+                                <stop offset="1" stop-color="#7D2AE8"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    Canva Pro
+                </span>
+            </div>
+            <div class="bar-actions">
+                <button type="button" class="btn-action" onclick="copyWaScriptLocal()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    Salin Script WA
+                </button>
+                <button type="button" class="btn-action" onclick="copyInvoiceLink()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Salin Link
+                </button>
+                <button type="button" class="btn-action" onclick="downloadPDF()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Cetak PDF
+                </button>
+                <button type="button" class="btn-action btn-primary" onclick="downloadHighResPNG()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Unduh PNG
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- INVOICE SHEET -->
+    <main class="document-wrapper" id="invoiceDocument" inert>
+        <div class="invoice-sheet" id="invoiceSheetCapture">
+            
+            <!-- HEADER -->
+            <header class="doc-header">
+                <div class="brand-unit">
+                    <div class="canva-logo-icon">
+                        <!-- Canva Signature 'C' Emblem SVG -->
+                        <svg viewBox="0 0 28 28" fill="none">
+                            <path d="M17.5 10.5C16.6 9.4 15.3 8.8 13.9 8.8C10.8 8.8 8.4 11.2 8.4 14.5C8.4 17.8 10.8 20.2 14.1 20.2C15.9 20.2 17.4 19.3 18.2 17.8" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text-block">
+                        <div class="brand-name">
+                            Canva Pro
+                            <span class="canva-badge">Design Suite</span>
+                        </div>
+                        <span class="brand-sub">Creative Cloud Workspace &middot; Dokumen Penagihan</span>
+                    </div>
+                </div>
+
+                <div class="invoice-title-block">
+                    <h1 class="invoice-main-heading">INVOICE</h1>
+                    <div class="invoice-meta-list">
+                        No. Ref: <strong>#INV/DAR/2026/10/005</strong><br>
+                        Tanggal: <strong>11 Oktober 2026</strong>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PARTIES INFO -->
+            <section class="parties-grid">
+                <div class="party-col">
+                    <div class="party-label">Tagihan Ditujukan Kepada :</div>
+                    <div class="party-title">Mas Akbar</div>
+                    <div class="party-desc">
+                        Pengguna Layanan Canva Pro 3 Bulan<br>
+                        Aktivasi Akun &amp; Creative Suite
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Akun Personal Terverifikasi
+                    </div>
+                </div>
+
+                <div class="party-col">
+                    <div class="party-label">Diterbitkan Oleh :</div>
+                    <div class="party-title">Daru Fahmaa Muliawan</div>
+                    <div class="party-desc">
+                        Digital Product &amp; Tech Solutions<br>
+                        Email: darufahmaamuliawan@gmail.com &middot; TemanTiket
+                    </div>
+                    <div class="party-tag-pill">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Workspace &amp; Tech Specialist
+                    </div>
+                </div>
+            </section>
+
+            <!-- HIGHLIGHT BENTO FEATURES -->
+            <section class="features-bento-grid">
+                <div class="bento-card">
+                    <div class="bento-icon-wrap icon-teal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="bento-content">
+                        <div class="bento-badge">Premium Assets</div>
+                        <div class="bento-title">Jutaan Template &amp; Font</div>
+                        <div class="bento-desc">Akses penuh 100M+ stok foto, ilustrasi grafis, video, audio, dan font premium tanpa watermark</div>
+                    </div>
+                </div>
+                
+                <div class="bento-card">
+                    <div class="bento-icon-wrap icon-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                    </div>
+                    <div class="bento-content">
+                        <div class="bento-badge">AI Magic Studio™</div>
+                        <div class="bento-title">Magic Resize &amp; Tools</div>
+                        <div class="bento-desc">Background remover 1-klik, Magic Eraser, Magic Switch, dan convert layout otomatis</div>
+                    </div>
+                </div>
+                
+                <div class="bento-card">
+                    <div class="bento-icon-wrap icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                    <div class="bento-content">
+                        <div class="bento-badge">Export Berkualitas</div>
+                        <div class="bento-title">SVG, PNG &amp; Cloud 1 TB</div>
+                        <div class="bento-desc">Unduh PNG transparan ultra high-res, SVG vektor tajam, PDF Cetak, dan penyimpanan cloud 1 TB</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="table-wrap">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th class="th-num">#</th>
+                            <th class="th-desc">Rincian Layanan / Produk</th>
+                            <th class="th-price">Harga Satuan</th>
+                            <th class="th-qty">Durasi / Qty</th>
+                            <th class="th-total">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-num">1</td>
+                            <td class="td-desc">
+                                <div class="item-main-title">
+                                    Paket Langganan Canva Pro &middot; Akses Premium 3 Bulan
+                                    <span class="badge-duration">3 Bulan Aktif</span>
+                                    <span class="badge-no-warranty">Non-Garansi (No Warranty)</span>
+                                </div>
+                                <ul class="item-feature-list">
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Akses Lengkap Canva Pro (3 Bulan):</strong> Terbuka seluruh koleksi template premium, 100+ juta stok foto/video berlisensi, elemen grafis eksklusif, dan font pro tanpa watermark.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Fitur Kreatif Magic Studio™ AI:</strong> Penghapus Latar Belakang 1-Klik (Background Remover), Magic Resize instan ke semua rasio media sosial, Magic Eraser, dan Magic Grab.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Brand Kit &amp; Aset Visual:</strong> Kemudahan menyimpan palet warna, logo, dan tipografi konsisten untuk kebutuhan presentasi dan media branding.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Export Kualitas Tertinggi &amp; Cloud:</strong> Unduh file format PNG Transparan tajam, SVG Vektor, PDF Cetak CMYK resolusi tinggi, dan alokasi Cloud Storage Canva 1 TB.</span>
+                                    </li>
+                                    <li>
+                                        <span class="feature-bullet">&#10003;</span>
+                                        <span><strong>Durasi Layanan:</strong> Masa aktif 3 Bulan terhitung sejak tanggal aktivasi / serah terima akses akun.</span>
+                                    </li>
+                                </ul>
+                                <div class="warranty-disclaimer-box">
+                                    <div class="warranty-title-row">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                        Klausul Non-Garansi (No Warranty / As-Is)
+                                    </div>
+                                    <p>Layanan ini disediakan dalam kondisi <strong>TANPA GARANSI (No Warranty / As-Is)</strong>. Penjual memastikan akun berstatus aktif dan seluruh fitur pro dapat diakses pada saat serah terima. Segala bentuk pembaruan sistem, perubahan kebijakan, penonaktifan tim, atau suspend sepihak dari pihak Canva di kemudian hari berada di luar kendali penjual dan tidak dapat diklaim garansi, penggantian akun, maupun pengembalian dana (non-refundable).</p>
+                                </div>
+                            </td>
+                            <td class="td-price">Rp 50.000</td>
+                            <td class="td-qty">3 Bulan</td>
+                            <td class="td-total" data-mobile-label="Total (3 Bulan)">Rp 50.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TOTALS & SIGNATURE -->
+            <section class="bottom-summary-grid">
+                <div class="signature-block">
+                    <div class="sig-label">Hormat Kami,</div>
+                    <div class="sig-image-frame">
+                        <img src="/masakbar2/ttd_daru.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="sig-image" onerror="this.src='ttd_daru.png'">
+                    </div>
+                    <div class="sig-signer-name">Daru Fahmaa Muliawan</div>
+                    <div class="sig-signer-role">Digital Product Specialist &middot; TemanTiket</div>
+                </div>
+
+                <div class="totals-block">
+                    <div class="summary-row">
+                        <span>Subtotal :</span>
+                        <strong>Rp 50.000</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Pajak / PPN :</span>
+                        <strong>0.00% (Bebas Biaya)</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Biaya Administrasi :</span>
+                        <strong>Rp 0</strong>
+                    </div>
+                    <div class="summary-row grand-total-row">
+                        <span>TOTAL TAGIHAN :</span>
+                        <strong>Rp 50.000</strong>
+                    </div>
+                    <div class="spelled-amount-box">
+                        Terbilang: <strong>Lima Puluh Ribu Rupiah</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BANK MANDIRI (DITARUH TERAKHIR / AT THE BOTTOM) -->
+            <section class="bottom-payment-section">
+                <div class="mandiri-payment-card">
+                    <div class="mandiri-info-left">
+                        <div class="mandiri-header-row">
+                            <img src="/masakbar2/mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-logo-img" onerror="this.src='mandiri_logo.webp'">
+                            <span class="mandiri-official-pill">Rekening Resmi Pembayaran</span>
+                        </div>
+                        <div class="mandiri-account-number" id="mandiriAccNumber" onclick="copyBankAccount()" title="Klik untuk menyalin">
+                            <span>1550010616962</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </div>
+                        <div class="mandiri-account-name">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
+                    </div>
+                    <div class="mandiri-actions-right">
+                        <button type="button" class="btn-copy-account" id="btnCopyAccount" onclick="copyBankAccount()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="btnCopyAccountText">Salin No. Rekening</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TERMS & CONDITIONS FOOTER -->
+            <footer class="document-footer-terms">
+                <p>
+                    <strong>Ketentuan Layanan &amp; Penyerahan Akun:</strong><br>
+                    1. Pembayaran tagihan dapat ditransfer langsung ke rekening resmi Bank Mandiri: <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan sebesar Rp 50.000.<br>
+                    2. Fitur mencakup akses Canva Pro 3 Bulan aktif, jutaan aset template, font, foto/video tanpa watermark, serta Magic Studio™ AI tools.<br>
+                    3. <strong>Pernyataan Tegas Non-Garansi (As-Is):</strong> Akun ini berstatus <strong>TANPA GARANSI (No Warranty)</strong> setelah diserahterimakan dan login/akses pertama kali berhasil. Pembeli memahami dan menyetujui seluruh ketentuan ini sebelum melakukan pembayaran.
+                </p>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- SECURITY PIN MODAL OVERLAY -->
+    <div class="security-gate-overlay" id="securityGate">
+        <div class="modal-box">
+            <div class="modal-icon-badge">
+                <svg viewBox="0 0 28 28" fill="none">
+                    <path d="M17.5 10.5C16.6 9.4 15.3 8.8 13.9 8.8C10.8 8.8 8.4 11.2 8.4 14.5C8.4 17.8 10.8 20.2 14.1 20.2C15.9 20.2 17.4 19.3 18.2 17.8" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h3 class="modal-title">Invoice Terproteksi</h3>
+            <p class="modal-desc">Masukkan Kode PIN Resmi untuk membuka akses dokumen invoice Canva Pro Mas Akbar.</p>
+
+            <form onsubmit="handlePinSubmit(event)">
+                <input type="password" id="pinInput" class="pin-field" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
+                <button type="submit" class="btn-modal-submit">Buka Dokumen</button>
+            </form>
+
+            <div class="error-label" id="gateError">Kode PIN tidak valid. Coba lagi.</div>
+        </div>
+    </div>
+
+    <!-- TOAST POPUP -->
+    <div class="toast-popup" id="toastBox">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMsg">Teks berhasil disalin!</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const VALID_PINS = ["0001", "050900"];
+
+        function unlockDocument() {
+            const gate = document.getElementById("securityGate");
+            const doc = document.getElementById("invoiceDocument");
+            if (gate) gate.style.display = "none";
+            if (doc) doc.removeAttribute("inert");
+            document.body.classList.remove("locked");
+            try { sessionStorage.setItem("masakbar2_unlocked", "true"); } catch(e) {}
+        }
+
+        function verifyPin() {
+            const pinIn = document.getElementById("pinInput");
+            const errEl = document.getElementById("gateError");
+            if (!pinIn) return;
+
+            const val = pinIn.value.trim();
+            if (VALID_PINS.includes(val)) {
+                if (errEl) errEl.style.display = "none";
+                unlockDocument();
+                showToast("Akses invoice dibuka!");
+            } else {
+                if (errEl) errEl.style.display = "block";
+                pinIn.style.borderColor = "#ea4335";
+                pinIn.style.background = "#fff1f2";
+                setTimeout(() => {
+                    pinIn.style.background = "#f8fafc";
+                    pinIn.style.borderColor = "#cbd5e1";
+                }, 1000);
+            }
+        }
+
+        function handlePinSubmit(e) {
+            e.preventDefault();
+            verifyPin();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toastBox");
+            const msgEl = document.getElementById("toastMsg");
+            if (!toast) return;
+            if (msgEl) msgEl.innerText = msg;
+            toast.classList.add("visible");
+            setTimeout(() => {
+                toast.classList.remove("visible");
+            }, 2600);
+        }
+
+        function copyInvoiceLink() {
+            const url = "https://temantiket.com/masakbar2";
+            navigator.clipboard.writeText(url).then(() => {
+                showToast("Link invoice (" + url + ") disalin!");
+            }).catch(() => {
+                showToast("Link: " + url);
+            });
+        }
+
+        function copyBankAccount() {
+            const num = "1550010616962";
+            const btn = document.getElementById("btnCopyAccount");
+            const btnText = document.getElementById("btnCopyAccountText");
+
+            navigator.clipboard.writeText(num).then(() => {
+                showToast("Rekening Mandiri (1550010616962) disalin!");
+                if (btnText) btnText.innerText = "✓ Berhasil Disalin";
+                if (btn) btn.classList.add("copied");
+                setTimeout(() => {
+                    if (btnText) btnText.innerText = "Salin No. Rekening";
+                    if (btn) btn.classList.remove("copied");
+                }, 2200);
+            }).catch(() => {
+                showToast("No. Rekening: 1550010616962");
+            });
+        }
+
+        function copyWaScriptLocal() {
+            const text = "Halo Mas Akbar! 🙏✨\n\n" +
+                         "Berikut kami lampirkan dokumen resmi Invoice untuk pembelian paket langganan Canva Pro 3 Bulan:\n\n" +
+                         "🔗 Invoice Online: https://temantiket.com/masakbar2\n" +
+                         "🔑 Kode PIN Akses: 0001 (atau 050900)\n\n" +
+                         "📋 Rincian & Spesifikasi Lengkap:\n" +
+                         "• Layanan: Paket Langganan Canva Pro (3 Bulan)\n" +
+                         "• Akses Aset Pro: 100M+ stok foto, video, font, dan template premium tanpa watermark\n" +
+                         "• AI Magic Studio™: Magic Resize, Background Remover 1-klik, Magic Eraser, Magic Switch\n" +
+                         "• Brand Kit & Cloud: Penyimpanan cloud 1 TB, simpan palet warna & logo tim\n" +
+                         "• Export Resolusi Tinggi: Unduh format PNG Transparan, SVG Vektor, dan PDF Cetak\n" +
+                         "• Klausul Garansi: NON-GARANSI (Tanpa Garansi / No Warranty / As-Is setelah serah terima)\n" +
+                         "• Total Tagihan: Rp 50.000\n" +
+                         "(Terbilang: Lima Puluh Ribu Rupiah)\n\n" +
+                         "💳 Rekening Resmi Pembayaran:\n" +
+                         "Bank Mandiri: 1550010616962\n" +
+                         "a.n. Daru Fahmaa Muliawan\n\n" +
+                         "Dokumen invoice interaktif resmi serta tombol Cetak PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak! 🙏✨";
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Script Pesan WA Berhasil Disalin!");
+            }).catch(() => {
+                showToast("Link: https://temantiket.com/masakbar2");
+            });
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+
+        function downloadHighResPNG() {
+            const captureEl = document.getElementById("invoiceSheetCapture");
+            if (!captureEl) return;
+
+            showToast("Sedang membuat gambar PNG resolusi tinggi...");
+
+            html2canvas(captureEl, {
+                scale: 2.5,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false,
+                windowWidth: captureEl.scrollWidth,
+                windowHeight: captureEl.scrollHeight
+            }).then(canvas => {
+                const link = document.createElement("a");
+                link.download = "Invoice-MasAkbar-CanvaPro-INV-DAR-2026-10-005.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                showToast("PNG berhasil diunduh!");
+            }).catch(err => {
+                console.error("Gagal generate PNG:", err);
+                showToast("Gagal mengunduh gambar. Silakan coba Cetak PDF.");
+            });
+        }
+
+        // Auto unlock check
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                if (sessionStorage.getItem("masakbar2_unlocked") === "true") {
+                    unlockDocument();
+                }
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>

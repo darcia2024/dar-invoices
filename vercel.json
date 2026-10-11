@@ -97,6 +97,10 @@
     { "source": "/talkhisan", "destination": "/talkhisan-hamasah/index.html" },
     { "source": "/modul-hamasah", "destination": "/talkhisan-hamasah/index.html" },
     { "source": "/penawaran-hamasah", "destination": "/talkhisan-hamasah/index.html" },
-    { "source": "/hamasah-modul", "destination": "/talkhisan-hamasah/index.html" }
+    { "source": "/hamasah-modul", "destination": "/talkhisan-hamasah/index.html" },
+    { "source": "/masakbar2", "destination": "/masakbar2/index.html" },
+    { "source": "/masakabar2", "destination": "/masakbar2/index.html" },
+    { "source": "/mas-akbar2", "destination": "/masakbar2/index.html" },
+    { "source": "/canva-akbar", "destination": "/masakbar2/index.html" }
   ]
 }
