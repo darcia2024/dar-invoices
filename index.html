@@ -3822,6 +3822,58 @@
                     <span>Buka Penawaran &amp; Invoice Hamasah</span>
                 </a>
             </div>
+
+            <!-- PT Katalis Lintas Global - Katalis ERP Card -->
+            <div class="invoice-card" id="card-katalis" data-id="katalis" data-month="2026-10" data-amount="10000000" data-client="pt katalis lintas global erp fish processing pabrik ikan cold storage abf loin 10000000 10jt #inv/katalis/2026/10/001 oktober 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">PT Katalis Lintas Global (Katalis ERP)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('katalis')">
+                                ⏳ BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="tag-row">
+                        <span class="meta-tag">💼 Aplikasi Web ERP</span>
+                        <span class="meta-tag">13 Modul v1</span>
+                        <span class="meta-tag">4 Minggu</span>
+                        <span class="meta-tag">Next.js 16 + Supabase</span>
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/katalis</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/katalis')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptKatalis()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 10.000.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValKatalis">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValKatalis">Rp 10.000.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('katalis')">✏️ Edit Profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/katalis" class="action-btn">
+                    <span>Buka Invoice Katalis ERP</span>
+                </a>
+            </div>
         </div>
 
         <!-- Developer Footer Profile Card -->
@@ -4051,7 +4103,8 @@
             "underrated-ai": "UNPAID",
             masakbar: "UNPAID",
             masakbar2: "UNPAID",
-            "talkhisan-hamasah": "UNPAID"
+            "talkhisan-hamasah": "UNPAID",
+            katalis: "UNPAID"
         };
 
         function getStoredNumber(key, fallback) {
@@ -4109,7 +4162,8 @@
             "underrated-ai": 450000,
             masakbar: 100000,
             masakbar2: 50000,
-            "talkhisan-hamasah": 2100000
+            "talkhisan-hamasah": 2100000,
+            katalis: 10000000
         };
 
         const paymentStatuses = Object.fromEntries(
@@ -4178,7 +4232,8 @@
             { id: "underrated-ai", name: "Owner Barber Underrated (Add-on AI Smart System)", month: "2026-10", monthLabel: "Oktober 2026", gross: 500000 },
             { id: "masakbar", name: "Mas Akbar (Google AI Pro 18 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 100000 },
             { id: "masakbar2", name: "Mas Akbar (Canva Pro 3 Bulan)", month: "2026-10", monthLabel: "Oktober 2026", gross: 50000 },
-            { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 2100000 }
+            { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 2100000 },
+            { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 }
         ];
 
         function formatIDR(num) {
@@ -6512,6 +6567,39 @@ Dokumen penawaran interaktif resmi, rincian matrix kurikulum, contoh mind map, s
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA HAMASAH BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptKatalis() {
+            const waScript = `Yth. Bapak/Ibu Direksi & Tim Owner
+PT Katalis Lintas Global
+
+Berikut kami lampirkan dokumen resmi Invoice & Perjanjian Pengembangan Aplikasi Web "Katalis ERP":
+
+📄 Invoice Online: https://temantiket.com/katalis
+No. Invoice: #INV/KATALIS/2026/10/001
+Total Nilai Kontrak: Rp 10.000.000,- (Sepuluh Juta Rupiah)
+Target Durasi: 4 Minggu (15 Bagian PRD · 115 Task · 13 Modul ERP)
+
+🎯 Ruang Lingkup Utama:
+1. Pembelian ikan utuh, bongkar malam, lot & pemeriksaan mutu (F01–F06)
+2. Grid loin per potong presisi 3 desimal numeric(12,3) & offline-first Dexie (F07–F08)
+3. Neraca produksi real-time (Loin, hasil samping, limbah, susut, selisih belum jelas) (F09–F10)
+4. Modul stok fresh/beku, cold storage, tarif otomatis & jadwal ABF (F11–F13)
+5. Modul penjualan, pengiriman, penagihan & kas ledger 8 kategori (F14–F18)
+6. Dashboard Owner HP, Absensi Geofencing GPS & live camera, Asisten AI (F19–F23)
+7. Uji coba 1 siklus produksi nyata di pabrik & serah terima sistem
+
+💳 Rekening Resmi Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Dokumen invoice interaktif, rincian teknis per modul, tombol Cetak PDF, dan unduh berkas dapat langsung diakses melalui tautan resmi di atas. Terima kasih banyak atas kepercayaan dan kerja samanya! 🙏✨`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA PT KATALIS BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

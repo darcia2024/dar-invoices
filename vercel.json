@@ -101,6 +101,10 @@
     { "source": "/masakbar2", "destination": "/masakbar2/index.html" },
     { "source": "/masakabar2", "destination": "/masakbar2/index.html" },
     { "source": "/mas-akbar2", "destination": "/masakbar2/index.html" },
-    { "source": "/canva-akbar", "destination": "/masakbar2/index.html" }
+    { "source": "/canva-akbar", "destination": "/masakbar2/index.html" },
+    { "source": "/katalis", "destination": "/katalis/index.html" },
+    { "source": "/ptkatalis", "destination": "/katalis/index.html" },
+    { "source": "/katalis-erp", "destination": "/katalis/index.html" },
+    { "source": "/erp-katalis", "destination": "/katalis/index.html" }
   ]
 }
