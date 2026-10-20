@@ -2,1027 +2,1579 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Invoice #INV/DD/2026/10/001 — Katalis ERP (PT Katalis Lintas Global)</title>
-
-    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PENAWARAN &amp; INVOICE #INV/DD/2026/10/001 - Katalis ERP (PT Katalis Lintas Global)</title>
+    <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-    <!-- html2canvas for High-Res PNG Generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --color-bg-page: #f1f5f9;
-            --color-ink: #00171F;
-            --color-deep: #003459;
-            --color-ocean: #176D9C;
-            --color-blue: #1B7FC4;
-            --color-muted: #6C7F8A;
-            --color-dark: #1e293b;
-            --color-light-bg: #F4F5F9;
-            --color-border: #E2E8F0;
-            --color-white: #ffffff;
-
-            --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --bg-canvas: #e2e8f0;
+            --bg-cream: #f8fafc;
+            --navy-primary: #00171f; /* Deep Navy Slate */
+            --red-accent: #0284c7;   /* Oceanic Cyan-Blue Accent */
+            --red-light: #f0f9ff;   /* Soft Ice Blue */
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --border-navy: #00171f;
+            --border-light: #cbd5e1;
+            
+            --font-sora: 'Sora', sans-serif;
             --font-mono: 'Space Mono', monospace;
-
-            --shadow-subtle: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-            --shadow-card: 0 16px 45px -8px rgba(0, 23, 31, 0.12);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--color-bg-page);
-            color: var(--color-dark);
-            min-height: 100vh;
+            font-family: var(--font-sora);
+            font-weight: 300;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
             line-height: 1.5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 0 60px 0;
+            padding: 40px 20px;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
         }
 
         /* ----------------------------------------------------
-           STICKY ACTION TOOLBAR (NON-PRINT)
+           CLASSIFIED "DOKUMEN RESMI" COVER SCREEN
         ---------------------------------------------------- */
-        .top-action-bar {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--color-border);
-            position: sticky;
+        .cover-overlay {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            padding: 12px 20px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #00171f;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 10000;
             display: flex;
             justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bar-inner {
-            max-width: 860px;
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
+        }
+
+        .cover-card {
+            background-color: #f8fafc;
+            border: 3px double #00171f;
+            border-radius: 2px;
+            max-width: 560px;
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .bar-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: #fff1f2;
-            color: #e11d48;
-            border: 1px solid #fecdd3;
-            padding: 5px 12px;
-            border-radius: 999px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-        }
-
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            background: #e11d48;
-            border-radius: 50%;
-            animation: pulse-dot 1.8s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-
-        .bar-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            height: 36px;
-            padding: 0 14px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            font-family: var(--font-main);
-            border-radius: 8px;
-            border: 1px solid var(--color-border);
-            background: var(--color-white);
-            color: var(--color-dark);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .btn-action:hover {
-            border-color: #94a3b8;
-            background: #f8fafc;
-        }
-
-        .btn-action.btn-primary {
-            background: var(--color-ink);
-            border-color: var(--color-ink);
-            color: var(--color-white);
-        }
-
-        .btn-action.btn-primary:hover {
-            background: var(--color-deep);
-            box-shadow: 0 4px 12px rgba(0, 23, 31, 0.2);
-        }
-
-        .btn-action.btn-wa {
-            background: #059669;
-            border-color: #059669;
-            color: #ffffff;
-        }
-
-        .btn-action.btn-wa:hover {
-            background: #047857;
-        }
-
-        /* ----------------------------------------------------
-           MAIN INVOICE SHEET (CLEAN DOCUMENT LOOK)
-        ---------------------------------------------------- */
-        .document-wrapper {
-            max-width: 860px;
-            width: 100%;
-            margin: 24px auto 0;
-            padding: 0 16px;
-        }
-
-        .invoice-sheet {
-            background: var(--color-white);
-            border: 1px solid var(--color-border);
-            border-radius: 16px;
-            padding: 40px 44px;
-            box-shadow: var(--shadow-card);
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
             position: relative;
-            overflow: hidden;
+            color: #000000;
+            font-family: var(--font-mono);
         }
 
-        /* Top Header Dark Banner to make White Logo Pop */
-        .inv-header-banner {
-            background: var(--color-ink);
-            border-radius: 12px;
-            padding: 24px 28px;
-            display: flex;
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #00171f;
+            padding: 4px 14px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            color: #00171f;
+        }
+
+        .cover-logo-container {
+            background: #00171f;
+            padding: 12px 26px;
+            border-radius: 6px;
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            margin-bottom: 28px;
-            color: var(--color-white);
+            justify-content: center;
+            border: 1px solid #1e293b;
+            margin-bottom: 20px;
         }
 
-        .inv-brand-col {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .katalis-logo-img {
-            height: 48px;
+        .cover-logo-container img {
+            height: 44px;
             width: auto;
-            max-width: 240px;
+            max-width: 220px;
             object-fit: contain;
             display: block;
         }
 
-        .katalis-sub-tag {
-            font-size: 0.74rem;
-            color: #94a3b8;
-            font-weight: 500;
-            letter-spacing: 0.02em;
+        .cover-recipient-box {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            line-height: 1.5;
         }
 
-        .inv-title-col {
-            text-align: right;
+        .cover-recipient-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--red-accent);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .cover-recipient-name {
+            font-family: var(--font-sora);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #00171f;
+        }
+
+        .cover-recipient-org {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--red-accent);
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .passcode-wrapper {
+            margin: 25px 0 15px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            color: #475569;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            -webkit-text-security: disc;
+            text-security: disc;
+            width: 190px;
+            height: 48px;
+            background: #ffffff;
+            border: 2px solid #00171f;
+            border-radius: 0;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: #00171f;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: var(--red-accent);
+            box-shadow: 0 0 8px rgba(2, 132, 199, 0.35);
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+            letter-spacing: 0.05em;
+        }
+
+        .cover-open-btn {
+            background: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 23, 31, 0.35);
+            transition: all 0.2s ease;
+            width: 100%;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .cover-open-btn:hover {
+            background: var(--red-accent);
+            transform: translateY(-1px);
+        }
+
+        /* ----------------------------------------------------
+           MAIN INVOICE CONTAINER (SIGNATURE DOSSIER LOOK)
+        ---------------------------------------------------- */
+        .invoice-container {
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: var(--bg-cream);
+            border: 1px solid var(--border-navy);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            display: flex;
+            position: relative;
+        }
+
+        /* Sidebar Kiri Accent */
+        .sidebar-left {
+            width: 75px;
+            background-color: #f1f5f9;
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: lowercase;
+            color: var(--red-accent);
+            opacity: 0.95;
+        }
+
+        .vertical-text-wrapper {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            gap: 15px;
+        }
+
+        .vertical-brand-name {
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        /* Main Content Right */
+        .main-panel {
+            flex-grow: 1;
+            padding: 40px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
-        .inv-badge-pill {
-            display: inline-flex;
-            align-self: flex-end;
-            padding: 3px 9px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.15);
-            color: #38bdf8;
-            font-size: 0.68rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .inv-num-big {
+        .inv-num-label {
             font-family: var(--font-mono);
-            font-size: 1.35rem;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            color: #ffffff;
-        }
-
-        .inv-date-sub {
-            font-size: 0.76rem;
-            color: #94a3b8;
-        }
-
-        /* ----------------------------------------------------
-           PARTIES METADATA (TWO BOXES)
-        ---------------------------------------------------- */
-        .parties-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .party-box {
-            background: var(--color-light-bg);
-            border: 1px solid var(--color-border);
-            border-radius: 10px;
-            padding: 16px 18px;
-        }
-
-        .party-box.highlight-client {
-            border-left: 4px solid var(--color-ocean);
-        }
-
-        .party-lbl {
-            font-size: 0.68rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--color-muted);
-            margin-bottom: 4px;
+            color: var(--navy-primary);
+            letter-spacing: 0.05em;
         }
 
-        .party-name {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--color-ink);
-            margin-bottom: 2px;
+        .inv-date-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
         }
 
-        .party-desc {
-            font-size: 0.8rem;
-            color: #475569;
+        .billed-to-box {
+            font-size: 0.85rem;
             line-height: 1.45;
         }
 
-        /* ----------------------------------------------------
-           TABLE OF INVOICE ITEMS
-        ---------------------------------------------------- */
-        .table-wrap {
-            border: 1px solid var(--color-border);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .inv-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        .inv-table thead {
-            background: #E3ECF6;
-            color: var(--color-ink);
-        }
-
-        .inv-table th {
-            padding: 10px 14px;
-            font-size: 0.74rem;
+        .billed-title {
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.1em;
+            color: var(--red-accent);
+            margin-bottom: 2px;
             text-transform: uppercase;
         }
 
-        .th-num { width: 44px; text-align: center; }
-        .th-dur { width: 100px; text-align: center; }
-        .th-amt { width: 140px; text-align: right; }
-
-        .inv-table tbody tr {
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .inv-table tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        .inv-table td {
-            padding: 18px 14px;
-            vertical-align: top;
-            font-size: 0.85rem;
-        }
-
-        .td-num {
-            text-align: center;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--color-muted);
-        }
-
-        .td-dur {
-            text-align: center;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--color-ink);
-            font-size: 0.82rem;
-        }
-
-        .td-amt {
+        .top-right-logo-box {
             text-align: right;
-            font-family: var(--font-mono);
-            font-weight: 800;
-            color: var(--color-ink);
-            font-size: 0.95rem;
-        }
-
-        .item-title {
-            font-size: 0.98rem;
-            font-weight: 800;
-            color: var(--color-ink);
-            margin-bottom: 6px;
-        }
-
-        .item-desc {
-            font-size: 0.8rem;
-            color: #475569;
-            line-height: 1.55;
-            margin-bottom: 10px;
-        }
-
-        .modules-tags {
             display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
         }
 
-        .mod-tag {
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 2px 7px;
-            border-radius: 4px;
-            background: #EAF0F4;
-            color: var(--color-deep);
-        }
-
-        /* ----------------------------------------------------
-           TOTALS & CALCULATION SECTION
-        ---------------------------------------------------- */
-        .totals-section {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 24px;
-        }
-
-        .totals-table-box {
-            width: 58%;
-        }
-
-        .totals-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.84rem;
-        }
-
-        .totals-table td {
-            padding: 6px 12px;
-        }
-
-        .totals-table td.amt {
-            text-align: right;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--color-ink);
-        }
-
-        .totals-table tr.due td {
-            background: var(--color-ink);
-            color: var(--color-white);
-            font-weight: 800;
-            padding: 10px 12px;
-        }
-
-        .totals-table tr.due td.amt {
-            color: #38bdf8;
-            font-size: 1.2rem;
-        }
-
-        .terbilang-box {
-            text-align: right;
-            font-style: italic;
-            font-size: 0.78rem;
-            color: var(--color-muted);
-            margin-top: 8px;
-            padding-right: 4px;
-        }
-
-        /* ----------------------------------------------------
-           BANK PAYMENT CARD & TERMS (TWO COLUMNS)
-        ---------------------------------------------------- */
-        .payment-terms-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 28px;
-            padding-top: 20px;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .bank-card {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border: 1.5px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 16px 18px;
-            position: relative;
-        }
-
-        .bank-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 4px;
-            background: #003d79; /* Mandiri Blue */
-            border-radius: 10px 0 0 10px;
-        }
-
-        .bank-head-row {
-            display: flex;
+        .logo-badge-container {
+            background: #00171f;
+            padding: 8px 18px;
+            border-radius: 6px;
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
+            justify-content: center;
+            border: 1px solid #1e293b;
         }
 
-        .bank-logo {
-            height: 24px;
+        .logo-badge-container img {
+            height: 38px;
             width: auto;
+            max-width: 170px;
+            object-fit: contain;
             display: block;
         }
 
-        .bank-pill {
-            font-size: 0.68rem;
+        .brand-badge-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            font-size: 0.72rem;
             font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 4px;
             text-transform: uppercase;
-            color: #003d79;
-            background: rgba(0, 61, 121, 0.08);
-            padding: 2px 8px;
-            border-radius: 999px;
         }
 
-        .acc-number-big {
-            font-size: 1.35rem;
-            font-weight: 800;
+        /* Table Architecture */
+        .table-area {
+            margin-bottom: 25px;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--navy-primary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--navy-primary);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .section-header-banner {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 10px 14px;
             font-family: var(--font-mono);
-            color: #003d79;
+            font-size: 0.78rem;
+            font-weight: 700;
             letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--red-accent);
+        }
+
+        .section-header-banner.adjust-banner {
+            background-color: #0f172a;
+            border-left-color: #38bdf8;
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 150px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--red-accent);
+            font-weight: bold;
+        }
+
+        .table-totals-row td {
+            padding: 10px 0;
+            border-bottom: none;
+        }
+
+        .grand-total {
+            border-top: 2px solid var(--navy-primary);
+            border-bottom: 2px solid var(--navy-primary);
+            font-weight: 700;
+            background: var(--red-light);
+        }
+
+        .grand-total td {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            padding: 16px 10px;
+            color: var(--navy-primary);
+        }
+
+        /* Scope Breakdown Box */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 16px 18px;
+            border-radius: 4px;
+        }
+
+        .scope-card-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            margin-bottom: 16px;
+        }
+
+        .bottom-block-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .bottom-block-content {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .bank-mandiri-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .copy-pill-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-navy);
+            color: var(--navy-primary);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
             cursor: pointer;
-            user-select: all;
-            margin: 4px 0;
-            display: inline-flex;
+            margin-left: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--red-accent);
+            border-color: var(--red-accent);
+            color: #ffffff;
+        }
+
+        /* Terms & Notes Box */
+        .terms-container {
+            background-color: #f1f5f9;
+            border: 1px solid var(--border-light);
+            padding: 16px 20px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .terms-title {
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Top Action Bar */
+        .action-bar {
+            max-width: 960px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .acc-number-big:hover {
-            color: var(--color-blue);
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red-accent);
         }
 
-        .acc-owner-name {
-            font-size: 0.8rem;
-            color: #475569;
-            font-weight: 500;
+        .btn-group {
+            display: flex;
+            gap: 8px;
         }
 
-        .btn-copy-acc {
+        .btn {
+            font-family: var(--font-sora);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 2px;
+            cursor: pointer;
+            border: 1px solid var(--navy-primary);
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 10px;
-            background: #003d79;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
             color: #ffffff;
-            border: none;
-            padding: 7px 14px;
-            border-radius: 6px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .btn-copy-acc:hover {
-            background: #00274e;
+        .btn-primary:hover {
+            background-color: var(--red-accent);
+            border-color: var(--red-accent);
         }
 
-        /* Terms Box */
-        .terms-card {
-            background: var(--color-light-bg);
-            border: 1px solid var(--color-border);
-            border-radius: 10px;
-            padding: 16px 18px;
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--navy-primary);
         }
 
-        .terms-h3 {
-            font-size: 0.74rem;
-            font-weight: 800;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--color-ink);
-            margin-bottom: 8px;
+        .btn-secondary:hover {
+            background-color: #f1f5f9;
         }
 
-        .terms-ul {
-            padding-left: 16px;
-            font-size: 0.76rem;
-            color: #475569;
-            line-height: 1.55;
-        }
-
-        .terms-ul li {
-            margin-bottom: 4px;
-        }
-
-        /* ----------------------------------------------------
-           SIGNATURES SECTION
-        ---------------------------------------------------- */
-        .signatures-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .sig-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .sig-role-lbl {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--color-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .sig-img-wrap {
-            height: 75px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 4px 0;
-        }
-
-        .sig-img {
-            max-height: 70px;
-            max-width: 150px;
-            object-fit: contain;
-        }
-
-        .sig-dash-space {
-            height: 70px;
-            width: 140px;
-            border-bottom: 1px dashed #cbd5e1;
-        }
-
-        .sig-name {
-            font-weight: 800;
-            font-size: 0.9rem;
-            color: var(--color-ink);
-        }
-
-        .sig-sub {
-            font-size: 0.74rem;
-            color: var(--color-muted);
-        }
-
-        /* ----------------------------------------------------
-           TOAST NOTIFICATION
-        ---------------------------------------------------- */
-        .toast-notif {
+        .toast {
             position: fixed;
             bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(30px);
-            background: #00171F;
+            right: 24px;
+            background-color: var(--navy-primary);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 10px 22px;
-            border-radius: 999px;
+            padding: 12px 22px;
+            border-radius: 4px;
             font-size: 0.82rem;
-            font-weight: 600;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
+            font-weight: 500;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
             opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99999;
+            border-left: 4px solid var(--red-accent);
         }
 
-        .toast-notif.active {
+        .toast.show {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
-            pointer-events: auto;
+            visibility: visible;
+            transform: translateY(-5px);
         }
 
         /* ----------------------------------------------------
-           PRINT STYLES
+           RESPONSIVE MOBILE STYLES
         ---------------------------------------------------- */
-        @media print {
-            @page {
-                size: A4;
-                margin: 10mm 12mm;
-            }
+        @media screen and (max-width: 768px) {
             body {
-                background: #ffffff !important;
-                padding: 0 !important;
+                padding: 10px 8px 36px 8px;
             }
-            .top-action-bar, .toast-notif {
-                display: none !important;
-            }
-            .document-wrapper {
-                margin: 0 !important;
-                padding: 0 !important;
-                max-width: 100% !important;
-            }
-            .invoice-sheet {
-                border: none !important;
-                box-shadow: none !important;
-                padding: 16px 0 !important;
-            }
-            .inv-header-banner {
-                background: #00171F !important;
-                color: #ffffff !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .totals-table tr.due td {
-                background: #00171F !important;
-                color: #ffffff !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .bank-card, .signatures-grid {
-                break-inside: avoid;
-            }
-        }
 
-        /* ----------------------------------------------------
-           MOBILE RESPONSIVENESS
-        ---------------------------------------------------- */
-        @media (max-width: 768px) {
-            .invoice-sheet {
-                padding: 24px 18px;
-            }
-            .inv-header-banner {
+            .action-bar {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 14px;
-                padding: 20px;
+                gap: 10px;
+                align-items: stretch;
+                margin-bottom: 12px;
             }
-            .inv-title-col {
-                text-align: left;
+
+            .action-title {
+                text-align: center;
+                justify-content: center;
+                font-size: 0.72rem;
+                line-height: 1.4;
             }
-            .inv-badge-pill {
-                align-self: flex-start;
-            }
-            .parties-grid, .payment-terms-grid, .signatures-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .totals-table-box {
+
+            .btn-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
                 width: 100%;
             }
+
+            .btn {
+                padding: 10px 8px;
+                font-size: 0.75rem;
+                justify-content: center;
+                min-height: 42px;
+            }
+
+            .invoice-container {
+                flex-direction: column;
+                border-radius: 4px;
+                overflow: hidden;
+            }
+
+            .sidebar-left {
+                width: 100%;
+                height: auto;
+                min-height: 46px;
+                padding: 10px 14px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
+            }
+
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.2rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                line-height: 1;
+            }
+
+            .vertical-text-wrapper {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 0.62rem;
+                letter-spacing: 0.06em;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
+            }
+
+            .main-panel {
+                padding: 18px 12px;
+            }
+
+            .invoice-header-row {
+                flex-direction: column-reverse;
+                gap: 14px;
+            }
+
+            .top-right-logo-box {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding-bottom: 10px;
+                border-bottom: 1px dashed var(--border-light);
+                text-align: left;
+            }
+
+            .logo-badge-container {
+                padding: 6px 14px;
+            }
+
+            .logo-badge-container img {
+                height: 32px;
+                width: auto;
+            }
+
+            .brand-badge-pill {
+                margin-top: 0;
+                font-size: 0.64rem;
+                padding: 3px 8px;
+            }
+
+            .top-left-meta {
+                width: 100%;
+            }
+
+            .inv-num-label {
+                font-size: 0.72rem;
+            }
+
+            .inv-date-label {
+                font-size: 0.72rem;
+                margin-bottom: 8px;
+            }
+
+            .billed-to-box {
+                padding: 12px;
+                font-size: 0.8rem;
+            }
+
+            .table-area {
+                margin-bottom: 18px;
+                overflow-x: visible;
+            }
+
+            /* Responsive Card Table Layout on Mobile */
+            .margarita-table {
+                display: block;
+                width: 100%;
+                border: none;
+                overflow-x: visible;
+            }
+
+            .margarita-table thead {
+                display: none;
+            }
+
+            .margarita-table tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .margarita-table tr {
+                display: block;
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 4px;
+                padding: 14px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            }
+
+            .margarita-table tr:has(.section-header-banner) {
+                background: transparent;
+                border: none;
+                padding: 0;
+                box-shadow: none;
+                margin-bottom: -4px;
+            }
+
+            .section-header-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                padding: 8px 12px;
+                font-size: 0.72rem;
+                border-radius: 3px;
+            }
+
+            .margarita-table td {
+                display: block;
+                width: 100% !important;
+                padding: 0 !important;
+                border: none !important;
+                text-align: left !important;
+            }
+
+            .margarita-table tr td:nth-child(2),
+            .margarita-table tr td:nth-child(3) {
+                display: none !important;
+            }
+
+            .margarita-table .item-title {
+                font-size: 0.88rem;
+                line-height: 1.4;
+                margin-bottom: 6px;
+            }
+
+            .margarita-table .bullet-list {
+                font-size: 0.78rem;
+                line-height: 1.45;
+                margin-bottom: 8px;
+            }
+
+            .margarita-table tr td.col-subtotal {
+                margin-top: 10px;
+                padding-top: 8px !important;
+                border-top: 1px dashed var(--border-light) !important;
+                display: flex !important;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.85rem;
+                color: var(--navy-primary);
+                width: 100% !important;
+                font-weight: 700;
+            }
+
+            .margarita-table tr td.col-subtotal::before {
+                content: "BIAYA // STATUS:";
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                color: var(--text-muted);
+                font-weight: 700;
+                letter-spacing: 0.05em;
+            }
+
+            .margarita-table tr.grand-total {
+                background: var(--red-light);
+                border: 2px solid var(--navy-primary);
+                padding: 14px;
+                margin-top: 4px;
+            }
+
+            .margarita-table tr.grand-total td {
+                padding: 0 !important;
+            }
+
+            .margarita-table tr.grand-total td:first-child {
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--navy-primary);
+                margin-bottom: 6px;
+                line-height: 1.4;
+            }
+
+            .margarita-table tr.grand-total td.col-subtotal {
+                font-size: 1.25rem !important;
+                font-weight: 800 !important;
+                color: var(--navy-primary) !important;
+                border-top: 1px solid var(--navy-primary) !important;
+                padding-top: 8px !important;
+            }
+
+            .margarita-table tr.grand-total td.col-subtotal::before {
+                content: "TOTAL HARUS DIBAYAR:";
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--navy-primary);
+            }
+
+            .scope-breakdown-box {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 18px;
+            }
+
+            .scope-card {
+                padding: 14px;
+            }
+
+            .scope-card-title {
+                font-size: 0.72rem;
+            }
+
+            .scope-card-list {
+                font-size: 0.76rem;
+            }
+
+            .bottom-section-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding-top: 14px;
+            }
+
+            .bank-mandiri-box {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 4px;
+                padding: 10px 12px;
+                margin-top: 6px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .copy-pill-btn {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+                min-height: 34px;
+            }
+
+            .terms-container {
+                padding: 12px 14px;
+                font-size: 0.74rem;
+                line-height: 1.5;
+            }
+
+            .cover-card {
+                padding: 26px 16px;
+                margin: 8px;
+            }
+
+            .classified-stamp {
+                font-size: 0.62rem;
+                letter-spacing: 0.1em;
+                padding: 3px 8px;
+                margin-bottom: 12px;
+            }
+
+            .passcode-input {
+                width: 100%;
+                max-width: 220px;
+                font-size: 1.4rem;
+                height: 48px;
+                letter-spacing: 8px;
+            }
+
+            .cover-open-btn {
+                min-height: 48px;
+                font-size: 0.8rem;
+                padding: 12px;
+            }
+        }
+
+        /* Print Optimization */
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; }
+            .cover-overlay, .action-bar, .copy-pill-btn, .toast { display: none !important; }
+            .invoice-container { box-shadow: none !important; border: 1px solid #000000 !important; max-width: 100% !important; }
+            .sidebar-left { background-color: #f1f5f9 !important; border-right: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
+            .section-header-banner { background-color: #00171f !important; color: #ffffff !important; -webkit-print-color-adjust: exact !important; }
+            .grand-total { background-color: #f0f9ff !important; -webkit-print-color-adjust: exact !important; }
+            .logo-badge-container { background: #00171f !important; -webkit-print-color-adjust: exact !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP ACTION BAR -->
-    <header class="top-action-bar">
-        <div class="bar-inner">
-            <div class="bar-left">
-                <span class="status-pill">
-                    <span class="status-dot"></span>
-                    <span>Menunggu Pembayaran (DP 50%)</span>
-                </span>
+    <!-- SECURITY PASSCODE COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="classified-stamp">DOKUMEN RESMI // CONFIDENTIAL DOSSIER</div>
+
+            <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+                <div class="cover-logo-container">
+                    <img src="katalis-logo.png" alt="Katalis ERP Logo" onerror="this.src='/katalis/katalis-logo.png'">
+                </div>
             </div>
-            <div class="bar-actions">
-                <button type="button" class="btn-action" onclick="window.print()" title="Cetak atau Simpan PDF">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    <span>Cetak PDF</span>
-                </button>
-                <button type="button" class="btn-action" id="btnPng" onclick="downloadInvoicePng()" title="Unduh Gambar PNG">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span id="btnPngText">Unduh PNG</span>
-                </button>
-                <button type="button" class="btn-action" onclick="copyInvoiceUrl()" title="Salin Link Invoice">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    <span>Salin Link</span>
-                </button>
-                <button type="button" class="btn-action btn-wa" onclick="kirimPesanWa()" title="Konfirmasi WhatsApp">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    <span>Kirim WA</span>
-                </button>
+
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">PT Katalis Lintas Global</div>
+                <div class="cover-recipient-org">Up: <strong>Direksi &amp; Tim Manajemen Pabrik</strong></div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Proyek: <strong>Katalis ERP v1.0 (Fish Processing &amp; Cold Storage System)</strong></div>
+                <div class="cover-inv-num">REF CODE: #INV/DD/2026/10/001</div>
             </div>
+
+            <div class="passcode-wrapper">
+                <div class="passcode-label">MASUKKAN KODE PIN RESMI:</div>
+                <input type="text" id="passcodeInput" class="passcode-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocomplete="new-password" name="pin_code_clean" value="" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
+            </div>
+
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                BUKA DOKUMEN PENAWARAN RESMI
+            </button>
         </div>
-    </header>
-
-    <!-- INVOICE SHEET -->
-    <main class="document-wrapper">
-        <div class="invoice-sheet" id="invoiceSheetCapture">
-
-            <!-- HEADER BANNER WITH OFFICIAL WHITE LOGO -->
-            <div class="inv-header-banner">
-                <div class="inv-brand-col">
-                    <img src="katalis-logo.png" alt="KATALIS ERP" class="katalis-logo-img" onerror="this.src='/katalis/katalis-logo.png'">
-                    <div class="katalis-sub-tag">Integrated Fish Processing &amp; Cold Storage Management System</div>
-                </div>
-                <div class="inv-title-col">
-                    <div class="inv-badge-pill">OFFICIAL INVOICE</div>
-                    <div class="inv-num-big">#INV/DD/2026/10/001</div>
-                    <div class="inv-date-sub">21 Oktober 2026 &middot; Jatuh Tempo: 28 Oktober 2026</div>
-                </div>
-            </div>
-
-            <!-- PARTIES INFO -->
-            <div class="parties-grid">
-                <div class="party-box highlight-client">
-                    <div class="party-lbl">Ditagihkan Kepada :</div>
-                    <div class="party-name">PT Katalis Lintas Global</div>
-                    <div class="party-desc">
-                        Up: Direksi &amp; Tim Owner PT Katalis<br>
-                        Bungus Barat, Kota Padang, Sumatera Barat<br>
-                        Proyek: Pengembangan Aplikasi Web Katalis ERP
-                    </div>
-                </div>
-
-                <div class="party-box">
-                    <div class="party-lbl">Diterbitkan Oleh :</div>
-                    <div class="party-name">Dar Dev &middot; Daru Fahmaa Muliawan</div>
-                    <div class="party-desc">
-                        Senior Full-Stack Engineer &amp; System Architect<br>
-                        Email: <strong>darufahmaamuliawan@gmail.com</strong><br>
-                        Kota Tangerang, Banten &middot; TemanTiket Tech Solutions
-                    </div>
-                </div>
-            </div>
-
-            <!-- ITEMS TABLE -->
-            <div class="table-wrap">
-                <table class="inv-table">
-                    <thead>
-                        <tr>
-                            <th class="th-num">No</th>
-                            <th>Uraian Pekerjaan &amp; Cakupan Sistem</th>
-                            <th class="th-dur">Durasi</th>
-                            <th class="th-amt">Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="td-num">1</td>
-                            <td>
-                                <div class="item-title">Pembangunan Sistem KATALIS ERP Versi 1</div>
-                                <div class="item-desc">
-                                    Pengerjaan sistem enterprise 4 minggu sesuai kesepakatan PRD 21 Oktober 2026: mencatat seluruh alur usaha dari beli ikan utuh, timbang loin presisi, neraca produksi, stok fresh/beku, cold storage, hingga penjualan dan uang masuk tanpa input ulang. Termasuk setup database Supabase RLS, hosting Vercel, uji 1 siklus nyata di pabrik, pelatihan 7 peran pengguna, dan serah terima tertulis.
-                                </div>
-                                <div class="modules-tags">
-                                    <span class="mod-tag">Pembelian &amp; Cek Mutu (PO)</span>
-                                    <span class="mod-tag">Grid Loin Presisi (FRM-PRD-01)</span>
-                                    <span class="mod-tag">Neraca Produksi Otomatis</span>
-                                    <span class="mod-tag">Cold Storage &amp; Mesin Tarif</span>
-                                    <span class="mod-tag">Penjualan &amp; Pengiriman</span>
-                                    <span class="mod-tag">Ledger Kas 8 Kategori</span>
-                                    <span class="mod-tag">Dashboard Owner di HP</span>
-                                    <span class="mod-tag">Absensi Geofencing GPS</span>
-                                    <span class="mod-tag">Asisten AI &amp; Simulasi</span>
-                                </div>
-                            </td>
-                            <td class="td-dur">4 Minggu<br><span style="font-size:0.7rem; color:var(--color-muted); font-weight:normal;">(Minggu 1–4)</span></td>
-                            <td class="td-amt">Rp10.000.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- TOTALS SECTION -->
-            <div class="totals-section">
-                <div class="totals-table-box">
-                    <table class="totals-table">
-                        <tr>
-                            <td>Nilai Kontrak Pengembangan :</td>
-                            <td class="amt">Rp 10.000.000</td>
-                        </tr>
-                        <tr>
-                            <td>Uang Muka 50% (Tagihan Invoice Ini) :</td>
-                            <td class="amt" style="color:var(--color-blue);">Rp 5.000.000</td>
-                        </tr>
-                        <tr>
-                            <td style="color:var(--color-muted);">Pajak Pertambahan Nilai (PPN) :</td>
-                            <td class="amt" style="color:var(--color-muted);">Tidak dikenakan</td>
-                        </tr>
-                        <tr class="due">
-                            <td>TOTAL YANG HARUS DIBAYAR (DP 50%) :</td>
-                            <td class="amt">Rp 5.000.000</td>
-                        </tr>
-                        <tr>
-                            <td style="color:var(--color-muted);">Sisa Pelunasan (Ditagih saat serah terima akhir M4) :</td>
-                            <td class="amt" style="color:var(--color-muted);">Rp 5.000.000</td>
-                        </tr>
-                    </table>
-                    <div class="terbilang-box">
-                        Terbilang: <strong>Lima Juta Rupiah</strong> <em>(atau Sepuluh Juta Rupiah jika pembayaran penuh 100%)</em>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PAYMENT ACCOUNT & TERMS -->
-            <div class="payment-terms-grid">
-                <!-- Bank Mandiri Card -->
-                <div class="bank-card">
-                    <div class="bank-head-row">
-                        <img src="mandiri_logo.webp" alt="Bank Mandiri" class="bank-logo" onerror="this.src='/katalis/mandiri_logo.webp'">
-                        <span class="bank-pill">Rekening Resmi Pembayaran</span>
-                    </div>
-                    <div style="font-size:0.74rem; color:var(--color-muted); margin-top:4px;">Transfer Langsung Bank Mandiri :</div>
-                    <div class="acc-number-big" id="accNumberTxt" onclick="copyRekeningMandiri()" title="Klik untuk menyalin">
-                        <span>155-00-1061696-2</span>
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    </div>
-                    <div class="acc-owner-name">Atas Nama : <strong>Daru Fahmaa Muliawan</strong></div>
-                    <div style="font-size:0.72rem; color:var(--color-muted); margin-top:2px;">Berita Transfer : <code>INV/DD/2026/10/001</code></div>
-
-                    <button type="button" class="btn-copy-acc" id="btnCopyAcc" onclick="copyRekeningMandiri()">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        <span id="btnCopyAccTxt">Salin No. Rekening</span>
-                    </button>
-                </div>
-
-                <!-- Terms Box -->
-                <div class="terms-card">
-                    <div class="terms-h3">Ketentuan Pembayaran &amp; Kerja</div>
-                    <ul class="terms-ul">
-                        <li>Pengerjaan minggu 1 dimulai setelah pembayaran uang muka (DP 50%) diterima.</li>
-                        <li>Sisa 50% (Rp5.000.000) ditagih saat serah terima tertulis di akhir minggu 4 setelah uji siklus nyata.</li>
-                        <li>Biaya server cloud (Vercel &amp; Supabase) dibayarkan langsung atas nama perusahaan.</li>
-                        <li>Garansi perbaikan bug berlaku 30 hari kalender setelah serah terima resmi.</li>
-                        <li>Mohon kirimkan bukti transfer setelah pembayaran untuk pencatatan instan.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- SIGNATURES SECTION -->
-            <div class="signatures-grid">
-                <div class="sig-col">
-                    <div class="sig-role-lbl">Pihak Pengembang Sistem :</div>
-                    <div class="sig-img-wrap">
-                        <img src="ttd_daru.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="sig-img" onerror="this.src='/katalis/ttd_daru.png'">
-                    </div>
-                    <div class="sig-name">Dar Dev &middot; Daru Fahmaa Muliawan</div>
-                    <div class="sig-sub">Senior Full-Stack Engineer &middot; TemanTiket Tech Solutions</div>
-                </div>
-
-                <div class="sig-col">
-                    <div class="sig-role-lbl">Pemberi Tugas &amp; Klien :</div>
-                    <div class="sig-img-wrap">
-                        <div class="sig-dash-space"></div>
-                    </div>
-                    <div class="sig-name">Direksi / Owner</div>
-                    <div class="sig-sub">PT Katalis Lintas Global</div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- TOAST NOTIFICATION -->
-    <div class="toast-notif" id="toastNotif">
-        <span id="toastMsg">Teks berhasil disalin</span>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- TOP CONTROL BAR -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> PROPOSAL &amp; INVOICE #INV/DD/2026/10/001 &mdash; KATALIS ERP
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <a href="https://wa.me/6281311506025?text=Halo%20Mas%20Daru%2C%20saya%20sudah%20cek%20Invoice%20%23INV%2FDD%2F2026%2F10%2F001%20Katalis%20ERP" target="_blank" class="btn btn-secondary" style="color: #16a34a; border-color: #16a34a;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                Chat WhatsApp
+            </a>
+            <button class="btn btn-primary" onclick="downloadPDF()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+            </button>
+            <button class="btn btn-primary" style="background:#00171f; border-color:#00171f;" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN INVOICE CONTAINER -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Signature -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">katalis erp</div>
+            <div class="vertical-text-wrapper">
+                <span class="vertical-brand-name">PT KATALIS LINTAS GLOBAL</span>
+                <span>OKTOBER 2026</span>
+            </div>
+        </div>
+
+        <!-- Main Content Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Header Meta Row -->
+                <div class="invoice-header-row">
+                    <div class="top-left-meta">
+                        <div class="inv-num-label">PENAWARAN &amp; INVOICE NO. #INV/DD/2026/10/001</div>
+                        <div class="inv-date-label">21 Oktober 2026 &middot; Jatuh Tempo DP: 28 Oktober 2026</div>
+
+                        <div class="billed-to-box">
+                            <div class="billed-title">DITUJUKAN KEPADA // BILLED TO:</div>
+                            <div class="billed-content">
+                                <strong>PT Katalis Lintas Global</strong><br>
+                                Up: Direksi &amp; Tim Owner PT Katalis<br>
+                                Bungus Barat, Kota Padang, Sumatera Barat<br>
+                                Proyek: <strong>Pengembangan Sistem Aplikasi Web Katalis ERP v1.0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-right-logo-box">
+                        <div class="logo-badge-container">
+                            <img src="katalis-logo.png" alt="Katalis ERP Logo" onerror="this.src='/katalis/katalis-logo.png'">
+                        </div>
+                        <span class="brand-badge-pill">OFFICIAL ERP CONTRACT</span>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>RUANG LINGKUP &amp; SPESIFIKASI SISTEM KATALIS ERP</th>
+                                <th class="col-subtotal" style="text-align: center; width: 90px;">DURASI</th>
+                                <th class="col-subtotal" style="text-align: right; width: 140px;">BIAYA</th>
+                                <th class="col-subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <!-- BANNER BAGIAN I -->
+                            <tr>
+                                <td colspan="4" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner">
+                                        <span>BAGIAN I: CORE SYSTEM &amp; 9 MODUL PENGOLAHAN IKAN TERINTEGRASI</span>
+                                        <span>Total: Rp 10.000.000</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 1: PO & QC -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        1. Modul Pengadaan &amp; Cek Mutu Bahan Baku Ikan (PO &amp; QC)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Penerimaan Bahan Baku:</strong> Pencatatan PO ikan utuh langsung dari supplier/nelayan, grading visual mutu, suhu ikan masuk, dan kalkulasi tara/bruto.</li>
+                                        <li><strong>Integrasi Utang Supplier:</strong> Rekapitulasi status pembayaran ke supplier ikan otomatis tanpa data manual terpisah.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 2: Grid Loin Presisi -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        2. Grid Timbang Loin Presisi 3 Desimal (Form FRM-PRD-01)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Antarmuka Meja Potong:</strong> Input timbang cepat touch-friendly untuk operator lantai potong dengan presisi hingga 3 desimal (0,001 kg).</li>
+                                        <li><strong>Grouping Otomatis:</strong> Pengelompokan loin per keranjang &amp; generate kode barcode batch secara instan.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 3: Neraca Rendemen -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        3. Neraca Rendemen Produksi Otomatis (Yield &amp; Recovery Analysis)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Rekonsiliasi Real-Time:</strong> Mengonversi bobot ikan utuh menjadi loin A/B, tetelan, kepala &amp; tulang secara otomatis.</li>
+                                        <li><strong>Evaluasi Efisiensi Meja Potong:</strong> Mengetahui persentase rendemen tiap batch dan performa tim potong tanpa rumus Excel manual.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 4: Cold Storage -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        4. Manajemen Cold Storage &amp; Mesin Tarif Multi-Gudang
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Pelacakan Pallet &amp; Suhu:</strong> Visualisasi slot rak, kapasitas muat kamar beku, dan riwayat mutasi masuk/keluar barang.</li>
+                                        <li><strong>Mesin Tarif Titipan Pihak Ketiga:</strong> Kalkulasi otomatis tagihan sewa harian/bulanan untuk titipan cold storage eksternal.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 5: Penjualan & DO -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        5. Modul Penjualan, Packing List Otomatis &amp; Surat Jalan (DO)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Faktur Penjualan Lokal &amp; Ekspor:</strong> Penerbitan invoice, rekap piutang customer, dan status pembayaran tempo.</li>
+                                        <li><strong>Cetak Standar Pabrik:</strong> Format packing list dan delivery order siap cetak sesuai standar logistik perikanan.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 6: Keuangan Kas -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        6. Keuangan &amp; Ledger Kas 8 Kategori (Financial &amp; Cashflow Control)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Arus Kas Pabrik Terpisah:</strong> Pengelompokan kas kecil operasional, biaya solar/es, gaji, dan perputaran modal kerja.</li>
+                                        <li><strong>Laba-Rugi Kotor per Batch:</strong> Mengetahui profit riil tiap siklus bongkar ikan tanpa menunggu laporan bulanan.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 7: Executive Dashboard Mobile -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        7. Executive Mobile Dashboard (Khusus Direksi &amp; Owner via Smartphone)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Pantauan Jarak Jauh 24/7:</strong> Cek omzet harian, sisa tonase stok beku di gudang, dan posisi kas langsung dari layar HP.</li>
+                                        <li><strong>Peringatan Dini:</strong> Notifikasi otomatis batas piutang jatuh tempo dan kapasitas cold storage mendekati batas maksimal.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 8: Absensi GPS -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        8. Absensi Geofencing GPS Pabrik Bungus &amp; Shift Pegawai
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Radius Validasi GPS:</strong> Pegawai hanya dapat absen dalam batas radius koordinat pabrik Bungus Barat Padang.</li>
+                                        <li><strong>Verifikasi Kamera &amp; Shift Kerja:</strong> Selfie check-in anti-titip absen serta rekapitulasi otomatis insentif lembur.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 9: Asisten AI Katalis -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        9. Asisten AI Katalis &amp; Analisis Prediksi Biaya
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Smart Data Query:</strong> Bertanya riwayat harga ikan, sisa stok gudang, atau ringkasan produksi dengan bahasa percakapan.</li>
+                                        <li><strong>Executive Summary Otomatis:</strong> Pembuatan rangkuman laporan mingguan instan untuk rapat manajemen.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #00171f;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #00171f;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #00171f; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- BANNER BAGIAN II -->
+                            <tr>
+                                <td colspan="4" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner adjust-banner">
+                                        <span>BAGIAN II: CLOUD ARCHITECTURE, DEPLOYMENT &amp; TRAINING PABRIK</span>
+                                        <span>Total Paket Termasuk</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- CLOUD & IMPLEMENTATION ITEM -->
+                            <tr>
+                                <td>
+                                    <div class="item-title" style="color: #0284c7;">
+                                        ★ Setup Database Supabase Cloud, Uji 1 Siklus Nyata &amp; Pelatihan Tim
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Cloud &amp; Security:</strong> Database PostgreSQL Supabase dengan Row-Level Security (RLS) &amp; hosting Vercel Enterprise.</li>
+                                        <li><strong>Uji Coba Lapangan:</strong> Simulasi 1 batch nyata dari bahan baku masuk, timbang potong, masuk storage, hingga DO keluar.</li>
+                                        <li><strong>Pelatihan 7 Peran Pengguna:</strong> Training operator timbang, mandor, gudang cold storage, kasir, QC, dan owner.</li>
+                                        <li><strong>Garansi Sistem:</strong> Garansi perbaikan bug &amp; pendampingan teknis 30 hari pasca serah terima resmi.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #0284c7;">4 Minggu</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #0284c7;">Rp 10.000.000</td>
+                                <td class="col-subtotal" style="color: #0284c7; font-weight: 700;">Rp 10.000.000</td>
+                            </tr>
+
+                            <!-- SUMMARY ROWS -->
+                            <tr class="table-totals-row" style="border-top: 1px solid var(--border-light);">
+                                <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-muted); padding-top: 14px;">
+                                    Total Nilai Kontrak Pengembangan (4 Minggu) :
+                                </td>
+                                <td class="col-subtotal" style="font-weight: 700; color: var(--navy-primary); padding-top: 14px;">
+                                    Rp 10.000.000
+                                </td>
+                            </tr>
+                            <tr class="table-totals-row">
+                                <td colspan="3" style="text-align: right; font-weight: 600; color: var(--red-accent);">
+                                    Tagihan Uang Muka (DP 50%) Saat Ini :
+                                </td>
+                                <td class="col-subtotal" style="font-weight: 700; color: var(--red-accent);">
+                                    Rp 5.000.000
+                                </td>
+                            </tr>
+                            <tr class="table-totals-row">
+                                <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-muted);">
+                                    Pajak Pertambahan Nilai (PPN) :
+                                </td>
+                                <td class="col-subtotal" style="color: var(--text-muted);">
+                                    Tidak Dikenakan
+                                </td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td colspan="3" style="font-weight: 700; color: #00171f;">
+                                    TOTAL YANG HARUS DIBAYAR (DP 50%)
+                                </td>
+                                <td class="col-subtotal" style="font-size:1.25rem; font-weight:800; color: #00171f;">
+                                    Rp 5.000.000
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:8px;">
+                        // lima juta rupiah // &mdash; Sisa Pelunasan Rp 5.000.000 ditagih setelah serah terima tertulis &amp; uji siklus nyata akhir Minggu ke-4
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHTS & BENEFIT CARDS -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>9 MODUL UTAMA KATALIS ERP v1.0</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>1. PO &amp; QC:</strong> Penerimaan ikan utuh, grading visual, suhu &amp; utang nelayan.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>2. Grid Loin Presisi:</strong> Timbang potong 3 desimal &amp; generate barcode keranjang.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>3. Neraca Rendemen:</strong> Konversi rasio rendemen loin &amp; evaluasi tim otomatis.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>4. Cold Storage:</strong> Peta pallet, suhu kamar beku &amp; mesin tarif sewa pihak ke-3.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>5. Penjualan &amp; DO:</strong> Faktur ekspor/lokal, packing list &amp; surat jalan otomatis.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>6. Keuangan &amp; Kas:</strong> Laba-rugi kotor per batch &amp; pengelompokan 8 pos kas.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>7. Dashboard HP Owner:</strong> Live omzet, tonase stok beku &amp; arus kas 24 jam.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>8. Absensi GPS Bungus:</strong> Geofencing radius pabrik, selfie &amp; rekap lembur shift.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>9. Asisten AI Katalis:</strong> Query data percakapan &amp; ringkasan laporan mingguan.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00171f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>SKEMA KONTRAK &amp; JAMINAN KERJA</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00171f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Nilai Kontrak:</strong> Rp 10.000.000 (DP 50% = Rp 5.000.000).</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span><strong>Waktu Pengerjaan:</strong> 4 Minggu Penuh (Minggu 1 s/d Minggu 4).</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00171f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Uji Siklus Nyata:</strong> Pendampingan 1 siklus batch produksi riil di pabrik.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00171f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Kepemilikan Mandiri:</strong> Akses akun Supabase &amp; Vercel milik perusahaan.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00171f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span><strong>Garansi Bug:</strong> Garansi penuh 30 hari pasca serah terima tertulis.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section Grid -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 18px; width: auto; object-fit: contain;" onerror="this.src='/katalis/mandiri_logo.webp'">
+                                <strong style="font-size: 0.95rem; color: #00171f;">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 2px; color: var(--text-muted);">
+                                Account Name: <strong style="color: #00171f;">Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div class="bank-mandiri-box">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.95rem; color: #00171f; letter-spacing: 0.03em;">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REK</button>
+                            </div>
+                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+                                Berita Transfer: <code style="font-family: var(--font-mono); font-weight: 700; color: #00171f;">INV/DD/2026/10/001</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer Details & Signature -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER &amp; TANDA TANGAN RESMI</div>
+                        <div class="bottom-block-content">
+                            <strong style="color:#00171f;">Dar Dev &middot; Daru Fahmaa Muliawan</strong><br>
+                            <span style="color:var(--red-accent); font-weight: 600; font-size: 0.78rem;">Senior Full-Stack Engineer &amp; System Architect</span><br>
+                            <span style="color:var(--text-muted); font-size: 0.78rem;">WhatsApp: 081311506025 &middot; Tangerang, Banten</span>
+                            
+                            <div style="margin-top: 8px; border-top: 1px dashed var(--border-light); padding-top: 8px; display: flex; align-items: center; gap: 10px;">
+                                <img src="ttd_daru.png" alt="Tanda Tangan Daru Fahmaa" style="height: 44px; width: auto; object-fit: contain;" onerror="this.src='/katalis/ttd_daru.png'">
+                                <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.3;">
+                                    <span style="color: #16a34a; font-weight: 700;">✓ VALID DIGITAL SIGNATURE</span><br>
+                                    <span>Daru Fahmaa Muliawan</span><br>
+                                    <span style="font-family: var(--font-mono); font-size: 0.65rem;">KATALIS-ERP-2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">KETENTUAN IMPLEMENTASI &amp; PEMBAYARAN KONTRAK</div>
+                    <div>
+                        • <strong>Waktu Pengerjaan:</strong> Total 4 Minggu Kalender (Minggu 1 dimulakan segera setelah pembayaran uang muka DP 50% = Rp 5.000.000 diverifikasi).<br>
+                        • <strong>Pelunasan Akhir:</strong> Sisa 50% (Rp 5.000.000) ditagihkan saat serah terima tertulis di akhir Minggu ke-4 setelah verifikasi uji coba siklus nyata di pabrik.<br>
+                        • <strong>Infrastruktur Cloud:</strong> Database Supabase dan hosting cloud Vercel disetup transparan atas nama PT Katalis Lintas Global.<br>
+                        • <strong>Garansi &amp; Layanan:</strong> Dukungan teknis dan garansi bebas bug aktif selama 30 hari kalender setelah serah terima sistem selesai.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
     <script>
-        function copyRekeningMandiri() {
-            const rek = "1550010616962";
-            const btn = document.getElementById("btnCopyAcc");
-            const btnTxt = document.getElementById("btnCopyAccTxt");
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const coverCard = document.querySelector('.cover-card');
 
-            navigator.clipboard.writeText(rek).then(() => {
-                showToast("Nomor Rekening Mandiri (1550010616962) berhasil disalin!");
-                if (btnTxt) btnTxt.innerText = "✓ Berhasil Disalin";
+            const pinVal = (typeof input === "string" ? input : (input ? input.value : "")).trim();
+            if (pinVal === "0001" || pinVal === "050900") {
+                overlay.classList.add('opened');
+            } else {
+                errorMsg.style.display = 'block';
+                coverCard.classList.add('shake-anim');
                 setTimeout(() => {
-                    if (btnTxt) btnTxt.innerText = "Salin No. Rekening";
-                }, 2500);
-            }).catch(() => {
-                showToast("No. Rekening Mandiri: 1550010616962");
+                    coverCard.classList.remove('shake-anim');
+                }, 400);
+            }
+        }
+
+        const pinInput = document.getElementById('passcodeInput');
+        if (pinInput) {
+            pinInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    verifyPasscode();
+                }
+            });
+            pinInput.addEventListener('input', function() {
+                const val = this.value.trim();
+                if (val === "0001" || val === "050900") {
+                    verifyPasscode();
+                }
             });
         }
 
-        function copyInvoiceUrl() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                showToast("Tautan invoice berhasil disalin!");
-            }).catch(() => {
-                showToast("Tautan: " + url);
-            });
-        }
-
-        function kirimPesanWa() {
-            const text = 
-`Yth. Bapak/Ibu Direksi & Tim Owner
-PT Katalis Lintas Global
-
-Berikut kami lampirkan dokumen resmi Invoice Pembangunan Sistem "Katalis ERP":
-
-📄 Invoice Online: https://temantiket.com/penawaran
-No. Invoice: INV/DD/2026/10/001
-Total Nilai Kontrak: Rp 10.000.000,-
-Uang Muka (DP 50%): Rp 5.000.000,-
-Jatuh Tempo: 28 Oktober 2026
-
-💳 Pembayaran Bank Mandiri:
-No. Rekening: 155-00-1061696-2 (1550010616962)
-a.n. Daru Fahmaa Muliawan
-Berita: INV/DD/2026/10/001
-
-Dokumen invoice resmi, tombol Cetak PDF, dan unduh berkas dapat langsung diakses pada tautan di atas. Terima kasih banyak atas kerja samanya! 🙏✨`;
-
-            const waUrl = "https://wa.me/6282125381501?text=" + encodeURIComponent(text);
-            window.open(waUrl, "_blank");
-        }
-
-        function downloadInvoicePng() {
-            const sheet = document.getElementById("invoiceSheetCapture");
-            const btnTxt = document.getElementById("btnPngText");
-            if (!sheet) return;
-
-            if (btnTxt) btnTxt.innerText = "Memproses...";
-            showToast("Sedang memproses unduhan gambar...");
-
-            html2canvas(sheet, {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: "#ffffff",
-                logging: false
-            }).then((canvas) => {
-                const link = document.createElement("a");
-                link.download = "Invoice-Katalis-ERP-INV-DD-2026-10-001.png";
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-                if (btnTxt) btnTxt.innerText = "Unduh PNG";
-                showToast("✓ File PNG berhasil diunduh!");
-            }).catch((err) => {
-                console.error("html2canvas error:", err);
-                if (btnTxt) btnTxt.innerText = "Unduh PNG";
-                showToast("Gagal mengunduh gambar. Silakan gunakan tombol Cetak PDF.");
-            });
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri (1550010616962) Berhasil Disalin!');
         }
 
         function showToast(msg) {
-            const toast = document.getElementById("toastNotif");
-            const toastMsg = document.getElementById("toastMsg");
-            if (!toast || !toastMsg) return;
-
-            toastMsg.innerText = msg;
-            toast.classList.add("active");
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
             setTimeout(() => {
-                toast.classList.remove("active");
+                toast.classList.remove('show');
             }, 3000);
         }
+
+        function downloadPDF() {
+            window.print();
+        }
+    
+        window.addEventListener("DOMContentLoaded", function () {
+            // Check if pin is passed in URL ?pin=0001 or ?open=1
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("pin") === "0001" || params.get("pin") === "050900" || params.get("open") === "1") {
+                const overlay = document.getElementById('coverOverlay');
+                if (overlay) overlay.classList.add('opened');
+            }
+
+            const el = document.getElementById("passcodeInput");
+            if (el) {
+                el.value = "";
+                setTimeout(function () { el.value = ""; }, 100);
+                setTimeout(function () { el.value = ""; }, 400);
+            }
+        });
     </script>
+
 </body>
 </html>
