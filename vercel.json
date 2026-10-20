@@ -105,6 +105,9 @@
     { "source": "/katalis", "destination": "/katalis/index.html" },
     { "source": "/ptkatalis", "destination": "/katalis/index.html" },
     { "source": "/katalis-erp", "destination": "/katalis/index.html" },
-    { "source": "/erp-katalis", "destination": "/katalis/index.html" }
+    { "source": "/erp-katalis", "destination": "/katalis/index.html" },
+    { "source": "/penawaran", "destination": "/penawaran/index.html" },
+    { "source": "/penawaran-katalis", "destination": "/penawaran/index.html" },
+    { "source": "/proposal-katalis", "destination": "/penawaran/index.html" }
   ]
 }
