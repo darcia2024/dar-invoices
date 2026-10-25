@@ -3,1442 +3,1592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Invoice #INV/DAR/2026/10/001 — El Massa</title>
-
-    <!-- Google Fonts: Plus Jakarta Sans -->
+    <title>PENAWARAN &amp; INVOICE #INV/EM-UM/2026/10/001 - Sistem Operasional ElMassa &amp; Unlimited Token Umrahme</title>
+    <!-- Google Fonts: Sora & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- html2canvas for High-Res PNG Generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --font-main: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
-            /* El Massa Official Color Palette: Coklat (Chocolate Brown) & Pink (Rose Blush) */
-            --color-brown-primary: #5c240e;
-            --color-brown-dark: #3e1607;
-            --color-brown-subtle: #7a3c20;
-            --color-pink-primary: #c54767;
-            --color-pink-hover: #ad3755;
-            --color-pink-light: #fff0f3;
-            --color-pink-soft: #fde8ed;
-            --color-pink-border: #f4c2cc;
+            --bg-canvas: #f2eee9;
+            --bg-cream: #fffdfc;
+            --navy-primary: #3e1607; /* El Massa Deep Chocolate Brown */
+            --navy-secondary: #5c240e;
+            --red-accent: #c54767;   /* Elegant Rose Gold / Crimson Accent */
+            --red-light: #fff1f4;   /* Soft Rose Cream */
+            --text-dark: #2b170f;
+            --text-muted: #6b5349;
+            --border-navy: #3e1607;
+            --border-light: #e5ded6;
             
-            --color-cream-bg: #fffdfc;
-            --color-text-main: #2b170f;
-            --color-text-muted: #745b52;
-            --color-text-light: #9e877e;
-            --color-border-line: #5c240e;
-            --color-border-subtle: #e8dcd6;
-            --color-white: #ffffff;
+            --font-sora: 'Sora', sans-serif;
+            --font-mono: 'Space Mono', monospace;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--color-white);
-            color: var(--color-text-main);
-            min-height: 100vh;
+            font-family: var(--font-sora);
+            font-weight: 300;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 20px;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body.locked {
-            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
         }
 
         /* ----------------------------------------------------
-           TOP TOOLBAR (NON-PRINT)
+           CLASSIFIED "DOKUMEN RESMI" COVER SCREEN
         ---------------------------------------------------- */
-        .top-toolbar {
-            width: 100%;
-            background: var(--color-white);
-            border-bottom: 1px solid var(--color-border-subtle);
-            position: sticky;
+        .cover-overlay {
+            position: fixed;
             top: 0;
-            z-index: 100;
-        }
-
-        .toolbar-inner {
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 12px 24px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #2b1105;
+            background-image: radial-gradient(#4a2110 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 10000;
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .toolbar-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .cover-overlay.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: scale(0.98) translateY(-30px);
         }
 
-        .btn-nav-dashboard {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            background: transparent;
-            border: 1.5px solid var(--color-brown-primary);
-            color: var(--color-brown-primary);
-            text-decoration: none;
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            border-radius: 6px;
-            transition: all 0.2s ease;
+        .cover-card {
+            background-color: #fffdfc;
+            border: 3px double #3e1607;
+            border-radius: 2px;
+            max-width: 560px;
+            width: 100%;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            color: #2b170f;
+            font-family: var(--font-mono);
+            margin: auto;
         }
 
-        .btn-nav-dashboard:hover {
-            background: var(--color-brown-primary);
-            color: var(--color-white);
+        .shake-anim {
+            animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
         }
 
-        .pill-status-unpaid {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 20px;
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .classified-stamp {
+            display: inline-block;
+            border: 2px solid #3e1607;
+            padding: 4px 14px;
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            background: var(--color-pink-light);
-            color: var(--color-pink-primary);
-            border: 1px solid var(--color-pink-border);
+            margin-bottom: 20px;
+            background: #fbf6f3;
+            color: #3e1607;
         }
 
-        .toolbar-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-action-chip {
+        .cover-logo-container {
+            background: #3e1607;
+            padding: 14px 28px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            padding: 8px 14px;
-            font-family: var(--font-main);
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1.5px solid var(--color-brown-primary);
-            background: var(--color-white);
-            color: var(--color-brown-primary);
-            transition: all 0.2s ease;
+            justify-content: center;
+            border: 1px solid #5c240e;
+            margin-bottom: 20px;
         }
 
-        .btn-action-chip:hover {
-            background: var(--color-brown-primary);
-            color: var(--color-white);
-            transform: translateY(-1px);
-        }
-
-        .btn-action-chip.btn-primary-brown {
-            background: var(--color-brown-primary);
-            color: var(--color-white);
-        }
-
-        .btn-action-chip.btn-primary-brown:hover {
-            background: var(--color-brown-dark);
-            border-color: var(--color-brown-dark);
-        }
-
-        .btn-action-chip.btn-pink-accent {
-            background: var(--color-pink-primary);
-            color: var(--color-white);
-            border-color: var(--color-pink-primary);
-        }
-
-        .btn-action-chip.btn-pink-accent:hover {
-            background: var(--color-pink-hover);
-            border-color: var(--color-pink-hover);
-        }
-
-        /* ----------------------------------------------------
-           FULL DOCUMENT CONTAINER (NO BOX, FULL CLEAN FLOW)
-        ---------------------------------------------------- */
-        .invoice-full-page {
-            max-width: 980px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 44px 32px 80px;
-            background: var(--color-white);
-        }
-
-        /* ----------------------------------------------------
-           HEADER SECTION (EL MASSA BRANDING)
-        ---------------------------------------------------- */
-        .document-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            padding-bottom: 28px;
-            border-bottom: 2.5px solid var(--color-brown-primary);
-        }
-
-        .brand-unit {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .elmassa-logo-img {
-            height: 76px;
+        .cover-logo-container img {
+            height: 54px;
             width: auto;
+            max-width: 220px;
             object-fit: contain;
             display: block;
         }
 
-        .brand-details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-name {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            color: var(--color-brown-primary);
-            text-transform: uppercase;
-            line-height: 1.15;
-        }
-
-        .brand-sub {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            color: var(--color-pink-primary);
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-
-        .invoice-title-unit {
-            text-align: right;
-        }
-
-        .invoice-main-heading {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: var(--color-brown-primary);
-            letter-spacing: -0.03em;
-            line-height: 1;
-            text-transform: uppercase;
-        }
-
-        .invoice-meta-lines {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            font-weight: 500;
-            margin-top: 8px;
+        .cover-recipient-box {
+            background: #ffffff;
+            border: 1px solid #e5ded6;
+            padding: 16px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 0.85rem;
             line-height: 1.5;
         }
 
-        .invoice-meta-lines strong {
-            color: var(--color-brown-primary);
+        .cover-recipient-label {
+            font-size: 0.68rem;
             font-weight: 700;
-        }
-
-        /* ----------------------------------------------------
-           METADATA BAR (INVOICE TO & DITERBITKAN OLEH)
-        ---------------------------------------------------- */
-        .invoice-meta-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--color-border-subtle);
-        }
-
-        .meta-col {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .meta-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--color-pink-primary);
-            margin-bottom: 6px;
-        }
-
-        .meta-title-bold {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--color-brown-primary);
+            letter-spacing: 0.15em;
+            color: var(--red-accent);
             margin-bottom: 4px;
-        }
-
-        .meta-sub-text {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            line-height: 1.5;
-            font-weight: 500;
-        }
-
-        /* ----------------------------------------------------
-           TABLE SECTION (FULL WIDTH)
-        ---------------------------------------------------- */
-        .table-section-area {
-            margin-top: 24px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .elmassa-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.84rem;
-        }
-
-        .elmassa-table thead tr {
-            border-top: 2px solid var(--color-brown-primary);
-            border-bottom: 2px solid var(--color-brown-primary);
-        }
-
-        .elmassa-table thead th {
-            padding: 12px 0;
-            font-weight: 800;
-            font-size: 0.76rem;
-            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--color-brown-primary);
         }
 
-        .elmassa-table thead th.th-num {
-            width: 28px;
-            text-align: left;
-        }
-        .elmassa-table thead th.th-desc {
-            text-align: left;
-            padding-left: 10px;
-        }
-        .elmassa-table thead th.th-price {
-            text-align: right;
-            width: 100px;
-        }
-        .elmassa-table thead th.th-qty {
-            text-align: center;
-            width: 55px;
-        }
-        .elmassa-table thead th.th-total {
-            text-align: right;
-            width: 120px;
-        }
-
-        .elmassa-table tbody tr {
-            border-bottom: 1px solid var(--color-border-subtle);
-        }
-
-        .elmassa-table tbody td {
-            padding: 9px 0;
-            vertical-align: middle;
-            color: var(--color-text-main);
-        }
-
-        .td-num {
-            font-weight: 600;
-            color: var(--color-pink-primary);
-            font-size: 0.78rem;
-        }
-
-        .td-desc {
-            padding-left: 10px;
-        }
-
-        .item-title-text {
+        .cover-recipient-name {
+            font-family: var(--font-sora);
+            font-size: 1.05rem;
             font-weight: 700;
-            font-size: 0.84rem;
-            color: var(--color-brown-primary);
-            line-height: 1.3;
+            color: #3e1607;
         }
 
-        .item-desc-text {
-            font-size: 0.72rem;
-            color: var(--color-text-muted);
-            line-height: 1.35;
-            margin-top: 1px;
-        }
-
-        .td-price {
-            text-align: right;
-            font-weight: 600;
+        .cover-recipient-org {
             font-size: 0.82rem;
-            color: var(--color-text-muted);
-            white-space: nowrap;
-        }
-
-        .td-qty {
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.82rem;
-            color: var(--color-brown-subtle);
-        }
-
-        .td-total {
-            text-align: right;
-            font-weight: 800;
-            font-size: 0.84rem;
-            color: var(--color-brown-primary);
-            white-space: nowrap;
-        }
-
-        /* Mockup Subtotal Divider Row (Pink Soft Background) */
-        .row-subtotal-mockup td {
-            background: var(--color-pink-light);
-            padding: 9px 10px;
-            border-top: 1.5px dashed var(--color-pink-border);
-            border-bottom: 2px solid var(--color-brown-primary);
-            font-weight: 800;
-            font-size: 0.76rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--color-pink-primary);
-        }
-
-        .row-subtotal-mockup .td-total-mockup {
-            color: var(--color-brown-primary);
-            font-size: 0.84rem;
-        }
-
-        /* TOTALS & SUMMARY SECTION */
-        .totals-and-signature-grid {
-            margin-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .totals-summary-box {
-            width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 0.86rem;
-        }
-
-        .summary-line-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--color-text-muted);
-        }
-
-        .summary-label {
-            font-weight: 700;
-        }
-
-        .summary-value {
-            font-weight: 700;
-            text-align: right;
-            white-space: nowrap;
-            color: var(--color-brown-primary);
-        }
-
-        .summary-line-item.final-grand-total {
-            font-size: 1.15rem;
-            font-weight: 800;
-            padding-top: 10px;
-            border-top: 2px solid var(--color-brown-primary);
-            margin-top: 6px;
-            color: var(--color-brown-primary);
-        }
-
-        .summary-line-item.final-grand-total .summary-value {
-            color: var(--color-pink-primary);
-            font-size: 1.25rem;
-        }
-
-        /* SIGNATURE SECTION (REAL TTD DARU) */
-        .editorial-signature-unit {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .real-sig-wrapper {
-            display: inline-flex;
-            justify-content: flex-end;
-            margin-bottom: 2px;
-        }
-
-        .real-sig-img {
-            height: 90px;
-            max-width: 140px;
-            width: auto;
-            object-fit: contain;
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(92, 36, 14, 0.12));
-        }
-
-        .sig-printed-name {
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: var(--color-brown-primary);
-            letter-spacing: 0.02em;
-        }
-
-        .sig-official-role {
-            font-size: 0.72rem;
-            color: var(--color-pink-primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: var(--text-muted);
             margin-top: 2px;
         }
 
+        .cover-inv-num {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--red-accent);
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .passcode-wrapper {
+            margin: 25px 0 15px 0;
+        }
+
+        .passcode-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            color: #6b5349;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .passcode-input {
+            -webkit-text-security: disc;
+            text-security: disc;
+            width: 190px;
+            height: 48px;
+            background: #ffffff;
+            border: 2px solid #3e1607;
+            border-radius: 0;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: #3e1607;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .passcode-input:focus {
+            border-color: var(--red-accent);
+            box-shadow: 0 0 8px rgba(197, 71, 103, 0.35);
+        }
+
+        .passcode-error {
+            color: #dc2626;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+            letter-spacing: 0.05em;
+        }
+
+        .cover-open-btn {
+            background: var(--navy-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(62, 22, 7, 0.35);
+            transition: all 0.2s ease;
+            width: 100%;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .cover-open-btn:hover {
+            background: var(--red-accent);
+            transform: translateY(-1px);
+        }
+
         /* ----------------------------------------------------
-           BOTTOM PAYMENT REKENING CARD (DITARUH TERAKHIR)
+           MAIN INVOICE CONTAINER (SIGNATURE DOSSIER LOOK)
         ---------------------------------------------------- */
-        .bottom-payment-section {
-            margin-top: 36px;
-            padding-top: 24px;
-            border-top: 2px solid var(--color-brown-primary);
-        }
-
-        .mandiri-payment-card-full {
-            border: 1.5px solid var(--color-brown-primary);
-            background: var(--color-pink-light);
-            border-radius: 10px;
-            padding: 18px 24px;
+        .invoice-container {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--bg-cream);
+            border: 1px solid var(--border-navy);
+            box-shadow: 0 15px 35px rgba(62, 22, 7, 0.1);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
+            position: relative;
         }
 
-        .mandiri-card-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .mandiri-logo-row {
+        /* Sidebar Kiri Accent */
+        .sidebar-left {
+            width: 75px;
+            background-color: #fbf6f3;
+            border-right: 1px solid var(--border-light);
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            flex-shrink: 0;
+        }
+
+        .vertical-invoice-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: lowercase;
+            color: var(--red-accent);
+            opacity: 0.95;
+        }
+
+        .vertical-text-wrapper {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            gap: 15px;
+        }
+
+        .vertical-brand-name {
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+
+        /* Main Content Right */
+        .main-panel {
+            flex-grow: 1;
+            padding: 40px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            min-width: 0;
+        }
+
+        /* Header Row */
+        .invoice-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .top-left-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .inv-num-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .inv-date-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .billed-to-box {
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        .billed-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--red-accent);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .top-right-logo-box {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .logo-badge-container {
+            background: #3e1607;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #5c240e;
+        }
+
+        .logo-badge-container img {
+            height: 42px;
+            width: auto;
+            max-width: 170px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-badge-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--navy-primary);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Table Architecture */
+        .table-area {
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .margarita-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .margarita-table th {
+            text-align: left;
+            font-weight: 700;
+            color: var(--navy-primary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--navy-primary);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .margarita-table td {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        .section-header-banner {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 10px 14px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--red-accent);
+        }
+
+        .section-header-banner.adjust-banner {
+            background-color: #5c240e;
+            border-left-color: #e11d48;
+        }
+
+        .section-header-banner.maint-banner {
+            background-color: #2b1105;
+            border-left-color: #10b981;
+        }
+
+        .col-subtotal {
+            text-align: right;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            width: 150px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 3px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--red-accent);
+            font-weight: bold;
+        }
+
+        .table-totals-row td {
+            padding: 8px 0;
+            border-bottom: none;
+        }
+
+        .grand-total {
+            border-top: 2px solid var(--navy-primary);
+            border-bottom: 2px solid var(--navy-primary);
+            font-weight: 700;
+            background: var(--red-light);
+        }
+
+        .grand-total td {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            padding: 16px 10px;
+            color: var(--navy-primary);
+        }
+
+        /* Scope Breakdown Box */
+        .scope-breakdown-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 16px 18px;
+            border-radius: 4px;
+        }
+
+        .scope-card-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scope-card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .scope-card-list li {
+            margin-bottom: 4px;
+            display: flex;
             align-items: flex-start;
             gap: 6px;
         }
 
-        .mandiri-bank-logo {
-            height: 32px;
-            max-width: 150px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .mandiri-badge {
-            font-size: 0.68rem;
-            font-weight: 800;
-            color: var(--color-pink-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .mandiri-account-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .mandiri-bold-number {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--color-brown-primary);
-            letter-spacing: 0.05em;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: color 0.15s ease;
-        }
-
-        .mandiri-bold-number:hover {
-            color: var(--color-pink-primary);
-        }
-
-        .click-copy-icon {
-            color: var(--color-pink-primary);
-        }
-
-        .mandiri-acc-name {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--color-text-main);
-        }
-
-        .mandiri-card-right {
-            display: flex;
-            align-items: center;
-        }
-
-        .btn-copy-account {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 22px;
-            background: var(--color-brown-primary);
-            color: var(--color-white);
-            border: 1.5px solid var(--color-brown-primary);
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(92, 36, 14, 0.15);
-        }
-
-        .btn-copy-account:hover {
-            background: var(--color-pink-primary);
-            border-color: var(--color-pink-primary);
-            transform: translateY(-1px);
-        }
-
-        .btn-copy-account.copied {
-            background: var(--color-pink-primary);
-            border-color: var(--color-pink-primary);
-            color: var(--color-white);
-        }
-
-        /* ----------------------------------------------------
-           TERMS & CONDITIONS FOOTER (PINK & BROWN PALETTE)
-        ---------------------------------------------------- */
-        .document-footer-terms {
-            margin-top: 28px;
-            padding-top: 18px;
-            border-top: 1px solid var(--color-border-subtle);
-            font-size: 0.78rem;
-            color: var(--color-text-muted);
-            line-height: 1.6;
-        }
-
-        .document-footer-terms strong {
-            color: var(--color-brown-primary);
-            font-weight: 700;
-        }
-
-        .upcoming-scope-box {
-            margin-top: 14px;
-            padding: 14px 18px;
-            border: 1.5px solid var(--color-pink-border);
-            border-left: 4px solid var(--color-pink-primary);
-            background: var(--color-pink-light);
-            border-radius: 6px;
-            font-size: 0.76rem;
-            color: var(--color-text-main);
-            line-height: 1.65;
-        }
-
-        .upcoming-scope-box strong {
-            color: var(--color-pink-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        /* ----------------------------------------------------
-           SECURITY PIN MODAL OVERLAY
-        ---------------------------------------------------- */
-        .security-gate-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: rgba(62, 22, 7, 0.88);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-box {
-            background: var(--color-white);
-            border: 2px solid var(--color-brown-primary);
-            border-radius: 12px;
-            max-width: 390px;
-            width: 100%;
-            padding: 38px 30px;
-            text-align: center;
-            font-family: var(--font-main);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-logo-frame {
+        /* Bottom Section Grid */
+        .bottom-section-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
             margin-bottom: 16px;
-            display: flex;
-            justify-content: center;
         }
 
-        .modal-logo-frame img {
-            height: 58px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--color-brown-primary);
-            letter-spacing: -0.02em;
+        .bottom-block-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--navy-primary);
             margin-bottom: 6px;
             text-transform: uppercase;
-        }
-
-        .modal-desc {
-            font-size: 0.82rem;
-            color: var(--color-text-muted);
-            line-height: 1.5;
-            margin-bottom: 22px;
-        }
-
-        .pin-field {
-            width: 100%;
-            height: 52px;
-            border: 2px solid var(--color-pink-border);
-            border-radius: 8px;
-            font-size: 1.45rem;
-            font-weight: 800;
-            text-align: center;
-            letter-spacing: 0.35em;
-            color: var(--color-brown-primary);
-            outline: none;
-            transition: all 0.2s ease;
-            margin-bottom: 14px;
-            font-family: var(--font-main);
-            background: var(--color-pink-light);
-        }
-
-        .pin-field:focus {
-            border-color: var(--color-pink-primary);
-            box-shadow: 0 0 0 3px rgba(197, 71, 103, 0.2);
-            background: var(--color-white);
-        }
-
-        .btn-modal-submit {
-            width: 100%;
-            height: 50px;
-            background: var(--color-brown-primary);
-            color: var(--color-white);
-            border: none;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 0.86rem;
             letter-spacing: 0.08em;
-            text-transform: uppercase;
+        }
+
+        .bottom-block-content {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .bank-mandiri-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .copy-pill-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-navy);
+            color: var(--navy-primary);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: var(--font-main);
+            margin-left: 6px;
+            transition: all 0.15s ease;
         }
 
-        .btn-modal-submit:hover {
-            background: var(--color-pink-primary);
+        .copy-pill-btn:hover {
+            background: var(--red-accent);
+            border-color: var(--red-accent);
+            color: #ffffff;
         }
 
-        .error-label {
-            color: var(--color-pink-primary);
-            background: var(--color-pink-light);
-            border: 1px solid var(--color-pink-border);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.74rem;
+        /* Terms & Notes Box */
+        .terms-container {
+            background-color: #fbf6f3;
+            border: 1px solid var(--border-light);
+            padding: 16px 20px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .terms-title {
             font-weight: 700;
-            margin-top: 14px;
-            display: none;
-        }
-
-        /* ----------------------------------------------------
-           TOAST NOTIFICATION
-        ---------------------------------------------------- */
-        .toast-popup {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(50px);
-            background: var(--color-brown-primary);
-            color: var(--color-white);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
+            color: var(--navy-primary);
+            margin-bottom: 6px;
             text-transform: uppercase;
-            box-shadow: 0 10px 30px rgba(92, 36, 14, 0.35);
-            z-index: 100000;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            border: 1.5px solid var(--color-pink-border);
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
         }
 
-        .toast-popup.show {
-            transform: translateX(-50%) translateY(0);
+        /* Top Action Bar */
+        .action-bar {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-title span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red-accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font-family: var(--font-sora);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 2px;
+            cursor: pointer;
+            border: 1px solid var(--navy-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--red-accent);
+            border-color: var(--red-accent);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: var(--navy-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #fbf6f3;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--navy-primary);
+            color: #ffffff;
+            padding: 12px 22px;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99999;
+            border-left: 4px solid var(--red-accent);
+        }
+
+        .toast.show {
             opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
         }
 
         /* ----------------------------------------------------
-           HIGHLY REFINED RESPONSIVE MOBILE UX (< 680px)
+           RESPONSIVE MOBILE STYLES (ENHANCED FOR ALL PHONES)
         ---------------------------------------------------- */
-        @media (max-width: 680px) {
-            .invoice-full-page {
-                padding: 16px 14px 60px;
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px 8px 36px 8px;
             }
 
-            .toolbar-inner {
-                padding: 10px 14px;
+            .action-bar {
+                flex-direction: column;
                 gap: 10px;
+                align-items: stretch;
+                margin-bottom: 12px;
             }
 
-            .toolbar-left {
-                width: 100%;
-                justify-content: space-between;
+            .action-title {
+                text-align: center;
+                justify-content: center;
+                font-size: 0.72rem;
+                line-height: 1.4;
             }
 
-            /* Thumb-friendly 2x2 grid for action buttons */
-            .toolbar-right {
-                width: 100%;
+            .btn-group {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 8px;
+                width: 100%;
             }
 
-            .btn-action-chip {
-                width: 100%;
+            .btn {
+                padding: 10px 6px;
+                font-size: 0.74rem;
                 justify-content: center;
-                padding: 10px 8px;
-                font-size: 0.72rem;
-                border-radius: 6px;
+                min-height: 42px;
             }
 
-            /* Responsive Header */
-            .document-header {
+            .invoice-container {
                 flex-direction: column;
-                align-items: stretch;
-                gap: 16px;
-                padding-bottom: 20px;
+                border-radius: 4px;
+                overflow: hidden;
             }
 
-            .brand-unit {
+            .sidebar-left {
                 width: 100%;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-
-            .elmassa-logo-img {
-                height: 54px;
-            }
-
-            .brand-name {
-                font-size: 1.15rem;
-            }
-
-            .brand-sub {
-                font-size: 0.68rem;
-            }
-
-            .invoice-title-unit {
-                width: 100%;
-                display: flex;
+                height: auto;
+                min-height: 46px;
+                padding: 10px 14px;
+                flex-direction: row;
                 justify-content: space-between;
+                align-items: center;
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
+            }
+
+            .vertical-invoice-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 1.2rem;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+                line-height: 1;
+            }
+
+            .vertical-text-wrapper {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 0.62rem;
+                letter-spacing: 0.06em;
+                display: flex;
+                flex-direction: column;
                 align-items: flex-end;
-                padding-top: 14px;
-                border-top: 1px dashed var(--color-border-subtle);
+                gap: 2px;
+            }
+
+            .main-panel {
+                padding: 18px 12px;
+            }
+
+            .invoice-header-row {
+                flex-direction: column-reverse;
+                gap: 14px;
+            }
+
+            .top-right-logo-box {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding-bottom: 10px;
+                border-bottom: 1px dashed var(--border-light);
                 text-align: left;
             }
 
-            .invoice-main-heading {
-                font-size: 2.1rem;
-                line-height: 0.95;
+            .logo-badge-container {
+                padding: 6px 12px;
             }
 
-            .invoice-meta-lines {
-                text-align: right;
+            .logo-badge-container img {
+                height: 34px;
+                width: auto;
+            }
+
+            .brand-badge-pill {
                 margin-top: 0;
+                font-size: 0.64rem;
+                padding: 3px 8px;
+            }
+
+            .top-left-meta {
+                width: 100%;
+            }
+
+            .inv-num-label {
                 font-size: 0.72rem;
             }
 
-            /* Meta Grid Mobile */
-            .invoice-meta-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                padding: 16px 0;
-            }
-
-            /* LUXURY CARD-ROW MOBILE TABLE */
-            .elmassa-table thead {
-                display: none;
-            }
-
-            .elmassa-table tbody tr {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding: 11px 0;
-                border-bottom: 1px solid var(--color-border-subtle);
-                gap: 12px;
-            }
-
-            .elmassa-table tbody tr td {
-                padding: 0;
-                border: none;
-            }
-
-            .elmassa-table .td-num {
-                display: none;
-            }
-
-            .elmassa-table .td-desc {
-                flex: 1;
-                padding-left: 0;
-            }
-
-            .elmassa-table .item-title-text {
-                font-size: 0.85rem;
-                line-height: 1.3;
-            }
-
-            .elmassa-table .item-desc-text {
+            .inv-date-label {
                 font-size: 0.72rem;
-                margin-top: 2px;
-                color: var(--color-text-muted);
+                margin-bottom: 8px;
             }
 
-            .elmassa-table .td-price,
-            .elmassa-table .td-qty {
-                display: none;
-            }
-
-            .elmassa-table .td-total {
-                text-align: right;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                flex-shrink: 0;
-                gap: 2px;
-                font-size: 0.86rem;
-            }
-
-            .elmassa-table .td-total::after {
-                content: attr(data-qty);
-                font-size: 0.7rem;
-                font-weight: 600;
-                color: var(--color-text-muted);
-            }
-
-            /* Mobile Mockup Subtotal Banner */
-            .elmassa-table .row-subtotal-mockup {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 11px 14px;
-                border-radius: 8px;
-                margin: 8px 0;
-                border: 1.5px solid var(--color-pink-border);
-                background: var(--color-pink-light);
-            }
-
-            .elmassa-table .row-subtotal-mockup td {
-                background: transparent;
-                padding: 0;
-                border: none;
-            }
-
-            .elmassa-table .row-subtotal-mockup .td-total-mockup {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-
-            .elmassa-table .row-subtotal-mockup .td-total-mockup::after {
-                content: "12 Item";
-                font-size: 0.7rem;
-                font-weight: 700;
-                color: var(--color-pink-primary);
-            }
-
-            /* Summary & Signature Mobile */
-            .totals-and-signature-grid {
-                flex-direction: column-reverse;
-                align-items: stretch;
-                gap: 20px;
-                margin-top: 20px;
-            }
-
-            .totals-summary-box {
-                width: 100%;
-                background: var(--color-pink-light);
-                padding: 14px 16px;
-                border-radius: 8px;
-                border: 1px solid var(--color-pink-border);
-            }
-
-            .editorial-signature-unit {
-                align-self: flex-end;
-            }
-
-            .real-sig-img {
-                height: 78px;
-            }
-
-            /* Mandiri Card Mobile (Terakhir) */
-            .mandiri-payment-card-full {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 16px;
-                gap: 16px;
-            }
-
-            .mandiri-card-left {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .mandiri-bold-number {
-                font-size: 1.25rem;
-            }
-
-            .btn-copy-account {
-                width: 100%;
+            .billed-to-box {
                 padding: 12px;
+                font-size: 0.8rem;
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 4px;
             }
-        }
 
-        /* ----------------------------------------------------
-           PRINT SPECIFICATION (A4 CLEAN PRINT)
-        ---------------------------------------------------- */
-        @media print {
-            body {
-                background: #ffffff !important;
+            .table-area {
+                margin-bottom: 18px;
+                overflow-x: visible;
+            }
+
+            /* Responsive Card Table Layout on Mobile */
+            .margarita-table {
+                display: block;
+                width: 100%;
+                border: none;
+                overflow-x: visible;
+            }
+
+            .margarita-table thead {
+                display: none;
+            }
+
+            .margarita-table tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .margarita-table tr {
+                display: block;
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 4px;
+                padding: 14px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            }
+
+            .margarita-table tr:has(.section-header-banner) {
+                background: transparent;
+                border: none;
+                padding: 0;
+                box-shadow: none;
+                margin-bottom: -4px;
+            }
+
+            .section-header-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                padding: 8px 12px;
+                font-size: 0.72rem;
+                border-radius: 3px;
+            }
+
+            .margarita-table td {
+                display: block;
+                width: 100% !important;
                 padding: 0 !important;
-                margin: 0 !important;
-                color: #2b170f !important;
+                border: none !important;
+                text-align: left !important;
             }
 
-            .top-toolbar,
-            .security-gate-overlay,
-            .toast-popup {
+            .margarita-table tr td:nth-child(2),
+            .margarita-table tr td:nth-child(3) {
                 display: none !important;
             }
 
-            .invoice-full-page {
-                max-width: 100% !important;
-                width: 100% !important;
-                padding: 20px 24px !important;
-                margin: 0 !important;
+            .margarita-table .item-title {
+                font-size: 0.88rem;
+                line-height: 1.4;
+                margin-bottom: 6px;
             }
 
-            .mandiri-payment-card-full,
-            .row-subtotal-mockup td,
-            .upcoming-scope-box {
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
+            .margarita-table .bullet-list {
+                font-size: 0.78rem;
+                line-height: 1.45;
+                margin-bottom: 8px;
             }
+
+            .margarita-table tr td.col-subtotal {
+                margin-top: 10px;
+                padding-top: 8px !important;
+                border-top: 1px dashed var(--border-light) !important;
+                display: flex !important;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.85rem;
+                color: var(--navy-primary);
+                width: 100% !important;
+                font-weight: 700;
+            }
+
+            .margarita-table tr td.col-subtotal::before {
+                content: "BIAYA // STATUS:";
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                color: var(--text-muted);
+                font-weight: 700;
+                letter-spacing: 0.05em;
+            }
+
+            /* Clean Unified Totals Block on Mobile */
+            .margarita-table tr.table-totals-row:not(.grand-total) {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-bottom: 1px dashed var(--border-light);
+                border-radius: 0;
+                padding: 10px 14px;
+                margin-bottom: 0;
+                box-shadow: none;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                flex-direction: row !important;
+            }
+
+            .margarita-table tr.table-totals-row:first-of-type {
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                margin-top: 6px;
+                border-top: 1px solid var(--border-light) !important;
+            }
+
+            .margarita-table tr.table-totals-row:not(.grand-total) td:first-child {
+                display: inline-block !important;
+                width: auto !important;
+                font-size: 0.78rem !important;
+                font-weight: 600 !important;
+                text-align: left !important;
+                padding: 0 !important;
+                line-height: 1.3 !important;
+            }
+
+            .margarita-table tr.table-totals-row:not(.grand-total) td.col-subtotal {
+                display: inline-block !important;
+                width: auto !important;
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+                border-top: none !important;
+                font-size: 0.85rem !important;
+                font-weight: 700 !important;
+                text-align: right !important;
+                white-space: nowrap !important;
+            }
+
+            .margarita-table tr.table-totals-row:not(.grand-total) td.col-subtotal::before {
+                display: none !important;
+            }
+
+            .margarita-table tr.grand-total {
+                background: var(--red-light);
+                border: 2px solid var(--navy-primary);
+                border-radius: 0 0 6px 6px;
+                padding: 14px;
+                margin-top: 0;
+                display: block !important;
+            }
+
+            .margarita-table tr.grand-total td {
+                padding: 0 !important;
+            }
+
+            .margarita-table tr.grand-total td:first-child {
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--navy-primary);
+                margin-bottom: 6px;
+                line-height: 1.4;
+            }
+
+            .margarita-table tr.grand-total td.col-subtotal {
+                font-size: 1.25rem !important;
+                font-weight: 800 !important;
+                color: var(--navy-primary) !important;
+                border-top: 1px solid var(--navy-primary) !important;
+                padding-top: 8px !important;
+            }
+
+            .margarita-table tr.grand-total td.col-subtotal::before {
+                content: "TOTAL HARUS DIBAYAR:";
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--navy-primary);
+            }
+
+            .scope-breakdown-box {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 18px;
+            }
+
+            .scope-card {
+                padding: 14px;
+            }
+
+            .scope-card-title {
+                font-size: 0.72rem;
+            }
+
+            .scope-card-list {
+                font-size: 0.76rem;
+            }
+
+            .bottom-section-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding-top: 14px;
+            }
+
+            .bank-mandiri-box {
+                background: #ffffff;
+                border: 1px solid var(--border-light);
+                border-radius: 4px;
+                padding: 10px 12px;
+                margin-top: 6px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .copy-pill-btn {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+                min-height: 34px;
+            }
+
+            .terms-container {
+                padding: 12px 14px;
+                font-size: 0.74rem;
+                line-height: 1.5;
+            }
+
+            .cover-card {
+                padding: 26px 16px;
+                margin: 8px auto;
+            }
+
+            .classified-stamp {
+                font-size: 0.62rem;
+                letter-spacing: 0.1em;
+                padding: 3px 8px;
+                margin-bottom: 12px;
+            }
+
+            .passcode-input {
+                width: 100%;
+                max-width: 220px;
+                font-size: 1.4rem;
+                height: 48px;
+                letter-spacing: 8px;
+            }
+
+            .cover-open-btn {
+                min-height: 48px;
+                font-size: 0.8rem;
+                padding: 12px;
+            }
+
+            .toast {
+                left: 50% !important;
+                right: auto !important;
+                transform: translateX(-50%) translateY(20px) !important;
+                width: calc(100% - 32px);
+                max-width: 360px;
+                text-align: center;
+                bottom: 20px !important;
+            }
+
+            .toast.show {
+                transform: translateX(-50%) translateY(0) !important;
+            }
+        }
+
+        /* Print Optimization */
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; }
+            .cover-overlay, .action-bar, .copy-pill-btn, .toast { display: none !important; }
+            .invoice-container { box-shadow: none !important; border: 1px solid #000000 !important; max-width: 100% !important; }
+            .sidebar-left { background-color: #fbf6f3 !important; border-right: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
+            .section-header-banner { background-color: #3e1607 !important; color: #ffffff !important; -webkit-print-color-adjust: exact !important; }
+            .grand-total { background-color: #fff1f4 !important; -webkit-print-color-adjust: exact !important; }
+            .logo-badge-container { background: #3e1607 !important; -webkit-print-color-adjust: exact !important; }
         }
     </style>
 </head>
-<body class="locked">
+<body>
 
-    <!-- TOP TOOLBAR -->
-    <header class="top-toolbar">
-        <div class="toolbar-inner">
-            <div class="toolbar-left">
-                <a href="/" class="btn-nav-dashboard">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Dashboard
-                </a>
-                <span class="pill-status-unpaid">
-                    Belum Lunas
-                </span>
+    <!-- SECURITY PASSCODE COVER OVERLAY -->
+    <div id="coverOverlay" class="cover-overlay">
+        <div class="cover-card">
+            <div class="classified-stamp">DOKUMEN RESMI // CONFIDENTIAL DOSSIER</div>
+
+            <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+                <div class="cover-logo-container">
+                    <img src="/elmassa/logo_elmassa.png" alt="El Massa Tour &amp; Travel Logo" onerror="this.src='logo_elmassa.png'">
+                </div>
             </div>
 
-            <div class="toolbar-right">
-                <button type="button" class="btn-action-chip btn-primary-brown" onclick="window.print()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    Cetak PDF
-                </button>
-                <button type="button" class="btn-action-chip btn-pink-accent" id="btnDownloadPng" onclick="downloadInvoicePng()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    Unduh PNG
-                </button>
-                <button type="button" class="btn-action-chip" onclick="copyBankAccount()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                    Salin Rek Mandiri
-                </button>
-                <button type="button" class="btn-action-chip" onclick="copyWaScriptLocal()">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    Salin Script WA
-                </button>
+            <div class="cover-recipient-box">
+                <div class="cover-recipient-label">DOSSIER RECIPIENT // DITUJUKAN KEPADA:</div>
+                <div class="cover-recipient-name">El Massa Tour &amp; Travel</div>
+                <div class="cover-recipient-org">Up: <strong>Direksi &amp; Tim Manajemen Operasional</strong></div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Proyek: <strong>Sistem Operasional Travel ElMassa &amp; Unlimited Token Umrahme</strong></div>
+                <div class="cover-inv-num">REF CODE: #INV/EM-UM/2026/10/001</div>
             </div>
-        </div>
-    </header>
 
-    <!-- FULL DOCUMENT (NO BOX, FULL CLEAN PAGE) -->
-    <main class="invoice-full-page" id="invoiceCaptureContainer">
-
-        <div id="invoiceDocument" inert>
-
-            <!-- DOCUMENT HEADER WITH EL MASSA LOGO -->
-            <header class="document-header">
-                <div class="brand-unit">
-                    <img src="/elmassa/logo_elmassa.png" alt="Logo El Massa Tour &amp; Travel" class="elmassa-logo-img" onerror="this.src='logo_elmassa.png'">
-                    <div class="brand-details">
-                        <span class="brand-name">EL MASSA</span>
-                        <span class="brand-sub">Tour &amp; Travel &middot; Project Invoice</span>
-                    </div>
-                </div>
-
-                <div class="invoice-title-unit">
-                    <h1 class="invoice-main-heading">Invoice</h1>
-                    <div class="invoice-meta-lines">
-                        No. Ref: <strong>#INV/DAR/2026/10/001</strong><br>
-                        Tanggal: <strong>01 Oktober 2026</strong>
-                    </div>
-                </div>
-            </header>
-
-            <!-- INVOICE METADATA: CLIENT & ISSUER INFO -->
-            <section class="invoice-meta-grid">
-                <div class="meta-col">
-                    <div class="meta-label">Invoice To :</div>
-                    <div class="meta-title-bold">El Massa Tour &amp; Travel</div>
-                    <div class="meta-sub-text">
-                        Klien Resmi &middot; Indonesia &middot; +62 813-1150-6025
-                    </div>
-                </div>
-                <div class="meta-col">
-                    <div class="meta-label">Diterbitkan Oleh :</div>
-                    <div class="meta-title-bold">DAR STUDIO</div>
-                    <div class="meta-sub-text">
-                        Kota Tangerang, Banten &middot; temantiket.com &middot; +62 813-1150-6025
-                    </div>
-                </div>
-            </section>
-
-            <!-- MAIN ITEMS TABLE -->
-            <section class="table-section-area">
-                <table class="elmassa-table">
-                    <thead>
-                        <tr>
-                            <th class="th-num">#</th>
-                            <th class="th-desc">Item Description</th>
-                            <th class="th-price">Price</th>
-                            <th class="th-qty">Qty.</th>
-                            <th class="th-total">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- ITEM 1: TOTAL MOCKUP MERCHANDISE -->
-                        <tr>
-                            <td class="td-num">1</td>
-                            <td class="td-desc">
-                                <div class="item-title-text">Desain Mockup Merchandise (12 Item)</div>
-                                <div class="item-desc-text">Kain Baju Pria &amp; Wanita (2,5 m), Tas Serut, Sarung Koper 26", Sajadah Syal, Bantal Leher, Lanyard, Ransel, Kerudung Syar'i, Mukena Travel, Cover Mini Notebook, Cover Buku Doa.</div>
-                            </td>
-                            <td class="td-price">Rp 420.000</td>
-                            <td class="td-qty">1 Paket</td>
-                            <td class="td-total" data-qty="1 Paket">Rp 420.000</td>
-                        </tr>
-
-                        <!-- ITEM 2: POSTER / BROSUR PROMOSI -->
-                        <tr>
-                            <td class="td-num">2</td>
-                            <td class="td-desc">
-                                <div class="item-title-text">Desain Poster / Brosur Promosi</div>
-                                <div class="item-desc-text">12 materi promosi cetak &amp; konten publikasi media sosial El Massa</div>
-                            </td>
-                            <td class="td-price">Rp 35.000</td>
-                            <td class="td-qty">12</td>
-                            <td class="td-total" data-qty="12 × Rp 35.000">Rp 420.000</td>
-                        </tr>
-
-                        <!-- ITEM 3: WEBSITE KATALOG -->
-                        <tr>
-                            <td class="td-num">3</td>
-                            <td class="td-desc">
-                                <div class="item-title-text">Pembuatan Website Katalog</div>
-                                <div class="item-desc-text">Pembangunan landing page responsif katalog paket umrah &amp; travel</div>
-                            </td>
-                            <td class="td-price">Rp 800.000</td>
-                            <td class="td-qty">1</td>
-                            <td class="td-total" data-qty="1 × Rp 800.000">Rp 800.000</td>
-                        </tr>
-
-                        <!-- ITEM 4: UPDATE WEBSITE ITINERARY -->
-                        <tr>
-                            <td class="td-num">4</td>
-                            <td class="td-desc">
-                                <div class="item-title-text">Update Website Itinerary</div>
-                                <div class="item-desc-text">Pembaruan jadwal rute perjalanan &amp; fasilitas paket keberangkatan</div>
-                            </td>
-                            <td class="td-price">Rp 300.000</td>
-                            <td class="td-qty">1</td>
-                            <td class="td-total" data-qty="1 × Rp 300.000">Rp 300.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- SUMMARY TOTALS & SIGNATURE -->
-            <section class="totals-and-signature-grid">
-                <!-- SIGNATURE BLOCK (REAL SIGNATURE DARU FAHMAA) -->
-                <div class="editorial-signature-unit">
-                    <div class="real-sig-wrapper">
-                        <img src="/elmassa/ttd_daru_brown.png" alt="Tanda Tangan Daru Fahmaa Muliawan" class="real-sig-img" onerror="this.src='ttd_daru.png'">
-                    </div>
-                    <div class="sig-printed-name">Daru Fahmaa Muliawan</div>
-                    <div class="sig-official-role">Lead Creative &amp; Director &middot; DAR Studio</div>
-                </div>
-
-                <!-- TOTALS SUMMARY -->
-                <div class="totals-summary-box">
-                    <div class="summary-line-item">
-                        <span class="summary-label">Sub Total :</span>
-                        <span class="summary-value">Rp 1.940.000</span>
-                    </div>
-                    <div class="summary-line-item">
-                        <span class="summary-label">Tax :</span>
-                        <span class="summary-value">0.00%</span>
-                    </div>
-                    <div class="summary-line-item final-grand-total">
-                        <span class="summary-label">Total :</span>
-                        <span class="summary-value">Rp 1.940.000</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- REKENING BANK MANDIRI (DITARUH TERAKHIR / AT THE VERY BOTTOM) -->
-            <section class="bottom-payment-section">
-                <div class="mandiri-payment-card-full">
-                    <div class="mandiri-card-left">
-                        <div class="mandiri-logo-row">
-                            <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri" class="mandiri-bank-logo" onerror="this.src='mandiri_logo.webp'">
-                            <span class="mandiri-badge">Rekening Resmi Pembayaran</span>
-                        </div>
-                        <div class="mandiri-account-info">
-                            <div class="mandiri-bold-number" id="bankAccNumber" onclick="copyBankAccount()" title="Klik untuk salin nomor rekening">
-                                <span>1550010616962</span>
-                                <svg class="click-copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            </div>
-                            <div class="mandiri-acc-name">Bank Mandiri &middot; a.n. Daru Fahmaa Muliawan</div>
-                        </div>
-                    </div>
-                    <div class="mandiri-card-right">
-                        <button type="button" class="btn-copy-account" id="btnCopyAccount" onclick="copyBankAccount()">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            <span id="btnCopyAccountText">Salin No. Rekening</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TERMS & CONDITIONS / UPCOMING SCOPE FOOTER -->
-            <footer class="document-footer-terms">
-                <p>
-                    <strong>Terms &amp; Conditions :</strong> Pembayaran tagihan resmi ini ditransfer ke rekening Bank Mandiri di atas dengan nomor <strong>1550010616962</strong> a.n. Daru Fahmaa Muliawan. Seluruh berkas digital master resolusi tinggi akan diserahkan setelah verifikasi pembayaran diterima.
-                </p>
-                <div class="upcoming-scope-box">
-                    <strong>Pekerjaan Lanjutan &mdash; Belum Termasuk Total Tagihan di Atas:</strong><br>
-                    &bull; <strong>Sistem Travel:</strong> Harga menyusul sesuai kebutuhan alur &amp; modul pemesanan sistem.<br>
-                    &bull; <strong>Sistem UmrahMe:</strong> Harga menyesuaikan saat penerbitan dokumen resmi untuk jamaah.
-                </div>
-            </footer>
-
-        </div>
-
-    </main>
-
-    <!-- SECURITY PIN MODAL OVERLAY -->
-    <div class="security-gate-overlay" id="securityGate">
-        <div class="modal-box">
-            <div class="modal-logo-frame">
-                <img src="/elmassa/logo_elmassa.png" alt="El Massa Logo" onerror="this.src='logo_elmassa.png'">
+            <div class="passcode-wrapper">
+                <div class="passcode-label">MASUKKAN KODE PIN RESMI:</div>
+                <input type="text" id="passcodeInput" class="passcode-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocomplete="new-password" name="pin_code_clean" value="" placeholder="• • • •">
+                <div id="passcodeError" class="passcode-error">[ ACCESS DENIED // KODE PIN SALAH ]</div>
             </div>
-            <h3 class="modal-title">Invoice Terproteksi</h3>
-            <p class="modal-desc">Masukkan Kode PIN Resmi untuk membuka akses dokumen invoice El Massa.</p>
 
-            <form onsubmit="handlePinSubmit(event)">
-                <input type="password" id="pinInput" class="pin-field" placeholder="••••" maxlength="6" autofocus inputmode="numeric">
-                <button type="submit" class="btn-modal-submit">Buka Dokumen</button>
-            </form>
-
-            <div class="error-label" id="gateError">Kode PIN tidak valid. Coba lagi.</div>
+            <button class="cover-open-btn" onclick="verifyPasscode()">
+                BUKA DOKUMEN PENAWARAN RESMI
+            </button>
         </div>
     </div>
 
-    <!-- TOAST POPUP -->
-    <div class="toast-popup" id="toastBox">Teks berhasil disalin!</div>
+    <!-- TOP CONTROL BAR -->
+    <div class="action-bar">
+        <div class="action-title">
+            <span></span> PROPOSAL &amp; INVOICE #INV/EM-UM/2026/10/001 &mdash; EL MASSA &amp; UMRAHME
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="copyBankAcc()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <a href="https://wa.me/6281311506025?text=Halo%20Mas%20Daru%2C%20saya%20sudah%20cek%20Invoice%20%23INV%2FEM-UM%2F2026%2F10%2F001%20ElMassa%20%26%20Umrahme" target="_blank" class="btn btn-secondary" style="color: #16a34a; border-color: #16a34a;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                Chat WhatsApp
+            </a>
+            <button class="btn btn-primary" onclick="downloadPDF()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+            </button>
+            <button class="btn btn-primary" style="background:#3e1607; border-color:#3e1607;" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Print
+            </button>
+        </div>
+    </div>
 
-    <!-- INTERACTION LOGIC SCRIPT -->
+    <!-- MAIN INVOICE CONTAINER -->
+    <div class="invoice-container">
+        
+        <!-- Sidebar Kiri Signature -->
+        <div class="sidebar-left">
+            <div class="vertical-invoice-title">elmassa travel</div>
+            <div class="vertical-text-wrapper">
+                <span class="vertical-brand-name">EL MASSA TOUR &amp; TRAVEL</span>
+                <span>OKTOBER 2026</span>
+            </div>
+        </div>
+
+        <!-- Main Content Right -->
+        <div class="main-panel">
+            
+            <div>
+                <!-- Header Meta Row -->
+                <div class="invoice-header-row">
+                    <div class="top-left-meta">
+                        <div class="inv-num-label">PENAWARAN &amp; INVOICE NO. #INV/EM-UM/2026/10/001</div>
+                        <div class="inv-date-label">26 Oktober 2026 &middot; Jatuh Tempo: 02 November 2026</div>
+
+                        <div class="billed-to-box">
+                            <div class="billed-title">DITUJUKAN KEPADA // BILLED TO:</div>
+                            <div class="billed-content">
+                                <strong>El Massa Tour &amp; Travel</strong><br>
+                                Up: Direksi &amp; Tim Manajemen Operasional Travel<br>
+                                Proyek: <strong>Sistem Operasional Travel ElMassa &amp; Unlimited Token Umrahme</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="top-right-logo-box">
+                        <div class="logo-badge-container">
+                            <img src="/elmassa/logo_elmassa.png" alt="El Massa Tour &amp; Travel Logo" onerror="this.src='logo_elmassa.png'">
+                        </div>
+                        <span class="brand-badge-pill">OFFICIAL TRAVEL CONTRACT</span>
+                    </div>
+                </div>
+
+                <!-- Scope Breakdown Table -->
+                <div class="table-area">
+                    <table class="margarita-table">
+                        <thead>
+                            <tr>
+                                <th>RUANG LINGKUP &amp; SPESIFIKASI SISTEM ELMASSA &amp; UMRAHME</th>
+                                <th class="col-subtotal" style="text-align: center; width: 90px;">DURASI</th>
+                                <th class="col-subtotal" style="text-align: right; width: 140px;">BIAYA</th>
+                                <th class="col-subtotal">SUBTOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <!-- BANNER BAGIAN I: UNLIMITED TOKEN UMRAHME -->
+                            <tr>
+                                <td colspan="4" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner">
+                                        <span>BAGIAN I: LISENSI UNLIMITED TOKEN UMRAHME (UNLIMITED ISSUANCE ACCESS)</span>
+                                        <span>Akses Penuh Tanpa Batas</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 1: Unlimited Token Umrahme -->
+                            <tr>
+                                <td>
+                                    <div class="item-title" style="color: #c54767;">
+                                        ★ Lisensi Akses Unlimited Token Umrahme (Bisa Terbitkan Berapapun Tanpa Batasan Kuota)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Unlimited Issuance Access:</strong> Hak penerbitan dokumen visa umrah, manifest jamaah, ID card, dan voucher hotel via engine Umrahme tanpa batasan kuota / token per pax. Bebas terbitkan berapapun jumlah jamaah!</li>
+                                        <li><strong>No Hidden Costs:</strong> Tidak ada biaya isi ulang token (top-up fee) bulanan maupun per transaksi untuk operasional travel El Massa.</li>
+                                        <li><strong>Sinkronisasi Langsung:</strong> Data penerbitan dokumen langsung tersinkronisasi otomatis dengan sistem operasional El Massa secara real-time.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #3e1607;">Unlimited</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #3e1607;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #3e1607; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- BANNER BAGIAN II: SISTEM OPERASIONAL TRAVEL ELMASSA -->
+                            <tr>
+                                <td colspan="4" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner adjust-banner">
+                                        <span>BAGIAN II: PENGEMBANGAN SISTEM OPERASIONAL TRAVEL ELMASSA</span>
+                                        <span>Sistem Lengkap Terintegrasi</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 2: Modul Paket & Keberangkatan -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        1. Modul Manajemen Paket Umrah &amp; Kuota Keberangkatan
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Pengaturan Paket &amp; Seat:</strong> Manajemen jadwal keberangkatan, kuota seat pesawat, hotel Makkah &amp; Madinah, serta kalkulasi HPP paket reguler/plus secara instan.</li>
+                                        <li><strong>Status Seat Real-Time:</strong> Pemantauan sisa seat tersedia, waiting list jamaah, dan status booking per grup tanggal.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #3e1607;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #3e1607;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #3e1607; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 3: Database Jamaah & Manifest -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        2. Database Jamaah, Dokumen Paspor &amp; Ekspor Manifest SISKOPATUH
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Database Jamaah Terpadu:</strong> Rekapitulasi biodata jamaah, scan paspor, nomor visa, status vaksin/buku kuning, dan pembagian kamar (quad/triple/double).</li>
+                                        <li><strong>Ekspor Manifest Standar Maskapai &amp; Kemenag:</strong> Cetak manifest penerbangan dan pelaporan SISKOPATUH sekali klik tanpa input ulang.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #3e1607;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #3e1607;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #3e1607; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 4: Pembayaran & Kwitansi QR -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        3. Modul Kasir, Pembayaran Bertahap &amp; Kwitansi QR Code Resmi
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Arus Kas Pembayaran:</strong> Pencatatan uang muka (DP), riwayat angsuran, pelunasan jamaah, dan rekap sisa piutang otomatis.</li>
+                                        <li><strong>Kwitansi Digital El Massa:</strong> Cetak kwitansi pembayaran resmi ber-QR Code untuk verifikasi keabsahan pembayaran jamaah.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #3e1607;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #3e1607;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #3e1607; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- ITEM 5: Executive Mobile Dashboard -->
+                            <tr>
+                                <td>
+                                    <div class="item-title">
+                                        4. Executive Mobile Dashboard (Khusus Direksi &amp; Owner via Smartphone)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Pantauan Bisnis 24/7:</strong> Cek omzet penjualan paket, sisa kuota seat per batch keberangkatan, dan posisi kas langsung dari HP pimpinan.</li>
+                                        <li><strong>Laporan Keberangkatan Instan:</strong> Rekap performa penjualan dan komisi agen/cabang siap pantau kapan saja.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #3e1607;">Include</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #3e1607;">Termasuk</td>
+                                <td class="col-subtotal" style="color: #3e1607; font-weight: 600;">Termasuk</td>
+                            </tr>
+
+                            <!-- BANNER BAGIAN III: OPERASIONAL & MAINTENANCE 1 TAHUN -->
+                            <tr>
+                                <td colspan="4" style="padding:0; border-bottom:none;">
+                                    <div class="section-header-banner maint-banner">
+                                        <span>BAGIAN III: OPERASIONAL MAINTENANCE &amp; DEDICATED SUPPORT 1 TAHUN</span>
+                                        <span>Garansi 365 Hari Kalender</span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ITEM 6: Maintenance 1 Tahun Penuh -->
+                            <tr>
+                                <td>
+                                    <div class="item-title" style="color: #10b981;">
+                                        ★ Layanan Operasional &amp; Maintenance Sistem Penuh Selama 1 Tahun (12 Bulan / 365 Hari)
+                                    </div>
+                                    <ul class="bullet-list">
+                                        <li><strong>Dedicated Technical Support:</strong> Pendampingan teknis prioritas via grup WhatsApp khusus untuk membantu kendala operasional harian tim El Massa.</li>
+                                        <li><strong>Pemeliharaan Server &amp; Database Backup:</strong> Monitoring uptime server 24/7, optimasi performa, serta backup database otomatis berkala terenkripsi aman.</li>
+                                        <li><strong>Pembaruan &amp; Bug Fixing:</strong> Garansi perbaikan bug dan pembaruan fitur minor (updates) sistem sepanjang 1 tahun kalender masa kontrak.</li>
+                                        <li><strong>Pelatihan Penggunaan Tim:</strong> Panduan intensif dan asistensi untuk operator travel, admin kasir, dan pimpinan El Massa.</li>
+                                    </ul>
+                                </td>
+                                <td style="text-align: center; font-family: var(--font-mono); color: #10b981;">1 Tahun</td>
+                                <td style="text-align: right; font-family: var(--font-mono); color: #10b981;">Rp 30.000.000</td>
+                                <td class="col-subtotal" style="color: #10b981; font-weight: 700;">Rp 30.000.000</td>
+                            </tr>
+
+                            <!-- SUMMARY ROWS -->
+                            <tr class="table-totals-row" style="border-top: 1px solid var(--border-light);">
+                                <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-muted); padding-top: 14px;">
+                                    Total Nilai Investasi Sistem &amp; Lisensi Token :
+                                </td>
+                                <td class="col-subtotal" style="font-weight: 700; color: var(--navy-primary); padding-top: 14px;">
+                                    Rp 30.000.000
+                                </td>
+                            </tr>
+                            <tr class="table-totals-row">
+                                <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-muted);">
+                                    Durasi Lisensi Token &amp; Maintenance :
+                                </td>
+                                <td class="col-subtotal" style="color: #10b981; font-weight: 700;">
+                                    1 Tahun Penuh (Unlimited)
+                                </td>
+                            </tr>
+                            <tr class="table-totals-row">
+                                <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-muted);">
+                                    Pajak Pertambahan Nilai (PPN) :
+                                </td>
+                                <td class="col-subtotal" style="color: var(--text-muted);">
+                                    Tidak Dikenakan
+                                </td>
+                            </tr>
+
+                            <!-- GRAND TOTAL ROW -->
+                            <tr class="table-totals-row grand-total">
+                                <td colspan="3" style="font-weight: 700; color: #3e1607;">
+                                    TOTAL YANG HARUS DIBAYAR (ALL-IN KONTRAK)
+                                </td>
+                                <td class="col-subtotal" style="font-size:1.3rem; font-weight:800; color: #3e1607;">
+                                    Rp 30.000.000
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:8px;">
+                        // tiga puluh juta rupiah // &mdash; All-in termasuk Lisensi Unlimited Token Umrahme (bebas terbitkan berapapun) dan Operasional Maintenance 1 Tahun
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHTS & BENEFIT CARDS -->
+                <div class="scope-breakdown-box">
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c54767" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>BENEFIT UTAMA UNLIMITED TOKEN UMRAHME</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c54767" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Unlimited Issuance:</strong> Bebas terbitkan dokumen &amp; visa umrah berapapun tanpa batasan kuota.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c54767" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Bebas Biaya Tambahan:</strong> Tanpa biaya top-up token per pax / transaksi selamanya.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c54767" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Sistem Operasional ElMassa:</strong> Terhubung langsung dengan database jamaah &amp; paket travel.</span>
+                            </li>
+                            <li>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c54767" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Manifest Standar SISKOPATUH:</strong> Ekspor format manifest resmi Kemenag &amp; maskapai sekali klik.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scope-card">
+                        <div class="scope-card-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3e1607" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>JAMINAN OPERASIONAL &amp; MAINTENANCE 1 TAHUN</span>
+                        </div>
+                        <ul class="scope-card-list">
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3e1607" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Total Nilai Kontrak:</strong> Rp 30.000.000 (All-In Sistem, Lisensi &amp; Support).</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span><strong>Masa Maintenance:</strong> 1 Tahun Kalender Penuh (12 Bulan / 365 Hari).</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3e1607" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Dedicated Support:</strong> Pendampingan teknis prioritas via WhatsApp &amp; Remote.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3e1607" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span><strong>Backup &amp; Server SLA:</strong> Monitoring uptime server 24/7 &amp; backup database harian.</span>
+                            </li>
+                            <li>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3e1607" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px; flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span><strong>Garansi &amp; Update:</strong> Garansi perbaikan bug &amp; update minor sepanjang 1 tahun.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Section Grid -->
+            <div>
+                <div class="bottom-section-grid">
+                    <!-- Left: Payments Info -->
+                    <div>
+                        <div class="bottom-block-title">PAYMENTS &amp; REKENING RESMI</div>
+                        <div class="bottom-block-content">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri Logo" style="height: 18px; width: auto; object-fit: contain;" onerror="this.src='mandiri_logo.webp'">
+                                <strong style="font-size: 0.95rem; color: #3e1607;">Bank Mandiri</strong>
+                            </div>
+                            <div style="margin-bottom: 2px; color: var(--text-muted);">
+                                Account Name: <strong style="color: #3e1607;">Daru Fahmaa Muliawan</strong>
+                            </div>
+                            <div class="bank-mandiri-box">
+                                <span>Account No: <strong style="font-family: var(--font-mono); font-size: 0.95rem; color: #3e1607; letter-spacing: 0.03em;">1550010616962</strong></span>
+                                <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REK</button>
+                            </div>
+                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+                                Berita Transfer: <code style="font-family: var(--font-mono); font-weight: 700; color: #3e1607;">INV/EM-UM/2026/10/001</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Issuer Details & Signature -->
+                    <div>
+                        <div class="bottom-block-title">ISSUER &amp; TANDA TANGAN RESMI</div>
+                        <div class="bottom-block-content">
+                            <strong style="color:#3e1607;">Dar Dev &middot; Daru Fahmaa Muliawan</strong><br>
+                            <span style="color:var(--red-accent); font-weight: 600; font-size: 0.78rem;">Senior Full-Stack Engineer &amp; System Architect</span><br>
+                            <span style="color:var(--text-muted); font-size: 0.78rem;">TemanTiket Tech Solutions &middot; WhatsApp: 081311506025</span>
+                            
+                            <div style="margin-top: 8px; border-top: 1px dashed var(--border-light); padding-top: 8px; display: flex; align-items: center; gap: 10px;">
+                                <img src="/elmassa/ttd_daru.png" alt="Tanda Tangan Daru Fahmaa" style="height: 44px; width: auto; object-fit: contain;" onerror="this.src='ttd_daru.png'">
+                                <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.3;">
+                                    <span style="color: #16a34a; font-weight: 700;">✓ VALID DIGITAL SIGNATURE</span><br>
+                                    <span>Daru Fahmaa Muliawan</span><br>
+                                    <span style="font-family: var(--font-mono); font-size: 0.65rem;">ELMASSA-UMRAHME-2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions Section -->
+                <div class="terms-container">
+                    <div class="terms-title">KETENTUAN KONTRAK &amp; PEMBAYARAN</div>
+                    <div>
+                        • <strong>Hak Akses Lisensi:</strong> Lisensi token Umrahme bersifat Unlimited (bebas terbitkan berapapun tanpa batasan kuota) aktif selama 1 tahun masa kontrak.<br>
+                        • <strong>Periode Maintenance:</strong> Pemeliharaan teknis, server hosting, dan backup database berlaku selama 365 hari kalender terhitung sejak sistem diaktifkan.<br>
+                        • <strong>Dukungan Teknis:</strong> Pendampingan teknis harian via WhatsApp prioritas untuk menjamin operasional kelancaran pendaftaran dan keberangkatan jamaah.<br>
+                        • <strong>Kerahasiaan Data:</strong> Seluruh database jamaah, dokumen paspor, dan transaksi keuangan merupakan aset rahasia milik El Massa Tour &amp; Travel.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Nomor Rekening Bank Mandiri Berhasil Disalin!</div>
+
     <script>
-        const VALID_PINS = ["0001", "050900"];
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput');
+            const errorMsg = document.getElementById('passcodeError');
+            const overlay = document.getElementById('coverOverlay');
+            const coverCard = document.querySelector('.cover-card');
 
-        function unlockDocument() {
-            const gate = document.getElementById("securityGate");
-            const doc = document.getElementById("invoiceDocument");
-            if (gate) gate.style.display = "none";
-            if (doc) doc.removeAttribute("inert");
-            document.body.classList.remove("locked");
-            try { sessionStorage.setItem("elmassa_unlocked", "true"); } catch(e) {}
-        }
-
-        function verifyPin() {
-            const pinIn = document.getElementById("pinInput");
-            const errEl = document.getElementById("gateError");
-            if (!pinIn) return;
-
-            const val = pinIn.value.trim();
-            if (VALID_PINS.includes(val)) {
-                if (errEl) errEl.style.display = "none";
-                unlockDocument();
-                showToast("Akses invoice dibuka!");
+            const pinVal = (typeof input === "string" ? input : (input ? input.value : "")).trim();
+            if (pinVal === "0001" || pinVal === "050900") {
+                overlay.classList.add('opened');
             } else {
-                if (errEl) errEl.style.display = "block";
-                pinIn.style.borderColor = "#c54767";
-                pinIn.style.background = "#fff0f3";
+                errorMsg.style.display = 'block';
+                coverCard.classList.add('shake-anim');
                 setTimeout(() => {
-                    pinIn.style.background = "#fde8ed";
+                    coverCard.classList.remove('shake-anim');
                 }, 400);
             }
         }
 
-        function handlePinSubmit(e) {
-            e.preventDefault();
-            verifyPin();
+        const pinInput = document.getElementById('passcodeInput');
+        if (pinInput) {
+            pinInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    verifyPasscode();
+                }
+            });
+            pinInput.addEventListener('input', function() {
+                const val = this.value.trim();
+                if (val === "0001" || val === "050900") {
+                    verifyPasscode();
+                }
+            });
+        }
+
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962');
+            showToast('Nomor Rekening Bank Mandiri (1550010616962) Berhasil Disalin!');
         }
 
         function showToast(msg) {
-            const t = document.getElementById("toastBox");
-            if (!t) return;
-            t.innerText = msg;
-            t.classList.add("show");
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
             setTimeout(() => {
-                t.classList.remove("show");
-            }, 2500);
+                toast.classList.remove('show');
+            }, 3000);
         }
 
-        function copyBankAccount() {
-            const num = "1550010616962";
-            const btn = document.getElementById("btnCopyAccount");
-            const btnText = document.getElementById("btnCopyAccountText");
-
-            navigator.clipboard.writeText(num).then(() => {
-                showToast("Rekening Mandiri (1550010616962) Disalin!");
-                if (btnText) btnText.innerText = "✓ Berhasil Disalin";
-                if (btn) btn.classList.add("copied");
-                setTimeout(() => {
-                    if (btnText) btnText.innerText = "Salin No. Rekening";
-                    if (btn) btn.classList.remove("copied");
-                }, 2200);
-            }).catch(() => {
-                showToast("No. Rekening: 1550010616962");
-            });
+        function downloadPDF() {
+            window.print();
         }
+    
+        window.addEventListener("DOMContentLoaded", function () {
+            // Check if pin is passed in URL ?pin=0001 or ?open=1
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("pin") === "0001" || params.get("pin") === "050900" || params.get("open") === "1") {
+                const overlay = document.getElementById('coverOverlay');
+                if (overlay) overlay.classList.add('opened');
+            }
 
-        function copyWaScriptLocal() {
-            const text = "Halo Tim El Massa! 🙏✨\n\n" +
-                         "Berikut kami lampirkan dokumen resmi Invoice untuk pengerjaan Paket Desain Branding Merchandise, Poster/Brosur, serta Pembuatan & Update Website Katalog El Massa:\n\n" +
-                         "🔗 Invoice Online: https://temantiket.com/elmassa\n" +
-                         "🔑 Kode PIN Akses: 0001 (atau 050900)\n\n" +
-                         "📋 Rincian Pekerjaan:\n" +
-                         "1. Desain Mockup Merchandise (12 Item): Rp 420.000\n" +
-                         "   • Kain Baju Pria & Kain Baju Wanita (2,5 m)\n" +
-                         "   • Tas Serut, Sarung Koper 26 inch, Sajadah Syal, Bantal Leher\n" +
-                         "   • Lanyard, Ransel, Kerudung Syar'i, Mukena Travel\n" +
-                         "   • Cover Mini Notebook, Cover Buku Doa\n" +
-                         "2. 12 Desain Poster / Brosur (@ Rp 35.000): Rp 420.000\n" +
-                         "3. Pembuatan Website Katalog: Rp 800.000\n" +
-                         "4. Update Website Itinerary: Rp 300.000\n\n" +
-                         "💰 TOTAL INVOICE: Rp 1.940.000\n" +
-                         "(Terbilang: Satu Juta Sembilan Ratus Empat Puluh Ribu Rupiah)\n\n" +
-                         "📌 Catatan Pekerjaan Lanjutan (Belum Termasuk Total):\n" +
-                         "• Sistem Travel → Harga menyusul\n" +
-                         "• Sistem UmrahMe → Harga menyesuaikan saat penerbitan untuk jamaah\n\n" +
-                         "💳 Rekening Resmi Pembayaran:\n" +
-                         "Bank Mandiri: 1550010616962\n" +
-                         "a.n. Daru Fahmaa Muliawan\n\n" +
-                         "Dokumen invoice interaktif resmi serta tombol Cetak Dokumen PDF & Unduh PNG beresolusi tinggi dapat langsung diakses melalui tautan di atas. Terima kasih banyak atas kepercayaan dan kerjasamanya! 🙏✨";
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("Script Pesan WA Berhasil Disalin!");
-            }).catch(() => {
-                showToast("Link: https://temantiket.com/elmassa");
-            });
-        }
-
-        function downloadInvoicePng() {
-            const btn = document.getElementById("btnDownloadPng");
-            const target = document.getElementById("invoiceCaptureContainer");
-            if (!target) return;
-
-            const origText = btn ? btn.innerHTML : "";
-            if (btn) btn.innerHTML = "Memproses...";
-
-            html2canvas(target, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: "#ffffff",
-                logging: false,
-                windowWidth: 1050
-            }).then(canvas => {
-                const link = document.createElement("a");
-                link.download = "Invoice-El-Massa-INV-DAR-2026-09-019.png";
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-                showToast("Invoice berhasil diunduh sebagai gambar PNG!");
-                if (btn) btn.innerHTML = origText;
-            }).catch(err => {
-                console.error("Gagal generate gambar:", err);
-                showToast("Gagal mengunduh PNG. Silakan gunakan Cetak PDF.");
-                if (btn) btn.innerHTML = origText;
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                if (sessionStorage.getItem("elmassa_unlocked") === "true") {
-                    unlockDocument();
-                }
-            } catch(e) {}
-
-            const pinIn = document.getElementById("pinInput");
-            if (pinIn) {
-                pinIn.addEventListener("input", () => {
-                    if (pinIn.value.length === 4 || pinIn.value.length === 6) {
-                        verifyPin();
-                    }
-                });
+            const el = document.getElementById("passcodeInput");
+            if (el) {
+                el.value = "";
+                setTimeout(function () { el.value = ""; }, 100);
+                setTimeout(function () { el.value = ""; }, 400);
             }
         });
     </script>
+
 </body>
 </html>

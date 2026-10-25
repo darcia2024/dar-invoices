@@ -19,6 +19,8 @@
     { "source": "/google-ai", "destination": "/masdaus/index.html" },
     { "source": "/elmassa", "destination": "/elmassa/index.html" },
     { "source": "/el-massa", "destination": "/elmassa/index.html" },
+    { "source": "/elmassa-umrahme", "destination": "/elmassa/index.html" },
+    { "source": "/umrahme-elmassa", "destination": "/elmassa/index.html" },
     { "source": "/today", "destination": "/today/index.html" },
     { "source": "/oslo", "destination": "/oslo/index.html" },
     { "source": "/oslopark", "destination": "/oslo/index.html" },
