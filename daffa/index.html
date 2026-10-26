@@ -1058,6 +1058,15 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .m-footer-btn:active {
+            transform: scale(0.97);
+            background: #111111;
         }
 
         /* ----------------------------------------------------
@@ -1774,16 +1783,13 @@
             <span class="m-footer-label">DP 50% Mulai Kerja</span>
             <span class="m-footer-price">Rp 1.750.000</span>
         </div>
-        <a href="https://wa.me/6281311506025?text=Assalamu'alaikum%20Mas%20Daru,%20saya%20Ust.%20Daffa%20(Nizhamiyyah%20Edu),%20sudah%20cek%20Proposal%20%26%20Invoice%20Perbaikan%20Sistem%20%26%20Redesign%20belajarditimurtengah.com%20(Rp%203.500.000)" 
-           target="_blank" 
-           rel="noopener" 
-           class="m-footer-btn">
-            <span>Chat WhatsApp</span>
+        <button type="button" class="m-footer-btn" onclick="copyBankAcc()">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
-        </a>
+            <span>Salin Rekening</span>
+        </button>
     </aside>
 
     <!-- TOAST NOTIFICATION -->
