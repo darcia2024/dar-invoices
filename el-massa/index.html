@@ -317,7 +317,7 @@
         .hero-desc {
             font-size: 1.02rem;
             color: #fcf6f8;
-            max-width: 780px;
+            max-width: 820px;
             line-height: 1.6;
             margin-bottom: 32px;
             font-weight: 400;
@@ -615,7 +615,7 @@
         }
 
         .items-table td {
-            padding: 16px 14px;
+            padding: 18px 14px;
             border-bottom: 1px solid var(--rose-tint-200);
             vertical-align: top;
             font-size: 0.85rem;
@@ -624,14 +624,39 @@
         .table-item-name {
             font-weight: 800;
             color: var(--rose-deep);
-            margin-bottom: 4px;
-            font-size: 0.94rem;
+            margin-bottom: 6px;
+            font-size: 0.98rem;
         }
 
         .table-item-desc {
+            font-size: 0.8rem;
+            color: var(--rose-muted);
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .feature-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 10px 0;
             font-size: 0.78rem;
             color: var(--rose-muted);
             line-height: 1.5;
+        }
+
+        .feature-bullets li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+        }
+
+        .feature-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--rose-primary);
+            font-weight: 900;
+            font-size: 0.9rem;
         }
 
         .table-tag-pill {
@@ -640,10 +665,10 @@
             font-weight: 700;
             background: var(--rose-tint-100);
             color: var(--rose-primary);
-            padding: 2px 8px;
+            padding: 3px 9px;
             border-radius: 4px;
             border: 1px solid var(--rose-tint-200);
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         /* Grand Total Card in Calm Rose */
@@ -655,7 +680,7 @@
 
         .total-box {
             width: 100%;
-            max-width: 460px;
+            max-width: 480px;
             background: var(--rose-tint-50);
             border: 1px solid var(--rose-tint-200);
             border-radius: 14px;
@@ -711,27 +736,27 @@
         }
 
         /* ----------------------------------------------------
-           VALUE & EFFICIENCY ANALYSIS CARDS ("BIAR TERLIHAT MURAH")
+           BENCHMARK & JUSTIFICATION MATRIX ("KENAPA PANTAS SEGINI")
         ---------------------------------------------------- */
-        .value-anchor-section {
+        .benchmark-section {
             background: #ffffff;
             border: 2px dashed var(--rose-tint-300);
             border-radius: 16px;
-            padding: 22px 24px;
+            padding: 24px 26px;
             margin-bottom: 30px;
         }
 
-        .value-anchor-head {
+        .benchmark-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .value-anchor-title {
-            font-size: 0.85rem;
+        .benchmark-title {
+            font-size: 0.88rem;
             font-weight: 800;
             color: var(--rose-deep);
             letter-spacing: 0.04em;
@@ -741,14 +766,50 @@
             gap: 8px;
         }
 
-        .value-anchor-badge {
+        .benchmark-badge {
             background: var(--rose-primary);
             color: #ffffff;
             font-size: 0.68rem;
             font-weight: 800;
-            padding: 3px 10px;
+            padding: 3px 12px;
             border-radius: 9999px;
             letter-spacing: 0.05em;
+        }
+
+        .comparison-table-wrap {
+            overflow-x: auto;
+            margin-bottom: 18px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .comparison-table th {
+            background: var(--rose-tint-100);
+            color: var(--rose-deep);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 800;
+            border: 1px solid var(--rose-tint-200);
+        }
+
+        .comparison-table td {
+            padding: 10px 14px;
+            border: 1px solid var(--rose-tint-200);
+            color: var(--rose-muted);
+        }
+
+        .comparison-table tr.highlight-row {
+            background: var(--rose-tint-50);
+            font-weight: 700;
+        }
+
+        .comparison-table tr.highlight-row td {
+            color: var(--rose-primary);
+            border-color: var(--rose-tint-300);
         }
 
         .value-grid-3 {
@@ -787,7 +848,7 @@
         .value-mini-sub {
             font-size: 0.74rem;
             color: var(--rose-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         /* ----------------------------------------------------
@@ -1038,7 +1099,7 @@
             }
 
             .items-table td {
-                padding: 4px 0 !important;
+                padding: 6px 0 !important;
                 border: none !important;
             }
 
@@ -1126,26 +1187,26 @@
                     Sistem Operasional Travel ElMassa &amp; <span>Unlimited Token Umrahme</span>
                 </h1>
                 <p class="hero-desc">
-                    All-in-one otomatisasi operasional haji &amp; umrah, integrasi penerbitan dokumen tanpa batas kuota via engine Umrahme, serta pendampingan operasional &amp; pemeliharaan server penuh selama 1 tahun.
+                    Infrastruktur teknologi terpadu operasional travel haji &amp; umrah El Massa: Hak akses penerbitan dokumen tanpa batas kuota via engine Umrahme, custom engineering 4 modul operasional travel, cloud server dedicated, serta pendampingan teknis purna jual 1 tahun penuh.
                 </p>
 
                 <!-- 4 PITCH METRICS / HIGHLIGHTS (CALM ROSE THEME) -->
                 <div class="stats-grid">
                     <div class="stat-card featured">
                         <div class="stat-val">Unlimited</div>
-                        <div class="stat-label">Token Umrahme (Bebas terbitkan berapapun tanpa biaya per pax)</div>
+                        <div class="stat-label">Token Umrahme (Bebas terbitkan berapapun visa &amp; dokumen tanpa batas)</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-val">4 Modul</div>
-                        <div class="stat-label">Sistem Operasional Travel (Paket, SISKOPATUH, Kasir &amp; Mobile)</div>
+                        <div class="stat-label">Sistem Operasional Khusus (Paket, SISKOPATUH, Kasir QR &amp; HP Pimpinan)</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-val">365 Hari</div>
-                        <div class="stat-label">Operasional Maintenance (Monitoring 24/7 &amp; backup database harian)</div>
+                        <div class="stat-label">Dedicated SLA &amp; Support (Monitoring 24/7 &amp; backup database harian)</div>
                     </div>
                     <div class="stat-card featured">
                         <div class="stat-val">Rp 30 Juta</div>
-                        <div class="stat-label">Total Nilai Kontrak All-In (Lisensi, Pengembangan &amp; Maintenance)</div>
+                        <div class="stat-label">Total Investasi All-In Kontrak 1 Tahun (Lisensi + Sistem + Maintenance)</div>
                     </div>
                 </div>
             </div>
@@ -1163,9 +1224,9 @@
                     <span class="card-top-badge">PILAR I &middot; ENGINE LISENSI</span>
                     <h2 class="card-title">Akses Lisensi Unlimited Token Umrahme</h2>
                     <ul class="card-points">
-                        <li><strong>Unlimited Issuance:</strong> Bebas menerbitkan visa umrah, manifest jamaah, ID card, dan hotel voucher tanpa batas kuota.</li>
+                        <li><strong>Unlimited Issuance Access:</strong> Hak penuh penerbitan visa umrah, manifest jamaah, ID card, dan hotel voucher tanpa batasan kuota.</li>
                         <li><strong>Zero Per-Pax Fee:</strong> Tidak ada biaya top-up token per jamaah maupun per transaksi selamanya.</li>
-                        <li><strong>Sinkronisasi Real-Time:</strong> Terintegrasi langsung dengan database jamaah El Massa secara otomatis.</li>
+                        <li><strong>Sinkronisasi Real-Time:</strong> Data penerbitan dokumen langsung tersambung otomatis dengan sistem operasional travel El Massa.</li>
                     </ul>
                 </div>
                 <div class="card-footer-metric">
@@ -1180,10 +1241,10 @@
                     <span class="card-top-badge">PILAR II &middot; OPERASIONAL TRAVEL</span>
                     <h2 class="card-title">Sistem Operasional Travel Terintegrasi</h2>
                     <ul class="card-points">
-                        <li><strong>Modul Paket &amp; Seat:</strong> Manajemen kuota penerbangan, alokasi hotel Makkah &amp; Madinah, serta kalkulasi HPP paket.</li>
-                        <li><strong>Database Jamaah &amp; SISKOPATUH:</strong> Rekap paspor &amp; vaksin, cetak manifest Kemenag &amp; maskapai 1-klik.</li>
-                        <li><strong>Kasir &amp; Kwitansi QR Code:</strong> Pencatatan uang muka (DP), riwayat angsuran, dan kwitansi resmi ber-QR Code.</li>
-                        <li><strong>Executive Mobile Dashboard:</strong> Pantauan bisnis pimpinan dari smartphone untuk cek omzet dan kas 24/7.</li>
+                        <li><strong>Modul Paket &amp; Seat:</strong> Manajemen kuota penerbangan, alokasi hotel Makkah &amp; Madinah, serta kalkulasi HPP paket instan.</li>
+                        <li><strong>Database Jamaah &amp; SISKOPATUH:</strong> Rekap paspor &amp; vaksin, cetak manifest Kemenag &amp; maskapai 1-klik tanpa input ulang.</li>
+                        <li><strong>Kasir &amp; Kwitansi QR Code:</strong> Pencatatan DP, riwayat angsuran, sisa tagihan, dan kwitansi resmi ber-QR Code anti-pemalsuan.</li>
+                        <li><strong>Executive Mobile Dashboard:</strong> Pantauan bisnis pimpinan dari smartphone untuk cek omzet dan kas 24/7 di mana saja.</li>
                     </ul>
                 </div>
                 <div class="card-footer-metric">
@@ -1198,10 +1259,10 @@
                     <span class="card-top-badge">PILAR III &middot; JAMINAN &amp; SLA</span>
                     <h2 class="card-title">Operasional Maintenance 1 Tahun Penuh</h2>
                     <ul class="card-points">
-                        <li><strong>Dedicated Support:</strong> Pendampingan teknis prioritas via grup WhatsApp khusus operasional El Massa.</li>
-                        <li><strong>Server Monitoring &amp; Backup:</strong> Pengawasan performa cloud 24/7 serta auto backup database harian terenkripsi.</li>
-                        <li><strong>Garansi Bug &amp; Update:</strong> Perbaikan kendala teknis dan pembaruan fitur minor selama 365 hari kalender.</li>
-                        <li><strong>Pelatihan Intensif Tim:</strong> Training operator travel dan staf kasir sampai mandiri dan mahir.</li>
+                        <li><strong>Dedicated Support:</strong> Pendampingan teknis prioritas via grup WhatsApp khusus operasional El Massa langsung dengan engineer.</li>
+                        <li><strong>Server Monitoring &amp; Backup:</strong> Pengawasan performa cloud 24/7 serta auto backup database harian terenkripsi aman.</li>
+                        <li><strong>Garansi Bug &amp; Update:</strong> Perbaikan kendala teknis dan pembaruan fitur minor selama 365 hari kalender penuh.</li>
+                        <li><strong>Pelatihan Intensif Tim:</strong> Training operator travel dan staf kasir sampai mahir dan operasional mandiri.</li>
                     </ul>
                 </div>
                 <div class="card-footer-metric">
@@ -1211,9 +1272,9 @@
             </div>
         </div>
 
-        <!-- 3. FORMAL INVOICE & COMMERCIAL DETAILS (RINCIAN RESMI 30JT) -->
+        <!-- 3. FORMAL INVOICE & COMMERCIAL DETAILS (RINCIAN REALISTIS 30JT) -->
         <div class="pitch-section-title">
-            <span class="bar"></span> Rincian Penawaran &amp; Invoice Resmi (Breakdown Investasi)
+            <span class="bar"></span> Rincian Penawaran &amp; Invoice Resmi (Spesifikasi Riil Deliverables)
         </div>
 
         <section class="formal-invoice-card">
@@ -1234,14 +1295,14 @@
                 </div>
             </div>
 
-            <!-- Two Parties Grid -->
+            <!-- Two Parties Grid: Personalized for Bang Azri -->
             <div class="parties-box-grid">
                 <div class="party-tile">
                     <div class="party-tile-tag">Ditujukan Kepada // Billed To :</div>
                     <div class="party-tile-title">El Massa Tour &amp; Travel</div>
                     <div class="party-tile-info">
-                        Up: <strong>Direksi &amp; Tim Manajemen Operasional</strong><br>
-                        Perihal: Implementasi Sistem Travel &amp; Lisensi Unlimited Token Umrahme
+                        Up: <strong>Bang Azri &amp; Tim Manajemen Operasional</strong><br>
+                        Perihal: Implementasi Sistem Operasional Travel ElMassa &amp; Lisensi Unlimited Token Umrahme
                     </div>
                 </div>
                 <div class="party-tile">
@@ -1254,12 +1315,12 @@
                 </div>
             </div>
 
-            <!-- Commercial Line Items Table (RINCIAN RESMI 30JT) -->
+            <!-- Commercial Line Items Table (DETIL PENUH REALISTIS) -->
             <table class="items-table">
                 <thead>
                     <tr>
                         <th style="width: 50px; text-align: center;">No</th>
-                        <th>Ruang Lingkup &amp; Rincian Spesifikasi Layanan</th>
+                        <th>Ruang Lingkup &amp; Detil Spesifikasi Pekerjaan</th>
                         <th style="width: 150px; text-align: center;">Durasi / Akses</th>
                         <th style="width: 170px; text-align: right;">Nilai Investasi</th>
                     </tr>
@@ -1269,11 +1330,16 @@
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--rose-primary);">01</td>
                         <td>
-                            <div class="table-item-name">Lisensi Unlimited Token Umrahme Engine (Unlimited Issuance)</div>
+                            <div class="table-item-name">Lisensi Akses Unlimited Token Engine Umrahme (Akses Penuh Tanpa Batas)</div>
                             <div class="table-item-desc">
-                                Akses penuh penerbitan dokumen visa umrah, manifest jamaah, ID card, dan hotel voucher tanpa batasan kuota. Bebas biaya isi ulang token selamanya (Zero Per-Pax Fee).
+                                Penyediaan lisensi integrasi mesin penerbitan dokumen Umrahme tanpa batasan kuota per pax (Zero Per-Pax Fee), membebaskan El Massa dari kewajiban membeli token berulang:
                             </div>
-                            <span class="table-tag-pill">✓ Hemat Biaya Kuota Per-Pax</span>
+                            <ul class="feature-bullets">
+                                <li><strong>Penerbitan Dokumen Tanpa Kuota:</strong> Bebas terbitkan Visa Umrah resmi, Manifest Jamaah, ID Card Jamaah, dan Hotel Voucher Makkah/Madinah untuk ribuan jamaah tanpa biaya top-up tambahan.</li>
+                                <li><strong>Bebas Biaya Per Pax Selamanya:</strong> Menghemat puluhan juta rupiah biaya kuota penerbitan dibanding provider luar yang mengenakan charge Rp 50.000 - Rp 75.000 / jamaah.</li>
+                                <li><strong>Live Sync Database:</strong> Data hasil penerbitan dokumen otomatis tersinkronisasi ke database internal travel El Massa secara instan.</li>
+                            </ul>
+                            <span class="table-tag-pill">✓ Lisensi Unlimited &middot; Bebas Biaya Top-Up</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 700;">Unlimited</td>
                         <td style="text-align: right; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 800; font-size: 0.95rem;">Rp 10.000.000</td>
@@ -1283,11 +1349,17 @@
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--rose-primary);">02</td>
                         <td>
-                            <div class="table-item-name">Pengembangan &amp; Setup Sistem Operasional Travel ElMassa</div>
+                            <div class="table-item-name">Pengembangan &amp; Kustomisasi Sistem Operasional Travel ElMassa (4 Modul Inti)</div>
                             <div class="table-item-desc">
-                                Implementasi lengkap 4 modul inti: (1) Modul Paket &amp; Seat Keberangkatan, (2) Database Jamaah &amp; Ekspor SISKOPATUH 1-klik, (3) Kasir Kwitansi QR Code Resmi, dan (4) Executive Mobile Dashboard untuk pimpinan.
+                                Pengembangan custom web application menyeluruh untuk mengotomatisasi rantai kerja operasional travel El Massa dari pendaftaran sampai kepulangan:
                             </div>
-                            <span class="table-tag-pill">✓ 4 Modul Terintegrasi Penuh</span>
+                            <ul class="feature-bullets">
+                                <li><strong>Modul 1 (Manajemen Paket &amp; Seat):</strong> Pengaturan jadwal penerbangan, kuota kursi pesawat, alokasi hotel Makkah &amp; Madinah, serta kalkulasi HPP paket reguler/VIP secara otomatis.</li>
+                                <li><strong>Modul 2 (Database Jamaah &amp; Manifest SISKOPATUH):</strong> Rekapitulasi paspor, vaksin, pembagian kamar (quad/triple/double), dan ekspor manifest standar SISKOPATUH Kemenag &amp; maskapai 1-klik tanpa input ulang manual di Excel.</li>
+                                <li><strong>Modul 3 (Kasir, Angsuran &amp; Kwitansi QR Code Resmi):</strong> Pencatatan uang muka (DP), riwayat cicilan, sisa tagihan otomatis, dan pencetakan kwitansi digital resmi El Massa ber-QR Code anti-manipulasi.</li>
+                                <li><strong>Modul 4 (Executive Mobile Dashboard Khusus Bang Azri):</strong> Tampilan mobile khusus pimpinan/owner via smartphone untuk memantau omzet penjualan, sisa kuota seat per batch, dan posisi kas travel 24/7 di mana saja.</li>
+                            </ul>
+                            <span class="table-tag-pill">✓ 4 Modul Terintegrasi Penuh (Custom El Massa)</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 700;">Sistem Penuh</td>
                         <td style="text-align: right; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 800; font-size: 0.95rem;">Rp 12.500.000</td>
@@ -1297,11 +1369,17 @@
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--rose-primary);">03</td>
                         <td>
-                            <div class="table-item-name">Cloud Server, Daily Backup &amp; Dedicated SLA Support 1 Tahun Penuh</div>
+                            <div class="table-item-name">Cloud Infrastructure, Daily Encrypted Backup &amp; Dedicated Support 1 Tahun</div>
                             <div class="table-item-desc">
-                                Pemeliharaan teknis sistem selama 12 bulan (hanya setara <strong>Rp 625.000/bulan</strong>). Mencakup 24/7 server monitoring, auto daily backup terenkripsi, penanganan kendala bug, pembaruan minor, &amp; VIP WhatsApp support.
+                                Pemeliharaan infrastruktur server cloud dan pendampingan teknis purna jual penuh selama 365 hari kalender (hanya setara <strong>Rp 625.000 / bulan</strong>):
                             </div>
-                            <span class="table-tag-pill">✓ 12 Bulan (@ Rp 625rb/bln)</span>
+                            <ul class="feature-bullets">
+                                <li><strong>Dedicated Cloud VPS &amp; SSL:</strong> Hosting performa tinggi dengan jaminan uptime 99.9% dan proteksi sertifikat keamanan data SSL/HTTPS.</li>
+                                <li><strong>Pencadangan Harian Otomatis (Encrypted Daily Backup):</strong> Backup database jamaah, dokumen paspor, dan transaksi keuangan setiap malam ke cloud terpisah untuk mengamankan aset El Massa dari risiko kerusakan/kehilangan data.</li>
+                                <li><strong>VIP WhatsApp Support Langsung Engineer:</strong> Grup WhatsApp khusus untuk Bang Azri dan staf operasional El Massa untuk penanganan kendala teknis darurat secara prioritas.</li>
+                                <li><strong>Garansi Bug-Fixing, Pembaruan &amp; Training:</strong> Perbaikan kendala bug gratis sepanjang 12 bulan dan sesi pelatihan intensif bagi admin kasir dan operator travel sampai mandiri.</li>
+                            </ul>
+                            <span class="table-tag-pill">✓ 12 Bulan (@ Rp 625.000/bln) &middot; SLA Prioritas</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 700;">1 Tahun (12 Bln)</td>
                         <td style="text-align: right; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 800; font-size: 0.95rem;">Rp 7.500.000</td>
@@ -1313,15 +1391,15 @@
             <div class="commercials-summary">
                 <div class="total-box">
                     <div class="total-line">
-                        <span>Lisensi Unlimited Token Umrahme :</span>
+                        <span>Lisensi Unlimited Token Umrahme (1 Tahun) :</span>
                         <span style="font-family: var(--font-mono); font-weight: 700; color: var(--rose-deep);">Rp 10.000.000</span>
                     </div>
                     <div class="total-line">
-                        <span>Pengembangan Sistem Operasional :</span>
+                        <span>Pengembangan 4 Modul Operasional Travel :</span>
                         <span style="font-family: var(--font-mono); font-weight: 700; color: var(--rose-deep);">Rp 12.500.000</span>
                     </div>
                     <div class="total-line">
-                        <span>Maintenance 1 Tahun (@ Rp 625rb/bln) :</span>
+                        <span>Dedicated Cloud &amp; Support 1 Tahun (@ Rp 625rb/bln) :</span>
                         <span style="font-family: var(--font-mono); font-weight: 700; color: var(--rose-deep);">Rp 7.500.000</span>
                     </div>
                     <div class="total-line">
@@ -1337,22 +1415,56 @@
                 </div>
             </div>
 
-            <!-- VALUE & EFFICIENCY ANALYSIS (MEMBUAT TERLIHAT SANGAT MURAH) -->
-            <div class="value-anchor-section">
-                <div class="value-anchor-head">
-                    <div class="value-anchor-title">
-                        <span>💡</span>
-                        <span>Analisis Efisiensi &amp; Keuntungan Investasi Travel El Massa</span>
+            <!-- BENCHMARK & JUSTIFICATION MATRIX (BUKTI KENAPA HARGA INI SANGAT PANTAS & MURAH) -->
+            <div class="benchmark-section">
+                <div class="benchmark-header">
+                    <div class="benchmark-title">
+                        <span>📊</span>
+                        <span>Analisis Komparasi: Mengapa Investasi Rp 30 Juta Ini Sangat Pantas &amp; Menguntungkan</span>
                     </div>
-                    <span class="value-anchor-badge">HIGH ROI &amp; COST EFFICIENCY</span>
+                    <span class="benchmark-badge">KOMPARASI BIAYA RIIL</span>
                 </div>
 
+                <div class="comparison-table-wrap">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Opsi Infrastruktur Digital</th>
+                                <th>Cakupan Layanan</th>
+                                <th>Estimasi Biaya / Tahun</th>
+                                <th>Status Untuk El Massa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Rekrut Staf IT / Programmer Sendiri</strong></td>
+                                <td>Gaji 1 orang programmer (belum server, THR &amp; lisensi)</td>
+                                <td>Rp 72.000.000 – Rp 96.000.000</td>
+                                <td style="color: #9d174d;">Terlalu mahal &amp; risiko staf resign</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Beli Token &amp; SaaS Travel Eceran</strong></td>
+                                <td>Biaya token per jamaah (500 pax @ Rp 50.000 – Rp 75.000)</td>
+                                <td>Rp 25.000.000 – Rp 37.500.000</td>
+                                <td style="color: #9d174d;">Hanya bayar token, sistem bukan milik sendiri</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><strong>Solusi Kemitraan Dar Dev &middot; El Massa</strong></td>
+                                <td><strong>Sistem Travel 4 Modul + Unlimited Token + Cloud &amp; Support 1 Tahun</strong></td>
+                                <td><strong>Rp 30.000.000 (All-In)</strong></td>
+                                <td style="font-weight: 800;">✓ Hemat &gt; Rp 45 Juta &middot; Langsung Pakai</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 3 Mini Metric Anchors -->
                 <div class="value-grid-3">
                     <div class="value-mini-card">
                         <div class="value-mini-label">Ekuivalen Bulanan</div>
                         <div class="value-mini-number">Rp 2.500.000 <span style="font-size: 0.75rem; font-weight: 600;">/ bln</span></div>
                         <div class="value-mini-sub">
-                            Jauh lebih hemat dari menggaji 1 staf IT/admin (UMR ~Rp 5.3jt/bln), sudah mencakup seluruh sistem, token tanpa batas, dan tim purna jual.
+                            Jauh lebih hemat dari gaji 1 staf IT (UMR Jakarta ~Rp 5.3jt/bln), El Massa sudah mendapatkan custom software, token unlimited, dan tim IT purna jual 24/7.
                         </div>
                     </div>
 
@@ -1360,15 +1472,15 @@
                         <div class="value-mini-label">Ekuivalen Harian</div>
                         <div class="value-mini-number">~Rp 82.000 <span style="font-size: 0.75rem; font-weight: 600;">/ hari</span></div>
                         <div class="value-mini-sub">
-                            Hanya seharga 2 cangkir kopi per hari untuk mengoperasikan infrastruktur digital travel, database jamaah, dan penerbitan dokumen 24/7.
+                            Hanya seharga 2 cangkir kopi per hari untuk mengoperasikan seluruh sistem travel, backup database paspor, dan kelancaran keberangkatan ribuan jamaah.
                         </div>
                     </div>
 
                     <div class="value-mini-card">
-                        <div class="value-mini-label">Bebas Biaya Token</div>
-                        <div class="value-mini-number">HEMAT PULUHAN JUTA</div>
+                        <div class="value-mini-label">Efisiensi Token Umrahme</div>
+                        <div class="value-mini-number">NOL RUPIAH TOP-UP</div>
                         <div class="value-mini-sub">
-                            Tanpa biaya kuota per jamaah (Zero Per-Pax Fee). Berangkatkan 500 atau 2.000 jamaah biaya tetap sama, tidak ada biaya tambahan!
+                            Bebas biaya kuota per jamaah selamanya (Zero Per-Pax Fee). Berangkatkan 500, 1.000, atau 2.000 jamaah biaya tetap sama, tidak ada biaya tambahan sepeser pun!
                         </div>
                     </div>
                 </div>
@@ -1420,7 +1532,7 @@
                 <strong>Ketentuan Jaminan &amp; Perjanjian Layanan :</strong><br>
                 1. <strong>Akses Unlimited Token:</strong> Hak penerbitan dokumen Umrahme berlaku tanpa batasan kuota sepanjang 1 tahun masa kontrak.<br>
                 2. <strong>Garansi &amp; Pemeliharaan:</strong> Pendampingan teknis dan monitoring uptime server berlangsung selama 365 hari kalender penuh.<br>
-                3. <strong>Kerahasiaan Data:</strong> Seluruh database jamaah dan data transaksi merupakan hak milik penuh El Massa Tour &amp; Travel.
+                3. <strong>Kerahasiaan Data:</strong> Seluruh database jamaah dan data transaksi merupakan aset rahasia milik penuh El Massa Tour &amp; Travel.
             </div>
         </section>
 
