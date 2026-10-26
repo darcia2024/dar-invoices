@@ -1674,7 +1674,7 @@
 
         function copyAccountNumber() {
             var accNum = "1550010616962";
-            navigator.clipboard.writeText(accNum).then(function() {
+            function onSuccess() {
                 var btn = document.getElementById('copyBtn');
                 var text = document.getElementById('copyText');
                 btn.classList.add('copied');
@@ -1683,9 +1683,32 @@
                     btn.classList.remove('copied');
                     text.innerText = 'Salin Rekening';
                 }, 2500);
-            }).catch(function(err) {
-                console.error('Gagal menyalin:', err);
-            });
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(accNum).then(onSuccess).catch(function() {
+                    fallbackCopy(accNum, onSuccess);
+                });
+            } else {
+                fallbackCopy(accNum, onSuccess);
+            }
+        }
+
+        function fallbackCopy(text, cb) {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+                document.execCommand('copy');
+                if (cb) cb();
+            } catch (err) {
+                console.error('Fallback copy error:', err);
+            }
+            document.body.removeChild(ta);
         }
     </script>
 </body>
