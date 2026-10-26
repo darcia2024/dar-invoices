@@ -476,12 +476,12 @@
         }
 
         .pillar-price {
-            font-family: var(--font-mono);
-            font-size: 0.92rem;
+            font-size: 0.74rem;
             font-weight: 600;
             color: var(--rose-primary);
             padding-top: 8px;
             border-top: 1px dashed var(--rose-tint-200);
+            letter-spacing: 0.02em;
         }
 
         /* ----------------------------------------------------
@@ -496,7 +496,7 @@
         .items-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 600px;
+            min-width: 680px;
         }
 
         .items-table th {
@@ -565,6 +565,24 @@
             padding: 2px 8px;
             border-radius: 4px;
             margin-top: 6px;
+        }
+
+        .complexity-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--rose-primary);
+            background: var(--rose-tint-100);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+        }
+
+        .complexity-desc {
+            font-size: 0.72rem;
+            color: var(--rose-muted);
+            line-height: 1.35;
         }
 
         /* ----------------------------------------------------
@@ -933,11 +951,6 @@
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
-
-            .items-table th:nth-child(3),
-            .items-table td:nth-child(3) {
-                display: none;
-            }
         }
 
         /* ----------------------------------------------------
@@ -1073,12 +1086,12 @@
                     <div class="pillar-num">Pilar I &middot; Engine Lisensi</div>
                     <div class="pillar-title">Akses Lisensi Unlimited Token Umrahme</div>
                     <ul class="pillar-points">
-                        <li><strong>Unlimited Issuance (Permanen):</strong> Hak penuh penerbitan visa resmi, manifest jamaah, ID card, dan hotel voucher Makkah/Madinah tanpa batas kuota selamanya.</li>
-                        <li><strong>Bebas Biaya Rp 35.000 / Pax:</strong> Menghilangkan biaya token satuan Umrahme (tarif normal eceran Rp 35.000 / jamaah) selamanya.</li>
-                        <li><strong>Live Sync Database:</strong> Data hasil generate dokumen otomatis tersambung ke database travel El Massa.</li>
+                        <li><strong>Bypass Rate-Limit &amp; Infinite Concurrency:</strong> Rekayasa antrean data berkecepatan tinggi agar ribuan permohonan visa dan manifest jamaah dapat diproses serentak tanpa lock kuota.</li>
+                        <li><strong>Otomatisasi 4 Dokumen Sekaligus:</strong> Translasi data mentah jemaah instan ke e-Visa resmi Saudi, Manifest Maskapai, ID Card Barcode, &amp; Hotel Voucher terverifikasi.</li>
+                        <li><strong>Zero Per-Pax Fee:</strong> Menghilangkan total kewajiban bayar eceran token (Rp 35.000 / pax) selamanya bagi El Massa.</li>
                     </ul>
                 </div>
-                <div class="pillar-price">Rp 10.000.000 <span style="font-size: 0.72rem; font-weight: 500; color: var(--rose-muted);">(Beli Putus &middot; Normal Rp 35rb/pax)</span></div>
+                <div class="pillar-price">⚙️ Kerumitan: Tinggi &middot; Advanced API Gateway</div>
             </div>
 
             <!-- Pilar 2 -->
@@ -1087,13 +1100,12 @@
                     <div class="pillar-num">Pilar II &middot; Operasional Travel</div>
                     <div class="pillar-title">Pengembangan 4 Modul Operasional Travel</div>
                     <ul class="pillar-points">
-                        <li><strong>Hak Milik Penuh (Beli Putus):</strong> Aplikasi web custom milik travel El Massa seutuhnya, bukan aplikasi sewa bulanan.</li>
-                        <li><strong>Modul Paket &amp; Seat:</strong> Manajemen kursi pesawat, alokasi hotel, dan kalkulator HPP otomatis.</li>
-                        <li><strong>Database Jamaah &amp; SISKOPATUH:</strong> Rekap paspor &amp; vaksin, ekspor manifest standar Kemenag 1-klik tanpa Excel manual.</li>
-                        <li><strong>Kasir QR &amp; Executive Dashboard:</strong> Kwitansi resmi ber-QR anti-manipulasi dan mobile dashboard khusus Bang Azri.</li>
+                        <li><strong>Algoritma HPP Dinamis &amp; Kurs Real-Time:</strong> Kalkulasi otomatis modal paket &amp; laba kotor yang memperhitungkan fluktuasi kurs SAR/USD dan kamar Quad/Triple/Double.</li>
+                        <li><strong>Parser Paspor &amp; Ekspor SISKOPATUH:</strong> Validasi OCR paspor otomatis dan konversi 1-klik standar manifest Kemenag &amp; maskapai (100% bebas input ulang Excel).</li>
+                        <li><strong>Kasir QR Anti-Fraud &amp; Dashboard CEO:</strong> Kwitansi digital ber-tanda tangan kriptografis dan mobile endpoint khusus smartphone Bang Azri.</li>
                     </ul>
                 </div>
-                <div class="pillar-price">Rp 12.500.000 <span style="font-size: 0.72rem; font-weight: 500; color: var(--rose-muted);">(Hak Milik Penuh)</span></div>
+                <div class="pillar-price">⚙️ Kerumitan: Sangat Kompleks &middot; 4 Modul Inti</div>
             </div>
 
             <!-- Pilar 3 -->
@@ -1102,30 +1114,29 @@
                     <div class="pillar-num">Pilar III &middot; Jaminan Purna Jual</div>
                     <div class="pillar-title">Free Cloud VPS &amp; Support Purna Jual 1 Tahun</div>
                     <ul class="pillar-points">
-                        <li><strong>Include 1 Tahun Pertama:</strong> Server hosting performa tinggi dan garansi pendampingan purna jual sudah termasuk selama 365 hari.</li>
-                        <li><strong>Encrypted Daily Backup:</strong> Pencadangan database otomatis setiap malam ke cloud terpisah demi keamanan aset El Massa.</li>
-                        <li><strong>VIP WhatsApp Assistance:</strong> Jalur komunikasi darurat langsung dengan engineer tanpa perantara tiket antrean.</li>
-                        <li><strong>Garansi &amp; Training:</strong> Bug-fixing gratis selama 12 bulan dan pendampingan staf operator sampai mandiri.</li>
+                        <li><strong>Dedicated VPS Hardening &amp; SSL:</strong> Server Linux teroptimasi dengan reverse proxy Nginx dan tuning PostgreSQL untuk uptime 99.9% di peak season.</li>
+                        <li><strong>Encrypted Off-Site Backup (Disaster Recovery):</strong> Pipeline backup harian terenkripsi AES-256 setiap malam ke cloud terpisah demi proteksi data paspor jamaah.</li>
+                        <li><strong>VIP WhatsApp SLA Langsung Engineer:</strong> Pengawalan teknis darurat 24/7 langsung ke software architect tanpa melalui bot antrean helpdesk.</li>
                     </ul>
                 </div>
-                <div class="pillar-price">Rp 7.500.000 <span style="font-size: 0.72rem; font-weight: 500; color: var(--rose-muted);">(Include Tahun ke-1)</span></div>
+                <div class="pillar-price">⚙️ Kerumitan: Kritis &middot; Cloud DevOps &amp; Data Security</div>
             </div>
         </div>
 
         <hr class="hairline">
 
         <!-- 4. RINCIAN BIAYA & SPESIFIKASI PEKERJAAN (INVOICE ITEMS) -->
-        <div class="section-heading">Rincian Faktur Tagihan &amp; Spesifikasi Investasi Beli Putus</div>
-        <p class="section-subtext">Spesifikasi komersial terikat untuk implementasi kepemilikan sistem dan lisensi resmi:</p>
+        <div class="section-heading">Rincian Spesifikasi Rekayasa Teknologi &amp; Tingkat Kerumitan</div>
+        <p class="section-subtext">Detil arsitektur teknis dan tingkat kerumitan pengerjaan software operasional travel El Massa:</p>
 
         <div class="table-responsive">
             <table class="items-table">
                 <thead>
                     <tr>
                         <th style="width: 44px; text-align: center;">No</th>
-                        <th>Deskripsi Ruang Lingkup &amp; Spesifikasi Pekerjaan</th>
-                        <th style="width: 150px; text-align: center;">Status / Akses</th>
-                        <th style="width: 160px; text-align: right;">Nilai Investasi</th>
+                        <th>Ruang Lingkup Spesifikasi &amp; Detil Kerumitan Teknis</th>
+                        <th style="width: 150px; text-align: center;">Status Kepemilikan</th>
+                        <th style="width: 190px;">Tingkat Kerumitan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1133,59 +1144,68 @@
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 600; color: var(--rose-primary);">01</td>
                         <td>
-                            <div class="item-title">Lisensi Akses Unlimited Token Engine Umrahme (Beli Putus &middot; Akses Penuh Tanpa Kuota)</div>
+                            <div class="item-title">Engine Integrasi Unlimited Token Umrahme (Arsitektur High-Concurrency API)</div>
                             <div class="item-desc">
-                                Penyediaan lisensi integrasi mesin penerbitan dokumen Umrahme tanpa batasan kuota per pax (Zero Per-Pax Fee), membebaskan El Massa dari kewajiban membeli token berulang:
+                                Membangun jembatan komunikasi data (*API gateway middleware*) antara core database El Massa dan mesin dokumen Umrahme untuk membebaskan travel dari batasan kuota eceran:
                             </div>
                             <ul class="feature-list">
-                                <li><strong>Penerbitan Dokumen Tanpa Kuota:</strong> Bebas terbitkan Visa Umrah resmi, Manifest Jamaah, ID Card Jamaah, dan Hotel Voucher Makkah/Madinah untuk ribuan jamaah tanpa biaya top-up tambahan.</li>
-                                <li><strong>Bebas Biaya Rp 35.000 / Pax Selamanya:</strong> Tarif normal eceran resmi Umrahme adalah <strong>Rp 35.000 / pax</strong>. Khusus El Massa, diberikan hak akses <em>Unlimited Token Beli Putus (Rp 0 / pax)</em>, menghemat biaya kuota hingga puluhan juta rupiah setiap musim umrah.</li>
-                                <li><strong>Live Sync Database:</strong> Data hasil penerbitan dokumen otomatis tersinkronisasi ke database internal travel El Massa secara instan.</li>
+                                <li><strong>Bypass Rate-Limit &amp; Queue Worker Handling:</strong> Merancang antrean pemrosesan background (*queue handler*) berkecepatan tinggi agar ratusan berkas visa dan manifest jamaah dapat diterbitkan serentak tanpa terkena pembatasan kuota rate-limit server luar.</li>
+                                <li><strong>Otomatisasi 4 Dokumen Resmi Kemenag &amp; Saudi:</strong> Mengotomatisasi translasi data jamaah mentah ke format XML/JSON terverifikasi untuk mencetak: (1) e-Visa Umrah resmi Saudi, (2) Manifest Penerbangan Maskapai, (3) ID Card barcode jamaah resolusi tinggi, dan (4) Voucher Hotel Makkah/Madinah terverifikasi.</li>
+                                <li><strong>Mekanisme Idempotency &amp; Anti-Corrupt:</strong> Proteksi kriptografi agar data tidak pernah duplikat (*duplicate issuance*) atau gagal generate di tengah jalan saat memproses ratusan paspor sekaligus pada musim puncak (peak season).</li>
+                                <li><strong>Bebas Biaya Eceran Rp 35.000 / Pax Selamanya:</strong> Menghilangkan total kewajiban top-up token eceran selamanya, menghemat puluhan hingga ratusan juta rupiah seiring bertambahnya jamaah El Massa.</li>
                             </ul>
                             <span class="item-tag">✓ Lisensi Beli Putus &middot; Bebas Biaya Rp 35.000/Pax Selamanya</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 600;">Permanen (Beli Putus)</td>
-                        <td style="text-align: right; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 600; font-size: 0.95rem;">Rp 10.000.000</td>
+                        <td>
+                            <span class="complexity-badge">Kompleksitas Tinggi</span>
+                            <div class="complexity-desc">Arsitektur API Concurrency, Queue Worker &amp; Multi-Document Engine</div>
+                        </td>
                     </tr>
 
                     <!-- Item 2 -->
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 600; color: var(--rose-primary);">02</td>
                         <td>
-                            <div class="item-title">Pengembangan &amp; Kustomisasi Sistem Operasional Travel ElMassa (4 Modul Inti &middot; Hak Milik Penuh)</div>
+                            <div class="item-title">Pengembangan Custom Web Application ElMassa (4 Modul Inti Terintegrasi)</div>
                             <div class="item-desc">
-                                Pengembangan custom web application menyeluruh untuk mengotomatisasi rantai kerja operasional travel El Massa dari pendaftaran sampai kepulangan (bukan sistem sewa bulanan):
+                                Rekayasa software enterprise menyeluruh berbasis web yang menyatukan seluruh divisi travel El Massa (operasional, manifest, kasir, pimpinan) dalam satu ekosistem:
                             </div>
                             <ul class="feature-list">
-                                <li><strong>Modul 1 (Manajemen Paket &amp; Seat):</strong> Pengaturan jadwal penerbangan, kuota kursi pesawat, alokasi hotel Makkah &amp; Madinah, serta kalkulasi HPP paket reguler/VIP secara otomatis.</li>
-                                <li><strong>Modul 2 (Database Jamaah &amp; Manifest SISKOPATUH):</strong> Rekapitulasi paspor, vaksin, pembagian kamar (quad/triple/double), dan ekspor manifest standar SISKOPATUH Kemenag &amp; maskapai 1-klik tanpa input ulang manual di Excel.</li>
-                                <li><strong>Modul 3 (Kasir, Angsuran &amp; Kwitansi QR Code Resmi):</strong> Pencatatan uang muka (DP), riwayat cicilan, sisa tagihan otomatis, dan pencetakan kwitansi digital resmi El Massa ber-QR Code anti-manipulasi.</li>
-                                <li><strong>Modul 4 (Executive Mobile Dashboard Khusus Bang Azri):</strong> Tampilan mobile khusus pimpinan/owner via smartphone untuk memantau omzet penjualan, sisa kuota seat per batch, dan posisi kas travel 24/7 di mana saja.</li>
+                                <li><strong>Modul 1 (Multi-Tier Seat Inventory &amp; Algoritma HPP Real-Time):</strong> Perhitungan HPP paket travel umrah sangat kompleks karena melibatkan fluktuasi kurs mata uang SAR/USD, kuota kursi transit/direct pesawat, dan rasio kamar hotel (Quad, Triple, Double). Modul ini mengotomatisasi seluruh kalkulasi biaya modal dan estimasi laba kotor per paket secara instan tanpa selisih hitung akuntansi.</li>
+                                <li><strong>Modul 2 (Parser Paspor &amp; Auto-Export SISKOPATUH 1-Klik):</strong> Validasi otomatis data paspor (validitas masa aktif min 6 bulan, kesesuaian 3 suku kata nama jamaah), integrasi data vaksin, generator rooming list otomatis, dan konversi 1-klik ke struktur format manifest resmi SISKOPATUH Kemenag &amp; maskapai (menghilangkan 100% human-error dan lembur ketik ulang di Excel).</li>
+                                <li><strong>Modul 3 (Kasir, Multi-Term Angsuran &amp; Kwitansi QR Code Anti-Fraud):</strong> Sistem pencatatan kasir double-entry untuk tracking uang muka (DP), riwayat cicilan bertahap, sisa piutang jamaah, serta generator kwitansi digital resmi ber-QR Code kriptografis anti-manipulasi oknum staf.</li>
+                                <li><strong>Modul 4 (Secure Executive Mobile Endpoint Khusus Bang Azri):</strong> Endpoint mobile ringan dan terenkripsi khusus smartphone pimpinan untuk memantau arus kas, realisasi laba kotor, dan sisa kuota kursi kosong di manapun secara real-time 24/7.</li>
                             </ul>
                             <span class="item-tag">✓ 4 Modul Hak Milik Penuh (Beli Putus El Massa)</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 600;">Hak Milik Penuh</td>
-                        <td style="text-align: right; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 600; font-size: 0.95rem;">Rp 12.500.000</td>
+                        <td>
+                            <span class="complexity-badge">Sangat Rumit &amp; Luas</span>
+                            <div class="complexity-desc">Full-Stack Enterprise Architecture, Financial Ledger &amp; Data Pipeline</div>
+                        </td>
                     </tr>
 
                     <!-- Item 3 -->
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 600; color: var(--rose-primary);">03</td>
                         <td>
-                            <div class="item-title">Cloud Infrastructure, Daily Encrypted Backup &amp; Dedicated Support (Include Tahun ke-1)</div>
+                            <div class="item-title">Dedicated Cloud VPS, Automated Encrypted Backup &amp; SLA Support Tahun ke-1</div>
                             <div class="item-desc">
-                                Pemeliharaan infrastruktur server cloud dan pendampingan teknis purna jual penuh selama 365 hari kalender tahun pertama (setara <strong>Rp 625.000 / bulan</strong>):
+                                Penggelaran infrastruktur server cloud performa tinggi dan jaminan pengawalan teknis langsung oleh software architect selama 365 hari kalender:
                             </div>
                             <ul class="feature-list">
-                                <li><strong>Dedicated Cloud VPS &amp; SSL:</strong> Hosting performa tinggi dengan jaminan uptime 99.9% dan proteksi sertifikat keamanan data SSL/HTTPS.</li>
-                                <li><strong>Pencadangan Harian Otomatis (Encrypted Daily Backup):</strong> Backup database jamaah, dokumen paspor, dan transaksi keuangan setiap malam ke cloud terpisah untuk mengamankan aset El Massa dari risiko kerusakan/kehilangan data.</li>
-                                <li><strong>VIP WhatsApp Support Langsung Engineer:</strong> Komunikasi khusus untuk Bang Azri dan staf operasional El Massa untuk penanganan kendala teknis darurat secara prioritas.</li>
-                                <li><strong>Garansi Bug-Fixing, Pembaruan &amp; Training:</strong> Perbaikan kendala teknis gratis sepanjang 12 bulan dan sesi pelatihan intensif bagi staf operator travel sampai mandiri.</li>
+                                <li><strong>Cloud VPS Hardening &amp; Database Tuning:</strong> Konfigurasi dedicated virtual server Linux dengan reverse proxy Nginx, proteksi SSL/TLS Grade A, dan tuning database PostgreSQL/MySQL untuk menjaga performa kilat dan jaminan uptime 99.9% tanpa risiko server down saat traffic jamaah membludak.</li>
+                                <li><strong>Automated Encrypted Off-Site Backup (Disaster Recovery):</strong> Pipeline skrip pencadangan otomatis harian terenkripsi (AES-256) setiap pukul 02:00 dini hari ke cloud storage terpisah. Jika terjadi force majeure atau kerusakan fisik perangkat kantor, seluruh data jamaah dan transaksi El Massa dapat dipulihkan (*disaster recovery*) dalam hitungan jam.</li>
+                                <li><strong>Direct VIP WhatsApp SLA &amp; Garansi Bug 1 Tahun:</strong> Jalur komunikasi darurat teknis langsung dengan engineer tanpa perantara antrean bot, garansi perbaikan bug prioritas, serta sesi pelatihan intensif staf admin travel sampai mandiri.</li>
                             </ul>
-                            <span class="item-tag">✓ Include Tahun ke-1 &middot; SLA Prioritas</span>
+                            <span class="item-tag">✓ Include Tahun ke-1 &middot; Dedicated SLA Support</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 600;">1 Tahun (Include)</td>
-                        <td style="text-align: right; font-family: var(--font-mono); color: var(--rose-primary); font-weight: 600; font-size: 0.95rem;">Rp 7.500.000</td>
+                        <td>
+                            <span class="complexity-badge">Kritis &amp; Kontinu</span>
+                            <div class="complexity-desc">Cloud DevOps, Enkripsi AES-256, Disaster Recovery &amp; Direct SLA</div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -1195,16 +1215,16 @@
         <div class="totals-section">
             <div class="totals-block">
                 <div class="totals-row">
-                    <span>Lisensi Unlimited Token Umrahme (Beli Putus) :</span>
-                    <strong>Rp 10.000.000</strong>
+                    <span>Lisensi Unlimited Token Umrahme :</span>
+                    <strong style="color: var(--rose-primary);">Termasuk (Beli Putus / Permanen)</strong>
                 </div>
                 <div class="totals-row">
-                    <span>Pengembangan 4 Modul Travel (Hak Milik) :</span>
-                    <strong>Rp 12.500.000</strong>
+                    <span>Pengembangan Sistem Travel 4 Modul :</span>
+                    <strong style="color: var(--rose-primary);">Termasuk (Hak Milik Penuh)</strong>
                 </div>
                 <div class="totals-row">
-                    <span>Dedicated Cloud &amp; Support Tahun ke-1 (@ Rp 625rb/bln) :</span>
-                    <strong>Rp 7.500.000</strong>
+                    <span>Dedicated Cloud VPS &amp; SLA Support :</span>
+                    <strong style="color: var(--rose-primary);">Termasuk (Gratis Tahun ke-1)</strong>
                 </div>
                 <div class="totals-row">
                     <span>Pajak Pertambahan Nilai (PPN 0%) :</span>
@@ -1215,7 +1235,7 @@
                     <span class="grand-total-label">TOTAL INVESTASI BELI PUTUS (ALL-IN) :</span>
                     <span class="grand-total-val">Rp 30.000.000</span>
                 </div>
-                <div class="spelled-text">// Tiga Puluh Juta Rupiah (Beli Putus / Kepemilikan Penuh) //</div>
+                <div class="spelled-text">// Tiga Puluh Juta Rupiah (Beli Putus / Kepemilikan Penuh Selamanya) //</div>
             </div>
         </div>
 
