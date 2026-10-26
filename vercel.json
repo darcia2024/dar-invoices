@@ -2,6 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/ismu", "destination": "/ismu/index.html" },
+    { "source": "/ust-ismu", "destination": "/ismu/index.html" },
+    { "source": "/ustadz-ismu", "destination": "/ismu/index.html" },
+    { "source": "/voa-ismu", "destination": "/ismu/index.html" },
+    { "source": "/ismu-bahrul-ulum", "destination": "/ismu/index.html" },
+    { "source": "/bahrul-ulum", "destination": "/ismu/index.html" },
     { "source": "/daffa", "destination": "/daffa/index.html" },
     { "source": "/ust-daffa", "destination": "/daffa/index.html" },
     { "source": "/ustadz-daffa", "destination": "/daffa/index.html" },
