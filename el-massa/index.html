@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>INVOICE #INV/EM-UM/2026/10/001 — Sistem Operasional Travel ElMassa &amp; Unlimited Token Umrahme</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-canvas: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --primary: #1e293b;
+            --primary-hover: #0f172a;
+            --brand-brown: #451a03;
+            --brand-gold: #b45309;
+            --brand-gold-bg: #fef3c7;
+            --brand-green: #059669;
+            --brand-green-bg: #ecfdf5;
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            --border-dark: #cbd5e1;
+            
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-canvas);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            padding: 30px 20px 60px 20px;
+            min-height: 100vh;
+        }
+
+        /* ----------------------------------------------------
+           TOP ACTION BAR
+        ---------------------------------------------------- */
+        .top-action-bar {
+            max-width: 860px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .bar-left-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--brand-gold);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+            animation: pulse-dot 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+
+        .bar-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: var(--font-main);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: 1px solid transparent;
+            min-height: 38px;
+        }
+
+        .btn-outline {
+            background-color: #ffffff;
+            border-color: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--border-light);
+            border-color: var(--border-dark);
+        }
+
+        .btn-whatsapp {
+            background-color: #ffffff;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #f0fdf4;
+            border-color: #16a34a;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* ----------------------------------------------------
+           MAIN INVOICE SHEET (CLEAN & MINIMALIST)
+        ---------------------------------------------------- */
+        .invoice-card {
+            max-width: 860px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: 48px;
+            position: relative;
+        }
+
+        /* Top Header Grid: Logo & Invoice Title */
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+            gap: 20px;
+        }
+
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            max-height: 52px;
+            width: auto;
+            max-width: 240px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-subline {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .header-meta {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .invoice-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: 0.04em;
+            line-height: 1.1;
+            margin-bottom: 2px;
+        }
+
+        .invoice-number {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--brand-brown);
+            background: #fbf6f3;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid #ebdcd2;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--brand-gold-bg);
+            color: var(--brand-gold);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* ----------------------------------------------------
+           PARTIES SECTION: BILLED TO & ISSUER
+        ---------------------------------------------------- */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .party-box {
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+        }
+
+        .party-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .party-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .party-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .meta-dates {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-dates strong {
+            color: var(--text-main);
+        }
+
+        /* ----------------------------------------------------
+           INVOICE ITEMS TABLE
+        ---------------------------------------------------- */
+        .table-wrap {
+            margin-bottom: 28px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .invoice-table th {
+            background-color: #f8fafc;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .invoice-table td {
+            padding: 18px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+            font-size: 0.85rem;
+        }
+
+        .invoice-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .col-no {
+            width: 44px;
+            text-align: center;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .col-duration {
+            width: 130px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .col-amount {
+            width: 160px;
+            text-align: right;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+
+        .item-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-token {
+            background-color: #fdf2f8;
+            color: #be185d;
+            border: 1px solid #fbcfe8;
+        }
+
+        .badge-system {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #dbeafe;
+        }
+
+        .badge-maint {
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .item-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .item-list {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .item-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 4px;
+        }
+
+        .item-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        /* ----------------------------------------------------
+           TOTALS & SUMMARY SECTION
+        ---------------------------------------------------- */
+        .summary-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 32px;
+        }
+
+        .summary-box {
+            width: 100%;
+            max-width: 420px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            padding: 6px 0;
+        }
+
+        .summary-row.bold-row {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .summary-divider {
+            border-top: 1px solid var(--border-color);
+            margin: 10px 0;
+        }
+
+        .grand-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-top: 6px;
+        }
+
+        .grand-total-label {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: 0.02em;
+        }
+
+        .grand-total-val {
+            font-family: var(--font-mono);
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--brand-brown);
+        }
+
+        .terbilang-text {
+            font-size: 0.75rem;
+            font-style: italic;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 6px;
+        }
+
+        /* ----------------------------------------------------
+           BOTTOM DETAILS: PAYMENT INSTRUCTIONS & SIGNATURE
+        ---------------------------------------------------- */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 24px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 28px;
+            margin-bottom: 28px;
+        }
+
+        .section-subhead {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bank-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .bank-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .bank-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bank-logo {
+            height: 20px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .bank-name {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--text-main);
+        }
+
+        .acc-number-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin: 8px 0;
+        }
+
+        .acc-number {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--text-main);
+        }
+
+        .btn-copy-acc {
+            background: #ffffff;
+            border: 1px solid var(--border-dark);
+            color: var(--text-main);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-copy-acc:hover {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .acc-holder {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .acc-holder strong {
+            color: var(--text-main);
+        }
+
+        .transfer-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Signature Section */
+        .signature-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .signature-body {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sig-location {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .sig-image-wrap {
+            margin: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sig-img {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .sig-verified-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--brand-green);
+            background: var(--brand-green-bg);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #bbf7d0;
+        }
+
+        .sig-signer-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-top: 4px;
+        }
+
+        .sig-signer-title {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* ----------------------------------------------------
+           TERMS & NOTES
+        ---------------------------------------------------- */
+        .terms-card {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .terms-heading {
+            font-weight: 700;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        /* ----------------------------------------------------
+           TOAST NOTIFICATION
+        ---------------------------------------------------- */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE MOBILE BREAKPOINTS
+        ---------------------------------------------------- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 14px 10px 40px 10px;
+            }
+
+            .top-action-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+
+            .bar-left-meta {
+                justify-content: center;
+                font-size: 0.8rem;
+            }
+
+            .bar-btn-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .btn {
+                padding: 8px 10px;
+                font-size: 0.75rem;
+                min-height: 40px;
+            }
+
+            .invoice-card {
+                padding: 22px 16px;
+                border-radius: 8px;
+            }
+
+            .invoice-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+
+            .header-meta {
+                text-align: left;
+                align-items: flex-start;
+                width: 100%;
+                border-top: 1px dashed var(--border-color);
+                padding-top: 14px;
+            }
+
+            .invoice-title {
+                font-size: 1.35rem;
+            }
+
+            .parties-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .party-box {
+                padding: 14px 16px;
+            }
+
+            /* Responsive Table Conversion */
+            .table-wrap {
+                border: none;
+                margin-bottom: 20px;
+            }
+
+            .invoice-table {
+                display: block;
+            }
+
+            .invoice-table thead {
+                display: none;
+            }
+
+            .invoice-table tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .invoice-table tr {
+                display: block;
+                background: #ffffff;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .invoice-table td {
+                display: block;
+                padding: 0 !important;
+                border: none !important;
+                text-align: left !important;
+                width: 100% !important;
+            }
+
+            .col-no {
+                display: none !important;
+            }
+
+            .col-duration {
+                margin-top: 10px;
+                font-size: 0.78rem !important;
+                color: var(--text-muted) !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center;
+                border-top: 1px dashed var(--border-light);
+                padding-top: 8px !important;
+            }
+
+            .col-duration::before {
+                content: "Durasi / Akses:";
+                font-weight: 600;
+                color: var(--text-secondary);
+            }
+
+            .col-amount {
+                margin-top: 6px;
+                font-size: 0.95rem !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center;
+                padding-top: 4px !important;
+            }
+
+            .col-amount::before {
+                content: "Subtotal:";
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--text-secondary);
+            }
+
+            .summary-container {
+                margin-bottom: 20px;
+            }
+
+            .summary-box {
+                max-width: 100%;
+                padding: 14px 16px;
+            }
+
+            .grand-total-val {
+                font-size: 1.3rem;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .acc-number {
+                font-size: 0.95rem;
+            }
+
+            .toast {
+                left: 16px !important;
+                right: 16px !important;
+                bottom: 16px !important;
+                transform: translateY(20px);
+                justify-content: center;
+            }
+
+            .toast.show {
+                transform: translateY(0);
+            }
+        }
+
+        /* ----------------------------------------------------
+           CLEAN A4 PRINT STYLES
+        ---------------------------------------------------- */
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+            }
+
+            .top-action-bar, .toast, .btn-copy-acc {
+                display: none !important;
+            }
+
+            .invoice-card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .party-box, .bank-card, .terms-card, .summary-box {
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+
+            .invoice-table th {
+                background-color: #f1f5f9 !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP ACTION BAR -->
+    <div class="top-action-bar">
+        <div class="bar-left-meta">
+            <span class="status-dot"></span>
+            <span>Invoice Resmi #INV/EM-UM/2026/10/001</span>
+        </div>
+        <div class="bar-btn-group">
+            <button class="btn btn-outline" onclick="copyBankAcc()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Salin Rekening
+            </button>
+            <a href="https://wa.me/6281311506025?text=Halo%20Mas%20Daru%2C%20saya%20sudah%20cek%20Invoice%20%23INV%2FEM-UM%2F2026%2F10%2F001%20ElMassa%20%26%20Umrahme" target="_blank" class="btn btn-whatsapp">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                Chat WhatsApp
+            </a>
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Cetak / Download PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN INVOICE CARD -->
+    <div class="invoice-card">
+
+        <!-- Header: Logo & Invoice Identifiers -->
+        <header class="invoice-header">
+            <div class="header-brand">
+                <div class="logo-wrap">
+                    <img src="/elmassa/logo_official.png" alt="El Massa Tour &amp; Travel Logo" class="logo-img" onerror="this.src='logo_official.png'; this.onerror=function(){this.src='logo_elmassa.png'};">
+                </div>
+                <div class="brand-subline">Sistem Operasional Haji &amp; Umrah &middot; Solusi Teknologi Perjalanan Ibadah</div>
+            </div>
+            <div class="header-meta">
+                <div class="invoice-title">INVOICE</div>
+                <div class="invoice-number">#INV/EM-UM/2026/10/001</div>
+                <div class="status-badge">Menunggu Pembayaran</div>
+            </div>
+        </header>
+
+        <!-- Parties Section -->
+        <section class="parties-grid">
+            <!-- Ditujukan Kepada -->
+            <div class="party-box">
+                <div class="party-label">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Ditujukan Kepada (Billed To)
+                </div>
+                <div class="party-name">El Massa Tour &amp; Travel</div>
+                <div class="party-desc">
+                    Up: <strong>Direksi &amp; Tim Manajemen Operasional</strong><br>
+                    Perihal: Sistem Operasional Travel ElMassa &amp; Unlimited Token Umrahme
+                </div>
+                <div class="meta-dates">
+                    <div>Tanggal Terbit: <strong>26 Oktober 2026</strong></div>
+                    <div>Jatuh Tempo: <strong>02 November 2026</strong></div>
+                </div>
+            </div>
+
+            <!-- Diterbitkan Oleh -->
+            <div class="party-box">
+                <div class="party-label">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Diterbitkan Oleh (Issuer)
+                </div>
+                <div class="party-name">Dar Dev &middot; Daru Fahmaa Muliawan</div>
+                <div class="party-desc">
+                    Senior Full-Stack Engineer &amp; Travel Tech Architect<br>
+                    TemanTiket Tech Solutions &middot; WhatsApp: 0813-1150-6025
+                </div>
+                <div class="meta-dates">
+                    <div>Status Kontrak: <strong>All-In Service Agreement</strong></div>
+                    <div>Masa Berlaku: <strong>1 Tahun Kalender Penuh</strong></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Line Items Table -->
+        <section class="table-wrap">
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th class="col-no">No</th>
+                        <th>Rincian Layanan &amp; Spesifikasi Sistem</th>
+                        <th class="col-duration">Durasi / Akses</th>
+                        <th class="col-amount">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Item 1: Unlimited Token Umrahme -->
+                    <tr>
+                        <td class="col-no">01</td>
+                        <td>
+                            <span class="item-badge badge-token">UNLIMITED TOKEN UMRAHME</span>
+                            <div class="item-title">Lisensi Akses Unlimited Token Umrahme (Bisa Terbitkan Berapapun)</div>
+                            <ul class="item-list">
+                                <li><strong>Akses Penerbitan Tanpa Batas:</strong> Hak penerbitan dokumen visa umrah, manifest jamaah, ID card, dan voucher hotel via engine Umrahme tanpa batasan kuota / token per pax. Bebas terbitkan berapapun jumlah jamaah!</li>
+                                <li><strong>Bebas Biaya Tambahan:</strong> Tidak ada biaya isi ulang token (zero per-pax top-up fee) bulanan maupun per transaksi selamanya.</li>
+                                <li><strong>Sinkronisasi Real-Time:</strong> Data penerbitan dokumen langsung tersinkronisasi otomatis dengan sistem operasional travel El Massa.</li>
+                            </ul>
+                        </td>
+                        <td class="col-duration">Unlimited</td>
+                        <td class="col-amount" style="color: var(--brand-green);">Termasuk</td>
+                    </tr>
+
+                    <!-- Item 2: Sistem Operasional ElMassa -->
+                    <tr>
+                        <td class="col-no">02</td>
+                        <td>
+                            <span class="item-badge badge-system">SISTEM OPERASIONAL TRAVEL</span>
+                            <div class="item-title">Pengembangan &amp; Implementasi Sistem Operasional Travel ElMassa</div>
+                            <ul class="item-list">
+                                <li><strong>Modul Paket &amp; Seat Keberangkatan:</strong> Pengaturan jadwal penerbangan, kuota kursi, alokasi hotel Makkah &amp; Madinah, serta kalkulasi HPP paket.</li>
+                                <li><strong>Database Jamaah &amp; Manifest SISKOPATUH:</strong> Manajemen biodata, paspor, vaksin, pembagian kamar, dan ekspor manifest standar Kemenag &amp; maskapai 1-klik.</li>
+                                <li><strong>Modul Kasir &amp; Kwitansi QR Code:</strong> Pencatatan uang muka (DP), riwayat pembayaran bertahap, sisa piutang, dan cetak kwitansi resmi ber-QR Code.</li>
+                                <li><strong>Executive Mobile Dashboard:</strong> Pantauan bisnis khusus pimpinan/owner via smartphone untuk cek omzet, kuota seat, dan arus kas 24/7.</li>
+                            </ul>
+                        </td>
+                        <td class="col-duration">Sistem Penuh</td>
+                        <td class="col-amount" style="color: var(--brand-green);">Termasuk</td>
+                    </tr>
+
+                    <!-- Item 3: Operasional Maintenance 1 Tahun -->
+                    <tr>
+                        <td class="col-no">03</td>
+                        <td>
+                            <span class="item-badge badge-maint">MAINTENANCE &amp; DEDICATED SUPPORT</span>
+                            <div class="item-title">Layanan Operasional Maintenance &amp; Dedicated Support 1 Tahun Penuh</div>
+                            <ul class="item-list">
+                                <li><strong>Pendampingan Teknis Prioritas:</strong> Jalur komunikasi cepat via WhatsApp khusus untuk membantu kendala teknis operasional harian tim El Massa.</li>
+                                <li><strong>Server Monitoring &amp; Backup Terenkripsi:</strong> Pengawasan performa cloud server 24/7 dan pencadangan database harian otomatis yang aman.</li>
+                                <li><strong>Garansi Bug-Fixing &amp; Update Minor:</strong> Jaminan perbaikan bug dan pembaharuan berkala sepanjang 365 hari kalender masa kontrak.</li>
+                                <li><strong>Pelatihan Penggunaan Tim:</strong> Training komprehensif bagi admin kasir dan operator travel sampai mahir.</li>
+                            </ul>
+                        </td>
+                        <td class="col-duration">1 Tahun (365 Hari)</td>
+                        <td class="col-amount">Rp 30.000.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Summary & Totals -->
+        <section class="summary-container">
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Subtotal Nilai Sistem :</span>
+                    <span style="font-family: var(--font-mono); font-weight: 600;">Rp 30.000.000</span>
+                </div>
+                <div class="summary-row">
+                    <span>Lisensi Token Umrahme :</span>
+                    <span style="font-weight: 600; color: var(--brand-green);">Unlimited (Include)</span>
+                </div>
+                <div class="summary-row">
+                    <span>Operasional Maintenance :</span>
+                    <span style="font-weight: 600; color: var(--brand-green);">1 Tahun Penuh (Include)</span>
+                </div>
+                <div class="summary-row">
+                    <span>Pajak (PPN 0%) :</span>
+                    <span style="font-family: var(--font-mono); color: var(--text-muted);">Rp 0</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="grand-total-row">
+                    <span class="grand-total-label">TOTAL TAGIHAN :</span>
+                    <span class="grand-total-val">Rp 30.000.000</span>
+                </div>
+                <div class="terbilang-text">
+                    // Tiga Puluh Juta Rupiah //
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Instructions & Signature Grid -->
+        <section class="bottom-grid">
+            <!-- Payment Account -->
+            <div>
+                <div class="section-subhead">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    Instruksi Pembayaran &amp; Rekening Resmi
+                </div>
+                <div class="bank-card">
+                    <div class="bank-head">
+                        <div class="bank-brand">
+                            <img src="/elmassa/mandiri_logo.webp" alt="Bank Mandiri" class="bank-logo" onerror="this.src='mandiri_logo.webp'">
+                            <span class="bank-name">Bank Mandiri</span>
+                        </div>
+                        <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">IDR (Rupiah)</span>
+                    </div>
+                    <div class="acc-holder">
+                        Atas Nama: <strong>Daru Fahmaa Muliawan</strong>
+                    </div>
+                    <div class="acc-number-row">
+                        <span class="acc-number">1550010616962</span>
+                        <button class="btn-copy-acc" onclick="copyBankAcc()">Salin Rekening</button>
+                    </div>
+                    <div class="transfer-note">
+                        Mohon cantumkan berita transfer: <code style="font-family: var(--font-mono); font-weight: 700; color: var(--text-main);">INV/EM-UM/2026/10/001</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signature & Authorization -->
+            <div>
+                <div class="section-subhead">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Otorisasi &amp; Pengesahan
+                </div>
+                <div class="signature-box">
+                    <div class="signature-body">
+                        <div class="sig-location">Jakarta, 26 Oktober 2026</div>
+                        <div class="sig-image-wrap">
+                            <img src="/elmassa/ttd_daru.png" alt="Tanda Tangan Daru Fahmaa" class="sig-img" onerror="this.src='ttd_daru.png'">
+                            <span class="sig-verified-pill">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Terverifikasi Digital
+                            </span>
+                        </div>
+                        <div class="sig-signer-name">Daru Fahmaa Muliawan</div>
+                        <div class="sig-signer-title">Lead Travel Tech Engineer &middot; Dar Dev</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms and Conditions -->
+        <footer class="terms-card">
+            <div class="terms-heading">Ketentuan Layanan &amp; Jaminan Sistem :</div>
+            <div>
+                1. <strong>Akses Unlimited Token:</strong> Hak penerbitan dokumen Umrahme aktif dan dapat digunakan tanpa batas kuota selama 1 tahun masa kontrak.<br>
+                2. <strong>Garansi &amp; Maintenance:</strong> Pemeliharaan teknis, kestabilan server, dan pemulihan backup berlaku selama 365 hari kalender sejak serah terima sistem.<br>
+                3. <strong>Dukungan Teknis Prioritas:</strong> Bantuan langsung via WhatsApp &amp; remote desktop pada jam operasional kerja.<br>
+                4. <strong>Keamanan Data:</strong> Seluruh database jamaah, data paspor, dan transaksi keuangan bersifat rahasia penuh milik El Massa Tour &amp; Travel.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Nomor Rekening Bank Mandiri Berhasil Disalin!</span>
+    </div>
+
+    <script>
+        function copyBankAcc() {
+            navigator.clipboard.writeText('1550010616962').then(function() {
+                showToast('Nomor Rekening Bank Mandiri (1550010616962) Berhasil Disalin!');
+            }).catch(function() {
+                // Fallback for older browsers
+                const tempInput = document.createElement('input');
+                tempInput.value = '1550010616962';
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showToast('Nomor Rekening Bank Mandiri (1550010616962) Berhasil Disalin!');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('span').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
