@@ -550,123 +550,224 @@
         }
 
         /* ----------------------------------------------------
-           INVESTMENT SUMMARY & TOTAL (PRESISI & ESTETIK)
+           4. UNIFIED MASTER SUMMARY PANEL (PRESISI & ESTETIK)
+           Seamless Dual-Half Architecture (Black & Sky Blue)
         ---------------------------------------------------- */
-        .summary-block {
+        .summary-master-panel {
             display: grid;
             grid-template-columns: 1.15fr 1fr;
-            gap: 36px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 8px;
+            background: #ffffff;
+            overflow: hidden;
             margin-bottom: 36px;
-            align-items: stretch;
+            box-shadow: 0 4px 20px -2px rgba(9, 9, 11, 0.05);
         }
 
-        .summary-inclusions-col {
+        /* Left Half: Scope & Deliverables */
+        .panel-scope {
+            background: #f8fafc;
+            padding: 28px 30px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
+            border-right: 1px solid var(--border-hairline);
         }
 
-        .inclusions-title {
+        .scope-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .scope-icon-wrap {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--sky-tint-100, #e0f2fe);
+            color: var(--sky-primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .scope-header-title {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--sky-primary);
+            text-transform: uppercase;
+        }
+
+        .scope-items {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .scope-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .sr-badge {
             font-family: var(--font-mono);
             font-size: 0.7rem;
             font-weight: 700;
             color: var(--sky-primary);
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            line-height: 1.2;
+            flex-shrink: 0;
+            margin-top: 1px;
         }
 
-        .inclusions-list {
-            list-style: none;
+        .sr-content {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            font-size: 0.82rem;
+            gap: 2px;
         }
 
-        .inclusions-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            color: var(--theme-body);
+        .sr-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--theme-deep);
+        }
+
+        .sr-desc {
+            font-size: 0.78rem;
+            color: var(--theme-muted);
             line-height: 1.45;
         }
 
-        .inc-check {
-            color: var(--sky-primary);
-            font-weight: 700;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-            line-height: 1.4;
-        }
-
-        .summary-total-card {
+        /* Right Half: Financial Breakdown & Grand Total */
+        .panel-total {
             background: var(--theme-deep);
             color: #ffffff;
-            border-radius: 6px;
-            padding: 28px 26px;
+            padding: 28px 30px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            box-shadow: 0 10px 30px -4px rgba(9, 9, 11, 0.2);
+            justify-content: space-between;
         }
 
-        .total-tag {
+        .pt-calc-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.78rem;
+            font-family: var(--font-mono);
+        }
+
+        .pt-calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+        }
+
+        .ptc-val {
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .pt-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            margin: 14px 0 12px 0;
+        }
+
+        .pt-total-section {
+            margin-bottom: 12px;
+        }
+
+        .pt-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .pt-tag {
             font-family: var(--font-mono);
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             color: var(--sky-accent);
             text-transform: uppercase;
-            margin-bottom: 6px;
         }
 
-        .total-amount-line {
+        .pt-status-badge {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--sky-accent);
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        .pt-amount-row {
             display: flex;
             align-items: baseline;
             gap: 6px;
             margin-bottom: 4px;
         }
 
-        .total-amount-line .currency {
+        .pt-curr {
             font-family: var(--font-mono);
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: var(--sky-accent);
-            font-weight: 600;
+            font-weight: 700;
         }
 
-        .total-amount-line .amount {
+        .pt-num {
             font-family: var(--font-mono);
             font-size: 2.35rem;
-            font-weight: 700;
-            letter-spacing: -0.025em;
+            font-weight: 800;
             color: #ffffff;
+            letter-spacing: -0.03em;
             line-height: 1;
         }
 
-        .total-sub {
-            font-size: 0.78rem;
-            color: #94a3b8;
-            margin-bottom: 8px;
-        }
-
-        .total-words {
-            font-size: 0.76rem;
-            color: #cbd5e1;
+        .pt-words {
+            font-size: 0.74rem;
             font-style: italic;
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-            padding-top: 10px;
-            margin-top: 4px;
+            color: #cbd5e1;
         }
 
-        .total-breakdown-line {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            color: var(--sky-accent);
-            margin-top: 10px;
-            display: flex;
+        .pt-meta-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 14px;
+            font-family: var(--font-mono);
+        }
+
+        .pt-meta-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ptm-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.04em;
+        }
+
+        .ptm-val {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--sky-accent);
         }
 
         /* ----------------------------------------------------
@@ -978,18 +1079,28 @@
                 display: flex;
             }
 
-            .summary-block {
+            .summary-master-panel {
                 grid-template-columns: 1fr;
-                gap: 24px;
-                margin-bottom: 28px;
+                border-radius: 8px;
+                margin-bottom: 26px;
             }
 
-            .summary-total-card {
-                padding: 22px 20px;
+            .panel-scope {
+                padding: 22px 18px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-hairline);
             }
 
-            .total-amount-line .amount {
-                font-size: 2.05rem;
+            .panel-total {
+                padding: 24px 18px;
+            }
+
+            .pt-num {
+                font-size: 2.1rem;
+            }
+
+            .pt-meta-strip {
+                gap: 6px;
             }
 
             .settlement-row {
@@ -1289,40 +1400,88 @@
             </div>
         </div>
 
-        <!-- 4. INVESTMENT SUMMARY & TOTAL (PRESISI & ESTETIK) -->
-        <div class="summary-block">
-            <div class="summary-inclusions-col">
-                <div class="inclusions-title">Cakupan Layanan Terpadu (All-In 2 Pax):</div>
-                <ul class="inclusions-list">
-                    <li>
-                        <span class="inc-check">✓</span>
-                        <span><strong>Penerbitan VOA 2 Pax:</strong> Dokumen jaminan kedatangan resmi otoritas imigrasi Mesir.</span>
-                    </li>
-                    <li>
-                        <span class="inc-check">✓</span>
-                        <span><strong>Ground Handling Mandub:</strong> Penyambutan dan pendampingan di terminal Bandara Kairo.</span>
-                    </li>
-                    <li>
-                        <span class="inc-check">✓</span>
-                        <span><strong>OTB Flynas 2 Pax:</strong> Kliring sistem manifes penerbangan maskapai Flynas.</span>
-                    </li>
-                    <li>
-                        <span class="inc-check">✓</span>
-                        <span><strong>Void Ticket 2 Pax:</strong> Penutupan reservasi tiket 2 penumpang secara legal tanpa penalti.</span>
-                    </li>
-                </ul>
+        <!-- 4. EXECUTIVE INVESTMENT SUMMARY & DELIVERABLES (UNIFIED SPLIT PANEL) -->
+        <div class="summary-master-panel">
+            <!-- Left: Scope of Service & Inclusions -->
+            <div class="panel-scope">
+                <div class="scope-header">
+                    <span class="scope-icon-wrap">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    <span class="scope-header-title">CAKUPAN LAYANAN TERPADU (2 PAX ALL-IN)</span>
+                </div>
+                <div class="scope-items">
+                    <div class="scope-row">
+                        <span class="sr-badge">01</span>
+                        <div class="sr-content">
+                            <div class="sr-title">Penerbitan VOA Mesir (2 Pax)</div>
+                            <div class="sr-desc">Dokumen jaminan kedatangan resmi otoritas imigrasi Republik Arab Mesir.</div>
+                        </div>
+                    </div>
+                    <div class="scope-row">
+                        <span class="sr-badge">02</span>
+                        <div class="sr-content">
+                            <div class="sr-title">Ground Handling Mandub Kairo</div>
+                            <div class="sr-desc">Penyambutan delegasi dan asistensi terminal Bandara Internasional Kairo (CAI).</div>
+                        </div>
+                    </div>
+                    <div class="scope-row">
+                        <span class="sr-badge">03</span>
+                        <div class="sr-content">
+                            <div class="sr-title">Otorisasi OTB Flynas Flight</div>
+                            <div class="sr-desc">Verifikasi berkas &amp; kliring sistem reservasi manifes maskapai penerbangan Flynas.</div>
+                        </div>
+                    </div>
+                    <div class="scope-row">
+                        <span class="sr-badge">04</span>
+                        <div class="sr-content">
+                            <div class="sr-title">Administrasi Void Ticket (2 Pax)</div>
+                            <div class="sr-desc">Penutupan resmi tiket penerbangan rute Kairo &ndash; Jakarta tanpa penalti.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="summary-total-card">
-                <div class="total-tag">TOTAL TAGIHAN RESMI (2 PAX ALL-IN)</div>
-                <div class="total-amount-line">
-                    <span class="currency">Rp</span>
-                    <span class="amount">7.498.000</span>
+            <!-- Right: Calculation Breakdown & Grand Total -->
+            <div class="panel-total">
+                <div class="pt-calc-box">
+                    <div class="pt-calc-row">
+                        <span class="ptc-label">Subtotal Dokumen Valas (2 Pax)</span>
+                        <span class="ptc-val">Rp 7.098.000</span>
+                    </div>
+                    <div class="pt-calc-row">
+                        <span class="ptc-label">Administrasi Void Ticket CAI &ndash; CGK (2 Pax)</span>
+                        <span class="ptc-val">Rp 400.000</span>
+                    </div>
                 </div>
-                <div class="total-sub">Layanan VOA Mesir, OTB Flynas &amp; Void Ticket (2 Pax)</div>
-                <div class="total-words">// Tujuh Juta Empat Ratus Sembilan Puluh Delapan Ribu Rupiah //</div>
-                <div class="total-breakdown-line">
-                    <span>2 Pax</span> &middot; <span>Rp 3.749.000 / Pax</span> &middot; <span>Valas: $195 USD / Pax</span>
+
+                <div class="pt-divider"></div>
+
+                <div class="pt-total-section">
+                    <div class="pt-label-row">
+                        <span class="pt-tag">TOTAL TAGIHAN RESMI</span>
+                        <span class="pt-status-badge">2 Pax All-In</span>
+                    </div>
+                    <div class="pt-amount-row">
+                        <span class="pt-curr">Rp</span>
+                        <span class="pt-num">7.498.000</span>
+                    </div>
+                    <div class="pt-words">// Tujuh Juta Empat Ratus Sembilan Puluh Delapan Ribu Rupiah //</div>
+                </div>
+
+                <div class="pt-meta-strip">
+                    <div class="pt-meta-cell">
+                        <span class="ptm-label">PEMOHON</span>
+                        <span class="ptm-val">2 Pax</span>
+                    </div>
+                    <div class="pt-meta-cell">
+                        <span class="ptm-label">RATA-RATA</span>
+                        <span class="ptm-val">Rp 3,74 Jt</span>
+                    </div>
+                    <div class="pt-meta-cell">
+                        <span class="ptm-label">VALAS / PAX</span>
+                        <span class="ptm-val">$195 USD</span>
+                    </div>
                 </div>
             </div>
         </div>
