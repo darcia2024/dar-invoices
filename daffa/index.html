@@ -1002,10 +1002,12 @@
 
         .sign-image {
             height: 52px;
+            max-height: 58px;
             width: auto;
             object-fit: contain;
-            margin: 8px 0;
+            margin: 6px 0;
             display: block;
+            mix-blend-mode: multiply;
         }
 
         .sign-name {
@@ -1600,7 +1602,7 @@
                 <div class="sign-block">
                     <span class="sign-date">Jakarta / Kairo, 26 Oktober 2026</span>
                     <span class="sign-label">Penerbit Dokumen</span>
-                    <img src="ttd_daru_clean.png" alt="Tanda Tangan Daru" class="sign-image">
+                    <img src="ttd_daru.png" alt="Tanda Tangan Daru" class="sign-image" onerror="this.src='/ttd_daru.png'">
                     <div class="sign-name">Daru Fahmaa Muliawan</div>
                     <div class="sign-role">Dar Dev · Lead Software Architect</div>
                 </div>
