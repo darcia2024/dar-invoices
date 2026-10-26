@@ -51,7 +51,7 @@
             color: var(--theme-body);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            padding-bottom: 60px;
+            padding-bottom: 70px;
         }
 
         strong, b {
@@ -59,7 +59,7 @@
         }
 
         /* ----------------------------------------------------
-           STICKY TOP NAV (EL MASSA CLEAN & MINIMAL)
+           STICKY TOP NAV (CLEAN & BOX-FREE LOGO)
         ---------------------------------------------------- */
         .top-nav {
             position: sticky;
@@ -89,17 +89,8 @@
             color: inherit;
         }
 
-        .nav-logo-box {
-            background: #181816;
-            padding: 5px 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-logo-thumb {
-            height: 28px;
+        .nav-logo-clean {
+            height: 34px;
             width: auto;
             object-fit: contain;
             display: block;
@@ -198,12 +189,12 @@
         }
 
         /* ----------------------------------------------------
-           1. HERO & EXECUTIVE HEADER (NO BOXES, LIGHT WEIGHT)
+           1. HERO & EXECUTIVE HEADER (NO BOXES AROUND LOGO)
         ---------------------------------------------------- */
         .header-top {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             gap: 24px;
             margin-bottom: 28px;
             flex-wrap: wrap;
@@ -214,18 +205,9 @@
             align-items: center;
         }
 
-        .brand-logo-card {
-            background: #181816;
-            padding: 12px 24px;
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-        }
-
-        .brand-logo-img {
-            height: 60px;
+        /* Pure un-boxed calligraphy logo */
+        .brand-logo-clean {
+            height: 76px;
             width: auto;
             object-fit: contain;
             display: block;
@@ -276,7 +258,7 @@
         }
 
         /* ----------------------------------------------------
-           KEY METRIC STRIP (STREAMLINED TYPOGRAPHY, REFINED WEIGHT)
+           KEY METRIC STRIP (STREAMLINED TYPOGRAPHY)
         ---------------------------------------------------- */
         .metric-strip {
             display: grid;
@@ -408,7 +390,7 @@
         }
 
         /* ----------------------------------------------------
-           3. THREE PILLARS (EDITORIAL 3-COLUMN, REFINED WEIGHT)
+           3. THREE PILLARS (EDITORIAL 3-COLUMN)
         ---------------------------------------------------- */
         .pillars-flow {
             display: grid;
@@ -476,7 +458,7 @@
         }
 
         /* ----------------------------------------------------
-           4. TABLE OF DELIVERABLES (UN-BOXED & SLEEK)
+           4. TABLE OF DELIVERABLES (DESKTOP)
         ---------------------------------------------------- */
         .table-responsive {
             overflow-x: auto;
@@ -574,6 +556,108 @@
             font-size: 0.72rem;
             color: var(--theme-muted);
             line-height: 1.35;
+        }
+
+        /* ----------------------------------------------------
+           CUSTOM MOBILE CARDS FEED (OPTIMAL ON MOBILE ONLY)
+        ---------------------------------------------------- */
+        .mobile-cards-feed {
+            display: none;
+        }
+
+        .m-card {
+            background: #ffffff;
+            border: 1px solid var(--theme-tint-200);
+            border-radius: 12px;
+            padding: 18px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(25, 24, 22, 0.02);
+        }
+
+        .m-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .m-card-num {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--theme-primary);
+            background: var(--theme-tint-100);
+            padding: 4px 8px;
+            border-radius: 6px;
+            line-height: 1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .m-card-title {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--theme-deep);
+            line-height: 1.35;
+        }
+
+        .m-card-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .m-badge-scope {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--theme-primary);
+            background: var(--theme-tint-50);
+            border: 1px solid var(--theme-tint-200);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .m-badge-complex {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--theme-deep);
+            background: var(--theme-tint-100);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .m-card-desc {
+            font-size: 0.82rem;
+            color: var(--theme-muted);
+            line-height: 1.55;
+            margin-bottom: 10px;
+        }
+
+        .m-card-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .m-card-bullets li {
+            font-size: 0.78rem;
+            color: var(--theme-body);
+            line-height: 1.45;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .m-card-bullets li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--theme-primary);
+            font-weight: bold;
         }
 
         /* ----------------------------------------------------
@@ -765,7 +849,7 @@
         }
 
         /* ----------------------------------------------------
-           6. SETTLEMENT & DIGITAL SIGNATURE (EL MASSA UN-BOXED ROW)
+           6. SETTLEMENT & DIGITAL SIGNATURE (UN-BOXED ROW)
         ---------------------------------------------------- */
         .settlement-row {
             display: grid;
@@ -920,103 +1004,293 @@
         }
 
         /* ----------------------------------------------------
-           MOBILE RESPONSIVENESS (EL MASSA TESTED PATTERN)
+           MOBILE STICKY ACTION BAR (THUMB-FRIENDLY)
+        ---------------------------------------------------- */
+        .mobile-sticky-footer {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--theme-tint-200);
+            padding: 12px 18px;
+            z-index: 100;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 16px rgba(25, 24, 22, 0.05);
+        }
+
+        .m-footer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .m-footer-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--theme-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .m-footer-price {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--theme-deep);
+            line-height: 1.1;
+        }
+
+        .m-footer-btn {
+            background: var(--theme-deep);
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        /* ----------------------------------------------------
+           BESPOKE MOBILE VIEWPORT (<= 768px)
         ---------------------------------------------------- */
         @media screen and (max-width: 768px) {
+            body {
+                padding-bottom: 90px;
+                background-color: #f7f5f0;
+            }
+
+            /* Sticky nav on phone */
+            .top-nav {
+                padding: 10px 16px;
+            }
+
             .nav-inner {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            .nav-brand {
+                gap: 8px;
+            }
+
+            .nav-logo-clean {
+                height: 28px;
+            }
+
+            .nav-brand-title {
+                font-size: 0.82rem;
+                font-weight: 700;
+            }
+
+            .nav-badge-ref {
+                display: none;
             }
 
             .nav-actions {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
                 gap: 6px;
             }
 
             .nav-actions .btn {
-                padding: 7px 6px;
+                padding: 6px 10px;
                 font-size: 0.72rem;
-            }
-
-            .doc-sheet {
-                padding: 28px 20px;
-                margin: 16px 12px;
                 border-radius: 6px;
             }
 
+            .nav-actions .btn-outline {
+                display: none; /* Bank copy is integrated prominently in page body */
+            }
+
+            /* Mobile Document Sheet */
+            .doc-sheet {
+                padding: 24px 16px;
+                margin: 12px 10px;
+                border-radius: 12px;
+                border: 1px solid var(--theme-tint-200);
+            }
+
+            /* Header on phone */
             .header-top {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 16px;
+                gap: 14px;
+                margin-bottom: 20px;
+            }
+
+            .brand-logo-clean {
+                height: 64px;
             }
 
             .header-meta {
                 text-align: left;
                 align-items: flex-start;
+                width: 100%;
+                padding-bottom: 12px;
+                border-bottom: 1px dashed var(--theme-tint-200);
+            }
+
+            .header-inv-num {
+                font-size: 0.95rem;
             }
 
             .doc-title {
-                font-size: 1.55rem;
+                font-size: 1.48rem;
+                line-height: 1.3;
+                margin-bottom: 10px;
             }
 
+            .doc-intro {
+                font-size: 0.88rem;
+                line-height: 1.6;
+                margin-bottom: 24px;
+            }
+
+            /* Metrics in 2x2 Clean Grid */
             .metric-strip {
                 grid-template-columns: 1fr 1fr;
-                gap: 16px;
+                gap: 14px;
+                padding: 16px 0;
             }
 
             .metric-item {
                 border-right: none;
                 padding-right: 0;
+                background: #ffffff;
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px solid var(--theme-tint-200);
             }
 
+            .metric-val {
+                font-size: 1.25rem;
+            }
+
+            /* Parties in clean cards on phone */
             .parties-row {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 14px;
+                margin: 24px 0;
             }
 
+            .parties-row > div {
+                background: var(--theme-tint-50);
+                padding: 16px;
+                border-radius: 8px;
+                border: 1px solid var(--theme-tint-200);
+            }
+
+            .party-name {
+                font-size: 1.05rem;
+            }
+
+            /* Pillars in clean cards */
             .pillars-flow {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 16px;
+                margin-bottom: 28px;
             }
 
-            .metrics-quad {
-                grid-template-columns: 1fr 1fr;
-                gap: 18px;
+            .pillar-item {
+                background: #ffffff;
+                border: 1px solid var(--theme-tint-200);
+                border-radius: 10px;
+                padding: 16px;
             }
 
-            .settlement-row {
-                grid-template-columns: 1fr;
-                gap: 24px;
+            /* Hide desktop table on phone, show optimal cards */
+            .table-responsive {
+                display: none;
             }
 
+            .mobile-cards-feed {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                margin-bottom: 28px;
+            }
+
+            /* Summary Container on Phone */
             .summary-container {
                 grid-template-columns: 1fr;
                 gap: 20px;
-                padding: 20px 16px;
+                padding: 18px 16px;
+                border-radius: 12px;
             }
 
             .summary-total-card {
                 align-items: flex-start;
                 text-align: left;
-                padding: 18px 20px;
+                padding: 18px;
+                border-radius: 8px;
             }
 
             .total-amount-line .amount {
-                font-size: 1.65rem;
+                font-size: 1.7rem;
+            }
+
+            .payment-milestones-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .payment-milestones-row .milestone-mini {
+                text-align: left !important;
+            }
+
+            /* Timeline in 2-col or vertical */
+            .metrics-quad {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .quad-col {
+                border-top: none;
+                background: #ffffff;
+                border: 1px solid var(--theme-tint-200);
+                border-radius: 8px;
+                padding: 12px;
+            }
+
+            /* Settlement row on phone */
+            .settlement-row {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding-top: 20px;
+            }
+
+            .acc-digits {
+                font-size: 1.22rem;
+            }
+
+            .mobile-sticky-footer {
+                display: flex;
             }
         }
 
         /* ----------------------------------------------------
-           PRINT STYLES
+           PRINT STYLES FOR CLEAN PDF
         ---------------------------------------------------- */
         @media print {
             body {
                 background: #ffffff !important;
                 padding: 0 !important;
             }
-            .top-nav, .toast, .btn-copy-sm {
+            .top-nav, .toast, .btn-copy-sm, .mobile-sticky-footer {
+                display: none !important;
+            }
+            .table-responsive {
+                display: block !important;
+            }
+            .mobile-cards-feed {
                 display: none !important;
             }
             .doc-sheet {
@@ -1035,9 +1309,7 @@
     <nav class="top-nav">
         <div class="nav-inner">
             <div class="nav-brand">
-                <div class="nav-logo-box">
-                    <img src="/daffa/logo_nizhamiyyah.png" alt="Nizhamiyyah Calligraphy" class="nav-logo-thumb" onerror="this.src='/logo_nizhamiyyah.png'">
-                </div>
+                <img src="/daffa/logo_nizhamiyyah_dark.png" alt="Nizhamiyyah Calligraphy" class="nav-logo-clean" onerror="this.src='/logo_nizhamiyyah_dark.png'">
                 <span class="nav-brand-title">NIZHAMIYYAH EDU</span>
                 <span class="nav-badge-ref">#INV/DAR-NZH/2026/10/001</span>
             </div>
@@ -1061,12 +1333,10 @@
     <!-- UN-BOXED EDITORIAL DOCUMENT SHEET -->
     <main class="doc-sheet">
 
-        <!-- 1. HEADER (LOGO & INVOICE META) -->
+        <!-- 1. HEADER (UN-BOXED NATIVE ARABIC CALLIGRAPHY LOGO) -->
         <header class="header-top">
             <div class="brand-unit">
-                <div class="brand-logo-card">
-                    <img src="/daffa/logo_nizhamiyyah.png" alt="Nizhamiyyah Arabic Calligraphy" class="brand-logo-img" onerror="this.src='/logo_nizhamiyyah.png'">
-                </div>
+                <img src="/daffa/logo_nizhamiyyah_dark.png" alt="Nizhamiyyah Arabic Calligraphy" class="brand-logo-clean" onerror="this.src='/logo_nizhamiyyah_dark.png'">
             </div>
             <div class="header-meta">
                 <div class="header-inv-num">#INV/DAR-NZH/2026/10/001</div>
@@ -1081,7 +1351,7 @@
             Rencana kerja komprehensif yang dirancang khusus untuk <strong>Ust. Daffa</strong> dan tim <strong>Nizhamiyyah Edu</strong>: Audit dan penanganan tuntas 37 catatan teknis pada platform <strong>belajarditimurtengah.com</strong>, penutupan celah keamanan server, perombakan antarmuka ruang belajar berorientasi kitab Arab RTL, serta penyediaan custom admin panel mandiri tanpa koding.
         </p>
 
-        <!-- KEY METRIC STRIP (STREAMLINED TYPOGRAPHY, NO CARDS) -->
+        <!-- KEY METRIC STRIP -->
         <div class="metric-strip">
             <div class="metric-item">
                 <div class="metric-val">37 Butir</div>
@@ -1128,7 +1398,7 @@
 
         <hr class="hairline">
 
-        <!-- 3. TIGA PILAR SOLUSI (EDITORIAL 3-COLUMN) -->
+        <!-- 3. TIGA PILAR SOLUSI -->
         <div class="section-heading">Tiga Pilar Ruang Lingkup Solusi Teknologi</div>
         <p class="section-subtext">Pondasi terpadu untuk memastikan portal Nizhamiyyah Edu aman dari serangan luar, ramah bagi calon pendaftar, dan mandiri dikelola jangka panjang:</p>
 
@@ -1178,10 +1448,11 @@
 
         <hr class="hairline">
 
-        <!-- 4. RINCIAN SPESIFIKASI PEKERJAAN (NO INDIVIDUAL PRICE BREAKDOWN) -->
+        <!-- 4. RINCIAN SPESIFIKASI PEKERJAAN (DESKTOP TABLE) -->
         <div class="section-heading">Rincian Spesifikasi Rekayasa Teknologi &amp; Tingkat Kerumitan</div>
         <p class="section-subtext">Detil arsitektur teknis dan tingkat kerumitan pengerjaan website belajarditimurtengah.com:</p>
 
+        <!-- A. TABLE VIEW FOR DESKTOP -->
         <div class="table-responsive">
             <table class="items-table">
                 <thead>
@@ -1288,7 +1559,96 @@
             </table>
         </div>
 
-        <!-- EXECUTIVE INVESTMENT SUMMARY PANEL (TOTAL ONLY - EL MASSA STYLE) -->
+        <!-- B. CUSTOM CARD FEED FOR MOBILE (OPTIMIZED & THUMB-FRIENDLY) -->
+        <div class="mobile-cards-feed">
+            
+            <!-- Mobile Card 1 -->
+            <div class="m-card">
+                <div class="m-card-header">
+                    <span class="m-card-num">01</span>
+                    <h3 class="m-card-title">Audit Keamanan Server &amp; Celah RCE Next.js 15 &amp; React 19</h3>
+                </div>
+                <div class="m-card-badges">
+                    <span class="m-badge-scope">Paket All-In</span>
+                    <span class="m-badge-complex">Kompleksitas Tinggi &middot; Keamanan</span>
+                </div>
+                <p class="m-card-desc">
+                    Menutup celah eksekusi kode server tanpa login, rotasi menyeluruh kunci enkripsi, dan penataan pengaman sistem:
+                </p>
+                <ul class="m-card-bullets">
+                    <li><strong>Upgrade Next.js &amp; React:</strong> Dependensi stabil penutup celah RCE dan tes alur pembayaran.</li>
+                    <li><strong>Rotasi Kunci Server:</strong> Reset &amp; amankan OAuth Google, Mayar API key, dan database.</li>
+                    <li><strong>Security Headers:</strong> Proteksi anti-clickjacking dan sembunyikan jejak versi teknologi.</li>
+                    <li><strong>Arsip Kursus:</strong> Ganti tombol hapus permanen dengan arsip konfirmasi bertahap.</li>
+                </ul>
+            </div>
+
+            <!-- Mobile Card 2 -->
+            <div class="m-card">
+                <div class="m-card-header">
+                    <span class="m-card-num">02</span>
+                    <h3 class="m-card-title">Optimalisasi Alur Konversi &amp; Integrasi Payment Mayar</h3>
+                </div>
+                <div class="m-card-badges">
+                    <span class="m-badge-scope">Paket All-In</span>
+                    <span class="m-badge-complex">Kompleksitas Menengah-Tinggi</span>
+                </div>
+                <p class="m-card-desc">
+                    Memudahkan calon santri menjelajahi kurikulum serta menjamin pembayaran tervalidasi secara instan:
+                </p>
+                <ul class="m-card-bullets">
+                    <li><strong>Buka 6 Tombol Beranda:</strong> Akses langsung ke katalog publik tanpa mental ke login.</li>
+                    <li><strong>Detail Silabus &amp; 1 Video Gratis:</strong> Calon santri dapat melihat materi sebelum mendaftar.</li>
+                    <li><strong>4 Halaman Legal Resmi:</strong> Kebijakan Privasi, Syarat Ketentuan, Refund, dan Kontak.</li>
+                    <li><strong>Sinkronisasi Mayar Real-Time:</strong> Status akurat (Menunggu, Lunas, Expired) &amp; anti-double click.</li>
+                </ul>
+            </div>
+
+            <!-- Mobile Card 3 -->
+            <div class="m-card">
+                <div class="m-card-header">
+                    <span class="m-card-num">03</span>
+                    <h3 class="m-card-title">Redesign UI/UX Web Portal &amp; Ruang Belajar Arab RTL</h3>
+                </div>
+                <div class="m-card-badges">
+                    <span class="m-badge-scope">Paket All-In</span>
+                    <span class="m-badge-complex">Kompleksitas Tinggi &middot; UI/UX</span>
+                </div>
+                <p class="m-card-desc">
+                    Antarmuka baru yang berwibawa, modern, dan sangat nyaman dipelajari di layar smartphone santri:
+                </p>
+                <ul class="m-card-bullets">
+                    <li><strong>Beranda Jenjang Kitab:</strong> Struktur kurikulum jelas (Mubtadi', Mutawassith, Mutaqaddim).</li>
+                    <li><strong>Katalog &amp; Pendaftaran 1-Layar:</strong> Kartu interaktif terintegrasi checkout langsung.</li>
+                    <li><strong>Teks Arab Kanan-ke-Kiri (RTL):</strong> Matan kitab tersaji rapi bersanding video kajian.</li>
+                    <li><strong>Dashboard Santri:</strong> Lanjut materi terakhir tanpa menu kosong yang membingungkan.</li>
+                </ul>
+            </div>
+
+            <!-- Mobile Card 4 -->
+            <div class="m-card">
+                <div class="m-card-header">
+                    <span class="m-card-num">04</span>
+                    <h3 class="m-card-title">Custom Admin Panel Mandiri (CMS Konten &amp; Santri)</h3>
+                </div>
+                <div class="m-card-badges">
+                    <span class="m-badge-scope">Paket All-In</span>
+                    <span class="m-badge-complex">Sangat Kompleks &middot; Mandiri</span>
+                </div>
+                <p class="m-card-desc">
+                    Dashboard kontrol mandiri tanpa koding untuk asatidzah dan pengurus Nizhamiyyah Edu:
+                </p>
+                <ul class="m-card-bullets">
+                    <li><strong>Manajemen Kursus &amp; Materi:</strong> Atur urutan kitab, harga, silabus, dan status draf.</li>
+                    <li><strong>Manajemen Santri &amp; Mayar:</strong> Pantau pendaftaran &amp; aktivasi manual santri offline.</li>
+                    <li><strong>CMS Editor Halaman:</strong> Ubah teks pengumuman, beranda, dan FAQ tanpa programmer.</li>
+                    <li><strong>Ringkasan Metrik:</strong> Pantau perkembangan santri dan transaksi dalam satu layar.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- EXECUTIVE INVESTMENT SUMMARY PANEL -->
         <div class="summary-container">
             <div class="summary-inclusions">
                 <div class="inclusions-title">Cakupan Paket Investasi All-In:</div>
@@ -1365,12 +1725,12 @@
             </div>
         </div>
 
-        <!-- 6. SETTLEMENT & DIGITAL SIGNATURE (EL MASSA UN-BOXED ROW) -->
+        <!-- 6. SETTLEMENT & DIGITAL SIGNATURE -->
         <div class="settlement-row">
             <div>
                 <div class="party-col-label">Instruksi Pembayaran Resmi // Bank Settlement :</div>
                 <div class="bank-title-row">
-                    <img src="mandiri_logo.webp" alt="Bank Mandiri Logo" class="bank-img" onerror="this.src='/daffa/mandiri_logo.webp'">
+                    <img src="/daffa/mandiri_logo.webp" alt="Bank Mandiri Logo" class="bank-img" onerror="this.src='/mandiri_logo.webp'">
                     <strong style="font-size: 0.95rem; color: var(--theme-deep);">Bank Mandiri</strong>
                 </div>
                 <div style="font-size: 0.82rem; color: var(--theme-muted);">
@@ -1388,7 +1748,7 @@
             <div class="sig-col">
                 <div class="sig-date">Jakarta / Kairo, 26 Oktober 2026</div>
                 <div class="sig-img-wrap">
-                    <img src="ttd_daru.png" alt="Tanda Tangan Daru Fahmaa" class="sig-graphic" onerror="this.src='/daffa/ttd_daru.png'">
+                    <img src="/daffa/ttd_daru.png" alt="Tanda Tangan Daru Fahmaa" class="sig-graphic" onerror="this.src='/ttd_daru.png'">
                     <span class="sig-verified">✓ Terverifikasi Digital</span>
                 </div>
                 <div class="sig-name">Daru Fahmaa Muliawan</div>
@@ -1405,6 +1765,24 @@
         </div>
 
     </main>
+
+    <!-- MOBILE STICKY BOTTOM ACTION BAR -->
+    <aside class="mobile-sticky-footer">
+        <div class="m-footer-info">
+            <span class="m-footer-label">DP 50% Mulai Kerja</span>
+            <span class="m-footer-price">Rp 1.750.000</span>
+        </div>
+        <a href="https://wa.me/6281311506025?text=Assalamu'alaikum%20Mas%20Daru,%20saya%20Ust.%20Daffa%20(Nizhamiyyah%20Edu),%20sudah%20cek%20Proposal%20%26%20Invoice%20Perbaikan%20Sistem%20%26%20Redesign%20belajarditimurtengah.com%20(Rp%203.500.000)" 
+           target="_blank" 
+           rel="noopener" 
+           class="m-footer-btn">
+            <span>Chat WhatsApp</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </aside>
 
     <!-- TOAST NOTIFICATION -->
     <div id="toast" class="toast">
