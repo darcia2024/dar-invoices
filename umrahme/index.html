@@ -545,65 +545,115 @@
         }
 
         /* ----------------------------------------------------
-           TOTALS ROW (STREAMLINED RIGHT ALIGNED)
+           EXECUTIVE INVESTMENT SUMMARY PANEL
         ---------------------------------------------------- */
-        .totals-section {
-            display: flex;
-            justify-content: flex-end;
+        .summary-container {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 28px;
+            align-items: center;
+            background: var(--rose-tint-50);
+            border: 1px solid var(--rose-tint-200);
+            border-radius: 10px;
+            padding: 24px 28px;
             margin-bottom: 36px;
         }
 
-        .totals-block {
-            width: 100%;
-            max-width: 440px;
+        .inclusions-title {
+            font-size: 0.74rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--rose-primary);
+            margin-bottom: 12px;
         }
 
-        .totals-row {
+        .inclusions-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--rose-muted);
-            padding: 6px 0;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .totals-row strong {
+        .inclusions-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: var(--rose-muted);
+            line-height: 1.45;
+        }
+
+        .inc-check {
+            color: var(--rose-primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            flex-shrink: 0;
+        }
+
+        .inc-text strong {
             color: var(--rose-deep);
-            font-family: var(--font-mono);
             font-weight: 600;
         }
 
-        .totals-rule {
-            height: 1px;
-            background: var(--rose-tint-200);
-            margin: 8px 0;
-        }
-
-        .grand-total-row {
+        .summary-total-card {
+            background: #ffffff;
+            border: 1px solid var(--rose-tint-200);
+            border-radius: 8px;
+            padding: 22px 24px;
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 10px 0 4px 0;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            box-shadow: 0 4px 14px rgba(44, 26, 34, 0.03);
         }
 
-        .grand-total-label {
-            font-size: 0.98rem;
-            font-weight: 700;
+        .total-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--rose-muted);
+            margin-bottom: 6px;
+        }
+
+        .total-amount-line {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            white-space: nowrap;
+            margin-bottom: 4px;
+        }
+
+        .total-amount-line .currency {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 600;
             color: var(--rose-deep);
         }
 
-        .grand-total-val {
+        .total-amount-line .amount {
             font-family: var(--font-mono);
-            font-size: 1.55rem;
+            font-size: 1.95rem;
             font-weight: 700;
             color: var(--rose-primary);
+            letter-spacing: -0.02em;
+            line-height: 1;
         }
 
-        .spelled-text {
+        .total-sub {
             font-size: 0.74rem;
+            color: var(--rose-muted);
+            margin-bottom: 3px;
+        }
+
+        .total-words {
+            font-size: 0.72rem;
             font-style: italic;
             color: var(--rose-primary);
-            text-align: right;
             font-weight: 500;
         }
 
@@ -910,6 +960,22 @@
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
+
+            .summary-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px 16px;
+            }
+
+            .summary-total-card {
+                align-items: flex-start;
+                text-align: left;
+                padding: 18px 20px;
+            }
+
+            .total-amount-line .amount {
+                font-size: 1.65rem;
+            }
         }
 
         /* ----------------------------------------------------
@@ -1164,31 +1230,33 @@
             </table>
         </div>
 
-        <!-- TOTALS BLOCK (UN-BOXED RIGHT-ALIGNED) -->
-        <div class="totals-section">
-            <div class="totals-block">
-                <div class="totals-row">
-                    <span>Lisensi Unlimited Token Umrahme :</span>
-                    <strong style="color: var(--rose-primary);">Termasuk (Beli Putus / Permanen)</strong>
+        <!-- EXECUTIVE INVESTMENT SUMMARY PANEL (REFINED & NO WRAPPING) -->
+        <div class="summary-container">
+            <div class="summary-inclusions">
+                <div class="inclusions-title">Cakupan Paket Investasi Beli Putus All-In:</div>
+                <ul class="inclusions-list">
+                    <li>
+                        <span class="inc-check">✓</span>
+                        <span class="inc-text"><strong>Lisensi Unlimited Token Umrahme:</strong> Beli Putus / Hak Akses Permanen Selamanya (Bebas Biaya Eceran Rp 35.000/Pax)</span>
+                    </li>
+                    <li>
+                        <span class="inc-check">✓</span>
+                        <span class="inc-text"><strong>Custom Web App 4 Modul Inti:</strong> Hak Milik Penuh PT AlMassa Azka Wisata (Paket &amp; Seat, SISKOPATUH, Kasir QR, Dashboard CEO)</span>
+                    </li>
+                    <li>
+                        <span class="inc-check">✓</span>
+                        <span class="inc-text"><strong>Dedicated Cloud VPS &amp; Support SLA:</strong> Server Hosting performa tinggi &amp; Pemeliharaan Teknis Tahun ke-1</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="summary-total-card">
+                <div class="total-tag">TOTAL INVESTASI ALL-IN</div>
+                <div class="total-amount-line">
+                    <span class="currency">Rp</span>
+                    <span class="amount">30.000.000</span>
                 </div>
-                <div class="totals-row">
-                    <span>Pengembangan Sistem Travel 4 Modul :</span>
-                    <strong style="color: var(--rose-primary);">Termasuk (Hak Milik Penuh)</strong>
-                </div>
-                <div class="totals-row">
-                    <span>Dedicated Cloud VPS &amp; SLA Support :</span>
-                    <strong style="color: var(--rose-primary);">Termasuk (Gratis Tahun ke-1)</strong>
-                </div>
-                <div class="totals-row">
-                    <span>Pajak Pertambahan Nilai (PPN 0%) :</span>
-                    <strong style="color: var(--rose-subtle);">Rp 0</strong>
-                </div>
-                <div class="totals-rule"></div>
-                <div class="grand-total-row">
-                    <span class="grand-total-label">TOTAL INVESTASI BELI PUTUS (ALL-IN) :</span>
-                    <span class="grand-total-val">Rp 30.000.000</span>
-                </div>
-                <div class="spelled-text">// Tiga Puluh Juta Rupiah (Beli Putus / Kepemilikan Penuh Selamanya) //</div>
+                <div class="total-sub">Sekali Bayar &middot; Hak Milik Permanen Selamanya</div>
+                <div class="total-words">// Tiga Puluh Juta Rupiah (Beli Putus) //</div>
             </div>
         </div>
 
