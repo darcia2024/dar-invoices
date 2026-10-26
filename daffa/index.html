@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVOICE &amp; PROPOSAL — Ust. Daffa (Nizhamiyyah Edu) | Dar Dev</title>
+    
+    <!-- Meta & Social Sharing -->
+    <meta name="description" content="Invoice &amp; Rencana Kerja Perbaikan 37 Masalah Website, Redesign UI/UX, dan Admin Panel Mandiri belajarditimurtengah.com.">
+    <meta property="og:title" content="INVOICE &amp; PROPOSAL — Ust. Daffa (Nizhamiyyah Edu) | Dar Dev">
+    <meta property="og:description" content="Rencana kerja lengkap &amp; tagihan perbaikan teknis belajarditimurtengah.com oleh Dar Dev. Total Rp 3.500.000 (DP 50% Rp 1.750.000).">
+    
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ----------------------------------------------------
+           DESIGN SYSTEM: NIZHAMIYYAH PAPER & ARCHITECTURAL INK
+           Tone: Editorial, Sophisticated, Clean, Non-Boxy
+        ---------------------------------------------------- */
+        :root {
+            --ground: #f4f3ef;
+            --paper: #fbfaf6;
+            --sheet: #ffffff;
+            --ink-primary: #151514;
+            --ink-body: #3c3a36;
+            --ink-muted: #6b6860;
+            --ink-subtle: #98948b;
+            --line: #e5e2db;
+            --line-light: #eeece6;
+            
+            --lime: #d8e527;
+            --lime-soft: #f4f8be;
+            --lime-deep: #474e05;
+            
+            --urgent-red: #9e2318;
+            --urgent-bg: #fae9e7;
+            --urgent-border: #f2c7c2;
+            
+            --success-green: #1c7340;
+            --success-bg: #eaf5ee;
+            
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--ground);
+            color: var(--ink-body);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 90px;
+        }
+
+        strong, b {
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ----------------------------------------------------
+           STICKY MINIMAL TOP NAVIGATION
+        ---------------------------------------------------- */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(244, 243, 239, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            padding: 14px 24px;
+        }
+
+        .nav-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--ink-primary);
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-brand-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            line-height: 1.2;
+        }
+
+        .nav-brand-sub {
+            font-size: 0.74rem;
+            color: var(--ink-muted);
+            font-family: var(--font-mono);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-print {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--sheet);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--ink-body);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print:hover {
+            border-color: var(--ink-muted);
+            color: var(--ink-primary);
+        }
+
+        .btn-wa-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--ink-primary);
+            border: 1px solid var(--ink-primary);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-wa-header:hover {
+            background: #2b2b29;
+        }
+
+        /* ----------------------------------------------------
+           MAIN CONTAINER & PAGE CANVAS
+        ---------------------------------------------------- */
+        .page-wrap {
+            max-width: 980px;
+            margin: 36px auto 0 auto;
+            padding: 0 20px;
+        }
+
+        .invoice-sheet {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: clamp(32px, 5vw, 64px);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        /* ----------------------------------------------------
+           DOCUMENT HEADER & CLIENT INFO
+        ---------------------------------------------------- */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 32px;
+            padding-bottom: 36px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .doc-meta {
+            max-width: 520px;
+        }
+
+        .doc-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .badge-doc {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: var(--line-light);
+            color: var(--ink-body);
+        }
+
+        .badge-tag-status {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: var(--lime-soft);
+            color: var(--lime-deep);
+            border: 1px solid rgba(216, 229, 39, 0.4);
+        }
+
+        .doc-title {
+            font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .doc-subtitle {
+            font-size: 1.02rem;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+
+        .doc-summary-aside {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .inv-number {
+            font-family: var(--font-mono);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .inv-date {
+            font-size: 0.84rem;
+            color: var(--ink-muted);
+        }
+
+        .inv-total-pill {
+            margin-top: 10px;
+            background: var(--ink-primary);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-align: right;
+        }
+
+        .inv-total-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #a8a6a1;
+            margin-bottom: 2px;
+        }
+
+        .inv-total-val {
+            font-family: var(--font-mono);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--lime);
+            line-height: 1.1;
+        }
+
+        /* ----------------------------------------------------
+           PARTIES: ISSUER & RECIPIENT
+        ---------------------------------------------------- */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .party-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .party-role-tag {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-muted);
+            margin-bottom: 2px;
+        }
+
+        .party-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.3;
+        }
+
+        .party-sub {
+            font-size: 0.88rem;
+            color: var(--ink-body);
+            line-height: 1.45;
+        }
+
+        .party-detail {
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+            font-family: var(--font-mono);
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .party-detail a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: var(--ink-primary);
+        }
+
+        /* ----------------------------------------------------
+           EXECUTIVE CONTEXT & SCOPE BRIEF
+        ---------------------------------------------------- */
+        .exec-brief {
+            padding: 32px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--line-light);
+        }
+
+        .brief-headline {
+            font-size: 1.22rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .brief-paragraph {
+            font-size: 0.95rem;
+            color: var(--ink-body);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .brief-stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .stat-card {
+            background: var(--sheet);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-card.highlight {
+            border-color: rgba(216, 229, 39, 0.8);
+            background: #fcfaee;
+        }
+
+        .stat-card.urgent {
+            border-color: var(--urgent-border);
+            background: #fff8f7;
+        }
+
+        .stat-num {
+            font-family: var(--font-mono);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1;
+        }
+
+        .stat-card.urgent .stat-num {
+            color: var(--urgent-red);
+        }
+
+        .stat-title {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            line-height: 1.3;
+        }
+
+        /* ----------------------------------------------------
+           DELIVERABLES & SCOPE SPECIFICATION (UN-BOXED & REFINED)
+        ---------------------------------------------------- */
+        .deliverables-section {
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .deliverable-item {
+            padding: 24px 0;
+            border-bottom: 1px dashed var(--line);
+        }
+
+        .deliverable-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .deliv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .deliv-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .deliv-num {
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            background: var(--line-light);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .deliv-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .deliv-price-tag {
+            font-family: var(--font-mono);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .deliv-desc {
+            font-size: 0.92rem;
+            color: var(--ink-body);
+            line-height: 1.65;
+            margin-bottom: 14px;
+            padding-left: 36px;
+        }
+
+        .deliv-bullets {
+            list-style: none;
+            padding-left: 36px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .deliv-bullets li {
+            font-size: 0.86rem;
+            color: var(--ink-body);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
+        }
+
+        .deliv-bullets li svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            margin-top: 3px;
+            color: var(--ink-primary);
+        }
+
+        /* ----------------------------------------------------
+           AUDIT DRILLDOWN TOGGLE ACCORDION (37 ITEMS)
+        ---------------------------------------------------- */
+        .audit-accordion {
+            margin: 28px 0 10px 36px;
+            background: var(--sheet);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .audit-accordion-trigger {
+            width: 100%;
+            padding: 14px 18px;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            text-align: left;
+            font-family: var(--font-sans);
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            transition: background 0.2s;
+        }
+
+        .audit-accordion-trigger:hover {
+            background: var(--line-light);
+        }
+
+        .audit-accordion-trigger span.count-badge {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            background: var(--lime-soft);
+            color: var(--lime-deep);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .audit-content {
+            display: none;
+            padding: 0 18px 18px 18px;
+            border-top: 1px solid var(--line);
+            background: var(--sheet);
+        }
+
+        .audit-content.open {
+            display: block;
+        }
+
+        .audit-group {
+            margin-top: 16px;
+        }
+
+        .audit-group-title {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ink-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audit-point-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .audit-point-item {
+            padding: 10px 14px;
+            background: var(--paper);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .audit-point-item.urgent-item {
+            background: #fff8f7;
+            border-left: 3px solid var(--urgent-red);
+        }
+
+        .audit-point-num {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-right: 6px;
+        }
+
+        .audit-point-fix {
+            margin-top: 4px;
+            color: var(--ink-muted);
+            font-size: 0.78rem;
+        }
+
+        .audit-point-fix strong {
+            color: var(--ink-body);
+        }
+
+        /* ----------------------------------------------------
+           TIMELINE & SPRINT PLAN (1-4 DAYS)
+        ---------------------------------------------------- */
+        .timeline-section {
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .day-card {
+            background: var(--sheet);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .day-badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-primary);
+            background: var(--line-light);
+            padding: 3px 8px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        .day-focus {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            line-height: 1.35;
+        }
+
+        .day-tasks {
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+
+        /* ----------------------------------------------------
+           FINANCIAL SUMMARY & SPLIT PAYMENT
+        ---------------------------------------------------- */
+        .financial-section {
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .pricing-summary-box {
+            background: var(--sheet);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 28px;
+            margin-top: 20px;
+        }
+
+        .price-line-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line-light);
+            font-size: 0.95rem;
+        }
+
+        .price-line-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .price-line-title {
+            color: var(--ink-body);
+        }
+
+        .price-line-val {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .price-line-val.bundled {
+            color: var(--ink-muted);
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+
+        .grand-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 8px 0;
+            border-top: 2px solid var(--ink-primary);
+            margin-top: 10px;
+        }
+
+        .grand-total-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .grand-total-amount {
+            font-family: var(--font-mono);
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        /* 2-Step Payment Cards */
+        .payment-milestones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .milestone-card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .milestone-card.active {
+            border-color: var(--ink-primary);
+            background: var(--sheet);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .milestone-badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        .milestone-card.active .milestone-badge {
+            background: var(--lime-soft);
+            color: var(--lime-deep);
+        }
+
+        .milestone-card:not(.active) .milestone-badge {
+            background: var(--line-light);
+            color: var(--ink-muted);
+        }
+
+        .milestone-title {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .milestone-amount {
+            font-family: var(--font-mono);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.2;
+        }
+
+        .milestone-desc {
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+            line-height: 1.45;
+        }
+
+        /* ----------------------------------------------------
+           PAYMENT SETTLEMENT & MANDIRI ACCOUNT
+        ---------------------------------------------------- */
+        .settlement-section {
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .bank-transfer-card {
+            background: var(--sheet);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .bank-info-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .bank-logo-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .bank-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .bank-name {
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .bank-acc-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bank-acc-number {
+            font-family: var(--font-mono);
+            font-size: 1.38rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--ink-primary);
+        }
+
+        .btn-copy-acc {
+            background: var(--line-light);
+            border: 1px solid var(--line);
+            color: var(--ink-primary);
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy-acc:hover {
+            background: var(--ink-primary);
+            color: #ffffff;
+            border-color: var(--ink-primary);
+        }
+
+        .btn-copy-acc.copied {
+            background: var(--success-green);
+            color: #ffffff;
+            border-color: var(--success-green);
+        }
+
+        .bank-acc-holder {
+            font-size: 0.88rem;
+            color: var(--ink-body);
+        }
+
+        .bank-cta-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .btn-wa-confirm {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--ink-primary);
+            color: #ffffff;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-wa-confirm:hover {
+            background: #2b2b29;
+            transform: translateY(-1px);
+        }
+
+        .cta-note {
+            font-size: 0.76rem;
+            color: var(--ink-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* ----------------------------------------------------
+           SIGNATURE & AGREEMENT
+        ---------------------------------------------------- */
+        .agreement-section {
+            padding-top: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .agreement-notes {
+            max-width: 460px;
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+            line-height: 1.6;
+        }
+
+        .agreement-notes strong {
+            color: var(--ink-body);
+        }
+
+        .sign-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 200px;
+        }
+
+        .sign-date {
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+            margin-bottom: 6px;
+        }
+
+        .sign-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-muted);
+        }
+
+        .sign-image {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+            margin: 8px 0;
+            display: block;
+        }
+
+        .sign-name {
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.2;
+        }
+
+        .sign-role {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* ----------------------------------------------------
+           STICKY MOBILE ACTION BAR (BOTTOM)
+        ---------------------------------------------------- */
+        .mobile-bottom-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(251, 250, 246, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--line);
+            padding: 12px 18px;
+            z-index: 99;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .mobile-bar-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-bar-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--ink-muted);
+            font-family: var(--font-mono);
+        }
+
+        .mobile-bar-price {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .mobile-bar-btn {
+            background: var(--ink-primary);
+            color: #ffffff;
+            font-size: 0.84rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE BREAKPOINTS
+        ---------------------------------------------------- */
+        @media (max-width: 768px) {
+            .parties-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .brief-stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-milestones {
+                grid-template-columns: 1fr;
+            }
+
+            .bank-transfer-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .bank-cta-right {
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .btn-wa-confirm {
+                justify-content: center;
+            }
+
+            .doc-summary-aside {
+                text-align: left;
+                width: 100%;
+            }
+
+            .inv-total-pill {
+                text-align: left;
+            }
+
+            .deliv-desc, .deliv-bullets {
+                padding-left: 0;
+            }
+
+            .audit-accordion {
+                margin-left: 0;
+            }
+
+            .mobile-bottom-bar {
+                display: flex;
+            }
+        }
+
+        /* ----------------------------------------------------
+           PRINT STYLES FOR CLEAN PDF EXPORT
+        ---------------------------------------------------- */
+        @media print {
+            body {
+                background: #ffffff;
+                color: #000000;
+                padding-bottom: 0;
+            }
+
+            .top-nav, .mobile-bottom-bar, .btn-print, .btn-wa-header, .btn-copy-acc, .btn-wa-confirm {
+                display: none !important;
+            }
+
+            .page-wrap {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .invoice-sheet {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .audit-content {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY TOP BAR -->
+    <header class="top-nav">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <div class="nav-logo-mark">D</div>
+                <div class="nav-brand-text">
+                    <span class="nav-brand-title">Dar Dev · Invoicing System</span>
+                    <span class="nav-brand-sub">Ref: #INV/DAR-NZH/2026/10/001</span>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-print" onclick="window.print()" title="Cetak atau Simpan sebagai PDF">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    <span>Cetak PDF</span>
+                </button>
+                <a href="https://wa.me/6281311506025?text=Assalamu'alaikum%20Mas%20Daru,%20saya%20Ust.%20Daffa%20dari%20Nizhamiyyah%20Edu.%20Kami%20ingin%20konfirmasi%20invoice%20perbaikan%20dan%20redesign%20website%20belajarditimurtengah.com." 
+                   target="_blank" 
+                   rel="noopener" 
+                   class="btn-wa-header">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span>Konfirmasi WA</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INVOICE & PROPOSAL CANVAS -->
+    <main class="page-wrap">
+        <article class="invoice-sheet">
+            
+            <!-- DOCUMENT HEADER -->
+            <header class="doc-header">
+                <div class="doc-meta">
+                    <div class="doc-badge-row">
+                        <span class="badge-doc">INVOICE &amp; PROPOSAL KERJA</span>
+                        <span class="badge-tag-status">Siap Dimulai (DP 50%)</span>
+                    </div>
+                    <h1 class="doc-title">Perbaikan Sistem, Redesign &amp; Admin Panel</h1>
+                    <p class="doc-subtitle">Penanganan tuntas 37 isu sistem &amp; keamanan, perombakan antarmuka santri, dan CMS mandiri untuk <strong>belajarditimurtengah.com</strong>.</p>
+                </div>
+
+                <div class="doc-summary-aside">
+                    <div class="inv-number">#INV/DAR-NZH/2026/10/001</div>
+                    <div class="inv-date">Tanggal: 26 Oktober 2026</div>
+                    <div class="inv-date">Durasi Pengerjaan: <strong>1 – 4 Hari Kerja</strong></div>
+                    <div class="inv-total-pill">
+                        <div class="inv-total-label">Total Nilai Investasi</div>
+                        <div class="inv-total-val">Rp 3.500.000</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PARTIES INFO -->
+            <section class="parties-grid">
+                <!-- CLIENT / RECIPIENT -->
+                <div class="party-block">
+                    <span class="party-role-tag">Ditujukan Kepada</span>
+                    <h2 class="party-name">Ust. Daffa &amp; Tim Nizhamiyyah Edu</h2>
+                    <p class="party-sub">Platform Kursus &amp; Kajian Bahasa Arab / Dirasah Islamiyyah</p>
+                    <div class="party-detail">
+                        <span>Platform: <a href="https://belajarditimurtengah.com" target="_blank" rel="noopener">belajarditimurtengah.com</a></span>
+                        <span>Audited Source: <a href="https://nizhamiyyahedu.vercel.app/" target="_blank" rel="noopener">nizhamiyyahedu.vercel.app</a></span>
+                    </div>
+                </div>
+
+                <!-- ISSUER -->
+                <div class="party-block">
+                    <span class="party-role-tag">Diterbitkan Oleh (Pelaksana Teknis)</span>
+                    <h2 class="party-name">Dar Dev · Daru Fahmaa Muliawan</h2>
+                    <p class="party-sub">Full-Stack Web Architect &amp; Software Engineer</p>
+                    <div class="party-detail">
+                        <span>WhatsApp: +62 813-1150-6025</span>
+                        <span>Settlement: Bank Mandiri (1550010616962)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXECUTIVE CONTEXT & AUDIT HIGHLIGHTS -->
+            <section class="exec-brief">
+                <div class="section-label">Latar Belakang &amp; Hasil Audit Kode</div>
+                <h3 class="brief-headline">Transparansi Kondisi Sistem &amp; Rencana Kerja Tuntas</h3>
+                <p class="brief-paragraph">
+                    Berdasarkan audit menyeluruh terhadap kode sumber yang aktif di server, pengetesan langsung di browser desktop &amp; perangkat mobile, serta simulasi alur pendaftaran dan checkout pembayaran Mayar, ditemukan <strong>37 catatan teknis</strong>. Sebagian besar merupakan detail UX dan aksesibilitas, namun terdapat beberapa celah keamanan kritis dan bug pada tombol utama beranda yang mendesak untuk dibereskan agar santri baru dapat mendaftar tanpa hambatan.
+                </p>
+
+                <div class="brief-stats-row">
+                    <div class="stat-card">
+                        <span class="stat-num">37</span>
+                        <span class="stat-title">Total Catatan Teknis Selesai Ditangani</span>
+                    </div>
+                    <div class="stat-card urgent">
+                        <span class="stat-num">5</span>
+                        <span class="stat-title">Celah Kritis &amp; Keamanan Server Diperbaiki</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-num">1–4</span>
+                        <span class="stat-title">Hari Kerja Target Penyelesaian</span>
+                    </div>
+                    <div class="stat-card highlight">
+                        <span class="stat-num">All-In</span>
+                        <span class="stat-title">Termasuk Redesign UI &amp; Admin Panel</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SCOPE DELIVERABLES -->
+            <section class="deliverables-section">
+                <div class="section-label">Rincian Ruang Lingkup Pekerjaan</div>
+
+                <!-- PILAR 1 -->
+                <div class="deliverable-item">
+                    <div class="deliv-header">
+                        <div class="deliv-title-wrap">
+                            <span class="deliv-num">01</span>
+                            <h4 class="deliv-title">Audit &amp; Penanganan 37 Masalah Sistem &amp; Keamanan</h4>
+                        </div>
+                        <span class="deliv-price-tag">Termasuk dalam Paket</span>
+                    </div>
+                    <p class="deliv-desc">
+                        Perbaikan komprehensif mulai dari pembaruan celah server kritis (Next.js &amp; React 19 RCE fix), rotasi kunci rahasia OAuth &amp; Mayar, pembukaan 6 tombol beranda yang loop balik, validasi form pendaftaran, sinkronisasi status Mayar real-time, hingga perbaikan render teks Arab matan kitab dari kanan ke kiri (RTL).
+                    </p>
+                    <ul class="deliv-bullets">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Pilar Keamanan Server:</strong> Penutupan celah eksekusi kode tanpa login, rotasi kunci rahasia (OAuth, database, token gateway), dan security headers.</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Pilar Konversi Santri:</strong> Pembukaan katalog publik tanpa wajib login di awal, halaman detail silabus &amp; video preview gratis, 4 halaman legal resmi.</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Pilar Santri &amp; Pengajar:</strong> Format matan Arab RTL, perbaikan dashboard santri, alat reorder pelajaran, status draft kursus, dan audit log hak akses.</span>
+                        </li>
+                    </ul>
+
+                    <!-- ACCORDION FOR 37 ITEMS INSPECTION -->
+                    <div class="audit-accordion">
+                        <button type="button" class="audit-accordion-trigger" onclick="toggleAuditAccordion()">
+                            <span>Buka / Tutup Daftar Lengkap 37 Masalah &amp; Solusinya</span>
+                            <span class="count-badge" id="accordBadge">Lihat 37 Butir &#9662;</span>
+                        </button>
+                        <div class="audit-content" id="auditContent">
+                            
+                            <!-- KELOMPOK 1 -->
+                            <div class="audit-group">
+                                <div class="audit-group-title">01 · Penanganan Mendesak (Keamanan &amp; Integritas Data)</div>
+                                <div class="audit-point-list">
+                                    <div class="audit-point-item urgent-item">
+                                        <div><span class="audit-point-num">01.</span><strong>Next.js 15.1.3 &amp; React 19 RCE Vulnerability:</strong> Celah keamanan pada versi lama memungkinkan eksekusi kode jarak jauh tanpa autentikasi.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Upgrade ke versi rilis aman terbaru, verifikasi stabilitas semua dependensi dan alur checkout.</div>
+                                    </div>
+                                    <div class="audit-point-item urgent-item">
+                                        <div><span class="audit-point-num">02.</span><strong>Kunci Rahasia Tersimpan di Bundle Kompilasi:</strong> File statis memuat kunci enkripsi yang rawan direkayasa.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Rotasi seluruh kredensial (Google OAuth, Mayar API key, database) dan amankan di environment server host.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">03.</span><strong>Ketiadaan Pengaman Browser (Security Headers):</strong> Dashboard rentan disematkan di iframe berbahaya (clickjacking).</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Pasang header CSP, X-Frame-Options standar industri, dan sembunyikan jejak versi teknologi.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">04.</span><strong>Penghapusan Kursus Tanpa Proteksi:</strong> Tombol hapus kursus mengeksekusi langsung tanpa dialog konfirmasi dan merusak data santri berbayar.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Alihkan menjadi mekanisme arsip bertingkat; kursus dengan santri aktif dilarang dihapus permanen.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">05.</span><strong>Layar Error Kosong Saat Validasi Form:</strong> Kesalahan input nomor WhatsApp pada saat checkout memunculkan blank screen.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Standarisasi validasi form dengan pesan bantuan kontekstual tepat di bawah kolom input, plus fallback error page Bahasa Indonesia.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- KELOMPOK 2 -->
+                            <div class="audit-group">
+                                <div class="audit-group-title">02 · Hambatan Pendaftaran &amp; Konversi Calon Santri</div>
+                                <div class="audit-point-list">
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">06.</span><strong>6 Tombol Utama Beranda Mental ke Login:</strong> Calon santri baru langsung terlempar kembali ke beranda tanpa navigasi katalog.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Buka katalog kursus untuk akses publik lengkap dengan pencarian &amp; filter jenjang ilmu. Login hanya diminta saat pendaftaran checkout.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">07.</span><strong>Ketiadaan Silabus &amp; Pratinjau Materi:</strong> Pengunjung tidak dapat melihat isi kurikulum sebelum melakukan pembayaran.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Pembuatan halaman detail kursus publik yang merinci daftar materi, profil pengajar, dan 1 pelajaran video gratis.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">08.</span><strong>Ketiadaan Halaman Legal &amp; Kontak Resmi:</strong> Belum tersedianya Kebijakan Privasi, Syarat Ketentuan, dan Kebijakan Refund sesuai UU PDP &amp; syarat payment gateway.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Pembuatan 4 halaman legal terstandarisasi yang tertaut di footer dan checkout.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">09.</span><strong>Struktur Pesan Nilai Beranda Belum Menampakkan Kurikulum:</strong> Menampilkan klaim tanpa bukti nama kitab dan nama asatidzah.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Restrukturisasi beranda untuk menonjolkan jenjang kitab dari dasar ke lanjutan serta profil asatidzah secara visual.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">10.</span><strong>Status Pembayaran Mayar Menggantung:</strong> Tagihan berstatus "sedang diproses" meski pembayaran telah berhasil atau kedaluwarsa, serta risiko tagihan ganda.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Sinkronisasi status riil (Menunggu, Lunas, Expired), batas waktu invoice, dan proteksi klik ganda.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">11.</span><strong>Webhook Mayar Rentan Spam:</strong> Endpoint notifikasi belum menerapkan validasi payload signature dan pembatasan frekuensi (rate limiting).</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Verifikasi signature Mayar di setiap permintaan dan pasang rate limiting ketat.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">12.</span><strong>Kontras Warna &amp; Aksesibilitas:</strong> Warna teks emas pada judul dan harga sulit terbaca di atas latar putih.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Penyesuaian palet tipografi dengan kontras tinggi yang nyaman di mata santri.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- KELOMPOK 3 -->
+                            <div class="audit-group">
+                                <div class="audit-group-title">03 · Pengalaman Santri &amp; Asatidzah Terdaftar</div>
+                                <div class="audit-point-list">
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">13.</span><strong>Dashboard Santri Kurang Relevan:</strong> Jumlah kursus aktif stuck di angka 3 dan adanya menu kosong "Segera Hadir".</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Tampilkan data riil progres belajar tiap kitab, kartu "Lanjutkan Pelajaran Terakhir", dan rapikan navigasi santri.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">14.</span><strong>Format Teks Materi Hilang &amp; Arab Belum RTL:</strong> Teks matan kitab tidak mendukung arah baca kanan-ke-kiri.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Integrasikan formatting paragraf dan blok tipografi khusus bahasa Arab RTL dengan font Uthmanic/Amiri yang elegan.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">15.</span><strong>Keterbatasan Alat Asatidzah:</strong> Pengajar tidak dapat merubah urutan pelajaran, mengubah harga, maupun melihat daftar santri.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Penambahan fitur drag-and-drop urutan pelajaran, pengubahan harga, status draft materi, dan rekap progres santri.</div>
+                                    </div>
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">16.</span><strong>Audit Trail Hak Akses:</strong> Perubahan status admin tidak tersimpan dalam riwayat aktivitas.</div>
+                                        <div class="audit-point-fix"><strong>Solusi:</strong> Catat log mutasi peran pengguna serta proteksi pencegahan degradasi admin utama secara tidak sengaja.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- KELOMPOK 4 -->
+                            <div class="audit-group">
+                                <div class="audit-group-title">04 · Perapian Fondasi Sistem di Belakang Layar</div>
+                                <div class="audit-point-list">
+                                    <div class="audit-point-item">
+                                        <div><span class="audit-point-num">17–37.</span><strong>Optimasi Database, Validasi Form, SEO &amp; Performa:</strong></div>
+                                        <div class="audit-point-fix">Database query caching untuk beranda super cepat, sanitasi embed video YouTube, middleware proteksi hak akses terpusat, halaman 404 &amp; 500 kustom, OpenGraph preview di WhatsApp, favicon resmi, dan penyusutan aset statis.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PILAR 2 -->
+                <div class="deliverable-item">
+                    <div class="deliv-header">
+                        <div class="deliv-title-wrap">
+                            <span class="deliv-num">02</span>
+                            <h4 class="deliv-title">Desain Ulang UI/UX Modern Web Portal &amp; Ruang Belajar</h4>
+                        </div>
+                        <span class="deliv-price-tag">Termasuk dalam Paket</span>
+                    </div>
+                    <p class="deliv-desc">
+                        Perombakan menyeluruh pada antarmuka visual agar merefleksikan wibawa keilmuan Islam klasik dengan sentuhan editorial modern. Dirancang ringan, elegan, dan sangat responsif di perangkat ponsel santri.
+                    </p>
+                    <ul class="deliv-bullets">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Beranda Berorientasi Jenjang:</strong> Penataan tingkatan kitab (Mubtadi', Mutawassith, Mutaqaddim), profil asatidzah, dan FAQ ringkas.</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Katalog &amp; Pendaftaran 1-Layar:</strong> Kartu kitab lengkap dengan cover, klik langsung memunculkan ringkasan checkout tanpa navigasi berbelit.</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Ruang Belajar Matan &amp; Video:</strong> Pemutar video kajian di bagian atas bersanding dengan teks Arab matan kitab per kalimat terjemahan.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- PILAR 3 -->
+                <div class="deliverable-item">
+                    <div class="deliv-header">
+                        <div class="deliv-title-wrap">
+                            <span class="deliv-num">03</span>
+                            <h4 class="deliv-title">Custom Admin Panel Mandiri (CMS &amp; Manajemen Santri)</h4>
+                        </div>
+                        <span class="deliv-price-tag">Termasuk dalam Paket</span>
+                    </div>
+                    <p class="deliv-desc">
+                        Panel pengelolaan website independen untuk tim Nizhamiyyah Edu, sehingga asatidzah dan pengurus dapat memperbarui seluruh isi website secara mandiri tanpa harus bergantung pada programmer.
+                    </p>
+                    <ul class="deliv-bullets">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Manajemen Kursus, Pelajaran &amp; Pengajar:</strong> Tambah/edit materi, atur urutan kitab, tentukan harga, dan status tayang.</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Manajemen Santri &amp; Transaksi Mayar:</strong> Pantau pembayaran masuk, tangani transaksi nyangkut, serta aktivasi manual bagi santri offline.</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span><strong>Editor Teks Halaman &amp; Ringkasan Metrik:</strong> Edit teks beranda, pengumuman, dan FAQ langsung lewat form panel admin.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <!-- TIMELINE SECTION (1-4 HARI KERJA) -->
+            <section class="timeline-section">
+                <div class="section-label">Timeline Pengerjaan Sprint (1 – 4 Hari Kerja)</div>
+                <p class="brief-paragraph" style="margin-bottom: 0;">
+                    Pengerjaan berlangsung secara terfokus selama 1 hingga 4 hari kerja. Setiap hari akan disampaikan laporan progres transparan dan dapat langsung diuji coba sebelum dideploy ke server utama.
+                </p>
+
+                <div class="timeline-grid">
+                    <div class="day-card">
+                        <span class="day-badge">Hari 1</span>
+                        <div class="day-focus">Keamanan &amp; Fondasi</div>
+                        <div class="day-tasks">Upgrade Next.js &amp; React, rotasi seluruh kunci enkripsi, pasang security headers, sistem arsip kursus, dan validasi form pendaftaran.</div>
+                    </div>
+                    <div class="day-card">
+                        <span class="day-badge">Hari 2</span>
+                        <div class="day-focus">Katalog &amp; Legal</div>
+                        <div class="day-tasks">Pembukaan katalog publik, halaman detail silabus kursus, penerbitan 4 halaman legal, serta implementasi desain baru beranda &amp; katalog.</div>
+                    </div>
+                    <div class="day-card">
+                        <span class="day-badge">Hari 3</span>
+                        <div class="day-focus">Pembayaran &amp; Belajar</div>
+                        <div class="day-tasks">Sinkronisasi status Mayar, pengamanan webhook, serta desain baru dashboard santri &amp; ruang belajar kitab teks Arab RTL.</div>
+                    </div>
+                    <div class="day-card">
+                        <span class="day-badge">Hari 4</span>
+                        <div class="day-focus">Admin Panel &amp; Rilis</div>
+                        <div class="day-tasks">Penyelesaian Custom Admin Panel mandiri, testing bersama tim Nizhamiyyah Edu, panduan penggunaan, dan peluncuran resmi.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FINANCIAL SUMMARY & SPLIT PAYMENT -->
+            <section class="financial-section">
+                <div class="section-label">Rincian Biaya &amp; Skema Pembayaran</div>
+
+                <div class="pricing-summary-box">
+                    <div class="price-line-row">
+                        <span class="price-line-title">01. Audit Teknis &amp; Penanganan Tuntas 37 Masalah Sistem &amp; Keamanan</span>
+                        <span class="price-line-val">Rp 1.500.000</span>
+                    </div>
+                    <div class="price-line-row">
+                        <span class="price-line-title">02. Desain Ulang UI/UX Modern Web Portal, Katalog &amp; Ruang Belajar Arab RTL</span>
+                        <span class="price-line-val">Rp 1.000.000</span>
+                    </div>
+                    <div class="price-line-row">
+                        <span class="price-line-title">03. Pembuatan Custom Admin Panel Mandiri (CMS, Santri, Mayar &amp; Metrik)</span>
+                        <span class="price-line-val">Rp 1.000.000</span>
+                    </div>
+
+                    <div class="grand-total-row">
+                        <span class="grand-total-label">Total Investasi All-In</span>
+                        <span class="grand-total-amount">Rp 3.500.000</span>
+                    </div>
+                </div>
+
+                <!-- 2-STEP PAYMENT SCHEME -->
+                <div class="payment-milestones">
+                    <div class="milestone-card active">
+                        <span class="milestone-badge">Tahap 1 · Uang Muka (DP 50%)</span>
+                        <div class="milestone-title">Konfirmasi Awal Pengerjaan</div>
+                        <div class="milestone-amount">Rp 1.750.000</div>
+                        <div class="milestone-desc">
+                            Dibayarkan sebelum pekerjaan dimulai untuk mengonfirmasi jadwal sprint kerja intensif.
+                        </div>
+                    </div>
+
+                    <div class="milestone-card">
+                        <span class="milestone-badge">Tahap 2 · Pelunasan (50%)</span>
+                        <div class="milestone-title">Setelah Selesai &amp; Dicek Bersama</div>
+                        <div class="milestone-amount">Rp 1.750.000</div>
+                        <div class="milestone-desc">
+                            Dibayarkan setelah seluruh 37 masalah, desain baru, dan admin panel selesai serta disetujui bersama tim Nizhamiyyah.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAYMENT SETTLEMENT & MANDIRI ACCOUNT -->
+            <section class="settlement-section">
+                <div class="section-label">Informasi Rekening Pembayaran</div>
+
+                <div class="bank-transfer-card">
+                    <div class="bank-info-left">
+                        <img src="mandiri_logo.webp" alt="Bank Mandiri" class="bank-logo-img">
+                        <div class="bank-details">
+                            <span class="bank-name">Bank Mandiri Indonesia</span>
+                            <div class="bank-acc-row">
+                                <span class="bank-acc-number" id="accNumber">1550010616962</span>
+                                <button type="button" class="btn-copy-acc" id="copyBtn" onclick="copyAccountNumber()">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span id="copyText">Salin Rekening</span>
+                                </button>
+                            </div>
+                            <span class="bank-acc-holder">Atas Nama: <strong>Daru Fahmaa Muliawan</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="bank-cta-right">
+                        <a href="https://wa.me/6281311506025?text=Assalamu'alaikum%20Mas%20Daru,%20berikut%20kami%20kirimkan%20bukti%20transfer%20DP%2050%25%20(Rp%201.750.000)%20untuk%20mulai%20pengerjaan%20website%20Nizhamiyyah%20Edu." 
+                           target="_blank" 
+                           rel="noopener" 
+                           class="btn-wa-confirm">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                            <span>Kirim Bukti Transfer WhatsApp</span>
+                        </a>
+                        <span class="cta-note">Konfirmasi instan ke 0813-1150-6025</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SIGNATURE & AUTHORIZATION -->
+            <footer class="agreement-section">
+                <div class="agreement-notes">
+                    <p><strong>Ketentuan Tambahan:</strong></p>
+                    <p>
+                        Pengerjaan dimulai segera setelah konfirmasi penerimaan DP 50%. Akses repositori GitHub, akun hosting/Vercel, serta kredensial database &amp; payment gateway Mayar akan dijaga kerahasiaannya dan diproteksi penuh selama masa pengerjaan hingga serah terima.
+                    </p>
+                </div>
+
+                <div class="sign-block">
+                    <span class="sign-date">Jakarta / Kairo, 26 Oktober 2026</span>
+                    <span class="sign-label">Penerbit Dokumen</span>
+                    <img src="ttd_daru_clean.png" alt="Tanda Tangan Daru" class="sign-image">
+                    <div class="sign-name">Daru Fahmaa Muliawan</div>
+                    <div class="sign-role">Dar Dev · Lead Software Architect</div>
+                </div>
+            </footer>
+
+        </article>
+    </main>
+
+    <!-- MOBILE STICKY BOTTOM ACTION BAR -->
+    <aside class="mobile-bottom-bar">
+        <div class="mobile-bar-info">
+            <span class="mobile-bar-label">DP 50% Mulai Kerja</span>
+            <span class="mobile-bar-price">Rp 1.750.000</span>
+        </div>
+        <a href="https://wa.me/6281311506025?text=Assalamu'alaikum%20Mas%20Daru,%20saya%20Ust.%20Daffa%20dari%20Nizhamiyyah%20Edu.%20Kami%20ingin%20konfirmasi%20invoice%20perbaikan%20dan%20redesign%20website%20belajarditimurtengah.com." 
+           target="_blank" 
+           rel="noopener" 
+           class="mobile-bar-btn">
+            <span>Konfirmasi WA</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </aside>
+
+    <!-- JAVASCRIPT: COPY ACCOUNT & TOGGLE ACCORDION -->
+    <script>
+        function toggleAuditAccordion() {
+            var content = document.getElementById('auditContent');
+            var badge = document.getElementById('accordBadge');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                badge.innerHTML = 'Lihat 37 Butir &#9662;';
+            } else {
+                content.classList.add('open');
+                badge.innerHTML = 'Tutup Butir &#9652;';
+            }
+        }
+
+        function copyAccountNumber() {
+            var accNum = "1550010616962";
+            navigator.clipboard.writeText(accNum).then(function() {
+                var btn = document.getElementById('copyBtn');
+                var text = document.getElementById('copyText');
+                btn.classList.add('copied');
+                text.innerText = 'Tersalin!';
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    text.innerText = 'Salin Rekening';
+                }, 2500);
+            }).catch(function(err) {
+                console.error('Gagal menyalin:', err);
+            });
+        }
+    </script>
+</body>
+</html>

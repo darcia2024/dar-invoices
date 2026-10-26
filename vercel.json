@@ -2,6 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/daffa", "destination": "/daffa/index.html" },
+    { "source": "/ust-daffa", "destination": "/daffa/index.html" },
+    { "source": "/ustadz-daffa", "destination": "/daffa/index.html" },
+    { "source": "/nizhamiyyah", "destination": "/daffa/index.html" },
+    { "source": "/nizhamiyyahedu", "destination": "/daffa/index.html" },
+    { "source": "/belajarditimurtengah", "destination": "/daffa/index.html" },
     { "source": "/edo-undangan", "destination": "/bangedo/index.html" },
     { "source": "/bangedo-nikah", "destination": "/bangedo/index.html" },
     { "source": "/bangedo-undangan", "destination": "/bangedo/index.html" },
