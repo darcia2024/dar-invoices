@@ -588,29 +588,41 @@
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 4px;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
         }
 
         .table-item-desc {
             font-size: 0.78rem;
             color: var(--text-muted);
-            line-height: 1.45;
+            line-height: 1.5;
+        }
+
+        .table-tag-pill {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            background: var(--pink-100);
+            color: var(--pink-800);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--pink-200);
+            margin-top: 6px;
         }
 
         /* Grand Total Card in Pink */
         .commercials-summary {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .total-box {
             width: 100%;
-            max-width: 440px;
+            max-width: 460px;
             background: var(--pink-50);
             border: 1px solid var(--pink-200);
             border-radius: 14px;
-            padding: 20px 24px;
+            padding: 22px 24px;
         }
 
         .total-line {
@@ -659,6 +671,86 @@
             text-align: right;
             margin-top: 4px;
             font-weight: 600;
+        }
+
+        /* ----------------------------------------------------
+           VALUE & EFFICIENCY ANALYSIS CARDS ("BIAR TERLIHAT MURAH")
+        ---------------------------------------------------- */
+        .value-anchor-section {
+            background: #ffffff;
+            border: 2px dashed var(--pink-300);
+            border-radius: 16px;
+            padding: 22px 24px;
+            margin-bottom: 30px;
+        }
+
+        .value-anchor-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .value-anchor-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--pink-900);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .value-anchor-badge {
+            background: var(--pink-600);
+            color: #ffffff;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+
+        .value-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .value-mini-card {
+            background: var(--pink-50);
+            border: 1px solid var(--pink-200);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .value-mini-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--pink-800);
+            margin-bottom: 6px;
+        }
+
+        .value-mini-number {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--pink-700);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .value-mini-sub {
+            font-size: 0.74rem;
+            color: var(--pink-900);
+            line-height: 1.4;
         }
 
         /* ----------------------------------------------------
@@ -912,6 +1004,11 @@
                 border: none !important;
             }
 
+            .value-grid-3 {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
             .settlement-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
@@ -1028,8 +1125,8 @@
                     </ul>
                 </div>
                 <div class="card-footer-metric">
-                    <span>Kuota Penerbitan:</span>
-                    <strong>UNLIMITED</strong>
+                    <span>Investasi Lisensi:</span>
+                    <strong>Rp 10.000.000</strong>
                 </div>
             </div>
 
@@ -1046,8 +1143,8 @@
                     </ul>
                 </div>
                 <div class="card-footer-metric">
-                    <span>Kelengkapan Fitur:</span>
-                    <strong>SISTEM LENGKAP</strong>
+                    <span>Investasi Sistem:</span>
+                    <strong>Rp 12.500.000</strong>
                 </div>
             </div>
 
@@ -1064,15 +1161,15 @@
                     </ul>
                 </div>
                 <div class="card-footer-metric">
-                    <span>Durasi Jaminan:</span>
-                    <strong>1 TAHUN (365 HARI)</strong>
+                    <span>12 Bulan (@ Rp 625rb/bln):</span>
+                    <strong>Rp 7.500.000</strong>
                 </div>
             </div>
         </div>
 
-        <!-- 3. FORMAL INVOICE & COMMERCIAL DETAILS (PINK ACCENTS) -->
+        <!-- 3. FORMAL INVOICE & COMMERCIAL DETAILS (RINCIAN 30JT) -->
         <div class="pitch-section-title">
-            <span class="bar"></span> Rincian Penawaran &amp; Invoice Resmi
+            <span class="bar"></span> Rincian Penawaran &amp; Invoice Resmi (Breakdown Investasi)
         </div>
 
         <section class="formal-invoice-card">
@@ -1110,49 +1207,57 @@
                 </div>
             </div>
 
-            <!-- Commercial Line Items Table -->
+            <!-- Commercial Line Items Table (RINCIAN RESMI 30JT) -->
             <table class="items-table">
                 <thead>
                     <tr>
                         <th style="width: 50px; text-align: center;">No</th>
-                        <th>Ruang Lingkup &amp; Spesifikasi Layanan</th>
-                        <th style="width: 140px; text-align: center;">Durasi / Akses</th>
-                        <th style="width: 160px; text-align: right;">Nilai Investasi</th>
+                        <th>Ruang Lingkup &amp; Rincian Spesifikasi Layanan</th>
+                        <th style="width: 150px; text-align: center;">Durasi / Akses</th>
+                        <th style="width: 170px; text-align: right;">Nilai Investasi</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Item 1: Token Unlimited -->
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--pink-700);">01</td>
                         <td>
-                            <div class="table-item-name">Lisensi Unlimited Token Umrahme (Unlimited Issuance)</div>
+                            <div class="table-item-name">Lisensi Unlimited Token Umrahme Engine (Unlimited Issuance)</div>
                             <div class="table-item-desc">
-                                Penerbitan visa, manifest jamaah, ID card, dan hotel voucher tanpa batasan kuota per pax. Bebas biaya top-up token selamanya.
+                                Akses penuh penerbitan dokumen visa umrah, manifest jamaah, ID card, dan hotel voucher tanpa batasan kuota. Bebas biaya isi ulang token selamanya (Zero Per-Pax Fee).
                             </div>
+                            <span class="table-tag-pill">✓ Hemat Biaya Kuota Per-Pax</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--pink-700); font-weight: 700;">Unlimited</td>
-                        <td style="text-align: right; font-family: var(--font-mono); color: var(--pink-700); font-weight: 700;">Termasuk</td>
+                        <td style="text-align: right; font-family: var(--font-mono); color: var(--pink-700); font-weight: 800; font-size: 0.95rem;">Rp 10.000.000</td>
                     </tr>
+
+                    <!-- Item 2: Sistem Operasional Travel -->
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--pink-700);">02</td>
                         <td>
-                            <div class="table-item-name">Pengembangan Sistem Operasional Travel ElMassa</div>
+                            <div class="table-item-name">Pengembangan &amp; Setup Sistem Operasional Travel ElMassa</div>
                             <div class="table-item-desc">
-                                Modul manajemen paket &amp; kuota seat, database jamaah lengkap, ekspor manifest standar SISKOPATUH, kasir kwitansi QR Code, dan Executive Mobile Dashboard.
+                                Implementasi lengkap 4 modul inti: (1) Modul Paket &amp; Seat Keberangkatan, (2) Database Jamaah &amp; Ekspor SISKOPATUH 1-klik, (3) Kasir Kwitansi QR Code Resmi, dan (4) Executive Mobile Dashboard untuk pimpinan.
                             </div>
+                            <span class="table-tag-pill">✓ 4 Modul Terintegrasi Penuh</span>
                         </td>
                         <td style="text-align: center; font-family: var(--font-mono); color: var(--pink-700); font-weight: 700;">Sistem Penuh</td>
-                        <td style="text-align: right; font-family: var(--font-mono); color: var(--pink-700); font-weight: 700;">Termasuk</td>
+                        <td style="text-align: right; font-family: var(--font-mono); color: var(--pink-700); font-weight: 800; font-size: 0.95rem;">Rp 12.500.000</td>
                     </tr>
+
+                    <!-- Item 3: Maintenance 1 Tahun -->
                     <tr>
                         <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--pink-700);">03</td>
                         <td>
-                            <div class="table-item-name">Operasional Maintenance &amp; Dedicated Support 1 Tahun Penuh</div>
+                            <div class="table-item-name">Cloud Server, Daily Backup &amp; Dedicated SLA Support 1 Tahun Penuh</div>
                             <div class="table-item-desc">
-                                Pendampingan teknis prioritas via WhatsApp, uptime server monitoring 24/7, daily backup database terenkripsi aman, penanganan bug, dan pelatihan tim operator.
+                                Pemeliharaan teknis sistem selama 12 bulan (hanya setara <strong>Rp 625.000/bulan</strong>). Mencakup 24/7 server monitoring, auto daily backup terenkripsi, penanganan kendala bug, pembaruan minor, &amp; VIP WhatsApp support.
                             </div>
+                            <span class="table-tag-pill">✓ 12 Bulan (@ Rp 625rb/bln)</span>
                         </td>
-                        <td style="text-align: center; font-family: var(--font-mono); color: var(--pink-700); font-weight: 700;">1 Tahun (365 Hari)</td>
-                        <td style="text-align: right; font-family: var(--font-mono); color: var(--pink-700); font-weight: 800;">Rp 30.000.000</td>
+                        <td style="text-align: center; font-family: var(--font-mono); color: var(--pink-700); font-weight: 700;">1 Tahun (12 Bln)</td>
+                        <td style="text-align: right; font-family: var(--font-mono); color: var(--pink-700); font-weight: 800; font-size: 0.95rem;">Rp 7.500.000</td>
                     </tr>
                 </tbody>
             </table>
@@ -1161,27 +1266,64 @@
             <div class="commercials-summary">
                 <div class="total-box">
                     <div class="total-line">
-                        <span>Subtotal Sistem &amp; Lisensi :</span>
-                        <span style="font-family: var(--font-mono); font-weight: 700;">Rp 30.000.000</span>
+                        <span>Lisensi Unlimited Token Umrahme :</span>
+                        <span style="font-family: var(--font-mono); font-weight: 700; color: var(--text-dark);">Rp 10.000.000</span>
                     </div>
                     <div class="total-line">
-                        <span>Lisensi Token Umrahme :</span>
-                        <span style="font-weight: 800; color: var(--pink-700);">Unlimited (Termasuk)</span>
+                        <span>Pengembangan Sistem Operasional :</span>
+                        <span style="font-family: var(--font-mono); font-weight: 700; color: var(--text-dark);">Rp 12.500.000</span>
                     </div>
                     <div class="total-line">
-                        <span>Operasional Maintenance 1 Tahun :</span>
-                        <span style="font-weight: 800; color: var(--pink-700);">1 Tahun (Termasuk)</span>
+                        <span>Maintenance 1 Tahun (@ Rp 625rb/bln) :</span>
+                        <span style="font-family: var(--font-mono); font-weight: 700; color: var(--text-dark);">Rp 7.500.000</span>
                     </div>
                     <div class="total-line">
-                        <span>Pajak (PPN 0%) :</span>
+                        <span>Pajak Pertambahan Nilai (PPN 0%) :</span>
                         <span style="font-family: var(--font-mono); color: var(--pink-400);">Rp 0</span>
                     </div>
                     <div class="total-divider"></div>
                     <div class="grand-line">
-                        <span class="grand-title">TOTAL TAGIHAN :</span>
+                        <span class="grand-title">TOTAL INVESTASI ALL-IN :</span>
                         <span class="grand-figure">Rp 30.000.000</span>
                     </div>
                     <div class="spelled-out">// Tiga Puluh Juta Rupiah //</div>
+                </div>
+            </div>
+
+            <!-- VALUE & EFFICIENCY ANALYSIS (MEMBUAT TERLIHAT SANGAT MURAH) -->
+            <div class="value-anchor-section">
+                <div class="value-anchor-head">
+                    <div class="value-anchor-title">
+                        <span>💡</span>
+                        <span>Analisis Efisiensi &amp; Keuntungan Investasi Travel El Massa</span>
+                    </div>
+                    <span class="value-anchor-badge">HIGH ROI &amp; COST EFFICIENCY</span>
+                </div>
+
+                <div class="value-grid-3">
+                    <div class="value-mini-card">
+                        <div class="value-mini-label">Ekuivalen Bulanan</div>
+                        <div class="value-mini-number">Rp 2.500.000 <span style="font-size: 0.75rem; font-weight: 600;">/ bln</span></div>
+                        <div class="value-mini-sub">
+                            Jauh lebih hemat dari menggaji 1 staf IT/admin (UMR ~Rp 5.3jt/bln), sudah mencakup seluruh sistem, token tanpa batas, dan tim purna jual.
+                        </div>
+                    </div>
+
+                    <div class="value-mini-card">
+                        <div class="value-mini-label">Ekuivalen Harian</div>
+                        <div class="value-mini-number">~Rp 82.000 <span style="font-size: 0.75rem; font-weight: 600;">/ hari</span></div>
+                        <div class="value-mini-sub">
+                            Hanya seharga 2 cangkir kopi per hari untuk mengoperasikan infrastruktur digital travel, database jamaah, dan penerbitan dokumen 24/7.
+                        </div>
+                    </div>
+
+                    <div class="value-mini-card">
+                        <div class="value-mini-label">Bebas Biaya Token</div>
+                        <div class="value-mini-number">HEMAT PULUHAN JUTA</div>
+                        <div class="value-mini-sub">
+                            Tanpa biaya kuota per jamaah (Zero Per-Pax Fee). Berangkatkan 500 atau 2.000 jamaah biaya tetap sama, tidak ada biaya tambahan!
+                        </div>
+                    </div>
                 </div>
             </div>
 
