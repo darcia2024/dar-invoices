@@ -6,7 +6,7 @@
 <title>Invoice INV/DD/2026/11/001 — Dar Dev</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Mona+Sans:wdth,wght@75..125,400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #0D0C22;
@@ -14,8 +14,11 @@
     --line: #E7E7E9;
     --pink: #EA4C89;
     --pink-soft: #FDEEF4;
-    --font-head: "Bricolage Grotesque", system-ui, sans-serif;
-    --font-body: "Mona Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --blue: #9ED3F7;
+    --blue-soft: #EAF6FF;
+    --blue-ink: #2D7DBA;
+    --font-head: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: #f4f4f6; }
@@ -80,7 +83,7 @@
   .tbl table { width: 100%; border-collapse: collapse; }
   .tbl th {
     text-align: left; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--muted); font-weight: 600; padding: 3.2mm 4mm; background: #FAFAFB;
+    color: var(--blue-ink); font-weight: 700; padding: 3.2mm 4mm; background: var(--blue-soft);
     border-bottom: 1px solid var(--line);
   }
   .tbl td { padding: 3.5mm 4mm; vertical-align: top; }
@@ -130,8 +133,9 @@
   .foot strong { font-family: var(--font-head); color: var(--ink); font-weight: 700; font-size: 10pt; }
 
   /* POLISH */
+  .sheet .foot { margin-top: 28px; }
   .sheet {
-    background: radial-gradient(520px 200px at 100% 0, var(--pink-soft), rgba(253,238,244,0) 70%), #fff;
+    background: radial-gradient(460px 190px at 100% 0, var(--pink-soft), rgba(253,238,244,0) 70%), radial-gradient(420px 180px at 0 0, var(--blue-soft), rgba(234,246,255,0) 70%), #fff;
     animation: rise .5s cubic-bezier(.2, .7, .2, 1) both;
   }
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -144,27 +148,33 @@
   .tbl tbody tr { transition: background .2s; }
   .tbl tbody tr:hover { background: #FFFAFC; }
   .grand { box-shadow: inset 0 0 0 1px rgba(234, 76, 137, .18); }
+  .tbl { border-color: var(--blue); }
+  .rule { border-top-color: #D6EBFA; }
+  .includes li::before { background: var(--blue-ink); }
+  .terms li::marker { color: var(--blue-ink); }
+  body { font-feature-settings: "tnum" 1, "cv11" 1; }
 
   /* PAYMENT (interactive) */
-  .pay { background: linear-gradient(180deg, #FFFAFC, #fff); border-color: rgba(234, 76, 137, .28); }
+  .pay { background: linear-gradient(180deg, var(--blue-soft), #fff 70%); border-color: var(--blue); }
   .bank-line { display: flex; flex-wrap: wrap; align-items: center; gap: 2mm 3mm; margin-bottom: 3mm; }
   .bank-chip {
     background: var(--ink); color: #fff; font-weight: 700; font-size: 8.5pt;
     padding: 1mm 3mm; border-radius: 99px; letter-spacing: .02em;
   }
   .owner { color: var(--muted); font-size: 9.5pt; font-weight: 600; }
+  .bank-logo { height: 7mm; width: auto; display: block; }
   .acc-copy {
     all: unset; box-sizing: border-box; cursor: pointer; width: 100%;
     display: grid; grid-template-columns: 1fr auto; grid-template-areas: "l i" "n i"; align-items: center; column-gap: 3mm;
-    background: #fff; border: 1.5px dashed rgba(234, 76, 137, .55); border-radius: 3.5mm; padding: 3mm 4mm;
+    background: #fff; border: 1.5px dashed var(--blue); border-radius: 3.5mm; padding: 3mm 4mm;
     transition: border-color .2s, background .2s, transform .1s;
   }
-  .acc-copy:hover { background: var(--pink-soft); border-style: solid; }
+  .acc-copy:hover { background: var(--blue-soft); border-style: solid; border-color: var(--blue-ink); }
   .acc-copy:active { transform: scale(.985); }
   .acc-copy:focus-visible, .btn:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
   .acc-label { grid-area: l; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
   .acc-num { grid-area: n; font-family: var(--font-head); font-weight: 800; font-size: 17pt; letter-spacing: .03em; font-variant-numeric: tabular-nums; user-select: all; }
-  .acc-copy .ico { grid-area: i; color: var(--pink); }
+  .acc-copy .ico { grid-area: i; color: var(--blue-ink); }
   .pay-actions { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 3mm; }
   .btn {
     all: unset; box-sizing: border-box; cursor: pointer; text-align: center; white-space: nowrap;
@@ -172,8 +182,8 @@
     transition: background .2s, color .2s, transform .1s, box-shadow .2s;
   }
   .btn:active { transform: scale(.97); }
-  .btn-soft { background: var(--pink-soft); color: var(--pink); }
-  .btn-soft:hover { background: #fbdce9; }
+  .btn-soft { background: #D9EEFC; color: var(--blue-ink); }
+  .btn-soft:hover { background: #C7E5FA; }
   .btn-solid { background: var(--pink); color: #fff; flex: 1 1 100%; box-shadow: 0 6px 16px -6px rgba(234, 76, 137, .7); }
   .btn-solid:hover { background: #d93f7a; }
   .btn.done { background: var(--ink); color: #fff; }
@@ -215,7 +225,7 @@
       width: 210mm; max-width: none; height: 297mm; margin: 0;
       padding: 13mm 16mm 11mm; border-radius: 0; box-shadow: none; overflow: hidden;
     }
-    .foot { margin-top: auto; }
+    .sheet .foot { margin-top: auto; }
   }
 </style>
 </head>
@@ -309,7 +319,7 @@
   <section class="lower">
     <div class="box pay">
       <h3>Pembayaran</h3>
-      <div class="bank-line"><span class="bank-chip">Bank Mandiri</span><span class="owner">a.n. Daru Fahmaa Muliawan</span></div>
+      <div class="bank-line"><img class="bank-logo" src="mandiri_logo.webp" alt="Bank Mandiri"><span class="owner">a.n. Daru Fahmaa Muliawan</span></div>
       <button type="button" class="acc-copy" data-copy="1550010616962" data-toast="No. rekening disalin" aria-label="Salin nomor rekening 1550010616962">
         <span class="acc-label">No. rekening</span>
         <span class="acc-num">1550010616962</span>
