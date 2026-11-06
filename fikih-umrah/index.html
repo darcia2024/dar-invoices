@@ -17,332 +17,331 @@
     --blue: #9ED3F7;
     --blue-soft: #EAF6FF;
     --blue-ink: #2D7DBA;
-    --font-head: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { background: #f4f4f6; }
+  html { background: #F3F3F6; font-size: 16px; }
   body {
-    font-family: var(--font-body);
+    font-family: var(--font);
     color: var(--ink);
-    font-size: 10pt;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.55;
+    font-feature-settings: "tnum" 1, "cv11" 1;
+    -webkit-font-smoothing: antialiased;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-
   @page { size: A4; margin: 0; }
 
-  .topbar { max-width: 860px; margin: 24px auto 0; padding: 0 16px; display: flex; justify-content: flex-end; }
+  .topbar { max-width: 880px; margin: 1.5rem auto 0; padding: 0 1rem; display: flex; justify-content: flex-end; }
   .btn-print {
-    font: 600 13px var(--font-body); color: var(--ink); background: #fff; cursor: pointer;
-    border: 1px solid var(--line); border-radius: 99px; padding: 8px 16px;
+    font: 600 .8rem var(--font); color: var(--ink); background: #fff; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 99px; padding: .5rem 1rem; transition: .2s;
   }
-  .btn-print:hover { border-color: var(--pink); color: var(--pink); }
+  .btn-print:hover { border-color: var(--ink); }
 
   .sheet {
-    max-width: 860px;
-    margin: 14px auto 40px;
-    padding: clamp(22px, 5vw, 48px);
-    background: #fff;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 24px rgba(13, 12, 34, .06);
+    max-width: 880px; margin: .9rem auto 3rem;
+    padding: clamp(1.4rem, 5vw, 3.25rem);
+    background: #fff; border-radius: 1.75rem;
+    box-shadow: 0 1px 0 rgba(13,12,34,.04), 0 30px 60px -30px rgba(13,12,34,.18);
+    display: flex; flex-direction: column;
+    animation: rise .6s cubic-bezier(.2,.7,.2,1) both;
   }
   .sheet > * { flex-shrink: 0; }
-  .foot { margin-top: 28px; }
-  .item-mobile { display: none; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
-  /* HEADER */
-  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12mm; }
-  .logo { font-family: var(--font-head); font-weight: 800; font-size: 25pt; letter-spacing: -.02em; line-height: 1; }
+  .eyebrow { font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+  /* TOP */
+  .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; }
+  .logo { font-weight: 800; font-size: 1.7rem; letter-spacing: -.04em; line-height: 1; }
   .logo i { font-style: normal; color: var(--pink); }
-  .seller { margin-top: 3.2mm; font-weight: 600; font-size: 11pt; }
-  .seller small { display: block; font-weight: 400; color: var(--muted); font-size: 9.5pt; }
-  .head-right { text-align: right; }
-  .inv-title { font-family: var(--font-head); font-weight: 800; font-size: 30pt; letter-spacing: -.02em; line-height: 1; }
-  .inv-no { margin-top: 2mm; color: var(--muted); font-size: 10pt; font-variant-numeric: tabular-nums; }
-  .pill {
-    display: inline-block; margin-top: 3.2mm; padding: 1.3mm 4mm;
-    background: var(--pink-soft); color: var(--pink);
-    border-radius: 99px; font-weight: 700; font-size: 8.5pt; letter-spacing: .08em;
-  }
+  .by { margin-top: .55rem; font-size: .82rem; color: var(--muted); }
+  .by b { color: var(--ink); font-weight: 600; }
+  .top-r { text-align: right; }
+  .top-r .no { margin-top: .35rem; font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
 
-  .rule { height: 0; border-top: 1px solid var(--line); margin: 6mm 0 5mm; }
+  /* HERO */
+  .hero {
+    margin-top: 2rem; border-radius: 1.4rem; color: #fff; position: relative; overflow: hidden;
+    padding: 2rem 2.1rem;
+    background:
+      radial-gradient(560px 240px at 92% -30%, rgba(234,76,137,.6), transparent 62%),
+      radial-gradient(480px 240px at -8% 130%, rgba(158,211,247,.38), transparent 62%),
+      #0D0C22;
+    display: grid; grid-template-columns: 1fr auto; gap: 1.5rem 2rem; align-items: end;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+  }
+  .hero .eyebrow { color: rgba(255,255,255,.62); }
+  .amount { margin-top: .5rem; font-size: clamp(2.2rem, 7vw, 3.4rem); font-weight: 800; letter-spacing: -.05em; line-height: 1; }
+  .amount small { font-size: .42em; font-weight: 600; letter-spacing: 0; color: rgba(255,255,255,.7); margin-right: .35em; vertical-align: .55em; }
+  .terbilang { margin-top: .7rem; font-size: .82rem; color: rgba(255,255,255,.62); font-style: italic; }
+  .hero-r { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: .55rem; }
+  .pill {
+    display: inline-flex; align-items: center; gap: .5rem; padding: .38rem .85rem; border-radius: 99px;
+    background: rgba(255,255,255,.1); color: #FFC4DA; font-weight: 700; font-size: .66rem; letter-spacing: .12em;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+  }
+  .pill::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--pink); animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(234,76,137,.6); } 50% { box-shadow: 0 0 0 .4rem rgba(234,76,137,0); } }
+  .due { font-size: .82rem; color: rgba(255,255,255,.62); }
+  .due b { display: block; color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
+  .hero-cta {
+    margin-top: .3rem; display: inline-block; text-decoration: none; font-weight: 700; font-size: .82rem;
+    background: #fff; color: var(--ink); padding: .65rem 1.2rem; border-radius: 99px; transition: .2s;
+  }
+  .hero-cta:hover { background: var(--blue); }
 
   /* META */
-  .meta { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 8mm; }
-  .label { font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 1.6mm; }
-  .meta .v { font-weight: 600; }
-  .meta .s { color: var(--muted); font-size: 9.5pt; }
-  .meta .row + .row { margin-top: 3.2mm; }
+  .meta { margin-top: 2.2rem; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .meta .v { margin-top: .4rem; font-weight: 600; }
+  .meta .s { font-size: .86rem; color: var(--muted); line-height: 1.45; margin-top: .1rem; }
 
-  /* TABLE */
-  .tbl { margin-top: 6mm; border: 1px solid var(--line); border-radius: 4mm; overflow: hidden; }
-  .tbl table { width: 100%; border-collapse: collapse; }
-  .tbl th {
-    text-align: left; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--blue-ink); font-weight: 700; padding: 3.2mm 4mm; background: var(--blue-soft);
-    border-bottom: 1px solid var(--line);
+  /* SECTION HEAD */
+  .sec { margin-top: 2.2rem; display: flex; align-items: baseline; gap: .75rem; }
+  .sec .n { font-size: .7rem; font-weight: 700; color: var(--blue-ink); letter-spacing: .06em; }
+  .sec h2 { font-size: .98rem; font-weight: 700; letter-spacing: -.01em; }
+  .sec::after { content: ""; flex: 1; border-top: 1px solid var(--line); transform: translateY(-.25rem); }
+
+  /* ITEMS */
+  .items { margin-top: .9rem; width: 100%; border-collapse: collapse; }
+  .items th { text-align: left; font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: .5rem 0; }
+  .items td { padding: 1.1rem 0 .3rem; vertical-align: top; }
+  .items .num { text-align: right; white-space: nowrap; }
+  .items .qty { width: 5.5rem; } .items .price { width: 8.5rem; } .items .amt { width: 8.5rem; font-weight: 700; }
+  .item-title { font-weight: 700; font-size: 1.05rem; letter-spacing: -.015em; }
+  .item-sub { margin-top: .25rem; font-size: .88rem; color: var(--muted); max-width: 30rem; }
+  .item-mobile { display: none; }
+  .feat { margin-top: 1rem; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .55rem 1.5rem; }
+  .feat li { position: relative; padding-left: 1.6rem; font-size: .86rem; line-height: 1.4; }
+  .feat li::before {
+    content: ""; position: absolute; left: 0; top: .12rem; width: 1.05rem; height: 1.05rem; border-radius: 50%;
+    background: var(--blue-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232D7DBA' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/70% no-repeat;
   }
-  .tbl td { padding: 3.5mm 4mm; vertical-align: top; }
-  .tbl .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .tbl .c { width: 10mm; color: var(--muted); }
-  .tbl .qty { width: 22mm; }
-  .tbl .price { width: 32mm; }
-  .tbl .amt { width: 34mm; font-weight: 700; }
-  .item-title { font-weight: 700; }
-  .item-sub { color: var(--muted); font-size: 9.5pt; margin-top: 1mm; }
-  .includes { margin-top: 2.2mm; padding-left: 0; list-style: none; }
-  .includes li { position: relative; padding-left: 4.5mm; font-size: 9.5pt; color: var(--ink); }
-  .includes li + li { margin-top: .8mm; }
-  .includes li::before {
-    content: ""; position: absolute; left: 0; top: 2.1mm; width: 1.8mm; height: 1.8mm;
-    border-radius: 50%; background: var(--pink);
-  }
+  .row-end td { border-bottom: 1px solid var(--line); padding: .2rem 0 1.3rem; }
+  .feat { margin-top: .4rem; }
 
   /* TOTALS */
-  .totals-wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: 10mm; margin-top: 5mm; }
-  .terbilang { flex: 1; padding-top: 1mm; }
-  .terbilang p { font-style: italic; color: var(--ink); }
-  .totals { width: 82mm; }
-  .totals .line { display: flex; justify-content: space-between; padding: 1.6mm 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .totals { margin: 1.2rem 0 0 auto; width: min(19rem, 100%); }
+  .totals .line { display: flex; justify-content: space-between; padding: .35rem 0; font-size: .9rem; color: var(--muted); }
   .totals .line b { color: var(--ink); font-weight: 600; }
-  .grand {
-    margin-top: 2.5mm; background: var(--pink-soft); border-radius: 3.5mm;
-    padding: 4mm 5mm; display: flex; justify-content: space-between; align-items: baseline;
-  }
-  .grand span { font-weight: 700; }
-  .grand strong { font-family: var(--font-head); font-weight: 800; font-size: 17pt; letter-spacing: -.01em; color: var(--pink); font-variant-numeric: tabular-nums; }
+  .totals .grand { margin-top: .4rem; padding-top: .8rem; border-top: 1px solid var(--ink); color: var(--ink); font-weight: 700; font-size: 1rem; align-items: baseline; }
+  .totals .grand b { font-size: 1.35rem; font-weight: 800; letter-spacing: -.03em; color: var(--pink); }
 
-  /* PAYMENT + TERMS */
-  .lower { display: grid; grid-template-columns: 1fr 1.25fr; gap: 8mm; margin-top: 6mm; }
-  .box { border: 1px solid var(--line); border-radius: 4mm; padding: 4mm 4.5mm; }
-  .box h3 { font-family: var(--font-head); font-size: 11pt; font-weight: 700; margin-bottom: 2.5mm; }
-  .pay dl { display: grid; grid-template-columns: 24mm 1fr; row-gap: 1.2mm; font-size: 9.5pt; }
-  .pay dt { color: var(--muted); }
-  .pay dd { font-weight: 600; }
-  .pay .acc { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
-  .pay .note { margin-top: 3mm; font-size: 9pt; color: var(--muted); }
-  .terms ol { padding-left: 4.5mm; font-size: 9pt; color: var(--muted); }
-  .terms li + li { margin-top: 1mm; }
-  .terms li::marker { color: var(--pink); font-weight: 700; }
-
-  .foot { margin-top: auto; padding-top: 4mm; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 9.5pt; color: var(--muted); }
-  .foot strong { font-family: var(--font-head); color: var(--ink); font-weight: 700; font-size: 10pt; }
-
-  /* POLISH */
-  .sheet .foot { margin-top: 28px; }
-  .sheet {
-    background: radial-gradient(460px 190px at 100% 0, var(--pink-soft), rgba(253,238,244,0) 70%), radial-gradient(420px 180px at 0 0, var(--blue-soft), rgba(234,246,255,0) 70%), #fff;
-    animation: rise .5s cubic-bezier(.2, .7, .2, 1) both;
+  /* PAYMENT */
+  .pay {
+    margin-top: 1.1rem; border-radius: 1.3rem; padding: 1.5rem; scroll-margin-top: 1rem;
+    background: linear-gradient(135deg, var(--blue-soft), #fff 75%);
+    box-shadow: inset 0 0 0 1px rgba(158,211,247,.8);
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; align-items: stretch;
   }
-  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .pill { display: inline-flex; align-items: center; gap: 2mm; }
-  .pill::before {
-    content: ""; width: 1.9mm; height: 1.9mm; border-radius: 50%; background: var(--pink);
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(234, 76, 137, .45); } 50% { box-shadow: 0 0 0 1.6mm rgba(234, 76, 137, 0); } }
-  .tbl tbody tr { transition: background .2s; }
-  .tbl tbody tr:hover { background: #FFFAFC; }
-  .grand { box-shadow: inset 0 0 0 1px rgba(234, 76, 137, .18); }
-  .tbl { border-color: var(--blue); }
-  .rule { border-top-color: #D6EBFA; }
-  .includes li::before { background: var(--blue-ink); }
-  .terms li::marker { color: var(--blue-ink); }
-  body { font-feature-settings: "tnum" 1, "cv11" 1; }
-
-  /* PAYMENT (interactive) */
-  .pay { background: linear-gradient(180deg, var(--blue-soft), #fff 70%); border-color: var(--blue); }
-  .bank-line { display: flex; flex-wrap: wrap; align-items: center; gap: 2mm 3mm; margin-bottom: 3mm; }
-  .bank-chip {
-    background: var(--ink); color: #fff; font-weight: 700; font-size: 8.5pt;
-    padding: 1mm 3mm; border-radius: 99px; letter-spacing: .02em;
-  }
-  .owner { color: var(--muted); font-size: 9.5pt; font-weight: 600; }
-  .bank-logo { height: 7mm; width: auto; display: block; }
+  .bank-head { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+  .bank-logo { height: 1.7rem; width: auto; display: block; }
+  .owner { font-size: .84rem; color: var(--muted); font-weight: 500; }
   .acc-copy {
-    all: unset; box-sizing: border-box; cursor: pointer; width: 100%;
-    display: grid; grid-template-columns: 1fr auto; grid-template-areas: "l i" "n i"; align-items: center; column-gap: 3mm;
-    background: #fff; border: 1.5px dashed var(--blue); border-radius: 3.5mm; padding: 3mm 4mm;
-    transition: border-color .2s, background .2s, transform .1s;
+    all: unset; box-sizing: border-box; cursor: pointer; width: 100%; margin-top: 1rem;
+    display: grid; grid-template-columns: 1fr auto; grid-template-areas: "l i" "n i"; align-items: center; column-gap: .75rem;
+    background: #fff; border-radius: 1rem; padding: .85rem 1.1rem;
+    box-shadow: inset 0 0 0 1.5px rgba(158,211,247,.9); transition: .2s;
   }
-  .acc-copy:hover { background: var(--blue-soft); border-style: solid; border-color: var(--blue-ink); }
+  .acc-copy:hover { box-shadow: inset 0 0 0 1.5px var(--blue-ink); transform: translateY(-1px); }
   .acc-copy:active { transform: scale(.985); }
-  .acc-copy:focus-visible, .btn:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
-  .acc-label { grid-area: l; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .acc-num { grid-area: n; font-family: var(--font-head); font-weight: 800; font-size: 17pt; letter-spacing: .03em; font-variant-numeric: tabular-nums; user-select: all; }
+  .acc-copy:focus-visible, .btn:focus-visible, .hero-cta:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+  .acc-label { grid-area: l; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .acc-num { grid-area: n; font-weight: 800; font-size: 1.55rem; letter-spacing: -.01em; user-select: all; }
   .acc-copy .ico { grid-area: i; color: var(--blue-ink); }
-  .pay-actions { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 3mm; }
+  .pay-r { display: flex; flex-direction: column; justify-content: space-between; gap: .9rem; }
+  .pay-r .big { font-size: 1.5rem; font-weight: 800; letter-spacing: -.03em; margin-top: .2rem; }
+  .pay-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
   .btn {
     all: unset; box-sizing: border-box; cursor: pointer; text-align: center; white-space: nowrap;
-    font: 700 9pt var(--font-body); padding: 2.4mm 4mm; border-radius: 99px;
-    transition: background .2s, color .2s, transform .1s, box-shadow .2s;
+    font: 700 .8rem var(--font); padding: .65rem 1.05rem; border-radius: 99px; transition: .2s;
   }
   .btn:active { transform: scale(.97); }
   .btn-soft { background: #D9EEFC; color: var(--blue-ink); }
-  .btn-soft:hover { background: #C7E5FA; }
-  .btn-solid { background: var(--pink); color: #fff; flex: 1 1 100%; box-shadow: 0 6px 16px -6px rgba(234, 76, 137, .7); }
-  .btn-solid:hover { background: #d93f7a; }
+  .btn-soft:hover { background: #C4E4FA; }
+  .btn-solid { background: var(--ink); color: #fff; flex: 1 1 100%; box-shadow: 0 10px 22px -10px rgba(13,12,34,.6); }
+  .btn-solid:hover { background: var(--pink); }
   .btn.done { background: var(--ink); color: #fff; }
+  .note { grid-column: 1 / -1; font-size: .8rem; color: var(--muted); }
+
+  /* TERMS */
+  .terms { margin-top: 1rem; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .8rem 2.2rem; counter-reset: t; }
+  .terms li { counter-increment: t; position: relative; padding-left: 2rem; font-size: .8rem; color: var(--muted); line-height: 1.5; }
+  .terms li::before { content: "0" counter(t); position: absolute; left: 0; top: 0; font-weight: 700; font-size: .72rem; color: var(--pink); letter-spacing: .04em; }
+
+  .foot { margin-top: 2.2rem; padding-top: 1.1rem; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: .82rem; color: var(--muted); }
+  .foot strong { color: var(--ink); font-weight: 700; letter-spacing: -.01em; }
 
   .toast {
-    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 24px); opacity: 0; pointer-events: none;
-    background: var(--ink); color: #fff; font-weight: 600; font-size: 13px; padding: 10px 18px;
-    border-radius: 99px; box-shadow: 0 10px 30px rgba(13, 12, 34, .25); transition: opacity .25s, transform .25s; z-index: 10;
+    position: fixed; left: 50%; bottom: 1.5rem; transform: translate(-50%, 1.5rem); opacity: 0; pointer-events: none;
+    background: var(--ink); color: #fff; font-weight: 600; font-size: .82rem; padding: .65rem 1.1rem;
+    border-radius: 99px; box-shadow: 0 10px 30px rgba(13,12,34,.25); transition: .25s; z-index: 10;
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
   @media (prefers-reduced-motion: reduce) { .sheet, .pill::before { animation: none; } }
 
-  @media screen and (max-width: 640px) {
-    body { font-size: 14px; }
-    .acc-num { font-size: 15pt; }
-    .btn { flex: 1 1 auto; padding: 3mm 4mm; }
-    .btn-solid { flex-basis: 100%; }
-    .head { flex-direction: column; gap: 5mm; }
-    .head-right { text-align: left; }
-    .inv-title { font-size: 26pt; }
-    .meta { grid-template-columns: 1fr 1fr; gap: 6mm; }
+  @media screen and (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; padding: 1.5rem; }
+    .hero-r { align-items: flex-start; text-align: left; }
+    .meta { grid-template-columns: 1fr 1fr; }
     .meta > div:first-child { grid-column: 1 / -1; }
-    .lower { grid-template-columns: 1fr; }
-    .totals-wrap { flex-direction: column; gap: 5mm; }
-    .totals { width: 100%; }
-    .tbl .c, .tbl .qty, .tbl .price { display: none; }
-    .tbl .amt { width: auto; }
-    .item-mobile { display: block; margin-top: 2mm; color: var(--muted); font-size: 9.5pt; }
+    .pay { grid-template-columns: 1fr; padding: 1.2rem; }
+    .terms { grid-template-columns: 1fr; }
+    .feat { grid-template-columns: 1fr; }
+    .items .c, .items .qty, .items .price { display: none; }
+    .items .amt { width: auto; }
+    .item-mobile { display: block; margin-top: .4rem; font-size: .84rem; color: var(--muted); }
+    .top { flex-direction: column; gap: 1rem; }
+    .top-r { text-align: left; }
+    .btn { flex: 1 1 auto; padding: .8rem 1rem; }
+    .btn-solid { flex-basis: 100%; }
+    .acc-num { font-size: 1.3rem; }
+    .foot { flex-direction: column; align-items: flex-start; }
   }
 
   @media print {
-    html { background: #fff; }
-    body { font-size: 10pt; }
-    .topbar, .no-print, .toast { display: none !important; }
-    .sheet { animation: none; }
-    .acc-copy { border-style: solid; padding: 2mm 3mm; }
-    .acc-num { font-size: 13pt; }
+    html { background: #fff; font-size: 11.4px; }
+    .topbar, .no-print, .toast, .hero-cta { display: none !important; }
     .sheet {
-      width: 210mm; max-width: none; height: 297mm; margin: 0;
-      padding: 13mm 16mm 11mm; border-radius: 0; box-shadow: none; overflow: hidden;
+      width: 210mm; max-width: none; height: 297mm; margin: 0; border-radius: 0; box-shadow: none; animation: none;
+      padding: 13mm 15mm 11mm; overflow: hidden;
     }
-    .sheet .foot { margin-top: auto; }
+    .hero { margin-top: 1.5rem; padding: 1.4rem 1.6rem; }
+    .meta { margin-top: 1.6rem; padding-bottom: 1.4rem; }
+    .sec { margin-top: 1.5rem; }
+    .pay { margin-top: .8rem; padding: 1.1rem; }
+    .foot { margin-top: auto; }
   }
 </style>
 </head>
 <body>
 <div class="topbar"><button type="button" class="btn-print" onclick="window.print()">Cetak / Simpan PDF</button></div>
+
 <main class="sheet">
 
-  <header class="head">
+  <header class="top">
     <div>
       <div class="logo">fikih umrah<i>.</i></div>
-      <div class="seller">Dar Dev<small>WhatsApp 0813 1150 6025</small></div>
+      <div class="by">oleh <b>Dar Dev</b> &middot; WhatsApp 0813 1150 6025</div>
     </div>
-    <div class="head-right">
-      <div class="inv-title">INVOICE</div>
-      <div class="inv-no">INV/DD/2026/11/001</div>
-      <div class="pill">BELUM DIBAYAR</div>
+    <div class="top-r">
+      <div class="eyebrow">Invoice</div>
+      <div class="no">INV/DD/2026/11/001</div>
     </div>
   </header>
 
-  <div class="rule"></div>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Total tagihan</div>
+      <div class="amount"><small>Rp</small>2.000.000</div>
+      <div class="terbilang">Dua juta rupiah</div>
+    </div>
+    <div class="hero-r">
+      <span class="pill">BELUM DIBAYAR</span>
+      <div class="due">Jatuh tempo<b>9 November 2026</b></div>
+      <a class="hero-cta" href="#bayar">Bayar sekarang &darr;</a>
+    </div>
+  </section>
 
   <section class="meta">
     <div>
-      <div class="label">Ditagihkan kepada</div>
+      <div class="eyebrow">Ditagihkan kepada</div>
       <div class="v">Sidi Alief</div>
       <div class="s">Akun Instagram pribadi<br>(seri &ldquo;Fikih Umrah 1 Menit&rdquo;)</div>
     </div>
     <div>
-      <div class="row">
-        <div class="label">Tanggal terbit</div>
-        <div class="v">6 November 2026</div>
-      </div>
-      <div class="row">
-        <div class="label">Jatuh tempo</div>
-        <div class="v">9 November 2026</div>
-      </div>
+      <div class="eyebrow">Tanggal terbit</div>
+      <div class="v">6 November 2026</div>
     </div>
     <div>
-      <div class="label">Periode layanan</div>
+      <div class="eyebrow">Periode layanan</div>
       <div class="v">6 Nov &ndash; 5 Des 2026</div>
       <div class="s">1 bulan</div>
     </div>
   </section>
 
-  <section class="tbl">
-    <table>
-      <thead>
-        <tr>
-          <th class="c">No</th>
-          <th>Deskripsi</th>
-          <th class="num qty">Qty</th>
-          <th class="num price">Harga</th>
-          <th class="num amt">Jumlah</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="c">1</td>
-          <td>
-            <div class="item-title">Paket Rutin</div>
-            <div class="item-sub">Video motion graphic edukasi fikih umrah, durasi &plusmn;1 menit, format 9:16 untuk Instagram Reels</div>
-            <div class="item-mobile">1 bulan &times; Rp 2.000.000</div>
-            <ul class="includes">
-              <li>8 video per bulan (2&times; seminggu)</li>
-              <li>Riset topik dan naskah berdalil</li>
-              <li>Animasi motion graphic, suara narasi, teks Arab, subtitle, dan musik</li>
-              <li>Caption, hashtag, dan jadwal posting</li>
-              <li>Revisi 1&times; per video</li>
-            </ul>
-          </td>
-          <td class="num qty">1 bulan</td>
-          <td class="num price">Rp 2.000.000</td>
-          <td class="num amt">Rp 2.000.000</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+  <div class="sec"><span class="n">01</span><h2>Rincian layanan</h2></div>
+  <table class="items">
+    <thead>
+      <tr>
+        <th class="c" hidden></th>
+        <th>Deskripsi</th>
+        <th class="num qty">Qty</th>
+        <th class="num price">Harga</th>
+        <th class="num amt">Jumlah</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="item-title">Paket Rutin</div>
+          <div class="item-sub">Video motion graphic edukasi fikih umrah, durasi &plusmn;1 menit, format 9:16 untuk Instagram Reels</div>
+          <div class="item-mobile">1 bulan &times; Rp 2.000.000</div>
+        </td>
+        <td class="num qty">1 bulan</td>
+        <td class="num price">Rp 2.000.000</td>
+        <td class="num amt">Rp 2.000.000</td>
+      </tr>
+      <tr class="row-end">
+        <td colspan="4">
+          <ul class="feat">
+            <li>8 video per bulan (2&times; seminggu)</li>
+            <li>Riset topik dan naskah berdalil</li>
+            <li>Animasi motion graphic, suara narasi, teks Arab, subtitle, dan musik</li>
+            <li>Caption, hashtag, dan jadwal posting</li>
+            <li>Revisi 1&times; per video</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-  <section class="totals-wrap">
-    <div class="terbilang">
-      <div class="label">Terbilang</div>
-      <p>Dua juta rupiah</p>
-    </div>
-    <div class="totals">
-      <div class="line"><span>Subtotal</span><b>Rp 2.000.000</b></div>
-      <div class="line"><span>Diskon</span><b>Rp 0</b></div>
-      <div class="grand"><span>Total dibayar</span><strong>Rp 2.000.000</strong></div>
-    </div>
-  </section>
+  <div class="totals">
+    <div class="line"><span>Subtotal</span><b>Rp 2.000.000</b></div>
+    <div class="line"><span>Diskon</span><b>Rp 0</b></div>
+    <div class="line grand"><span>Total dibayar</span><b>Rp 2.000.000</b></div>
+  </div>
 
-  <section class="lower">
-    <div class="box pay">
-      <h3>Pembayaran</h3>
-      <div class="bank-line"><img class="bank-logo" src="mandiri_logo.webp" alt="Bank Mandiri"><span class="owner">a.n. Daru Fahmaa Muliawan</span></div>
+  <div class="sec" id="bayar"><span class="n">02</span><h2>Pembayaran</h2></div>
+  <section class="pay">
+    <div>
+      <div class="bank-head">
+        <img class="bank-logo" src="mandiri_logo.webp" alt="Bank Mandiri">
+        <span class="owner">a.n. Daru Fahmaa Muliawan</span>
+      </div>
       <button type="button" class="acc-copy" data-copy="1550010616962" data-toast="No. rekening disalin" aria-label="Salin nomor rekening 1550010616962">
         <span class="acc-label">No. rekening</span>
         <span class="acc-num">1550010616962</span>
-        <svg class="ico no-print" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>
+        <svg class="ico no-print" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>
       </button>
+    </div>
+    <div class="pay-r">
+      <div>
+        <div class="eyebrow">Nominal transfer</div>
+        <div class="big">Rp 2.000.000</div>
+      </div>
       <div class="pay-actions no-print">
         <button type="button" class="btn btn-soft" data-copy="1550010616962" data-toast="No. rekening disalin">Salin rekening</button>
         <button type="button" class="btn btn-soft" data-copy="2000000" data-toast="Nominal Rp 2.000.000 disalin">Salin nominal</button>
         <a class="btn btn-solid" target="_blank" rel="noopener" href="https://wa.me/6281311506025?text=Halo%20Dar%20Dev%2C%20saya%20konfirmasi%20pembayaran%20invoice%20INV%2FDD%2F2026%2F11%2F001%20(Rp%202.000.000)%20untuk%20paket%20video%20Fikih%20Umrah%201%20Menit.">Konfirmasi via WhatsApp</a>
       </div>
-      <p class="note">Setelah transfer, mohon kirim bukti pembayaran ke WhatsApp 0813 1150 6025.</p>
     </div>
-    <div class="box terms">
-      <h3>Ketentuan</h3>
-      <ol>
-        <li>Pembayaran dilakukan di awal setiap periode bulanan.</li>
-        <li>Produksi video pertama dimulai setelah pembayaran diterima dan naskah disetujui klien.</li>
-        <li>Tidak ada video yang tayang sebelum naskah dan hasil akhirnya disetujui klien.</li>
-        <li>Semua video yang sudah dibayar menjadi milik klien.</li>
-        <li>Paket berjalan per bulan dan bisa tidak diperpanjang di bulan berikutnya.</li>
-      </ol>
-    </div>
+    <p class="note">Setelah transfer, mohon kirim bukti pembayaran ke WhatsApp 0813 1150 6025.</p>
   </section>
+
+  <div class="sec"><span class="n">03</span><h2>Ketentuan</h2></div>
+  <ol class="terms">
+    <li>Pembayaran dilakukan di awal setiap periode bulanan.</li>
+    <li>Produksi video pertama dimulai setelah pembayaran diterima dan naskah disetujui klien.</li>
+    <li>Tidak ada video yang tayang sebelum naskah dan hasil akhirnya disetujui klien.</li>
+    <li>Semua video yang sudah dibayar menjadi milik klien.</li>
+    <li>Paket berjalan per bulan dan bisa tidak diperpanjang di bulan berikutnya.</li>
+  </ol>
 
   <footer class="foot">
     <span>Jazakallahu khairan atas kepercayaannya.</span>
