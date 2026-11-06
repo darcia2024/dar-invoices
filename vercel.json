@@ -22,6 +22,7 @@
     { "source": "/bangedo", "destination": "/bangedo/index.html" },
     { "source": "/bang-edo", "destination": "/bangedo/index.html" },
     { "source": "/edo", "destination": "/bangedo/index.html" },
+    { "source": "/jasavideo", "destination": "/fikih-umrah/index.html" },
     { "source": "/dreammecca-november", "destination": "/dreammecca-november/index.html" },
     { "source": "/dreammecca-11", "destination": "/dreammecca-november/index.html" },
     { "source": "/dm-november", "destination": "/dreammecca-november/index.html" },
