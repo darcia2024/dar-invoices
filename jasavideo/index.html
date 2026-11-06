@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice INV/DD/2026/11/001 — Dar Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Mona+Sans:wdth,wght@75..125,400..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0D0C22;
+    --muted: #6E6D7A;
+    --line: #E7E7E9;
+    --pink: #EA4C89;
+    --pink-soft: #FDEEF4;
+    --font-head: "Bricolage Grotesque", system-ui, sans-serif;
+    --font-body: "Mona Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #f4f4f6; }
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    font-size: 10pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page { size: A4; margin: 0; }
+
+  .topbar { max-width: 860px; margin: 24px auto 0; padding: 0 16px; display: flex; justify-content: flex-end; }
+  .btn-print {
+    font: 600 13px var(--font-body); color: var(--ink); background: #fff; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 99px; padding: 8px 16px;
+  }
+  .btn-print:hover { border-color: var(--pink); color: var(--pink); }
+
+  .sheet {
+    max-width: 860px;
+    margin: 14px auto 40px;
+    padding: clamp(22px, 5vw, 48px);
+    background: #fff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 24px rgba(13, 12, 34, .06);
+  }
+  .sheet > * { flex-shrink: 0; }
+  .foot { margin-top: 28px; }
+  .item-mobile { display: none; }
+
+  /* HEADER */
+  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12mm; }
+  .logo { font-family: var(--font-head); font-weight: 800; font-size: 25pt; letter-spacing: -.02em; line-height: 1; }
+  .logo i { font-style: normal; color: var(--pink); }
+  .seller { margin-top: 3.2mm; font-weight: 600; font-size: 11pt; }
+  .seller small { display: block; font-weight: 400; color: var(--muted); font-size: 9.5pt; }
+  .head-right { text-align: right; }
+  .inv-title { font-family: var(--font-head); font-weight: 800; font-size: 30pt; letter-spacing: -.02em; line-height: 1; }
+  .inv-no { margin-top: 2mm; color: var(--muted); font-size: 10pt; font-variant-numeric: tabular-nums; }
+  .pill {
+    display: inline-block; margin-top: 3.2mm; padding: 1.3mm 4mm;
+    background: var(--pink-soft); color: var(--pink);
+    border-radius: 99px; font-weight: 700; font-size: 8.5pt; letter-spacing: .08em;
+  }
+
+  .rule { height: 0; border-top: 1px solid var(--line); margin: 6mm 0 5mm; }
+
+  /* META */
+  .meta { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 8mm; }
+  .label { font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 1.6mm; }
+  .meta .v { font-weight: 600; }
+  .meta .s { color: var(--muted); font-size: 9.5pt; }
+  .meta .row + .row { margin-top: 3.2mm; }
+
+  /* TABLE */
+  .tbl { margin-top: 6mm; border: 1px solid var(--line); border-radius: 4mm; overflow: hidden; }
+  .tbl table { width: 100%; border-collapse: collapse; }
+  .tbl th {
+    text-align: left; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; padding: 3.2mm 4mm; background: #FAFAFB;
+    border-bottom: 1px solid var(--line);
+  }
+  .tbl td { padding: 3.5mm 4mm; vertical-align: top; }
+  .tbl .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tbl .c { width: 10mm; color: var(--muted); }
+  .tbl .qty { width: 22mm; }
+  .tbl .price { width: 32mm; }
+  .tbl .amt { width: 34mm; font-weight: 700; }
+  .item-title { font-weight: 700; }
+  .item-sub { color: var(--muted); font-size: 9.5pt; margin-top: 1mm; }
+  .includes { margin-top: 2.2mm; padding-left: 0; list-style: none; }
+  .includes li { position: relative; padding-left: 4.5mm; font-size: 9.5pt; color: var(--ink); }
+  .includes li + li { margin-top: .8mm; }
+  .includes li::before {
+    content: ""; position: absolute; left: 0; top: 2.1mm; width: 1.8mm; height: 1.8mm;
+    border-radius: 50%; background: var(--pink);
+  }
+
+  /* TOTALS */
+  .totals-wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: 10mm; margin-top: 5mm; }
+  .terbilang { flex: 1; padding-top: 1mm; }
+  .terbilang p { font-style: italic; color: var(--ink); }
+  .totals { width: 82mm; }
+  .totals .line { display: flex; justify-content: space-between; padding: 1.6mm 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .totals .line b { color: var(--ink); font-weight: 600; }
+  .grand {
+    margin-top: 2.5mm; background: var(--pink-soft); border-radius: 3.5mm;
+    padding: 4mm 5mm; display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .grand span { font-weight: 700; }
+  .grand strong { font-family: var(--font-head); font-weight: 800; font-size: 17pt; letter-spacing: -.01em; color: var(--pink); font-variant-numeric: tabular-nums; }
+
+  /* PAYMENT + TERMS */
+  .lower { display: grid; grid-template-columns: 1fr 1.25fr; gap: 8mm; margin-top: 6mm; }
+  .box { border: 1px solid var(--line); border-radius: 4mm; padding: 4mm 4.5mm; }
+  .box h3 { font-family: var(--font-head); font-size: 11pt; font-weight: 700; margin-bottom: 2.5mm; }
+  .pay dl { display: grid; grid-template-columns: 24mm 1fr; row-gap: 1.2mm; font-size: 9.5pt; }
+  .pay dt { color: var(--muted); }
+  .pay dd { font-weight: 600; }
+  .pay .acc { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+  .pay .note { margin-top: 3mm; font-size: 9pt; color: var(--muted); }
+  .terms ol { padding-left: 4.5mm; font-size: 9pt; color: var(--muted); }
+  .terms li + li { margin-top: 1mm; }
+  .terms li::marker { color: var(--pink); font-weight: 700; }
+
+  .foot { margin-top: auto; padding-top: 4mm; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 9.5pt; color: var(--muted); }
+  .foot strong { font-family: var(--font-head); color: var(--ink); font-weight: 700; font-size: 10pt; }
+
+  @media screen and (max-width: 640px) {
+    body { font-size: 14px; }
+    .head { flex-direction: column; gap: 5mm; }
+    .head-right { text-align: left; }
+    .inv-title { font-size: 26pt; }
+    .meta { grid-template-columns: 1fr 1fr; gap: 6mm; }
+    .meta > div:first-child { grid-column: 1 / -1; }
+    .lower { grid-template-columns: 1fr; }
+    .totals-wrap { flex-direction: column; gap: 5mm; }
+    .totals { width: 100%; }
+    .tbl .c, .tbl .qty, .tbl .price { display: none; }
+    .tbl .amt { width: auto; }
+    .item-mobile { display: block; margin-top: 2mm; color: var(--muted); font-size: 9.5pt; }
+  }
+
+  @media print {
+    html { background: #fff; }
+    body { font-size: 10pt; }
+    .topbar { display: none; }
+    .sheet {
+      width: 210mm; max-width: none; height: 297mm; margin: 0;
+      padding: 13mm 16mm 11mm; border-radius: 0; box-shadow: none; overflow: hidden;
+    }
+    .foot { margin-top: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar"><button type="button" class="btn-print" onclick="window.print()">Cetak / Simpan PDF</button></div>
+<main class="sheet">
+
+  <header class="head">
+    <div>
+      <div class="logo">fikih umrah<i>.</i></div>
+      <div class="seller">Dar Dev<small>WhatsApp 0813 1150 6025</small></div>
+    </div>
+    <div class="head-right">
+      <div class="inv-title">INVOICE</div>
+      <div class="inv-no">INV/DD/2026/11/001</div>
+      <div class="pill">BELUM DIBAYAR</div>
+    </div>
+  </header>
+
+  <div class="rule"></div>
+
+  <section class="meta">
+    <div>
+      <div class="label">Ditagihkan kepada</div>
+      <div class="v">Sidi Alief</div>
+      <div class="s">Akun Instagram pribadi<br>(seri &ldquo;Fikih Umrah 1 Menit&rdquo;)</div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="label">Tanggal terbit</div>
+        <div class="v">6 November 2026</div>
+      </div>
+      <div class="row">
+        <div class="label">Jatuh tempo</div>
+        <div class="v">9 November 2026</div>
+      </div>
+    </div>
+    <div>
+      <div class="label">Periode layanan</div>
+      <div class="v">6 Nov &ndash; 5 Des 2026</div>
+      <div class="s">1 bulan</div>
+    </div>
+  </section>
+
+  <section class="tbl">
+    <table>
+      <thead>
+        <tr>
+          <th class="c">No</th>
+          <th>Deskripsi</th>
+          <th class="num qty">Qty</th>
+          <th class="num price">Harga</th>
+          <th class="num amt">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="c">1</td>
+          <td>
+            <div class="item-title">Paket Rutin</div>
+            <div class="item-sub">Video motion graphic edukasi fikih umrah, durasi &plusmn;1 menit, format 9:16 untuk Instagram Reels</div>
+            <div class="item-mobile">1 bulan &times; Rp 2.000.000</div>
+            <ul class="includes">
+              <li>8 video per bulan (2&times; seminggu)</li>
+              <li>Riset topik dan naskah berdalil</li>
+              <li>Animasi motion graphic, suara narasi, teks Arab, subtitle, dan musik</li>
+              <li>Caption, hashtag, dan jadwal posting</li>
+              <li>Revisi 1&times; per video</li>
+            </ul>
+          </td>
+          <td class="num qty">1 bulan</td>
+          <td class="num price">Rp 2.000.000</td>
+          <td class="num amt">Rp 2.000.000</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="totals-wrap">
+    <div class="terbilang">
+      <div class="label">Terbilang</div>
+      <p>Dua juta rupiah</p>
+    </div>
+    <div class="totals">
+      <div class="line"><span>Subtotal</span><b>Rp 2.000.000</b></div>
+      <div class="line"><span>Diskon</span><b>Rp 0</b></div>
+      <div class="grand"><span>Total dibayar</span><strong>Rp 2.000.000</strong></div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="box pay">
+      <h3>Pembayaran</h3>
+      <dl>
+        <dt>Bank</dt><dd>Bank Mandiri</dd>
+        <dt>No. rekening</dt><dd class="acc">1550010616962</dd>
+        <dt>Atas nama</dt><dd>Daru Fahmaa Muliawan</dd>
+      </dl>
+      <p class="note">Setelah transfer, mohon kirim bukti pembayaran ke WhatsApp 0813 1150 6025.</p>
+    </div>
+    <div class="box terms">
+      <h3>Ketentuan</h3>
+      <ol>
+        <li>Pembayaran dilakukan di awal setiap periode bulanan.</li>
+        <li>Produksi video pertama dimulai setelah pembayaran diterima dan naskah disetujui klien.</li>
+        <li>Tidak ada video yang tayang sebelum naskah dan hasil akhirnya disetujui klien.</li>
+        <li>Semua video yang sudah dibayar menjadi milik klien.</li>
+        <li>Paket berjalan per bulan dan bisa tidak diperpanjang di bulan berikutnya.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Jazakallahu khairan atas kepercayaannya.</span>
+    <strong>Dar Dev</strong>
+  </footer>
+
+</main>
+</body>
+</html>
