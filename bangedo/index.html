@@ -1169,12 +1169,12 @@
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                    <div class="stat-icon-wrap" style="color: #10b981;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     </div>
                     <div class="stat-details">
                         <span class="stat-label">Status Tagihan</span>
-                        <span class="stat-value">Menunggu Pembayaran</span>
+                        <span class="stat-value" style="color: #10b981; font-weight: 600;">Lunas (Selesai Rp 150.000)</span>
                     </div>
                 </div>
             </section>
@@ -1251,28 +1251,28 @@
 
                 <div class="totals-block">
                     <div class="summary-row">
-                        <span>Subtotal Desain Undangan :</span>
-                        <strong>Rp 350.000</strong>
+                        <span>Biaya Desain Awal :</span>
+                        <strong style="text-decoration: line-through; color: var(--text-muted);">Rp 350.000</strong>
                     </div>
                     <div class="summary-row">
-                        <span>Jumlah Paket :</span>
-                        <strong>1 Paket Penuh</strong>
+                        <span>Penyesuaian (Sisa Dibatalkan) :</span>
+                        <strong style="color: #ef4444;">- Rp 200.000</strong>
                     </div>
-                    <div class="summary-row">
-                        <span>Pajak / PPN :</span>
-                        <strong>0.00% (Bebas Biaya)</strong>
+                    <div class="summary-row" style="border-top: 1px dashed var(--border-subtle); padding-top: 8px; margin-top: 4px;">
+                        <span>Pembayaran Diterima (Lunas) :</span>
+                        <strong style="color: #10b981;">✓ Rp 150.000</strong>
                     </div>
 
                     <div class="grand-total-row">
                         <span class="grand-total-label">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
-                            TOTAL TAGIHAN
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            TOTAL REALISASI (LUNAS)
                         </span>
-                        <span class="grand-total-figure">Rp 350.000</span>
+                        <span class="grand-total-figure" style="color: #10b981;">Rp 150.000</span>
                     </div>
 
                     <div class="terbilang-text">
-                        # Tiga Ratus Lima Puluh Ribu Rupiah #
+                        # Seratus Lima Puluh Ribu Rupiah (Sisa Rp 200.000 Dibatalkan) #
                     </div>
                 </div>
             </section>
@@ -1414,9 +1414,10 @@ Tanggal: 02 Oktober 2026
 - Penyesuaian denah lokasi / QR code maps & data acara
 - Revisi minor hingga siap cetak
 
-*Total Tagihan:*
-*Rp 350.000*
-(Tiga Ratus Lima Puluh Ribu Rupiah)
+*Status:* Lunas / Selesai (Sisa Dibatalkan)
+*Total Dibayar:*
+*Rp 150.000*
+(Seratus Lima Puluh Ribu Rupiah)
 
 *Pembayaran Transfer Mandiri:*
 Bank Mandiri
