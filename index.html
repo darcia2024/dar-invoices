@@ -1481,7 +1481,327 @@
         }
 
         /* Responsive mobile styling is maintained in /dashboard.css */
-    </style>
+    
+/* ==========================================================================
+   BANK BALANCES TRACKER & FINANCIAL ADVISORY STYLES
+   ========================================================================== */
+.bank-tracker-card {
+    background: var(--card-bg, #171410);
+    border: 1px solid var(--card-border, #3a3025);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.22);
+    position: relative;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.bank-tracker-card:hover {
+    border-color: var(--accent, #c99a45);
+}
+.bank-tracker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--card-border, #3a3025);
+}
+.bank-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.bank-icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(201, 154, 69, 0.12);
+    color: var(--accent, #c99a45);
+    border: 1px solid rgba(201, 154, 69, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.bank-tracker-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main, #ffffff);
+    letter-spacing: -0.01em;
+}
+.bank-tracker-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted, #c9c0b4);
+    margin-top: 2px;
+}
+.bank-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.bank-total-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(78, 192, 139, 0.12);
+    border: 1px solid rgba(78, 192, 139, 0.3);
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+.bank-total-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--color-paid, #4ec08b);
+    text-transform: uppercase;
+}
+.bank-total-val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-paid, #4ec08b);
+    font-family: var(--font-mono, monospace);
+    letter-spacing: -0.02em;
+}
+.bank-edit-btn {
+    background: var(--card-strong, #211c15);
+    color: var(--text-main, #ffffff);
+    border: 1px solid var(--card-border, #3a3025);
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.18s ease;
+}
+.bank-edit-btn:hover {
+    border-color: var(--accent, #c99a45);
+    background: rgba(201, 154, 69, 0.15);
+    color: var(--accent, #c99a45);
+}
+.bank-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+}
+.bank-item-card {
+    background: rgba(13, 11, 8, 0.6);
+    border: 1px solid var(--card-border, #3a3025);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.18s ease, transform 0.18s ease;
+}
+.bank-item-card:hover {
+    border-color: rgba(201, 154, 69, 0.4);
+    transform: translateY(-2px);
+}
+.bank-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bank-item-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.bank-logo-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+.mandiri-badge { background: #003d79; color: #ffb700; border: 1px solid rgba(255, 183, 0, 0.4); }
+.bca-badge { background: #005aa9; color: #ffffff; border: 1px solid rgba(0, 90, 169, 0.4); }
+.bsi-badge { background: #00a39d; color: #ffffff; border: 1px solid rgba(0, 163, 157, 0.4); }
+.bri-badge { background: #00529c; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+.cash-badge { background: #374151; color: #f3f4f6; border: 1px solid rgba(255, 255, 255, 0.15); }
+
+.bank-tag-primary {
+    font-size: 0.65rem;
+    color: var(--accent, #c99a45);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.bank-tag-secondary {
+    font-size: 0.65rem;
+    color: #38bdf8;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.bank-tag-tertiary {
+    font-size: 0.65rem;
+    color: #34d399;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.bank-item-pct {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-dim, #897d6e);
+    font-family: var(--font-mono, monospace);
+}
+.bank-account-num {
+    font-size: 0.72rem;
+    color: var(--text-dim, #897d6e);
+    font-family: var(--font-mono, monospace);
+}
+.bank-balance-amount {
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: var(--text-main, #ffffff);
+    margin-top: 2px;
+    font-family: var(--font-mono, monospace);
+}
+.bank-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+.bank-progress-fill {
+    height: 100%;
+    background: var(--accent, #c99a45);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Financial Advisory & Tips Section */
+.financial-advisory-section {
+    margin-top: 28px;
+    margin-bottom: 28px;
+}
+.advisory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--card-border, #3a3025);
+    padding-bottom: 12px;
+}
+.advisory-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.advisory-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-main, #ffffff);
+}
+.advisory-badge {
+    background: rgba(201, 154, 69, 0.15);
+    color: var(--accent, #c99a45);
+    border: 1px solid rgba(201, 154, 69, 0.3);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+.advisory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+.advisory-card {
+    background: var(--card-bg, #171410);
+    border: 1px solid var(--card-border, #3a3025);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+.advisory-card:hover {
+    border-color: var(--accent, #c99a45);
+    transform: translateY(-2px);
+}
+.advisory-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.advisory-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+.advisory-card-title {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--text-main, #ffffff);
+}
+.advisory-card-subtitle {
+    font-size: 0.72rem;
+    color: var(--accent, #c99a45);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.advisory-body {
+    font-size: 0.83rem;
+    color: var(--text-muted, #c9c0b4);
+    line-height: 1.6;
+}
+.advisory-points-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.advisory-point-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted, #c9c0b4);
+}
+.advisory-bullet {
+    color: var(--accent, #c99a45);
+    font-weight: 700;
+    margin-top: 1px;
+}
+
+/* View switching styles */
+body[data-view="board"] .report-only,
+body[data-view="board"] #debtSection {
+    display: none !important;
+}
+body[data-view="report"] .board-only,
+body[data-view="report"] #debtSection {
+    display: none !important;
+}
+body[data-view="debt"] .board-only,
+body[data-view="debt"] .report-only,
+body[data-view="debt"] .stats-bar,
+body[data-view="debt"] .bank-tracker-card {
+    display: none !important;
+}
+body[data-view="debt"] #debtSection {
+    display: block !important;
+}
+
+</style>
     <link rel="stylesheet" href="/dashboard.css">
 <script>['gesturestart','gesturechange','gestureend'].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault();},{passive:false});});</script>
 </head>
@@ -1542,7 +1862,6 @@
         </div>
         <p class="sidebar-caption">Workspace</p>
         <nav aria-label="Navigasi utama">
-            <a href="/today" class="sidebar-link" style="text-decoration:none;"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span> Update Today</a>
             <button class="sidebar-link active" data-view="board" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span> Invoice</button>
             <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span> Laporan keuangan</button>
             <button class="sidebar-link" data-view="debt" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg></span> Hutang &amp; Piutang</button>
@@ -1564,19 +1883,11 @@
                     <p class="portal-subtitle">Tagihan tertata, pendapatan terpantau.</p>
                 </div>
                 <div class="portal-header-action">
-                    <a href="/today" class="create-invoice-btn" style="background:#1e293b; color:#ffffff; font-size:12px; font-weight:600; padding:10px 16px; border-radius:8px; display:inline-flex; align-items:center; gap:7px; text-decoration:none; box-shadow:0 1px 3px rgba(0,0,0,0.12);">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                        Update Today
-                    </a>
-                </div>
+                    </div>
             </div>
         </div>
 
         <div class="invoice-tools">
-            <a href="/today" class="create-invoice-btn" style="background:#1e293b; color:#ffffff; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-weight:600;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Update Today
-            </a>
             <button class="create-invoice-btn" onclick="openInvoiceComposer()">+ Buat invoice</button>
             <button class="month-pill-btn" onclick="openInvoiceTrash()">Sampah <span id="trashCount">0</span></button>
             <span class="invoice-sync-state" role="status"></span>
@@ -1592,6 +1903,101 @@
                     <div class="stat-info-title">Profit diterima</div>
                     <div id="statNetProfitTotal" class="stat-info-val" style="color: var(--color-profit);">Rp 0</div>
                 </div>
+        <!-- Bank Balances & Liquid Cash Tracker Widget -->
+        <div class="bank-tracker-card" id="bankTrackerCard">
+            <div class="bank-tracker-header">
+                <div class="bank-header-left">
+                    <div class="bank-icon-badge" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                    </div>
+                    <div>
+                        <div class="bank-tracker-title">Status Saldo Kas &amp; Rekening Bank</div>
+                        <div class="bank-tracker-subtitle">Total dana likuid riil yang tersimpan di seluruh rekening per hari ini</div>
+                    </div>
+                </div>
+                <div class="bank-header-right">
+                    <div class="bank-total-pill">
+                        <span class="bank-total-label">TOTAL KAS LIKUID:</span>
+                        <span class="bank-total-val" id="totalLiquidCashVal">Rp 0</span>
+                    </div>
+                    <button type="button" class="bank-edit-btn" onclick="openBankBalanceModal()">
+                        ✏️ Input / Update Saldo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bank Accounts Grid -->
+            <div class="bank-grid">
+                <!-- Mandiri -->
+                <div class="bank-item-card bank-mandiri">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <span class="bank-logo-badge mandiri-badge">MANDIRI</span>
+                            <span class="bank-tag-primary">Rek. Utama</span>
+                        </div>
+                        <span class="bank-item-pct" id="pctMandiri">0%</span>
+                    </div>
+                    <div class="bank-account-num">155-00-1061696-2 &bull; Daru</div>
+                    <div class="bank-balance-amount" id="balanceMandiri">Rp 0</div>
+                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillMandiri" style="width:0%;"></div></div>
+                </div>
+
+                <!-- BCA -->
+                <div class="bank-item-card bank-bca">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <span class="bank-logo-badge bca-badge">BCA</span>
+                            <span class="bank-tag-secondary">Operasional</span>
+                        </div>
+                        <span class="bank-item-pct" id="pctBca">0%</span>
+                    </div>
+                    <div class="bank-account-num">BCA Digital / Personal</div>
+                    <div class="bank-balance-amount" id="balanceBca">Rp 0</div>
+                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillBca" style="width:0%;"></div></div>
+                </div>
+
+                <!-- BSI -->
+                <div class="bank-item-card bank-bsi">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <span class="bank-logo-badge bsi-badge">BSI</span>
+                            <span class="bank-tag-tertiary">Dana Cadangan</span>
+                        </div>
+                        <span class="bank-item-pct" id="pctBsi">0%</span>
+                    </div>
+                    <div class="bank-account-num">Bank Syariah Indonesia</div>
+                    <div class="bank-balance-amount" id="balanceBsi">Rp 0</div>
+                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillBsi" style="width:0%;"></div></div>
+                </div>
+
+                <!-- BRI -->
+                <div class="bank-item-card bank-bri">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <span class="bank-logo-badge bri-badge">BRI / LAINNYA</span>
+                        </div>
+                        <span class="bank-item-pct" id="pctBri">0%</span>
+                    </div>
+                    <div class="bank-account-num">Rekening Pendukung</div>
+                    <div class="bank-balance-amount" id="balanceBri">Rp 0</div>
+                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillBri" style="width:0%;"></div></div>
+                </div>
+
+                <!-- Cash / E-Wallet -->
+                <div class="bank-item-card bank-cash">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <span class="bank-logo-badge cash-badge">KAS &amp; E-WALLET</span>
+                        </div>
+                        <span class="bank-item-pct" id="pctCash">0%</span>
+                    </div>
+                    <div class="bank-account-num">Tunai, GoPay, OVO, DANA</div>
+                    <div class="bank-balance-amount" id="balanceCash">Rp 0</div>
+                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillCash" style="width:0%;"></div></div>
+                </div>
+            </div>
+        </div>
+
             </div>
 
             <div class="stat-card paid-stat">
@@ -1626,7 +2032,7 @@
         </div>
 
         <!-- Monthly Profit Goals & Mindset Affirmation Widget (Harmonized Pastel Bento Design) -->
-        <div class="goal-tracker-card" id="goalTrackerCard">
+        <div class="goal-tracker-card board-only" id="goalTrackerCard">
             <div class="goal-tracker-header">
                 <div class="goal-header-left">
                     <div class="goal-icon-badge" aria-hidden="true">
@@ -1705,7 +2111,7 @@
         <canvas id="goalConfettiCanvas"></canvas>
 
         <!-- Monthly Categorization & Search Filter Section -->
-        <div class="filter-section">
+        <div class="filter-section board-only">
             <div class="filter-row-top">
                 <div class="filter-title">
                     <span>Periode invoice</span>
@@ -1729,27 +2135,124 @@
                 </div>
             </div>
         </div>
-
-        <!-- Collapsible Executive Monthly Revenue & Net Profit Report Table -->
-        <div class="revenue-report-box">
-            <div class="revenue-report-title">
-                <span>Laporan omset, biaya operasional, dan keuntungan bersih bulanan</span>
+        <!-- Comprehensive Financial Report & Money Management Advisory Section (Report View) -->
+        <div class="report-only" id="financialReportViewSection">
+            <!-- Executive Monthly Revenue & Profit Table -->
+            <div class="revenue-report-box" style="margin-top:0;">
+                <div class="revenue-report-title">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        <span>Laporan Rekapitulasi Finansial &amp; Margin Keuntungan Bulanan</span>
+                    </div>
+                    <span class="advisory-badge">Audit Resmi Dar Invoices</span>
+                </div>
+                <table class="revenue-table">
+                    <thead>
+                        <tr>
+                            <th>PERIODE BULAN</th>
+                            <th>JML LUNAS</th>
+                            <th>TOTAL OMSET GROSS</th>
+                            <th>BIAYA OPERASIONAL</th>
+                            <th style="text-align: right;">KEUNTUNGAN BERSIH (PAID PROFIT)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="revenueReportBody">
+                        <!-- Dynamic rendering by JS -->
+                    </tbody>
+                </table>
             </div>
-            <table class="revenue-table">
-                <thead>
-                    <tr>
-                        <th>PERIODE BULAN</th>
-                        <th>JML LUNAS</th>
-                        <th>TOTAL OMSET GROSS</th>
-                        <th>BIAYA OPERASIONAL</th>
-                        <th style="text-align: right;">KEUNTUNGAN BERSIH (PAID PROFIT)</th>
-                    </tr>
-                </thead>
-                <tbody id="revenueReportBody">
-                    <!-- Dynamic rendering by JS -->
-                </tbody>
-            </table>
+
+            <!-- Strategic Money Management Advisory Blueprint -->
+            <div class="financial-advisory-section">
+                <div class="advisory-header">
+                    <div class="advisory-title-group">
+                        <span style="font-size:1.3rem;">🧭</span>
+                        <div class="advisory-title">Tips &amp; Saran Strategis Pengelolaan Uang</div>
+                    </div>
+                    <span class="advisory-badge">Blueprint Keuangan Kreatif</span>
+                </div>
+
+                <div class="advisory-grid">
+                    <!-- Card 1: Alokasi 50/30/20 -->
+                    <div class="advisory-card">
+                        <div class="advisory-card-top">
+                            <div class="advisory-icon" style="background:rgba(78, 192, 139, 0.15); color:#4ec08b;">📊</div>
+                            <div>
+                                <div class="advisory-card-title">Struktur Alokasi Kas (50/30/20)</div>
+                                <div class="advisory-card-subtitle">Manajemen Arus Kas Masuk</div>
+                            </div>
+                        </div>
+                        <div class="advisory-body">
+                            Bagi setiap keuntungan bersih yang cair ke dalam 3 pos rekening mandiri:
+                            <div class="advisory-points-list">
+                                <div class="advisory-point-item"><span class="advisory-bullet">50%</span> <span><strong>Modal Kerja &amp; Operasional</strong>: Biaya domain, server (Vercel/Supabase), token AI, dan vendor.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">30%</span> <span><strong>Dana Cadangan Likuid (BSI)</strong>: Buffer darurat minimal 3-6 bulan operasional yang tidak boleh disentuh.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">20%</span> <span><strong>Dividen Pribadi &amp; Investasi</strong>: Hak penarikan gaji pemilik dan instrumen pertumbuhan modal.</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Action Plan Piutang -->
+                    <div class="advisory-card">
+                        <div class="advisory-card-top">
+                            <div class="advisory-icon" style="background:rgba(201, 154, 69, 0.15); color:#c99a45;">🎯</div>
+                            <div>
+                                <div class="advisory-card-title">SOP Penagihan Piutang Rp 40,6jt</div>
+                                <div class="advisory-card-subtitle">Penyelamatan Cash Flow</div>
+                            </div>
+                        </div>
+                        <div class="advisory-body">
+                            Prioritaskan penagihan termin pelunasan dengan jadwal terstruktur:
+                            <div class="advisory-points-list">
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Katalis ERP (Sisa 5jt)</strong>: Jadwalkan penagihan bersamaan penyerahan modul final v1.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>KPI PPMI (Sisa 7,1jt)</strong>: Tagih pelunasan, lalu langsung potong 1,5jt untuk fee Fairuz agar cash flow bersih.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Hamasah (Sisa 8,6jt)</strong>: Kunci serah terima kredensial sebelum pelunasan final diterima penuh.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Talkhisan (2,1jt)</strong>: Counter tawaran 200rb ke 250rb/modul untuk menjaga standar harga profesional.</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Multi-Bank Isolation -->
+                    <div class="advisory-card">
+                        <div class="advisory-card-top">
+                            <div class="advisory-icon" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8;">🏦</div>
+                            <div>
+                                <div class="advisory-card-title">Isolasi Rekening Anti-Bocor</div>
+                                <div class="advisory-card-subtitle">Disiplin Pisah Rekening</div>
+                            </div>
+                        </div>
+                        <div class="advisory-body">
+                            Hindari mencampur uang bisnis dengan uang jajan harian:
+                            <div class="advisory-points-list">
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Bank Mandiri (1550010616962)</strong>: Khusus penampung transfer pembayaran klien.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>BCA / Personal</strong>: Hanya menerima transfer dividen 20% untuk pengeluaran pribadi sehari-hari.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>BSI (Syariah)</strong>: Tempat menimbun dana darurat. Jangan pasang kartu debit di e-commerce/GoPay.</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Proteksi Kontrak & Non-Refundable DP -->
+                    <div class="advisory-card">
+                        <div class="advisory-card-top">
+                            <div class="advisory-icon" style="background:rgba(228, 111, 97, 0.15); color:#e46f61;">🛡️</div>
+                            <div>
+                                <div class="advisory-card-title">Proteksi DP Non-Refundable</div>
+                                <div class="advisory-card-subtitle">Pelajaran Kasus Cancel</div>
+                            </div>
+                        </div>
+                        <div class="advisory-body">
+                            Belajar dari kasus pembatalan sepihak sisa tagihan:
+                            <div class="advisory-points-list">
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Wajibkan klausul: <strong>DP minimal 50% bersifat hangus (non-refundable)</strong> jika proyek dibatalkan klien.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Seperti kasus Bang Edo (dibayar 150rb, sisa 200rb cancel), DP yang masuk langsung dikonversi menjadi laba bersih.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Jangan serahkan aset mentah (source code, vector file, PIN master) sebelum 100% lunas.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
         <!-- Hutang & Piutang (Debts & Receivables) Section -->
         <div id="debtSection">
@@ -1830,7 +2333,7 @@
         </div>
 
         <!-- Invoice Cards Grid -->
-        <div id="invoiceGrid" class="invoice-grid" aria-label="Invoice menurut status pembayaran">
+        <div id="invoiceGrid" class="invoice-grid board-only" aria-label="Invoice menurut status pembayaran">
             <div class="invoice-card" id="card-almadroj" data-id="almadroj" data-month="2026-09" data-amount="3700000" data-client="sidi watra pusat belajar al madroj al madraj bimbel standard september 2026 inv/alm/2026/016 almadroj-edu.com">
                 <div>
                     <div class="card-top"><div class="client-title">Sidi Watra · Pusat Belajar Al Madroj</div><div class="status-badge-group">
@@ -5318,9 +5821,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function setWorkspaceView(view) {
             document.body.dataset.view = view;
             if (view === 'report') {
-                document.getElementById('workspaceTitle').textContent = 'Laporan keuangan';
+                document.getElementById('workspaceTitle').textContent = 'Laporan Keuangan & Advisory';
                 const sub = document.querySelector('.portal-subtitle');
-                if (sub) sub.textContent = 'Ringkasan performa omset, biaya operasional, dan keuntungan bersih.';
+                if (sub) sub.textContent = 'Performa omset, analisis profit, cadangan likuiditas, dan strategi pengelolaan uang.';
+                renderBankBalancesUI();
             } else if (view === 'debt') {
                 document.getElementById('workspaceTitle').textContent = 'Hutang & Piutang';
                 const sub = document.querySelector('.portal-subtitle');
@@ -5330,12 +5834,104 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 document.getElementById('workspaceTitle').textContent = 'Invoice';
                 const sub = document.querySelector('.portal-subtitle');
                 if (sub) sub.textContent = 'Tagihan tertata, pendapatan terpantau.';
+                renderBankBalancesUI();
             }
             document.querySelectorAll('[data-view].sidebar-link').forEach(button => {
                 button.classList.toggle('active', button.dataset.view === view);
                 button.setAttribute('aria-pressed', String(button.dataset.view === view));
             });
         }
+
+        
+        // =========================================================================
+        // BANK BALANCES TRACKER MANAGEMENT
+        // =========================================================================
+        const DEFAULT_BANK_BALANCES = {
+            mandiri: 45000000,
+            bca: 25000000,
+            bsi: 15000000,
+            bri: 5000000,
+            cash: 3233190
+        };
+
+        let bankBalances = (() => {
+            try {
+                const stored = localStorage.getItem('dar_bank_balances');
+                return stored ? JSON.parse(stored) : { ...DEFAULT_BANK_BALANCES };
+            } catch (e) {
+                return { ...DEFAULT_BANK_BALANCES };
+            }
+        })();
+
+        function renderBankBalancesUI() {
+            const total = Object.values(bankBalances).reduce((a, b) => a + (Number(b) || 0), 0);
+            const totalEl = document.getElementById('totalLiquidCashVal');
+            if (totalEl) totalEl.innerText = formatIDR(total);
+
+            const keys = ['mandiri', 'bca', 'bsi', 'bri', 'cash'];
+            keys.forEach(k => {
+                const val = Number(bankBalances[k]) || 0;
+                const pct = total > 0 ? Math.round((val / total) * 100) : 0;
+                
+                const capKey = k.charAt(0).toUpperCase() + k.slice(1);
+                const balEl = document.getElementById('balance' + capKey);
+                const pctEl = document.getElementById('pct' + capKey);
+                const fillEl = document.getElementById('fill' + capKey);
+                
+                if (balEl) balEl.innerText = formatIDR(val);
+                if (pctEl) pctEl.innerText = pct + '%';
+                if (fillEl) fillEl.style.width = pct + '%';
+            });
+        }
+
+        function openBankBalanceModal() {
+            const keys = ['mandiri', 'bca', 'bsi', 'bri', 'cash'];
+            keys.forEach(k => {
+                const capKey = k.charAt(0).toUpperCase() + k.slice(1);
+                const input = document.getElementById('inputSaldo' + capKey);
+                if (input) {
+                    input.value = (bankBalances[k] !== undefined ? bankBalances[k] : 0).toLocaleString('id-ID');
+                }
+            });
+            const modal = document.getElementById('bankBalanceModal');
+            if (modal) {
+                if (typeof modal.showModal === 'function') modal.showModal();
+                else modal.style.display = 'block';
+            }
+        }
+
+        function closeBankBalanceModal() {
+            const modal = document.getElementById('bankBalanceModal');
+            if (modal) {
+                if (typeof modal.close === 'function') modal.close();
+                else modal.style.display = 'none';
+            }
+        }
+
+        function handleBankBalanceSubmit(event) {
+            event.preventDefault();
+            const parseCurrency = (str) => {
+                const clean = String(str || '').replace(/[^0-9]/g, '');
+                return clean ? parseInt(clean, 10) : 0;
+            };
+            
+            bankBalances.mandiri = parseCurrency(document.getElementById('inputSaldoMandiri')?.value);
+            bankBalances.bca = parseCurrency(document.getElementById('inputSaldoBca')?.value);
+            bankBalances.bsi = parseCurrency(document.getElementById('inputSaldoBsi')?.value);
+            bankBalances.bri = parseCurrency(document.getElementById('inputSaldoBri')?.value);
+            bankBalances.cash = parseCurrency(document.getElementById('inputSaldoCash')?.value);
+            
+            try {
+                localStorage.setItem('dar_bank_balances', JSON.stringify(bankBalances));
+            } catch (e) {
+                console.warn("Saving bank balances to localStorage failed:", e);
+            }
+            
+            renderBankBalancesUI();
+            closeBankBalanceModal();
+            showToast("SALDO BANK BERHASIL DIPERBARUI!");
+        }
+
 
         function renderInvoiceBoard() {
             refreshInvoiceControls();
@@ -5435,6 +6031,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         updatePaymentBadges();
         renderProfitUI();
         calculateFinancials();
+        renderBankBalancesUI();
 
         function copySlug(url) {
             navigator.clipboard.writeText(url).then(() => {
@@ -6525,5 +7122,50 @@ Dokumen proposal resmi, breakdown teknis, serta opsi cetak/unduh PDF dapat dicek
         });
 
     </script>
+
+    <!-- Bank Balance Input / Update Modal -->
+    <dialog id="bankBalanceModal" class="invoice-manager-dialog" aria-labelledby="bankModalTitle">
+        <div class="dialog-header">
+            <h2 id="bankModalTitle" style="font-size:1.1rem; font-weight:700; color:var(--text-main,#fff); margin:0;">Input &amp; Update Saldo Rekening Bank</h2>
+            <button type="button" class="dialog-close-btn" onclick="closeBankBalanceModal()" aria-label="Tutup">&times;</button>
+        </div>
+        <form id="bankBalanceForm" onsubmit="handleBankBalanceSubmit(event)" style="padding: 16px 20px 20px;">
+            <p style="font-size:0.82rem; color:var(--text-muted,#c9c0b4); margin-bottom:16px;">
+                Masukkan nominal saldo riil yang ada di masing-masing rekening bank per hari ini. Saldo akan diakumulasi otomatis dan disimpan secara lokal.
+            </p>
+            <div style="display:grid; grid-template-columns:1fr; gap:12px;">
+                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.8rem; font-weight:600; color:var(--text-main,#fff);">Bank Mandiri (Rekening Utama Penerimaan)</span>
+                    <input type="text" id="inputSaldoMandiri" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace);">
+                </label>
+
+                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.8rem; font-weight:600; color:var(--text-main,#fff);">Bank BCA (Operasional / Personal)</span>
+                    <input type="text" id="inputSaldoBca" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace);">
+                </label>
+
+                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.8rem; font-weight:600; color:var(--text-main,#fff);">Bank Syariah Indonesia (BSI - Dana Cadangan)</span>
+                    <input type="text" id="inputSaldoBsi" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace);">
+                </label>
+
+                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.8rem; font-weight:600; color:var(--text-main,#fff);">Bank BRI / Bank Lainnya</span>
+                    <input type="text" id="inputSaldoBri" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace);">
+                </label>
+
+                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.8rem; font-weight:600; color:var(--text-main,#fff);">Kas Tunai &amp; E-Wallet (GoPay, OVO, DANA)</span>
+                    <input type="text" id="inputSaldoCash" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace);">
+                </label>
+            </div>
+
+            <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:8px;">
+                <button type="button" class="btn-cancel" onclick="closeBankBalanceModal()" style="padding:9px 16px; border-radius:8px; border:1px solid var(--card-border,#3a3025); background:transparent; color:var(--text-main,#fff); cursor:pointer;">Batal</button>
+                <button type="submit" class="create-invoice-btn" style="padding:9px 18px; cursor:pointer;">Simpan Saldo</button>
+            </div>
+        </form>
+    </dialog>
+
 </body>
 </html>

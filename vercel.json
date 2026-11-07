@@ -2,135 +2,521 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/ismu", "destination": "/ismu/index.html" },
-    { "source": "/ust-ismu", "destination": "/ismu/index.html" },
-    { "source": "/ustadz-ismu", "destination": "/ismu/index.html" },
-    { "source": "/voa-ismu", "destination": "/ismu/index.html" },
-    { "source": "/ismu-bahrul-ulum", "destination": "/ismu/index.html" },
-    { "source": "/bahrul-ulum", "destination": "/ismu/index.html" },
-    { "source": "/daffa", "destination": "/daffa/index.html" },
-    { "source": "/ust-daffa", "destination": "/daffa/index.html" },
-    { "source": "/ustadz-daffa", "destination": "/daffa/index.html" },
-    { "source": "/nizhamiyyah", "destination": "/daffa/index.html" },
-    { "source": "/nizhamiyyahedu", "destination": "/daffa/index.html" },
-    { "source": "/belajarditimurtengah", "destination": "/daffa/index.html" },
-    { "source": "/edo-undangan", "destination": "/bangedo/index.html" },
-    { "source": "/bangedo-nikah", "destination": "/bangedo/index.html" },
-    { "source": "/bangedo-undangan", "destination": "/bangedo/index.html" },
-    { "source": "/edo-nikah", "destination": "/bangedo/index.html" },
-    { "source": "/undangan-edo", "destination": "/bangedo/index.html" },
-    { "source": "/bangedo", "destination": "/bangedo/index.html" },
-    { "source": "/bang-edo", "destination": "/bangedo/index.html" },
-    { "source": "/edo", "destination": "/bangedo/index.html" },
-    { "source": "/jasavideo", "destination": "/fikih-umrah/index.html" },
-    { "source": "/dreammecca-november", "destination": "/dreammecca-november/index.html" },
-    { "source": "/dreammecca-11", "destination": "/dreammecca-november/index.html" },
-    { "source": "/dm-november", "destination": "/dreammecca-november/index.html" },
-    { "source": "/umrahme-november", "destination": "/dreammecca-november/index.html" },
-    { "source": "/dreammecca", "destination": "/dreammecca-november/index.html" },
-    { "source": "/dreammecca-oktober", "destination": "/dreammecca-oktober/index.html" },
-    { "source": "/dreammecca-october", "destination": "/dreammecca-oktober/index.html" },
-    { "source": "/dreammecca-10", "destination": "/dreammecca-oktober/index.html" },
-    { "source": "/umrahme-oktober", "destination": "/dreammecca-oktober/index.html" },
-    { "source": "/masdaus", "destination": "/masdaus/index.html" },
-    { "source": "/mas-daus", "destination": "/masdaus/index.html" },
-    { "source": "/google-ai", "destination": "/masdaus/index.html" },
-    { "source": "/elmassa", "destination": "/elmassa/index.html" },
-    { "source": "/el-massa", "destination": "/elmassa/index.html" },
-    { "source": "/elmassa-umrahme", "destination": "/elmassa/index.html" },
-    { "source": "/umrahme-elmassa", "destination": "/elmassa/index.html" },
-    { "source": "/el-massa-umrahme", "destination": "/elmassa/index.html" },
-    { "source": "/umrahme", "destination": "/elmassa/index.html" },
-    { "source": "/umrah-me", "destination": "/elmassa/index.html" },
-    { "source": "/today", "destination": "/today/index.html" },
-    { "source": "/oslo", "destination": "/oslo/index.html" },
-    { "source": "/oslopark", "destination": "/oslo/index.html" },
-    { "source": "/oslo-park", "destination": "/oslo/index.html" },
-    { "source": "/pak-joko", "destination": "/oslo/index.html" },
-    { "source": "/athifa", "destination": "/athifa/index.html" },
-    { "source": "/mba-athifa", "destination": "/athifa/index.html" },
-    { "source": "/cover-athifa", "destination": "/athifa/index.html" },
-    { "source": "/mochi", "destination": "/mochi/index.html" },
-    { "source": "/mochi-cafe", "destination": "/mochi/index.html" },
-    { "source": "/kael-mochi", "destination": "/mochi/index.html" },
-    { "source": "/mochicafe", "destination": "/mochi/index.html" },
-    { "source": "/kael", "destination": "/mochi/index.html" },
-    { "source": "/almadroj", "destination": "/almadroj/index.html" },
-    { "source": "/markazfiqih", "destination": "/markazfiqih/index.html" },
-    { "source": "/abdurrahman", "destination": "/abdurrahman/index.html" },
-    { "source": "/dreammecca-umrahme", "destination": "/dreammecca-umrahme/index.html" },
-    { "source": "/umrahme-dreammecca", "destination": "/umrahme-dreammecca/index.html" },
-    { "source": "/haramain-capture", "destination": "/haramain-capture/index.html" },
-    { "source": "/template", "destination": "/template/index.html" },
-    { "source": "/qohiroh", "destination": "/qohiroh/index.html" },
-    { "source": "/zaky", "destination": "/zaky/index.html" },
-    { "source": "/sidi", "destination": "/hamasahlaundry/index.html" },
-    { "source": "/hamasahlaundry", "destination": "/hamasahlaundry/index.html" },
-    { "source": "/umiatiyah", "destination": "/umiatiyah/index.html" },
-    { "source": "/umi", "destination": "/umiatiyah/index.html" },
-    { "source": "/kolohaga", "destination": "/kolohaga/index.html" },
-    { "source": "/azzam", "destination": "/kolohaga/index.html" },
-    { "source": "/zalvice", "destination": "/zalvice/index.html" },
-    { "source": "/ptzalvice", "destination": "/zalvice/index.html" },
-    { "source": "/azhariyah", "destination": "/azhariyah/index.html" },
-    { "source": "/umielly", "destination": "/azhariyah/index.html" },
-    { "source": "/zalbina", "destination": "/zalvice/index.html" },
-    { "source": "/ridwan", "destination": "/zalvice/index.html" },
-    { "source": "/barber", "destination": "/barber/index.html" },
-    { "source": "/underrated", "destination": "/barber/index.html" },
-    { "source": "/saudia", "destination": "/saudia/index.html" },
-    { "source": "/tiket", "destination": "/saudia/index.html" },
-    { "source": "/tiket-saudia", "destination": "/saudia/index.html" },
-    { "source": "/kairo", "destination": "/saudia/index.html" },
-    { "source": "/flight", "destination": "/saudia/index.html" },
-    { "source": "/etiket", "destination": "/saudia/etiket" },
-    { "source": "/e-ticket", "destination": "/saudia/etiket" },
-    { "source": "/azharuna", "destination": "/ifdony" },
-    { "source": "/ifdony", "destination": "/ifdony" },
-    { "source": "/logo-azharuna", "destination": "/ifdony" },
-    { "source": "/ibrahim", "destination": "/ibrahim" },
-    { "source": "/visa-ibrahim", "destination": "/ibrahim" },
-    { "source": "/visa-entry", "destination": "/ibrahim" },
-    { "source": "/visa-cairo", "destination": "/ibrahim" },
-    { "source": "/kpi", "destination": "/kpi" },
-    { "source": "/ppmi-kpi", "destination": "/kpi" },
-    { "source": "/komisi-interaksi", "destination": "/kpi" },
-    { "source": "/tehumi", "destination": "/tehumi" },
-    { "source": "/teh-umi", "destination": "/tehumi" },
-    { "source": "/ereader-tehumi", "destination": "/tehumi" },
-    { "source": "/e-reader-tehumi", "destination": "/tehumi" },
-    { "source": "/hamasahinternational", "destination": "/hamasahinternational" },
-    { "source": "/pgstour/generator", "destination": "/pgstour/generator.html" },
-    { "source": "/pgs-generator", "destination": "/pgstour/generator.html" },
-    { "source": "/generator-pgs", "destination": "/pgstour/generator.html" },
-    { "source": "/pgstour", "destination": "/pgstour" },
-    { "source": "/pgs", "destination": "/pgstour" },
-    { "source": "/buerna", "destination": "/buerna/index.html" },
-    { "source": "/bu-erna", "destination": "/buerna/index.html" },
-    { "source": "/ibu-erna", "destination": "/buerna/index.html" },
-    { "source": "/erna", "destination": "/buerna/index.html" },
-    { "source": "/visa-erna", "destination": "/buerna/index.html" },
-    { "source": "/underrated-ai", "destination": "/underrated-ai/index.html" },
-    { "source": "/barber-ai", "destination": "/underrated-ai/index.html" },
-    { "source": "/ai-underrated", "destination": "/underrated-ai/index.html" },
-    { "source": "/masakbar", "destination": "/masakbar/index.html" },
-    { "source": "/mas-akbar", "destination": "/masakbar/index.html" },
-    { "source": "/akbar", "destination": "/masakbar/index.html" },
-    { "source": "/talkhisan-hamasah", "destination": "/talkhisan-hamasah/index.html" },
-    { "source": "/talkhisan", "destination": "/talkhisan-hamasah/index.html" },
-    { "source": "/modul-hamasah", "destination": "/talkhisan-hamasah/index.html" },
-    { "source": "/penawaran-hamasah", "destination": "/talkhisan-hamasah/index.html" },
-    { "source": "/hamasah-modul", "destination": "/talkhisan-hamasah/index.html" },
-    { "source": "/masakbar2", "destination": "/masakbar2/index.html" },
-    { "source": "/masakabar2", "destination": "/masakbar2/index.html" },
-    { "source": "/mas-akbar2", "destination": "/masakbar2/index.html" },
-    { "source": "/canva-akbar", "destination": "/masakbar2/index.html" },
-    { "source": "/katalis", "destination": "/katalis/index.html" },
-    { "source": "/ptkatalis", "destination": "/katalis/index.html" },
-    { "source": "/katalis-erp", "destination": "/katalis/index.html" },
-    { "source": "/erp-katalis", "destination": "/katalis/index.html" },
-    { "source": "/penawaran", "destination": "/penawaran/index.html" },
-    { "source": "/penawaran-katalis", "destination": "/penawaran/index.html" },
-    { "source": "/proposal-katalis", "destination": "/penawaran/index.html" }
+    {
+      "source": "/ismu",
+      "destination": "/ismu/index.html"
+    },
+    {
+      "source": "/ust-ismu",
+      "destination": "/ismu/index.html"
+    },
+    {
+      "source": "/ustadz-ismu",
+      "destination": "/ismu/index.html"
+    },
+    {
+      "source": "/voa-ismu",
+      "destination": "/ismu/index.html"
+    },
+    {
+      "source": "/ismu-bahrul-ulum",
+      "destination": "/ismu/index.html"
+    },
+    {
+      "source": "/bahrul-ulum",
+      "destination": "/ismu/index.html"
+    },
+    {
+      "source": "/daffa",
+      "destination": "/daffa/index.html"
+    },
+    {
+      "source": "/ust-daffa",
+      "destination": "/daffa/index.html"
+    },
+    {
+      "source": "/ustadz-daffa",
+      "destination": "/daffa/index.html"
+    },
+    {
+      "source": "/nizhamiyyah",
+      "destination": "/daffa/index.html"
+    },
+    {
+      "source": "/nizhamiyyahedu",
+      "destination": "/daffa/index.html"
+    },
+    {
+      "source": "/belajarditimurtengah",
+      "destination": "/daffa/index.html"
+    },
+    {
+      "source": "/edo-undangan",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/bangedo-nikah",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/bangedo-undangan",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/edo-nikah",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/undangan-edo",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/bangedo",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/bang-edo",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/edo",
+      "destination": "/bangedo/index.html"
+    },
+    {
+      "source": "/jasavideo",
+      "destination": "/fikih-umrah/index.html"
+    },
+    {
+      "source": "/dreammecca-november",
+      "destination": "/dreammecca-november/index.html"
+    },
+    {
+      "source": "/dreammecca-11",
+      "destination": "/dreammecca-november/index.html"
+    },
+    {
+      "source": "/dm-november",
+      "destination": "/dreammecca-november/index.html"
+    },
+    {
+      "source": "/umrahme-november",
+      "destination": "/dreammecca-november/index.html"
+    },
+    {
+      "source": "/dreammecca",
+      "destination": "/dreammecca-november/index.html"
+    },
+    {
+      "source": "/dreammecca-oktober",
+      "destination": "/dreammecca-oktober/index.html"
+    },
+    {
+      "source": "/dreammecca-october",
+      "destination": "/dreammecca-oktober/index.html"
+    },
+    {
+      "source": "/dreammecca-10",
+      "destination": "/dreammecca-oktober/index.html"
+    },
+    {
+      "source": "/umrahme-oktober",
+      "destination": "/dreammecca-oktober/index.html"
+    },
+    {
+      "source": "/masdaus",
+      "destination": "/masdaus/index.html"
+    },
+    {
+      "source": "/mas-daus",
+      "destination": "/masdaus/index.html"
+    },
+    {
+      "source": "/google-ai",
+      "destination": "/masdaus/index.html"
+    },
+    {
+      "source": "/elmassa",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/el-massa",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/elmassa-umrahme",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/umrahme-elmassa",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/el-massa-umrahme",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/umrahme",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/umrah-me",
+      "destination": "/elmassa/index.html"
+    },
+    {
+      "source": "/oslo",
+      "destination": "/oslo/index.html"
+    },
+    {
+      "source": "/oslopark",
+      "destination": "/oslo/index.html"
+    },
+    {
+      "source": "/oslo-park",
+      "destination": "/oslo/index.html"
+    },
+    {
+      "source": "/pak-joko",
+      "destination": "/oslo/index.html"
+    },
+    {
+      "source": "/athifa",
+      "destination": "/athifa/index.html"
+    },
+    {
+      "source": "/mba-athifa",
+      "destination": "/athifa/index.html"
+    },
+    {
+      "source": "/cover-athifa",
+      "destination": "/athifa/index.html"
+    },
+    {
+      "source": "/mochi",
+      "destination": "/mochi/index.html"
+    },
+    {
+      "source": "/mochi-cafe",
+      "destination": "/mochi/index.html"
+    },
+    {
+      "source": "/kael-mochi",
+      "destination": "/mochi/index.html"
+    },
+    {
+      "source": "/mochicafe",
+      "destination": "/mochi/index.html"
+    },
+    {
+      "source": "/kael",
+      "destination": "/mochi/index.html"
+    },
+    {
+      "source": "/almadroj",
+      "destination": "/almadroj/index.html"
+    },
+    {
+      "source": "/markazfiqih",
+      "destination": "/markazfiqih/index.html"
+    },
+    {
+      "source": "/abdurrahman",
+      "destination": "/abdurrahman/index.html"
+    },
+    {
+      "source": "/dreammecca-umrahme",
+      "destination": "/dreammecca-umrahme/index.html"
+    },
+    {
+      "source": "/umrahme-dreammecca",
+      "destination": "/umrahme-dreammecca/index.html"
+    },
+    {
+      "source": "/haramain-capture",
+      "destination": "/haramain-capture/index.html"
+    },
+    {
+      "source": "/template",
+      "destination": "/template/index.html"
+    },
+    {
+      "source": "/qohiroh",
+      "destination": "/qohiroh/index.html"
+    },
+    {
+      "source": "/zaky",
+      "destination": "/zaky/index.html"
+    },
+    {
+      "source": "/sidi",
+      "destination": "/hamasahlaundry/index.html"
+    },
+    {
+      "source": "/hamasahlaundry",
+      "destination": "/hamasahlaundry/index.html"
+    },
+    {
+      "source": "/umiatiyah",
+      "destination": "/umiatiyah/index.html"
+    },
+    {
+      "source": "/umi",
+      "destination": "/umiatiyah/index.html"
+    },
+    {
+      "source": "/kolohaga",
+      "destination": "/kolohaga/index.html"
+    },
+    {
+      "source": "/azzam",
+      "destination": "/kolohaga/index.html"
+    },
+    {
+      "source": "/zalvice",
+      "destination": "/zalvice/index.html"
+    },
+    {
+      "source": "/ptzalvice",
+      "destination": "/zalvice/index.html"
+    },
+    {
+      "source": "/azhariyah",
+      "destination": "/azhariyah/index.html"
+    },
+    {
+      "source": "/umielly",
+      "destination": "/azhariyah/index.html"
+    },
+    {
+      "source": "/zalbina",
+      "destination": "/zalvice/index.html"
+    },
+    {
+      "source": "/ridwan",
+      "destination": "/zalvice/index.html"
+    },
+    {
+      "source": "/barber",
+      "destination": "/barber/index.html"
+    },
+    {
+      "source": "/underrated",
+      "destination": "/barber/index.html"
+    },
+    {
+      "source": "/saudia",
+      "destination": "/saudia/index.html"
+    },
+    {
+      "source": "/tiket",
+      "destination": "/saudia/index.html"
+    },
+    {
+      "source": "/tiket-saudia",
+      "destination": "/saudia/index.html"
+    },
+    {
+      "source": "/kairo",
+      "destination": "/saudia/index.html"
+    },
+    {
+      "source": "/flight",
+      "destination": "/saudia/index.html"
+    },
+    {
+      "source": "/etiket",
+      "destination": "/saudia/etiket"
+    },
+    {
+      "source": "/e-ticket",
+      "destination": "/saudia/etiket"
+    },
+    {
+      "source": "/azharuna",
+      "destination": "/ifdony"
+    },
+    {
+      "source": "/ifdony",
+      "destination": "/ifdony"
+    },
+    {
+      "source": "/logo-azharuna",
+      "destination": "/ifdony"
+    },
+    {
+      "source": "/ibrahim",
+      "destination": "/ibrahim"
+    },
+    {
+      "source": "/visa-ibrahim",
+      "destination": "/ibrahim"
+    },
+    {
+      "source": "/visa-entry",
+      "destination": "/ibrahim"
+    },
+    {
+      "source": "/visa-cairo",
+      "destination": "/ibrahim"
+    },
+    {
+      "source": "/kpi",
+      "destination": "/kpi"
+    },
+    {
+      "source": "/ppmi-kpi",
+      "destination": "/kpi"
+    },
+    {
+      "source": "/komisi-interaksi",
+      "destination": "/kpi"
+    },
+    {
+      "source": "/tehumi",
+      "destination": "/tehumi"
+    },
+    {
+      "source": "/teh-umi",
+      "destination": "/tehumi"
+    },
+    {
+      "source": "/ereader-tehumi",
+      "destination": "/tehumi"
+    },
+    {
+      "source": "/e-reader-tehumi",
+      "destination": "/tehumi"
+    },
+    {
+      "source": "/hamasahinternational",
+      "destination": "/hamasahinternational"
+    },
+    {
+      "source": "/pgstour/generator",
+      "destination": "/pgstour/generator.html"
+    },
+    {
+      "source": "/pgs-generator",
+      "destination": "/pgstour/generator.html"
+    },
+    {
+      "source": "/generator-pgs",
+      "destination": "/pgstour/generator.html"
+    },
+    {
+      "source": "/pgstour",
+      "destination": "/pgstour"
+    },
+    {
+      "source": "/pgs",
+      "destination": "/pgstour"
+    },
+    {
+      "source": "/buerna",
+      "destination": "/buerna/index.html"
+    },
+    {
+      "source": "/bu-erna",
+      "destination": "/buerna/index.html"
+    },
+    {
+      "source": "/ibu-erna",
+      "destination": "/buerna/index.html"
+    },
+    {
+      "source": "/erna",
+      "destination": "/buerna/index.html"
+    },
+    {
+      "source": "/visa-erna",
+      "destination": "/buerna/index.html"
+    },
+    {
+      "source": "/underrated-ai",
+      "destination": "/underrated-ai/index.html"
+    },
+    {
+      "source": "/barber-ai",
+      "destination": "/underrated-ai/index.html"
+    },
+    {
+      "source": "/ai-underrated",
+      "destination": "/underrated-ai/index.html"
+    },
+    {
+      "source": "/masakbar",
+      "destination": "/masakbar/index.html"
+    },
+    {
+      "source": "/mas-akbar",
+      "destination": "/masakbar/index.html"
+    },
+    {
+      "source": "/akbar",
+      "destination": "/masakbar/index.html"
+    },
+    {
+      "source": "/talkhisan-hamasah",
+      "destination": "/talkhisan-hamasah/index.html"
+    },
+    {
+      "source": "/talkhisan",
+      "destination": "/talkhisan-hamasah/index.html"
+    },
+    {
+      "source": "/modul-hamasah",
+      "destination": "/talkhisan-hamasah/index.html"
+    },
+    {
+      "source": "/penawaran-hamasah",
+      "destination": "/talkhisan-hamasah/index.html"
+    },
+    {
+      "source": "/hamasah-modul",
+      "destination": "/talkhisan-hamasah/index.html"
+    },
+    {
+      "source": "/masakbar2",
+      "destination": "/masakbar2/index.html"
+    },
+    {
+      "source": "/masakabar2",
+      "destination": "/masakbar2/index.html"
+    },
+    {
+      "source": "/mas-akbar2",
+      "destination": "/masakbar2/index.html"
+    },
+    {
+      "source": "/canva-akbar",
+      "destination": "/masakbar2/index.html"
+    },
+    {
+      "source": "/katalis",
+      "destination": "/katalis/index.html"
+    },
+    {
+      "source": "/ptkatalis",
+      "destination": "/katalis/index.html"
+    },
+    {
+      "source": "/katalis-erp",
+      "destination": "/katalis/index.html"
+    },
+    {
+      "source": "/erp-katalis",
+      "destination": "/katalis/index.html"
+    },
+    {
+      "source": "/penawaran",
+      "destination": "/penawaran/index.html"
+    },
+    {
+      "source": "/penawaran-katalis",
+      "destination": "/penawaran/index.html"
+    },
+    {
+      "source": "/proposal-katalis",
+      "destination": "/penawaran/index.html"
+    }
   ]
 }
