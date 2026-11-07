@@ -5907,6 +5907,14 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         };
         const DEFAULT_BANK_UPDATED_AT = '2026-11-08';
         const DEFAULT_ACCOUNT_HOLDER = 'Daru Fahmaa Muliawan';
+        const DEFAULT_ACCOUNT_NUMBERS = {
+            mandiri: '1550010616962',
+            line: '14804962490',
+            blu: '006503316487',
+            jago: '100598361895',
+            dana: '081311506025',
+            gopay: '081311506025'
+        };
         const DEFAULT_BANK_COPY_TEMPLATE = '{bank}\n{label}: {nomor}\na.n. {nama}';
 
         // v2: the old key held placeholder numbers for BCA/BSI/BRI accounts that are no longer tracked.
@@ -5927,8 +5935,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function accountDetail(key) {
             const detail = bankAccountDetails[key] || {};
-            // Account numbers live only in the cloud state (entered via "Update saldo"), never in this file.
-            return { number: detail.number || '', holder: detail.holder || DEFAULT_ACCOUNT_HOLDER };
+            // A saved-but-empty number falls back to the default, so earlier blank saves don't hide it.
+            return { number: detail.number || DEFAULT_ACCOUNT_NUMBERS[key] || '', holder: detail.holder || DEFAULT_ACCOUNT_HOLDER };
         }
 
         function saveLocalBankBalances() {
