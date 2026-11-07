@@ -45,7 +45,8 @@ export default async function middleware(request) {
   }
   return new Response(null, {
     headers: {
-      'x-middleware-rewrite': new URL('/admin-login.html', request.url).toString(),
+      // cleanUrls serves admin-login.html at /admin-login (the .html path only redirects).
+      'x-middleware-rewrite': new URL('/admin-login', request.url).toString(),
       'Cache-Control': 'no-store',
     },
   });
