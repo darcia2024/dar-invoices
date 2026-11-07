@@ -5907,7 +5907,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         };
         const DEFAULT_BANK_UPDATED_AT = '2026-11-08';
         const DEFAULT_ACCOUNT_HOLDER = 'Daru Fahmaa Muliawan';
-        const DEFAULT_BANK_COPY_TEMPLATE = '{bank}\nNo. rekening: {nomor}\na.n. {nama}';
+        const DEFAULT_BANK_COPY_TEMPLATE = '{bank}\n{label}: {nomor}\na.n. {nama}';
 
         // v2: the old key held placeholder numbers for BCA/BSI/BRI accounts that are no longer tracked.
         const BANK_STORAGE_KEY = 'dar_bank_balances_v2';
@@ -5927,6 +5927,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function accountDetail(key) {
             const detail = bankAccountDetails[key] || {};
+            // Account numbers live only in the cloud state (entered via "Update saldo"), never in this file.
             return { number: detail.number || '', holder: detail.holder || DEFAULT_ACCOUNT_HOLDER };
         }
 
@@ -5986,6 +5987,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const { number, holder } = accountDetail(acc.key);
             return (bankCopyTemplate || DEFAULT_BANK_COPY_TEMPLATE)
                 .replace(/\{bank\}/gi, acc.bankName)
+                .replace(/\{label\}/gi, acc.wallet ? 'No. HP' : 'No. rekening')
                 .replace(/\{nomor\}/gi, number)
                 .replace(/\{nama\}/gi, holder);
         }
@@ -6039,7 +6041,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 }).join('') + `
                     <label class="bank-template-field">Template salin rekening
                         <textarea id="bankCopyTemplateInput" class="search-input" rows="3">${escapeHTML(bankCopyTemplate)}</textarea>
-                        <small>Pakai {bank}, {nomor}, dan {nama}. Contoh hasil muncul saat tombol "Salin rekening" diklik.</small>
+                        <small>Pakai {bank}, {label} (No. rekening / No. HP), {nomor}, dan {nama}. Contoh hasil muncul saat tombol "Salin rekening" diklik.</small>
                     </label>`;
             }
             const modal = document.getElementById('bankBalanceModal');
