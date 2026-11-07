@@ -4388,8 +4388,7 @@ body[data-view="debt"] #debtSection {
             katalis: 10000000
         };
 
-        let deletedInvoiceIds = [];
-        let purgedInvoiceIds = [];
+        // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
         // Auto-migrate status version so returning visitors get updated canonical payment statuses
         const STATUS_DATA_VERSION = "2026-11-07_v4";
         if (localStorage.getItem("status_data_version") !== STATUS_DATA_VERSION) {
