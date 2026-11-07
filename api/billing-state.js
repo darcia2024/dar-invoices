@@ -1,3 +1,5 @@
+const { hasValidSession, redisCommand } = require("./_session");
+
 const STATE_KEY = "dar-invoices:billing-state";
 
 const defaultDebts = [
@@ -141,47 +143,11 @@ function mergeState(state) {
   };
 }
 
-async function redisCommand(command) {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-
-  if (!url || !token) {
-    const error = new Error("Upstash env vars are not configured");
-    error.statusCode = 503;
-    throw error;
-  }
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(command),
-  });
-
-  if (!response.ok) {
-    const error = new Error(`Upstash request failed with ${response.status}`);
-    error.statusCode = 502;
-    throw error;
-  }
-
-  const payload = await response.json();
-  if (payload.error) {
-    const error = new Error(payload.error);
-    error.statusCode = 502;
-    throw error;
-  }
-
-  return payload.result;
-}
-
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
   try {
-    const adminPasscode = process.env.ADMIN_PASSCODE || "050900";
-    if (req.headers["x-admin-passcode"] !== adminPasscode) {
+    if (!hasValidSession(req)) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
