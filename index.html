@@ -2094,11 +2094,11 @@ body[data-view="debt"] #debtSection {
                 </div>
                 <div class="bank-header-right">
                     <div class="bank-total-pill">
-                        <span class="bank-total-label">TOTAL KAS LIKUID:</span>
+                        <span class="bank-total-label">Total kas likuid</span>
                         <span class="bank-total-val" id="totalLiquidCashVal">Rp 0</span>
                     </div>
                     <button type="button" class="bank-edit-btn" onclick="openBankBalanceModal()">
-                        ✏️ Input / Update Saldo
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Update saldo
                     </button>
                 </div>
             </div>
@@ -2310,7 +2310,7 @@ body[data-view="debt"] #debtSection {
             <div class="financial-advisory-section">
                 <div class="advisory-header">
                     <div class="advisory-title-group">
-                        <span style="font-size:1.3rem;">🧭</span>
+                        <span class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/></svg></span>
                         <div class="advisory-title">Tips &amp; Saran Strategis Pengelolaan Uang</div>
                     </div>
                     <span class="advisory-badge">Blueprint Keuangan Kreatif</span>
@@ -2320,7 +2320,7 @@ body[data-view="debt"] #debtSection {
                     <!-- Card 1: Alokasi 50/30/20 -->
                     <div class="advisory-card">
                         <div class="advisory-card-top">
-                            <div class="advisory-icon" style="background:rgba(78, 192, 139, 0.15); color:#4ec08b;">📊</div>
+                            <div class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
                             <div>
                                 <div class="advisory-card-title">Struktur Alokasi Kas (50/30/20)</div>
                                 <div class="advisory-card-subtitle">Manajemen Arus Kas Masuk</div>
@@ -2339,7 +2339,7 @@ body[data-view="debt"] #debtSection {
                     <!-- Card 2: Action Plan Piutang -->
                     <div class="advisory-card">
                         <div class="advisory-card-top">
-                            <div class="advisory-icon" style="background:rgba(201, 154, 69, 0.15); color:#c99a45;">🎯</div>
+                            <div class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
                             <div>
                                 <div class="advisory-card-title">SOP Penagihan Piutang Rp 40,6jt</div>
                                 <div class="advisory-card-subtitle">Penyelamatan Cash Flow</div>
@@ -2359,7 +2359,7 @@ body[data-view="debt"] #debtSection {
                     <!-- Card 3: Multi-Bank Isolation -->
                     <div class="advisory-card">
                         <div class="advisory-card-top">
-                            <div class="advisory-icon" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8;">🏦</div>
+                            <div class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10M9 21V10M15 21V10M19 21V10M2 10l10-6 10 6"/></svg></div>
                             <div>
                                 <div class="advisory-card-title">Isolasi Rekening Anti-Bocor</div>
                                 <div class="advisory-card-subtitle">Disiplin Pisah Rekening</div>
@@ -2378,7 +2378,7 @@ body[data-view="debt"] #debtSection {
                     <!-- Card 4: Proteksi Kontrak & Non-Refundable DP -->
                     <div class="advisory-card">
                         <div class="advisory-card-top">
-                            <div class="advisory-icon" style="background:rgba(228, 111, 97, 0.15); color:#e46f61;">🛡️</div>
+                            <div class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                             <div>
                                 <div class="advisory-card-title">Proteksi DP Non-Refundable</div>
                                 <div class="advisory-card-subtitle">Pelajaran Kasus Cancel</div>
@@ -2516,7 +2516,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/MF/2026/001</span>
-                        <span class="month-tag">📅 Juli 2026</span>
+                        <span class="month-tag">Juli 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2545,7 +2545,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValMarkaz">Rp 5.500.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('markaz')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('markaz')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2570,7 +2570,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/DU/2026/001</span>
-                        <span class="month-tag">📅 Juli 2026</span>
+                        <span class="month-tag">Juli 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2599,7 +2599,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValDreammecca">Rp 350.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('dreammecca')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('dreammecca')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2624,7 +2624,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/HC/2026/001</span>
-                        <span class="month-tag">📅 Juli 2026</span>
+                        <span class="month-tag">Juli 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2653,7 +2653,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValHaramainCapture">Rp 600.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('haramain-capture')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('haramain-capture')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2678,7 +2678,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/AJM/2026/002</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2707,7 +2707,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValAbdurrahman">Rp 1.460.690</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('abdurrahman')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('abdurrahman')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2727,13 +2727,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('qohiroh')">
                                 🔴 BELUM LUNAS
                             </span>
-                            <span class="dp-history-badge" style="background:#fff7ed; color:#c2410c; border:1px solid #ffedd5;">⏳ MENUNGGU ANGKA PASTI</span>
+                            <span class="dp-history-badge tone-warn">MENUNGGU ANGKA PASTI</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/QC/2026/001</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2762,7 +2762,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValQohiroh">Rp 9.500.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('qohiroh')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('qohiroh')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2787,7 +2787,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/ZK/2026/006</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2816,7 +2816,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValZaky">Rp 600.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('zaky')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('zaky')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2841,7 +2841,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/SD/2026/007</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2870,7 +2870,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValSidi">Rp 1.000.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('sidi')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('sidi')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2895,7 +2895,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/UA/2026/008</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2924,7 +2924,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValUmiatiyah">Rp 2.200.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('umiatiyah')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('umiatiyah')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -2949,7 +2949,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/KH/2026/009</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -2978,7 +2978,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValKolohaga">Rp 700.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('kolohaga')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('kolohaga')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3003,7 +3003,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/RZ/2026/012</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3032,7 +3032,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValZalvice">Rp 1.200.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('zalvice')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('zalvice')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3052,13 +3052,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('azhariyah')">
                                 🟢 LUNAS TOTAL (RP 7.000.000)
                             </span>
-                            <span class="dp-history-badge" style="background:#fff7ed; color:#c2410c; border:1px solid #ffedd5;">🛠️ PROJECT ON-GOING (BELUM SELESAI)</span>
+                            <span class="dp-history-badge tone-warn">PROJECT ON-GOING (BELUM SELESAI)</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/YPIA/2026/011 &bull; Proyek Perisa Platform</span>
-                        <span class="month-tag">📅 Sep &amp; Okt 2026 (7JT)</span>
+                        <span class="month-tag">Sep &amp; Okt 2026 (7JT)</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3087,7 +3087,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValAzhariyah">Rp 7.000.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('azhariyah')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('azhariyah')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3110,7 +3110,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/BU/2026/013</span>
-                        <span class="month-tag">📅 Agt 2026 (DP 3JT) &amp; Sep 2026 (Pelunasan 3JT)</span>
+                        <span class="month-tag">Agt 2026 (DP 3JT) &amp; Sep 2026 (Pelunasan 3JT)</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3143,7 +3143,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValBarber">Rp 6.000.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('barber')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('barber')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3168,7 +3168,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/SV/2026/014</span>
-                        <span class="month-tag">📅 Agustus 2026</span>
+                        <span class="month-tag">Agustus 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3197,7 +3197,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValSaudia">Rp 39.600.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('saudia')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('saudia')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3222,7 +3222,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/AZH/2026/015</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3251,7 +3251,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValIfdony">Rp 500.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('ifdony')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('ifdony')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3276,7 +3276,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/VES/2026/016</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3305,7 +3305,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValIbrahim">Rp 1.100.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('ibrahim')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('ibrahim')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3324,13 +3324,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-dp" onclick="togglePaymentStatus('kpi')">
                                 🟡 DP (Rp 7.100.000)
                             </span>
-                            <span class="dp-history-badge" style="background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe;">SISA PELUNASAN: RP 7.100.000</span>
+                            <span class="dp-history-badge tone-info">SISA PELUNASAN: RP 7.100.000</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/KPI/2026/017 &bull; Ekosistem Digital PPMI</span>
-                        <span class="month-tag">📅 Sep &amp; Okt 2026 (14.2JT)</span>
+                        <span class="month-tag">Sep &amp; Okt 2026 (14.2JT)</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3367,7 +3367,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValKpi">Rp 12.600.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('kpi')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('kpi')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3390,7 +3390,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/UMI/2026/018 &bull; Akses Media Baca Digital</span>
-                        <span class="month-tag">📅 Sep &amp; Okt 2026 (300rb)</span>
+                        <span class="month-tag">Sep &amp; Okt 2026 (300rb)</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3419,7 +3419,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValTehumi">Rp 300.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('tehumi')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('tehumi')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3437,13 +3437,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('hamasahinternational')">
                                 🔴 BELUM LUNAS
                             </span>
-                            <span class="dp-history-badge" style="background:#fff7ed; color:#c2410c; border:1px solid #ffedd5;">⏳ MENUNGGU SISA (RP 8.605.000)</span>
+                            <span class="dp-history-badge tone-warn">MENUNGGU SISA (RP 8.605.000)</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/HI/2026/018 &bull; Ustadz Ifdony Nur Syamsi, Lc</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3472,7 +3472,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValHamasahinternational">Rp 16.105.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('hamasahinternational')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('hamasahinternational')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3497,7 +3497,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/PGS/2026/09/001 &bull; PT Permana Group Sejahtera</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3526,7 +3526,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValPgstour">Rp 1.000.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('pgstour')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('pgstour')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3538,7 +3538,7 @@ body[data-view="debt"] #debtSection {
                     </a>
                     <a href="/pgstour/generator" class="action-btn" style="background:#0284c7; border-color:#0284c7; color:#ffffff;">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px; vertical-align:middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        <span>⚡ Generator Invoice &amp; Kwitansi PGS</span>
+                        <span>Generator Invoice &amp; Kwitansi PGS</span>
                     </a>
                 </div>
             </div>
@@ -3557,7 +3557,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/DU/2026/09/002 &bull; M. Hilmy Hafizh</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3586,7 +3586,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValUmrahmeDreammecca">Rp 280.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('umrahme-dreammecca')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('umrahme-dreammecca')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3611,7 +3611,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/KAEL/2026/09/001 &bull; Tenant F&amp;B</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3640,7 +3640,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValMochi">Rp 600.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('mochi')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('mochi')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3665,7 +3665,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/DAR/2026/09/017 &bull; Desain Sampul</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3694,7 +3694,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValAthifa">Rp 250.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('athifa')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('athifa')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3714,13 +3714,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('oslo')">
                                 🟢 LUNAS &amp; SELESAI
                             </span>
-                            <span class="dp-history-badge" style="background:#f0fdf4; color:#15803d; border:1px solid #dcfce7;">✅ PROJECT SELESAI &amp; SUDAH DIBAYAR</span>
+                            <span class="dp-history-badge tone-ok">PROJECT SELESAI &amp; SUDAH DIBAYAR</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/DAR/2026/09/018 &bull; Brosur Premium 16 Hal</span>
-                        <span class="month-tag">📅 September 2026</span>
+                        <span class="month-tag">September 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3749,7 +3749,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValOslo">Rp 1.500.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('oslo')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('oslo')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3769,13 +3769,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('elmassa')">
                                 🔴 BELUM LUNAS
                             </span>
-                            <span class="dp-history-badge" style="background:#f1f5f9; color:#475569; border:1px solid #e2e8f0;">⏳ BELUM ADA KABAR</span>
+                            <span class="dp-history-badge tone-muted">BELUM ADA KABAR</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/DAR/2026/10/001 &bull; Merchandise &amp; Web</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3804,7 +3804,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValElmassa">Rp 1.940.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('elmassa')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('elmassa')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3829,7 +3829,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/DAR/2026/10/002 &bull; Google AI Pro 18 Bulan</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3858,7 +3858,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValMasdaus">Rp 75.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('masdaus')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('masdaus')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3883,7 +3883,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/DU/2026/10/003 &bull; Umrahme Batch Oktober</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3912,7 +3912,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValUmrahmeDreammeccaOktober">Rp 367.500</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('umrahme-dreammecca-oktober')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('umrahme-dreammecca-oktober')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3932,13 +3932,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-paid" onclick="togglePaymentStatus('bangedo')">
                                 🟢 LUNAS (RP 150.000)
                             </span>
-                            <span class="dp-history-badge" style="background:#fef2f2; color:#b91c1c; border:1px solid #fee2e2;">⚠️ SISA DICANCEL (HANYA BAYAR 150RB)</span>
+                            <span class="dp-history-badge tone-alert">SISA DICANCEL (HANYA BAYAR 150RB)</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/DAR/2026/10/004 &bull; Desain Undangan Nikah</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -3971,7 +3971,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValBangedo">Rp 150.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('bangedo')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('bangedo')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -3996,7 +3996,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/VES/2026/017 &bull; Visa Entry Student Mesir</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -4025,7 +4025,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValErna">Rp 500.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('erna')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('erna')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -4050,7 +4050,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/BU-AI/2026/019 &bull; Add-on AI Smart System</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -4079,7 +4079,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValUnderratedAi">Rp 450.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('underrated-ai')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('underrated-ai')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -4104,7 +4104,7 @@ body[data-view="debt"] #debtSection {
 
                     <div class="ref-code">
                         <span>REF: #INV/DAR/2026/10/003 &bull; AI Pro &amp; Canva Pro</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -4133,7 +4133,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValMasakbar">Rp 150.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('masakbar')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('masakbar')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -4151,13 +4151,13 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('talkhisan-hamasah')">
                                 🔴 BELUM LUNAS
                             </span>
-                            <span class="dp-history-badge" style="background:#fef2f2; color:#b91c1c; border:1px solid #fee2e2;">💬 NEGO: TAWAR RP 200RB/MODUL</span>
+                            <span class="dp-history-badge tone-alert">NEGO: TAWAR RP 200RB/MODUL</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/SYMP-HMS/2026/10/004 &bull; 6 Modul Talkhisan</span>
-                        <span class="month-tag">📅 Oktober 2026</span>
+                        <span class="month-tag">Oktober 2026</span>
                     </div>
                     
                     <div class="project-desc">
@@ -4186,7 +4186,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValTalkhisanHamasah">Rp 2.100.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('talkhisan-hamasah')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('talkhisan-hamasah')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -4206,12 +4206,12 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-dp" onclick="togglePaymentStatus('katalis')">
                                 🟡 DP (Rp 5.000.000)
                             </span>
-                            <span class="dp-history-badge" style="background:#eff6ff; color:#1d4ed8; border:1px solid #dbeafe;">SISA TAGIHAN: RP 5.000.000</span>
+                            <span class="dp-history-badge tone-info">SISA TAGIHAN: RP 5.000.000</span>
                         </div>
                     </div>
 
                     <div class="tag-row">
-                        <span class="meta-tag">💼 Aplikasi Web ERP</span>
+                        <span class="meta-tag">Aplikasi Web ERP</span>
                         <span class="meta-tag">13 Modul v1</span>
                         <span class="meta-tag">4 Minggu</span>
                         <span class="meta-tag">Next.js 16 + Supabase</span>
@@ -4221,7 +4221,7 @@ body[data-view="debt"] #debtSection {
                         <span class="slug-url">temantiket.com/katalis</span>
                         <div class="btn-row-flex">
                             <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/katalis')">Salin Link</button>
-                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptKatalis()">Salin Script WA</button>
+                            <button class="slug-copy-btn" onclick="copyWaScriptKatalis()">Salin Script WA</button>
                         </div>
                     </div>
 
@@ -4239,7 +4239,7 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
                             <div class="net-profit-flex">
                                 <span class="net-profit-val" id="profitValKatalis">Rp 10.000.000</span>
-                                <button class="edit-profit-btn" onclick="openProfitModal('katalis')">✏️ Edit Profit</button>
+                                <button class="edit-profit-btn" onclick="openProfitModal('katalis')">Edit profit</button>
                             </div>
                         </div>
                     </div>
@@ -4869,7 +4869,7 @@ body[data-view="debt"] #debtSection {
                         }
                         markBtn.style.display = "inline-flex";
                         markBtn.className = "mark-pelunasan-btn";
-                        markBtn.innerHTML = `✅ Lunaskan Sisa (${formatIDR(remaining)})`;
+                        markBtn.innerHTML = `Lunaskan sisa (${formatIDR(remaining)})`;
                     }
                 } else if (status === "PAID") {
                     if (markBtn) {
@@ -4887,7 +4887,7 @@ body[data-view="debt"] #debtSection {
                     } else if (markBtn) {
                         markBtn.style.display = "inline-flex";
                         markBtn.className = "mark-pelunasan-btn";
-                        markBtn.innerHTML = `✅ Tandai Pelunasan Lunas (${formatIDR(item.gross)})`;
+                        markBtn.innerHTML = `Tandai pelunasan lunas (${formatIDR(item.gross)})`;
                     }
                 }
 
@@ -5415,7 +5415,7 @@ body[data-view="debt"] #debtSection {
 
                 tableHTML += `
                     <tr>
-                        <td data-label="Periode">📅 ${row.label}</td>
+                        <td data-label="Periode">${row.label}</td>
                         <td data-label="Jml lunas" style="color: var(--color-paid); font-weight: 700;">${statusLabel}</td>
                         <td data-label="Omset gross">${formatIDR(row.paidGrossTotal)}</td>
                         <td data-label="Biaya operasional" style="color: var(--text-dim);">${formatIDR(row.costTotal)}</td>

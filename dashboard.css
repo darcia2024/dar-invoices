@@ -2196,3 +2196,83 @@ html, body { touch-action: manipulation; }
     .trash-actions button { min-height: 42px; font-size: 12.5px; justify-content: center; }
     .purge-all-btn { min-height: 46px; }
 }
+
+/* ===== Harmonisasi widget baru (saldo bank, rekap, tips, badge kartu) ===== */
+.bank-icon-badge,
+.advisory-icon {
+    width: 27px; height: 27px; min-width: 27px; border-radius: 50%;
+    background: #272722 !important; color: #fff !important; font-size: 0; margin-top: 2px;
+}
+.bank-icon-badge svg, .advisory-icon svg { width: 14px; height: 14px; }
+.bank-tracker-header { align-items: flex-start; border-bottom-color: #eee8da; }
+.bank-header-left, .advisory-title-group, .advisory-card-top { align-items: flex-start; gap: 12px; }
+.bank-tracker-title, .advisory-title { font-size: 16px; font-weight: 600; letter-spacing: -.5px; color: #24241f; }
+.bank-tracker-subtitle { font-size: 11px; color: #666256; line-height: 1.5; }
+.bank-total-pill { background: transparent; border: 1px solid #d7d1c2; border-radius: 20px; padding: 6px 12px; gap: 8px; }
+.bank-total-label { font-size: 10px; font-weight: 500; letter-spacing: 0; text-transform: uppercase; color: #666256; }
+.bank-total-val { font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: -.2px; color: #24241f; }
+.bank-edit-btn {
+    background: transparent; border: 1px solid #d7d1c2; color: #514f43; border-radius: 20px;
+    padding: 6px 12px; font-size: 10px; font-weight: 500; gap: 6px;
+}
+.bank-edit-btn:hover { background: #272722; border-color: #272722; color: #fff; }
+.bank-item-card { background: transparent; border: 1px solid #e4ddcd; border-radius: 12px; }
+.bank-item-card:hover { transform: none; border-color: #c7bda8; }
+.bank-logo-badge,
+.mandiri-badge, .bca-badge, .bsi-badge, .bri-badge, .cash-badge {
+    background: #efece1; color: #3c3b30; border: 0; border-radius: 4px;
+    font-size: 9px; font-weight: 600; letter-spacing: .02em; padding: 3px 6px;
+}
+.bank-tag-primary, .bank-tag-secondary, .bank-tag-tertiary { color: #666256; font-size: 9px; font-weight: 500; letter-spacing: 0; }
+.bank-item-pct, .bank-account-num { font-family: inherit; color: #666256; font-weight: 500; }
+.bank-balance-amount { font-family: inherit; font-size: 15px; font-weight: 600; letter-spacing: -.3px; color: #24241f; }
+.bank-progress-bar { height: 4px; background: #ece6d7; }
+
+.advisory-header { align-items: center; border-bottom-color: #d9d2c2; }
+.advisory-badge {
+    background: transparent; color: #666256; border: 1px solid #d7d1c2; border-radius: 20px;
+    font-size: 10px; font-weight: 500; letter-spacing: 0; padding: 4px 10px; white-space: nowrap;
+}
+.advisory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.advisory-card { border-radius: 17px; }
+.advisory-card:hover { transform: none; }
+.advisory-card-title { font-size: 14px; font-weight: 600; letter-spacing: -.3px; color: #24241f; }
+.advisory-card-subtitle { color: #666256; font-size: 10px; font-weight: 500; letter-spacing: 0; margin-top: 2px; }
+.advisory-body { color: #555247; }
+.advisory-point-item { color: #36362d; }
+.advisory-bullet { color: #39392f; font-weight: 600; }
+.revenue-table .grand-row td { font-size: 13px; font-weight: 600; }
+.revenue-report-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.month-tag { display: inline-flex; align-items: center; gap: 4px; }
+.month-tag::before, .edit-profit-btn::before {
+    content: ""; width: 10px; height: 10px; flex-shrink: 0; background: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat;
+}
+.month-tag::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E"); }
+.edit-profit-btn { display: inline-flex; align-items: center; gap: 4px; }
+.edit-profit-btn::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E"); }
+
+.dp-history-badge.tone-warn  { background: #f9ded1; color: #814637; border: 0; }
+.dp-history-badge.tone-info  { background: #e5d5f2; color: #57376a; border: 0; }
+.dp-history-badge.tone-ok    { background: #e2ecdc; color: #305d46; border: 0; }
+.dp-history-badge.tone-muted { background: #efece1; color: #5c594f; border: 0; }
+.dp-history-badge.tone-alert { background: #f3d3cc; color: #7a2f22; border: 0; }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+.meta-tag { background: #efece1; color: #5c594f; border-radius: 4px; font-size: 9px; padding: 3px 6px; }
+
+@media (max-width: 600px) {
+    .bank-tracker-title, .advisory-title { font-size: 14px; }
+    .bank-tracker-subtitle { font-size: 11px; }
+    .bank-total-pill { padding: 5px 10px; justify-content: space-between; }
+    .bank-total-label { font-size: 9px; }
+    .bank-total-val { font-size: 13px; }
+    .bank-edit-btn { padding: 6px 10px; min-height: 32px; }
+    .bank-balance-amount { font-size: 13px; }
+    .bank-logo-badge, .mandiri-badge, .bca-badge, .bsi-badge, .bri-badge, .cash-badge { font-size: 8.5px; padding: 2px 5px; }
+    .advisory-header { align-items: flex-start; }
+    .advisory-grid { grid-template-columns: 1fr; }
+    .advisory-card-title { font-size: 13px; }
+    .advisory-badge { font-size: 9px; padding: 3px 8px; }
+}
