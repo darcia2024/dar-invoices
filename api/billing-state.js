@@ -132,6 +132,8 @@ function mergeState(state) {
     debts: state && Array.isArray(state.debts) ? state.debts : defaultDebts,
     bankBalances: state && state.bankBalances && typeof state.bankBalances === "object" ? state.bankBalances : null,
     bankBalancesUpdatedAt: state && typeof state.bankBalancesUpdatedAt === "string" ? state.bankBalancesUpdatedAt : null,
+    bankAccountDetails: state && state.bankAccountDetails && typeof state.bankAccountDetails === "object" ? state.bankAccountDetails : null,
+    bankCopyTemplate: state && typeof state.bankCopyTemplate === "string" ? state.bankCopyTemplate : null,
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),

@@ -2204,6 +2204,29 @@ body[data-view="debt"] #debtSection {
                 </table>
             </div>
 
+            <!-- Outstanding invoices (dirender dari invoiceItems + status pembayaran) -->
+            <div class="revenue-report-box unpaid-report-box">
+                <div class="revenue-report-title">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                        <span>Project Belum Lunas</span>
+                    </div>
+                    <span class="advisory-badge" id="unpaidCountBadge">0 project</span>
+                </div>
+                <table class="revenue-table">
+                    <thead>
+                        <tr>
+                            <th>PROJECT</th>
+                            <th>STATUS</th>
+                            <th>TOTAL TAGIHAN</th>
+                            <th>SUDAH DIBAYAR</th>
+                            <th style="text-align: right;">SISA TAGIHAN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unpaidReportBody"></tbody>
+                </table>
+            </div>
+
             <!-- Strategic Money Management Advisory Blueprint -->
             <div class="financial-advisory-section">
                 <div class="advisory-header">
@@ -4484,6 +4507,14 @@ body[data-view="debt"] #debtSection {
             if (state.bankBalances && typeof state.bankBalances === 'object') {
                 bankBalances = { ...DEFAULT_BANK_BALANCES, ...state.bankBalances };
                 bankBalancesUpdatedAt = state.bankBalancesUpdatedAt || bankBalancesUpdatedAt;
+            }
+            if (state.bankAccountDetails && typeof state.bankAccountDetails === 'object') {
+                bankAccountDetails = state.bankAccountDetails;
+            }
+            if (typeof state.bankCopyTemplate === 'string' && state.bankCopyTemplate.trim()) {
+                bankCopyTemplate = state.bankCopyTemplate;
+            }
+            if (state.bankBalances || state.bankAccountDetails || state.bankCopyTemplate) {
                 saveLocalBankBalances();
                 renderBankBalancesUI();
             }
@@ -4547,7 +4578,9 @@ body[data-view="debt"] #debtSection {
                         purgedInvoiceIds,
                         debts,
                         bankBalances,
-                        bankBalancesUpdatedAt
+                        bankBalancesUpdatedAt,
+                        bankAccountDetails,
+                        bankCopyTemplate
                     })
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
@@ -5300,6 +5333,7 @@ body[data-view="debt"] #debtSection {
             `;
 
             tbody.innerHTML = tableHTML;
+            renderUnpaidList();
             renderInvoiceBoard();
         }
 
@@ -5855,12 +5889,12 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         // BANK BALANCES TRACKER MANAGEMENT
         // =========================================================================
         const BANK_ACCOUNTS = [
-            { key: 'mandiri', name: 'Mandiri', logo: '/bank-logos/mandiri.webp', tag: 'Rek. utama', note: '155-00-1061696-2 • Daru' },
-            { key: 'jago', name: 'Jago', logo: '/bank-logos/jago.svg', tag: 'Bank digital', note: 'Bank Jago' },
-            { key: 'blu', name: 'blu', logo: '/bank-logos/blu.png', tag: 'Bank digital', note: 'blu by BCA Digital' },
-            { key: 'line', name: 'LINE Bank', logo: '/bank-logos/linebank.webp', logoOnDark: true, tag: 'Bank digital', note: 'LINE Bank by Hana Bank' },
-            { key: 'gopay', name: 'GoPay', logo: '/bank-logos/gopay.svg', tag: 'E-wallet', note: 'Saldo GoPay' },
-            { key: 'dana', name: 'DANA', logo: '/bank-logos/dana.svg', tag: 'E-wallet', note: 'Saldo DANA' }
+            { key: 'mandiri', name: 'Mandiri', bankName: 'Bank Mandiri', logo: '/bank-logos/mandiri.webp', tag: 'Rek. utama' },
+            { key: 'jago', name: 'Jago', bankName: 'Bank Jago', logo: '/bank-logos/jago.svg', tag: 'Bank digital' },
+            { key: 'blu', name: 'blu', bankName: 'blu by BCA Digital', logo: '/bank-logos/blu.png', tag: 'Bank digital' },
+            { key: 'line', name: 'LINE Bank', bankName: 'LINE Bank', logo: '/bank-logos/linebank.webp', logoOnDark: true, tag: 'Bank digital' },
+            { key: 'gopay', name: 'GoPay', bankName: 'GoPay', logo: '/bank-logos/gopay.svg', tag: 'E-wallet', wallet: true },
+            { key: 'dana', name: 'DANA', bankName: 'DANA', logo: '/bank-logos/dana.svg', tag: 'E-wallet', wallet: true }
         ];
 
         const DEFAULT_BANK_BALANCES = {
@@ -5872,25 +5906,45 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             dana: 4996
         };
         const DEFAULT_BANK_UPDATED_AT = '2026-11-08';
+        const DEFAULT_ACCOUNT_HOLDER = 'Daru Fahmaa Muliawan';
+        const DEFAULT_BANK_COPY_TEMPLATE = '{bank}\nNo. rekening: {nomor}\na.n. {nama}';
 
         // v2: the old key held placeholder numbers for BCA/BSI/BRI accounts that are no longer tracked.
         const BANK_STORAGE_KEY = 'dar_bank_balances_v2';
         let bankBalances = { ...DEFAULT_BANK_BALANCES };
         let bankBalancesUpdatedAt = DEFAULT_BANK_UPDATED_AT;
+        let bankAccountDetails = {};
+        let bankCopyTemplate = DEFAULT_BANK_COPY_TEMPLATE;
         try {
             const stored = JSON.parse(localStorage.getItem(BANK_STORAGE_KEY) || 'null');
             if (stored && stored.balances) {
                 bankBalances = { ...DEFAULT_BANK_BALANCES, ...stored.balances };
                 bankBalancesUpdatedAt = stored.updatedAt || DEFAULT_BANK_UPDATED_AT;
             }
+            if (stored && stored.details) bankAccountDetails = stored.details;
+            if (stored && typeof stored.template === 'string' && stored.template.trim()) bankCopyTemplate = stored.template;
         } catch (e) {}
+
+        function accountDetail(key) {
+            const detail = bankAccountDetails[key] || {};
+            return { number: detail.number || '', holder: detail.holder || DEFAULT_ACCOUNT_HOLDER };
+        }
 
         function saveLocalBankBalances() {
             try {
-                localStorage.setItem(BANK_STORAGE_KEY, JSON.stringify({ balances: bankBalances, updatedAt: bankBalancesUpdatedAt }));
+                localStorage.setItem(BANK_STORAGE_KEY, JSON.stringify({
+                    balances: bankBalances,
+                    updatedAt: bankBalancesUpdatedAt,
+                    details: bankAccountDetails,
+                    template: bankCopyTemplate
+                }));
             } catch (e) {
                 console.warn("Saving bank balances to localStorage failed:", e);
             }
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
         }
 
         function formatShortDate(iso) {
@@ -5910,6 +5964,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             grid.innerHTML = BANK_ACCOUNTS.map(acc => {
                 const val = Number(bankBalances[acc.key]) || 0;
                 const pct = total > 0 ? Math.round((val / total) * 100) : 0;
+                const { number } = accountDetail(acc.key);
                 return `
                 <div class="bank-item-card">
                     <div class="bank-item-top">
@@ -5919,21 +5974,73 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                         </div>
                         <span class="bank-item-pct">${val > 0 && pct === 0 ? '&lt;1' : pct}%</span>
                     </div>
-                    <div class="bank-account-num">${acc.note}</div>
+                    <div class="bank-account-num${number ? '' : ' is-empty'}">${number ? escapeHTML(number) : (acc.wallet ? 'No. HP belum diisi' : 'No. rekening belum diisi')}</div>
                     <div class="bank-balance-amount">${formatIDR(val)}</div>
                     <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
+                    <button type="button" class="bank-copy-btn" onclick="copyBankAccount('${acc.key}')">Salin rekening</button>
                 </div>`;
             }).join('');
+        }
+
+        function buildBankCopyText(acc) {
+            const { number, holder } = accountDetail(acc.key);
+            return (bankCopyTemplate || DEFAULT_BANK_COPY_TEMPLATE)
+                .replace(/\{bank\}/gi, acc.bankName)
+                .replace(/\{nomor\}/gi, number)
+                .replace(/\{nama\}/gi, holder);
+        }
+
+        function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text).then(() => true, () => false);
+            }
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+            document.body.appendChild(ta);
+            ta.select();
+            let ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) {}
+            ta.remove();
+            return Promise.resolve(ok);
+        }
+
+        function copyBankAccount(key) {
+            const acc = BANK_ACCOUNTS.find(a => a.key === key);
+            if (!acc) return;
+            if (!accountDetail(key).number) {
+                showToast(`ISI DULU NO. ${acc.wallet ? 'HP' : 'REKENING'} ${acc.name.toUpperCase()} DI UPDATE SALDO`);
+                return;
+            }
+            copyText(buildBankCopyText(acc)).then(ok => {
+                showToast(ok ? `REKENING ${acc.name.toUpperCase()} BERHASIL DISALIN!` : 'GAGAL MENYALIN REKENING');
+            });
         }
 
         function openBankBalanceModal() {
             const wrap = document.getElementById('bankModalInputs');
             if (wrap) {
-                wrap.innerHTML = BANK_ACCOUNTS.map(acc => `
-                    <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
-                        <span style="font-size:0.8rem; font-weight:600; color:#252520;">${acc.name} <span style="font-weight:400; color:#666256;">· ${acc.tag}</span></span>
-                        <input type="text" inputmode="numeric" data-bank-key="${acc.key}" class="search-input" placeholder="0" value="${(Number(bankBalances[acc.key]) || 0).toLocaleString('id-ID')}" style="padding:10px 14px; background:#fff; border:1px solid #d9d1bf; color:#252520;">
-                    </label>`).join('');
+                wrap.innerHTML = BANK_ACCOUNTS.map(acc => {
+                    const { number, holder } = accountDetail(acc.key);
+                    return `
+                    <fieldset class="bank-modal-group" data-bank-key="${acc.key}">
+                        <legend><img class="bank-logo-img${acc.logoOnDark ? ' on-dark' : ''}" src="${acc.logo}" alt="${acc.name}"><span>${acc.tag}</span></legend>
+                        <label>Saldo
+                            <input type="text" inputmode="numeric" data-field="balance" class="search-input" placeholder="0" value="${(Number(bankBalances[acc.key]) || 0).toLocaleString('id-ID')}">
+                        </label>
+                        <label>${acc.wallet ? 'No. HP' : 'No. rekening'}
+                            <input type="text" inputmode="numeric" data-field="number" class="search-input" placeholder="${acc.wallet ? '08xx…' : 'Isi no. rekening'}" value="${escapeHTML(number)}">
+                        </label>
+                        <label>Atas nama
+                            <input type="text" data-field="holder" class="search-input" value="${escapeHTML(holder)}">
+                        </label>
+                    </fieldset>`;
+                }).join('') + `
+                    <label class="bank-template-field">Template salin rekening
+                        <textarea id="bankCopyTemplateInput" class="search-input" rows="3">${escapeHTML(bankCopyTemplate)}</textarea>
+                        <small>Pakai {bank}, {nomor}, dan {nama}. Contoh hasil muncul saat tombol "Salin rekening" diklik.</small>
+                    </label>`;
             }
             const modal = document.getElementById('bankBalanceModal');
             if (modal) {
@@ -5952,17 +6059,75 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function handleBankBalanceSubmit(event) {
             event.preventDefault();
-            document.querySelectorAll('#bankModalInputs [data-bank-key]').forEach(input => {
-                const clean = String(input.value || '').replace(/[^0-9]/g, '');
-                bankBalances[input.dataset.bankKey] = clean ? parseInt(clean, 10) : 0;
+            document.querySelectorAll('#bankModalInputs .bank-modal-group').forEach(group => {
+                const key = group.dataset.bankKey;
+                const field = name => group.querySelector(`[data-field="${name}"]`)?.value || '';
+                const cleanBalance = field('balance').replace(/[^0-9]/g, '');
+                bankBalances[key] = cleanBalance ? parseInt(cleanBalance, 10) : 0;
+                bankAccountDetails[key] = {
+                    number: field('number').trim(),
+                    holder: field('holder').trim() || DEFAULT_ACCOUNT_HOLDER
+                };
             });
+            const templateInput = document.getElementById('bankCopyTemplateInput');
+            if (templateInput) bankCopyTemplate = templateInput.value.trim() || DEFAULT_BANK_COPY_TEMPLATE;
             const now = new Date();
             bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
             saveLocalBankBalances();
             renderBankBalancesUI();
             closeBankBalanceModal();
-            showToast("SALDO BERHASIL DIPERBARUI!");
+            showToast("SALDO & REKENING BERHASIL DIPERBARUI!");
             persistBillingState();
+        }
+
+        // Sisa tagihan per project, memakai aturan yang sama dengan calculateFinancials().
+        function getOutstandingInvoices() {
+            const rows = [];
+            invoiceItems.forEach(item => {
+                if (deletedInvoiceIds.includes(item.id)) return;
+                const status = paymentStatuses[item.id] || "UNPAID";
+                if (status === "PAID") return;
+                const dpVal = Math.min(item.gross, Math.max(0, dpAmounts[item.id] !== undefined ? dpAmounts[item.id] : Math.round(item.gross / 2)));
+                let total = item.gross;
+                let paid = status === "DP" ? dpVal : 0;
+                if (item.allocations) {
+                    const allocs = Object.values(item.allocations);
+                    total = allocs.reduce((sum, a) => sum + (a.paid || a.gross || 0), 0);
+                    const ratio = item.gross > 0 ? dpVal / item.gross : 0.5;
+                    paid = status === "DP" ? allocs.reduce((sum, a) => sum + Math.round((a.paid || a.gross || 0) * ratio), 0) : 0;
+                }
+                const remaining = total - paid;
+                if (remaining > 0) rows.push({ id: item.id, name: item.name, status, total, paid, remaining });
+            });
+            return rows.sort((a, b) => b.remaining - a.remaining);
+        }
+
+        function renderUnpaidList() {
+            const body = document.getElementById('unpaidReportBody');
+            if (!body) return;
+            const rows = getOutstandingInvoices();
+            const sum = rows.reduce((acc, r) => acc + r.remaining, 0);
+            const badge = document.getElementById('unpaidCountBadge');
+            if (badge) badge.textContent = `${rows.length} project`;
+            if (!rows.length) {
+                body.innerHTML = '<tr><td colspan="5">Semua project sudah lunas.</td></tr>';
+                return;
+            }
+            body.innerHTML = rows.map(r => `
+                    <tr>
+                        <td data-label="Project">${r.name}</td>
+                        <td data-label="Status">${r.status === 'DP' ? 'DP' : 'Belum bayar'}</td>
+                        <td data-label="Total tagihan">${formatIDR(r.total)}</td>
+                        <td data-label="Sudah dibayar">${formatIDR(r.paid)}</td>
+                        <td data-label="Sisa tagihan" style="text-align: right; font-weight: 600;">${formatIDR(r.remaining)}</td>
+                    </tr>`).join('') + `
+                    <tr class="grand-row">
+                        <td data-label="Total">TOTAL SISA TAGIHAN</td>
+                        <td data-label="Project">${rows.length} project</td>
+                        <td></td>
+                        <td></td>
+                        <td data-label="Sisa tagihan" style="text-align: right;">${formatIDR(sum)}</td>
+                    </tr>`;
         }
 
         function renderInvoiceBoard() {
