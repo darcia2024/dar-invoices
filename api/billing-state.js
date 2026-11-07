@@ -78,11 +78,13 @@ const defaultState = {
     masakbar: "UNPAID",
     masakbar2: "UNPAID",
     "talkhisan-hamasah": "UNPAID",
+    hamasahinternational: "DP",
   },
   dpAmounts: {
     tehumi: 100000,
     "tehumi-pelunasan": 100000,
     kpi: 7100000,
+    hamasahinternational: 7500000,
   },
   netProfits: {
     almadroj: 3500000,
