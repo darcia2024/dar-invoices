@@ -130,6 +130,8 @@ function mergeState(state) {
     purgedInvoiceIds: state && Array.isArray(state.purgedInvoiceIds) ? state.purgedInvoiceIds : [],
     // An empty list is the user's choice; only seed the defaults when debts were never saved.
     debts: state && Array.isArray(state.debts) ? state.debts : defaultDebts,
+    bankBalances: state && state.bankBalances && typeof state.bankBalances === "object" ? state.bankBalances : null,
+    bankBalancesUpdatedAt: state && typeof state.bankBalancesUpdatedAt === "string" ? state.bankBalancesUpdatedAt : null,
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),

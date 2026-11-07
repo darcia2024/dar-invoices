@@ -2062,7 +2062,7 @@ body[data-view="debt"] #debtSection {
                     </div>
                     <div>
                         <div class="bank-tracker-title">Status Saldo Kas &amp; Rekening Bank</div>
-                        <div class="bank-tracker-subtitle">Total dana likuid riil yang tersimpan di seluruh rekening per hari ini</div>
+                        <div class="bank-tracker-subtitle">Total dana likuid di seluruh rekening &amp; e-wallet <span id="bankUpdatedAt"></span></div>
                     </div>
                 </div>
                 <div class="bank-header-right">
@@ -2076,78 +2076,9 @@ body[data-view="debt"] #debtSection {
                 </div>
             </div>
 
-            <!-- Bank Accounts Grid -->
-            <div class="bank-grid">
-                <!-- Mandiri -->
-                <div class="bank-item-card bank-mandiri">
-                    <div class="bank-item-top">
-                        <div class="bank-item-brand">
-                            <span class="bank-logo-badge mandiri-badge">MANDIRI</span>
-                            <span class="bank-tag-primary">Rek. Utama</span>
-                        </div>
-                        <span class="bank-item-pct" id="pctMandiri">0%</span>
-                    </div>
-                    <div class="bank-account-num">155-00-1061696-2 &bull; Daru</div>
-                    <div class="bank-balance-amount" id="balanceMandiri">Rp 0</div>
-                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillMandiri" style="width:0%;"></div></div>
-                </div>
-
-                <!-- BCA -->
-                <div class="bank-item-card bank-bca">
-                    <div class="bank-item-top">
-                        <div class="bank-item-brand">
-                            <span class="bank-logo-badge bca-badge">BCA</span>
-                            <span class="bank-tag-secondary">Operasional</span>
-                        </div>
-                        <span class="bank-item-pct" id="pctBca">0%</span>
-                    </div>
-                    <div class="bank-account-num">BCA Digital / Personal</div>
-                    <div class="bank-balance-amount" id="balanceBca">Rp 0</div>
-                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillBca" style="width:0%;"></div></div>
-                </div>
-
-                <!-- BSI -->
-                <div class="bank-item-card bank-bsi">
-                    <div class="bank-item-top">
-                        <div class="bank-item-brand">
-                            <span class="bank-logo-badge bsi-badge">BSI</span>
-                            <span class="bank-tag-tertiary">Dana Cadangan</span>
-                        </div>
-                        <span class="bank-item-pct" id="pctBsi">0%</span>
-                    </div>
-                    <div class="bank-account-num">Bank Syariah Indonesia</div>
-                    <div class="bank-balance-amount" id="balanceBsi">Rp 0</div>
-                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillBsi" style="width:0%;"></div></div>
-                </div>
-
-                <!-- BRI -->
-                <div class="bank-item-card bank-bri">
-                    <div class="bank-item-top">
-                        <div class="bank-item-brand">
-                            <span class="bank-logo-badge bri-badge">BRI / LAINNYA</span>
-                        </div>
-                        <span class="bank-item-pct" id="pctBri">0%</span>
-                    </div>
-                    <div class="bank-account-num">Rekening Pendukung</div>
-                    <div class="bank-balance-amount" id="balanceBri">Rp 0</div>
-                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillBri" style="width:0%;"></div></div>
-                </div>
-
-                <!-- Cash / E-Wallet -->
-                <div class="bank-item-card bank-cash">
-                    <div class="bank-item-top">
-                        <div class="bank-item-brand">
-                            <span class="bank-logo-badge cash-badge">KAS &amp; E-WALLET</span>
-                        </div>
-                        <span class="bank-item-pct" id="pctCash">0%</span>
-                    </div>
-                    <div class="bank-account-num">Tunai, GoPay, OVO, DANA</div>
-                    <div class="bank-balance-amount" id="balanceCash">Rp 0</div>
-                    <div class="bank-progress-bar"><div class="bank-progress-fill" id="fillCash" style="width:0%;"></div></div>
-                </div>
-            </div>
+            <!-- Bank Accounts Grid (dirender dari BANK_ACCOUNTS) -->
+            <div class="bank-grid" id="bankGrid"></div>
         </div>
-
         <!-- Monthly Profit Goals & Mindset Affirmation Widget (Harmonized Pastel Bento Design) -->
         <div class="goal-tracker-card board-only" id="goalTrackerCard">
             <div class="goal-tracker-header">
@@ -4550,6 +4481,12 @@ body[data-view="debt"] #debtSection {
                 localStorage.setItem('dar-debts-records', JSON.stringify(debts));
                 renderDebtUI();
             }
+            if (state.bankBalances && typeof state.bankBalances === 'object') {
+                bankBalances = { ...DEFAULT_BANK_BALANCES, ...state.bankBalances };
+                bankBalancesUpdatedAt = state.bankBalancesUpdatedAt || bankBalancesUpdatedAt;
+                saveLocalBankBalances();
+                renderBankBalancesUI();
+            }
         }
 
         function saveLocalBillingState() {
@@ -4608,7 +4545,9 @@ body[data-view="debt"] #debtSection {
                         customInvoices,
                         deletedInvoiceIds,
                         purgedInvoiceIds,
-                        debts
+                        debts,
+                        bankBalances,
+                        bankBalancesUpdatedAt
                     })
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
@@ -5915,53 +5854,87 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         // =========================================================================
         // BANK BALANCES TRACKER MANAGEMENT
         // =========================================================================
-        const DEFAULT_BANK_BALANCES = {
-            mandiri: 45000000,
-            bca: 25000000,
-            bsi: 15000000,
-            bri: 5000000,
-            cash: 3233190
-        };
+        const BANK_ACCOUNTS = [
+            { key: 'mandiri', name: 'Mandiri', logo: '/bank-logos/mandiri.webp', tag: 'Rek. utama', note: '155-00-1061696-2 • Daru' },
+            { key: 'jago', name: 'Jago', logo: '/bank-logos/jago.svg', tag: 'Bank digital', note: 'Bank Jago' },
+            { key: 'blu', name: 'blu', logo: '/bank-logos/blu.png', tag: 'Bank digital', note: 'blu by BCA Digital' },
+            { key: 'line', name: 'LINE Bank', logo: '/bank-logos/linebank.webp', logoOnDark: true, tag: 'Bank digital', note: 'LINE Bank by Hana Bank' },
+            { key: 'gopay', name: 'GoPay', logo: '/bank-logos/gopay.svg', tag: 'E-wallet', note: 'Saldo GoPay' },
+            { key: 'dana', name: 'DANA', logo: '/bank-logos/dana.svg', tag: 'E-wallet', note: 'Saldo DANA' }
+        ];
 
-        let bankBalances = (() => {
-            try {
-                const stored = localStorage.getItem('dar_bank_balances');
-                return stored ? JSON.parse(stored) : { ...DEFAULT_BANK_BALANCES };
-            } catch (e) {
-                return { ...DEFAULT_BANK_BALANCES };
+        const DEFAULT_BANK_BALANCES = {
+            mandiri: 2556495,
+            jago: 23055,
+            blu: 6467,
+            line: 5469,
+            gopay: 3695,
+            dana: 4996
+        };
+        const DEFAULT_BANK_UPDATED_AT = '2026-11-08';
+
+        // v2: the old key held placeholder numbers for BCA/BSI/BRI accounts that are no longer tracked.
+        const BANK_STORAGE_KEY = 'dar_bank_balances_v2';
+        let bankBalances = { ...DEFAULT_BANK_BALANCES };
+        let bankBalancesUpdatedAt = DEFAULT_BANK_UPDATED_AT;
+        try {
+            const stored = JSON.parse(localStorage.getItem(BANK_STORAGE_KEY) || 'null');
+            if (stored && stored.balances) {
+                bankBalances = { ...DEFAULT_BANK_BALANCES, ...stored.balances };
+                bankBalancesUpdatedAt = stored.updatedAt || DEFAULT_BANK_UPDATED_AT;
             }
-        })();
+        } catch (e) {}
+
+        function saveLocalBankBalances() {
+            try {
+                localStorage.setItem(BANK_STORAGE_KEY, JSON.stringify({ balances: bankBalances, updatedAt: bankBalancesUpdatedAt }));
+            } catch (e) {
+                console.warn("Saving bank balances to localStorage failed:", e);
+            }
+        }
+
+        function formatShortDate(iso) {
+            const d = new Date(iso + 'T00:00:00');
+            return isNaN(d) ? '' : d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
 
         function renderBankBalancesUI() {
-            const total = Object.values(bankBalances).reduce((a, b) => a + (Number(b) || 0), 0);
+            const total = BANK_ACCOUNTS.reduce((sum, acc) => sum + (Number(bankBalances[acc.key]) || 0), 0);
             const totalEl = document.getElementById('totalLiquidCashVal');
             if (totalEl) totalEl.innerText = formatIDR(total);
+            const updatedEl = document.getElementById('bankUpdatedAt');
+            if (updatedEl) updatedEl.textContent = bankBalancesUpdatedAt ? `· per ${formatShortDate(bankBalancesUpdatedAt)}` : '';
 
-            const keys = ['mandiri', 'bca', 'bsi', 'bri', 'cash'];
-            keys.forEach(k => {
-                const val = Number(bankBalances[k]) || 0;
+            const grid = document.getElementById('bankGrid');
+            if (!grid) return;
+            grid.innerHTML = BANK_ACCOUNTS.map(acc => {
+                const val = Number(bankBalances[acc.key]) || 0;
                 const pct = total > 0 ? Math.round((val / total) * 100) : 0;
-                
-                const capKey = k.charAt(0).toUpperCase() + k.slice(1);
-                const balEl = document.getElementById('balance' + capKey);
-                const pctEl = document.getElementById('pct' + capKey);
-                const fillEl = document.getElementById('fill' + capKey);
-                
-                if (balEl) balEl.innerText = formatIDR(val);
-                if (pctEl) pctEl.innerText = pct + '%';
-                if (fillEl) fillEl.style.width = pct + '%';
-            });
+                return `
+                <div class="bank-item-card">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <img class="bank-logo-img${acc.logoOnDark ? ' on-dark' : ''}" src="${acc.logo}" alt="${acc.name}" loading="lazy">
+                            <span class="bank-tag-primary">${acc.tag}</span>
+                        </div>
+                        <span class="bank-item-pct">${val > 0 && pct === 0 ? '&lt;1' : pct}%</span>
+                    </div>
+                    <div class="bank-account-num">${acc.note}</div>
+                    <div class="bank-balance-amount">${formatIDR(val)}</div>
+                    <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
+                </div>`;
+            }).join('');
         }
 
         function openBankBalanceModal() {
-            const keys = ['mandiri', 'bca', 'bsi', 'bri', 'cash'];
-            keys.forEach(k => {
-                const capKey = k.charAt(0).toUpperCase() + k.slice(1);
-                const input = document.getElementById('inputSaldo' + capKey);
-                if (input) {
-                    input.value = (bankBalances[k] !== undefined ? bankBalances[k] : 0).toLocaleString('id-ID');
-                }
-            });
+            const wrap = document.getElementById('bankModalInputs');
+            if (wrap) {
+                wrap.innerHTML = BANK_ACCOUNTS.map(acc => `
+                    <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
+                        <span style="font-size:0.8rem; font-weight:600; color:#252520;">${acc.name} <span style="font-weight:400; color:#666256;">· ${acc.tag}</span></span>
+                        <input type="text" inputmode="numeric" data-bank-key="${acc.key}" class="search-input" placeholder="0" value="${(Number(bankBalances[acc.key]) || 0).toLocaleString('id-ID')}" style="padding:10px 14px; background:#fff; border:1px solid #d9d1bf; color:#252520;">
+                    </label>`).join('');
+            }
             const modal = document.getElementById('bankBalanceModal');
             if (modal) {
                 if (typeof modal.showModal === 'function') modal.showModal();
@@ -5979,28 +5952,18 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function handleBankBalanceSubmit(event) {
             event.preventDefault();
-            const parseCurrency = (str) => {
-                const clean = String(str || '').replace(/[^0-9]/g, '');
-                return clean ? parseInt(clean, 10) : 0;
-            };
-            
-            bankBalances.mandiri = parseCurrency(document.getElementById('inputSaldoMandiri')?.value);
-            bankBalances.bca = parseCurrency(document.getElementById('inputSaldoBca')?.value);
-            bankBalances.bsi = parseCurrency(document.getElementById('inputSaldoBsi')?.value);
-            bankBalances.bri = parseCurrency(document.getElementById('inputSaldoBri')?.value);
-            bankBalances.cash = parseCurrency(document.getElementById('inputSaldoCash')?.value);
-            
-            try {
-                localStorage.setItem('dar_bank_balances', JSON.stringify(bankBalances));
-            } catch (e) {
-                console.warn("Saving bank balances to localStorage failed:", e);
-            }
-            
+            document.querySelectorAll('#bankModalInputs [data-bank-key]').forEach(input => {
+                const clean = String(input.value || '').replace(/[^0-9]/g, '');
+                bankBalances[input.dataset.bankKey] = clean ? parseInt(clean, 10) : 0;
+            });
+            const now = new Date();
+            bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            saveLocalBankBalances();
             renderBankBalancesUI();
             closeBankBalanceModal();
-            showToast("SALDO BANK BERHASIL DIPERBARUI!");
+            showToast("SALDO BERHASIL DIPERBARUI!");
+            persistBillingState();
         }
-
 
         function renderInvoiceBoard() {
             refreshInvoiceControls();
@@ -7188,40 +7151,14 @@ Dokumen proposal resmi, breakdown teknis, serta opsi cetak/unduh PDF dapat dicek
     <!-- Bank Balance Input / Update Modal -->
     <dialog id="bankBalanceModal" class="invoice-manager-dialog" aria-labelledby="bankModalTitle">
         <div class="dialog-header">
-            <h2 id="bankModalTitle" style="font-size:1.1rem; font-weight:700; color:#252520; margin:0;">Input &amp; Update Saldo Rekening Bank</h2>
+            <h2 id="bankModalTitle" style="font-size:1.1rem; font-weight:700; color:#252520; margin:0;">Update Saldo Rekening</h2>
             <button type="button" class="dialog-close-btn" onclick="closeBankBalanceModal()" aria-label="Tutup">&times;</button>
         </div>
         <form id="bankBalanceForm" onsubmit="handleBankBalanceSubmit(event)" style="padding: 16px 20px 20px;">
             <p style="font-size:0.82rem; color:#666256; margin-bottom:16px; line-height: 1.45;">
-                Masukkan nominal saldo riil yang ada di masing-masing rekening bank per hari ini. Saldo akan diakumulasi otomatis dan disimpan secara lokal.
+                Masukkan saldo riil di tiap rekening hari ini. Saldo dijumlah otomatis dan tersinkron ke semua perangkat.
             </p>
-            <div style="display:grid; grid-template-columns:1fr; gap:12px;">
-                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
-                    <span style="font-size:0.8rem; font-weight:600; color:#252520;">Bank Mandiri (Rekening Utama Penerimaan)</span>
-                    <input type="text" id="inputSaldoMandiri" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace); background:#fff; border:1px solid #d9d1bf; color:#252520;">
-                </label>
-
-                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
-                    <span style="font-size:0.8rem; font-weight:600; color:#252520;">Bank BCA (Operasional / Personal)</span>
-                    <input type="text" id="inputSaldoBca" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace); background:#fff; border:1px solid #d9d1bf; color:#252520;">
-                </label>
-
-                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
-                    <span style="font-size:0.8rem; font-weight:600; color:#252520;">Bank Syariah Indonesia (BSI - Dana Cadangan)</span>
-                    <input type="text" id="inputSaldoBsi" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace); background:#fff; border:1px solid #d9d1bf; color:#252520;">
-                </label>
-
-                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
-                    <span style="font-size:0.8rem; font-weight:600; color:#252520;">Bank BRI / Bank Lainnya</span>
-                    <input type="text" id="inputSaldoBri" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace); background:#fff; border:1px solid #d9d1bf; color:#252520;">
-                </label>
-
-                <label class="field-label" style="display:flex; flex-direction:column; gap:4px;">
-                    <span style="font-size:0.8rem; font-weight:600; color:#252520;">Kas Tunai &amp; E-Wallet (GoPay, OVO, DANA)</span>
-                    <input type="text" id="inputSaldoCash" class="search-input" placeholder="0" style="padding:10px 14px; font-family:var(--font-mono, monospace); background:#fff; border:1px solid #d9d1bf; color:#252520;">
-                </label>
-            </div>
-
+            <div id="bankModalInputs" style="display:grid; grid-template-columns:1fr; gap:12px;"></div>
             <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:8px;">
                 <button type="button" class="btn-cancel" onclick="closeBankBalanceModal()" style="padding:9px 16px; border-radius:8px; border:1px solid #ded7c6; background:#faf9f3; color:#433f33; cursor:pointer; font-weight:600;">Batal</button>
                 <button type="submit" class="create-invoice-btn" style="padding:9px 18px; cursor:pointer;">Simpan Saldo</button>
