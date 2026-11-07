@@ -1949,7 +1949,7 @@ body[data-view="debt"] #debtSection {
     <link rel="stylesheet" href="/dashboard.css">
 <script>['gesturestart','gesturechange','gestureend'].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault();},{passive:false});});</script>
 </head>
-<body>
+<body data-view="board">
 
     <!-- EDIT NET PROFIT MODAL SCREEN -->
     <div id="profitModal" class="modal-overlay">
@@ -4344,16 +4344,6 @@ body[data-view="debt"] #debtSection {
             fetch('/api/logout', { method: 'POST', keepalive: true, credentials: 'same-origin' })
                 .finally(() => window.location.replace('/'));
         }
-
-        // Kunci otomatis saat tab/aplikasi ditinggalkan, sama seperti sebelumnya.
-        window.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                workspaceLocked = true;
-                fetch('/api/logout', { method: 'POST', keepalive: true, credentials: 'same-origin' });
-            } else if (workspaceLocked) {
-                window.location.replace('/');
-            }
-        });
 
         // Halaman yang dipulihkan dari cache browser harus dicek ulang oleh server.
         window.addEventListener("pageshow", function(event) {
