@@ -2276,3 +2276,19 @@ html, body { touch-action: manipulation; }
     .advisory-card-title { font-size: 13px; }
     .advisory-badge { font-size: 9px; padding: 3px 8px; }
 }
+
+/* Pilihan bulan (dropdown) menggantikan deretan chip bulan */
+.month-select {
+    appearance: none; -webkit-appearance: none;
+    font: 500 11px var(--font-sora, 'Sora', sans-serif); color: #36362d;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23514f43' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right 11px center / 11px no-repeat;
+    border: 1px solid #d7d1c2; border-radius: 20px; padding: 7px 30px 7px 13px; min-height: 32px; cursor: pointer;
+    transition: border-color .18s ease, background-color .18s ease;
+}
+.month-select:hover { border-color: #928876; }
+.month-select:focus-visible { outline: 2px solid #4e3a68; outline-offset: 2px; }
+.filter-row-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 600px) {
+    .filter-row-top .month-select { flex: 1; width: 100%; }
+    .goal-control-col .month-select { flex: 1; min-width: 0; }
+}

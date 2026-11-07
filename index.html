@@ -2173,10 +2173,8 @@ body[data-view="debt"] #debtSection {
             <!-- Month Selection & Target Tier Controls -->
             <div class="goal-controls-row">
                 <div class="goal-control-col">
-                    <span class="goal-control-label">Pilih Bulan:</span>
-                    <div class="goal-month-pills" id="goalMonthPills">
-                        <!-- Populated by JS: September 2026, Agustus 2026, Juli 2026, Semua Bulan -->
-                    </div>
+                    <label class="goal-control-label" for="goalMonthSelect">Pilih Bulan:</label>
+                    <select id="goalMonthSelect" class="month-select" onchange="setGoalMonth(this.value, true)"></select>
                 </div>
                 <div class="goal-control-col">
                     <span class="goal-control-label">Target Profit:</span>
@@ -2233,13 +2231,9 @@ body[data-view="debt"] #debtSection {
                 <div class="filter-title">
                     <span>Periode invoice</span>
                 </div>
-                <div class="month-pills-group">
-                    <button class="month-pill-btn active" data-filter="all" onclick="setMonthFilter('all', this)">SEMUA BULAN</button>
-                    <button class="month-pill-btn" data-filter="2026-07" onclick="setMonthFilter('2026-07', this)">JULI 2026</button>
-                    <button class="month-pill-btn" data-filter="2026-08" onclick="setMonthFilter('2026-08', this)">AGUSTUS 2026</button>
-                    <button class="month-pill-btn" data-filter="2026-09" onclick="setMonthFilter('2026-09', this)">SEPTEMBER 2026</button>
-                    <button class="month-pill-btn" data-filter="2026-10" onclick="setMonthFilter('2026-10', this)">OKTOBER 2026</button>
-                </div>
+                <select id="monthFilterSelect" class="month-select" aria-label="Periode invoice" onchange="setMonthFilter(this.value)">
+                    <option value="all">Semua bulan</option>
+                </select>
             </div>
 
             <div class="filter-subrow">
@@ -2314,7 +2308,7 @@ body[data-view="debt"] #debtSection {
                         <div class="advisory-card-top">
                             <div class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
                             <div>
-                                <div class="advisory-card-title">SOP Penagihan Piutang Rp 40,6jt</div>
+                                <div class="advisory-card-title">SOP Penagihan Piutang <span id="advisoryUnpaidTotal">Rp 40.640.000</span></div>
                                 <div class="advisory-card-subtitle">Penyelamatan Cash Flow</div>
                             </div>
                         </div>
@@ -4997,9 +4991,9 @@ body[data-view="debt"] #debtSection {
             goalActiveMonth = monthKey;
             localStorage.setItem('dar_goal_active_month', monthKey);
             if (syncBoard) {
-                const targetBtn = document.querySelector(`.month-pill-btn[data-filter="${monthKey}"]`);
-                if (targetBtn) {
-                    setMonthFilter(monthKey, targetBtn);
+                const boardSelect = document.getElementById('monthFilterSelect');
+                if (boardSelect && [...boardSelect.options].some(o => o.value === monthKey)) {
+                    setMonthFilter(monthKey);
                     return;
                 }
             }
@@ -5007,19 +5001,21 @@ body[data-view="debt"] #debtSection {
         }
 
         function renderGoalMonthPills(monthlyMap) {
-            const container = document.getElementById('goalMonthPills');
-            if (!container) return;
-
             const availableKeys = Object.keys(monthlyMap).filter(k => k !== 'all').sort().reverse();
-            const items = [...availableKeys, 'all'];
+            const labelOf = (mKey) => mKey === 'all' ? 'Semua bulan' : (monthlyMap[mKey]?.label || mKey);
+            const optionsHTML = (keys, selected) => keys
+                .map(mKey => `<option value="${mKey}"${mKey === selected ? ' selected' : ''}>${labelOf(mKey)}</option>`)
+                .join('');
 
-            let html = '';
-            items.forEach(mKey => {
-                const isActive = (goalActiveMonth === mKey);
-                const label = mKey === 'all' ? 'Semua Bulan' : (monthlyMap[mKey]?.label || mKey);
-                html += `<button type="button" class="goal-month-pill-btn ${isActive ? 'active' : ''}" onclick="setGoalMonth('${mKey}', true)">${label}</button>`;
-            });
-            container.innerHTML = html;
+            const goalSelect = document.getElementById('goalMonthSelect');
+            if (goalSelect) goalSelect.innerHTML = optionsHTML([...availableKeys, 'all'], goalActiveMonth);
+
+            // Invoice board filters per single month only (combined keys like "2026-09 2026-10" stay goal-only).
+            const boardSelect = document.getElementById('monthFilterSelect');
+            if (boardSelect) {
+                const boardKeys = ['all', ...availableKeys.filter(k => !k.includes(' ')).sort()];
+                boardSelect.innerHTML = optionsHTML(boardKeys, activeMonthFilter);
+            }
         }
 
         function updateTierButtonsUI() {
@@ -5215,6 +5211,7 @@ body[data-view="debt"] #debtSection {
             let totalNetProfitPaid = 0;
             let totalUnpaidGross = 0;
             let totalGrandGross = 0;
+            let allMonthsUnpaidGross = 0;
 
             const monthlyMap = {
                 "2026-07": { label: "Juli 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 },
@@ -5244,8 +5241,10 @@ body[data-view="debt"] #debtSection {
                             paidNetProfit = allocProfit;
                             unpaidGross = 0;
                         } else if (status === "DP") {
-                            paidGross = Math.round(allocGross / 2);
-                            paidNetProfit = Math.round(allocProfit / 2);
+                            // Same DP ratio as single-month invoices, so an edited DP amount is respected.
+                            const dpRatio = item.gross > 0 ? dpVal / item.gross : 0.5;
+                            paidGross = Math.round(allocGross * dpRatio);
+                            paidNetProfit = Math.round(allocProfit * dpRatio);
                             unpaidGross = allocGross - paidGross;
                         } else {
                             paidGross = 0;
@@ -5253,6 +5252,7 @@ body[data-view="debt"] #debtSection {
                             unpaidGross = allocGross;
                         }
 
+                        allMonthsUnpaidGross += unpaidGross;
                         if (isVisibleThisMonth) {
                             totalPaidGross += paidGross;
                             totalNetProfitPaid += paidNetProfit;
@@ -5291,6 +5291,7 @@ body[data-view="debt"] #debtSection {
                         unpaidGross = item.gross;
                     }
 
+                    allMonthsUnpaidGross += unpaidGross;
                     if (isVisibleByMonth) {
                         totalPaidGross += paidGross;
                         totalNetProfitPaid += paidNetProfit;
@@ -5328,6 +5329,8 @@ body[data-view="debt"] #debtSection {
             document.getElementById("statPaidTotal").innerText = formatIDR(totalPaidGross);
             document.getElementById("statUnpaidTotal").innerText = formatIDR(totalUnpaidGross);
             document.getElementById("statGrandTotal").innerText = formatIDR(totalGrandGross);
+            const advisoryUnpaidEl = document.getElementById("advisoryUnpaidTotal");
+            if (advisoryUnpaidEl) advisoryUnpaidEl.innerText = formatIDR(allMonthsUnpaidGross);
 
             // Render Monthly Report Table
             const tbody = document.getElementById("revenueReportBody");
@@ -6068,13 +6071,13 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             }
         }
 
-        function setMonthFilter(month, btnEl) {
+        function setMonthFilter(month) {
             activeMonthFilter = month;
             goalActiveMonth = month;
             localStorage.setItem('dar_goal_active_month', month);
             
-            document.querySelectorAll(".month-pill-btn").forEach(btn => btn.classList.remove("active"));
-            if (btnEl) btnEl.classList.add("active");
+            const boardSelect = document.getElementById("monthFilterSelect");
+            if (boardSelect) boardSelect.value = month;
 
             filterInvoices();
             calculateFinancials();
