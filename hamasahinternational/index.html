@@ -4,45 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INVOICE PELUNASAN #INV/HI/2026/018 - Digital Ecosystem &amp; Desain Logo Hamasah International</title>
-    <!-- Google Font: Plus Jakarta Sans (Regular 400, SemiBold 600, Bold 700, ExtraBold 800) -->
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-canvas: #fafafa;
-            --bg-card: #ffffff;
-            /* Official Hamasah Brand Colors */
-            --brand-gold: #c89304;         /* Rich Brand Gold */
-            --brand-gold-vibrant: #e5ad0c; /* Vibrant Gold Accent */
-            --brand-gold-dark: #a17400;   /* Deep Gold for Text Contrast */
-            --brand-charcoal: #232226;    /* Dark Charcoal Onyx */
-            --brand-charcoal-light: #373638;
-            --gold-subtle: #fdfaf2;
-            --gold-border: #fef08a;
+            /* Palette: Editorial Warm Ivory & Hamasah Royal Gold */
+            --bg-canvas: #F9F8F5;
+            --bg-sheet: #FFFFFF;
+            --ink-primary: #141316;
+            --ink-secondary: #4A4850;
+            --ink-muted: #74717C;
+            --ink-faint: #A6A4AE;
             
-            --text-dark: #18181b;
-            --text-muted: #52525b;
-            --text-light: #a1a1aa;
-            --border-light: #e4e4e7;
-            --border-subtle: #f4f4f5;
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --border-card: #E8E5DF;
+            --border-subtle: #F1EFEA;
+            --line-divider: #ECE8E1;
+
+            /* Hamasah Brand Accents */
+            --gold-primary: #C59103;
+            --gold-vibrant: #D9A006;
+            --gold-dark: #916800;
+            --gold-light: #FBF4DC;
+            --gold-soft: #FDF9EC;
+            
+            /* Status Indicators */
+            --badge-green-bg: #EAF8EE;
+            --badge-green-text: #15803D;
+            --badge-green-border: #BBF7D0;
+
+            --badge-amber-bg: #FEF3C7;
+            --badge-amber-text: #B45309;
+            --badge-amber-border: #FDE68A;
+
+            /* Dark Obsidian Hero Card */
+            --obsidian-bg: #151417;
+            --obsidian-surface: #1E1C21;
+            --obsidian-border: #2E2A33;
+
+            /* Typography */
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: var(--font-sans);
-            font-weight: 400; /* Plus Jakarta Sans Reguler */
-            background-color: var(--bg-canvas);
-            color: var(--text-dark);
+            font-size: 14.5px;
             line-height: 1.6;
-            padding: 24px 16px;
+            color: var(--ink-primary);
+            background-color: var(--bg-canvas);
+            background-image: radial-gradient(rgba(197, 145, 3, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            padding: 24px 16px 60px;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
         }
@@ -56,34 +84,33 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #121214;
-            background-image: radial-gradient(circle at top center, #26241f 0%, #0d0d0f 100%);
+            background-color: #0F0E11;
+            background-image: radial-gradient(circle at 50% 20%, #2A2417 0%, #0F0E11 80%);
             z-index: 10000;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
         }
 
         .cover-overlay.opened {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: scale(0.98) translateY(-20px);
+            transform: scale(0.98) translateY(-16px);
         }
 
         .cover-card {
-            background-color: #ffffff;
-            border-top: 5px solid var(--brand-gold-vibrant);
-            border-radius: 12px;
-            max-width: 460px;
+            background-color: #FFFFFF;
+            border-top: 5px solid var(--gold-vibrant);
+            border-radius: var(--radius-xl);
+            max-width: 440px;
             width: 100%;
-            padding: 32px 28px;
+            padding: 36px 30px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
             position: relative;
-            color: var(--text-dark);
         }
 
         .shake-anim {
@@ -98,949 +125,949 @@
         }
 
         .cover-logo-img {
-            height: 68px;
+            height: 64px;
             width: auto;
             object-fit: contain;
-            margin: 0 auto 14px auto;
+            margin: 0 auto 16px auto;
             display: block;
         }
 
-        .classified-stamp {
+        .cover-stamp {
             display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 700;
+            font-size: 0.65rem;
+            font-weight: 800;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--brand-gold-dark);
-            border: 1px solid var(--brand-gold-vibrant);
-            padding: 2px 10px;
-            border-radius: 4px;
+            color: var(--gold-dark);
+            background-color: var(--gold-light);
+            border: 1px solid var(--badge-amber-border);
+            padding: 4px 10px;
+            border-radius: 999px;
             margin-bottom: 12px;
         }
 
         .cover-title {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 800;
-            color: var(--brand-charcoal);
+            color: var(--ink-primary);
+            letter-spacing: -0.02em;
             margin-bottom: 4px;
-            letter-spacing: -0.01em;
         }
 
         .cover-subtitle {
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: var(--text-muted);
-            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            margin-bottom: 20px;
         }
 
         .cover-recipient-box {
-            padding: 12px 14px;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-            margin-bottom: 20px;
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 22px;
             text-align: left;
         }
 
         .cover-recipient-label {
             font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--brand-gold-dark);
-            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--ink-muted);
             letter-spacing: 0.08em;
-            margin-bottom: 2px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
         }
 
         .cover-recipient-name {
-            font-size: 1rem;
-            font-weight: 800; /* Bold */
-            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--ink-primary);
         }
 
         .cover-recipient-org {
-            font-size: 0.82rem;
-            font-weight: 400;
-            color: var(--text-muted);
+            font-size: 0.78rem;
+            color: var(--ink-secondary);
+        }
+
+        .cover-ref-total {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--gold-dark);
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed var(--border-card);
+            font-weight: 700;
         }
 
         .passcode-wrapper {
             margin-bottom: 18px;
-            text-align: left;
         }
 
         .passcode-label {
-            font-size: 0.74rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 6px;
+            color: var(--ink-secondary);
+            margin-bottom: 8px;
         }
 
         .passcode-input {
             width: 100%;
-            height: 44px;
-            border: 1.5px solid var(--border-light);
-            border-radius: 6px;
-            padding: 0 14px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 0.35em;
+            height: 48px;
+            background: #FFFFFF;
+            border: 2px solid var(--border-card);
+            border-radius: var(--radius-md);
             text-align: center;
-            color: var(--brand-charcoal);
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            letter-spacing: 8px;
+            color: var(--ink-primary);
             outline: none;
             transition: all 0.2s ease;
         }
 
         .passcode-input:focus {
-            border-color: var(--brand-gold-vibrant);
-            box-shadow: 0 0 0 3px rgba(229, 173, 12, 0.18);
+            border-color: var(--gold-vibrant);
+            box-shadow: 0 0 0 4px rgba(217, 160, 6, 0.15);
         }
 
         .passcode-error {
-            color: #dc2626;
-            font-size: 0.72rem;
-            font-weight: 600;
-            margin-top: 6px;
             display: none;
-            text-align: center;
+            color: #EF4444;
+            font-size: 0.74rem;
+            font-weight: 700;
+            margin-top: 6px;
+            font-family: var(--font-mono);
         }
 
         .cover-open-btn {
             width: 100%;
-            height: 44px;
-            background-color: var(--brand-charcoal);
-            color: #ffffff;
+            height: 48px;
+            background: var(--ink-primary);
+            color: #FFFFFF;
             border: none;
-            border-radius: 6px;
-            font-family: var(--font-sans);
-            font-size: 0.84rem;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .cover-open-btn:hover {
-            background-color: var(--brand-gold-dark);
+            background: #27252C;
+            transform: translateY(-1px);
         }
 
         /* ----------------------------------------------------
-           TOP CONTROL ACTION BAR (DESKTOP)
+           TOP FLOATING ACTION TOOLBAR
         ---------------------------------------------------- */
         .action-bar {
-            max-width: 900px;
+            max-width: 880px;
             margin: 0 auto 16px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 4px 20px -5px rgba(20, 19, 22, 0.04);
         }
 
         .action-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 0.82rem;
-            color: var(--text-muted);
+            color: var(--ink-secondary);
+        }
+
+        .action-pill-ref {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.78rem;
+            color: var(--gold-dark);
+            background: var(--gold-light);
+            border: 1px solid var(--badge-amber-border);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .action-buttons {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .action-title strong {
-            color: var(--brand-gold-dark);
-            font-weight: 700;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn {
-            font-family: var(--font-sans);
-            font-size: 0.76rem;
-            font-weight: 600;
-            padding: 7px 14px;
-            border-radius: 6px;
-            cursor: pointer;
+        .btn-action {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.15s ease;
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
             text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
-        .btn-secondary {
-            background: #ffffff;
-            border: 1px solid var(--border-light);
-            color: var(--text-dark);
+        .btn-action-primary {
+            background: var(--ink-primary);
+            color: #FFFFFF;
         }
 
-        .btn-secondary:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
+        .btn-action-primary:hover {
+            background: #27252C;
+            transform: translateY(-1px);
         }
 
-        .btn-primary {
-            background: var(--brand-charcoal);
-            border: 1px solid var(--brand-charcoal);
-            color: #ffffff;
+        .btn-action-outline {
+            background: #FFFFFF;
+            color: var(--ink-primary);
+            border-color: var(--border-card);
         }
 
-        .btn-primary:hover {
-            background: var(--brand-gold-dark);
-            border-color: var(--brand-gold-dark);
+        .btn-action-outline:hover {
+            background: var(--bg-canvas);
+            border-color: var(--ink-muted);
+        }
+
+        .btn-action-gold {
+            background: var(--gold-soft);
+            color: var(--gold-dark);
+            border-color: var(--badge-amber-border);
+        }
+
+        .btn-action-gold:hover {
+            background: var(--gold-light);
         }
 
         /* ----------------------------------------------------
-           MAIN CLEAN DESKTOP DOCUMENT (NO BOXES)
+           MAIN INVOICE SHEET CONTAINER
         ---------------------------------------------------- */
-        .invoice-container {
-            max-width: 900px;
+        .invoice-sheet {
+            max-width: 880px;
             margin: 0 auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
-            padding: 40px 48px;
+            background: var(--bg-sheet);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-xl);
+            padding: clamp(20px, 4.5vw, 44px);
+            box-shadow: 0 20px 45px -15px rgba(20, 19, 22, 0.06), 0 0 0 1px rgba(232, 229, 223, 0.6);
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 32px;
+            animation: sheetRise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        /* Header Row */
-        .header-row {
+        @keyframes sheetRise {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----------------------------------------------------
+           HEADER & IDENTITY ROW
+        ---------------------------------------------------- */
+        .header-identity {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--brand-gold-vibrant);
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--line-divider);
         }
 
-        .brand-block {
+        .brand-col {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
-        .brand-logo-img {
-            height: 56px;
+        .brand-logo {
+            height: 52px;
             width: auto;
             object-fit: contain;
-            flex-shrink: 0;
+            border-radius: 8px;
         }
 
-        .brand-title {
+        .brand-text h1 {
             font-size: 1.25rem;
             font-weight: 800;
-            color: var(--brand-charcoal);
+            letter-spacing: -0.025em;
+            color: var(--ink-primary);
             line-height: 1.25;
-            letter-spacing: -0.01em;
         }
 
-        .brand-sub {
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: var(--brand-gold-dark);
+        .brand-text p {
+            font-size: 0.8rem;
+            color: var(--ink-muted);
             margin-top: 2px;
         }
 
-        .header-meta-box {
-            text-align: right;
-        }
-
-        .header-doc-pill {
-            display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: #ffffff;
-            background: var(--brand-charcoal);
-            padding: 3px 10px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .header-ref-number {
-            font-size: 0.98rem;
-            font-weight: 800;
-            color: var(--brand-gold-dark);
-            letter-spacing: 0.02em;
-        }
-
-        .header-date-text {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* Metadata Two Columns */
-        .meta-section {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 36px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .meta-col-label {
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--brand-gold-dark);
-            margin-bottom: 6px;
-        }
-
-        .client-name-bold {
-            font-size: 1.15rem;
-            font-weight: 800; /* Bold */
-            color: var(--brand-charcoal);
-            line-height: 1.35;
-        }
-
-        .client-desc-reg {
-            font-size: 0.84rem;
-            font-weight: 400; /* Reguler */
-            color: var(--text-muted);
-            margin-top: 4px;
-            line-height: 1.55;
-        }
-
-        .meta-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .meta-table td {
-            padding: 4px 0;
-            font-size: 0.84rem;
-        }
-
-        .meta-label {
-            color: var(--text-muted);
-            font-weight: 400; /* Reguler */
-            width: 135px;
-        }
-
-        .meta-value {
-            font-weight: 600;
-            color: var(--text-dark);
-            text-align: right;
-        }
-
-        /* Section Headings */
-        .section-wrap {
+        .header-meta-card {
+            background: var(--bg-canvas);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-        }
-
-        .section-heading {
-            font-size: 0.96rem;
-            font-weight: 800;
-            color: var(--brand-charcoal);
-            letter-spacing: -0.01em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .sec-tag {
-            color: var(--brand-gold-dark);
-            font-weight: 800;
-        }
-
-        .section-desc {
-            font-size: 0.85rem;
-            font-weight: 400; /* Reguler */
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Clean Tables */
-        .clean-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.84rem;
-        }
-
-        .clean-table th {
-            text-align: left;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-muted);
-            padding: 10px 10px;
-            border-bottom: 1.5px solid var(--border-light);
-        }
-
-        .clean-table td {
-            padding: 11px 10px;
-            border-bottom: 1px solid var(--border-subtle);
-            font-weight: 400; /* Reguler */
-            color: var(--text-dark);
-            vertical-align: top;
-            line-height: 1.5;
-        }
-
-        .clean-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .phase-col {
-            font-weight: 700 !important;
-            color: var(--brand-charcoal);
-            width: 110px;
-            white-space: nowrap;
-        }
-
-        .durasi-col {
-            width: 150px;
-            color: var(--text-muted);
-            text-align: left;
-        }
-
-        .price-col {
-            font-weight: 800 !important; /* Bold */
-            color: var(--brand-gold-dark);
+            gap: 4px;
             text-align: right;
-            width: 135px;
-            white-space: nowrap;
+            min-width: 200px;
         }
 
-        /* Scope Cards / Entries (Ringkas & Clean) */
-        .scope-grid-ringkas {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px 24px;
-            margin-top: 4px;
-        }
-
-        .scope-card-ringkas {
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .scope-card-ringkas:nth-last-child(-n+2) {
-            border-bottom: none;
-        }
-
-        .scope-head-ringkas {
-            display: flex;
+        .meta-tag-pill {
+            align-self: flex-end;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
-        }
-
-        .scope-num-badge {
+            gap: 5px;
             font-size: 0.68rem;
             font-weight: 700;
-            color: var(--brand-gold-dark);
+            color: var(--gold-dark);
+            background: var(--gold-light);
+            border: 1px solid var(--badge-amber-border);
+            padding: 2px 8px;
+            border-radius: 999px;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .scope-name-ringkas {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--brand-charcoal);
-        }
-
-        .clean-bullet-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 4px;
-        }
-
-        .clean-bullet-list li {
-            position: relative;
-            padding-left: 14px;
-            margin-bottom: 4px;
-            font-size: 0.81rem;
-            font-weight: 400; /* Reguler */
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .clean-bullet-list li strong {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .clean-bullet-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--brand-gold-vibrant);
-            font-weight: bold;
-        }
-
-        /* 2-Column Grid Flow */
-        .two-column-flow {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        /* Signature Grid */
-        .sign-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 36px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .sign-col-title {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--brand-gold-dark);
-            margin-bottom: 8px;
-        }
-
-        .sign-row {
-            display: flex;
-            font-size: 0.82rem;
-            margin-bottom: 4px;
-        }
-
-        .sign-label {
-            width: 80px;
-            color: var(--text-muted);
-            font-weight: 400; /* Reguler */
-        }
-
-        .sign-space {
-            height: 54px;
-            border-bottom: 1px dashed var(--border-light);
-            margin-top: 8px;
-            margin-bottom: 6px;
-        }
-
-        /* Bottom Payment & Issuer */
-        .bottom-section {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 36px;
-            padding-top: 18px;
-            border-top: 1.5px solid var(--brand-gold-vibrant);
-        }
-
-        .bottom-title {
-            font-size: 0.74rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--brand-gold-dark);
-            margin-bottom: 6px;
-        }
-
-        .bank-details-clean, .issuer-clean {
-            font-size: 0.83rem;
-            font-weight: 400; /* Reguler */
-            line-height: 1.55;
-            color: var(--text-muted);
-        }
-
-        .bank-acc-bold {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 800; /* Bold */
-            color: var(--text-dark);
-            font-size: 1rem;
             letter-spacing: 0.05em;
         }
 
-        .copy-pill-btn {
-            background: transparent;
-            border: 1px solid var(--brand-charcoal);
-            color: var(--brand-charcoal);
-            font-family: var(--font-sans);
-            font-size: 0.68rem;
+        .meta-ref-number {
+            font-family: var(--font-mono);
             font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 8px;
-            transition: all 0.15s ease;
+            font-size: 0.96rem;
+            color: var(--ink-primary);
+            letter-spacing: -0.02em;
         }
 
-        .copy-pill-btn:hover {
-            background: var(--brand-charcoal);
-            color: #ffffff;
+        .meta-dates {
+            font-size: 0.74rem;
+            color: var(--ink-muted);
         }
 
         /* ----------------------------------------------------
-           DEDICATED CLEAN MOBILE VIEW (NO BOXES, RINGKAS & ELEGAN)
+           PARTIES BENTO GRID (KLIEN & PENYEDIA)
         ---------------------------------------------------- */
-        .mobile-view {
-            display: none;
+        .parties-bento {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 16px 14px;
-                background-color: #ffffff;
-                font-family: var(--font-sans);
-                font-weight: 400; /* Reguler */
-            }
+        .party-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            position: relative;
+        }
 
-            .action-bar,
-            .invoice-container {
-                display: none !important;
-            }
+        .party-card.party-client {
+            background: #FCFBF7;
+            border-left: 3.5px solid var(--gold-vibrant);
+        }
 
-            .mobile-view {
-                display: block;
-                max-width: 480px;
-                margin: 0 auto;
-                background: transparent;
-                border: none;
-                box-shadow: none;
-                padding: 0;
-            }
+        .party-kicker {
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-            /* Mobile Top Navigation */
-            .mob-top-bar {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding-bottom: 14px;
-                margin-bottom: 14px;
-                border-bottom: 1px solid var(--border-light);
-            }
+        .party-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--ink-primary);
+            letter-spacing: -0.015em;
+            line-height: 1.3;
+        }
 
-            .mob-brand-group {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
+        .party-details {
+            font-size: 0.8rem;
+            color: var(--ink-secondary);
+            line-height: 1.5;
+        }
 
-            .mob-logo-img {
-                height: 38px;
-                width: auto;
-                object-fit: contain;
-            }
+        .party-details strong {
+            color: var(--ink-primary);
+            font-weight: 600;
+        }
 
-            .mob-brand-title {
-                font-size: 0.92rem;
-                font-weight: 800;
-                color: var(--brand-charcoal);
-                line-height: 1.25;
-            }
+        .party-footer-tag {
+            font-size: 0.72rem;
+            color: var(--ink-muted);
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-card);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-            .mob-brand-sub {
-                font-size: 0.72rem;
-                color: var(--brand-gold-dark);
-                font-weight: 600;
-            }
+        /* ----------------------------------------------------
+           HERO OBSIDIAN TOTAL BANNER
+        ---------------------------------------------------- */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--obsidian-bg) 0%, #1D1A22 100%);
+            border: 1.5px solid rgba(217, 160, 6, 0.4);
+            border-radius: var(--radius-xl);
+            padding: clamp(20px, 4vw, 32px);
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            box-shadow: 0 16px 36px -10px rgba(18, 17, 20, 0.45);
+            position: relative;
+            overflow: hidden;
+        }
 
-            .mob-actions {
-                display: flex;
-                gap: 6px;
-            }
+        .hero-banner::before {
+            content: "";
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(217, 160, 6, 0.18) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
-            .mob-btn {
-                background: #ffffff;
-                border: 1px solid var(--border-light);
-                color: var(--text-dark);
-                font-family: var(--font-sans);
-                font-size: 0.74rem;
-                font-weight: 600;
-                padding: 6px 12px;
-                border-radius: 6px;
-                cursor: pointer;
-                display: inline-flex;
-                align-items: center;
-                gap: 4px;
-            }
+        .hero-left {
+            max-width: 480px;
+            z-index: 1;
+        }
 
-            .mob-btn-primary {
-                background: var(--brand-charcoal);
-                color: #ffffff;
-                border-color: var(--brand-charcoal);
-            }
+        .hero-pill-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #FDE68A;
+            background: rgba(217, 160, 6, 0.15);
+            border: 1px solid rgba(217, 160, 6, 0.35);
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
 
-            /* Client Header */
-            .mob-header-section {
-                padding-bottom: 4px;
-                margin-bottom: 10px;
-            }
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #F59E0B;
+            box-shadow: 0 0 8px #F59E0B;
+            animation: pulseAnim 1.8s infinite;
+        }
 
-            .mob-client-label {
-                font-size: 0.68rem;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                color: var(--brand-gold-dark);
-                font-weight: 600;
-                margin-bottom: 4px;
-            }
+        @keyframes pulseAnim {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
 
-            .mob-client-name {
-                font-size: 1.25rem;
-                font-weight: 800; /* Bold */
-                color: var(--brand-charcoal);
-                line-height: 1.3;
-                margin-bottom: 3px;
-            }
+        .hero-headline {
+            font-size: 1.18rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            line-height: 1.35;
+            margin-bottom: 6px;
+        }
 
-            .mob-client-inst {
-                font-size: 0.82rem;
-                font-weight: 400; /* Reguler */
-                color: var(--text-muted);
-                line-height: 1.45;
-                margin-bottom: 12px;
-            }
+        .hero-sub {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.5;
+        }
 
-            /* Total Price Section (Separated & Prominent) */
-            .mob-total-section {
-                padding: 14px 0;
-                border-top: 1.5px solid var(--brand-gold-vibrant);
-                border-bottom: 1.5px solid var(--brand-gold-vibrant);
-                margin: 12px 0;
-            }
+        .hero-right {
+            text-align: right;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
 
-            .mob-total-label {
-                font-size: 0.7rem;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.07em;
-                color: var(--text-muted);
-                margin-bottom: 4px;
-            }
+        .hero-total-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-            .mob-total-price {
-                font-size: 1.75rem;
-                font-weight: 800; /* Bold */
-                color: var(--brand-gold-dark);
-                line-height: 1.1;
-                margin-bottom: 6px;
-                letter-spacing: -0.01em;
-            }
+        .hero-total-amount {
+            font-family: var(--font-mono);
+            font-size: clamp(1.85rem, 4vw, 2.4rem);
+            font-weight: 700;
+            color: #F8D368;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(248, 211, 104, 0.2);
+        }
 
-            .mob-perk-text {
-                font-size: 0.76rem;
-                font-weight: 600;
-                color: #16a34a;
-                line-height: 1.4;
-            }
+        .hero-spell-out {
+            font-size: 0.72rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.55);
+            font-family: var(--font-sans);
+        }
 
-            /* Metadata List */
-            .mob-meta-list {
-                display: flex;
-                flex-direction: column;
-                margin: 12px 0 8px 0;
-            }
+        .hero-cta-btn {
+            margin-top: 8px;
+            background: rgba(217, 160, 6, 0.2);
+            border: 1px solid rgba(217, 160, 6, 0.45);
+            color: #FEF3C7;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
 
-            .mob-meta-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 0.81rem;
-                padding: 6px 0;
-                border-bottom: 1px solid var(--border-subtle);
-            }
+        .hero-cta-btn:hover {
+            background: rgba(217, 160, 6, 0.35);
+            color: #FFFFFF;
+        }
 
-            .mob-meta-row:last-child {
-                border-bottom: none;
-            }
+        /* ----------------------------------------------------
+           SECTION TITLE & WRAPPER
+        ---------------------------------------------------- */
+        .section-block {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
 
-            .mob-meta-label {
-                color: var(--text-muted);
-                font-weight: 400; /* Reguler */
-            }
+        .section-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1.5px solid var(--line-divider);
+            padding-bottom: 8px;
+        }
 
-            .mob-meta-val {
-                font-weight: 600;
-                color: var(--text-dark);
-                text-align: right;
-            }
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: var(--ink-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-            /* Termin Breakdown (Prices Separated & Distinct) */
-            .mob-termin-block {
-                padding: 6px 0;
-                margin-bottom: 14px;
-                border-bottom: 1px solid var(--border-light);
-            }
+        .section-num {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--gold-dark);
+            background: var(--gold-light);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
 
-            .mob-termin-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 0.82rem;
-                padding: 6px 0;
-            }
+        .section-caption {
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+        }
 
-            .mob-termin-name {
-                font-weight: 400; /* Reguler */
-                color: var(--text-dark);
-            }
+        /* ----------------------------------------------------
+           MODERN BILLING TABLE
+        ---------------------------------------------------- */
+        .table-card {
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: #FFFFFF;
+        }
 
-            .mob-termin-amount {
-                font-size: 0.95rem;
-                font-weight: 800; /* Bold */
-                text-align: right;
-            }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
 
-            /* Section Entries */
-            .mob-sec-heading {
-                font-size: 0.78rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                color: var(--brand-gold-dark);
-                margin: 20px 0 10px 0;
-                padding-bottom: 6px;
-                border-bottom: 1px solid var(--border-light);
-            }
+        .invoice-table th {
+            background: var(--bg-canvas);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-card);
+        }
 
-            .mob-scope-item {
-                padding: 12px 0;
-                border-bottom: 1px solid var(--border-light);
-            }
+        .invoice-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
 
-            .mob-scope-item:last-child {
-                border-bottom: none;
-            }
+        .col-item {
+            width: 50%;
+        }
 
-            .mob-scope-top {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                margin-bottom: 4px;
-            }
+        .col-status {
+            width: 25%;
+            text-align: center;
+        }
 
-            .mob-scope-step {
-                font-size: 0.68rem;
-                font-weight: 700;
-                color: var(--brand-gold-dark);
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-            }
+        .col-amount {
+            width: 25%;
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
 
-            .mob-scope-title {
-                font-size: 0.9rem;
-                font-weight: 700;
-                color: var(--brand-charcoal);
-                line-height: 1.35;
-            }
+        .item-title-bold {
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-bottom: 2px;
+        }
 
-            .mob-scope-bullets {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+        .item-desc-small {
+            font-size: 0.76rem;
+            color: var(--ink-muted);
+            line-height: 1.45;
+        }
 
-            .mob-scope-bullets li {
-                position: relative;
-                padding-left: 14px;
-                margin-bottom: 4px;
-                font-size: 0.78rem;
-                font-weight: 400; /* Reguler */
-                color: var(--text-muted);
-                line-height: 1.48;
-            }
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+        }
 
-            .mob-scope-bullets li:last-child {
-                margin-bottom: 0;
-            }
+        .status-chip-paid {
+            background: var(--badge-green-bg);
+            color: var(--badge-green-text);
+            border: 1px solid var(--badge-green-border);
+        }
 
-            .mob-scope-bullets li::before {
-                content: "•";
-                position: absolute;
-                left: 0;
-                color: var(--brand-gold-vibrant);
-                font-weight: 700;
-            }
+        .status-chip-due {
+            background: var(--badge-amber-bg);
+            color: var(--badge-amber-text);
+            border: 1px solid var(--badge-amber-border);
+        }
 
-            /* Clean Payment & Rekening Section (No Boxes) */
-            .mob-bank-section {
-                padding-top: 16px;
-                border-top: 1px solid var(--border-light);
-                margin-top: 20px;
-            }
+        .row-highlight {
+            background-color: #FEFCF6;
+        }
 
-            .mob-bank-label {
-                font-size: 0.68rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                color: var(--brand-gold-dark);
-                margin-bottom: 4px;
-            }
+        .row-subtotal td {
+            background: #FAFAFA;
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            padding: 10px 16px;
+        }
 
-            .mob-bank-name {
-                font-size: 0.85rem;
-                color: var(--text-dark);
-                font-weight: 400; /* Reguler */
-                margin-bottom: 8px;
-            }
+        .row-grand-total td {
+            background: #FFFFFF;
+            border-top: 2px solid var(--ink-primary);
+            border-bottom: none;
+            padding: 16px;
+            font-size: 0.95rem;
+        }
 
-            .mob-bank-name strong {
-                font-weight: 600;
-            }
+        .row-grand-total .col-amount {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--gold-dark);
+        }
 
-            .mob-acc-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px 0;
-                border-top: 1px solid var(--border-subtle);
-                border-bottom: 1px solid var(--border-subtle);
-                margin-bottom: 12px;
-            }
+        /* ----------------------------------------------------
+           SCOPE ARCHITECTURE BENTO GRID (7 PILLARS)
+        ---------------------------------------------------- */
+        .scope-bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 14px;
+        }
 
-            .mob-acc-number {
-                font-family: 'Courier New', Courier, monospace;
-                font-size: 1.12rem;
-                font-weight: 800;
-                color: var(--text-dark);
-                letter-spacing: 0.05em;
-            }
+        .scope-bento-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
 
-            .mob-copy-btn {
-                background: var(--brand-charcoal);
-                color: #ffffff;
-                border: none;
-                font-family: var(--font-sans);
-                font-size: 0.74rem;
-                font-weight: 600;
-                padding: 7px 14px;
-                border-radius: 6px;
-                cursor: pointer;
-            }
+        .scope-bento-card:hover {
+            background: #FFFFFF;
+            box-shadow: 0 6px 18px -4px rgba(20, 19, 22, 0.05);
+            border-color: #DCD8D0;
+        }
 
-            .mob-footer-desc {
-                font-size: 0.75rem;
-                font-weight: 400; /* Reguler */
-                color: var(--text-muted);
-                line-height: 1.5;
-                text-align: center;
-            }
+        .scope-card-highlight {
+            background: #FFFDF7;
+            border: 1.5px solid var(--gold-vibrant);
+            grid-column: 1 / -1;
+        }
 
-            .mob-footer-desc strong {
-                font-weight: 600;
-                color: var(--text-dark);
-            }
+        .scope-bento-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-            /* Mobile Cover Card */
-            .cover-card {
-                padding: 26px 20px !important;
-                max-width: 380px !important;
-                width: 92% !important;
-            }
+        .scope-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--ink-muted);
+            background: var(--border-card);
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+        }
 
-            .cover-title {
-                font-size: 1.15rem !important;
-            }
+        .scope-badge-gold {
+            color: #FFFFFF;
+            background: var(--gold-dark);
+        }
+
+        .scope-bento-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--ink-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .scope-bento-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .scope-bento-list li {
+            font-size: 0.77rem;
+            color: var(--ink-secondary);
+            line-height: 1.45;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .scope-bento-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold-vibrant);
+            font-weight: 800;
+        }
+
+        /* ----------------------------------------------------
+           PAYMENT & VERIFICATION BENTO ROW
+        ---------------------------------------------------- */
+        .bottom-bento {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 16px;
+        }
+
+        .mandiri-pay-card {
+            background: #FDFEFE;
+            border: 1.5px solid #D6E4F0;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        .mandiri-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mandiri-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mandiri-logo-img {
+            height: 22px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .mandiri-brand-text {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #0F3E68;
+        }
+
+        .acc-number-box {
+            background: #F2F7FA;
+            border: 1px solid #D6E4F0;
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .acc-digits {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0F3E68;
+            letter-spacing: 1px;
+        }
+
+        .copy-acc-btn {
+            background: #0F3E68;
+            color: #FFFFFF;
+            border: none;
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.74rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-acc-btn:hover {
+            background: #0B2C4B;
+            transform: translateY(-1px);
+        }
+
+        .acc-holder {
+            font-size: 0.77rem;
+            color: var(--ink-secondary);
+        }
+
+        .acc-holder strong {
+            color: var(--ink-primary);
+        }
+
+        .verification-card {
+            background: var(--bg-canvas);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .seal-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .seal-badge {
+            font-size: 0.64rem;
+            font-weight: 800;
+            color: var(--gold-dark);
+            background: var(--gold-light);
+            border: 1px solid var(--badge-amber-border);
+            padding: 3px 8px;
+            border-radius: 999px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .seal-text {
+            font-size: 0.78rem;
+            color: var(--ink-secondary);
+            line-height: 1.45;
+        }
+
+        /* ----------------------------------------------------
+           SIGNATURE SECTION
+        ---------------------------------------------------- */
+        .signatures-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--line-divider);
+        }
+
+        .sig-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sig-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 2px;
+        }
+
+        .sig-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--ink-primary);
+        }
+
+        .sig-title {
+            font-size: 0.78rem;
+            color: var(--ink-secondary);
+        }
+
+        .sig-seal-digital {
+            margin-top: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gold-dark);
+            background: var(--gold-soft);
+            border: 1px dashed var(--gold-primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            width: fit-content;
         }
 
         /* ----------------------------------------------------
@@ -1050,48 +1077,185 @@
             position: fixed;
             bottom: 24px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #1e293b;
-            color: #ffffff;
-            font-size: 0.8rem;
+            transform: translateX(-50%) translateY(80px);
+            background-color: var(--ink-primary);
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 0.82rem;
             font-weight: 600;
-            padding: 10px 18px;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 100000;
+            box-shadow: 0 14px 35px -8px rgba(0, 0, 0, 0.45);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            z-index: 99999;
+            opacity: 0;
             pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .toast.show {
+            opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
 
-        /* PRINT OPTIMIZATION */
+        /* ----------------------------------------------------
+           RESPONSIVE MOBILE BREAKPOINTS
+        ---------------------------------------------------- */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 10px 40px;
+            }
+
+            .action-bar {
+                border-radius: var(--radius-md);
+                padding: 10px;
+            }
+
+            .action-title {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .action-buttons {
+                width: 100%;
+                justify-content: stretch;
+            }
+
+            .btn-action {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .invoice-sheet {
+                padding: 20px 16px;
+                border-radius: var(--radius-lg);
+                gap: 24px;
+            }
+
+            .header-identity {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .header-meta-card {
+                width: 100%;
+                text-align: left;
+            }
+
+            .meta-tag-pill {
+                align-self: flex-start;
+            }
+
+            .parties-bento {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-banner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: left;
+                gap: 18px;
+            }
+
+            .hero-right {
+                align-items: flex-start;
+                text-align: left;
+                border-top: 1px solid rgba(255, 255, 255, 0.12);
+                padding-top: 14px;
+            }
+
+            .col-status {
+                display: none;
+            }
+
+            .col-item {
+                width: 60%;
+            }
+
+            .col-amount {
+                width: 40%;
+            }
+
+            .bottom-bento {
+                grid-template-columns: 1fr;
+            }
+
+            .acc-number-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-acc-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .signatures-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+
+        /* ----------------------------------------------------
+           PRINT SPECIFICATION (A4 PRINT-READY)
+        ---------------------------------------------------- */
         @media print {
             body {
-                background: #ffffff !important;
+                background: #FFFFFF !important;
+                background-image: none !important;
                 padding: 0 !important;
+                color: #000000 !important;
             }
 
             .cover-overlay,
             .action-bar,
-            .mobile-view,
-            .toast {
+            .toast,
+            .hero-cta-btn,
+            .copy-acc-btn {
                 display: none !important;
             }
 
-            .invoice-container {
+            .invoice-sheet {
                 box-shadow: none !important;
                 border: none !important;
+                padding: 0 !important;
                 max-width: 100% !important;
-                padding: 20px 24px !important;
+                gap: 20px !important;
             }
 
-            .clean-table, .sign-grid, .scope-card-ringkas {
+            .hero-banner {
+                background: #F8F7F4 !important;
+                color: #000000 !important;
+                border: 1.5px solid #000000 !important;
+                box-shadow: none !important;
+            }
+
+            .hero-headline,
+            .hero-total-amount {
+                color: #000000 !important;
+                text-shadow: none !important;
+            }
+
+            .hero-sub,
+            .hero-total-label,
+            .hero-spell-out {
+                color: #444444 !important;
+            }
+
+            .hero-pill-status {
+                background: #FFFFFF !important;
+                color: #000000 !important;
+                border-color: #000000 !important;
+            }
+
+            .table-card,
+            .party-card,
+            .scope-bento-card,
+            .mandiri-pay-card,
+            .verification-card {
+                border-color: #CCCCCC !important;
                 page-break-inside: avoid;
             }
         }
@@ -1099,580 +1263,442 @@
 </head>
 <body>
 
-    <!-- PASSCODE SECURITY COVER OVERLAY -->
+    <!-- PASSCODE SECURITY GATE OVERLAY -->
     <div id="coverOverlay" class="cover-overlay">
         <div class="cover-card" id="coverCard">
             <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Hamasah International Logo" class="cover-logo-img">
 
-            <div class="classified-stamp">OFFICIAL INVOICE &bull; TERMIN PELUNASAN</div>
+            <div class="cover-stamp">DOKUMEN RESMI PELUNASAN</div>
 
             <h1 class="cover-title">HAMASAH INTERNATIONAL</h1>
             <div class="cover-subtitle">Pelunasan Digital Ecosystem &amp; Desain Logo</div>
 
             <div class="cover-recipient-box">
                 <div class="cover-recipient-label">DITUJUKAN KEPADA:</div>
-                <div class="cover-recipient-name">Hamasah International</div>
-                <div class="cover-recipient-org">Layanan Studi Al-Azhar Kairo &amp; Pendampingan Santri Mesir</div>
-                <div style="font-size: 0.85rem; color: var(--brand-gold-dark); margin-top: 5px; font-weight:800;">
-                    REF: #INV/HI/2026/018 &bull; SISA PELUNASAN: Rp 8.500.000
+                <div class="cover-recipient-name">Ustadz Ifdony Nur Syamsi, Lc</div>
+                <div class="cover-recipient-org">Komisaris Utama &bull; Hamasah International</div>
+                <div class="cover-ref-total">
+                    REF: #INV/HI/2026/018 &bull; TOTAL TAGIHAN: Rp 8.500.000
                 </div>
             </div>
 
             <div class="passcode-wrapper">
                 <div class="passcode-label">Masukkan PIN Akses Resmi:</div>
-                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •" autocomplete="off">
-                <div id="passcodeError" class="passcode-error">[ AKSES DITOLAK // KODE PIN SALAH ]</div>
+                <input type="password" id="passcodeInput" class="passcode-input" maxlength="6" placeholder="• • • •" autocomplete="off" autofocus>
+                <div id="passcodeError" class="passcode-error">[ AKSES DITOLAK // PIN TIDAK SESUAI ]</div>
             </div>
 
             <button class="cover-open-btn" onclick="verifyPasscode()">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                <span>Buka Dokumen Resmi</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Buka Invoice Resmi</span>
             </button>
         </div>
     </div>
 
-    <!-- TOP CONTROL ACTION BAR (DESKTOP) -->
-    <div class="action-bar">
+    <!-- FLOATING TOP ACTION TOOLBAR -->
+    <header class="action-bar">
         <div class="action-title">
-            <span>DOKUMEN RESMI</span>
-            <strong>#INV/HI/2026/018</strong>
-            <span>&bull; Pelunasan Digital Ecosystem &amp; Desain Logo Hamasah</span>
+            <span class="action-pill-ref">#INV/HI/2026/018</span>
+            <span>Hamasah International &bull; Tagihan Pelunasan</span>
         </div>
-        <div class="btn-group">
-            <button class="btn btn-secondary" onclick="copyBankAcc()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                Salin Rekening
+        <div class="action-buttons">
+            <button class="btn-action btn-action-gold" onclick="copyBankAcc()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Salin Rekening</span>
             </button>
-            <button class="btn btn-primary" onclick="downloadPDF()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Simpan PDF
+            <button class="btn-action btn-action-primary" onclick="downloadPDF()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Simpan PDF</span>
             </button>
-            <button class="btn btn-secondary" onclick="window.print()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                Cetak
+            <button class="btn-action btn-action-outline" onclick="window.print()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span>Cetak</span>
             </button>
         </div>
-    </div>
+    </header>
 
-    <!-- MAIN CLEAN DESKTOP DOCUMENT CONTAINER -->
-    <div class="invoice-container">
-        
-        <!-- Top Header Row -->
-        <div class="header-row">
-            <div class="brand-block">
-                <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Logo Hamasah International" class="brand-logo-img">
+    <!-- MAIN INVOICE CONTAINER SHEET -->
+    <main class="invoice-sheet">
+
+        <!-- 1. HEADER & IDENTITY -->
+        <section class="header-identity">
+            <div class="brand-col">
+                <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Logo Hamasah" class="brand-logo">
+                <div class="brand-text">
+                    <h1>HAMASAH INTERNATIONAL</h1>
+                    <p>Digital Ecosystem &bull; Portal Santri &bull; Desain Identitas Brand</p>
+                </div>
+            </div>
+
+            <div class="header-meta-card">
+                <span class="meta-tag-pill">INVOICE RESMI PELUNASAN</span>
+                <span class="meta-ref-number">#INV/HI/2026/018</span>
+                <span class="meta-dates">Terbit: 09 Sep 2026 &bull; Pelunasan: 07 Nov 2026</span>
+            </div>
+        </section>
+
+        <!-- 2. PARTIES BENTO ROW (KLIEN & PENYEDIA) -->
+        <section class="parties-bento">
+            <!-- Card Klien -->
+            <div class="party-card party-client">
+                <div class="party-kicker">
+                    <span>DITUJUKAN KEPADA (KLIEN)</span>
+                    <span style="color:var(--gold-dark); font-weight:700;">TERVERIFIKASI</span>
+                </div>
                 <div>
-                    <h1 class="brand-title">Pengembangan Digital Ecosystem Hamasah International</h1>
-                    <div class="brand-sub">Platform Web Terpadu: Publik, Registrasi, Wali, Akademik &amp; Administrasi</div>
+                    <h2 class="party-name">Ustadz Ifdony Nur Syamsi, Lc</h2>
+                    <div class="party-details">
+                        Jabatan: <strong>Komisaris Utama</strong><br>
+                        Lembaga: <strong>Hamasah International</strong><br>
+                        Layanan: Pendampingan Studi Al-Azhar Kairo &amp; Pendidikan Santri Mesir
+                    </div>
+                </div>
+                <div class="party-footer-tag">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span>Status Proyek: Selesai &bull; Siap Handover Penuh</span>
                 </div>
             </div>
 
-            <div class="header-meta-box">
-                <div class="header-doc-pill">INVOICE PELUNASAN &amp; ADD-ON</div>
-                <div class="header-ref-number">#INV/HI/2026/018</div>
-                <div class="header-date-text">Terbit: 9 September 2026 &bull; Tagihan: 7 November 2026</div>
-            </div>
-        </div>
-
-        <!-- Clean Two-Column Metadata (No Gray Box) -->
-        <div class="meta-section">
-            <div>
-                <div class="meta-col-label">DITUJUKAN KEPADA:</div>
-                <div class="client-name-bold">Ustadz Ifdony Nur Syamsi, Lc</div>
-                <div class="client-desc-reg">
-                    Jabatan: <strong>Komisaris Utama Hamasah International</strong><br>
-                    Lembaga: <strong>Hamasah International</strong><br>
-                    Layanan: Pendampingan Studi Al-Azhar Kairo &amp; Pendidikan Santri Mesir<br>
-                    Status: <strong>Tagihan Pelunasan (Termin 2) &amp; Add-on 2 Desain Logo</strong>
+            <!-- Card Penyedia -->
+            <div class="party-card">
+                <div class="party-kicker">
+                    <span>DITERBITKAN OLEH (STUDIO)</span>
+                    <span>DAR DEV</span>
+                </div>
+                <div>
+                    <h2 class="party-name">Dar Dev (Daru Fahmaa Muliawan)</h2>
+                    <div class="party-details">
+                        Peran: <strong>Digital Product &amp; System Architect</strong><br>
+                        WhatsApp Resmi: <strong>0813 1150 6025</strong><br>
+                        Spesialisasi: Ekosistem Web, Aplikasi Akademik &amp; Identitas Brand
+                    </div>
+                </div>
+                <div class="party-footer-tag">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Domain .com (1 Th) &bull; Garansi Maintenance (1 Th) Include</span>
                 </div>
             </div>
-            <div>
-                <div class="meta-col-label">PARAMETER TAGIHAN:</div>
-                <table class="meta-table">
-                    <tr>
-                        <td class="meta-label">Penyedia:</td>
-                        <td class="meta-value">Dar Dev (Daru Fahmaa Muliawan)</td>
-                    </tr>
-                    <tr>
-                        <td class="meta-label">Status Proyek:</td>
-                        <td class="meta-value" style="color:#16a34a; font-weight:700;">Selesai &amp; Siap Handover 100%</td>
-                    </tr>
-                    <tr>
-                        <td class="meta-label">DP Termin 1 (Web):</td>
-                        <td class="meta-value" style="color:#16a34a; font-weight:700;">Rp 7.500.000 (Lunas / Diterima)</td>
-                    </tr>
-                    <tr>
-                        <td class="meta-label">Add-on Desain:</td>
-                        <td class="meta-value" style="color:var(--brand-gold-dark); font-weight:700;">Logo Award &amp; Markaz Tatwir (Rp 1.000.000)</td>
-                    </tr>
-                    <tr>
-                        <td class="meta-label">Total Sisa Tagihan:</td>
-                        <td class="meta-value" style="color:var(--brand-gold-dark); font-weight:800; font-size:0.92rem;">Rp 8.500.000</td>
-                    </tr>
+        </section>
+
+        <!-- 3. HERO OBSIDIAN TOTAL BANNER -->
+        <section class="hero-banner">
+            <div class="hero-left">
+                <div class="hero-pill-status">
+                    <span class="pulse-dot"></span>
+                    <span>TAGIHAN PELUNASAN AKTIF</span>
+                </div>
+                <h3 class="hero-headline">Handover Ekosistem Web &amp; Desain 2 Logo Resmi</h3>
+                <p class="hero-sub">
+                    Pelunasan akhir pengembangan <strong>Digital Ecosystem Hamasah International</strong> (Termin 2) ditambah pekerjaan add-on pembuatan identitas visual <strong>Logo Hamasah Award &amp; Markaz Tatwir</strong>.
+                </p>
+            </div>
+
+            <div class="hero-right">
+                <span class="hero-total-label">TOTAL SISA TAGIHAN PELUNASAN</span>
+                <span class="hero-total-amount">Rp 8.500.000</span>
+                <span class="hero-spell-out"># Delapan Juta Lima Ratus Ribu Rupiah #</span>
+                <button class="hero-cta-btn" onclick="copyBankAcc()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Salin Rekening Mandiri (1550010616962)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 4. STRUCTURED BILLING TABLE -->
+        <section class="section-block">
+            <div class="section-header-flex">
+                <div class="section-title">
+                    <span class="section-num">01</span>
+                    <span>Rincian Tagihan &amp; Milestone Pembayaran</span>
+                </div>
+                <span class="section-caption">Skema 2 Termin &bull; Add-on 2 Logo</span>
+            </div>
+
+            <div class="table-card">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th class="col-item">DESKRIPSI PEKERJAAN &amp; DELIVERABLES</th>
+                            <th class="col-status">STATUS</th>
+                            <th class="col-amount">NOMINAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Termin 1 (Lunas) -->
+                        <tr>
+                            <td class="col-item">
+                                <div class="item-title-bold">Termin 1 (DP Kickoff Web Ecosystem 50%)</div>
+                                <div class="item-desc-small">
+                                    Inisiasi basis data relasional, desain UI/UX mobile-first, website publik resmi, sistem registrasi &amp; visual tracking calon santri.
+                                </div>
+                            </td>
+                            <td class="col-status">
+                                <span class="status-chip status-chip-paid">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    LUNAS / MASUK
+                                </span>
+                            </td>
+                            <td class="col-amount" style="color:var(--ink-faint); text-decoration:line-through;">
+                                Rp 7.500.000
+                            </td>
+                        </tr>
+
+                        <!-- Termin 2 (Ditagih) -->
+                        <tr class="row-highlight">
+                            <td class="col-item">
+                                <div class="item-title-bold">Termin 2 (Pelunasan Handover Web Ecosystem 50%)</div>
+                                <div class="item-desc-small">
+                                    Penyelesaian portal wali santri di Kairo, LMS materi talaqqi, modul admin operasional, ledger keuangan &amp; generator invoice ber-PDF, setup server production, domain .com 1 th &amp; garansi maintenance 1 th.
+                                </div>
+                            </td>
+                            <td class="col-status">
+                                <span class="status-chip status-chip-due">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    TAGIHAN SAAT INI
+                                </span>
+                            </td>
+                            <td class="col-amount" style="color:var(--ink-primary);">
+                                Rp 7.500.000
+                            </td>
+                        </tr>
+
+                        <!-- Add-on Logo (Ditagih) -->
+                        <tr class="row-highlight">
+                            <td class="col-item">
+                                <div class="item-title-bold">Add-on: Desain Identitas Brand (2 Logo Baru)</div>
+                                <div class="item-desc-small">
+                                    &bull; <strong>Logo Hamasah International Award</strong> (Identitas penghargaan santri &amp; alumni)<br>
+                                    &bull; <strong>Logo Markaz Tatwir</strong> (Divisi riset, kurikulum &amp; pembinaan intensif)<br>
+                                    <span style="font-size:0.72rem; color:var(--gold-dark); font-weight:600;">Termasuk: File Master PNG Transparan High-Res, Vektor EPS/PDF Siap Cetak/Digital &amp; Hak Cipta 100%.</span>
+                                </div>
+                            </td>
+                            <td class="col-status">
+                                <span class="status-chip status-chip-due">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    TAGIHAN SAAT INI
+                                </span>
+                            </td>
+                            <td class="col-amount" style="color:var(--ink-primary);">
+                                Rp 1.000.000
+                            </td>
+                        </tr>
+
+                        <!-- Summary Rows -->
+                        <tr class="row-subtotal">
+                            <td colspan="2">Total Nilai Kontrak Keseluruhan (Web Terpadu + 2 Logo)</td>
+                            <td class="col-amount">Rp 16.000.000</td>
+                        </tr>
+                        <tr class="row-subtotal">
+                            <td colspan="2" style="color:var(--badge-green-text);">Pembayaran Telah Diterima Sebelumnya (DP Termin 1 Web)</td>
+                            <td class="col-amount" style="color:var(--badge-green-text);">- Rp 7.500.000</td>
+                        </tr>
+                        <tr class="row-grand-total">
+                            <td colspan="2">
+                                <strong style="letter-spacing: -0.01em;">SISA TOTAL TAGIHAN PELUNASAN (NET DITAGIHKAN)</strong>
+                                <div style="font-size:0.75rem; color:var(--ink-muted); margin-top:2px;">Handover 100% Seluruh Hak Akses &amp; File Master Desain Logo</div>
+                            </td>
+                            <td class="col-amount">
+                                Rp 8.500.000
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-        </div>
+        </section>
 
-        <!-- SECTION 1: DESKRIPSI RINGKAS -->
-        <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">1.</span> Ringkasan Pekerjaan</h2>
-            <p class="section-desc">
-                Pengembangan ekosistem web terpadu satu pintu untuk <strong>Hamasah International</strong> yang mengintegrasikan pusat informasi publik, sistem registrasi &amp; tracking calon santri, portal monitoring wali santri di Kairo, portal pembelajaran digital (LMS santri), serta modul administrasi keuangan &amp; generator invoice/kuitansi digital.
-            </p>
-        </div>
-
-        <!-- SECTION 2: RINCIAN TAGIHAN PELUNASAN & ADD-ON LOGO -->
-        <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">2.</span> Rincian Tagihan Pelunasan &amp; Add-on Desain Logo</h2>
-            <p class="section-desc">
-                Berikut adalah rincian tagihan pelunasan akhir untuk pengembangan <strong>Digital Ecosystem Hamasah International</strong> (Termin 2) beserta tambahan pekerjaan desain identitas brand (<strong>Logo Hamasah International Award &amp; Markaz Tatwir</strong>):
-            </p>
-            <table class="clean-table">
-                <thead>
-                    <tr>
-                        <th class="phase-col">ITEM PEKERJAAN</th>
-                        <th>DESKRIPSI &amp; DELIVERABLE</th>
-                        <th class="durasi-col">STATUS</th>
-                        <th class="price-col">NOMINAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="phase-col"><strong>Termin 1 (Web)</strong></td>
-                        <td><strong>DP Kickoff Project (50%):</strong> Inisiasi repositori, UI/UX custom, arsitektur basis data, website publik, sistem registrasi &amp; modul tracking santri.</td>
-                        <td class="durasi-col"><span style="color:#16a34a; font-weight:700; background:#dcfce7; padding:2px 8px; border-radius:999px; font-size:0.75rem;">LUNAS (TERBAYAR)</span></td>
-                        <td class="price-col" style="color:#71717a; text-decoration:line-through;">Rp 7.500.000</td>
-                    </tr>
-                    <tr>
-                        <td class="phase-col"><strong>Termin 2 (Web)</strong></td>
-                        <td><strong>Pelunasan Handover &amp; Go-Live (50%):</strong> Portal keluarga/wali, LMS akademik, portal operasional admin, generator invoice/kuitansi digital, security audit, deployment server production, pelatihan tim admin, domain .com 1 th &amp; garansi maintenance 1 th.</td>
-                        <td class="durasi-col"><span style="color:#d97706; font-weight:700; background:#fef3c7; padding:2px 8px; border-radius:999px; font-size:0.75rem;">TAGIHAN SEKARANG</span></td>
-                        <td class="price-col" style="font-weight:700; color:var(--brand-charcoal);">Rp 7.500.000</td>
-                    </tr>
-                    <tr style="background:#fffcf4;">
-                        <td class="phase-col"><strong>Add-on Logo</strong></td>
-                        <td>
-                            <strong>Desain Identitas Brand (2 Logo Baru):</strong><br>
-                            &bull; <strong>Logo Hamasah International Award</strong> (Identitas penghargaan prestasi santri &amp; alumni)<br>
-                            &bull; <strong>Logo Markaz Tatwir</strong> (Divisi riset &amp; pengembangan kapasitas santri)<br>
-                            <span style="font-size:0.75rem; color:var(--text-muted);">Termasuk: File Master PNG High Resolution Transparan, Vektor EPS/PDF Siap Cetak &amp; Digital, Hak Cipta Penuh 100%.</span>
-                        </td>
-                        <td class="durasi-col"><span style="color:#d97706; font-weight:700; background:#fef3c7; padding:2px 8px; border-radius:999px; font-size:0.75rem;">TAGIHAN SEKARANG</span></td>
-                        <td class="price-col" style="font-weight:700; color:var(--brand-charcoal);">Rp 1.000.000</td>
-                    </tr>
-                    <tr style="border-top: 1.5px solid var(--border-subtle);">
-                        <td colspan="2" style="color:var(--text-muted); font-size:0.82rem;">Total Nilai Keseluruhan Pekerjaan (Web + 2 Logo)</td>
-                        <td class="durasi-col" style="color:var(--text-muted); font-size:0.82rem;">100% Selesai</td>
-                        <td class="price-col" style="color:var(--text-muted); font-size:0.85rem;">Rp 16.000.000</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="color:#16a34a; font-size:0.82rem;">Pembayaran Telah Diterima (DP Termin 1 Kickoff Web)</td>
-                        <td class="durasi-col" style="color:#16a34a; font-size:0.82rem;">Sudah Masuk</td>
-                        <td class="price-col" style="color:#16a34a; font-size:0.85rem;">- Rp 7.500.000</td>
-                    </tr>
-                    <tr style="border-top: 2px solid var(--text-dark); background:#fafafa;">
-                        <td colspan="2" style="font-weight: 800; font-size:0.92rem; text-transform: uppercase;">TOTAL SISA TAGIHAN PELUNASAN (YANG HARUS DIBAYARKAN)</td>
-                        <td class="durasi-col" style="font-weight: 700; color: var(--brand-gold-dark);">Termin 2 + 2 Logo</td>
-                        <td class="price-col" style="font-size: 1.25rem; font-weight: 800; color: var(--brand-gold-dark);">Rp 8.500.000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="font-size:0.75rem; font-style:italic; color:var(--text-muted); text-align:right; margin-top:6px;">
-                # delapan juta lima ratus ribu rupiah #
+        <!-- 5. ARCHITECTURAL SCOPE BENTO (7 PILAR) -->
+        <section class="section-block">
+            <div class="section-header-flex">
+                <div class="section-title">
+                    <span class="section-num">02</span>
+                    <span>Cakupan Sistem &amp; Deliverables Proyek</span>
+                </div>
+                <span class="section-caption">6 Pilar Web + 1 Add-on Logo</span>
             </div>
-        </div>
 
-        <!-- SECTION 3: RINCIAN RUANG LINGKUP (RINGKAS & PADAT) -->
-        <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">3.</span> Ruang Lingkup Sistem (Ringkasan 6 Pilar Utama)</h2>
-            <p class="section-desc">
-                Pekerjaan pengerjaan dirancang cepat dan tangkas (agile sprint) dengan target penyelesaian <strong>kurang lebih 1 bulan</strong> (sekitar 4 minggu kerja). Seluruh 6 pilar modul di bawah ini <strong>sudah termasuk (Include / All-In)</strong> dalam total paket pengembangan Rp 15.000.000 tanpa ada biaya parsial terpisah:
-            </p>
-
-            <div class="scope-grid-ringkas">
-                
+            <div class="scope-bento-grid">
                 <!-- Pilar 1 -->
-                <div class="scope-card-ringkas">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge">Pilar 01 &bull; Include</span>
-                        <h3 class="scope-name-ringkas">Website Publik &amp; CMS Berita</h3>
+                <div class="scope-bento-card">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge">Pilar 01</span>
+                        <span style="font-size:0.7rem; color:var(--ink-muted);">Web Publik</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li>Profil resmi Hamasah, info studi Al-Azhar &amp; biaya pendampingan.</li>
-                        <li>Integrasi formulir kontak &amp; WhatsApp resmi interaktif.</li>
-                        <li>CMS ramah pengguna untuk update artikel, pengumuman &amp; dokumentasi.</li>
+                    <h4 class="scope-bento-title">Website Publik &amp; CMS</h4>
+                    <ul class="scope-bento-list">
+                        <li>Profil resmi Hamasah, info studi Al-Azhar Kairo &amp; biaya pendampingan.</li>
+                        <li>Integrasi formulir interaktif &amp; WhatsApp conversion resmi.</li>
+                        <li>CMS ramah pengurus untuk artikel, dokumentasi santri &amp; pengumuman.</li>
                     </ul>
                 </div>
 
                 <!-- Pilar 2 -->
-                <div class="scope-card-ringkas">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge">Pilar 02 &bull; Include</span>
-                        <h3 class="scope-name-ringkas">Registrasi &amp; Tracking Keberangkatan</h3>
+                <div class="scope-bento-card">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge">Pilar 02</span>
+                        <span style="font-size:0.7rem; color:var(--ink-muted);">Santri Tracking</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li>Formulir pendaftaran calon santri online &amp; akun mandiri pendaftar.</li>
-                        <li>Unggah dokumen persyaratan (paspor, ijazah) &amp; validasi status berkas.</li>
-                        <li>Visual tracking 5 tahap: <em>Registrasi → Verifikasi → Pembekalan → Visa/Tiket → Berangkat</em>.</li>
+                    <h4 class="scope-bento-title">Registrasi &amp; Tracking</h4>
+                    <ul class="scope-bento-list">
+                        <li>Pendaftaran digital online &amp; akun mandiri calon santri.</li>
+                        <li>Unggah berkas (paspor, ijazah) &amp; validasi administrasi.</li>
+                        <li>Visual tracker 5 tahap keberangkatan Kairo secara realtime.</li>
                     </ul>
                 </div>
 
                 <!-- Pilar 3 -->
-                <div class="scope-card-ringkas">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge">Pilar 03 &bull; Include</span>
-                        <h3 class="scope-name-ringkas">Portal Keluarga / Wali Santri</h3>
+                <div class="scope-bento-card">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge">Pilar 03</span>
+                        <span style="font-size:0.7rem; color:var(--ink-muted);">Keluarga / Wali</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li>Monitoring aktivitas harian anak di Kairo, asrama, dan profil musyrif.</li>
-                        <li>Presensi, catatan tahfidz/hafalan santri, serta fitur kirim pesan doa.</li>
-                        <li>Penerbitan rekap perkembangan santri &amp; Rapor Digital berformat PDF resmi.</li>
+                    <h4 class="scope-bento-title">Portal Wali Santri</h4>
+                    <ul class="scope-bento-list">
+                        <li>Monitoring aktivitas harian anak di Mesir, asrama &amp; profil musyrif.</li>
+                        <li>Catatan hafalan tahfidz, presensi &amp; fitur kirim doa dari wali.</li>
+                        <li>Penerbitan rekap laporan &amp; Rapor Digital berformat PDF resmi.</li>
                     </ul>
                 </div>
 
                 <!-- Pilar 4 -->
-                <div class="scope-card-ringkas">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge">Pilar 04 &bull; Include</span>
-                        <h3 class="scope-name-ringkas">Portal Akademik &amp; LMS Pembelajaran</h3>
+                <div class="scope-bento-card">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge">Pilar 04</span>
+                        <span style="font-size:0.7rem; color:var(--ink-muted);">LMS Akademik</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li>Dashboard akademik santri, video talaqqi syeikh, &amp; repositori modul PDF.</li>
-                        <li>Roadmap kurikulum Al-Azhar, pelacakan progress, &amp; arsip materi studi.</li>
-                        <li>Desain fleksibel mobile-first untuk kenyamanan akses smartphone santri.</li>
+                    <h4 class="scope-bento-title">Portal Pembelajaran</h4>
+                    <ul class="scope-bento-list">
+                        <li>Dashboard talaqqi syeikh, video pembelajaran &amp; modul materi PDF.</li>
+                        <li>Roadmap kurikulum Al-Azhar &amp; pelacakan progres belajar santri.</li>
+                        <li>Desain fleksibel mobile-first untuk akses santri via smartphone.</li>
                     </ul>
                 </div>
 
                 <!-- Pilar 5 -->
-                <div class="scope-card-ringkas">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge">Pilar 05 &bull; Include</span>
-                        <h3 class="scope-name-ringkas">Operasional Admin &amp; Generator Invoice</h3>
+                <div class="scope-bento-card">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge">Pilar 05</span>
+                        <span style="font-size:0.7rem; color:var(--ink-muted);">Operasional</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li>Dashboard pengurus: kelola santri, calon santri, wali, musyrif &amp; kloter.</li>
-                        <li>Administrative ledger pencatatan riwayat transaksi &amp; status tagihan.</li>
-                        <li>Generator invoice &amp; kuitansi otomatis ber-PDF dengan nomor referensi unik.</li>
+                    <h4 class="scope-bento-title">Admin &amp; Generator Invoice</h4>
+                    <ul class="scope-bento-list">
+                        <li>Dashboard pengurus: kelola santri, wali, musyrif &amp; kloter.</li>
+                        <li>Administrative ledger riwayat transaksi &amp; status tagihan.</li>
+                        <li>Generator invoice &amp; kuitansi otomatis ber-PDF resmi unik.</li>
                     </ul>
                 </div>
 
                 <!-- Pilar 6 -->
-                <div class="scope-card-ringkas">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge">Pilar 06 &bull; Include</span>
-                        <h3 class="scope-name-ringkas">Keamanan RBAC, Setup &amp; Handover</h3>
+                <div class="scope-bento-card">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge">Pilar 06</span>
+                        <span style="font-size:0.7rem; color:var(--ink-muted);">Infrastructure</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li>Autentikasi 5 role (Admin, Staf, Musyrif, Santri, Wali) terisolasi aman.</li>
-                        <li>Setup database cloud, hosting server production, domain &amp; SSL HTTPS.</li>
-                        <li>Sesi training pengoperasian staf &amp; serah terima 100% source code sistem.</li>
+                    <h4 class="scope-bento-title">Keamanan RBAC &amp; Setup</h4>
+                    <ul class="scope-bento-list">
+                        <li>Autentikasi 5 role terisolasi (Admin, Staf, Musyrif, Santri, Wali).</li>
+                        <li>Setup database cloud, domain SSL HTTPS &amp; deployment server.</li>
+                        <li>Pelatihan tim admin &amp; serah terima 100% source code sistem.</li>
                     </ul>
                 </div>
 
-                <!-- Add-on Logo -->
-                <div class="scope-card-ringkas" style="border: 1.5px solid var(--brand-gold-vibrant); background: #fffcf4;">
-                    <div class="scope-head-ringkas">
-                        <span class="scope-num-badge" style="background:var(--brand-gold-dark); color:#fff;">Add-on Desain Logo &bull; Rp 1.000.000</span>
-                        <h3 class="scope-name-ringkas">Logo Hamasah Award &amp; Markaz Tatwir</h3>
+                <!-- Pilar 7: Highlighted Add-on Logo -->
+                <div class="scope-bento-card scope-card-highlight">
+                    <div class="scope-bento-head">
+                        <span class="scope-badge scope-badge-gold">Add-on Identitas Brand &bull; Rp 1.000.000</span>
+                        <span style="font-size:0.7rem; color:var(--gold-dark); font-weight:700;">2 LOGO RESMI EKSKLUSIF</span>
                     </div>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Logo Hamasah International Award:</strong> Identitas visual penghargaan bergengsi santri &amp; alumni.</li>
-                        <li><strong>Logo Markaz Tatwir:</strong> Identitas visual divisi riset, pelatihan &amp; pengembangan kapasitas santri.</li>
-                        <li>File master PNG High Resolution Transparan, format vektor siap cetak &amp; digital, hak cipta penuh 100%.</li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- SECTION 4: KETENTUAN KHUSUS & GARANSI -->
-        <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">4.</span> Ketentuan, Garansi &amp; Hak Kepemilikan</h2>
-            
-            <div class="two-column-flow">
-                <div>
-                    <h3 style="font-size:0.84rem; font-weight:700; color:var(--brand-charcoal); margin-bottom:4px;">Yang Tidak Termasuk (Exclusions):</h3>
-                    <ul class="clean-bullet-list">
-                        <li>Biaya sewa server VPS tahunan dari provider pihak ketiga (Domain .com tahun ke-1 sudah termasuk GRATIS).</li>
-                        <li>Biaya WhatsApp Business API berbayar (Meta BSP) &amp; payment gateway fee.</li>
-                        <li>Aplikasi mobile native (PlayStore/AppStore) dan software akuntansi penuh.</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 style="font-size:0.84rem; font-weight:700; color:var(--brand-charcoal); margin-bottom:4px;">Garansi &amp; Hak Cipta 100%:</h3>
-                    <ul class="clean-bullet-list">
-                        <li><strong>Domain .com Resmi 1 Tahun:</strong> Registrasi domain .com aktif selama 1 tahun penuh (GRATIS).</li>
-                        <li><strong>Garansi &amp; Maintenance 1 Tahun:</strong> Pemeliharaan operasional, monitoring sistem, bug fixing, dan asistensi teknis 1 tahun penuh (GRATIS).</li>
-                        <li><strong>Kepemilikan Penuh:</strong> Source code &amp; basis data 100% diserahkan ke Hamasah International setelah pelunasan.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 5: TANDA TANGAN -->
-        <div class="section-wrap">
-            <h2 class="section-heading"><span class="sec-tag">5.</span> Penerimaan &amp; Pengesahan</h2>
-            <div class="sign-grid">
-                <div>
-                    <div class="sign-col-title">Untuk Hamasah International</div>
-                    <div class="sign-row">
-                        <span class="sign-label">Nama:</span>
-                        <span style="font-weight:700; color:var(--brand-charcoal);">Ustadz Ifdony Nur Syamsi, Lc</span>
-                    </div>
-                    <div class="sign-row">
-                        <span class="sign-label">Jabatan:</span>
-                        <span style="font-weight:500; color:var(--text-dark);">Komisaris Utama</span>
-                    </div>
-                    <div class="sign-row">
-                        <span class="sign-label">Lembaga:</span>
-                        <span style="font-weight:500; color:var(--text-dark);">Hamasah International</span>
-                    </div>
-                    <div class="sign-row">
-                        <span class="sign-label">Tanggal:</span>
-                        <span style="font-weight:500; color:var(--text-dark);">9 September 2026</span>
-                    </div>
-                    <div class="sign-space"></div>
-                </div>
-
-                <div>
-                    <div class="sign-col-title">Untuk Dar Dev (Penyedia)</div>
-                    <div class="sign-row">
-                        <span class="sign-label">Nama:</span>
-                        <span style="font-weight:700; color:var(--brand-charcoal);">Daru Fahmaa Muliawan</span>
-                    </div>
-                    <div class="sign-row">
-                        <span class="sign-label">Jabatan:</span>
-                        <span style="font-weight:500; color:var(--text-dark);">Digital Product &amp; System Architect</span>
-                    </div>
-                    <div class="sign-row">
-                        <span class="sign-label">Lembaga:</span>
-                        <span style="font-weight:500; color:var(--text-dark);">Dar Dev</span>
-                    </div>
-                    <div class="sign-row">
-                        <span class="sign-label">Tanggal:</span>
-                        <span style="font-weight:500; color:var(--text-dark);">9 September 2026</span>
-                    </div>
-                    <div class="sign-space" style="display:flex; align-items:flex-end; justify-content:center; font-size:0.76rem; color:var(--brand-gold-dark); padding-bottom:2px;">
-                        [ DIGITAL VERIFIED &bull; DAR DEV ]
+                    <h4 class="scope-bento-title" style="font-size:1.02rem;">Desain Logo Hamasah International Award &amp; Markaz Tatwir</h4>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:4px;">
+                        <ul class="scope-bento-list">
+                            <li><strong>Logo Hamasah International Award:</strong> Identitas visual penghargaan bergengsi, sertifikat apresiasi, dan penganugerahan santri &amp; alumni berprestasi.</li>
+                            <li><strong>Filosofi Visual:</strong> Lambang kemuliaan ilmu, apresiasi ketekunan, dan standar keunggulan Hamasah International.</li>
+                        </ul>
+                        <ul class="scope-bento-list">
+                            <li><strong>Logo Markaz Tatwir:</strong> Identitas visual divisi riset, pusat pembinaan intensif, kursus bahasa &amp; pengembangan kapasitas santri.</li>
+                            <li><strong>Paket Aset Lengkap:</strong> File Master PNG Transparan High-Res, Vektor EPS/PDF Print-Ready, serta 100% Hak Cipta Kepemilikan.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Bottom Payment & Issuer -->
-        <div class="bottom-section">
-            <div>
-                <div class="bottom-title">REKENING RESMI PEMBAYARAN</div>
-                <div class="bank-details-clean">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <img src="/hamasahinternational/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri Logo" style="height: 18px; width: auto; object-fit: contain;">
-                        <strong>Bank Mandiri</strong> &bull; a.n. Daru Fahmaa Muliawan
+        <!-- 6. PAYMENT ACCOUNT & SECURITY SEAL BENTO -->
+        <section class="bottom-bento">
+            <!-- Bank Mandiri Card -->
+            <div class="mandiri-pay-card">
+                <div class="mandiri-top-row">
+                    <div class="mandiri-logo-wrap">
+                        <img src="/hamasahinternational/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri" class="mandiri-logo-img">
+                        <span class="mandiri-brand-text">Bank Mandiri Transfer Resmi</span>
                     </div>
-                    No. Rekening: <span class="bank-acc-bold">1550010616962</span>
-                    <button class="copy-pill-btn" onclick="copyBankAcc()">SALIN REKENING</button>
+                    <span style="font-size:0.68rem; font-weight:700; color:#0F3E68; background:#E5F0F8; padding:3px 8px; border-radius:4px;">REKENING UTAMA</span>
+                </div>
+
+                <div class="acc-number-box">
+                    <div>
+                        <div style="font-size:0.66rem; font-weight:800; color:#4B739B; text-transform:uppercase; letter-spacing:0.06em;">Nomor Rekening Mandiri</div>
+                        <div class="acc-digits">1550010616962</div>
+                    </div>
+                    <button class="copy-acc-btn" onclick="copyBankAcc()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span>Salin Nomor</span>
+                    </button>
+                </div>
+
+                <div class="acc-holder">
+                    Atas Nama: <strong>Daru Fahmaa Muliawan</strong> &bull; Konfirmasi otomatis via WhatsApp setelah transfer.
                 </div>
             </div>
-            <div>
-                <div class="bottom-title">PENERBIT &amp; KONSULTAN PENGEMBANG</div>
-                <div class="issuer-clean">
-                    <strong style="color:var(--brand-charcoal);">Dar Dev (Daru Fahmaa Muliawan)</strong><br>
-                    Digital Product &amp; System Development<br>
-                    WhatsApp Resmi: 081311506025
+
+            <!-- Guarantee & Authenticity Card -->
+            <div class="verification-card">
+                <div class="seal-row">
+                    <span class="seal-badge">GARANSI &amp; ASET 100%</span>
+                </div>
+                <div class="seal-text">
+                    <strong>Include All-In:</strong><br>
+                    &bull; Domain Resmi <strong>.com</strong> Aktif 1 Tahun Penuh (GRATIS)<br>
+                    &bull; Garansi &amp; Maintenance Teknis 1 Tahun Penuh (GRATIS)<br>
+                    &bull; Source Code &amp; Database 100% Milik Hamasah International
+                </div>
+                <div style="font-size:0.72rem; color:var(--ink-muted); display:flex; align-items:center; gap:5px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>SLA Dukungan Teknis Responsif</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-    </div>
-
-    <!-- DEDICATED CLEAN MOBILE VIEW -->
-    <div class="mobile-view">
-        
-        <!-- Mobile Top Bar -->
-        <div class="mob-top-bar">
-            <div class="mob-brand-group">
-                <img src="/hamasahinternational/logo_hamasah.webp" onerror="this.onerror=null; this.src='/hamasahinternational/logo_hamasah.png';" alt="Logo Hamasah" class="mob-logo-img">
-                <div>
-                    <div class="mob-brand-title">Hamasah International</div>
-                    <div class="mob-brand-sub">#INV/HI/2026/018</div>
+        <!-- 7. OFFICIAL SIGNATURES -->
+        <section class="signatures-grid">
+            <div class="sig-block">
+                <span class="sig-label">Untuk Klien &bull; Pihak Pertama</span>
+                <span class="sig-name">Ustadz Ifdony Nur Syamsi, Lc</span>
+                <span class="sig-title">Komisaris Utama &bull; Hamasah International</span>
+                <div style="font-size:0.75rem; color:var(--ink-muted); margin-top:4px;">
+                    Tanggal Pengesahan: <strong>07 November 2026</strong>
                 </div>
             </div>
-            <div class="mob-actions">
-                <button class="mob-btn" onclick="copyBankAcc()">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    Rekening
-                </button>
-                <button class="mob-btn mob-btn-primary" onclick="downloadPDF()">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    PDF
-                </button>
-            </div>
-        </div>
 
-        <!-- Clean Mobile Header -->
-        <div class="mob-header-section">
-            <div class="mob-client-label">DITUJUKAN KEPADA:</div>
-            <div class="mob-client-name">Ustadz Ifdony Nur Syamsi, Lc</div>
-            <div class="mob-client-inst">Komisaris Utama &bull; Hamasah International</div>
-        </div>
+            <div class="sig-block">
+                <span class="sig-label">Untuk Penyedia &bull; Pihak Kedua</span>
+                <span class="sig-name">Daru Fahmaa Muliawan</span>
+                <span class="sig-title">Digital Product &amp; System Architect &bull; Dar Dev</span>
+                <div class="sig-seal-digital">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>DIGITAL VERIFIED &bull; DAR DEV OFFICIAL</span>
+                </div>
+            </div>
+        </section>
 
-        <!-- Total Price Section (Separated & Prominent, No Boxes) -->
-        <div class="mob-total-section">
-            <div class="mob-total-label">TOTAL SISA TAGIHAN PELUNASAN</div>
-            <div class="mob-total-price">Rp 8.500.000</div>
-            <div class="mob-perk-text">Pelunasan Web (Rp 7.500.000) + 2 Desain Logo (Rp 1.000.000)</div>
-        </div>
+    </main>
 
-        <!-- Clean Meta Information -->
-        <div class="mob-meta-list">
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Nomor Referensi</span>
-                <span class="mob-meta-val" style="color:var(--brand-gold-dark);">#INV/HI/2026/018</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Status Tagihan</span>
-                <span class="mob-meta-val" style="color:#d97706; font-weight:700;">Pelunasan Handover &amp; Add-on Logo</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">DP Termin 1 (Web)</span>
-                <span class="mob-meta-val" style="color:#16a34a; font-weight:700;">Rp 7.500.000 (Lunas / Masuk)</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Sisa Pelunasan Web</span>
-                <span class="mob-meta-val">Rp 7.500.000</span>
-            </div>
-            <div class="mob-meta-row">
-                <span class="mob-meta-label">Add-on 2 Desain Logo</span>
-                <span class="mob-meta-val">Rp 1.000.000</span>
-            </div>
-        </div>
-
-        <!-- Termin Price Breakdown (Separated & Clear) -->
-        <div class="mob-termin-block">
-            <div class="mob-termin-row">
-                <span class="mob-termin-name">Termin 1 (DP Kickoff Web 50%)</span>
-                <span class="mob-termin-amount" style="color:#16a34a;">Rp 7.500.000 (LUNAS)</span>
-            </div>
-            <div class="mob-termin-row">
-                <span class="mob-termin-name">Termin 2 (Pelunasan Web 50%)</span>
-                <span class="mob-termin-amount">Rp 7.500.000</span>
-            </div>
-            <div class="mob-termin-row">
-                <span class="mob-termin-name">Add-on (Logo Award &amp; Markaz Tatwir)</span>
-                <span class="mob-termin-amount">Rp 1.000.000</span>
-            </div>
-            <div class="mob-termin-row" style="border-top:1.5px solid var(--brand-gold-vibrant); padding-top:8px; margin-top:6px; font-weight:800;">
-                <span class="mob-termin-name">TOTAL YANG HARUS DIBAYAR</span>
-                <span class="mob-termin-amount" style="color:var(--brand-gold-dark); font-size:1.1rem;">Rp 8.500.000</span>
-            </div>
-        </div>
-
-        <!-- Clean Mobile Scope List (Ringkas) -->
-        <div class="mob-sec-heading">RINGKASAN RUANG LINGKUP PEKERJAAN</div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step">01 &bull; Include</span>
-                <div class="mob-scope-title">Website Publik &amp; CMS Berita</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Profil resmi, info studi Al-Azhar Kairo, biaya &amp; WhatsApp resmi.</li>
-                <li>CMS mandiri untuk publikasi berita, pengumuman &amp; kegiatan santri.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step">02 &bull; Include</span>
-                <div class="mob-scope-title">Registrasi Calon Santri &amp; Tracking</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Pendaftaran digital online, akun mandiri, &amp; verifikasi berkas paspor/ijazah.</li>
-                <li>Tracking tahapan: <em>Registrasi → Berkas → Pembekalan → Visa → Berangkat</em>.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step">03 &bull; Include</span>
-                <div class="mob-scope-title">Portal Keluarga / Wali Santri</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Monitoring aktivitas harian anak di Mesir, asrama, musyrif &amp; tahfidz.</li>
-                <li>Rapor digital berkala (PDF resmi) &amp; fitur kirim pesan doa dari wali.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step">04 &bull; Include</span>
-                <div class="mob-scope-title">Portal Pembelajaran &amp; LMS Santri</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Dashboard materi talaqqi syeikh, video pembelajaran &amp; modul PDF.</li>
-                <li>Roadmap kurikulum, status progres belajar, &amp; mobile-friendly.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step">05 &bull; Include</span>
-                <div class="mob-scope-title">Operasional Admin &amp; Generator Invoice</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Kelola basis data santri, wali, musyrif, kloter &amp; ledger tagihan.</li>
-                <li>Generator invoice &amp; kuitansi otomatis berformat PDF resmi.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step">06 &bull; Include</span>
-                <div class="mob-scope-title">Keamanan RBAC, Setup &amp; Handover</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Autentikasi 5 role terisolasi, setup server production &amp; domain SSL.</li>
-                <li>Pelatihan staf admin &amp; serah terima 100% source code sistem.</li>
-            </ul>
-        </div>
-
-        <div class="mob-scope-item" style="border-left: 3px solid var(--brand-gold-dark); background:#fffcf4;">
-            <div class="mob-scope-top">
-                <span class="mob-scope-step" style="background:var(--brand-gold-dark); color:#fff;">Add-on &bull; Rp 1.000.000</span>
-                <div class="mob-scope-title">Logo Hamasah Award &amp; Markaz Tatwir</div>
-            </div>
-            <ul class="mob-scope-bullets">
-                <li>Desain Logo Hamasah International Award (Penghargaan Santri &amp; Alumni).</li>
-                <li>Desain Logo Markaz Tatwir (Lembaga Pengembangan Kapasitas Santri).</li>
-                <li>File Master PNG High-Res Transparan &amp; Vektor Siap Cetak/Digital (Hak Cipta 100%).</li>
-            </ul>
-        </div>
-
-        <!-- Clean Bank & Payment Section (No Boxes) -->
-        <div class="mob-bank-section">
-            <div class="mob-bank-label">REKENING TRANSFER RESMI</div>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                <img src="/hamasahinternational/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri Logo" style="height: 18px; width: auto; object-fit: contain;">
-                <div class="mob-bank-name" style="margin-bottom: 0;"><strong>Bank Mandiri</strong> &bull; a.n. Daru Fahmaa Muliawan</div>
-            </div>
-            <div class="mob-acc-row">
-                <span class="mob-acc-number">1550010616962</span>
-                <button class="mob-copy-btn" onclick="copyBankAcc()">Salin Rekening</button>
-            </div>
-            <div class="mob-footer-desc">
-                Penyedia: <strong>Dar Dev (Daru Fahmaa Muliawan)</strong><br>
-                WhatsApp Resmi: 081311506025 &bull; Dokumen Digital Terverifikasi
-            </div>
-        </div>
-
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
+    <!-- FLOATING TOAST NOTIFICATION -->
     <div id="toast" class="toast">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
         <span id="toastMsg">Nomor Rekening Bank Mandiri Berhasil Disalin!</span>
     </div>
 
+    <!-- CLIENT LOGIC & PASSCODE GATE -->
     <script>
         // Passcode verification logic
         function verifyPasscode() {
@@ -1690,21 +1716,21 @@
             } else {
                 errorMsg.style.display = 'block';
                 card.classList.remove('shake-anim');
-                void card.offsetWidth; // Trigger reflow
+                void card.offsetWidth; // Reflow trigger
                 card.classList.add('shake-anim');
                 input.value = '';
                 input.focus();
             }
         }
 
-        // Enter key trigger for passcode
+        // Enter key trigger
         document.getElementById('passcodeInput').addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
                 verifyPasscode();
             }
         });
 
-        // Auto unlock if previously unlocked in this browser session
+        // Auto unlock if previously unlocked in browser session
         window.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('hamasah_invoice_unlocked') === 'true') {
                 const overlay = document.getElementById('coverOverlay');
@@ -1735,7 +1761,7 @@
             }, 2500);
         }
 
-        // Trigger PDF generation / print dialog
+        // Trigger print / save PDF
         function downloadPDF() {
             window.print();
         }
