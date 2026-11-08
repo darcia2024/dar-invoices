@@ -2458,7 +2458,7 @@ body[data-view="plan"] #planSection {
                 <div class="stat-card plan-income-stat">
                     <div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
                     <div>
-                        <div class="stat-info-title">Profit diterima bulan ini</div>
+                        <div class="stat-info-title" id="planStatIncomeTitle">Posisi dana</div>
                         <div id="planStatIncome" class="stat-info-val">Rp 0</div>
                         <div id="planStatIncomeSub" class="plan-stat-sub">—</div>
                     </div>
@@ -4618,7 +4618,7 @@ body[data-view="plan"] #planSection {
             { key: 'cicilan', label: 'Cicilan & hutang', color: '#b3392d' },
             { key: 'tabungan', label: 'Tabungan & investasi', color: '#a16207' },
             { key: 'sosial', label: 'Sedekah & zakat', color: '#be185d' },
-            { key: 'keluarga', label: 'Keluarga', color: '#9a3412' },
+            { key: 'keluarga', label: 'Keluarga', color: '#4f63c9' },
             { key: 'rumah', label: 'Perabot & rumah', color: '#8a5a2b' },
             { key: 'hiburan', label: 'Hiburan & gaya hidup', color: '#4d7c0f' },
             { key: 'lainnya', label: 'Lainnya', color: '#5f5a4d' }
@@ -6448,14 +6448,31 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const remEl = document.getElementById('planStatRemaining');
             remEl.textContent = (remaining < 0 ? '- ' : '') + formatIDR(Math.abs(remaining));
             remEl.style.color = remaining < 0 ? '#991b1b' : '';
-            document.getElementById('planStatRemainingSub').textContent = remaining < 0 ? 'Lewat dari anggaran' : 'Belum terpakai';
-            document.getElementById('planStatIncome').textContent = formatIDR(income.profit);
-            const balance = income.profit - planned;
+            document.getElementById('planStatRemainingSub').textContent = remaining < 0 ? 'Lewat dari anggaran' : 'Belum dibayar / belum terpakai';
+            // Money still needed this month = unpaid part of every open item (done items need nothing more).
+            const stillNeeded = items.reduce((sum, p) => sum + (p.done ? 0 : Math.max(0, p.planned - p.actual)), 0);
+            const incomeTitle = document.getElementById('planStatIncomeTitle');
+            const incomeVal = document.getElementById('planStatIncome');
             const incomeSub = document.getElementById('planStatIncomeSub');
-            incomeSub.textContent = planned === 0
-                ? 'Omset masuk ' + formatIDR(income.gross)
-                : (balance >= 0 ? `Surplus ${formatIDR(balance)} setelah rencana` : `Kurang ${formatIDR(-balance)} dari rencana`);
-            incomeSub.classList.toggle('is-negative', planned > 0 && balance < 0);
+            const isPast = month < currentMonthKey();
+            if (isPast) {
+                // A past month can't be compared with today's bank balance: show what came in that month.
+                incomeTitle.textContent = 'Profit diterima bulan itu';
+                incomeVal.textContent = formatIDR(income.profit);
+                incomeVal.style.color = '';
+                const balance = income.profit - actual;
+                incomeSub.textContent = balance >= 0 ? `Sisa ${formatIDR(balance)} setelah pengeluaran` : `Pengeluaran lebih ${formatIDR(-balance)}`;
+                incomeSub.classList.toggle('is-negative', balance < 0);
+            } else {
+                const cash = BANK_ACCOUNTS.reduce((sum, acc) => sum + (Number(bankBalances[acc.key]) || 0), 0);
+                const gap = cash - stillNeeded;
+                incomeTitle.textContent = gap < 0 ? 'Kekurangan dana' : 'Dana aman';
+                incomeVal.textContent = formatIDR(Math.abs(gap));
+                incomeVal.style.color = gap < 0 ? '#991b1b' : '#065f46';
+                const asOf = bankBalancesUpdatedAt ? ` (per ${formatShortDate(bankBalancesUpdatedAt)})` : '';
+                incomeSub.textContent = `Saldo bank ${formatIDR(cash)}${asOf} vs belum dibayar ${formatIDR(stillNeeded)} · profit masuk ${formatIDR(income.profit)}`;
+                incomeSub.classList.remove('is-negative');
+            }
 
             // 2. Overview bar + category breakdown
             const bar = document.getElementById('planOverviewBar');
@@ -6686,6 +6703,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const total = BANK_ACCOUNTS.reduce((sum, acc) => sum + (Number(bankBalances[acc.key]) || 0), 0);
             const totalEl = document.getElementById('totalLiquidCashVal');
             if (totalEl) totalEl.innerText = formatIDR(total);
+            if (document.body.dataset.view === 'plan') renderPlanUI();
             const updatedEl = document.getElementById('bankUpdatedAt');
             if (updatedEl) updatedEl.textContent = bankBalancesUpdatedAt ? `· per ${formatShortDate(bankBalancesUpdatedAt)}` : '';
 
