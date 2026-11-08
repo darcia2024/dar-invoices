@@ -1,0 +1,19 @@
+/* DAR mascot mark for client invoice headers. Shared by every invoice page. */
+.dar-mascot-mark {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex-shrink: 0;
+    vertical-align: middle;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+.dar-mascot-mark.is-sm { width: 32px; height: 32px; }
+.dar-mascot-mark.is-lg { width: 56px; height: 56px; }
+/* On dark headers the black hair disappears: sit the mascot on a cream disc. */
+.dar-mascot-mark.on-dark { background: #f1eddf; border-radius: 50%; padding: 4px; }
+@media (max-width: 600px) {
+    .dar-mascot-mark { width: 36px; height: 36px; }
+    .dar-mascot-mark.is-lg { width: 44px; height: 44px; }
+}
