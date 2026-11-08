@@ -119,7 +119,7 @@ const defaultState = {
     "underrated-ai": 450000,
     masakbar: 100000,
     masakbar2: 50000,
-    "talkhisan-hamasah": 2100000,
+    "talkhisan-hamasah": 1200000,
   },
 };
 
@@ -150,6 +150,8 @@ const NOVEMBER_2026_PLAN = [
 const STATUS_MIGRATIONS = [
   { id: "2026-11-08-hamasah-lunas", statuses: { hamasahinternational: "PAID" } },
   { id: "2026-11-08-rencana-november", expensePlans: { "2026-11": NOVEMBER_2026_PLAN } },
+  // Talkhisan Hamasah repriced to Rp200.000 per modul × 6 = Rp1.200.000 (no operating cost).
+  { id: "2026-11-08-talkhisan-200rb", netProfits: { "talkhisan-hamasah": 1200000 } },
 ];
 
 function applyMigrations(state) {
@@ -157,10 +159,12 @@ function applyMigrations(state) {
   const pending = STATUS_MIGRATIONS.filter((m) => !applied.includes(m.id));
   if (pending.length === 0) return { state, changed: false };
   const paymentStatuses = { ...(state.paymentStatuses || {}) };
+  const netProfits = { ...(state.netProfits || {}) };
   const currentPlans = state.expensePlans && typeof state.expensePlans === "object" && !Array.isArray(state.expensePlans) ? state.expensePlans : {};
   const expensePlans = { ...currentPlans };
   pending.forEach((m) => {
     if (m.statuses) Object.assign(paymentStatuses, m.statuses);
+    if (m.netProfits) Object.assign(netProfits, m.netProfits);
     // Add plan items without touching ones already there (matched by id or name).
     Object.entries(m.expensePlans || {}).forEach(([month, items]) => {
       const existing = Array.isArray(expensePlans[month]) ? expensePlans[month] : [];
@@ -171,7 +175,7 @@ function applyMigrations(state) {
     });
   });
   return {
-    state: { ...state, paymentStatuses, expensePlans, appliedMigrations: [...applied, ...pending.map((m) => m.id)] },
+    state: { ...state, paymentStatuses, netProfits, expensePlans, appliedMigrations: [...applied, ...pending.map((m) => m.id)] },
     changed: true,
   };
 }
