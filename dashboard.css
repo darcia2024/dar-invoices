@@ -2479,3 +2479,12 @@ body[data-view="plan"] .filter-section { display: none !important; }
 /* Short explanation under each invoice stat */
 .stat-note { font-size: 10.5px; line-height: 1.4; color: #3f3d36; opacity: .82; margin-top: 4px; max-width: 34ch; }
 @media (max-width: 600px) { .stat-note { font-size: 11px; } }
+
+/* DAR mascot */
+.workspace-brand { align-items: center; }
+.workspace-brand .brand-mascot { width: 40px; height: 40px; flex-shrink: 0; margin-right: 2px; align-self: center; }
+.dev-avatar { overflow: hidden; padding: 4px; }
+.dev-avatar img { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (max-width: 600px) {
+    .workspace-brand .brand-mascot { width: 32px; height: 32px; }
+}
