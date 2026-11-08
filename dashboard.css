@@ -2332,3 +2332,78 @@ html, body { touch-action: manipulation; }
     .bank-modal-group { grid-template-columns: 1fr; }
     .bank-copy-btn { width: 100%; text-align: center; }
 }
+
+/* ========================================================
+   RENCANA PENGELUARAN (MONTHLY SPENDING PLAN)
+   ======================================================== */
+#planSection { display: none; }
+body[data-view="plan"] #planSection { display: block; }
+body[data-view="plan"] .goal-tracker-card,
+body[data-view="plan"] .filter-section { display: none !important; }
+
+.plan-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+.plan-month-nav { display: flex; align-items: center; gap: 6px; background: #fffdf8; border: 1px solid #ded8cb; border-radius: 12px; padding: 5px; }
+.plan-nav-btn { width: 38px; height: 38px; border: 0; border-radius: 9px; background: transparent; color: #3c3a32; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.plan-nav-btn:hover { background: #eeece3; }
+.plan-month-label { min-width: 150px; text-align: center; display: flex; flex-direction: column; line-height: 1.25; }
+.plan-month-label span { font-size: 14px; font-weight: 600; color: #24241f; }
+.plan-month-label small { font-size: 10px; color: #7a7567; }
+.plan-toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.plan-toolbar-actions .month-pill-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.stat-card.plan-planned-stat { background: #dce7f9; }
+.stat-card.plan-actual-stat { background: #ffd7c4; }
+.stat-card.plan-remaining-stat { background: #d4eedb; }
+.stat-card.plan-income-stat { background: #e3dcf3; }
+.plan-stat-sub { font-size: 10.5px; color: #4a473d; margin-top: 4px; line-height: 1.4; }
+.plan-stat-sub.is-negative { color: #991b1b; font-weight: 600; }
+
+.plan-overview-card { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; }
+.plan-overview-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 10px; }
+.plan-overview-title { font-size: 14px; font-weight: 600; color: #24241f; }
+.plan-overview-sub { font-size: 11.5px; color: #686150; margin-top: 2px; }
+.plan-overview-pct { font-size: 22px; font-weight: 600; color: #24241f; font-variant-numeric: tabular-nums; }
+.plan-bar { height: 10px; background: #ece7d8; border-radius: 99px; overflow: hidden; }
+.plan-bar-thin { height: 6px; }
+.plan-bar-fill { height: 100%; background: #30352b; border-radius: inherit; transition: width .3s ease; }
+.plan-bar-fill.is-over { background: #b3392d !important; }
+.plan-category-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; margin-top: 16px; }
+.plan-category-list:empty { display: none; }
+.plan-cat-head { display: flex; justify-content: space-between; gap: 10px; font-size: 11.5px; margin-bottom: 5px; }
+.plan-cat-name { display: inline-flex; align-items: center; gap: 6px; color: #34332f; min-width: 0; }
+.plan-cat-name i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.plan-cat-name em { font-style: normal; color: #8a8474; font-size: 10.5px; }
+.plan-cat-amount { color: #4a473d; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plan-cat-amount.is-over { color: #991b1b; font-weight: 600; }
+
+.plan-filter-row { margin-bottom: 14px; }
+.plan-status-open { background: #f4f1e8; color: #5c584c; border: 1px solid #e2dccf; }
+.plan-item-card.is-done { opacity: .72; }
+.plan-item-card.is-done .debt-person-name { text-decoration: line-through; text-decoration-color: #a39d8c; }
+.plan-item-bar { margin-top: 8px; max-width: 360px; }
+.plan-empty-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.plan-spend-info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; background: #fffdf6; border: 1px solid #e2dccf; border-radius: 10px; padding: 14px; margin-bottom: 16px; }
+.plan-spend-info span { display: block; font-size: 10.5px; color: #7a7567; }
+.plan-spend-info strong { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.manager-content select { width: 100%; font: inherit; color: #292923; background: #fffdf6; border: 1px solid #bdb3a0; padding: 11px; border-radius: 8px; margin: 6px 0 12px; }
+.plan-check-field { display: flex !important; flex-direction: column; justify-content: center; gap: 2px; }
+.plan-check-field span { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; }
+.manager-content .plan-check-field input[type="checkbox"] { width: 18px; height: 18px; margin: 0; padding: 0; accent-color: #30352b; }
+.plan-check-field small { color: #7a7567; font-size: 10.5px; line-height: 1.4; }
+
+@media (max-width: 600px) {
+    body[data-view="plan"] .board-tabs { display: none; }
+    .plan-toolbar { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 16px; }
+    .plan-month-nav { justify-content: space-between; }
+    .plan-nav-btn { width: 44px; height: 44px; }
+    .plan-toolbar-actions { display: grid; grid-template-columns: 1fr 1fr; }
+    .plan-toolbar-actions .create-invoice-btn { grid-column: 1 / -1; min-height: 46px; font-size: 13px; border-radius: 12px; text-align: center; }
+    .plan-toolbar-actions .month-pill-btn { min-height: 40px; font-size: 12px; white-space: normal; line-height: 1.25; }
+    .plan-stats-bar .stat-info-val { white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; }
+    .plan-overview-card { padding: 15px 14px; border-radius: 14px; }
+    .plan-category-list { grid-template-columns: 1fr; gap: 12px; }
+    .plan-cat-head { flex-direction: column; gap: 2px; }
+    .plan-spend-info { grid-template-columns: 1fr; gap: 6px; }
+    .plan-spend-info div { display: flex; justify-content: space-between; }
+    .plan-item-bar { max-width: none; }
+}
