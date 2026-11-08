@@ -78,7 +78,7 @@ const defaultState = {
     masakbar: "UNPAID",
     masakbar2: "UNPAID",
     "talkhisan-hamasah": "UNPAID",
-    hamasahinternational: "DP",
+    hamasahinternational: "PAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -123,8 +123,27 @@ const defaultState = {
   },
 };
 
+// One-time status corrections applied to the saved cloud state (each id runs once,
+// so later manual toggles in the dashboard are kept).
+const STATUS_MIGRATIONS = [
+  { id: "2026-11-08-hamasah-lunas", statuses: { hamasahinternational: "PAID" } },
+];
+
+function applyMigrations(state) {
+  const applied = Array.isArray(state.appliedMigrations) ? state.appliedMigrations : [];
+  const pending = STATUS_MIGRATIONS.filter((m) => !applied.includes(m.id));
+  if (pending.length === 0) return { state, changed: false };
+  const paymentStatuses = { ...(state.paymentStatuses || {}) };
+  pending.forEach((m) => Object.assign(paymentStatuses, m.statuses));
+  return {
+    state: { ...state, paymentStatuses, appliedMigrations: [...applied, ...pending.map((m) => m.id)] },
+    changed: true,
+  };
+}
+
 function mergeState(state) {
   return {
+    appliedMigrations: state && Array.isArray(state.appliedMigrations) ? state.appliedMigrations : [],
     customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
     deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
     purgedInvoiceIds: state && Array.isArray(state.purgedInvoiceIds) ? state.purgedInvoiceIds : [],
@@ -160,6 +179,14 @@ module.exports = async function handler(req, res) {
     if (req.method === "GET") {
       const saved = await redisCommand(["GET", STATE_KEY]);
       const parsed = saved ? JSON.parse(saved) : null;
+      if (parsed) {
+        const { state: migrated, changed } = applyMigrations(parsed);
+        if (changed) {
+          const merged = mergeState(migrated);
+          await redisCommand(["SET", STATE_KEY, JSON.stringify(merged)]);
+          return res.status(200).json(merged);
+        }
+      }
       return res.status(200).json(mergeState(parsed));
     }
 

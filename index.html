@@ -4331,7 +4331,7 @@ body[data-view="debt"] #debtSection {
             ibrahim: "PAID",
             kpi: "DP",
             tehumi: "PAID",
-            hamasahinternational: "DP",
+            hamasahinternational: "PAID",
             pgstour: "PAID",
             "umrahme-dreammecca": "PAID",
             mochi: "PAID",
@@ -4404,7 +4404,7 @@ body[data-view="debt"] #debtSection {
 
         // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
         // Auto-migrate status version so returning visitors get updated canonical payment statuses
-        const STATUS_DATA_VERSION = "2026-11-07_v4";
+        const STATUS_DATA_VERSION = "2026-11-08_v5";
         if (localStorage.getItem("status_data_version") !== STATUS_DATA_VERSION) {
             Object.keys(defaultPaymentStatuses).forEach(id => {
                 localStorage.removeItem("status_" + id);
