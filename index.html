@@ -3350,7 +3350,7 @@ body[data-view="debt"] #debtSection {
                     <span>Buka Invoice Teh Umi</span>
                 </a>
             </div>
-            <div class="invoice-card" id="card-hamasahinternational" data-id="hamasahinternational" data-month="2026-09" data-amount="16105000" data-client="hamasah international ustadz ifdony nur syamsi lc komisaris utama portal web ekosistem digital terpadu website publik registrasi santri portal wali akademik lms operasional admin keuangan invoice kuitansi 15.000.000 2x pembayaran dp 50% 7.500.000 pelunasan 7.500.000 durasi 1 bulan gratis domain .com 1 tahun garansi maintenance 1 tahun gratis include all-in #inv/hi/2026/018 september 2026">
+            <div class="invoice-card" id="card-hamasahinternational" data-id="hamasahinternational" data-month="2026-09 2026-11" data-amount="16105000" data-client="hamasah international ustadz ifdony nur syamsi lc komisaris utama portal web ekosistem digital terpadu website publik registrasi santri portal wali akademik lms operasional admin keuangan invoice kuitansi 15.000.000 2x pembayaran dp 50% 7.500.000 pelunasan 7.500.000 durasi 1 bulan gratis domain .com 1 tahun garansi maintenance 1 tahun gratis include all-in #inv/hi/2026/018 september 2026">
                 <div>
                     <div class="card-top">
                         <div class="client-title">Hamasah International</div>
@@ -3358,17 +3358,17 @@ body[data-view="debt"] #debtSection {
                             <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('hamasahinternational')">
                                 🔴 BELUM LUNAS
                             </span>
-                            <span class="dp-history-badge tone-warn">MENUNGGU SISA (RP 8.605.000)</span>
+                            <span class="dp-history-badge tone-ok">PELUNASAN MASUK 8 NOV 2026</span>
                         </div>
                     </div>
 
                     <div class="ref-code">
                         <span>REF: #INV/HI/2026/018 &bull; Ustadz Ifdony Nur Syamsi, Lc</span>
-                        <span class="month-tag">September 2026</span>
+                        <span class="month-tag">Sep 2026 (DP 7,5JT) &amp; Nov 2026 (Pelunasan 8,6JT)</span>
                     </div>
-                    
+
                     <div class="project-desc">
-                        Tagihan Pelunasan Digital Ecosystem Hamasah International (Sisa Termin 2: Rp 7.500.000) + Add-on 2 Logo Award &amp; Markaz Tatwir (Rp 1.000.000) + Top Up Token AI $5 (Rp 105.000). Total Sisa Tagihan Pelunasan: <strong>Rp 8.605.000</strong>.
+                        Pelunasan Digital Ecosystem Hamasah International (Termin 2: Rp 7.500.000) + Add-on 2 Logo Award &amp; Markaz Tatwir (Rp 1.000.000) + Top Up Token AI $5 (Rp 105.000). Pelunasan <strong>Rp 8.605.000</strong> diterima 8 November 2026.
                     </div>
 
                     <div class="slug-box">
@@ -3386,8 +3386,8 @@ body[data-view="debt"] #debtSection {
                             <span class="fin-val">Rp 16.105.000</span>
                         </div>
                         <div class="fin-row">
-                            <span class="fin-label">SISA TAGIHAN PELUNASAN:</span>
-                            <span class="fin-val" style="color: #d97706; font-weight:700;">Rp 8.605.000</span>
+                            <span class="fin-label">DP SEP + PELUNASAN NOV:</span>
+                            <span class="fin-val" style="color: #305d46; font-weight:700;">Rp 7.500.000 + Rp 8.605.000</span>
                         </div>
                         <div class="fin-row net-profit-row">
                             <span class="fin-label">KEUNTUNGAN BERSIH:</span>
@@ -4466,7 +4466,17 @@ body[data-view="debt"] #debtSection {
             { id: "ibrahim", name: "Ibrahim Nawawi (Visa Entry Student Kairo)", month: "2026-09", monthLabel: "September 2026", gross: 1100000 },
             { id: "kpi", name: "Komisi Peduli Interaksi (KPI) PPMI Mesir", month: "2026-09 2026-10", monthLabel: "Sep & Okt 2026", gross: 14200000 },
             { id: "tehumi", name: "Teh Umi (Media Baca)", month: "2026-09 2026-10", monthLabel: "Sep & Okt 2026", gross: 300000 },
-            { id: "hamasahinternational", name: "Hamasah International (Digital Ecosystem)", month: "2026-09", monthLabel: "September 2026", gross: 16105000 },
+            {
+                id: "hamasahinternational",
+                name: "Hamasah International (Digital Ecosystem)",
+                month: "2026-09 2026-11",
+                monthLabel: "Sep & Nov 2026",
+                gross: 16105000,
+                allocations: {
+                    "2026-09": { paid: 7500000, label: "DP Termin 1 Sep" },
+                    "2026-11": { paid: 8605000, label: "Pelunasan Nov" }
+                }
+            },
             { id: "pgstour", name: "PT Permana Group Sejahtera (PGS Tour)", month: "2026-09", monthLabel: "September 2026", gross: 1000000 },
             { id: "umrahme-dreammecca", name: "Dreammecca - Umrahme (16 Pax)", month: "2026-09", monthLabel: "September 2026", gross: 560000 },
             { id: "mochi", name: "Mochi Cafe n Resto (KAEL Paket Ultimate)", month: "2026-09", monthLabel: "September 2026", gross: 750000 },
@@ -5180,7 +5190,8 @@ body[data-view="debt"] #debtSection {
                 "2026-07": { label: "Juli 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 },
                 "2026-08": { label: "Agustus 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 },
                 "2026-09": { label: "September 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 },
-                "2026-10": { label: "Oktober 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 }
+                "2026-10": { label: "Oktober 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 },
+                "2026-11": { label: "November 2026", paidGrossTotal: 0, paidNetProfitTotal: 0, costTotal: 0, paidCount: 0, dpCount: 0, unpaidCount: 0 }
             };
 
             invoiceItems.forEach(item => {
@@ -5194,7 +5205,10 @@ body[data-view="debt"] #debtSection {
                     Object.entries(item.allocations).forEach(([mKey, alloc]) => {
                         const isVisibleThisMonth = (activeMonthFilter === "all" || activeMonthFilter === mKey);
                         const allocGross = alloc.paid || alloc.gross || 0;
-                        const allocProfit = alloc.profit !== undefined ? alloc.profit : allocGross;
+                        // Without a fixed profit, split the invoice's (editable) net profit by this month's share.
+                        const allocProfit = alloc.profit !== undefined
+                            ? alloc.profit
+                            : (item.gross > 0 ? Math.round(itemNetProfit * allocGross / item.gross) : allocGross);
                         let paidGross = 0;
                         let paidNetProfit = 0;
                         let unpaidGross = 0;
