@@ -153,6 +153,8 @@ function mergeState(state) {
     bankBalancesUpdatedAt: state && typeof state.bankBalancesUpdatedAt === "string" ? state.bankBalancesUpdatedAt : null,
     bankAccountDetails: state && state.bankAccountDetails && typeof state.bankAccountDetails === "object" ? state.bankAccountDetails : null,
     bankCopyTemplate: state && typeof state.bankCopyTemplate === "string" ? state.bankCopyTemplate : null,
+    // { [invoiceId]: [{ month: "YYYY-MM", amount, date }] } — the month each payment arrived.
+    paymentLog: state && state.paymentLog && typeof state.paymentLog === "object" && !Array.isArray(state.paymentLog) ? state.paymentLog : {},
     paymentStatuses: {
       ...defaultState.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),
