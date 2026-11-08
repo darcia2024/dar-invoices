@@ -125,8 +125,31 @@ const defaultState = {
 
 // One-time status corrections applied to the saved cloud state (each id runs once,
 // so later manual toggles in the dashboard are kept).
+const PLAN_SEED_TIME = Date.UTC(2026, 10, 5);
+function seedPlan(id, name, category, planned, { paid = false, recurring = false, notes = "" } = {}, order = 0) {
+  const t = PLAN_SEED_TIME + order;
+  return { id, name, category, planned, actual: paid ? planned : 0, done: paid, recurring, due: "", notes, createdAt: t, updatedAt: t };
+}
+
+// Rencana pengeluaran November 2026 (update per 5 Nov). Open items keep their priority order.
+const NOVEMBER_2026_PLAN = [
+  seedPlan("plan-nov26-voa", "VOA Mesir", "lainnya", 7830000, { notes: "Prioritas 1 · $435 × Rp18.000" }, 1),
+  seedPlan("plan-nov26-hutang-azam", "Hutang ke Azam", "cicilan", 500000, { notes: "Prioritas 2" }, 2),
+  seedPlan("plan-nov26-harian", "Kebutuhan sehari-hari", "pokok", 5000000, { recurring: true, notes: "Prioritas 3" }, 3),
+  seedPlan("plan-nov26-sakhona", "Sakhona / pemanas air", "rumah", 1200000, { notes: "Prioritas 4" }, 4),
+  seedPlan("plan-nov26-kasur", "Kasur", "rumah", 1600000, { notes: "Prioritas 5" }, 5),
+  seedPlan("plan-nov26-lemari", "Lemari", "rumah", 1000000, { notes: "Prioritas 6" }, 6),
+  seedPlan("plan-nov26-kulkas", "Kulkas (6.000 LE)", "rumah", 2070000, { notes: "Prioritas 7 · Ditunda sampai KPI cair" }, 7),
+  seedPlan("plan-nov26-syaqqoh", "Syaqqoh November", "pokok", 2800000, { paid: true, recurring: true }, 8),
+  seedPlan("plan-nov26-uang-istri", "Uang istri", "keluarga", 1500000, { paid: true, recurring: true }, 9),
+  seedPlan("plan-nov26-stroller", "Stroller", "keluarga", 2200000, { paid: true }, 10),
+];
+
+// One-time corrections applied to the saved cloud state (each id runs once,
+// so later manual changes in the dashboard are kept).
 const STATUS_MIGRATIONS = [
   { id: "2026-11-08-hamasah-lunas", statuses: { hamasahinternational: "PAID" } },
+  { id: "2026-11-08-rencana-november", expensePlans: { "2026-11": NOVEMBER_2026_PLAN } },
 ];
 
 function applyMigrations(state) {
@@ -134,9 +157,21 @@ function applyMigrations(state) {
   const pending = STATUS_MIGRATIONS.filter((m) => !applied.includes(m.id));
   if (pending.length === 0) return { state, changed: false };
   const paymentStatuses = { ...(state.paymentStatuses || {}) };
-  pending.forEach((m) => Object.assign(paymentStatuses, m.statuses));
+  const currentPlans = state.expensePlans && typeof state.expensePlans === "object" && !Array.isArray(state.expensePlans) ? state.expensePlans : {};
+  const expensePlans = { ...currentPlans };
+  pending.forEach((m) => {
+    if (m.statuses) Object.assign(paymentStatuses, m.statuses);
+    // Add plan items without touching ones already there (matched by id or name).
+    Object.entries(m.expensePlans || {}).forEach(([month, items]) => {
+      const existing = Array.isArray(expensePlans[month]) ? expensePlans[month] : [];
+      const ids = new Set(existing.map((p) => p && p.id));
+      const names = new Set(existing.map((p) => String((p && p.name) || "").trim().toLowerCase()));
+      const additions = items.filter((p) => !ids.has(p.id) && !names.has(p.name.toLowerCase()));
+      expensePlans[month] = existing.concat(additions);
+    });
+  });
   return {
-    state: { ...state, paymentStatuses, appliedMigrations: [...applied, ...pending.map((m) => m.id)] },
+    state: { ...state, paymentStatuses, expensePlans, appliedMigrations: [...applied, ...pending.map((m) => m.id)] },
     changed: true,
   };
 }
