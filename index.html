@@ -6430,7 +6430,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const copyBtn = document.getElementById('planCopyBtn');
             if (copyBtn) {
                 copyBtn.disabled = !source;
-                copyBtn.textContent = source ? `Salin pos rutin dari ${monthLabelOf(source)}` : 'Salin dari bulan lalu';
+                copyBtn.innerHTML = source
+                    ? `<span class="lbl-long">Salin pos rutin dari ${escapeHTML(monthLabelOf(source))}</span><span class="lbl-short">Salin rutin</span>`
+                    : '<span class="lbl-long">Salin dari bulan lalu</span><span class="lbl-short">Salin rutin</span>';
             }
 
             // 1. Totals
@@ -6470,7 +6472,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 incomeVal.textContent = formatIDR(Math.abs(gap));
                 incomeVal.style.color = gap < 0 ? '#991b1b' : '#065f46';
                 const asOf = bankBalancesUpdatedAt ? ` (per ${formatShortDate(bankBalancesUpdatedAt)})` : '';
-                incomeSub.textContent = `Saldo bank ${formatIDR(cash)}${asOf} vs belum dibayar ${formatIDR(stillNeeded)} · profit masuk ${formatIDR(income.profit)}`;
+                incomeSub.innerHTML = `Saldo ${formatIDR(cash)}${escapeHTML(asOf)} − belum dibayar ${formatIDR(stillNeeded)}<span class="lbl-long"> · profit masuk ${formatIDR(income.profit)}</span>`;
                 incomeSub.classList.remove('is-negative');
             }
 
@@ -6567,20 +6569,19 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             </div>
                             <div class="plan-bar plan-bar-thin plan-item-bar"><div class="plan-bar-fill${st === 'OVER' ? ' is-over' : ''}" style="width:${used}%; background:${st === 'OVER' ? '' : cat.color}"></div></div>
                         </div>
-                        <div class="debt-amount-col">
-                            <div class="debt-amount-label">ANGGARAN</div>
-                            <div class="debt-amount-total">${formatIDR(p.planned)}</div>
-                            <div class="debt-amount-remaining">Terpakai <span>${formatIDR(p.actual)}</span></div>
-                            <div class="debt-amount-remaining" style="color:${left < 0 ? '#991b1b' : '#065f46'};">${left < 0 ? 'Lewat' : 'Sisa'} <span>${formatIDR(Math.abs(left))}</span></div>
+                        <div class="debt-amount-col plan-amount-col">
+                            <div class="plan-amt plan-amt-main"><span class="debt-amount-label">Anggaran</span><span class="debt-amount-total">${formatIDR(p.planned)}</span></div>
+                            <div class="plan-amt"><span class="debt-amount-label">Terpakai</span><span class="plan-amt-val">${formatIDR(p.actual)}</span></div>
+                            <div class="plan-amt"><span class="debt-amount-label">${left < 0 ? 'Lewat' : 'Sisa'}</span><span class="plan-amt-val" style="color:${left < 0 ? '#991b1b' : '#065f46'};">${formatIDR(Math.abs(left))}</span></div>
                         </div>
                         <div class="debt-item-actions">
                             <button class="debt-action-btn btn-pay" onclick="openPlanSpendDialog('${id}')" title="Catat uang yang keluar untuk pos ini">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> Catat pengeluaran
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> <span class="lbl-long">Catat pengeluaran</span><span class="lbl-short">Catat</span>
                             </button>
                             <button class="debt-action-btn ${p.done ? '' : 'btn-settle'}" onclick="togglePlanDone('${id}')">
                                 ${p.done
-                                    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg> Buka lagi'
-                                    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"></polyline></svg> Tandai selesai'}
+                                    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg> <span class="lbl-long">Buka lagi</span><span class="lbl-short">Buka</span>'
+                                    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="lbl-long">Tandai selesai</span><span class="lbl-short">Selesai</span>'}
                             </button>
                             <button class="debt-action-btn" onclick="openPlanComposer('${id}')" title="Edit pos">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit

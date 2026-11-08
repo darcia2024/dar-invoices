@@ -2407,3 +2407,71 @@ body[data-view="plan"] .filter-section { display: none !important; }
     .plan-spend-info div { display: flex; justify-content: space-between; }
     .plan-item-bar { max-width: none; }
 }
+
+/* Rencana pengeluaran: amount column + short labels */
+.lbl-short { display: none; }
+.plan-amount-col { display: flex; flex-direction: column; gap: 1px; }
+.plan-amt { display: flex; justify-content: flex-end; align-items: baseline; gap: 6px; }
+.plan-amt .debt-amount-label { margin: 0; text-transform: none; font-size: 10.5px; }
+.plan-amt-val { font-size: 11.5px; font-weight: 500; color: #4a473d; font-variant-numeric: tabular-nums; }
+
+/* Rencana pengeluaran: compact mobile layout (declared last to beat the debt mobile rules) */
+@media (max-width: 600px) {
+    .lbl-long { display: none; }
+    .lbl-short { display: inline; }
+
+    #planSection .plan-toolbar { gap: 8px; margin-bottom: 12px; }
+    #planSection .plan-month-nav { padding: 3px; border-radius: 11px; }
+    #planSection .plan-nav-btn { width: 38px; height: 38px; }
+    #planSection .plan-month-label span { font-size: 13.5px; }
+    #planSection .plan-toolbar-actions { grid-template-columns: 1.6fr 1fr 1fr; gap: 6px; }
+    #planSection .plan-toolbar-actions .create-invoice-btn { grid-column: auto; min-height: 38px; font-size: 12px; padding: 8px 10px; border-radius: 10px; }
+    #planSection .plan-toolbar-actions .month-pill-btn { min-height: 38px; font-size: 11px; padding: 6px 8px; white-space: nowrap; }
+
+    #planSection .plan-stats-bar { gap: 8px; margin-bottom: 12px; }
+    #planSection .plan-stats-bar .stat-card { min-height: 0; padding: 10px 11px; gap: 0; border-radius: 12px; }
+    #planSection .plan-stats-bar .stat-icon { display: none; }
+    #planSection .plan-stats-bar .stat-info-title { font-size: 10px; margin-bottom: 2px; }
+    #planSection .plan-stats-bar .stat-info-val { font-size: 15.5px !important; letter-spacing: -0.4px; }
+    #planSection .plan-stat-sub { font-size: 9.5px; margin-top: 2px; line-height: 1.35; }
+
+    #planSection .plan-overview-card { padding: 11px 12px; margin-bottom: 12px; border-radius: 12px; }
+    #planSection .plan-overview-head { margin-bottom: 7px; }
+    #planSection .plan-overview-title { font-size: 12.5px; }
+    #planSection .plan-overview-sub { font-size: 10.5px; }
+    #planSection .plan-overview-pct { font-size: 17px; }
+    #planSection .plan-bar { height: 7px; }
+    #planSection .plan-bar-thin { height: 4px; }
+    #planSection .plan-category-list { gap: 7px; margin-top: 10px; }
+    #planSection .plan-cat-head { flex-direction: row; gap: 8px; font-size: 10.5px; margin-bottom: 3px; }
+    #planSection .plan-cat-name em { display: none; }
+
+    #planSection .plan-filter-row { margin-bottom: 10px; }
+    #planSection .debt-filter-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 5px; }
+    #planSection .debt-filter-pills::-webkit-scrollbar { display: none; }
+    #planSection .debt-filter-pills .month-pill-btn { flex-shrink: 0; min-height: 32px; padding: 6px 11px; font-size: 10.5px; }
+
+    #planItemList { gap: 8px; }
+    .plan-item-card.debt-item-card { padding: 10px 11px; gap: 7px; border-radius: 11px; }
+    .plan-item-card .debt-header-badges { gap: 4px; margin-bottom: 3px; }
+    .plan-item-card .debt-type-badge,
+    .plan-item-card .debt-status-pill { font-size: 8.5px; padding: 1.5px 5px; }
+    .plan-item-card .debt-person-name { font-size: 13.5px; margin: 0 0 1px; }
+    .plan-item-card .debt-notes { font-size: 11px; margin-bottom: 2px; line-height: 1.4; }
+    .plan-item-card .debt-meta-tags { font-size: 10px; }
+    .plan-item-card .plan-item-bar { margin-top: 5px; }
+    .plan-item-card .debt-amount-col.plan-amount-col {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        padding: 7px 9px;
+        border-radius: 8px;
+    }
+    .plan-item-card .plan-amt { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 0; }
+    .plan-item-card .plan-amt .debt-amount-label { font-size: 9.5px; }
+    .plan-item-card .plan-amt .debt-amount-total,
+    .plan-item-card .plan-amt-val { font-size: 12px; font-weight: 600; white-space: nowrap; letter-spacing: -0.2px; }
+    .plan-item-card .debt-item-actions { grid-template-columns: 1.3fr 1.1fr 0.9fr 40px; gap: 5px; }
+    .plan-item-card .debt-action-btn { min-height: 34px; padding: 5px 6px; font-size: 11px; border-radius: 8px; gap: 4px; }
+    .plan-item-card .debt-action-btn.btn-pay { grid-column: auto; }
+}
