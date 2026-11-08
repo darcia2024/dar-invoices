@@ -2037,6 +2037,7 @@ body[data-view="plan"] #planSection {
                 <div>
                     <div class="stat-info-title">Profit diterima</div>
                     <div id="statNetProfitTotal" class="stat-info-val" style="color: var(--color-profit);">Rp 0</div>
+                    <div id="noteNetProfit" class="stat-note"></div>
                 </div>
             </div>
 
@@ -2047,6 +2048,7 @@ body[data-view="plan"] #planSection {
                 <div>
                     <div class="stat-info-title">Pendapatan diterima</div>
                     <div id="statPaidTotal" class="stat-info-val" style="color: var(--color-paid);">Rp 0</div>
+                    <div id="notePaid" class="stat-note"></div>
                 </div>
             </div>
 
@@ -2057,6 +2059,7 @@ body[data-view="plan"] #planSection {
                 <div>
                     <div class="stat-info-title">Belum dibayar</div>
                     <div id="statUnpaidTotal" class="stat-info-val" style="color: var(--color-unpaid);">Rp 0</div>
+                    <div id="noteUnpaid" class="stat-note"></div>
                 </div>
             </div>
 
@@ -2067,6 +2070,7 @@ body[data-view="plan"] #planSection {
                 <div>
                     <div class="stat-info-title">Total nilai invoice</div>
                     <div id="statGrandTotal" class="stat-info-val">Rp 0</div>
+                    <div id="noteGrand" class="stat-note"></div>
                 </div>
             </div>
         </div>
@@ -5621,6 +5625,15 @@ body[data-view="plan"] #planSection {
             document.getElementById("statPaidTotal").innerText = formatIDR(totalPaidGross);
             document.getElementById("statUnpaidTotal").innerText = formatIDR(totalUnpaidGross);
             document.getElementById("statGrandTotal").innerText = formatIDR(totalGrandGross);
+            const allPeriods = activeMonthFilter === "all" || !monthlyMap[activeMonthFilter];
+            const periodText = allPeriods ? 'semua bulan' : monthLabelOf(activeMonthFilter);
+            const setNote = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+            setNote("noteNetProfit", `Uang bersih buat kamu: pendapatan diterima dikurangi biaya operasional · ${periodText}`);
+            setNote("notePaid", `Semua uang yang sudah masuk dari klien, termasuk DP & cicilan · ${periodText}`);
+            setNote("noteUnpaid", allPeriods
+                ? 'Sisa tagihan klien yang belum dibayar sampai sekarang'
+                : `Sisa tagihan yang masih terbuka di ${periodText}, termasuk tunggakan bulan sebelumnya`);
+            setNote("noteGrand", 'Pendapatan diterima + belum dibayar');
             const advisoryUnpaidEl = document.getElementById("advisoryUnpaidTotal");
             if (advisoryUnpaidEl) advisoryUnpaidEl.innerText = formatIDR(allMonthsUnpaidGross);
 

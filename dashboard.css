@@ -2475,3 +2475,7 @@ body[data-view="plan"] .filter-section { display: none !important; }
     .plan-item-card .debt-action-btn { min-height: 34px; padding: 5px 6px; font-size: 11px; border-radius: 8px; gap: 4px; }
     .plan-item-card .debt-action-btn.btn-pay { grid-column: auto; }
 }
+
+/* Short explanation under each invoice stat */
+.stat-note { font-size: 10.5px; line-height: 1.4; color: #3f3d36; opacity: .82; margin-top: 4px; max-width: 34ch; }
+@media (max-width: 600px) { .stat-note { font-size: 11px; } }
