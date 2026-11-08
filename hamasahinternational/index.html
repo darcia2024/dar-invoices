@@ -109,6 +109,8 @@
   }
   .pill::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: var(--gold); animation: pulse 1.8s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(200,147,4,.5); } 50% { box-shadow: 0 0 0 .4rem rgba(200,147,4,0); } }
+  .pill.paid { background: #eaf8ee; color: #15803d; }
+  .pill.paid::before { background: #16a34a; animation: none; }
   .due { font-size: .84rem; color: var(--muted); }
   .due b { display: block; color: var(--ink); font-size: 1rem; font-weight: 700; letter-spacing: -.01em; }
   .hero-cta { font-weight: 700; font-size: .84rem; color: var(--gold-dark); text-decoration: none; border-bottom: 1.5px solid var(--gold); padding-bottom: 2px; transition: .2s; }
@@ -252,7 +254,7 @@
     
     <div class="cover-meta">
       <div>Klien: <b>Ustadz Ifdony Nur Syamsi, Lc</b></div>
-      <div style="margin-top:2px;">Ref: <b>#INV/HI/2026/018</b> &bull; Total: <b>Rp 8.605.000</b></div>
+      <div style="margin-top:2px;">Ref: <b>#INV/HI/2026/018</b> &bull; Status: <b>LUNAS</b></div>
     </div>
 
     <div class="cover-pin-wrap">
@@ -289,14 +291,14 @@
   <!-- HERO TOTAL (LINES ONLY) -->
   <section class="hero">
     <div>
-      <div class="eyebrow">Total sisa tagihan pelunasan</div>
-      <div class="amount"><small>Rp</small>8.605.000</div>
-      <div class="terbilang">Delapan juta enam ratus lima ribu rupiah</div>
+      <div class="eyebrow">Total kontrak dibayar lunas</div>
+      <div class="amount"><small>Rp</small>16.105.000</div>
+      <div class="terbilang">Enam belas juta seratus lima ribu rupiah</div>
     </div>
     <div class="hero-r">
-      <span class="pill">MENUNGGU PELUNASAN</span>
+      <span class="pill paid">LUNAS</span>
+      <div class="due">Pelunasan diterima<b>8 November 2026</b></div>
       <div class="due">Tanggal terbit<b>7 November 2026</b></div>
-      <a class="hero-cta" href="#bayar">Bayar sekarang &darr;</a>
     </div>
   </section>
 
@@ -315,7 +317,7 @@
     <div>
       <div class="eyebrow">Skema Tagihan</div>
       <div class="v">Termin 2 + Logo &amp; Token AI</div>
-      <div class="s">DP 50% (Rp 7.500.000) Lunas Diterima</div>
+      <div class="s">DP Rp 7.500.000 &amp; pelunasan Rp 8.605.000 diterima</div>
     </div>
   </section>
 
@@ -349,7 +351,7 @@
             <div class="item-desc">Portal wali santri Kairo, LMS materi talaqqi, modul admin operasional, ledger keuangan &amp; generator invoice PDF, deployment server production, domain .com 1 th &amp; maintenance 1 th.</div>
           </td>
           <td>
-            <span class="tag-status tag-due">Ditagihkan</span>
+            <span class="tag-status tag-paid">Lunas / Masuk</span>
           </td>
           <td class="td-r num-mono" style="color:var(--ink); font-weight:700;">
             Rp 7.500.000
@@ -365,7 +367,7 @@
             </div>
           </td>
           <td>
-            <span class="tag-status tag-due">Ditagihkan</span>
+            <span class="tag-status tag-paid">Lunas / Masuk</span>
           </td>
           <td class="td-r num-mono" style="color:var(--ink); font-weight:700;">
             Rp 1.000.000
@@ -377,7 +379,7 @@
             <div class="item-desc">Biaya top up saldo token / credit model AI ($5 USD) untuk integrasi otomasi dan pengujian sistem cerdas Hamasah International.</div>
           </td>
           <td>
-            <span class="tag-status tag-due">Ditagihkan</span>
+            <span class="tag-status tag-paid">Lunas / Masuk</span>
           </td>
           <td class="td-r num-mono" style="color:var(--ink); font-weight:700;">
             Rp 105.000
@@ -390,9 +392,10 @@
   <div class="totals">
     <div class="line"><span>Total Kontrak (Web + Logo + Token AI)</span><b>Rp 16.105.000</b></div>
     <div class="line" style="color:#15803d;"><span>DP Termin 1 Web (Sudah Diterima)</span><b>- Rp 7.500.000</b></div>
+    <div class="line" style="color:#15803d;"><span>Pelunasan (Diterima 8 Nov 2026)</span><b>- Rp 8.605.000</b></div>
     <div class="line grand">
-      <span>Total Sisa Pelunasan</span>
-      <b>Rp 8.605.000</b>
+      <span>Sisa Tagihan</span>
+      <b style="color:#15803d;">Rp 0 &middot; LUNAS</b>
     </div>
   </div>
 
@@ -425,28 +428,20 @@
   </section>
 
   <!-- 03 PEMBAYARAN -->
-  <div class="sec" id="bayar"><span class="n">03</span><h2>Instruksi Pembayaran</h2></div>
+  <div class="sec" id="bayar"><span class="n">03</span><h2>Status Pembayaran</h2></div>
   <section class="pay">
     <div class="pay-l">
       <div class="bank-head">
         <img class="bank-logo" src="/hamasahinternational/mandiri_logo.webp" onerror="this.onerror=null; this.src='/mandiri_logo.webp';" alt="Bank Mandiri">
         <span class="owner">a.n. Daru Fahmaa Muliawan</span>
       </div>
-      <button type="button" class="acc-copy" data-copy="1550010616962" data-toast="Nomor rekening Mandiri berhasil disalin" aria-label="Salin nomor rekening 1550010616962">
-        <span class="acc-label">No. rekening Mandiri (Klik untuk salin)</span>
-        <span class="acc-num">1550010616962</span>
-        <svg class="ico no-print" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg>
-      </button>
-      <p class="note">Setelah transfer pelunasan, seluruh kredensial akun server dan file master logo akan langsung dikirimkan.</p>
+      <p class="note" style="font-size:.9rem; color:var(--ink-2);">Seluruh pembayaran telah diterima: DP Termin 1 Rp 7.500.000 dan pelunasan Rp 8.605.000 (8 November 2026). Tidak ada sisa tagihan.</p>
+      <p class="note">Kredensial akun server dan file master logo diserahkan sesuai ketentuan handover.</p>
     </div>
     <div class="pay-r">
-      <div class="eyebrow">Total yang ditransfer</div>
-      <div class="big">Rp 8.605.000</div>
-      <div class="pay-actions no-print">
-        <button type="button" class="btn" data-copy="1550010616962" data-toast="Nomor rekening disalin">Salin rekening</button>
-        <button type="button" class="btn" data-copy="8605000" data-toast="Nominal Rp 8.605.000 disalin">Salin nominal</button>
-        <a class="btn btn-solid" target="_blank" rel="noopener" href="https://wa.me/6281311506025?text=Assalamu%E2%80%99alaikum%20Mas%20Daru%2C%20saya%20konfirmasi%20pelunasan%20invoice%20Hamasah%20International%20%23INV%2FHI%2F2026%2F018%20(Rp%208.605.000)%20untuk%20Digital%20Ecosystem%2C%202%20Logo%2C%20dan%20Token%20AI.">Konfirmasi via WhatsApp</a>
-      </div>
+      <div class="eyebrow">Total diterima</div>
+      <div class="big" style="color:#15803d;">Rp 16.105.000</div>
+      <span class="pill paid" style="align-self:flex-start;">LUNAS</span>
     </div>
   </section>
 
