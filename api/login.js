@@ -1,4 +1,5 @@
 const { createSessionCookie, pinMatches, redisCommand } = require("./_session");
+const { getWorkspace } = require("./_workspaces");
 
 const MAX_FAILURES = 8;
 const LOCK_SECONDS = 15 * 60;
@@ -33,20 +34,28 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const key = `dar-invoices:login-fail:${clientIp(req)}`;
+    const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+    // A separate account logs in with { workspace: "<slug>" }; without it this is the DAR login.
+    let ws = null;
+    if (body.workspace) {
+      const found = getWorkspace(body.workspace);
+      if (!found) return res.status(404).json({ error: "Akun tidak ditemukan." });
+      ws = found.slug;
+    }
+
+    const key = `dar-invoices:login-fail:${ws ? `${ws}:` : ""}${clientIp(req)}`;
     if ((await failureCount(key)) >= MAX_FAILURES) {
       return res.status(429).json({ error: "Terlalu banyak percobaan. Coba lagi 15 menit lagi." });
     }
 
-    const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
-    if (!pinMatches(body.pin)) {
+    if (!pinMatches(body.pin, ws)) {
       await recordFailure(key);
       await new Promise((resolve) => setTimeout(resolve, 600));
       return res.status(401).json({ error: "PIN belum sesuai. Coba lagi." });
     }
 
     try { await redisCommand(["DEL", key]); } catch (e) {}
-    res.setHeader("Set-Cookie", createSessionCookie());
+    res.setHeader("Set-Cookie", createSessionCookie(ws));
     return res.status(200).json({ ok: true });
   } catch (error) {
     return res.status(error.statusCode || 500).json({ error: error.message || "Login gagal" });

@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>DAR INVOICES | Official Billing & Revenue Portal</title>
+    <!-- Separate accounts (/<slug>) get this page from api/workspace.js, which drops every
+         dar-only block and unwraps the ws: alternatives. Keep DAR data inside dar-only markers. -->
+    <!--dar-only--><title>DAR INVOICES | Official Billing & Revenue Portal</title><!--/dar-only-->
+    <!--ws:<title>{{WS_NAME}} | Invoices</title>-->
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
     <!-- PWA: Home Screen app on iPhone -->
-    <link rel="manifest" href="/manifest.webmanifest">
+    <!--dar-only--><link rel="manifest" href="/manifest.webmanifest"><!--/dar-only-->
+    <!--ws:<link rel="manifest" href="{{WS_HOME}}/manifest.webmanifest">-->
     <meta name="theme-color" content="#f1eddf">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="DAR">
+    <!--dar-only--><meta name="apple-mobile-web-app-title" content="DAR"><!--/dar-only-->
+    <!--ws:<meta name="apple-mobile-web-app-title" content="{{WS_NAME}}">-->
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
     <script>if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) document.documentElement.classList.add('is-standalone');</script>
@@ -2015,7 +2020,8 @@ body[data-view="pack"] #packSection {
 
     <aside class="workspace-sidebar">
         <div class="workspace-sidebar-top">
-            <a class="workspace-brand" href="/" aria-label="DAR Invoices"><span class="brand-mark"><img class="brand-mascot" src="/brand/dar-mascot-128.png" alt="" width="40" height="40"></span><span class="brand-text"><b>DAR</b><small>Invoices</small></span></a>
+            <!--dar-only--><a class="workspace-brand" href="/" aria-label="DAR Invoices"><span class="brand-mark"><img class="brand-mascot" src="/brand/dar-mascot-128.png" alt="" width="40" height="40"></span><span class="brand-text"><b>DAR</b><small>Invoices</small></span></a><!--/dar-only-->
+            <!--ws:<a class="workspace-brand" href="{{WS_HOME}}" aria-label="{{WS_NAME}}"><span class="brand-mark"><img class="brand-mascot" src="/brand/dar-mascot-128.png" alt="" width="40" height="40"></span><span class="brand-text"><b>{{WS_NAME}}</b><small>Invoices</small></span></a>-->
             <button class="mobile-lock-btn" onclick="lockAdminDashboard()" aria-label="Kunci workspace">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 <span>Kunci</span>
@@ -2031,7 +2037,8 @@ body[data-view="pack"] #packSection {
             <button class="sidebar-link mobile-lock" onclick="lockAdminDashboard()">Kunci</button>
         </nav>
         <div class="sidebar-note"><span>Catatan workspace</span><p>Status pembayaran dan profit bisa dikelola langsung dari kartu invoice.</p></div>
-        <div class="sidebar-account"><strong>Daru Fahmaa</strong><span>Agency workspace</span><button onclick="lockAdminDashboard()">Kunci workspace</button></div>
+        <!--dar-only--><div class="sidebar-account"><strong>Daru Fahmaa</strong><span>Agency workspace</span><button onclick="lockAdminDashboard()">Kunci workspace</button></div><!--/dar-only-->
+        <!--ws:<div class="sidebar-account"><strong>{{WS_OWNER}}</strong><span>{{WS_NAME}}</span><button onclick="lockAdminDashboard()">Kunci workspace</button></div>-->
     </aside>
     <main class="portal-container" id="workspace">
         
@@ -2314,17 +2321,22 @@ body[data-view="pack"] #packSection {
                         <div class="advisory-card-top">
                             <div class="advisory-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
                             <div>
-                                <div class="advisory-card-title">SOP Penagihan Piutang <span id="advisoryUnpaidTotal">Rp 40.640.000</span></div>
+                                <div class="advisory-card-title">SOP Penagihan Piutang <span id="advisoryUnpaidTotal">Rp 0</span></div>
                                 <div class="advisory-card-subtitle">Penyelamatan Cash Flow</div>
                             </div>
                         </div>
                         <div class="advisory-body">
                             Prioritaskan penagihan termin pelunasan dengan jadwal terstruktur:
                             <div class="advisory-points-list">
+                                <!--dar-only-->
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Katalis ERP (Sisa 5jt)</strong>: Jadwalkan penagihan bersamaan penyerahan modul final v1.</span></div>
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>KPI PPMI (Sisa 7,1jt)</strong>: Tagih pelunasan, lalu langsung potong 1,5jt untuk fee Fairuz agar cash flow bersih.</span></div>
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Hamasah (Sisa 8,6jt)</strong>: Kunci serah terima kredensial sebelum pelunasan final diterima penuh.</span></div>
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Talkhisan (2,1jt)</strong>: Counter tawaran 200rb ke 250rb/modul untuk menjaga standar harga profesional.</span></div>
+                                <!--/dar-only-->
+                                <!--ws:<div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Sisa terbesar dulu</strong>: Tagih invoice dengan sisa paling besar lebih dulu (lihat tabel Belum dibayar di atas).</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Tagih per termin</strong>: Kaitkan tiap pelunasan dengan serah terima hasil kerja.</span></div>
+                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Pengingat sopan</strong>: Kirim pengingat WhatsApp saat jatuh tempo, lalu tindak lanjuti tiap minggu.</span></div>-->
                             </div>
                         </div>
                     </div>
@@ -2341,7 +2353,8 @@ body[data-view="pack"] #packSection {
                         <div class="advisory-body">
                             Hindari mencampur uang bisnis dengan uang jajan harian:
                             <div class="advisory-points-list">
-                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Bank Mandiri (1550010616962)</strong>: Khusus penampung transfer pembayaran klien.</span></div>
+                                <!--dar-only--><div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Bank Mandiri (1550010616962)</strong>: Khusus penampung transfer pembayaran klien.</span></div><!--/dar-only-->
+                                <!--ws:<div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>Rekening utama</strong>: Khusus penampung transfer pembayaran klien.</span></div>-->
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>BCA / Personal</strong>: Hanya menerima transfer dividen 20% untuk pengeluaran pribadi sehari-hari.</span></div>
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span><strong>BSI (Syariah)</strong>: Tempat menimbun dana darurat. Jangan pasang kartu debit di e-commerce/GoPay.</span></div>
                             </div>
@@ -2361,7 +2374,7 @@ body[data-view="pack"] #packSection {
                             Belajar dari kasus pembatalan sepihak sisa tagihan:
                             <div class="advisory-points-list">
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Wajibkan klausul: <strong>DP minimal 50% bersifat hangus (non-refundable)</strong> jika proyek dibatalkan klien.</span></div>
-                                <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Seperti kasus Bang Edo (dibayar 150rb, sisa 200rb cancel), DP yang masuk langsung dikonversi menjadi laba bersih.</span></div>
+                                <!--dar-only--><div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Seperti kasus Bang Edo (dibayar 150rb, sisa 200rb cancel), DP yang masuk langsung dikonversi menjadi laba bersih.</span></div><!--/dar-only-->
                                 <div class="advisory-point-item"><span class="advisory-bullet">&bull;</span> <span>Jangan serahkan aset mentah (source code, vector file, PIN master) sebelum 100% lunas.</span></div>
                             </div>
                         </div>
@@ -2580,6 +2593,7 @@ body[data-view="pack"] #packSection {
 
         <!-- Invoice Cards Grid -->
         <div id="invoiceGrid" class="invoice-grid board-only" aria-label="Invoice menurut status pembayaran">
+            <!--dar-only-->
             <div class="invoice-card" id="card-almadroj" data-id="almadroj" data-month="2026-09" data-amount="3700000" data-client="sidi watra pusat belajar al madroj al madraj bimbel standard september 2026 inv/alm/2026/016 almadroj-edu.com">
                 <div>
                     <div class="card-top"><div class="client-title">Sidi Watra · Pusat Belajar Al Madroj</div><div class="status-badge-group">
@@ -4351,8 +4365,10 @@ body[data-view="pack"] #packSection {
                     <span>Buka Invoice Katalis ERP</span>
                 </a>
             </div>
+            <!--/dar-only-->
         </div>
 
+        <!--dar-only-->
         <!-- Developer Footer Profile Card -->
         <div class="dev-footer-card">
             <div class="dev-info-left">
@@ -4368,19 +4384,20 @@ body[data-view="pack"] #packSection {
                 <span>HUBUNGI VIA WHATSAPP (081311506025)</span>
             </a>
         </div>
+        <!--/dar-only-->
 
     </main>
 
     <!-- ASISTEN DAR (floating AI assistant) -->
     <button type="button" class="ai-fab" id="aiFab" onclick="openAssistant()" aria-label="Buka Asisten DAR">
         <img src="/brand/dar-mascot-fab.png" alt="" width="40" height="40">
-        <span>Tanya DAR</span>
+        <!--dar-only--><span>Tanya DAR</span><!--/dar-only--><!--ws:<span>Tanya Asisten</span>-->
     </button>
     <section class="ai-panel" id="aiPanel" hidden aria-label="Asisten DAR" role="dialog" aria-modal="false">
         <header class="ai-head">
             <img src="/brand/dar-mascot-128.png" alt="" width="34" height="34">
             <div class="ai-head-text">
-                <b>Asisten DAR</b>
+                <!--dar-only--><b>Asisten DAR</b><!--/dar-only--><!--ws:<b>Asisten</b>-->
                 <small id="aiModeHint">Tanya data keuangan lo, atau suruh nyatat.</small>
             </div>
             <button type="button" class="ai-icon-btn" onclick="clearAssistant()" title="Mulai obrolan baru" aria-label="Mulai obrolan baru">
@@ -4732,6 +4749,8 @@ body[data-view="pack"] #packSection {
         // Akses dashboard dijaga di server (middleware.js + /api/login).
         // Mengunci workspace = menghapus sesi di server, lalu kembali ke halaman login.
         let workspaceLocked = false;
+        // A separate account lives at /<slug> (window.DAR_WS comes from api/workspace.js).
+        const DASHBOARD_HOME = (window.DAR_WS && window.DAR_WS.home) || '/';
 
         function lockAdminDashboard() {
             if (workspaceLocked) return;
@@ -4740,7 +4759,7 @@ body[data-view="pack"] #packSection {
             // Drop the offline copy of the dashboard so nothing financial stays on the device.
             try { navigator.serviceWorker?.controller?.postMessage('clear-dashboard-cache'); } catch (e) {}
             fetch('/api/logout', { method: 'POST', keepalive: true, credentials: 'same-origin' })
-                .finally(() => window.location.replace('/'));
+                .finally(() => window.location.replace(DASHBOARD_HOME));
         }
 
         // ---- PWA (Home Screen app) ----
@@ -4755,7 +4774,7 @@ body[data-view="pack"] #packSection {
             const link = event.target.closest && event.target.closest('a[href]');
             if (!link || link.target === '_blank') return;
             const url = new URL(link.href, location.href);
-            const isDashboard = url.origin === location.origin && ['/', '/index', '/index.html'].includes(url.pathname);
+            const isDashboard = url.origin === location.origin && ['/', '/index', '/index.html', DASHBOARD_HOME].includes(url.pathname);
             if (url.protocol.startsWith('http') && !isDashboard) {
                 event.preventDefault();
                 window.open(url.href, '_blank', 'noopener');
@@ -4775,7 +4794,8 @@ body[data-view="pack"] #packSection {
             }
         });
 
-        const defaultPaymentStatuses = {
+        // dar-only blocks below are DAR's own data; separate accounts get the /*ws:...*/ value instead.
+        const defaultPaymentStatuses = /*ws:{}*/ /*dar-only*/{
             almadroj: "PAID",
             markaz: "PAID",
             dreammecca: "PAID",
@@ -4809,7 +4829,7 @@ body[data-view="pack"] #packSection {
             masakbar: "PAID",
             "talkhisan-hamasah": "UNPAID",
             katalis: "DP"
-        };
+        }/*/dar-only*/;
 
         function getStoredNumber(key, fallback) {
             const storedValue = localStorage.getItem(key);
@@ -4823,13 +4843,13 @@ body[data-view="pack"] #packSection {
             return storedValue === null || storedValue === "" ? fallback : storedValue;
         }
 
-        const defaultDpAmounts = {
+        const defaultDpAmounts = /*ws:{}*/ /*dar-only*/{
             kpi: 7100000,
             katalis: 5000000,
             hamasahinternational: 7500000
-        };
+        }/*/dar-only*/;
 
-        const defaultNetProfits = {
+        const defaultNetProfits = /*ws:{}*/ /*dar-only*/{
             almadroj: 3500000,
             markaz: 5500000,
             dreammecca: 350000,
@@ -4863,7 +4883,7 @@ body[data-view="pack"] #packSection {
             masakbar: 150000,
             "talkhisan-hamasah": 1200000,
             katalis: 10000000
-        };
+        }/*/dar-only*/;
 
         // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
         // Auto-migrate status version so returning visitors get updated canonical payment statuses
@@ -5152,6 +5172,7 @@ body[data-view="pack"] #packSection {
 
         let invoiceMonthIndex = {};
 
+        /*dar-only*/
         // Auto-migrate cached draft pgstour profit to 1000000
         if (localStorage.getItem("profit_pgstour") === "9000000") {
             localStorage.setItem("profit_pgstour", "1000000");
@@ -5161,8 +5182,9 @@ body[data-view="pack"] #packSection {
             localStorage.setItem("profit_kpi-pelunasan", "5600000");
             netProfits["kpi-pelunasan"] = 5600000;
         }
+        /*/dar-only*/
 
-        const invoiceItems = [
+        const invoiceItems = /*ws:[]*/ /*dar-only*/[
             { id: "almadroj", name: "Sidi Watra (Pusat Belajar Al Madroj)", month: "2026-09", monthLabel: "September 2026", gross: 3700000 },
             { id: "markaz", name: "Markaz Fiqih", month: "2026-07", monthLabel: "Juli 2026", gross: 8500000 },
             { id: "dreammecca", name: "Dreammecca - Umrahme", month: "2026-07", monthLabel: "Juli 2026", gross: 700000 },
@@ -5234,7 +5256,7 @@ body[data-view="pack"] #packSection {
             { id: "masakbar", name: "Mas Akbar (Google AI Pro & Canva Pro)", month: "2026-10", monthLabel: "Oktober 2026", gross: 150000 },
             { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 },
             { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 }
-        ];
+        ]/*/dar-only*/;
 
         function formatIDR(num) {
             return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -5328,7 +5350,7 @@ body[data-view="pack"] #packSection {
                     credentials: "same-origin",
                     cache: "no-store"
                 });
-                if (response.status === 401) { window.location.replace("/"); return; }
+                if (response.status === 401) { window.location.replace(DASHBOARD_HOME); return; }
                 if (!response.ok) throw new Error("Cloud state unavailable");
                 const state = await response.json();
                 applyBillingState(state);
@@ -6107,7 +6129,7 @@ body[data-view="pack"] #packSection {
         // ========================================================
         // DEBT & RECEIVABLE (HUTANG & PIUTANG) LOGIC & STATE
         // ========================================================
-        const defaultInitialDebts = [
+        const defaultInitialDebts = /*ws:[]*/ /*dar-only*/[
             {
                 id: "debt-teh-umi",
                 type: "piutang",
@@ -6145,7 +6167,7 @@ body[data-view="pack"] #packSection {
                 notes: "Bayar rumah di Mesir bulan September",
                 createdAt: 1788952000000
             }
-        ];
+        ]/*/dar-only*/;
 
         let debts = (() => {
             try {
@@ -6167,6 +6189,7 @@ body[data-view="pack"] #packSection {
 
         let activeDebtFilter = 'all';
 
+        /*dar-only*/
         // Auto-sync debt-teh-umi payment in localStorage if it was previously 0
         try {
             const storedDebts = localStorage.getItem('dar-debts-records');
@@ -6181,6 +6204,7 @@ body[data-view="pack"] #packSection {
                 }
             }
         } catch (e) {}
+        /*/dar-only*/
 
         setTimeout(() => {
             renderDebtUI();
@@ -6419,6 +6443,16 @@ body[data-view="pack"] #packSection {
             persistBillingState();
         }
 
+        // Where to transfer, for payment reminders: DAR's main account, or for a separate account
+        // every account it filled in under Update saldo.
+        function paymentAccountLines() {
+            /*dar-only*/if (!window.DAR_WS) return '🏦 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan';/*/dar-only*/
+            const lines = BANK_ACCOUNTS.map(acc => ({ acc, detail: accountDetail(acc.key) }))
+                .filter(x => x.detail.number)
+                .map(x => `🏦 ${x.acc.bankName}: ${x.detail.number} a.n. ${x.detail.holder}`);
+            return lines.length ? lines.join('\n') : '(no. rekening belum diisi)';
+        }
+
         function copyDebtWaScript(id) {
             const item = debts.find(d => d.id === id);
             if (!item) return;
@@ -6442,7 +6476,7 @@ ${(item.paid || 0) > 0 ? `💳 Sudah dicicil: ${formatIDR(item.paid)}
 `}${dueText}
 
 Nanti kalau sudah ada kelonggaran, bisa ditransfer ke rekening resmi:
-🏦 Bank Mandiri: 1550010616962 a.n. Daru Fahmaa Muliawan
+${paymentAccountLines()}
 
 Terima kasih banyak sebelumnya ya! 😊🤝`;
                 }
@@ -7355,7 +7389,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             today: localDateKey()
                         })
                     });
-                    if (response.status === 401) { window.location.replace('/'); return; }
+                    if (response.status === 401) { window.location.replace(DASHBOARD_HOME); return; }
                     const data = await response.json().catch(() => ({}));
                     if (!response.ok) throw new Error(data.error || 'Gagal membaca struk. Coba lagi.');
                     (data.transactions || []).forEach(t => found.push({ ...t, imageIndex: batches[b][t.imageIndex] ? batches[b][t.imageIndex].index : batches[b][0].index }));
@@ -7685,7 +7719,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                         credentials: 'same-origin',
                         body: JSON.stringify({ images: images.slice(i, i + 5).map(img => ({ data: img.data, mediaType: img.mediaType })), posOptions, today: localDateKey() })
                     });
-                    if (response.status === 401) { window.location.replace('/'); return; }
+                    if (response.status === 401) { window.location.replace(DASHBOARD_HOME); return; }
                     const data = await response.json().catch(() => ({}));
                     if (!response.ok) throw new Error(data.error || 'Gagal membaca struk. Coba lagi.');
                     found.push(...(data.transactions || []));
@@ -7831,7 +7865,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     credentials: 'same-origin',
                     body: JSON.stringify({ mode, messages: history, context: buildAssistantContext() })
                 });
-                if (response.status === 401) { window.location.replace('/'); return; }
+                if (response.status === 401) { window.location.replace(DASHBOARD_HOME); return; }
                 const data = await response.json().catch(() => ({}));
                 if (!response.ok) throw new Error(data.error || 'Asisten lagi error. Coba lagi.');
                 list.push({ role: 'assistant', content: data.reply || '', actions: (data.actions || []).map(a => ({ name: a.name, args: a.args })) });
@@ -8350,7 +8384,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             { key: 'mayar', name: 'Mayar', bankName: 'Mayar Wallet', logo: '/bank-logos/mayar.png', tag: 'Wallet bisnis', wallet: true }
         ];
 
-        const DEFAULT_BANK_BALANCES = {
+        const DEFAULT_BANK_BALANCES = /*ws:{}*/ /*dar-only*/{
             mandiri: 2556495,
             jago: 23055,
             blu: 6467,
@@ -8359,17 +8393,17 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             dana: 4996,
             // Mayar Wallet per 9 Nov 2026: Rp466.576 siap dicairkan + Rp349.000 pending.
             mayar: 815576
-        };
-        const DEFAULT_BANK_UPDATED_AT = '2026-11-08';
-        const DEFAULT_ACCOUNT_HOLDER = 'Daru Fahmaa Muliawan';
-        const DEFAULT_ACCOUNT_NUMBERS = {
+        }/*/dar-only*/;
+        const DEFAULT_BANK_UPDATED_AT = /*ws:''*/ /*dar-only*/'2026-11-08'/*/dar-only*/;
+        const DEFAULT_ACCOUNT_HOLDER = /*ws:window.DAR_WS.owner*/ /*dar-only*/'Daru Fahmaa Muliawan'/*/dar-only*/;
+        const DEFAULT_ACCOUNT_NUMBERS = /*ws:{}*/ /*dar-only*/{
             mandiri: '1550010616962',
             line: '14804962490',
             blu: '006503316487',
             jago: '100598361895',
             dana: '081311506025',
             gopay: '081311506025'
-        };
+        }/*/dar-only*/;
         const DEFAULT_BANK_COPY_TEMPLATE = '{bank}\n{label}: {nomor}\na.n. {nama}';
 
         // v2: the old key held placeholder numbers for BCA/BSI/BRI accounts that are no longer tracked.
@@ -8700,6 +8734,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             });
         }
 
+        /*dar-only*/
         function copyWaScript() {
             const waScript = `Assalamu’alaikum Warahmatullahi Wabarakatuh, Mas Faqih. 🙏✨
 
@@ -9759,6 +9794,7 @@ Dokumen proposal resmi, breakdown teknis, serta opsi cetak/unduh PDF dapat dicek
                 showToast("GAGAL MENYALIN SCRIPT");
             });
         }
+        /*/dar-only*/
 
         function showToast(msg) {
             const toast = document.getElementById("toast");

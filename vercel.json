@@ -7,25 +7,48 @@
     },
     "api/assistant.js": {
       "maxDuration": 60
+    },
+    "api/workspace.js": {
+      "includeFiles": "{index.html,admin-login.html}"
     }
   },
   "headers": [
     {
       "source": "/sw.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
-        { "key": "Service-Worker-Allowed", "value": "/" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
       ]
     },
     {
       "source": "/manifest.webmanifest",
       "headers": [
-        { "key": "Content-Type", "value": "application/manifest+json" },
-        { "key": "Cache-Control", "value": "no-cache" }
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
       ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/demo",
+      "destination": "/api/workspace?ws=demo"
+    },
+    {
+      "source": "/:ws/manifest.webmanifest",
+      "destination": "/api/workspace?ws=:ws&asset=manifest"
+    },
     {
       "source": "/ismu",
       "destination": "/ismu/index.html"

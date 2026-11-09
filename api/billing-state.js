@@ -1,6 +1,12 @@
-const { hasValidSession, redisCommand } = require("./_session");
+const { hasValidSession, redisCommand, requestWorkspace } = require("./_session");
 
 const STATE_KEY = "dar-invoices:billing-state";
+
+// Separate accounts keep their data under their own key and start empty: none of the DAR
+// defaults or migrations below apply to them.
+function stateKey(ws) {
+  return ws ? `dar-invoices:ws:${ws}:billing-state` : STATE_KEY;
+}
 
 const defaultDebts = [
   {
@@ -180,14 +186,17 @@ function applyMigrations(state) {
   };
 }
 
-function mergeState(state) {
+const EMPTY_DEFAULTS = { debts: [], paymentStatuses: {}, dpAmounts: {}, netProfits: {} };
+
+function mergeState(state, ws = null) {
+  const defaults = ws ? EMPTY_DEFAULTS : { ...defaultState, debts: defaultDebts };
   return {
     appliedMigrations: state && Array.isArray(state.appliedMigrations) ? state.appliedMigrations : [],
     customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
     deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
     purgedInvoiceIds: state && Array.isArray(state.purgedInvoiceIds) ? state.purgedInvoiceIds : [],
     // An empty list is the user's choice; only seed the defaults when debts were never saved.
-    debts: state && Array.isArray(state.debts) ? state.debts : defaultDebts,
+    debts: state && Array.isArray(state.debts) ? state.debts : defaults.debts,
     bankBalances: state && state.bankBalances && typeof state.bankBalances === "object" ? state.bankBalances : null,
     bankBalancesUpdatedAt: state && typeof state.bankBalancesUpdatedAt === "string" ? state.bankBalancesUpdatedAt : null,
     bankAccountDetails: state && state.bankAccountDetails && typeof state.bankAccountDetails === "object" ? state.bankAccountDetails : null,
@@ -203,15 +212,15 @@ function mergeState(state) {
     planSeededMonths: state && Array.isArray(state.planSeededMonths) ? state.planSeededMonths.filter((m) => /^\d{4}-\d{2}$/.test(m)) : [],
     paymentLog: state && state.paymentLog && typeof state.paymentLog === "object" && !Array.isArray(state.paymentLog) ? state.paymentLog : {},
     paymentStatuses: {
-      ...defaultState.paymentStatuses,
+      ...defaults.paymentStatuses,
       ...(state && state.paymentStatuses ? state.paymentStatuses : {}),
     },
     dpAmounts: {
-      ...defaultState.dpAmounts,
+      ...defaults.dpAmounts,
       ...(state && state.dpAmounts ? state.dpAmounts : {}),
     },
     netProfits: {
-      ...defaultState.netProfits,
+      ...defaults.netProfits,
       ...(state && state.netProfits ? state.netProfits : {}),
     },
   };
@@ -221,30 +230,32 @@ module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
   try {
-    if (!hasValidSession(req)) {
+    const ws = requestWorkspace(req);
+    if (!hasValidSession(req, ws)) {
       return res.status(401).json({ error: "Unauthorized" });
     }
+    const key = stateKey(ws);
 
     if (req.method === "GET") {
-      const saved = await redisCommand(["GET", STATE_KEY]);
+      const saved = await redisCommand(["GET", key]);
       const parsed = saved ? JSON.parse(saved) : null;
-      if (parsed) {
+      if (parsed && !ws) {
         const { state: migrated, changed } = applyMigrations(parsed);
         if (changed) {
           const merged = mergeState(migrated);
-          await redisCommand(["SET", STATE_KEY, JSON.stringify(merged)]);
+          await redisCommand(["SET", key, JSON.stringify(merged)]);
           return res.status(200).json(merged);
         }
       }
-      return res.status(200).json(mergeState(parsed));
+      return res.status(200).json(mergeState(parsed, ws));
     }
 
     if (req.method === "PUT" || req.method === "POST") {
       const incoming = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-      const saved = await redisCommand(["GET", STATE_KEY]);
+      const saved = await redisCommand(["GET", key]);
       const previous = saved ? JSON.parse(saved) : {};
-      const state = mergeState({ ...previous, ...incoming });
-      await redisCommand(["SET", STATE_KEY, JSON.stringify(state)]);
+      const state = mergeState({ ...previous, ...incoming }, ws);
+      await redisCommand(["SET", key, JSON.stringify(state)]);
       return res.status(200).json(state);
     }
 

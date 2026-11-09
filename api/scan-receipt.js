@@ -1,7 +1,7 @@
 // Reads screenshots of receipts / transfer proofs / e-wallet history with a vision model on
 // OpenRouter and returns the spending transactions it finds. Images are only forwarded to the
 // API, never stored. Set OPENROUTER_API_KEY (and optionally OPENROUTER_MODEL) on Vercel.
-const { hasValidSession } = require("./_session");
+const { hasValidSession, requestWorkspace } = require("./_session");
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const DEFAULT_MODEL = "anthropic/claude-haiku-5.5";
@@ -63,7 +63,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    if (!hasValidSession(req)) return res.status(401).json({ error: "Unauthorized" });
+    if (!hasValidSession(req, requestWorkspace(req))) return res.status(401).json({ error: "Unauthorized" });
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
       return res.status(503).json({ error: "OPENROUTER_API_KEY belum diatur di Vercel. Scan struk belum bisa dipakai." });

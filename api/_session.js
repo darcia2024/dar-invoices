@@ -1,8 +1,34 @@
 // Shared admin-session helpers. Files prefixed with "_" are not exposed as routes by Vercel.
 const crypto = require("crypto");
+const { getWorkspace, pinEnvName } = require("./_workspaces");
 
+// The DAR dashboard uses the "dar_admin" cookie (also checked by middleware.js). Every other
+// account gets its own cookie and its own signed payload, so one account's session never
+// opens another account's data.
 const COOKIE_NAME = "dar_admin";
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
+function cookieName(ws) {
+  return ws ? `dar_ws_${ws.replace(/-/g, "_")}` : COOKIE_NAME;
+}
+
+function signedText(ws, expires) {
+  return ws ? `dar-ws.${ws}.${expires}` : `dar-admin.${expires}`;
+}
+
+// Which account an API request is for: the dashboard of a separate account sends
+// "X-DAR-Workspace: <slug>". No header means the DAR dashboard.
+function requestWorkspace(req) {
+  const raw = req.headers["x-dar-workspace"];
+  if (!raw) return null;
+  const ws = getWorkspace(raw);
+  if (!ws) {
+    const error = new Error("Akun tidak ditemukan");
+    error.statusCode = 404;
+    throw error;
+  }
+  return ws.slug;
+}
 
 function getSecret() {
   const secret = process.env.SESSION_SECRET;
@@ -14,18 +40,18 @@ function getSecret() {
   return secret;
 }
 
-function sign(payload, secret) {
-  return crypto.createHmac("sha256", secret).update(`dar-admin.${payload}`).digest("base64url");
+function sign(ws, expires, secret) {
+  return crypto.createHmac("sha256", secret).update(signedText(ws, expires)).digest("base64url");
 }
 
-function createSessionCookie() {
+function createSessionCookie(ws = null) {
   const expires = Date.now() + SESSION_TTL_MS;
-  const value = `${expires}.${sign(String(expires), getSecret())}`;
-  return `${COOKIE_NAME}=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${SESSION_TTL_MS / 1000}`;
+  const value = `${expires}.${sign(ws, String(expires), getSecret())}`;
+  return `${cookieName(ws)}=${value}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${SESSION_TTL_MS / 1000}`;
 }
 
-function clearSessionCookie() {
-  return `${COOKIE_NAME}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`;
+function clearSessionCookie(ws = null) {
+  return `${cookieName(ws)}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`;
 }
 
 function readCookie(req, name) {
@@ -37,20 +63,21 @@ function readCookie(req, name) {
   return null;
 }
 
-function hasValidSession(req) {
-  const value = readCookie(req, COOKIE_NAME);
+function hasValidSession(req, ws = null) {
+  const value = readCookie(req, cookieName(ws));
   if (!value) return false;
   const [expires, signature] = value.split(".");
   if (!expires || !signature || !(Number(expires) > Date.now())) return false;
-  const expected = Buffer.from(sign(expires, getSecret()));
+  const expected = Buffer.from(sign(ws, expires, getSecret()));
   const given = Buffer.from(signature);
   return expected.length === given.length && crypto.timingSafeEqual(expected, given);
 }
 
-function pinMatches(input) {
-  const pin = process.env.ADMIN_PASSCODE;
+function pinMatches(input, ws = null) {
+  const envName = ws ? pinEnvName(ws) : "ADMIN_PASSCODE";
+  const pin = process.env[envName];
   if (!pin || pin.length < 6) {
-    const error = new Error("ADMIN_PASSCODE belum diatur (minimal 6 karakter)");
+    const error = new Error(`${envName} belum diatur di Vercel (minimal 6 karakter)`);
     error.statusCode = 503;
     throw error;
   }
@@ -100,4 +127,5 @@ module.exports = {
   hasValidSession,
   pinMatches,
   redisCommand,
+  requestWorkspace,
 };

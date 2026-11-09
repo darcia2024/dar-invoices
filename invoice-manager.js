@@ -40,15 +40,8 @@ function syncCustomInvoices() {
         if (!(item.id in paymentStatuses)) paymentStatuses[item.id] = getStoredText('status_' + item.id, item.deposit >= item.gross ? 'PAID' : item.deposit > 0 ? 'DP' : 'UNPAID');
         if (!(item.id in dpAmounts)) dpAmounts[item.id] = getStoredNumber('dp_' + item.id, item.deposit || 0);
         if (!(item.id in netProfits)) netProfits[item.id] = getStoredNumber('profit_' + item.id, item.gross);
+        // The month filter dropdown is rebuilt from the invoices by calculateFinancials().
         if (!document.getElementById('card-' + item.id)) createCustomInvoiceCard(item);
-        if (![...document.querySelectorAll('.month-pill-btn[data-filter]')].some(button => button.dataset.filter === item.month)) {
-            const button = document.createElement('button');
-            button.className = 'month-pill-btn';
-            button.dataset.filter = item.month;
-            button.textContent = item.monthLabel;
-            button.onclick = () => setMonthFilter(item.month, button);
-            document.querySelector('.month-pills-group').appendChild(button);
-        }
     });
 }
 
@@ -252,11 +245,24 @@ function parseInvoiceBrief(text) {
     return {name, description:description.replace(/[,\s]+$/,'').trim(), gross:money(totalMatch), deposit:money(dpMatch) || 0};
 }
 
+// Who the invoice is from: DAR, or a separate account (window.DAR_WS) with the accounts it
+// filled in under Update saldo.
+function invoiceIssuer() {
+    const ws = window.DAR_WS;
+    if (!ws) return {brand:'DAR Invoices', name:'Daru Fahmaa Muliawan', footer:'<strong>Pembayaran Bank Mandiri</strong><br>1550010616962 · Daru Fahmaa Muliawan<br>WhatsApp: 081311506025'};
+    const rows = (typeof BANK_ACCOUNTS !== 'undefined' ? BANK_ACCOUNTS : [])
+        .map(acc => ({acc, detail: accountDetail(acc.key)}))
+        .filter(row => row.detail.number)
+        .map(row => `${escapeInvoiceText(row.acc.bankName)} ${escapeInvoiceText(row.detail.number)} · ${escapeInvoiceText(row.detail.holder)}`);
+    return {brand:ws.name, name:ws.owner || ws.name, footer: rows.length ? '<strong>Pembayaran</strong><br>' + rows.join('<br>') : ''};
+}
+
 function openGeneratedInvoice(id) {
     const item = customInvoices.find(candidate => candidate.id === id);
     if (!item) return;
     const paid = paymentStatuses[id] === 'PAID' ? item.gross : paymentStatuses[id] === 'DP' ? (dpAmounts[id] || 0) : 0;
-    const html = `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeInvoiceText(item.reference)}</title><style>body{font:15px/1.7 Arial,sans-serif;color:#282820;background:#f2eee2;margin:0;padding:32px}main{max-width:760px;margin:auto;background:#fffdf6;padding:40px;border-radius:16px}header{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid #ddd4c0;padding-bottom:24px}h1{font-size:32px;margin:0}h2{font-size:20px}p{white-space:pre-wrap;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;margin:32px 0}td,th{padding:14px 0;border-bottom:1px solid #ddd4c0;text-align:left}td:last-child,th:last-child{text-align:right}button{padding:12px 18px;border:0;background:#282820;color:white;border-radius:8px;cursor:pointer}footer{border-top:1px solid #ddd4c0;margin-top:32px;padding-top:20px}@media(max-width:600px){body{padding:12px}main{padding:20px}header{display:block}}@media print{body{background:white;padding:0}main{padding:15px}button{display:none}}</style></head><body><main><header><div><h1>Invoice</h1><p>${escapeInvoiceText(item.reference)}</p></div><div><strong>DAR Invoices</strong><br>Daru Fahmaa Muliawan</div></header><h2>Kepada ${escapeInvoiceText(item.name)}</h2><p>Tanggal: ${escapeInvoiceText(item.date)}${item.due ? '\nJatuh tempo: ' + escapeInvoiceText(item.due) : ''}</p><p>${escapeInvoiceText(item.description)}</p><table><tr><th>Rincian pembayaran</th><th>Rupiah</th></tr><tr><td>Total invoice</td><td>${formatIDR(item.gross)}</td></tr><tr><td>Sudah dibayar</td><td>${formatIDR(paid)}</td></tr><tr><th>Sisa pembayaran</th><th>${formatIDR(item.gross-paid)}</th></tr></table><footer><strong>Pembayaran Bank Mandiri</strong><br>1550010616962 · Daru Fahmaa Muliawan<br>WhatsApp: 081311506025</footer><p><button onclick="window.print()">Cetak / Simpan PDF</button></p></main></body></html>`;
+    const issuer = invoiceIssuer();
+    const html = `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeInvoiceText(item.reference)}</title><style>body{font:15px/1.7 Arial,sans-serif;color:#282820;background:#f2eee2;margin:0;padding:32px}main{max-width:760px;margin:auto;background:#fffdf6;padding:40px;border-radius:16px}header{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid #ddd4c0;padding-bottom:24px}h1{font-size:32px;margin:0}h2{font-size:20px}p{white-space:pre-wrap;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;margin:32px 0}td,th{padding:14px 0;border-bottom:1px solid #ddd4c0;text-align:left}td:last-child,th:last-child{text-align:right}button{padding:12px 18px;border:0;background:#282820;color:white;border-radius:8px;cursor:pointer}footer{border-top:1px solid #ddd4c0;margin-top:32px;padding-top:20px}@media(max-width:600px){body{padding:12px}main{padding:20px}header{display:block}}@media print{body{background:white;padding:0}main{padding:15px}button{display:none}}</style></head><body><main><header><div><h1>Invoice</h1><p>${escapeInvoiceText(item.reference)}</p></div><div><strong>${escapeInvoiceText(issuer.brand)}</strong><br>${escapeInvoiceText(issuer.name)}</div></header><h2>Kepada ${escapeInvoiceText(item.name)}</h2><p>Tanggal: ${escapeInvoiceText(item.date)}${item.due ? '\nJatuh tempo: ' + escapeInvoiceText(item.due) : ''}</p><p>${escapeInvoiceText(item.description)}</p><table><tr><th>Rincian pembayaran</th><th>Rupiah</th></tr><tr><td>Total invoice</td><td>${formatIDR(item.gross)}</td></tr><tr><td>Sudah dibayar</td><td>${formatIDR(paid)}</td></tr><tr><th>Sisa pembayaran</th><th>${formatIDR(item.gross-paid)}</th></tr></table>${issuer.footer ? `<footer>${issuer.footer}</footer>` : ''}<p><button onclick="window.print()">Cetak / Simpan PDF</button></p></main></body></html>`;
     const content = managerDialog('Invoice siap');
     content.innerHTML = '<p>Periksa dokumen di bawah. Unduh HTML untuk menyimpan dokumen, atau buka dokumen lalu pilih Cetak / Simpan PDF. Dokumen unduhan dapat dibagikan; alamat preview hanya berlaku di browser ini.</p><div class="document-actions"></div><iframe title="Preview invoice" class="invoice-preview"></iframe>';
     content.querySelector('iframe').setAttribute('sandbox','');
