@@ -2526,8 +2526,10 @@ body[data-view="pack"] .filter-section { display: none !important; }
 .pack-cat-title { display: inline-flex; align-items: center; gap: 7px; border: 0; background: none; padding: 0; font: inherit; font-size: 13px; font-weight: 600; color: #24241f; cursor: pointer; text-align: left; }
 .pack-cat-title i { width: 9px; height: 9px; border-radius: 50%; background: var(--cat); flex-shrink: 0; }
 .pack-cat-title:hover { text-decoration: underline; text-decoration-color: #c4bdae; }
-.pack-cat-count { font-size: 11px; color: #6a6557; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.pack-cat-card.is-complete .pack-cat-count { color: #2e7343; font-weight: 600; }
+.pack-cat-count { font-size: 11px; color: #4a473d; background: #f1ede3; border-radius: 99px; padding: 2px 9px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pack-cat-count b { color: #1f5f33; font-weight: 700; }
+.pack-cat-card.is-complete .pack-cat-count { color: #fff; background: #2e7343; font-weight: 600; }
+.pack-cat-card.is-complete .pack-cat-count b { color: #fff; }
 .pack-cat-bar { height: 3px; background: #ece7d8; border-radius: 99px; margin: 8px 0 4px; overflow: hidden; }
 .pack-cat-bar div { height: 100%; background: var(--cat); border-radius: inherit; }
 
@@ -2544,7 +2546,11 @@ body[data-view="pack"] .filter-section { display: none !important; }
 .pack-item-name { font-size: 13px; color: #24241f; overflow-wrap: anywhere; }
 .pack-item-name em { font-style: normal; font-size: 11px; color: #7a7567; margin-left: 2px; }
 .pack-item-text small { font-size: 10.5px; color: #7a7567; line-height: 1.4; }
-.pack-item.is-packed .pack-item-name { color: #8a8474; text-decoration: line-through; text-decoration-color: #b8b1a0; }
+.pack-item.is-packed { background: #e6f3e9; border-bottom-color: #d3e9d9; border-radius: 8px; }
+.pack-item.is-packed + .pack-item.is-packed { border-top-left-radius: 0; border-top-right-radius: 0; }
+.pack-item.is-packed .pack-item-name { color: #1f5f33; font-weight: 500; }
+.pack-item.is-packed .pack-item-open:hover { background: #d9eedf; }
+.pack-item.is-packed .pack-item-chevron { color: #7fae8c; }
 .pack-icon-btn { width: 30px; height: 30px; border: 0; background: none; color: #8a8474; border-radius: 7px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .pack-icon-btn:hover { background: #f1ede3; color: #24241f; }
 .pack-icon-btn.is-danger:hover { background: #fdf0ee; color: #9e2d22; }
@@ -2615,3 +2621,78 @@ body[data-view="pack"] .filter-section { display: none !important; }
     .pack-schedule-fields { grid-template-columns: 1fr; }
     #packItemDialog .manager-heading h2 { font-size: 19px; overflow-wrap: anywhere; }
 }
+
+/* ========================================================
+   CATATAN PENGELUARAN HARIAN + SCAN STRUK
+   ======================================================== */
+.log-card { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 16px 18px; margin-bottom: 20px; }
+.log-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.log-card-actions { display: flex; gap: 8px; align-items: center; }
+.log-card-actions .month-pill-btn { display: inline-flex; align-items: center; gap: 6px; }
+.log-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.log-stats:empty { display: none; }
+.log-stats div { background: #f6f2e8; border-radius: 10px; padding: 9px 11px; display: flex; flex-direction: column; gap: 1px; }
+.log-stats span { font-size: 10.5px; color: #6a6557; }
+.log-stats b { font-size: 15px; font-weight: 600; color: #24241f; font-variant-numeric: tabular-nums; }
+.log-stats small { font-size: 10px; color: #7a7567; }
+.log-stats .is-good { background: #e9f4ec; }
+.log-stats .is-good b { color: #1f5f33; }
+.log-stats .is-over { background: #fdf0ee; }
+.log-stats .is-over b { color: #991b1b; }
+.log-day-list { display: grid; gap: 10px; }
+.log-day-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 11.5px; color: #5c584c; padding: 0 2px 4px; border-bottom: 1px solid #ece7d8; }
+.log-day-head b { color: #24241f; font-weight: 600; font-variant-numeric: tabular-nums; }
+.log-row { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 0; background: none; padding: 8px 4px; font: inherit; text-align: left; cursor: pointer; border-radius: 8px; color: inherit; }
+.log-row:hover { background: #f6f2e8; }
+.log-row-main { display: flex; flex-direction: column; min-width: 0; }
+.log-row-title { font-size: 13px; color: #24241f; overflow-wrap: anywhere; }
+.log-scan-tag { font-style: normal; font-size: 9px; text-transform: uppercase; letter-spacing: .3px; color: #6d3fb0; background: #f1ebfa; border-radius: 4px; padding: 1px 5px; margin-left: 4px; vertical-align: 1px; }
+.log-row-pos { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; color: #7a7567; }
+.log-row-pos i { width: 7px; height: 7px; border-radius: 50%; background: var(--cat, #8a8474); flex-shrink: 0; }
+.log-row-amount { font-size: 13px; font-weight: 600; color: #24241f; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.log-empty { font-size: 12px; color: #686150; padding: 14px 4px 4px; text-align: center; line-height: 1.6; }
+.log-more-btn { margin-top: 8px; border: 0; background: none; font: inherit; font-size: 11.5px; color: #4a473d; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 4px 2px; }
+.log-more-btn[hidden], #expenseLogPosInfo[hidden] { display: none; }
+
+.scan-hint { font-size: 12px; color: #5c584c; line-height: 1.6; }
+.scan-drop { display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 1.5px dashed #bdb3a0; border-radius: 12px; padding: 22px 12px; background: #fffdf6; cursor: pointer; color: #4a473d; font-size: 12.5px; font-weight: 500; }
+.scan-drop:hover { background: #f6f2e8; }
+.scan-drop input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.scan-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 4px; }
+.scan-thumbs:empty { display: none; }
+.scan-thumb { position: relative; width: 72px; height: 96px; border-radius: 8px; overflow: hidden; border: 1px solid #ded8cb; background: #fff; }
+.scan-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.scan-thumb span { position: absolute; left: 4px; bottom: 4px; background: #272722; color: #fff; font-size: 10px; border-radius: 4px; padding: 0 5px; }
+.scan-thumb button { position: absolute; top: 3px; right: 3px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: #272722cc; color: #fff; cursor: pointer; line-height: 1; font-size: 14px; }
+.scan-status { font-size: 12px; color: #4a473d; min-height: 18px; margin-top: 8px; }
+.scan-results { display: grid; gap: 8px; max-height: 52dvh; overflow-y: auto; margin-bottom: 4px; }
+.scan-row { display: flex; gap: 10px; align-items: flex-start; border: 1px solid #ded8cb; border-radius: 10px; padding: 9px; background: #fffdf8; }
+.scan-row.is-off { opacity: .55; }
+.scan-row-check input { width: 20px; height: 20px; margin: 4px 0 0; accent-color: #2e7343; }
+.scan-row-thumb { width: 40px; height: 54px; object-fit: cover; border-radius: 6px; border: 1px solid #e2dccf; flex-shrink: 0; }
+.scan-row-fields { flex: 1; min-width: 0; display: grid; gap: 6px; }
+.manager-content .scan-row-fields input, .manager-content .scan-row-fields select { margin: 0; padding: 7px 9px; font-size: 13px; border-radius: 7px; }
+.scan-row-grid { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 6px; }
+.scan-flags { display: flex; gap: 5px; flex-wrap: wrap; }
+.scan-flag { font-size: 10px; background: #f1ede3; color: #5c584c; border-radius: 4px; padding: 1px 6px; }
+.scan-flag.is-warn { background: #fef3dc; color: #8a5316; }
+.scan-dialog #scanPickStep[hidden], .scan-dialog #scanReviewStep[hidden] { display: none; }
+
+@media (max-width: 600px) {
+    .log-card { padding: 12px 12px; border-radius: 12px; margin-bottom: 12px; }
+    .log-card-head { margin-bottom: 10px; }
+    .log-card-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+    .log-card-actions .month-pill-btn, .log-card-actions .create-invoice-btn { min-height: 40px; justify-content: center; border-radius: 10px; font-size: 12px; }
+    .log-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
+    .log-stats div { padding: 7px 9px; }
+    .log-stats b { font-size: 14px; }
+    .log-row { padding: 9px 2px; }
+    .scan-row { gap: 8px; padding: 8px; }
+    .scan-row-thumb { display: none; }
+    .scan-row-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+    .scan-row-grid select { grid-column: 1 / -1; }
+    .manager-content .scan-row-fields input, .manager-content .scan-row-fields select { font-size: 16px; }
+    #expenseLogDialog input, #expenseLogDialog select { font-size: 16px; }
+}
+.pack-summary-counts .pack-count-done { color: #1f5f33; background: #e6f3e9; border-radius: 99px; padding: 1px 9px; }
+.pack-summary-counts .pack-count-done b { color: #1f5f33; }

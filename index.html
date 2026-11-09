@@ -2497,6 +2497,25 @@ body[data-view="pack"] #packSection {
                 <div class="plan-category-list" id="planCategoryList"></div>
             </div>
 
+            <div class="log-card" id="expenseLogCard">
+                <div class="log-card-head">
+                    <div>
+                        <div class="plan-overview-title">Catatan pengeluaran harian</div>
+                        <div class="plan-overview-sub" id="logCardSub">Catat tiap belanja, atau scan screenshot struk / bukti transfer.</div>
+                    </div>
+                    <div class="log-card-actions">
+                        <button type="button" class="month-pill-btn" onclick="openScanDialog()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                            Scan struk
+                        </button>
+                        <button type="button" class="create-invoice-btn" onclick="openExpenseLogDialog()">+ Catat</button>
+                    </div>
+                </div>
+                <div class="log-stats" id="logStats"></div>
+                <div class="log-day-list" id="logDayList"></div>
+                <button type="button" class="log-more-btn" id="logMoreBtn" onclick="toggleLogShowAll()" hidden></button>
+            </div>
+
             <div class="debt-toolbar plan-filter-row">
                 <div class="debt-filter-pills">
                     <button class="month-pill-btn active" data-plan-filter="all" onclick="setPlanFilter('all', this)">Semua</button>
@@ -4475,23 +4494,70 @@ body[data-view="pack"] #packSection {
         </div>
     </dialog>
 
-    <dialog id="planSpendDialog" class="invoice-manager-dialog" aria-labelledby="planSpendTitle">
+    <dialog id="expenseLogDialog" class="invoice-manager-dialog" aria-labelledby="expenseLogTitle">
         <div class="manager-heading">
-            <h2 id="planSpendTitle">Catat Pengeluaran</h2>
-            <button type="button" aria-label="Tutup" onclick="document.getElementById('planSpendDialog').close()">×</button>
+            <h2 id="expenseLogTitle">Catat Pengeluaran</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('expenseLogDialog').close()">×</button>
         </div>
         <div class="manager-content">
-            <div id="planSpendInfo" class="plan-spend-info"></div>
-            <form id="planSpendForm" onsubmit="handlePlanSpendSubmit(event)">
-                <input type="hidden" id="planSpendId" value="">
-                <label>Nominal yang baru dikeluarkan (Rp)
-                    <input type="number" id="planSpendInput" min="1" step="1" required placeholder="Masukkan nominal pengeluaran...">
-                </label>
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
-                    <button type="button" class="month-pill-btn" onclick="document.getElementById('planSpendDialog').close()">Batal</button>
-                    <button type="submit" class="create-invoice-btn">Tambahkan</button>
+            <div id="expenseLogPosInfo" class="plan-spend-info" hidden></div>
+            <form id="expenseLogForm" onsubmit="handleExpenseLogSubmit(event)">
+                <input type="hidden" id="expenseLogEditId" value="">
+                <input type="hidden" id="expenseLogEditMonth" value="">
+                <div class="draft-fields">
+                    <label>Nominal (Rp)
+                        <input type="number" id="expenseLogAmount" min="1" step="1" required inputmode="numeric" placeholder="Contoh: 45000">
+                    </label>
+                    <label>Tanggal
+                        <input type="date" id="expenseLogDate" required>
+                    </label>
+                    <label class="wide-field">Keterangan
+                        <input type="text" id="expenseLogNote" maxlength="120" placeholder="Contoh: Makan siang, Bensin, Belanja sayur">
+                    </label>
+                    <label class="wide-field">Masuk ke pos
+                        <select id="expenseLogPos" onchange="renderExpenseLogPosInfo()"></select>
+                    </label>
+                </div>
+                <div class="pack-dialog-actions">
+                    <button type="button" class="delete-invoice-btn" id="expenseLogDeleteBtn" onclick="deleteExpenseLog()">Hapus catatan</button>
+                    <span style="flex:1"></span>
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('expenseLogDialog').close()">Batal</button>
+                    <button type="submit" class="create-invoice-btn">Simpan</button>
                 </div>
             </form>
+        </div>
+    </dialog>
+
+    <dialog id="scanDialog" class="invoice-manager-dialog scan-dialog" aria-labelledby="scanTitle">
+        <div class="manager-heading">
+            <h2 id="scanTitle">Scan Struk</h2>
+            <button type="button" aria-label="Tutup" onclick="closeScanDialog()">×</button>
+        </div>
+        <div class="manager-content">
+            <div id="scanPickStep">
+                <p class="scan-hint">Pilih screenshot struk belanja, bukti transfer, atau riwayat GoPay / DANA / m-banking. Bisa beberapa sekaligus (maks. 10). Gambar cuma dibaca, tidak disimpan.</p>
+                <label class="scan-drop">
+                    <input type="file" id="scanFileInput" accept="image/*" multiple onchange="handleScanFiles(this.files)">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <span>Pilih screenshot</span>
+                </label>
+                <div class="scan-thumbs" id="scanThumbs"></div>
+                <div class="scan-status" id="scanStatus" role="status"></div>
+                <div class="pack-dialog-actions">
+                    <span style="flex:1"></span>
+                    <button type="button" class="month-pill-btn" onclick="closeScanDialog()">Batal</button>
+                    <button type="button" class="create-invoice-btn" id="scanRunBtn" onclick="runReceiptScan()" disabled>Baca struk</button>
+                </div>
+            </div>
+            <div id="scanReviewStep" hidden>
+                <p class="scan-hint" id="scanReviewHint"></p>
+                <div class="scan-results" id="scanResults"></div>
+                <div class="pack-dialog-actions">
+                    <button type="button" class="month-pill-btn" onclick="backToScanPick()">Scan lagi</button>
+                    <span style="flex:1"></span>
+                    <button type="button" class="create-invoice-btn" id="scanSaveBtn" onclick="saveScannedTransactions()">Simpan</button>
+                </div>
+            </div>
         </div>
     </dialog>
 
@@ -4846,6 +4912,17 @@ body[data-view="pack"] #packSection {
             lainnya: ['Kunci rumah', 'Kantong laundry', 'Bantal leher']
         };
 
+        const EXPENSE_LOGS_KEY = 'dar-expense-logs';
+        let expenseLogs = (() => {
+            try {
+                return normalizeExpenseLogs(JSON.parse(localStorage.getItem(EXPENSE_LOGS_KEY) || '{}'));
+            } catch (e) {
+                return {};
+            }
+        })();
+        let logShowAll = false;
+        let scanImages = [];
+        let scanResults = [];
         const PACKING_LISTS_KEY = 'dar-packing-lists';
         const PACK_ACTIVE_TRIP_KEY = 'dar-packing-active-trip';
         let packingLists = (() => {
@@ -5114,6 +5191,11 @@ body[data-view="pack"] #packSection {
             if (state.paymentLog && typeof state.paymentLog === 'object' && !Array.isArray(state.paymentLog)) {
                 paymentLog = state.paymentLog;
             }
+            if (state.expenseLogs && typeof state.expenseLogs === 'object' && !Array.isArray(state.expenseLogs)) {
+                if (Object.keys(state.expenseLogs).length > 0 || Object.keys(expenseLogs).length === 0) {
+                    expenseLogs = normalizeExpenseLogs(state.expenseLogs);
+                }
+            }
             if (Array.isArray(state.packingLists)) {
                 // Never-saved cloud copy comes back empty: keep trips made on this device until they sync.
                 if (state.packingLists.length > 0 || packingLists.length === 0) {
@@ -5156,6 +5238,7 @@ body[data-view="pack"] #packSection {
             localStorage.setItem(PAYMENT_LOG_KEY, JSON.stringify(paymentLog));
             localStorage.setItem(EXPENSE_PLANS_KEY, JSON.stringify(expensePlans));
             localStorage.setItem(PACKING_LISTS_KEY, JSON.stringify(packingLists));
+            localStorage.setItem(EXPENSE_LOGS_KEY, JSON.stringify(expenseLogs));
             Object.entries(paymentStatuses).forEach(([id, status]) => {
                 localStorage.setItem("status_" + id, status);
             });
@@ -5209,6 +5292,7 @@ body[data-view="pack"] #packSection {
                         paymentLog,
                         expensePlans,
                         packingLists,
+                        expenseLogs,
                         customInvoices,
                         deletedInvoiceIds,
                         purgedInvoiceIds,
@@ -6573,6 +6657,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             if (!item) return;
             if (!confirm(`Hapus rencana "${item.name}" (${formatIDR(item.planned)})?`)) return;
             expensePlans[activePlanMonth] = items.filter(p => p.id !== id);
+            logsOf(activePlanMonth).forEach(l => { if (l.posId === id) l.posId = ''; });
             savePlansAndSync();
             showToast('RENCANA DIHAPUS');
         }
@@ -6584,34 +6669,6 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             if (item.done && item.actual === 0) item.actual = item.planned;
             item.updatedAt = Date.now();
             showToast(item.done ? 'POS DITANDAI SELESAI' : 'POS DIBUKA KEMBALI');
-            savePlansAndSync();
-        }
-
-        function openPlanSpendDialog(id) {
-            const item = planItemsOf(activePlanMonth).find(p => p.id === id);
-            if (!item) return;
-            const left = Math.max(0, item.planned - item.actual);
-            document.getElementById('planSpendId').value = item.id;
-            document.getElementById('planSpendTitle').textContent = 'Catat Pengeluaran: ' + item.name;
-            document.getElementById('planSpendInfo').innerHTML = `
-                <div><span>Anggaran</span><strong>${formatIDR(item.planned)}</strong></div>
-                <div><span>Sudah terpakai</span><strong>${formatIDR(item.actual)}</strong></div>
-                <div><span>Sisa anggaran pos</span><strong>${formatIDR(left)}</strong></div>`;
-            document.getElementById('planSpendInput').value = left > 0 ? left : '';
-            document.getElementById('planSpendDialog').showModal();
-        }
-
-        function handlePlanSpendSubmit(event) {
-            event.preventDefault();
-            const id = document.getElementById('planSpendId').value;
-            const item = planItemsOf(activePlanMonth).find(p => p.id === id);
-            const amount = Math.round(Number(document.getElementById('planSpendInput').value)) || 0;
-            if (!item || amount <= 0) return;
-            item.actual += amount;
-            if (item.planned > 0 && item.actual >= item.planned) item.done = true;
-            item.updatedAt = Date.now();
-            document.getElementById('planSpendDialog').close();
-            showToast(item.actual > item.planned ? 'TERCATAT — POS INI LEWAT ANGGARAN' : 'PENGELUARAN TERCATAT');
             savePlansAndSync();
         }
 
@@ -6660,6 +6717,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function renderPlanUI() {
             const listEl = document.getElementById('planItemList');
             if (!listEl) return;
+            renderExpenseLogUI();
             const month = activePlanMonth;
             const items = planItemsOf(month);
             const isCurrent = month === currentMonthKey();
@@ -6679,6 +6737,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             // 1. Totals
             const planned = items.reduce((s, p) => s + p.planned, 0);
             const actual = items.reduce((s, p) => s + p.actual, 0);
+            const unplanned = logsOf(month).filter(l => !l.posId || !items.some(p => p.id === l.posId)).reduce((s, l) => s + l.amount, 0);
             const remaining = planned - actual;
             const doneCount = items.filter(p => p.done).length;
             const pct = planned > 0 ? Math.round((actual / planned) * 100) : 0;
@@ -6686,8 +6745,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
             document.getElementById('planStatPlanned').textContent = formatIDR(planned);
             document.getElementById('planStatPlannedSub').textContent = `${items.length} pos · ${doneCount} selesai`;
-            document.getElementById('planStatActual').textContent = formatIDR(actual);
-            document.getElementById('planStatActualSub').textContent = `${pct}% dari rencana`;
+            document.getElementById('planStatActual').textContent = formatIDR(actual + unplanned);
+            document.getElementById('planStatActualSub').textContent = unplanned
+                ? `${pct}% dari rencana · ${formatIDR(unplanned)} di luar rencana`
+                : `${pct}% dari rencana`;
             const remEl = document.getElementById('planStatRemaining');
             remEl.textContent = (remaining < 0 ? '- ' : '') + formatIDR(Math.abs(remaining));
             remEl.style.color = remaining < 0 ? '#991b1b' : '';
@@ -6816,7 +6877,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             <div class="plan-amt"><span class="debt-amount-label">${left < 0 ? 'Lewat' : 'Sisa'}</span><span class="plan-amt-val" style="color:${left < 0 ? '#991b1b' : '#065f46'};">${formatIDR(Math.abs(left))}</span></div>
                         </div>
                         <div class="debt-item-actions">
-                            <button class="debt-action-btn btn-pay" onclick="openPlanSpendDialog('${id}')" title="Catat uang yang keluar untuk pos ini">
+                            <button class="debt-action-btn btn-pay" onclick="openExpenseLogDialog(null, '${id}')" title="Catat uang yang keluar untuk pos ini">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> <span class="lbl-long">Catat pengeluaran</span><span class="lbl-short">Catat</span>
                             </button>
                             <button class="debt-action-btn ${p.done ? '' : 'btn-settle'}" onclick="togglePlanDone('${id}')">
@@ -6833,6 +6894,433 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                         </div>
                     </div>`;
             }).join('');
+        }
+
+        // =========================================================================
+        // CATATAN PENGELUARAN HARIAN + SCAN STRUK
+        // =========================================================================
+        // A log entry is one real spending event. When it is linked to a plan item (posId), its
+        // amount is added to that item's `actual`; editing or deleting the entry adjusts it back.
+        function normalizeExpenseLogs(value) {
+            const out = {};
+            if (!value || typeof value !== 'object' || Array.isArray(value)) return out;
+            Object.entries(value).forEach(([month, list]) => {
+                if (!MONTH_KEY_RE.test(month) || !Array.isArray(list)) return;
+                out[month] = list.filter(l => l && Number(l.amount) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(l.date || '')).map(l => ({
+                    id: typeof l.id === 'string' && l.id ? l.id : 'log-' + crypto.randomUUID(),
+                    date: l.date,
+                    amount: Math.round(Number(l.amount)),
+                    posId: typeof l.posId === 'string' ? l.posId : '',
+                    note: String(l.note || '').slice(0, 120),
+                    merchant: String(l.merchant || '').slice(0, 80),
+                    source: l.source === 'scan' ? 'scan' : 'manual',
+                    createdAt: Number(l.createdAt) || Date.now()
+                }));
+            });
+            return out;
+        }
+
+        function logsOf(month) {
+            return Array.isArray(expenseLogs[month]) ? expenseLogs[month] : [];
+        }
+
+        function applyLogToPos(month, posId, delta) {
+            if (!posId || !delta) return;
+            const item = planItemsOf(month).find(p => p.id === posId);
+            if (!item) return;
+            item.actual = Math.max(0, item.actual + delta);
+            if (delta > 0 && item.planned > 0 && item.actual >= item.planned) item.done = true;
+            item.updatedAt = Date.now();
+        }
+
+        function addExpenseLog(entry) {
+            const month = entry.date.slice(0, 7);
+            const posId = month === entry.planMonth ? entry.posId : (planItemsOf(month).some(p => p.id === entry.posId) ? entry.posId : '');
+            const log = {
+                id: 'log-' + crypto.randomUUID(),
+                date: entry.date,
+                amount: Math.round(entry.amount),
+                posId: posId || '',
+                note: (entry.note || '').slice(0, 120),
+                merchant: (entry.merchant || '').slice(0, 80),
+                source: entry.source || 'manual',
+                createdAt: Date.now()
+            };
+            expenseLogs[month] = logsOf(month).concat(log);
+            applyLogToPos(month, log.posId, log.amount);
+            return log;
+        }
+
+        function clampDateToMonth(month, date) {
+            const [y, m] = month.split('-').map(Number);
+            const last = `${month}-${String(new Date(y, m, 0).getDate()).padStart(2, '0')}`;
+            if (date && date.slice(0, 7) === month) return date;
+            const today = localDateKey();
+            if (today.slice(0, 7) === month) return today;
+            return month < today.slice(0, 7) ? last : `${month}-01`;
+        }
+
+        function fillLogPosSelect(select, month, selected) {
+            const items = planItemsOf(month);
+            select.innerHTML = '<option value="">Di luar rencana</option>' + items.map(p => {
+                const cat = PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya;
+                return `<option value="${escapeHTML(p.id)}">${escapeHTML(p.name)} · ${escapeHTML(cat.label)}</option>`;
+            }).join('');
+            select.value = items.some(p => p.id === selected) ? selected : '';
+        }
+
+        function renderExpenseLogPosInfo() {
+            const box = document.getElementById('expenseLogPosInfo');
+            const month = document.getElementById('expenseLogEditMonth').value || activePlanMonth;
+            const item = planItemsOf(month).find(p => p.id === document.getElementById('expenseLogPos').value);
+            box.hidden = !item;
+            if (!item) return;
+            const left = item.planned - item.actual;
+            box.innerHTML = `
+                <div><span>Anggaran ${escapeHTML(item.name)}</span><strong>${formatIDR(item.planned)}</strong></div>
+                <div><span>Sudah terpakai</span><strong>${formatIDR(item.actual)}</strong></div>
+                <div><span>${left < 0 ? 'Lewat' : 'Sisa'}</span><strong style="color:${left < 0 ? '#991b1b' : '#065f46'}">${formatIDR(Math.abs(left))}</strong></div>`;
+        }
+
+        function openExpenseLogDialog(editId = null, posId = '') {
+            const month = activePlanMonth;
+            const log = editId ? logsOf(month).find(l => l.id === editId) : null;
+            document.getElementById('expenseLogForm').reset();
+            document.getElementById('expenseLogEditId').value = log ? log.id : '';
+            document.getElementById('expenseLogEditMonth').value = month;
+            document.getElementById('expenseLogTitle').textContent = log ? 'Ubah Catatan' : 'Catat Pengeluaran';
+            document.getElementById('expenseLogDeleteBtn').hidden = !log;
+            document.getElementById('expenseLogAmount').value = log ? log.amount : '';
+            const dateEl = document.getElementById('expenseLogDate');
+            const [y, m] = month.split('-').map(Number);
+            dateEl.min = `${month}-01`;
+            dateEl.max = `${month}-${String(new Date(y, m, 0).getDate()).padStart(2, '0')}`;
+            dateEl.value = log ? log.date : clampDateToMonth(month, localDateKey());
+            const pos = planItemsOf(month).find(p => p.id === posId);
+            document.getElementById('expenseLogNote').value = log ? (log.note || log.merchant) : (pos ? pos.name : '');
+            fillLogPosSelect(document.getElementById('expenseLogPos'), month, log ? log.posId : posId);
+            renderExpenseLogPosInfo();
+            document.getElementById('expenseLogDialog').showModal();
+            setTimeout(() => document.getElementById('expenseLogAmount').focus(), 30);
+        }
+
+        function handleExpenseLogSubmit(event) {
+            event.preventDefault();
+            const month = document.getElementById('expenseLogEditMonth').value || activePlanMonth;
+            const amount = Math.round(Number(document.getElementById('expenseLogAmount').value)) || 0;
+            const date = document.getElementById('expenseLogDate').value;
+            const note = document.getElementById('expenseLogNote').value.trim();
+            const posId = document.getElementById('expenseLogPos').value;
+            if (amount <= 0 || !date) return;
+            const editId = document.getElementById('expenseLogEditId').value;
+            if (editId) {
+                const log = logsOf(month).find(l => l.id === editId);
+                if (!log) return;
+                applyLogToPos(month, log.posId, -log.amount);
+                expenseLogs[month] = logsOf(month).filter(l => l.id !== editId);
+                const updated = addExpenseLog({ date, amount, posId, note, merchant: log.merchant, source: log.source, planMonth: month });
+                updated.id = log.id;
+                updated.createdAt = log.createdAt;
+                showToast('CATATAN DIPERBARUI');
+            } else {
+                addExpenseLog({ date, amount, posId, note, source: 'manual', planMonth: month });
+                const item = planItemsOf(month).find(p => p.id === posId);
+                showToast(item && item.actual > item.planned ? 'TERCATAT — POS INI LEWAT ANGGARAN' : 'PENGELUARAN TERCATAT');
+            }
+            document.getElementById('expenseLogDialog').close();
+            savePlansAndSync();
+        }
+
+        function deleteExpenseLog() {
+            const month = document.getElementById('expenseLogEditMonth').value || activePlanMonth;
+            const id = document.getElementById('expenseLogEditId').value;
+            const log = logsOf(month).find(l => l.id === id);
+            if (!log || !confirm(`Hapus catatan ${formatIDR(log.amount)}${log.note ? ' (' + log.note + ')' : ''}?`)) return;
+            applyLogToPos(month, log.posId, -log.amount);
+            expenseLogs[month] = logsOf(month).filter(l => l.id !== id);
+            document.getElementById('expenseLogDialog').close();
+            showToast('CATATAN DIHAPUS');
+            savePlansAndSync();
+        }
+
+        function toggleLogShowAll() {
+            logShowAll = !logShowAll;
+            renderExpenseLogUI();
+        }
+
+        function findDailyPos(items) {
+            return items.find(p => /harian|sehari|makan|dapur/i.test(p.name)) || null;
+        }
+
+        function renderExpenseLogUI() {
+            const listEl = document.getElementById('logDayList');
+            if (!listEl) return;
+            const month = activePlanMonth;
+            const items = planItemsOf(month);
+            const logs = logsOf(month).slice().sort((a, b) => (b.date.localeCompare(a.date)) || (b.createdAt - a.createdAt));
+            const todayKey = localDateKey();
+            const isCurrent = month === todayKey.slice(0, 7);
+            const [y, m] = month.split('-').map(Number);
+            const daysInMonth = new Date(y, m, 0).getDate();
+            const total = logs.reduce((s, l) => s + l.amount, 0);
+            const todayTotal = logs.filter(l => l.date === todayKey).reduce((s, l) => s + l.amount, 0);
+            const elapsed = isCurrent ? Number(todayKey.slice(8, 10)) : (month < todayKey.slice(0, 7) ? daysInMonth : 0);
+            const avg = elapsed > 0 ? Math.round(total / elapsed) : 0;
+
+            const stats = [];
+            if (isCurrent) stats.push(`<div><span>Hari ini</span><b>${formatIDR(todayTotal)}</b></div>`);
+            stats.push(`<div><span>Tercatat bulan ini</span><b>${formatIDR(total)}</b><small>${logs.length} transaksi</small></div>`);
+            if (elapsed > 0) stats.push(`<div><span>Rata-rata / hari</span><b>${formatIDR(avg)}</b></div>`);
+            const dailyPos = findDailyPos(items);
+            if (dailyPos && isCurrent) {
+                const daysLeft = daysInMonth - Number(todayKey.slice(8, 10)) + 1;
+                const left = dailyPos.planned - dailyPos.actual;
+                const perDay = left > 0 ? Math.floor(left / daysLeft) : 0;
+                stats.push(`<div class="${left <= 0 ? 'is-over' : 'is-good'}"><span>Jatah harian (${escapeHTML(dailyPos.name)})</span><b>${left > 0 ? formatIDR(perDay) : 'Habis'}</b><small>${left > 0 ? `sisa ${formatIDR(left)} · ${daysLeft} hari lagi` : `lewat ${formatIDR(-left)}`}</small></div>`);
+            }
+            document.getElementById('logStats').innerHTML = stats.join('');
+
+            const moreBtn = document.getElementById('logMoreBtn');
+            if (!logs.length) {
+                listEl.innerHTML = `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(month))}. Klik <b>+ Catat</b> atau <b>Scan struk</b>.</div>`;
+                moreBtn.hidden = true;
+                return;
+            }
+            const days = [];
+            logs.forEach(l => {
+                let d = days[days.length - 1];
+                if (!d || d.date !== l.date) { d = { date: l.date, logs: [], total: 0 }; days.push(d); }
+                d.logs.push(l);
+                d.total += l.amount;
+            });
+            const LIMIT = 5;
+            const shown = logShowAll ? days : days.slice(0, LIMIT);
+            moreBtn.hidden = days.length <= LIMIT;
+            moreBtn.textContent = logShowAll ? 'Tampilkan lebih sedikit' : `Tampilkan semua (${days.length} hari)`;
+            const dayLabel = date => {
+                const [yy, mm, dd] = date.split('-').map(Number);
+                const label = new Date(yy, mm - 1, dd).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' });
+                return date === todayKey ? 'Hari ini · ' + label : label;
+            };
+            listEl.innerHTML = shown.map(d => `
+                <div class="log-day">
+                    <div class="log-day-head"><span>${escapeHTML(dayLabel(d.date))}</span><b>${formatIDR(d.total)}</b></div>
+                    ${d.logs.map(l => {
+                        const pos = items.find(p => p.id === l.posId);
+                        const cat = pos ? (PLAN_CATEGORY_MAP[pos.category] || PLAN_CATEGORY_MAP.lainnya) : null;
+                        const title = l.note || l.merchant || (pos ? pos.name : 'Pengeluaran');
+                        return `
+                        <button type="button" class="log-row" onclick="openExpenseLogDialog('${escapeHTML(l.id)}')">
+                            <span class="log-row-main">
+                                <span class="log-row-title">${escapeHTML(title)}${l.source === 'scan' ? ' <em class="log-scan-tag">scan</em>' : ''}</span>
+                                <span class="log-row-pos" style="${cat ? `--cat:${cat.color}` : ''}">${pos ? `<i></i>${escapeHTML(pos.name)}` : 'Di luar rencana'}${l.merchant && l.note && l.merchant !== l.note ? ' · ' + escapeHTML(l.merchant) : ''}</span>
+                            </span>
+                            <span class="log-row-amount">${formatIDR(l.amount)}</span>
+                        </button>`;
+                    }).join('')}
+                </div>`).join('');
+        }
+
+        // ---- Scan struk ----
+        function openScanDialog() {
+            scanImages = [];
+            scanResults = [];
+            document.getElementById('scanFileInput').value = '';
+            backToScanPick();
+            document.getElementById('scanDialog').showModal();
+        }
+
+        function closeScanDialog() {
+            scanImages = [];
+            document.getElementById('scanDialog').close();
+        }
+
+        function backToScanPick() {
+            document.getElementById('scanPickStep').hidden = false;
+            document.getElementById('scanReviewStep').hidden = true;
+            document.getElementById('scanStatus').textContent = '';
+            renderScanThumbs();
+        }
+
+        function downscaleImage(file) {
+            // Claude reads images up to ~1568px on the long edge; larger only costs upload time.
+            return new Promise((resolve, reject) => {
+                const url = URL.createObjectURL(file);
+                const img = new Image();
+                img.onload = () => {
+                    const scale = Math.min(1, 1568 / Math.max(img.width, img.height));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.round(img.width * scale);
+                    canvas.height = Math.round(img.height * scale);
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    URL.revokeObjectURL(url);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                    resolve({ name: file.name, preview: dataUrl, data: dataUrl.split(',')[1], mediaType: 'image/jpeg' });
+                };
+                img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Gambar tidak bisa dibuka: ' + file.name)); };
+                img.src = url;
+            });
+        }
+
+        async function handleScanFiles(fileList) {
+            const files = Array.from(fileList || []).filter(f => f.type.startsWith('image/'));
+            const status = document.getElementById('scanStatus');
+            const room = 10 - scanImages.length;
+            if (files.length > room) status.textContent = `Maksimal 10 gambar sekali scan. ${files.length - room} gambar dilewati.`;
+            for (const file of files.slice(0, Math.max(0, room))) {
+                try {
+                    scanImages.push(await downscaleImage(file));
+                } catch (e) {
+                    status.textContent = e.message;
+                }
+            }
+            document.getElementById('scanFileInput').value = '';
+            renderScanThumbs();
+        }
+
+        function removeScanImage(index) {
+            scanImages.splice(index, 1);
+            renderScanThumbs();
+        }
+
+        function renderScanThumbs() {
+            document.getElementById('scanThumbs').innerHTML = scanImages.map((img, i) => `
+                <div class="scan-thumb">
+                    <img src="${img.preview}" alt="Screenshot ${i + 1}">
+                    <span>${i + 1}</span>
+                    <button type="button" onclick="removeScanImage(${i})" aria-label="Hapus gambar ${i + 1}">×</button>
+                </div>`).join('');
+            const btn = document.getElementById('scanRunBtn');
+            btn.disabled = scanImages.length === 0;
+            btn.textContent = scanImages.length ? `Baca ${scanImages.length} struk` : 'Baca struk';
+        }
+
+        async function runReceiptScan() {
+            if (!scanImages.length) return;
+            const btn = document.getElementById('scanRunBtn');
+            const status = document.getElementById('scanStatus');
+            btn.disabled = true;
+            const posOptions = planItemsOf(activePlanMonth).map(p => ({
+                id: p.id, name: p.name, category: (PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya).label
+            }));
+            const batches = [];
+            for (let i = 0; i < scanImages.length; i += 5) batches.push(scanImages.slice(i, i + 5).map((img, j) => ({ img, index: i + j })));
+            const found = [];
+            const notes = [];
+            try {
+                for (let b = 0; b < batches.length; b++) {
+                    status.textContent = batches.length > 1 ? `Membaca struk… (${b + 1}/${batches.length})` : 'Membaca struk… biasanya 10–30 detik.';
+                    const response = await fetch('/api/scan-receipt', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({
+                            images: batches[b].map(x => ({ data: x.img.data, mediaType: x.img.mediaType })),
+                            posOptions,
+                            today: localDateKey()
+                        })
+                    });
+                    if (response.status === 401) { window.location.replace('/'); return; }
+                    const data = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(data.error || 'Gagal membaca struk. Coba lagi.');
+                    (data.transactions || []).forEach(t => found.push({ ...t, imageIndex: batches[b][t.imageIndex] ? batches[b][t.imageIndex].index : batches[b][0].index }));
+                    if (data.notes) notes.push(data.notes);
+                }
+            } catch (e) {
+                status.textContent = e.message;
+                btn.disabled = false;
+                return;
+            }
+            btn.disabled = false;
+            status.textContent = '';
+            showScanReview(found, notes);
+        }
+
+        function showScanReview(found, notes) {
+            const existing = Object.values(expenseLogs).flat();
+            scanResults = found.map((t, i) => {
+                const date = t.date || clampDateToMonth(activePlanMonth, localDateKey());
+                const duplicate = existing.some(l => l.date === date && l.amount === t.amount);
+                return {
+                    key: i,
+                    include: t.isExpense && !duplicate,
+                    duplicate,
+                    isExpense: t.isExpense,
+                    confidence: t.confidence,
+                    imageIndex: t.imageIndex,
+                    date,
+                    dateGuessed: !t.date,
+                    amount: t.amount,
+                    note: t.description || t.merchant,
+                    merchant: t.merchant,
+                    posId: t.posId
+                };
+            });
+            document.getElementById('scanPickStep').hidden = true;
+            document.getElementById('scanReviewStep').hidden = false;
+            const hint = scanResults.length
+                ? `Ketemu ${scanResults.length} transaksi. Cek dulu nominal, tanggal, dan posnya, lalu simpan yang dicentang.`
+                : 'Nggak ada transaksi yang kebaca dari screenshot ini.';
+            document.getElementById('scanReviewHint').textContent = hint + (notes.length ? ' Catatan: ' + notes.join(' ') : '');
+            renderScanResults();
+        }
+
+        function updateScanResult(key, field, value) {
+            const r = scanResults.find(x => x.key === key);
+            if (!r) return;
+            if (field === 'amount') r.amount = Math.max(0, Math.round(Number(value)) || 0);
+            else if (field === 'include') r.include = Boolean(value);
+            else r[field] = value;
+            if (field !== 'include') renderScanSaveBtn();
+            else renderScanResults();
+        }
+
+        function renderScanSaveBtn() {
+            const chosen = scanResults.filter(r => r.include && r.amount > 0 && r.date);
+            const btn = document.getElementById('scanSaveBtn');
+            btn.disabled = chosen.length === 0;
+            btn.textContent = chosen.length ? `Simpan ${chosen.length} transaksi (${formatIDR(chosen.reduce((s, r) => s + r.amount, 0))})` : 'Simpan';
+        }
+
+        function renderScanResults() {
+            const items = planItemsOf(activePlanMonth);
+            const posOptions = selected => '<option value="">Di luar rencana</option>' + items.map(p => `<option value="${escapeHTML(p.id)}" ${p.id === selected ? 'selected' : ''}>${escapeHTML(p.name)}</option>`).join('');
+            document.getElementById('scanResults').innerHTML = scanResults.map(r => {
+                const img = scanImages[r.imageIndex];
+                const flags = [];
+                if (r.duplicate) flags.push('<span class="scan-flag is-warn">Mungkin sudah tercatat</span>');
+                if (!r.isExpense) flags.push('<span class="scan-flag">Uang masuk / pindah rekening</span>');
+                if (r.confidence === 'low') flags.push('<span class="scan-flag is-warn">Kurang jelas, cek lagi</span>');
+                if (r.dateGuessed) flags.push('<span class="scan-flag">Tanggal tidak terbaca</span>');
+                return `
+                <div class="scan-row${r.include ? '' : ' is-off'}">
+                    <label class="scan-row-check"><input type="checkbox" ${r.include ? 'checked' : ''} onchange="updateScanResult(${r.key}, 'include', this.checked)" aria-label="Simpan transaksi ini"></label>
+                    ${img ? `<img class="scan-row-thumb" src="${img.preview}" alt="">` : ''}
+                    <div class="scan-row-fields">
+                        <input type="text" value="${escapeHTML(r.note)}" maxlength="120" oninput="updateScanResult(${r.key}, 'note', this.value)" aria-label="Keterangan">
+                        <div class="scan-row-grid">
+                            <input type="number" value="${r.amount}" min="1" inputmode="numeric" oninput="updateScanResult(${r.key}, 'amount', this.value)" aria-label="Nominal">
+                            <input type="date" value="${escapeHTML(r.date)}" onchange="updateScanResult(${r.key}, 'date', this.value)" aria-label="Tanggal">
+                            <select onchange="updateScanResult(${r.key}, 'posId', this.value)" aria-label="Pos">${posOptions(r.posId)}</select>
+                        </div>
+                        ${flags.length ? `<div class="scan-flags">${flags.join('')}</div>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+            renderScanSaveBtn();
+        }
+
+        function saveScannedTransactions() {
+            const chosen = scanResults.filter(r => r.include && r.amount > 0 && /^\d{4}-\d{2}-\d{2}$/.test(r.date));
+            if (!chosen.length) return;
+            chosen.forEach(r => addExpenseLog({ date: r.date, amount: r.amount, posId: r.posId, note: r.note, merchant: r.merchant, source: 'scan', planMonth: activePlanMonth }));
+            const otherMonths = chosen.filter(r => r.date.slice(0, 7) !== activePlanMonth).length;
+            closeScanDialog();
+            showToast(`${chosen.length} TRANSAKSI TERSIMPAN` + (otherMonths ? ` (${otherMonths} MASUK BULAN LAIN)` : ''));
+            savePlansAndSync();
         }
 
         // =========================================================================
@@ -7210,7 +7698,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             bar.style.width = pct + '%';
             bar.classList.toggle('is-complete', total > 0 && packed === total);
             document.getElementById('packSummaryCounts').innerHTML = total
-                ? `<span><b>${packed}</b> sudah dikemas</span><span><b>${total - packed}</b> belum</span><span><b>${total}</b> barang · ${trip.categories.length} kategori</span>`
+                ? `<span class="pack-count-done"><b>${packed}</b> sudah dikemas</span><span><b>${total - packed}</b> belum</span><span><b>${total}</b> barang · ${trip.categories.length} kategori</span>`
                 : '<span>Daftar masih kosong. Tambah barang di bawah, atau klik "Isi daftar umum".</span>';
 
             const quickCat = document.getElementById('packQuickCategory');
@@ -7236,7 +7724,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             <button type="button" class="pack-cat-title" onclick="openPackCategoryDialog('${catId}')" title="Ubah kategori">
                                 <i></i>${escapeHTML(cat.name)}
                             </button>
-                            <span class="pack-cat-count">${done ? '✓ ' : ''}${catPacked}/${all.length}</span>
+                            <span class="pack-cat-count">${done ? '✓ ' : ''}<b>${catPacked}</b>/${all.length} dikemas</span>
                         </header>
                         <div class="pack-cat-bar"><div style="width:${all.length ? Math.round((catPacked / all.length) * 100) : 0}%"></div></div>
                         <ul class="pack-item-list">
