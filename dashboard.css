@@ -2903,6 +2903,12 @@ body.ai-open .ai-fab { display: none; }
 .ai-act-btns { display: flex; gap: 6px; }
 .ai-act-btns button { border: 1px solid #c4bdae; background: #fffdf8; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 12px; cursor: pointer; }
 .ai-act-btns button.is-yes { background: #2e7343; border-color: #2e7343; color: #fff; font-weight: 600; }
+.ai-act-bank { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4b483f; flex: 1 1 100%; }
+.ai-act-bank select { flex: 1; min-width: 0; font: inherit; font-size: 12px; padding: 6px 8px; border: 1px solid #c4bdae; border-radius: 8px; background: #fffdf8; color: #25241f; }
+.scan-bank-field { display: flex; flex-direction: column; gap: 6px; margin: 0 0 14px; font-size: 12.5px; font-weight: 600; color: #3d3a31; }
+.scan-bank-field select { font: inherit; font-weight: 500; font-size: 14px; padding: 10px 12px; border: 1px solid #bdb3a0; border-radius: 8px; background: #fffdf6; color: #252520; }
+.scan-bank-field small, .bank-cut-hint { font-size: 11.5px; font-weight: 400; color: #6a6557; line-height: 1.4; }
+.bank-cut-hint { display: block; margin-top: 6px; }
 .ai-act-state { font-size: 12px; color: #6a6557; }
 .ai-act-state.is-ok { color: #1f5f33; font-weight: 600; }
 .ai-act-state.is-err { color: #9e2d22; }

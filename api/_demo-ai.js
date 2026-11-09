@@ -43,6 +43,16 @@ function matchPlanItem(note, plans) {
   return plans.find((p) => /harian|sehari|makan|pokok/i.test(`${p.nama} ${p.kategori}`)) || null;
 }
 
+const BANK_WORDS = [
+  ["mandiri", /mandiri/], ["jago", /jago/], ["blu", /\bblu\b/], ["line", /line\s*bank|\bline\b/],
+  ["gopay", /go\s*pay|gojek/], ["dana", /\bdana\b/], ["mayar", /mayar/],
+];
+
+function bankFromText(q) {
+  const hit = BANK_WORDS.find(([, re]) => re.test(q));
+  return hit ? hit[0] : "";
+}
+
 function unpaidInvoices(ctx) {
   return (Array.isArray(ctx.invoice) ? ctx.invoice : []).filter((i) => Number(i.sisa) > 0).sort((a, b) => b.sisa - a.sisa);
 }
@@ -85,11 +95,14 @@ function demoAssistant({ mode, history, context }) {
 
   const amount = parseAmount(q);
   if (amount && /(catat|beli|bayar|habis|jajan|bensin|makan|ongkos|parkir|pulsa|kopi|belanja|keluar)/.test(q)) {
-    const note = spendingNote(text);
+    const bank = bankFromText(q);
+    const note = spendingNote(text.replace(/\b(pake|pakai|via|dari|lewat)\s+(\w+\s*bank|go\s*pay|\w+)\s*$/i, ""));
     const pos = matchPlanItem(note, planSummary(ctx).plans);
+    const bankName = bank ? ((Array.isArray(ctx.rekening) ? ctx.rekening : []).find((r) => r.key === bank) || {}).nama || bank : "";
     return {
-      reply: `Siap, ini catatan pengeluarannya: **${note}** ${rupiah(amount)} tanggal ${today}${pos ? `, masuk ke pos **${pos.nama}**` : ""}. Cek dulu, lalu konfirmasi biar tersimpan.`,
-      actions: [{ name: "catat_pengeluaran", args: { amount, date: today, note, pos_id: pos ? pos.id : "" } }],
+      reply: `Siap, ini catatan pengeluarannya: **${note}** ${rupiah(amount)} tanggal ${today}${pos ? `, masuk ke pos **${pos.nama}**` : ""}.` +
+        (bankName ? ` Saldo **${bankName}** langsung kepotong setelah kamu klik Jalankan.` : " Dibayar dari rekening apa? Pilih di kolom **Dari**, saldonya langsung kepotong setelah kamu klik Jalankan."),
+      actions: [{ name: "catat_pengeluaran", args: { amount, date: today, note, pos_id: pos ? pos.id : "", bank } }],
     };
   }
 

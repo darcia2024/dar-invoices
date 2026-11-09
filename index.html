@@ -4552,16 +4552,20 @@ body[data-view="pack"] #packSection {
                 <input type="hidden" id="expenseLogEditMonth" value="">
                 <div class="draft-fields">
                     <label>Nominal (Rp)
-                        <input type="number" id="expenseLogAmount" min="1" step="1" required inputmode="numeric" placeholder="Contoh: 45000">
+                        <input type="number" id="expenseLogAmount" min="1" step="1" required inputmode="numeric" placeholder="Contoh: 45000" oninput="renderExpenseLogBankInfo()">
                     </label>
                     <label>Tanggal
-                        <input type="date" id="expenseLogDate" required>
+                        <input type="date" id="expenseLogDate" required onchange="renderExpenseLogBankInfo()">
                     </label>
                     <label class="wide-field">Keterangan
                         <input type="text" id="expenseLogNote" maxlength="120" placeholder="Contoh: Makan siang, Bensin, Belanja sayur">
                     </label>
                     <label class="wide-field">Masuk ke pos
                         <select id="expenseLogPos" onchange="renderExpenseLogPosInfo()"></select>
+                    </label>
+                    <label class="wide-field">Dibayar dari
+                        <select id="expenseLogBank" onchange="renderExpenseLogBankInfo()"></select>
+                        <small class="bank-cut-hint" id="expenseLogBankInfo"></small>
                     </label>
                 </div>
                 <div class="pack-dialog-actions">
@@ -4597,6 +4601,10 @@ body[data-view="pack"] #packSection {
             </div>
             <div id="scanReviewStep" hidden>
                 <p class="scan-hint" id="scanReviewHint"></p>
+                <label class="scan-bank-field">Dibayar dari rekening apa?
+                    <select id="scanBank" onchange="renderScanSaveBtn()"></select>
+                    <small>Saldo rekening yang dipilih langsung dipotong sebesar total yang disimpan.</small>
+                </label>
                 <div class="scan-results" id="scanResults"></div>
                 <div class="pack-dialog-actions">
                     <button type="button" class="month-pill-btn" onclick="backToScanPick()">Scan lagi</button>
@@ -7080,6 +7088,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     note: String(l.note || '').slice(0, 120),
                     merchant: String(l.merchant || '').slice(0, 80),
                     source: l.source === 'scan' ? 'scan' : 'manual',
+                    bankKey: typeof l.bankKey === 'string' ? l.bankKey.slice(0, 40) : '',
+                    bankCut: Math.max(0, Math.round(Number(l.bankCut)) || 0),
                     createdAt: Number(l.createdAt) || Date.now()
                 }));
             });
@@ -7099,6 +7109,69 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             item.updatedAt = Date.now();
         }
 
+        // "Dibayar dari": a spending paid from one of the saldo accounts lowers that account's
+        // balance right away. Only spendings dated on or after the last "Update saldo" are cut
+        // (an older one is already inside that balance). The cut is kept on the entry (bankCut)
+        // so editing or deleting it puts exactly that amount back.
+        const LAST_EXPENSE_BANK_KEY = 'dar-last-expense-bank';
+
+        function isBankKey(key) {
+            return BANK_ACCOUNTS.some(acc => acc.key === key);
+        }
+
+        function lastExpenseBank() {
+            try {
+                const key = localStorage.getItem(LAST_EXPENSE_BANK_KEY) || '';
+                return isBankKey(key) ? key : '';
+            } catch (e) {
+                return '';
+            }
+        }
+
+        function rememberExpenseBank(key) {
+            try { localStorage.setItem(LAST_EXPENSE_BANK_KEY, isBankKey(key) ? key : ''); } catch (e) {}
+        }
+
+        function bankOptionsHTML(selected) {
+            return '<option value="">Tunai / bukan dari rekening</option>' + BANK_ACCOUNTS.map(acc =>
+                `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)} · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}</option>`
+            ).join('');
+        }
+
+        function bankNameOf(key) {
+            const acc = BANK_ACCOUNTS.find(a => a.key === key);
+            return acc ? acc.name : '';
+        }
+
+        function chargeBankForLog(log) {
+            log.bankCut = 0;
+            if (!isBankKey(log.bankKey)) { log.bankKey = ''; return; }
+            if (bankBalancesUpdatedAt && log.date < bankBalancesUpdatedAt) return;
+            bankBalances[log.bankKey] = (Number(bankBalances[log.bankKey]) || 0) - log.amount;
+            log.bankCut = log.amount;
+        }
+
+        function refundBankForLog(log) {
+            if (log.bankCut > 0 && isBankKey(log.bankKey)) {
+                bankBalances[log.bankKey] = (Number(bankBalances[log.bankKey]) || 0) + log.bankCut;
+            }
+            log.bankCut = 0;
+        }
+
+        // Save and redraw balances after spendings changed them; returns a short toast suffix.
+        function afterBankCut(logs) {
+            const cut = logs.filter(l => l.bankCut > 0);
+            saveLocalBankBalances();
+            renderBankBalancesUI();
+            if (!cut.length) return '';
+            const keys = [...new Set(cut.map(l => l.bankKey))];
+            const minus = keys.filter(k => (Number(bankBalances[k]) || 0) < 0);
+            if (minus.length) return ` · SALDO ${bankNameOf(minus[0]).toUpperCase()} JADI MINUS, CEK UPDATE SALDO`;
+            return keys.length === 1
+                ? ` · SALDO ${bankNameOf(keys[0]).toUpperCase()} JADI ${formatIDR(Number(bankBalances[keys[0]]) || 0)}`
+                : ` · SALDO ${keys.length} REKENING DIPOTONG`;
+        }
+
         function addExpenseLog(entry) {
             const month = entry.date.slice(0, 7);
             const posId = month === entry.planMonth ? entry.posId : (planItemsOf(month).some(p => p.id === entry.posId) ? entry.posId : '');
@@ -7110,8 +7183,12 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 note: (entry.note || '').slice(0, 120),
                 merchant: (entry.merchant || '').slice(0, 80),
                 source: entry.source || 'manual',
+                bankKey: entry.bankKey || '',
+                bankCut: 0,
                 createdAt: Date.now()
             };
+            if (entry.skipBankCut) log.bankKey = isBankKey(log.bankKey) ? log.bankKey : '';
+            else chargeBankForLog(log);
             expenseLogs[month] = logsOf(month).concat(log);
             applyLogToPos(month, log.posId, log.amount);
             return log;
@@ -7166,8 +7243,27 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             document.getElementById('expenseLogNote').value = log ? (log.note || log.merchant) : (pos ? pos.name : '');
             fillLogPosSelect(document.getElementById('expenseLogPos'), month, log ? log.posId : posId);
             renderExpenseLogPosInfo();
+            document.getElementById('expenseLogBank').innerHTML = bankOptionsHTML(log ? log.bankKey : lastExpenseBank());
+            renderExpenseLogBankInfo();
             document.getElementById('expenseLogDialog').showModal();
             setTimeout(() => document.getElementById('expenseLogAmount').focus(), 30);
+        }
+
+        // Under "Dibayar dari": what the chosen account's balance becomes after saving.
+        function renderExpenseLogBankInfo() {
+            const info = document.getElementById('expenseLogBankInfo');
+            const key = document.getElementById('expenseLogBank').value;
+            if (!isBankKey(key)) { info.textContent = 'Saldo rekening tidak berubah.'; return; }
+            const month = document.getElementById('expenseLogEditMonth').value || activePlanMonth;
+            const editLog = logsOf(month).find(l => l.id === document.getElementById('expenseLogEditId').value);
+            const amount = Math.round(Number(document.getElementById('expenseLogAmount').value)) || 0;
+            const date = document.getElementById('expenseLogDate').value;
+            const now = (Number(bankBalances[key]) || 0) + (editLog && editLog.bankKey === key ? editLog.bankCut : 0);
+            if (date && bankBalancesUpdatedAt && date < bankBalancesUpdatedAt) {
+                info.textContent = `Saldo ${bankNameOf(key)} tidak dipotong: saldonya diperbarui ${formatShortDate(bankBalancesUpdatedAt)}, setelah tanggal pengeluaran ini.`;
+                return;
+            }
+            info.textContent = `Saldo ${bankNameOf(key)} ${formatIDR(now)} → ${formatIDR(now - amount)} setelah disimpan.`;
         }
 
         function handleExpenseLogSubmit(event) {
@@ -7177,21 +7273,27 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const date = document.getElementById('expenseLogDate').value;
             const note = document.getElementById('expenseLogNote').value.trim();
             const posId = document.getElementById('expenseLogPos').value;
+            const bankKey = document.getElementById('expenseLogBank').value;
             if (amount <= 0 || !date) return;
+            rememberExpenseBank(bankKey);
             const editId = document.getElementById('expenseLogEditId').value;
+            let saved;
             if (editId) {
                 const log = logsOf(month).find(l => l.id === editId);
                 if (!log) return;
                 applyLogToPos(month, log.posId, -log.amount);
+                // A spending already inside a later "Update saldo" stays there unless its account changes.
+                const alreadyInBalance = log.bankKey && !log.bankCut && log.bankKey === bankKey;
+                refundBankForLog(log);
                 expenseLogs[month] = logsOf(month).filter(l => l.id !== editId);
-                const updated = addExpenseLog({ date, amount, posId, note, merchant: log.merchant, source: log.source, planMonth: month });
-                updated.id = log.id;
-                updated.createdAt = log.createdAt;
-                showToast('CATATAN DIPERBARUI');
+                saved = addExpenseLog({ date, amount, posId, note, merchant: log.merchant, source: log.source, bankKey, skipBankCut: alreadyInBalance, planMonth: month });
+                saved.id = log.id;
+                saved.createdAt = log.createdAt;
+                showToast('CATATAN DIPERBARUI' + afterBankCut([saved]));
             } else {
-                addExpenseLog({ date, amount, posId, note, source: 'manual', planMonth: month });
+                saved = addExpenseLog({ date, amount, posId, note, source: 'manual', bankKey, planMonth: month });
                 const item = planItemsOf(month).find(p => p.id === posId);
-                showToast(item && item.actual > item.planned ? 'TERCATAT — POS INI LEWAT ANGGARAN' : 'PENGELUARAN TERCATAT');
+                showToast((item && item.actual > item.planned ? 'TERCATAT — POS INI LEWAT ANGGARAN' : 'PENGELUARAN TERCATAT') + afterBankCut([saved]));
             }
             document.getElementById('expenseLogDialog').close();
             savePlansAndSync();
@@ -7201,11 +7303,16 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const month = document.getElementById('expenseLogEditMonth').value || activePlanMonth;
             const id = document.getElementById('expenseLogEditId').value;
             const log = logsOf(month).find(l => l.id === id);
-            if (!log || !confirm(`Hapus catatan ${formatIDR(log.amount)}${log.note ? ' (' + log.note + ')' : ''}?`)) return;
+            if (!log) return;
+            const refund = log.bankCut > 0 ? `\nSaldo ${bankNameOf(log.bankKey)} dikembalikan ${formatIDR(log.bankCut)}.` : '';
+            if (!confirm(`Hapus catatan ${formatIDR(log.amount)}${log.note ? ' (' + log.note + ')' : ''}?${refund}`)) return;
             applyLogToPos(month, log.posId, -log.amount);
+            const refunded = log.bankCut > 0 ? log.bankKey : '';
+            refundBankForLog(log);
             expenseLogs[month] = logsOf(month).filter(l => l.id !== id);
+            afterBankCut([]);
             document.getElementById('expenseLogDialog').close();
-            showToast('CATATAN DIHAPUS');
+            showToast(refunded ? `CATATAN DIHAPUS · SALDO ${bankNameOf(refunded).toUpperCase()} DIKEMBALIKAN` : 'CATATAN DIHAPUS');
             savePlansAndSync();
         }
 
@@ -7431,6 +7538,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 ? `Ketemu ${scanResults.length} transaksi. Cek dulu nominal, tanggal, dan posnya, lalu simpan yang dicentang.`
                 : 'Nggak ada transaksi yang kebaca dari screenshot ini.';
             document.getElementById('scanReviewHint').textContent = hint + (notes.length ? ' Catatan: ' + notes.join(' ') : '');
+            document.getElementById('scanBank').innerHTML = bankOptionsHTML(lastExpenseBank());
             renderScanResults();
         }
 
@@ -7448,7 +7556,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const chosen = scanResults.filter(r => r.include && r.amount > 0 && r.date);
             const btn = document.getElementById('scanSaveBtn');
             btn.disabled = chosen.length === 0;
-            btn.textContent = chosen.length ? `Simpan ${chosen.length} transaksi (${formatIDR(chosen.reduce((s, r) => s + r.amount, 0))})` : 'Simpan';
+            const bank = bankNameOf(document.getElementById('scanBank').value);
+            btn.textContent = chosen.length ? `Simpan ${chosen.length} transaksi (${formatIDR(chosen.reduce((s, r) => s + r.amount, 0))})${bank ? ' · potong ' + bank : ''}` : 'Simpan';
         }
 
         function renderScanResults() {
@@ -7482,10 +7591,12 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function saveScannedTransactions() {
             const chosen = scanResults.filter(r => r.include && r.amount > 0 && /^\d{4}-\d{2}-\d{2}$/.test(r.date));
             if (!chosen.length) return;
-            chosen.forEach(r => addExpenseLog({ date: r.date, amount: r.amount, posId: r.posId, note: r.note, merchant: r.merchant, source: 'scan', planMonth: activePlanMonth }));
+            const bankKey = document.getElementById('scanBank').value;
+            rememberExpenseBank(bankKey);
+            const saved = chosen.map(r => addExpenseLog({ date: r.date, amount: r.amount, posId: r.posId, note: r.note, merchant: r.merchant, source: 'scan', bankKey, planMonth: activePlanMonth }));
             const otherMonths = chosen.filter(r => r.date.slice(0, 7) !== activePlanMonth).length;
             closeScanDialog();
-            showToast(`${chosen.length} TRANSAKSI TERSIMPAN` + (otherMonths ? ` (${otherMonths} MASUK BULAN LAIN)` : ''));
+            showToast(`${chosen.length} TRANSAKSI TERSIMPAN` + (otherMonths ? ` (${otherMonths} MASUK BULAN LAIN)` : '') + afterBankCut(saved));
             savePlansAndSync();
         }
 
@@ -7559,7 +7670,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const month = activePlanMonth || currentMonthKey();
             const posName = id => { const p = planItemsOf(month).find(x => x.id === id); return p ? p.name : ''; };
             if (action.name === 'catat_pengeluaran') {
-                return { title: 'Catat pengeluaran', detail: `${formatIDR(Math.round(a.amount) || 0)} · ${a.note || '-'}${posName(a.pos_id) ? ' · ' + posName(a.pos_id) : ' · di luar rencana'} · ${a.date ? formatShortDate(a.date) : 'hari ini'}` };
+                const bank = bankNameOf(aiActionBank(action));
+                return { title: 'Catat pengeluaran', detail: `${formatIDR(Math.round(a.amount) || 0)} · ${a.note || '-'}${posName(a.pos_id) ? ' · ' + posName(a.pos_id) : ' · di luar rencana'} · ${a.date ? formatShortDate(a.date) : 'hari ini'}${action.status === 'ok' && bank ? ' · dari ' + bank : ''}` };
             }
             if (action.name === 'tandai_rencana') return { title: a.done ? 'Tandai rencana selesai' : 'Buka lagi rencana', detail: posName(a.pos_id) || a.pos_id };
             if (action.name === 'tambah_rencana') {
@@ -7575,6 +7687,22 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             return { title: action.name, detail: '' };
         }
 
+        // Account a proposed spending is paid from: picked on the card, else what the assistant
+        // understood ("pake GoPay"), else the account used last time.
+        function aiActionBank(action) {
+            const a = action.args || {};
+            if (typeof action.bank === 'string') return isBankKey(action.bank) ? action.bank : '';
+            return isBankKey(a.bank) ? a.bank : lastExpenseBank();
+        }
+
+        function setAiActionBank(msgIndex, actionIndex, key) {
+            const msg = aiState[aiState.mode][msgIndex];
+            const action = msg && msg.actions && msg.actions[actionIndex];
+            if (!action || action.status) return;
+            action.bank = isBankKey(key) ? key : '';
+            saveAssistantState();
+        }
+
         function runAiAction(action) {
             const a = action.args || {};
             const month = activePlanMonth || currentMonthKey();
@@ -7582,8 +7710,14 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const amount = Math.round(Number(a.amount)) || 0;
                 const date = /^\d{4}-\d{2}-\d{2}$/.test(a.date || '') ? a.date : localDateKey();
                 if (amount <= 0) throw new Error('Nominal tidak valid');
-                addExpenseLog({ date, amount, posId: planItemsOf(date.slice(0, 7)).some(p => p.id === a.pos_id) ? a.pos_id : '', note: String(a.note || '').slice(0, 120), source: a.sumber === 'scan' ? 'scan' : 'manual', planMonth: date.slice(0, 7) });
+                const bankKey = aiActionBank(action);
+                action.bank = bankKey;
+                rememberExpenseBank(bankKey);
+                const log = addExpenseLog({ date, amount, posId: planItemsOf(date.slice(0, 7)).some(p => p.id === a.pos_id) ? a.pos_id : '', note: String(a.note || '').slice(0, 120), source: a.sumber === 'scan' ? 'scan' : 'manual', bankKey, planMonth: date.slice(0, 7) });
+                afterBankCut([log]);
                 saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                if (log.bankCut > 0) return `Tercatat, saldo ${bankNameOf(bankKey)} jadi ${formatIDR(Number(bankBalances[bankKey]) || 0)}`;
+                if (bankKey) return `Tercatat (saldo ${bankNameOf(bankKey)} sudah diperbarui setelah tanggal ini, tidak dipotong)`;
                 return 'Tercatat';
             }
             if (action.name === 'tandai_rencana') {
@@ -7751,7 +7885,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             let content;
             if (actions.length) {
                 const total = actions.reduce((s, a) => s + a.args.amount, 0);
-                content = `Kebaca ${actions.length} pengeluaran, total **${formatIDR(total)}**:\n${lines.join('\n')}\nCek dulu, terus klik Jalankan buat nyatet.`;
+                content = `Kebaca ${actions.length} pengeluaran, total **${formatIDR(total)}**:\n${lines.join('\n')}\nIni dibayar dari rekening apa? Pilih di kolom **Dari**, saldonya langsung kepotong pas lo klik Jalankan.`;
             } else {
                 content = found.length ? 'Nggak ada pengeluaran baru dari struk ini.' : 'Gue nggak nemu transaksi yang kebaca dari foto ini. Coba foto ulang lebih dekat dan terang.';
             }
@@ -7794,7 +7928,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             : a.status === 'batal' ? '<span class="ai-act-state">Dibatalkan</span>'
                             : a.status === 'gagal' ? `<span class="ai-act-state is-err">Gagal: ${escapeHTML(a.result || '')}</span>`
                             : `<span class="ai-act-btns"><button type="button" class="is-yes" onclick="handleAiAction(${i}, ${j}, true)">Jalankan</button><button type="button" onclick="handleAiAction(${i}, ${j}, false)">Batal</button></span>`;
-                        return `<div class="ai-action"><div><b>${escapeHTML(d.title)}</b><span>${escapeHTML(d.detail)}</span></div>${state}</div>`;
+                        const bankPick = a.name === 'catat_pengeluaran' && !a.status
+                            ? `<label class="ai-act-bank">Dari <select onchange="setAiActionBank(${i}, ${j}, this.value)">${bankOptionsHTML(aiActionBank(a))}</select></label>`
+                            : '';
+                        return `<div class="ai-action"><div><b>${escapeHTML(d.title)}</b><span>${escapeHTML(d.detail)}</span></div>${bankPick}${state}</div>`;
                     }).join('');
                     return `
                         <div class="ai-msg is-bot${m.error ? ' is-error' : ''}">
@@ -7829,6 +7966,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 hari_ini: today,
                 bulan_rencana_aktif: month,
                 saldo_bank: { total: cash, per_akun: Object.fromEntries(BANK_ACCOUNTS.map(a => [a.name, Number(bankBalances[a.key]) || 0])), diperbarui: bankBalancesUpdatedAt || null },
+                rekening: BANK_ACCOUNTS.map(a => ({ key: a.key, nama: a.bankName })),
                 rencana_bulan_aktif: planOf(month),
                 catatan_pengeluaran_bulan_aktif: logList(month),
                 rencana_bulan_lalu_ringkas: planItemsOf(prev).length ? { bulan: prev, total_anggaran: planItemsOf(prev).reduce((s, p) => s + p.planned, 0), total_terpakai: planItemsOf(prev).reduce((s, p) => s + p.actual, 0) } : null,
@@ -8573,6 +8711,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             if (templateInput) bankCopyTemplate = templateInput.value.trim() || DEFAULT_BANK_COPY_TEMPLATE;
             const now = new Date();
             bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            // The balances just typed already include every spending recorded so far, so deleting
+            // one of those later must not add its amount back.
+            Object.values(expenseLogs).forEach(list => list.forEach(log => { log.bankCut = 0; }));
+            saveLocalBillingState();
             saveLocalBankBalances();
             renderBankBalancesUI();
             closeBankBalanceModal();
