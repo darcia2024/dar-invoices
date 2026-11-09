@@ -4,6 +4,9 @@
   "functions": {
     "api/scan-receipt.js": {
       "maxDuration": 60
+    },
+    "api/assistant.js": {
+      "maxDuration": 60
     }
   },
   "rewrites": [

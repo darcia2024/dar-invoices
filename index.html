@@ -2529,6 +2529,7 @@ body[data-view="pack"] #packSection {
                     <div class="pack-summary-counts" id="packSummaryCounts"></div>
                 </div>
 
+                <div class="pack-cat-chips" id="packCatChips" role="tablist" aria-label="Pilih kategori"></div>
                 <form class="pack-quick-add" onsubmit="handlePackQuickAdd(event)">
                     <input type="text" id="packQuickName" maxlength="80" placeholder="Tambah barang… (contoh: Paspor, Charger HP)" aria-label="Nama barang" required>
                     <select id="packQuickCategory" aria-label="Kategori"></select>
@@ -4356,6 +4357,38 @@ body[data-view="pack"] #packSection {
 
     </main>
 
+    <!-- ASISTEN DAR (floating AI assistant) -->
+    <button type="button" class="ai-fab" id="aiFab" onclick="openAssistant()" aria-label="Buka Asisten DAR">
+        <img src="/brand/dar-mascot-128.png" alt="" width="40" height="40">
+        <span>Tanya DAR</span>
+    </button>
+    <section class="ai-panel" id="aiPanel" hidden aria-label="Asisten DAR" role="dialog" aria-modal="false">
+        <header class="ai-head">
+            <img src="/brand/dar-mascot-128.png" alt="" width="34" height="34">
+            <div class="ai-head-text">
+                <b>Asisten DAR</b>
+                <small id="aiModeHint">Tanya data keuangan lo, atau suruh nyatat.</small>
+            </div>
+            <button type="button" class="ai-icon-btn" onclick="clearAssistant()" title="Mulai obrolan baru" aria-label="Mulai obrolan baru">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            </button>
+            <button type="button" class="ai-icon-btn" onclick="closeAssistant()" aria-label="Tutup asisten">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </header>
+        <div class="ai-modes" role="tablist" aria-label="Mode asisten">
+            <button type="button" role="tab" data-ai-mode="asisten" class="active" onclick="setAssistantMode('asisten')">Asisten</button>
+            <button type="button" role="tab" data-ai-mode="penasehat" onclick="setAssistantMode('penasehat')">Penasehat keuangan</button>
+        </div>
+        <div class="ai-messages" id="aiMessages" aria-live="polite"></div>
+        <form class="ai-input" onsubmit="sendAssistantMessage(event)">
+            <textarea id="aiInput" rows="1" maxlength="2000" placeholder="Tulis pesan…" aria-label="Pesan untuk asisten" onkeydown="if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();this.form.requestSubmit();}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea>
+            <button type="submit" id="aiSendBtn" aria-label="Kirim">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </form>
+    </section>
+
     <!-- DIALOG COMPOSER: TAMBAH / EDIT HUTANG PIUTANG -->
     <dialog id="debtComposerDialog" class="invoice-manager-dialog" aria-labelledby="debtDialogTitle">
         <div class="manager-heading">
@@ -4908,6 +4941,7 @@ body[data-view="pack"] #packSection {
         })();
         let activePackTripId = (() => { try { return localStorage.getItem(PACK_ACTIVE_TRIP_KEY) || ''; } catch (e) { return ''; } })();
         let activePackFilter = 'all';
+        let activePackCategory = 'all';
 
 
         function currentMonthKey(date = new Date()) {
@@ -7286,6 +7320,274 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         }
 
         // =========================================================================
+        // ASISTEN DAR (AI chat + penasehat keuangan via /api/assistant)
+        // =========================================================================
+        const AI_STORAGE_KEY = 'dar-assistant-chat';
+        const AI_SUGGESTIONS = {
+            asisten: ['Pengeluaran minggu ini berapa?', 'Invoice mana yang belum lunas?', 'Catat makan siang 35rb', 'Bikinin pesan WA nagih invoice yang belum lunas'],
+            penasehat: ['Gimana kondisi keuangan gue bulan ini?', 'Apa yang harus gue bayar duluan?', 'Aman nggak belanja harian gue?', 'Gimana mulai bikin dana darurat?']
+        };
+        let aiState = (() => {
+            try {
+                const saved = JSON.parse(localStorage.getItem(AI_STORAGE_KEY) || 'null');
+                if (saved && Array.isArray(saved.asisten) && Array.isArray(saved.penasehat)) return { mode: saved.mode === 'penasehat' ? 'penasehat' : 'asisten', asisten: saved.asisten, penasehat: saved.penasehat };
+            } catch (e) {}
+            return { mode: 'asisten', asisten: [], penasehat: [] };
+        })();
+        let aiBusy = false;
+
+        function saveAssistantState() {
+            try {
+                const trim = list => list.slice(-40);
+                localStorage.setItem(AI_STORAGE_KEY, JSON.stringify({ mode: aiState.mode, asisten: trim(aiState.asisten), penasehat: trim(aiState.penasehat) }));
+            } catch (e) {}
+        }
+
+        function openAssistant() {
+            document.getElementById('aiPanel').hidden = false;
+            document.body.classList.add('ai-open');
+            renderAssistant();
+            setTimeout(() => document.getElementById('aiInput').focus(), 50);
+        }
+
+        function closeAssistant() {
+            document.getElementById('aiPanel').hidden = true;
+            document.body.classList.remove('ai-open');
+        }
+
+        function setAssistantMode(mode) {
+            aiState.mode = mode;
+            saveAssistantState();
+            renderAssistant();
+        }
+
+        function clearAssistant() {
+            if (aiState[aiState.mode].length && !confirm('Hapus obrolan ini dan mulai baru?')) return;
+            aiState[aiState.mode] = [];
+            saveAssistantState();
+            renderAssistant();
+        }
+
+        function aiMarkdown(text) {
+            const lines = escapeHTML(text).split('\n');
+            let html = '', inList = false;
+            lines.forEach(line => {
+                const item = line.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
+                if (item) {
+                    if (!inList) { html += '<ul>'; inList = true; }
+                    html += `<li>${item[1]}</li>`;
+                } else {
+                    if (inList) { html += '</ul>'; inList = false; }
+                    html += line.trim() ? `<p>${line}</p>` : '';
+                }
+            });
+            if (inList) html += '</ul>';
+            return html.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+        }
+
+        function describeAiAction(action) {
+            const a = action.args || {};
+            const month = activePlanMonth || currentMonthKey();
+            const posName = id => { const p = planItemsOf(month).find(x => x.id === id); return p ? p.name : ''; };
+            if (action.name === 'catat_pengeluaran') {
+                return { title: 'Catat pengeluaran', detail: `${formatIDR(Math.round(a.amount) || 0)} · ${a.note || '-'}${posName(a.pos_id) ? ' · ' + posName(a.pos_id) : ' · di luar rencana'} · ${a.date ? formatShortDate(a.date) : 'hari ini'}` };
+            }
+            if (action.name === 'tandai_rencana') return { title: a.done ? 'Tandai rencana selesai' : 'Buka lagi rencana', detail: posName(a.pos_id) || a.pos_id };
+            if (action.name === 'tambah_rencana') {
+                const cat = PLAN_CATEGORY_MAP[a.category] || PLAN_CATEGORY_MAP.lainnya;
+                return { title: 'Tambah rencana', detail: `${a.name} · ${formatIDR(Math.round(a.planned) || 0)} · ${cat.label}${a.due ? ' · ' + formatShortDate(a.due) : ''}` };
+            }
+            if (action.name === 'ubah_status_invoice') {
+                const inv = invoiceItems.find(i => i.id === a.invoice_id);
+                const label = a.status === 'PAID' ? 'Lunas' : a.status === 'DP' ? `DP ${formatIDR(Math.round(a.dp_amount) || 0)}` : 'Belum lunas';
+                return { title: 'Ubah status invoice', detail: `${inv ? inv.name : a.invoice_id} → ${label}` };
+            }
+            return { title: action.name, detail: '' };
+        }
+
+        function runAiAction(action) {
+            const a = action.args || {};
+            const month = activePlanMonth || currentMonthKey();
+            if (action.name === 'catat_pengeluaran') {
+                const amount = Math.round(Number(a.amount)) || 0;
+                const date = /^\d{4}-\d{2}-\d{2}$/.test(a.date || '') ? a.date : localDateKey();
+                if (amount <= 0) throw new Error('Nominal tidak valid');
+                addExpenseLog({ date, amount, posId: planItemsOf(date.slice(0, 7)).some(p => p.id === a.pos_id) ? a.pos_id : '', note: String(a.note || '').slice(0, 120), source: 'manual', planMonth: date.slice(0, 7) });
+                saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                return 'Tercatat';
+            }
+            if (action.name === 'tandai_rencana') {
+                const item = Object.keys(expensePlans).map(m => planItemsOf(m).find(p => p.id === a.pos_id)).find(Boolean);
+                if (!item) throw new Error('Rencana tidak ditemukan');
+                item.done = Boolean(a.done);
+                if (item.done && item.actual === 0) item.actual = item.planned;
+                item.updatedAt = Date.now();
+                saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                return item.done ? 'Ditandai selesai' : 'Dibuka lagi';
+            }
+            if (action.name === 'tambah_rencana') {
+                const created = normalizePlanItem({ name: a.name, category: a.category, planned: a.planned, actual: 0, due: /^\d{4}-\d{2}-\d{2}$/.test(a.due || '') ? a.due : '', notes: a.notes || '', recurring: false, createdAt: Date.now() });
+                if (!created) throw new Error('Data rencana tidak lengkap');
+                expensePlans[month] = planItemsOf(month).concat(created);
+                saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                return 'Ditambahkan';
+            }
+            if (action.name === 'ubah_status_invoice') {
+                const inv = invoiceItems.find(i => i.id === a.invoice_id);
+                if (!inv) throw new Error('Invoice tidak ditemukan');
+                const status = ['PAID', 'DP', 'UNPAID'].includes(a.status) ? a.status : null;
+                if (!status) throw new Error('Status tidak valid');
+                if (status === 'DP') {
+                    const dp = Math.round(Number(a.dp_amount)) || 0;
+                    if (dp <= 0 || dp >= inv.gross) throw new Error('Nominal DP tidak valid');
+                    setPaymentStatus(inv.id, 'DP', dp);
+                } else {
+                    setPaymentStatus(inv.id, status);
+                }
+                return 'Status diubah';
+            }
+            throw new Error('Aksi tidak dikenal');
+        }
+
+        function handleAiAction(msgIndex, actionIndex, confirmIt) {
+            const msg = aiState[aiState.mode][msgIndex];
+            const action = msg && msg.actions && msg.actions[actionIndex];
+            if (!action || action.status) return;
+            if (!confirmIt) {
+                action.status = 'batal';
+            } else {
+                try {
+                    action.result = runAiAction(action);
+                    action.status = 'ok';
+                } catch (e) {
+                    action.status = 'gagal';
+                    action.result = e.message;
+                }
+            }
+            saveAssistantState();
+            renderAssistant();
+        }
+
+        function copyAiMessage(index) {
+            const msg = aiState[aiState.mode][index];
+            if (!msg) return;
+            navigator.clipboard.writeText(msg.content).then(() => showToast('PESAN DISALIN')).catch(() => showToast('GAGAL MENYALIN'));
+        }
+
+        function renderAssistant() {
+            const mode = aiState.mode;
+            document.querySelectorAll('[data-ai-mode]').forEach(b => b.classList.toggle('active', b.dataset.aiMode === mode));
+            document.getElementById('aiPanel').classList.toggle('is-advisor', mode === 'penasehat');
+            document.getElementById('aiModeHint').textContent = mode === 'penasehat'
+                ? 'Analisis & saran dari data keuangan lo.'
+                : 'Tanya data keuangan lo, atau suruh nyatat.';
+            document.getElementById('aiInput').placeholder = mode === 'penasehat' ? 'Tanya soal kondisi keuangan…' : 'Contoh: catat bensin 20rb';
+            const list = aiState[mode];
+            const box = document.getElementById('aiMessages');
+            if (!list.length) {
+                box.innerHTML = `
+                    <div class="ai-welcome">
+                        <img src="/brand/dar-mascot-128.png" alt="" width="64" height="64">
+                        <b>${mode === 'penasehat' ? 'Penasehat keuangan DAR' : 'Halo bro, mau ngapain?'}</b>
+                        <span>${mode === 'penasehat' ? 'Gue lihat saldo, rencana, tagihan, dan pengeluaran lo, terus kasih saran yang realistis.' : 'Gue bisa jawab soal invoice, pengeluaran, rencana, hutang, dan nyatat buat lo.'}</span>
+                        <div class="ai-chips">${AI_SUGGESTIONS[mode].map(t => `<button type="button" onclick="sendAssistantMessage(null, ${escapeHTML(JSON.stringify(t))})">${escapeHTML(t)}</button>`).join('')}</div>
+                    </div>`;
+            } else {
+                box.innerHTML = list.map((m, i) => {
+                    if (m.role === 'user') return `<div class="ai-msg is-user"><div class="ai-bubble">${escapeHTML(m.content).replace(/\n/g, '<br>')}</div></div>`;
+                    const actions = (m.actions || []).map((a, j) => {
+                        const d = describeAiAction(a);
+                        const state = a.status === 'ok' ? `<span class="ai-act-state is-ok">✓ ${escapeHTML(a.result || 'Selesai')}</span>`
+                            : a.status === 'batal' ? '<span class="ai-act-state">Dibatalkan</span>'
+                            : a.status === 'gagal' ? `<span class="ai-act-state is-err">Gagal: ${escapeHTML(a.result || '')}</span>`
+                            : `<span class="ai-act-btns"><button type="button" class="is-yes" onclick="handleAiAction(${i}, ${j}, true)">Jalankan</button><button type="button" onclick="handleAiAction(${i}, ${j}, false)">Batal</button></span>`;
+                        return `<div class="ai-action"><div><b>${escapeHTML(d.title)}</b><span>${escapeHTML(d.detail)}</span></div>${state}</div>`;
+                    }).join('');
+                    return `
+                        <div class="ai-msg is-bot${m.error ? ' is-error' : ''}">
+                            ${m.content ? `<div class="ai-bubble">${aiMarkdown(m.content)}</div>` : ''}
+                            ${actions}
+                            ${m.content && !m.error ? `<button type="button" class="ai-copy" onclick="copyAiMessage(${i})">Salin</button>` : ''}
+                        </div>`;
+                }).join('') + (aiBusy ? `<div class="ai-msg is-bot"><div class="ai-bubble ai-typing"><span></span><span></span><span></span></div></div>` : '');
+            }
+            box.scrollTop = box.scrollHeight;
+            document.getElementById('aiSendBtn').disabled = aiBusy;
+        }
+
+        function buildAssistantContext() {
+            const today = localDateKey();
+            const month = activePlanMonth || currentMonthKey();
+            const cash = BANK_ACCOUNTS.reduce((sum, acc) => sum + (Number(bankBalances[acc.key]) || 0), 0);
+            let monthly = {};
+            try {
+                const { monthlyMap } = buildPaymentTimelines();
+                Object.entries(monthlyMap).slice(-6).forEach(([k, r]) => { monthly[k] = { pendapatan_masuk: r.paidGrossTotal, profit_masuk: r.paidNetProfitTotal }; });
+            } catch (e) {}
+            const invoices = invoiceItems.filter(i => !deletedInvoiceIds.includes(i.id)).map(i => {
+                const paid = paidAmountOf(i);
+                return { id: i.id, klien: i.name, bulan: i.monthLabel, total: i.gross, sudah_dibayar: paid, sisa: Math.max(0, i.gross - paid), status: paymentStatuses[i.id] || 'UNPAID' };
+            });
+            const planOf = m => planItemsOf(m).map(p => ({ id: p.id, nama: p.name, kategori: (PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya).label, anggaran: p.planned, terpakai: p.actual, selesai: p.done, rutin: p.recurring, tanggal_bayar: p.due || null, catatan: p.notes || null }));
+            const logList = m => logsOf(m).map(l => ({ tanggal: l.date, nominal: l.amount, ket: l.note || l.merchant, pos_id: l.posId || null }));
+            const prev = prevMonthKey(month);
+            return JSON.stringify({
+                hari_ini: today,
+                bulan_rencana_aktif: month,
+                saldo_bank: { total: cash, per_akun: Object.fromEntries(BANK_ACCOUNTS.map(a => [a.name, Number(bankBalances[a.key]) || 0])), diperbarui: bankBalancesUpdatedAt || null },
+                rencana_bulan_aktif: planOf(month),
+                catatan_pengeluaran_bulan_aktif: logList(month),
+                rencana_bulan_lalu_ringkas: planItemsOf(prev).length ? { bulan: prev, total_anggaran: planItemsOf(prev).reduce((s, p) => s + p.planned, 0), total_terpakai: planItemsOf(prev).reduce((s, p) => s + p.actual, 0) } : null,
+                invoice: invoices,
+                pemasukan_per_bulan: monthly,
+                hutang_piutang: debts.map(d => ({ jenis: d.type, nama: d.name, total: d.amount, sudah_dibayar: d.paid || 0, sisa: Math.max(0, d.amount - (d.paid || 0)), keterangan: d.notes, jatuh_tempo: d.due || null }))
+            });
+        }
+
+        async function sendAssistantMessage(event, preset) {
+            if (event) event.preventDefault();
+            if (aiBusy) return;
+            const input = document.getElementById('aiInput');
+            const text = (preset || input.value).trim();
+            if (!text) return;
+            const mode = aiState.mode;
+            const list = aiState[mode];
+            list.push({ role: 'user', content: text });
+            input.value = '';
+            input.style.height = 'auto';
+            aiBusy = true;
+            renderAssistant();
+            const history = list.filter(m => !m.error).map(m => {
+                let content = m.content || '';
+                if (m.actions && m.actions.length) {
+                    content += '\n[Aksi yang diusulkan: ' + m.actions.map(a => `${describeAiAction(a).title} (${describeAiAction(a).detail}) — ${a.status === 'ok' ? 'sudah dijalankan' : a.status === 'batal' ? 'dibatalkan user' : a.status === 'gagal' ? 'gagal' : 'belum dikonfirmasi'}`).join('; ') + ']';
+                }
+                return { role: m.role, content: content.trim() || '(aksi)' };
+            });
+            try {
+                const response = await fetch('/api/assistant', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ mode, messages: history, context: buildAssistantContext() })
+                });
+                if (response.status === 401) { window.location.replace('/'); return; }
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(data.error || 'Asisten lagi error. Coba lagi.');
+                list.push({ role: 'assistant', content: data.reply || '', actions: (data.actions || []).map(a => ({ name: a.name, args: a.args })) });
+            } catch (e) {
+                list.push({ role: 'assistant', content: e.message, error: true });
+            }
+            aiBusy = false;
+            saveAssistantState();
+            renderAssistant();
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !document.getElementById('aiPanel').hidden && !document.querySelector('dialog[open]')) closeAssistant();
+        });
+
+        // =========================================================================
         // BARANG BAWAAN (TRAVEL PACKING LIST)
         // =========================================================================
         function packId(prefix) { return prefix + '-' + crypto.randomUUID(); }
@@ -7344,6 +7646,16 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             activePackTripId = id;
             try { localStorage.setItem(PACK_ACTIVE_TRIP_KEY, id); } catch (e) {}
             renderPackUI();
+        }
+
+        function setPackCategory(id) {
+            activePackCategory = id;
+            renderPackUI();
+            const quick = document.getElementById('packQuickCategory');
+            if (quick && id !== 'all' && [...quick.options].some(o => o.value === id)) quick.value = id;
+            const list = document.getElementById('packCatChips');
+            const chip = list && list.querySelector('.is-active');
+            if (chip) chip.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
         }
 
         function setPackFilter(filter, button) {
@@ -7669,7 +7981,19 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
             const query = (document.getElementById('packSearchInput').value || '').toLowerCase().trim();
             const listEl = document.getElementById('packCategoryList');
-            const html = trip.categories.map(cat => {
+            if (activePackCategory !== 'all' && !trip.categories.some(c => c.id === activePackCategory)) activePackCategory = 'all';
+            const chipCount = cat => {
+                const all = trip.items.filter(i => i.categoryId === cat.id);
+                return { done: all.filter(i => i.packed).length, total: all.length };
+            };
+            document.getElementById('packCatChips').innerHTML =
+                `<button type="button" role="tab" class="${activePackCategory === 'all' ? 'is-active' : ''}" onclick="setPackCategory('all')">Semua <small>${packed}/${total}</small></button>` +
+                trip.categories.map(cat => {
+                    const c = chipCount(cat);
+                    const complete = c.total > 0 && c.done === c.total;
+                    return `<button type="button" role="tab" class="${activePackCategory === cat.id ? 'is-active' : ''}${complete ? ' is-complete' : ''}" style="--cat:${cat.color}" onclick="setPackCategory('${escapeHTML(cat.id)}')"><i></i>${escapeHTML(cat.name)} <small>${complete ? '✓' : c.done + '/' + c.total}</small></button>`;
+                }).join('');
+            const html = trip.categories.filter(cat => activePackCategory === 'all' || cat.id === activePackCategory).map(cat => {
                 const all = trip.items.filter(i => i.categoryId === cat.id);
                 const catPacked = all.filter(i => i.packed).length;
                 let shown = all;
@@ -7762,7 +8086,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             { key: 'blu', name: 'blu', bankName: 'blu by BCA Digital', logo: '/bank-logos/blu.png', tag: 'Bank digital' },
             { key: 'line', name: 'LINE Bank', bankName: 'LINE Bank', logo: '/bank-logos/linebank.png', tag: 'Bank digital' },
             { key: 'gopay', name: 'GoPay', bankName: 'GoPay', logo: '/bank-logos/gopay.svg', tag: 'E-wallet', wallet: true },
-            { key: 'dana', name: 'DANA', bankName: 'DANA', logo: '/bank-logos/dana.svg', tag: 'E-wallet', wallet: true }
+            { key: 'dana', name: 'DANA', bankName: 'DANA', logo: '/bank-logos/dana.svg', tag: 'E-wallet', wallet: true },
+            { key: 'mayar', name: 'Mayar', bankName: 'Mayar Wallet', logo: '/bank-logos/mayar.svg', tag: 'Wallet bisnis', wallet: true }
         ];
 
         const DEFAULT_BANK_BALANCES = {
@@ -7771,7 +8096,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             blu: 6467,
             line: 5469,
             gopay: 3695,
-            dana: 4996
+            dana: 4996,
+            // Mayar Wallet per 9 Nov 2026: Rp466.576 siap dicairkan + Rp349.000 pending.
+            mayar: 815576
         };
         const DEFAULT_BANK_UPDATED_AT = '2026-11-08';
         const DEFAULT_ACCOUNT_HOLDER = 'Daru Fahmaa Muliawan';
