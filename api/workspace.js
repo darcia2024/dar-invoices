@@ -22,6 +22,27 @@ function mustReplace(text, search, replacement) {
   return text.split(search).join(replacement);
 }
 
+// An account with `mascot: true` has its own set in brand/ws/<slug>/ (made by
+// scripts/make-workspace-mascot.py); every DAR mascot, icon and splash path points there.
+const BRAND_FILES = [
+  ["/brand/dar-mascot-128.png", "mascot-128.png"],
+  ["/brand/dar-mascot-256.png", "mascot-256.png"],
+  ["/brand/dar-mascot-fab.png", "mascot-fab.png"],
+  ["/brand/favicon-64.png", "favicon-64.png"],
+  ["/brand/apple-touch-icon.png", "apple-touch-icon.png"],
+  ["/brand/icon-192.png", "icon-192.png"],
+  ["/brand/icon-512.png", "icon-512.png"],
+  ["/brand/icon-maskable-512.png", "icon-maskable-512.png"],
+  ["/brand/splash-1179x2556.png", "splash-1179x2556.png"],
+  ["/brand/splash-1206x2622.png", "splash-1206x2622.png"],
+  ["/brand/splash-1290x2796.png", "splash-1290x2796.png"],
+];
+
+function applyBrand(text, ws) {
+  if (!ws.mascot) return text;
+  return BRAND_FILES.reduce((out, [from, file]) => out.split(from).join(`/brand/ws/${ws.slug}/${file}`), text);
+}
+
 function fillPlaceholders(text, ws) {
   return text
     .replace(/\{\{WS_NAME\}\}/g, escapeHtml(ws.name))
@@ -45,7 +66,7 @@ function dashboardPage(ws) {
     .replace(/<!--ws:([\s\S]*?)-->/g, "$1")
     .replace(/\/\*ws:([\s\S]*?)\*\//g, "$1");
   html = mustReplace(html, '<meta charset="UTF-8">', `<meta charset="UTF-8">\n    ${bootstrapScript(ws)}`);
-  return fillPlaceholders(html, ws);
+  return applyBrand(fillPlaceholders(html, ws), ws);
 }
 
 function loginPage(ws) {
@@ -58,11 +79,11 @@ function loginPage(ws) {
   html = mustReplace(html, "Masuk untuk mengelola tagihan dan melihat pendapatan agency.", `Masuk ke workspace ${escapeHtml(ws.name)} untuk mengelola tagihan dan keuangan.`);
   html = mustReplace(html, "JSON.stringify({ pin: input.value.trim() })", `JSON.stringify({ pin: input.value.trim(), workspace: ${JSON.stringify(ws.slug)} })`);
   html = mustReplace(html, "window.location.replace('/');", `window.location.replace(${JSON.stringify(`/${ws.slug}`)});`);
-  return html;
+  return applyBrand(html, ws);
 }
 
 function manifest(ws) {
-  return JSON.stringify({
+  return applyBrand(JSON.stringify({
     id: `/${ws.slug}`,
     name: `${ws.name} Invoices`,
     short_name: ws.name.slice(0, 12),
@@ -77,7 +98,7 @@ function manifest(ws) {
       { src: "/brand/icon-512.png", sizes: "512x512", type: "image/png" },
       { src: "/brand/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
-  });
+  }), ws);
 }
 
 module.exports = function handler(req, res) {

@@ -15,7 +15,7 @@
 const WORKSPACES = {
   demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000" },
   // Akun Lifetime (sold 2026-11-10). PIN: Vercel env WORKSPACE_PIN_JULIAN.
-  julian: { name: "Julian", owner: "Julian" },
+  julian: { name: "Julian", owner: "Julian", mascot: true },
 };
 
 function todayJakarta() {
