@@ -2858,7 +2858,7 @@ body:has(dialog[open]) .pl-fab { display: none !important; }
    ASISTEN DAR (floating AI chat)
    ======================================================== */
 .ai-fab { position: fixed; right: 24px; bottom: 24px; z-index: 45; display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px 6px 6px; border: 0; border-radius: 99px; background: #272722; color: #fffdf5; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 28px rgba(39, 39, 34, .3); }
-.ai-fab img { width: 40px; height: 40px; border-radius: 50%; background: #f1eddf; padding: 3px; }
+.ai-fab img { width: 40px; height: 40px; border-radius: 50%; background: #f1eddf; padding: 4px; object-fit: contain; }
 .ai-fab:hover { background: #3a3a33; }
 body.ai-open .ai-fab { display: none; }
 
@@ -2919,9 +2919,14 @@ body.ai-open .ai-fab { display: none; }
 .ai-input button:disabled { opacity: .45; cursor: wait; }
 
 @media (max-width: 600px) {
-    .ai-fab { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); padding: 4px; }
+    /* Mobile: just the mascot with a white outline that follows its shape, no circle. */
+    .ai-fab, .ai-fab:hover { right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); padding: 0; background: transparent; box-shadow: none; border-radius: 0; }
     .ai-fab span { display: none; }
-    .ai-fab img { width: 48px; height: 48px; }
+    .ai-fab img {
+        width: 58px; height: 58px; padding: 0; border-radius: 0; background: transparent;
+        filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 10px rgba(39, 39, 34, .28));
+    }
+    .ai-fab:active img { transform: scale(.94); }
     body[data-view="plan"] .ai-fab { bottom: calc(80px + env(safe-area-inset-bottom)); }
     .ai-panel { inset: 0; width: auto; height: 100dvh; border-radius: 0; border: 0; padding-bottom: env(safe-area-inset-bottom); }
     .ai-input textarea { font-size: 16px; }
