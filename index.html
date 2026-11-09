@@ -2126,6 +2126,7 @@ body[data-view="pack"] #packSection {
                 </div>
             </div>
 
+            <button type="button" class="mobile-section-toggle" aria-expanded="false" data-open="Lihat semua rekening" data-close="Tutup daftar rekening" onclick="toggleMobileSection('bankTrackerCard', this)">Lihat semua rekening</button>
             <!-- Bank Accounts Grid (dirender dari BANK_ACCOUNTS) -->
             <div class="bank-grid" id="bankGrid"></div>
         </div>
@@ -2185,6 +2186,7 @@ body[data-view="pack"] #packSection {
             <div class="goal-progress-track">
                 <div class="goal-progress-fill" id="goalProgressFill" style="width: 0%;"></div>
             </div>
+            <button type="button" class="mobile-section-toggle" aria-expanded="false" data-open="Atur bulan &amp; target" data-close="Tutup pengaturan" onclick="toggleMobileSection('goalTrackerCard', this)">Atur bulan &amp; target</button>
 
             <div class="goal-affirmation-box" id="goalAffirmationBox">
                 <div class="goal-affirmation-content">
@@ -5618,7 +5620,43 @@ body[data-view="pack"] #packSection {
                         bannerBodyEl.innerHTML = "<strong>DP Termin 1 Rp 100.000 SUDAH LUNAS DITERIMA</strong> pada tanggal <strong>10 September 2026</strong>. Tagihan bulan <strong>Oktober 2026</strong> ini adalah <strong>Sisa Pelunasan Rp 200.000</strong> (Total Nilai Kontrak: Rp 300.000).";
                     }
                 }
+
+                renderCardSummary(card, item, status);
             });
+        }
+
+        // Mobile: each invoice card shows one summary line; tapping the card opens the full details.
+        function renderCardSummary(card, item, status) {
+            let mini = card.querySelector('.card-mini');
+            if (!mini) {
+                mini = document.createElement('div');
+                mini.className = 'card-mini';
+                const top = card.querySelector('.card-top');
+                if (top) top.insertAdjacentElement('afterend', mini);
+                else card.prepend(mini);
+                card.addEventListener('click', event => {
+                    if (!window.matchMedia('(max-width: 600px)').matches) return;
+                    if (event.target.closest('button, a, input, select, textarea, label, .payment-status-pill')) return;
+                    const open = card.classList.toggle('is-open');
+                    card.setAttribute('aria-expanded', String(open));
+                });
+                card.setAttribute('aria-expanded', 'false');
+            }
+            const paid = paidAmountOf(item);
+            const remaining = Math.max(0, item.gross - paid);
+            let amount, note;
+            if (status === 'PAID') { amount = formatIDR(item.gross); note = 'Lunas'; }
+            else if (status === 'DP') { amount = formatIDR(remaining); note = `sisa dari ${formatIDR(item.gross)}`; }
+            else { amount = formatIDR(item.gross); note = 'belum dibayar'; }
+            mini.innerHTML = `<span class="card-mini-amount">${amount}</span><span class="card-mini-note">${escapeHTML(note)} · ${escapeHTML(item.monthLabel || '')}</span><span class="card-mini-chevron" aria-hidden="true"></span>`;
+        }
+
+        function toggleMobileSection(id, button) {
+            const section = document.getElementById(id);
+            if (!section) return;
+            const open = section.classList.toggle('is-expanded');
+            button.setAttribute('aria-expanded', String(open));
+            button.textContent = open ? button.dataset.close : button.dataset.open;
         }
 
         function renderProfitUI() {
