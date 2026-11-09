@@ -6,7 +6,9 @@
 // To add an account: add an entry below and a rewrite for "/<slug>" in vercel.json, then set
 // its PIN in Vercel.
 const WORKSPACES = {
-  demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000" },
+  // ai: false -> the assistant and receipt scan answer with templates (api/_demo-ai.js) and
+  // never call OpenRouter, so a public PIN cannot run up the AI bill.
+  demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000", ai: false },
 };
 
 const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$/;

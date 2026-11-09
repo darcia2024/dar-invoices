@@ -4,6 +4,7 @@
 // the user confirms. Nothing here writes to the database.
 const { hasValidSession, requestWorkspace } = require("./_session");
 const { getWorkspace } = require("./_workspaces");
+const { demoAssistant, pause } = require("./_demo-ai");
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const MODELS = {
@@ -145,7 +146,16 @@ module.exports = async function handler(req, res) {
   try {
     const wsSlug = requestWorkspace(req);
     if (!hasValidSession(req, wsSlug)) return res.status(401).json({ error: "Unauthorized" });
-    const PROMPTS = buildPrompts(wsSlug ? getWorkspace(wsSlug) : null);
+    const workspace = wsSlug ? getWorkspace(wsSlug) : null;
+    if (workspace && workspace.ai === false) {
+      const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
+      const history = (Array.isArray(body.messages) ? body.messages : []).filter((m) => m && typeof m.content === "string");
+      if (!history.length) return res.status(400).json({ error: "Pesan kosong." });
+      await pause(700 + Math.random() * 900);
+      const answer = demoAssistant({ mode: body.mode === "penasehat" ? "penasehat" : "asisten", history, context: body.context });
+      return res.status(200).json({ ...answer, model: MODELS[body.mode === "penasehat" ? "penasehat" : "asisten"] });
+    }
+    const PROMPTS = buildPrompts(workspace);
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) return res.status(503).json({ error: "OPENROUTER_API_KEY belum diatur di Vercel. Asisten belum bisa dipakai." });
 
