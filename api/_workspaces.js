@@ -14,6 +14,8 @@
 // Lifetime customer without AI:  rina: { name: "Rina Studio", owner: "Rina" },
 const WORKSPACES = {
   demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000" },
+  // Akun Lifetime (sold 2026-11-10). PIN: Vercel env WORKSPACE_PIN_JULIAN.
+  julian: { name: "Julian", owner: "Julian" },
 };
 
 function todayJakarta() {

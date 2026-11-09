@@ -46,6 +46,10 @@
       "destination": "/api/workspace?ws=demo"
     },
     {
+      "source": "/julian",
+      "destination": "/api/workspace?ws=julian"
+    },
+    {
       "source": "/:ws/manifest.webmanifest",
       "destination": "/api/workspace?ws=:ws&asset=manifest"
     },
