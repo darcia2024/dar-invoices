@@ -7,6 +7,18 @@
     <!-- Google Fonts: Sora & Space Mono -->
     <link rel="icon" type="image/png" sizes="64x64" href="/brand/favicon-64.png">
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+    <!-- PWA: Home Screen app on iPhone -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#f1eddf">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="DAR">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <script>if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) document.documentElement.classList.add('is-standalone');</script>
+    <link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/brand/splash-1179x2556.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/brand/splash-1206x2622.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/brand/splash-1290x2796.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -2011,11 +2023,11 @@ body[data-view="pack"] #packSection {
         </div>
         <p class="sidebar-caption">Workspace</p>
         <nav aria-label="Navigasi utama">
-            <button class="sidebar-link active" data-view="board" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span> Invoice</button>
-            <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span> Laporan keuangan</button>
-            <button class="sidebar-link" data-view="debt" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg></span> Hutang &amp; Piutang</button>
-            <button class="sidebar-link" data-view="plan" aria-pressed="false" onclick="setWorkspaceView('plan')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 15h3M8 18h6"/></svg></span> Rencana pengeluaran</button>
-            <button class="sidebar-link" data-view="pack" aria-pressed="false" onclick="setWorkspaceView('pack')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18M10 13v2h4v-2"/></svg></span> Barang bawaan</button>
+            <button class="sidebar-link active" data-view="board" data-short="Invoice" aria-pressed="true" onclick="setWorkspaceView('board')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span> Invoice</button>
+            <button class="sidebar-link" data-view="report" data-short="Laporan" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span> Laporan keuangan</button>
+            <button class="sidebar-link" data-view="debt" data-short="Hutang" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg></span> Hutang &amp; Piutang</button>
+            <button class="sidebar-link" data-view="plan" data-short="Rencana" aria-pressed="false" onclick="setWorkspaceView('plan')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 15h3M8 18h6"/></svg></span> Rencana pengeluaran</button>
+            <button class="sidebar-link" data-view="pack" data-short="Bawaan" aria-pressed="false" onclick="setWorkspaceView('pack')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18M10 13v2h4v-2"/></svg></span> Barang bawaan</button>
             <button class="sidebar-link mobile-lock" onclick="lockAdminDashboard()">Kunci</button>
         </nav>
         <div class="sidebar-note"><span>Catatan workspace</span><p>Status pembayaran dan profit bisa dikelola langsung dari kartu invoice.</p></div>
@@ -4723,9 +4735,30 @@ body[data-view="pack"] #packSection {
             if (workspaceLocked) return;
             workspaceLocked = true;
             document.getElementById('invoiceManagerDialog')?.close();
+            // Drop the offline copy of the dashboard so nothing financial stays on the device.
+            try { navigator.serviceWorker?.controller?.postMessage('clear-dashboard-cache'); } catch (e) {}
             fetch('/api/logout', { method: 'POST', keepalive: true, credentials: 'same-origin' })
                 .finally(() => window.location.replace('/'));
         }
+
+        // ---- PWA (Home Screen app) ----
+        const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        if (isStandaloneApp) document.documentElement.classList.add('is-standalone');
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+        }
+        // In the Home Screen app a client invoice page would open with no way back; open it in a browser sheet instead.
+        document.addEventListener('click', event => {
+            if (!isStandaloneApp) return;
+            const link = event.target.closest && event.target.closest('a[href]');
+            if (!link || link.target === '_blank') return;
+            const url = new URL(link.href, location.href);
+            const isDashboard = url.origin === location.origin && ['/', '/index', '/index.html'].includes(url.pathname);
+            if (url.protocol.startsWith('http') && !isDashboard) {
+                event.preventDefault();
+                window.open(url.href, '_blank', 'noopener');
+            }
+        });
 
         // Halaman yang dipulihkan dari cache browser harus dicek ulang oleh server.
         window.addEventListener("pageshow", function(event) {

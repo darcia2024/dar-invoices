@@ -2960,3 +2960,55 @@ body.ai-open .ai-fab { display: none; }
 @media (max-width: 600px) {
     .portal-container { padding-bottom: 84px; }
 }
+
+/* ========================================================
+   PWA — Home Screen app on iPhone (standalone mode)
+   ======================================================== */
+html.is-standalone, html.is-standalone body {
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+}
+html.is-standalone button, html.is-standalone .sidebar-link, html.is-standalone .month-pill-btn, html.is-standalone .create-invoice-btn {
+    -webkit-user-select: none; user-select: none;
+    -webkit-touch-callout: none;
+}
+@media (max-width: 600px) {
+    html.is-standalone body {
+        --tabbar-h: 62px;
+        padding-top: calc(env(safe-area-inset-top) + 8px);
+        padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 24px);
+    }
+    /* Native-style bottom tab bar */
+    html.is-standalone .workspace-sidebar nav {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+        display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0;
+        margin: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+        background: rgba(250, 248, 238, .86);
+        -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
+        border-top: 1px solid rgba(39, 39, 34, .12);
+    }
+    html.is-standalone .workspace-sidebar nav .sidebar-link {
+        min-height: 50px; padding: 4px 2px; gap: 3px; margin: 0;
+        background: transparent; border-radius: 10px; box-shadow: none;
+        color: #8a8577; font-size: 0; font-weight: 600;
+    }
+    html.is-standalone .workspace-sidebar nav .sidebar-link::after {
+        content: attr(data-short); font-size: 10.5px; line-height: 1.1; letter-spacing: .01em;
+    }
+    html.is-standalone .workspace-sidebar nav .sidebar-link,
+    html.is-standalone .workspace-sidebar nav .sidebar-link.active { border-color: transparent; transition: color .15s, transform .1s; }
+    html.is-standalone .workspace-sidebar nav .sidebar-link.active { background: transparent; color: #24241f; }
+    html.is-standalone .workspace-sidebar nav .sidebar-link .nav-icon { width: 23px; height: 23px; }
+    html.is-standalone .workspace-sidebar nav .sidebar-link.mobile-lock { display: none !important; }
+    html.is-standalone .workspace-sidebar nav .sidebar-link:active { transform: scale(.94); }
+    /* Header keeps only brand + lock */
+    html.is-standalone .workspace-sidebar { margin-bottom: 12px; padding: 8px 12px; }
+    /* Floating buttons sit above the tab bar */
+    html.is-standalone .ai-fab, html.is-standalone .ai-fab:hover { bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 12px); }
+    html.is-standalone body[data-view="plan"] .ai-fab { bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 78px); }
+    html.is-standalone body[data-view="plan"] .pl-fab { bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 12px); }
+    html.is-standalone .toast { bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 12px); }
+    html.is-standalone body.ai-open .workspace-sidebar nav { display: none; }
+    /* Full-screen assistant respects the notch / Dynamic Island */
+    html.is-standalone .ai-panel { padding-top: env(safe-area-inset-top); }
+}
