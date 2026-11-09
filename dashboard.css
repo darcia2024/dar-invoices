@@ -2917,6 +2917,13 @@ body.ai-open .ai-fab { display: none; }
 .ai-input textarea:focus { outline: none; border-color: #8a8474; }
 .ai-input button { width: 42px; height: 42px; border: 0; border-radius: 12px; background: #272722; color: #fffdf5; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .ai-input button:disabled { opacity: .45; cursor: wait; }
+.ai-input .ai-attach-btn { width: 38px; height: 42px; background: transparent; color: #4a473e; border-radius: 10px; }
+.ai-input .ai-attach-btn:hover { background: #ece7d8; }
+.ai-input .ai-attach-btn + .ai-attach-btn { margin-left: -6px; }
+.ai-thumbs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.ai-thumbs img { width: 64px; height: 84px; object-fit: cover; border-radius: 10px; border: 1px solid #d9d2c1; background: #fff; }
+.ai-run-all { align-self: flex-start; border: 0; background: #2e7343; color: #fff; font: inherit; font-size: 12.5px; font-weight: 600; border-radius: 9px; padding: 8px 14px; cursor: pointer; }
+.ai-run-all:hover { background: #255f37; }
 
 @media (max-width: 600px) {
     /* Mobile: just the mascot with a white outline that follows its shape, no circle. */

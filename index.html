@@ -4382,6 +4382,14 @@ body[data-view="pack"] #packSection {
         </div>
         <div class="ai-messages" id="aiMessages" aria-live="polite"></div>
         <form class="ai-input" onsubmit="sendAssistantMessage(event)">
+            <input type="file" id="aiCameraInput" accept="image/*" capture="environment" hidden onchange="handleAssistantReceipts(this.files)">
+            <input type="file" id="aiUploadInput" accept="image/*" multiple hidden onchange="handleAssistantReceipts(this.files)">
+            <button type="button" class="ai-attach-btn" onclick="document.getElementById('aiCameraInput').click()" title="Foto struk" aria-label="Foto struk pakai kamera">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            </button>
+            <button type="button" class="ai-attach-btn" onclick="document.getElementById('aiUploadInput').click()" title="Upload struk / screenshot" aria-label="Upload foto struk atau screenshot">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            </button>
             <textarea id="aiInput" rows="1" maxlength="2000" placeholder="Tulis pesan…" aria-label="Pesan untuk asisten" onkeydown="if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();this.form.requestSubmit();}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea>
             <button type="submit" id="aiSendBtn" aria-label="Kirim">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -7381,8 +7389,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         // =========================================================================
         const AI_STORAGE_KEY = 'dar-assistant-chat';
         const AI_SUGGESTIONS = {
-            asisten: ['Pengeluaran minggu ini berapa?', 'Invoice mana yang belum lunas?', 'Catat makan siang 35rb', 'Bikinin pesan WA nagih invoice yang belum lunas'],
-            penasehat: ['Gimana kondisi keuangan gue bulan ini?', 'Apa yang harus gue bayar duluan?', 'Aman nggak belanja harian gue?', 'Gimana mulai bikin dana darurat?']
+            asisten: ['Pengeluaran minggu ini berapa?', 'Invoice mana yang belum lunas?', 'Catat makan siang 35rb', 'Bikinin pesan WA nagih invoice yang belum lunas'],            penasehat: ['Gimana kondisi keuangan gue bulan ini?', 'Apa yang harus gue bayar duluan?', 'Aman nggak belanja harian gue?', 'Gimana mulai bikin dana darurat?']
         };
         let aiState = (() => {
             try {
@@ -7470,7 +7477,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const amount = Math.round(Number(a.amount)) || 0;
                 const date = /^\d{4}-\d{2}-\d{2}$/.test(a.date || '') ? a.date : localDateKey();
                 if (amount <= 0) throw new Error('Nominal tidak valid');
-                addExpenseLog({ date, amount, posId: planItemsOf(date.slice(0, 7)).some(p => p.id === a.pos_id) ? a.pos_id : '', note: String(a.note || '').slice(0, 120), source: 'manual', planMonth: date.slice(0, 7) });
+                addExpenseLog({ date, amount, posId: planItemsOf(date.slice(0, 7)).some(p => p.id === a.pos_id) ? a.pos_id : '', note: String(a.note || '').slice(0, 120), source: a.sumber === 'scan' ? 'scan' : 'manual', planMonth: date.slice(0, 7) });
                 saveLocalBillingState(); renderPlanUI(); persistBillingState();
                 return 'Tercatat';
             }
@@ -7534,6 +7541,120 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             renderAssistant();
         }
 
+        function handleAllAiActions(msgIndex) {
+            const msg = aiState[aiState.mode][msgIndex];
+            if (!msg || !msg.actions) return;
+            msg.actions.forEach(action => {
+                if (action.status) return;
+                try {
+                    action.result = runAiAction(action);
+                    action.status = 'ok';
+                } catch (e) {
+                    action.status = 'gagal';
+                    action.result = e.message;
+                }
+            });
+            saveAssistantState();
+            renderAssistant();
+        }
+
+        // Small preview kept in the chat history (the full image is never stored).
+        function receiptThumb(dataUrl) {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.onload = () => {
+                    const scale = Math.min(1, 160 / Math.max(img.width, img.height));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.round(img.width * scale);
+                    canvas.height = Math.round(img.height * scale);
+                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.7));
+                };
+                img.onerror = () => resolve('');
+                img.src = dataUrl;
+            });
+        }
+
+        // Foto / upload struk di chat: read with /api/scan-receipt, then propose one
+        // "Catat pengeluaran" per spending for the user to confirm.
+        async function handleAssistantReceipts(fileList) {
+            const files = Array.from(fileList || []).filter(f => f.type.startsWith('image/')).slice(0, 10);
+            document.getElementById('aiCameraInput').value = '';
+            document.getElementById('aiUploadInput').value = '';
+            if (!files.length || aiBusy) return;
+            const mode = aiState.mode;
+            const list = aiState[mode];
+            const input = document.getElementById('aiInput');
+            const extra = input.value.trim();
+            input.value = '';
+            input.style.height = 'auto';
+
+            let images = [];
+            try {
+                images = await Promise.all(files.map(downscaleImage));
+            } catch (e) {
+                list.push({ role: 'assistant', content: e.message, error: true });
+                saveAssistantState(); renderAssistant();
+                return;
+            }
+            const thumbs = (await Promise.all(images.map(img => receiptThumb(img.preview)))).filter(Boolean);
+            list.push({ role: 'user', content: `Foto struk (${images.length})${extra ? '\n' + extra : ''}`, thumbs });
+            aiBusy = true;
+            renderAssistant();
+
+            const month = currentMonthKey();
+            const posOptions = planItemsOf(month).map(p => ({ id: p.id, name: p.name, category: (PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya).label }));
+            const found = [];
+            const notes = [];
+            try {
+                for (let i = 0; i < images.length; i += 5) {
+                    const response = await fetch('/api/scan-receipt', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ images: images.slice(i, i + 5).map(img => ({ data: img.data, mediaType: img.mediaType })), posOptions, today: localDateKey() })
+                    });
+                    if (response.status === 401) { window.location.replace('/'); return; }
+                    const data = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(data.error || 'Gagal membaca struk. Coba lagi.');
+                    found.push(...(data.transactions || []));
+                    if (data.notes) notes.push(data.notes);
+                }
+                list.push(buildReceiptReply(found, notes));
+            } catch (e) {
+                list.push({ role: 'assistant', content: e.message, error: true });
+            }
+            aiBusy = false;
+            saveAssistantState();
+            renderAssistant();
+        }
+
+        function buildReceiptReply(found, notes) {
+            const today = localDateKey();
+            const existing = Object.values(expenseLogs).flat();
+            const lines = [];
+            const actions = [];
+            const skipped = [];
+            found.forEach(t => {
+                const date = t.date || today;
+                const label = t.description || t.merchant || 'Pengeluaran';
+                if (!t.isExpense) { skipped.push(`${formatIDR(t.amount)} · ${label} (uang masuk / pindah rekening, nggak dicatat)`); return; }
+                if (existing.some(l => l.date === date && l.amount === t.amount)) { skipped.push(`${formatIDR(t.amount)} · ${label} (kayaknya udah tercatat ${formatShortDate(date)})`); return; }
+                lines.push(`- **${formatIDR(t.amount)}** · ${label}${t.merchant && t.description ? ' (' + t.merchant + ')' : ''} · ${t.date ? formatShortDate(date) : 'tanggal nggak kebaca, pakai hari ini'}${t.confidence === 'low' ? ' · kurang jelas, cek lagi' : ''}`);
+                actions.push({ name: 'catat_pengeluaran', args: { amount: t.amount, date, note: label.slice(0, 120), pos_id: t.posId || '', sumber: 'scan' } });
+            });
+            let content;
+            if (actions.length) {
+                const total = actions.reduce((s, a) => s + a.args.amount, 0);
+                content = `Kebaca ${actions.length} pengeluaran, total **${formatIDR(total)}**:\n${lines.join('\n')}\nCek dulu, terus klik Jalankan buat nyatet.`;
+            } else {
+                content = found.length ? 'Nggak ada pengeluaran baru dari struk ini.' : 'Gue nggak nemu transaksi yang kebaca dari foto ini. Coba foto ulang lebih dekat dan terang.';
+            }
+            if (skipped.length) content += `\nDilewati:\n${skipped.map(s => '- ' + s).join('\n')}`;
+            if (notes.length) content += `\nCatatan: ${notes.join(' ')}`;
+            return { role: 'assistant', content, actions };
+        }
+
         function copyAiMessage(index) {
             const msg = aiState[aiState.mode][index];
             if (!msg) return;
@@ -7547,7 +7668,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             document.getElementById('aiModeHint').textContent = mode === 'penasehat'
                 ? 'Analisis & saran dari data keuangan lo.'
                 : 'Tanya data keuangan lo, atau suruh nyatat.';
-            document.getElementById('aiInput').placeholder = mode === 'penasehat' ? 'Tanya soal kondisi keuangan…' : 'Contoh: catat bensin 20rb';
+            document.getElementById('aiInput').placeholder = mode === 'penasehat' ? 'Tanya soal keuangan…' : 'Catat bensin 20rb…';
             const list = aiState[mode];
             const box = document.getElementById('aiMessages');
             if (!list.length) {
@@ -7555,12 +7676,13 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     <div class="ai-welcome">
                         <img src="/brand/dar-mascot-128.png" alt="" width="64" height="64">
                         <b>${mode === 'penasehat' ? 'Penasehat keuangan DAR' : 'Halo bro, mau ngapain?'}</b>
-                        <span>${mode === 'penasehat' ? 'Gue lihat saldo, rencana, tagihan, dan pengeluaran lo, terus kasih saran yang realistis.' : 'Gue bisa jawab soal invoice, pengeluaran, rencana, hutang, dan nyatat buat lo.'}</span>
+                        <span>${mode === 'penasehat' ? 'Gue lihat saldo, rencana, tagihan, dan pengeluaran lo, terus kasih saran yang realistis.' : 'Gue bisa jawab soal invoice, pengeluaran, rencana, hutang, dan nyatat buat lo. Kirim foto struk lewat tombol kamera, gue catetin pengeluarannya.'}</span>
                         <div class="ai-chips">${AI_SUGGESTIONS[mode].map(t => `<button type="button" onclick="sendAssistantMessage(null, ${escapeHTML(JSON.stringify(t))})">${escapeHTML(t)}</button>`).join('')}</div>
                     </div>`;
             } else {
                 box.innerHTML = list.map((m, i) => {
-                    if (m.role === 'user') return `<div class="ai-msg is-user"><div class="ai-bubble">${escapeHTML(m.content).replace(/\n/g, '<br>')}</div></div>`;
+                    if (m.role === 'user') return `<div class="ai-msg is-user">${(m.thumbs || []).length ? `<div class="ai-thumbs">${m.thumbs.map(t => `<img src="${escapeHTML(t)}" alt="Foto struk">`).join('')}</div>` : ''}<div class="ai-bubble">${escapeHTML(m.content).replace(/\n/g, '<br>')}</div></div>`;
+                    const pendingCount = (m.actions || []).filter(a => !a.status).length;
                     const actions = (m.actions || []).map((a, j) => {
                         const d = describeAiAction(a);
                         const state = a.status === 'ok' ? `<span class="ai-act-state is-ok">✓ ${escapeHTML(a.result || 'Selesai')}</span>`
@@ -7573,6 +7695,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                         <div class="ai-msg is-bot${m.error ? ' is-error' : ''}">
                             ${m.content ? `<div class="ai-bubble">${aiMarkdown(m.content)}</div>` : ''}
                             ${actions}
+                            ${pendingCount > 1 ? `<button type="button" class="ai-run-all" onclick="handleAllAiActions(${i})">Jalankan semua (${pendingCount})</button>` : ''}
                             ${m.content && !m.error ? `<button type="button" class="ai-copy" onclick="copyAiMessage(${i})">Salin</button>` : ''}
                         </div>`;
                 }).join('') + (aiBusy ? `<div class="ai-msg is-bot"><div class="ai-bubble ai-typing"><span></span><span></span><span></span></div></div>` : '');
