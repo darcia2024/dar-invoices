@@ -2430,72 +2430,45 @@ body[data-view="pack"] #packSection {
 
         <!-- Rencana Pengeluaran Bulanan (Monthly Spending Plan) Section -->
         <div id="planSection">
-            <div class="plan-toolbar">
-                <div class="plan-month-nav" role="group" aria-label="Pilih bulan rencana">
-                    <button type="button" class="plan-nav-btn" onclick="shiftPlanMonth(-1)" aria-label="Bulan sebelumnya">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    </button>
-                    <div class="plan-month-label">
+            <div class="pl-top">
+                <div class="pl-month" role="group" aria-label="Pilih bulan">
+                    <button type="button" class="pl-nav" onclick="shiftPlanMonth(-1)" aria-label="Bulan sebelumnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                    <button type="button" class="pl-month-label" onclick="goToCurrentPlanMonth()" title="Kembali ke bulan ini">
                         <span id="planMonthLabel">—</span>
                         <small id="planMonthHint"></small>
-                    </div>
-                    <button type="button" class="plan-nav-btn" onclick="shiftPlanMonth(1)" aria-label="Bulan berikutnya">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </button>
+                    <button type="button" class="pl-nav" onclick="shiftPlanMonth(1)" aria-label="Bulan berikutnya"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                 </div>
-                <div class="plan-toolbar-actions">
-                    <button type="button" class="create-invoice-btn" onclick="openPlanComposer()">+ Tambah rencana</button>
-                    <button type="button" class="month-pill-btn" id="planCopyBtn" onclick="copyPlanFromPreviousMonth()">Salin dari bulan lalu</button>
-                    <button type="button" class="month-pill-btn" onclick="goToCurrentPlanMonth()">Bulan ini</button>
-                </div>
+                <button type="button" class="pl-add" onclick="openPlanComposer()">+ Rencana</button>
             </div>
 
-            <div class="debt-stats-bar plan-stats-bar">
-                <div class="stat-card plan-planned-stat">
-                    <div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="17" rx="2"></rect><path d="M3 10h18"></path></svg></div>
+            <div class="pl-hero">
+                <div class="pl-hero-top">
                     <div>
-                        <div class="stat-info-title">Total rencana pengeluaran</div>
-                        <div id="planStatPlanned" class="stat-info-val">Rp 0</div>
-                        <div id="planStatPlannedSub" class="plan-stat-sub">0 pos</div>
+                        <div class="pl-hero-label" id="planHeroLabel">Sisa anggaran</div>
+                        <div class="pl-hero-val" id="planHeroVal">Rp 0</div>
                     </div>
+                    <div class="pl-hero-pct" id="planHeroPct">0%</div>
                 </div>
-                <div class="stat-card plan-actual-stat">
-                    <div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div>
-                    <div>
-                        <div class="stat-info-title">Sudah terpakai</div>
-                        <div id="planStatActual" class="stat-info-val">Rp 0</div>
-                        <div id="planStatActualSub" class="plan-stat-sub">0% dari rencana</div>
-                    </div>
-                </div>
-                <div class="stat-card plan-remaining-stat">
-                    <div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
-                    <div>
-                        <div class="stat-info-title">Sisa anggaran</div>
-                        <div id="planStatRemaining" class="stat-info-val">Rp 0</div>
-                        <div id="planStatRemainingSub" class="plan-stat-sub">Belum terpakai</div>
-                    </div>
-                </div>
-                <div class="stat-card plan-income-stat">
-                    <div class="stat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
-                    <div>
-                        <div class="stat-info-title" id="planStatIncomeTitle">Posisi dana</div>
-                        <div id="planStatIncome" class="stat-info-val">Rp 0</div>
-                        <div id="planStatIncomeSub" class="plan-stat-sub">—</div>
-                    </div>
-                </div>
+                <div class="pl-bar"><div id="planHeroBar"></div></div>
+                <div class="pl-hero-used" id="planHeroUsed"></div>
+                <div class="pl-fund" id="planFund" hidden></div>
+                <details class="pl-cats" id="planCatsBox">
+                    <summary>Lihat per kategori</summary>
+                    <div id="planCategoryList"></div>
+                </details>
             </div>
 
-            <div class="plan-overview-card">
-                <div class="plan-overview-head">
-                    <div>
-                        <div class="plan-overview-title">Realisasi anggaran</div>
-                        <div class="plan-overview-sub" id="planOverviewSub">Belum ada rencana untuk bulan ini.</div>
-                    </div>
-                    <div class="plan-overview-pct" id="planOverviewPct">0%</div>
+            <div class="pl-list-head">
+                <h3>Daftar rencana</h3>
+                <div class="pl-seg" role="tablist" aria-label="Filter rencana">
+                    <button type="button" data-plan-filter="all" class="active" onclick="setPlanFilter('all', this)">Semua</button>
+                    <button type="button" data-plan-filter="open" onclick="setPlanFilter('open', this)">Belum <b id="planCountOpen">0</b></button>
+                    <button type="button" data-plan-filter="done" onclick="setPlanFilter('done', this)">Selesai <b id="planCountDone">0</b></button>
                 </div>
-                <div class="plan-bar"><div class="plan-bar-fill" id="planOverviewBar" style="width:0%"></div></div>
-                <div class="plan-category-list" id="planCategoryList"></div>
             </div>
+            <div id="planItemList" class="pl-list"></div>
+            <button type="button" class="pl-copy-link" id="planCopyBtn" onclick="copyPlanFromPreviousMonth()" hidden></button>
 
             <div class="log-card" id="expenseLogCard">
                 <div class="log-card-head">
@@ -2516,18 +2489,11 @@ body[data-view="pack"] #packSection {
                 <button type="button" class="log-more-btn" id="logMoreBtn" onclick="toggleLogShowAll()" hidden></button>
             </div>
 
-            <div class="debt-toolbar plan-filter-row">
-                <div class="debt-filter-pills">
-                    <button class="month-pill-btn active" data-plan-filter="all" onclick="setPlanFilter('all', this)">Semua</button>
-                    <button class="month-pill-btn" data-plan-filter="open" onclick="setPlanFilter('open', this)">Belum selesai</button>
-                    <button class="month-pill-btn" data-plan-filter="done" onclick="setPlanFilter('done', this)">Selesai</button>
-                    <button class="month-pill-btn" data-plan-filter="over" onclick="setPlanFilter('over', this)">Lewat anggaran</button>
-                </div>
-            </div>
 
-            <div id="planItemList" class="debt-card-list">
-                <!-- Dynamically populated by JS -->
-            </div>
+            <button type="button" class="pl-fab" onclick="openExpenseLogDialog()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Catat pengeluaran
+            </button>
         </div>
 
         <!-- Barang Bawaan (Travel Packing List) Section -->
@@ -4492,6 +4458,14 @@ body[data-view="pack"] #packSection {
                 </div>
             </form>
         </div>
+    </dialog>
+
+    <dialog id="planItemDialog" class="invoice-manager-dialog pl-detail" aria-labelledby="planItemTitle">
+        <div class="manager-heading">
+            <h2 id="planItemTitle">Rencana</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('planItemDialog').close()">×</button>
+        </div>
+        <div class="manager-content" id="planItemBody"></div>
     </dialog>
 
     <dialog id="expenseLogDialog" class="invoice-manager-dialog" aria-labelledby="expenseLogTitle">
@@ -6714,78 +6688,59 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             }
         }
 
+        function planItemRowMeta(p) {
+            const left = p.planned - p.actual;
+            if (p.done && left >= 0) return { cls: 'is-done', text: 'Lunas' };
+            if (left < 0) return { cls: 'is-over', text: 'Lewat ' + formatIDR(-left) };
+            return { cls: '', text: formatIDR(left) };
+        }
+
         function renderPlanUI() {
             const listEl = document.getElementById('planItemList');
             if (!listEl) return;
             renderExpenseLogUI();
             const month = activePlanMonth;
             const items = planItemsOf(month);
-            const isCurrent = month === currentMonthKey();
+            const nowKey = currentMonthKey();
+            const isCurrent = month === nowKey;
 
             document.getElementById('planMonthLabel').textContent = monthLabelOf(month);
-            document.getElementById('planMonthHint').textContent = isCurrent ? 'Bulan berjalan' : (month < currentMonthKey() ? 'Bulan lalu' : 'Bulan depan');
+            document.getElementById('planMonthHint').textContent = isCurrent ? 'Bulan ini' : 'Ketuk untuk kembali ke bulan ini';
 
-            const source = findPreviousPlanMonth(month);
-            const copyBtn = document.getElementById('planCopyBtn');
-            if (copyBtn) {
-                copyBtn.disabled = !source;
-                copyBtn.innerHTML = source
-                    ? `<span class="lbl-long">Salin pos rutin dari ${escapeHTML(monthLabelOf(source))}</span><span class="lbl-short">Salin rutin</span>`
-                    : '<span class="lbl-long">Salin dari bulan lalu</span><span class="lbl-short">Salin rutin</span>';
-            }
-
-            // 1. Totals
+            // Summary
             const planned = items.reduce((s, p) => s + p.planned, 0);
             const actual = items.reduce((s, p) => s + p.actual, 0);
             const unplanned = logsOf(month).filter(l => !l.posId || !items.some(p => p.id === l.posId)).reduce((s, l) => s + l.amount, 0);
             const remaining = planned - actual;
-            const doneCount = items.filter(p => p.done).length;
             const pct = planned > 0 ? Math.round((actual / planned) * 100) : 0;
-            const income = planIncomeForMonth(month);
+            const heroVal = document.getElementById('planHeroVal');
+            document.getElementById('planHeroLabel').textContent = remaining < 0 ? 'Lewat dari anggaran' : 'Sisa anggaran';
+            heroVal.textContent = formatIDR(Math.abs(remaining));
+            heroVal.classList.toggle('is-over', remaining < 0);
+            document.getElementById('planHeroPct').textContent = pct + '%';
+            const bar = document.getElementById('planHeroBar');
+            bar.style.width = Math.min(100, pct) + '%';
+            bar.classList.toggle('is-over', remaining < 0);
+            document.getElementById('planHeroUsed').innerHTML = items.length
+                ? `Terpakai <b>${formatIDR(actual)}</b> dari <b>${formatIDR(planned)}</b>` + (unplanned ? ` · <span>+${formatIDR(unplanned)} di luar rencana</span>` : '')
+                : 'Belum ada rencana untuk bulan ini.';
 
-            document.getElementById('planStatPlanned').textContent = formatIDR(planned);
-            document.getElementById('planStatPlannedSub').textContent = `${items.length} pos · ${doneCount} selesai`;
-            document.getElementById('planStatActual').textContent = formatIDR(actual + unplanned);
-            document.getElementById('planStatActualSub').textContent = unplanned
-                ? `${pct}% dari rencana · ${formatIDR(unplanned)} di luar rencana`
-                : `${pct}% dari rencana`;
-            const remEl = document.getElementById('planStatRemaining');
-            remEl.textContent = (remaining < 0 ? '- ' : '') + formatIDR(Math.abs(remaining));
-            remEl.style.color = remaining < 0 ? '#991b1b' : '';
-            document.getElementById('planStatRemainingSub').textContent = remaining < 0 ? 'Lewat dari anggaran' : 'Belum dibayar / belum terpakai';
-            // Money still needed this month = unpaid part of every open item (done items need nothing more).
+            const fund = document.getElementById('planFund');
             const stillNeeded = items.reduce((sum, p) => sum + (p.done ? 0 : Math.max(0, p.planned - p.actual)), 0);
-            const incomeTitle = document.getElementById('planStatIncomeTitle');
-            const incomeVal = document.getElementById('planStatIncome');
-            const incomeSub = document.getElementById('planStatIncomeSub');
-            const isPast = month < currentMonthKey();
-            if (isPast) {
-                // A past month can't be compared with today's bank balance: show what came in that month.
-                incomeTitle.textContent = 'Profit diterima bulan itu';
-                incomeVal.textContent = formatIDR(income.profit);
-                incomeVal.style.color = '';
-                const balance = income.profit - actual;
-                incomeSub.textContent = balance >= 0 ? `Sisa ${formatIDR(balance)} setelah pengeluaran` : `Pengeluaran lebih ${formatIDR(-balance)}`;
-                incomeSub.classList.toggle('is-negative', balance < 0);
-            } else {
+            if (month >= nowKey && items.length) {
                 const cash = BANK_ACCOUNTS.reduce((sum, acc) => sum + (Number(bankBalances[acc.key]) || 0), 0);
                 const gap = cash - stillNeeded;
-                incomeTitle.textContent = gap < 0 ? 'Kekurangan dana' : 'Dana aman';
-                incomeVal.textContent = formatIDR(Math.abs(gap));
-                incomeVal.style.color = gap < 0 ? '#991b1b' : '#065f46';
-                const asOf = bankBalancesUpdatedAt ? ` (per ${formatShortDate(bankBalancesUpdatedAt)})` : '';
-                incomeSub.innerHTML = `Saldo ${formatIDR(cash)}${escapeHTML(asOf)} − belum dibayar ${formatIDR(stillNeeded)}<span class="lbl-long"> · profit masuk ${formatIDR(income.profit)}</span>`;
-                incomeSub.classList.remove('is-negative');
+                fund.hidden = false;
+                fund.className = 'pl-fund ' + (gap < 0 ? 'is-short' : 'is-safe');
+                fund.innerHTML = `<b>${gap < 0 ? 'Kurang dana ' + formatIDR(-gap) : 'Dana aman, lebih ' + formatIDR(gap)}</b><span>Saldo ${formatIDR(cash)} − belum dibayar ${formatIDR(stillNeeded)}</span>`;
+            } else if (month < nowKey && items.length) {
+                const income = planIncomeForMonth(month);
+                fund.hidden = false;
+                fund.className = 'pl-fund is-neutral';
+                fund.innerHTML = `<b>Profit masuk ${formatIDR(income.profit)}</b><span>bulan itu</span>`;
+            } else {
+                fund.hidden = true;
             }
-
-            // 2. Overview bar + category breakdown
-            const bar = document.getElementById('planOverviewBar');
-            bar.style.width = Math.min(100, pct) + '%';
-            bar.classList.toggle('is-over', actual > planned && planned > 0);
-            document.getElementById('planOverviewPct').textContent = pct + '%';
-            document.getElementById('planOverviewSub').textContent = items.length
-                ? `${formatIDR(actual)} terpakai dari ${formatIDR(planned)} yang direncanakan.`
-                : 'Belum ada rencana untuk bulan ini.';
 
             const byCat = {};
             items.forEach(p => {
@@ -6793,107 +6748,114 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 c.planned += p.planned;
                 c.actual += p.actual;
             });
+            document.getElementById('planCatsBox').hidden = items.length === 0;
             document.getElementById('planCategoryList').innerHTML = PLAN_CATEGORIES
                 .filter(c => byCat[c.key])
                 .sort((a, b) => byCat[b.key].planned - byCat[a.key].planned)
                 .map(c => {
                     const v = byCat[c.key];
-                    const share = planned > 0 ? Math.round((v.planned / planned) * 100) : 0;
                     const used = v.planned > 0 ? Math.min(100, Math.round((v.actual / v.planned) * 100)) : (v.actual > 0 ? 100 : 0);
                     const over = v.actual > v.planned;
                     return `
-                        <div class="plan-cat-row">
-                            <div class="plan-cat-head">
-                                <span class="plan-cat-name"><i style="background:${c.color}"></i>${escapeHTML(c.label)} <em>${share}% dari total</em></span>
-                                <span class="plan-cat-amount${over ? ' is-over' : ''}">${formatIDR(v.actual)} / ${formatIDR(v.planned)}</span>
-                            </div>
-                            <div class="plan-bar plan-bar-thin"><div class="plan-bar-fill${over ? ' is-over' : ''}" style="width:${used}%; background:${over ? '' : c.color}"></div></div>
+                        <div class="pl-cat">
+                            <div class="pl-cat-head"><span><i style="background:${c.color}"></i>${escapeHTML(c.label)}</span><span class="${over ? 'is-over' : ''}">${formatIDR(v.actual)} / ${formatIDR(v.planned)}</span></div>
+                            <div class="pl-bar is-thin"><div class="${over ? 'is-over' : ''}" style="width:${used}%;${over ? '' : `background:${c.color}`}"></div></div>
                         </div>`;
                 }).join('');
 
-            // 3. Item list
-            const filtered = items.filter(p => {
-                const st = getPlanStatus(p);
-                if (activePlanFilter === 'open') return !p.done;
-                if (activePlanFilter === 'done') return p.done;
-                if (activePlanFilter === 'over') return st === 'OVER';
-                return true;
-            }).sort((a, b) => {
-                if (a.done !== b.done) return a.done ? 1 : -1;
-                const ad = a.due || '9999', bd = b.due || '9999';
-                if (ad !== bd) return ad < bd ? -1 : 1;
-                return a.createdAt - b.createdAt;
-            });
+            // List
+            const openCount = items.filter(p => !p.done).length;
+            document.getElementById('planCountOpen').textContent = openCount;
+            document.getElementById('planCountDone').textContent = items.length - openCount;
+            const source = findPreviousPlanMonth(month);
+            const copyBtn = document.getElementById('planCopyBtn');
+            const names = new Set(items.map(p => p.name.toLowerCase()));
+            const copyable = source ? planItemsOf(source).filter(p => p.recurring && !names.has(p.name.toLowerCase())).length : 0;
+            copyBtn.hidden = !copyable || items.length === 0;
+            copyBtn.textContent = copyable ? `+ Salin ${copyable} pos rutin dari ${monthLabelOf(source)}` : '';
 
             if (!items.length) {
                 listEl.innerHTML = `
-                    <div class="debt-empty-state">
-                        Belum ada rencana pengeluaran untuk <strong>${escapeHTML(monthLabelOf(month))}</strong>.<br>
-                        Tambahkan pos seperti sewa, listrik, makan, langganan, atau tabungan${source ? ', atau salin pos rutin dari ' + escapeHTML(monthLabelOf(source)) : ''}.
-                        <div class="plan-empty-actions">
+                    <div class="pl-empty">
+                        <b>Belum ada rencana untuk ${escapeHTML(monthLabelOf(month))}</b>
+                        <span>Tambahkan pos seperti sewa, makan, listrik, atau tabungan.</span>
+                        <div class="pl-empty-actions">
                             <button type="button" class="create-invoice-btn" onclick="openPlanComposer()">+ Tambah rencana</button>
-                            ${source ? `<button type="button" class="month-pill-btn" onclick="copyPlanFromPreviousMonth()">Salin dari ${escapeHTML(monthLabelOf(source))}</button>` : ''}
+                            ${source && copyable ? `<button type="button" class="month-pill-btn" onclick="copyPlanFromPreviousMonth()">Salin ${copyable} pos rutin dari ${escapeHTML(monthLabelOf(source))}</button>` : ''}
                         </div>
                     </div>`;
                 return;
             }
+            const filtered = items.filter(p => activePlanFilter === 'open' ? !p.done : activePlanFilter === 'done' ? p.done : true)
+                .sort((a, b) => {
+                    if (a.done !== b.done) return a.done ? 1 : -1;
+                    const ad = a.due || '9999', bd = b.due || '9999';
+                    if (ad !== bd) return ad < bd ? -1 : 1;
+                    return a.createdAt - b.createdAt;
+                });
             if (!filtered.length) {
-                listEl.innerHTML = '<div class="debt-empty-state">Tidak ada pos yang cocok dengan filter ini.</div>';
+                listEl.innerHTML = `<div class="pl-empty"><span>${activePlanFilter === 'open' ? 'Semua rencana sudah selesai.' : 'Belum ada yang selesai.'}</span></div>`;
                 return;
             }
-
             const todayKey = localDateKey();
             listEl.innerHTML = filtered.map(p => {
                 const cat = PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya;
-                const st = getPlanStatus(p);
-                const left = p.planned - p.actual;
                 const used = p.planned > 0 ? Math.min(100, Math.round((p.actual / p.planned) * 100)) : (p.actual > 0 ? 100 : 0);
+                const meta = planItemRowMeta(p);
+                const over = p.actual > p.planned && p.planned > 0;
                 const overdue = !p.done && p.due && p.due < todayKey;
-                const statusPill = {
-                    OVER: '<span class="debt-status-pill debt-status-unpaid">Lewat anggaran</span>',
-                    DONE: '<span class="debt-status-pill debt-status-settled">Selesai</span>',
-                    PARTIAL: '<span class="debt-status-pill debt-status-partial">Sebagian</span>',
-                    OPEN: '<span class="debt-status-pill plan-status-open">Belum dibayar</span>'
-                }[st];
+                const sub = [p.actual > 0 && !p.done ? `${formatIDR(p.actual)} dari ${formatIDR(p.planned)}` : formatIDR(p.planned),
+                             p.due ? (overdue ? 'lewat ' : '') + formatShortDate(p.due).replace(/ \d{4}$/, '') : ''].filter(Boolean).join(' · ');
                 const id = escapeHTML(p.id);
                 return `
-                    <div class="debt-item-card plan-item-card${p.done ? ' is-done' : ''}" style="border-left: 3px solid ${cat.color};">
-                        <div class="debt-item-main">
-                            <div class="debt-header-badges">
-                                <span class="debt-type-badge plan-cat-badge" style="color:${cat.color}; border-color:${cat.color}33; background:${cat.color}12;">${escapeHTML(cat.label)}</span>
-                                ${statusPill}
-                                ${p.recurring ? '<span class="debt-status-pill plan-status-open">Rutin</span>' : ''}
-                            </div>
-                            <div class="debt-person-name">${escapeHTML(p.name)}</div>
-                            ${p.notes ? `<div class="debt-notes">${escapeHTML(p.notes)}</div>` : ''}
-                            <div class="debt-meta-tags">
-                                ${p.due ? `<span class="debt-meta-tag${overdue ? ' overdue' : ''}">${overdue ? 'Lewat tanggal · ' : 'Bayar '}${escapeHTML(formatShortDate(p.due))}</span>` : ''}
-                            </div>
-                            <div class="plan-bar plan-bar-thin plan-item-bar"><div class="plan-bar-fill${st === 'OVER' ? ' is-over' : ''}" style="width:${used}%; background:${st === 'OVER' ? '' : cat.color}"></div></div>
-                        </div>
-                        <div class="debt-amount-col plan-amount-col">
-                            <div class="plan-amt plan-amt-main"><span class="debt-amount-label">Anggaran</span><span class="debt-amount-total">${formatIDR(p.planned)}</span></div>
-                            <div class="plan-amt"><span class="debt-amount-label">Terpakai</span><span class="plan-amt-val">${formatIDR(p.actual)}</span></div>
-                            <div class="plan-amt"><span class="debt-amount-label">${left < 0 ? 'Lewat' : 'Sisa'}</span><span class="plan-amt-val" style="color:${left < 0 ? '#991b1b' : '#065f46'};">${formatIDR(Math.abs(left))}</span></div>
-                        </div>
-                        <div class="debt-item-actions">
-                            <button class="debt-action-btn btn-pay" onclick="openExpenseLogDialog(null, '${id}')" title="Catat uang yang keluar untuk pos ini">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> <span class="lbl-long">Catat pengeluaran</span><span class="lbl-short">Catat</span>
-                            </button>
-                            <button class="debt-action-btn ${p.done ? '' : 'btn-settle'}" onclick="togglePlanDone('${id}')">
-                                ${p.done
-                                    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg> <span class="lbl-long">Buka lagi</span><span class="lbl-short">Buka</span>'
-                                    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="lbl-long">Tandai selesai</span><span class="lbl-short">Selesai</span>'}
-                            </button>
-                            <button class="debt-action-btn" onclick="openPlanComposer('${id}')" title="Edit pos">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit
-                            </button>
-                            <button class="debt-action-btn btn-delete" onclick="deletePlanItem('${id}')" title="Hapus pos ini" aria-label="Hapus ${escapeHTML(p.name)}">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            </button>
-                        </div>
+                    <div class="pl-row${p.done ? ' is-done' : ''}" style="--cat:${cat.color}">
+                        <button type="button" class="pl-check" onclick="togglePlanDone('${id}')" aria-label="${p.done ? 'Tandai belum selesai' : 'Tandai selesai'}: ${escapeHTML(p.name)}" aria-pressed="${p.done}">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </button>
+                        <button type="button" class="pl-row-main" onclick="openPlanItemDialog('${id}')">
+                            <span class="pl-row-text">
+                                <span class="pl-row-name">${escapeHTML(p.name)}</span>
+                                <span class="pl-row-sub${overdue ? ' is-late' : ''}"><i></i>${escapeHTML(sub)}</span>
+                            </span>
+                            <span class="pl-row-right ${meta.cls}">
+                                ${p.done && !over ? '' : `<small>${over ? '' : 'sisa'}</small>`}${escapeHTML(meta.text)}
+                            </span>
+                            ${!p.done && p.actual > 0 ? `<span class="pl-row-bar"><span class="${over ? 'is-over' : ''}" style="width:${used}%"></span></span>` : ''}
+                        </button>
                     </div>`;
             }).join('');
+        }
+
+        function openPlanItemDialog(id) {
+            const p = planItemsOf(activePlanMonth).find(x => x.id === id);
+            if (!p) return;
+            const cat = PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya;
+            const left = p.planned - p.actual;
+            const used = p.planned > 0 ? Math.min(100, Math.round((p.actual / p.planned) * 100)) : 0;
+            const logs = logsOf(activePlanMonth).filter(l => l.posId === p.id).sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+            document.getElementById('planItemTitle').textContent = p.name;
+            document.getElementById('planItemBody').innerHTML = `
+                <div class="pl-detail-meta">
+                    <span class="pack-meta-chip" style="--cat:${cat.color}"><i></i>${escapeHTML(cat.label)}</span>
+                    ${p.recurring ? '<span>Rutin tiap bulan</span>' : ''}
+                    ${p.due ? `<span>Bayar ${escapeHTML(formatShortDate(p.due))}</span>` : ''}
+                    ${p.done ? '<span class="pl-done-tag">Selesai</span>' : ''}
+                </div>
+                <div class="pl-detail-nums">
+                    <div><span>Anggaran</span><b>${formatIDR(p.planned)}</b></div>
+                    <div><span>Terpakai</span><b>${formatIDR(p.actual)}</b></div>
+                    <div><span>${left < 0 ? 'Lewat' : 'Sisa'}</span><b class="${left < 0 ? 'is-over' : 'is-good'}">${formatIDR(Math.abs(left))}</b></div>
+                </div>
+                <div class="pl-bar"><div class="${left < 0 ? 'is-over' : ''}" style="width:${used}%"></div></div>
+                ${p.notes ? `<p class="pl-detail-notes">${escapeHTML(p.notes)}</p>` : ''}
+                ${logs.length ? `<div class="pl-detail-logs"><div class="pl-detail-logs-title">Riwayat pengeluaran</div>${logs.slice(0, 6).map(l => `<div><span>${escapeHTML(formatShortDate(l.date).replace(/ \d{4}$/, ''))} · ${escapeHTML(l.note || l.merchant || '-')}</span><b>${formatIDR(l.amount)}</b></div>`).join('')}</div>` : ''}
+                <div class="pl-detail-actions">
+                    <button type="button" class="create-invoice-btn" onclick="document.getElementById('planItemDialog').close(); openExpenseLogDialog(null, '${escapeHTML(p.id)}')">+ Catat pengeluaran</button>
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('planItemDialog').close(); togglePlanDone('${escapeHTML(p.id)}')">${p.done ? 'Buka lagi' : 'Tandai selesai'}</button>
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('planItemDialog').close(); openPlanComposer('${escapeHTML(p.id)}')">Edit</button>
+                    <button type="button" class="delete-invoice-btn" onclick="document.getElementById('planItemDialog').close(); deletePlanItem('${escapeHTML(p.id)}')">Hapus</button>
+                </div>`;
+            document.getElementById('planItemDialog').showModal();
         }
 
         // =========================================================================
