@@ -75,8 +75,10 @@ function hasValidSession(req, ws = null) {
 
 function pinMatches(input, ws = null) {
   const envName = ws ? pinEnvName(ws) : "ADMIN_PASSCODE";
-  const pin = process.env[envName];
-  if (!pin || pin.length < 6) {
+  // A PIN in _workspaces.js (public demo accounts only) is used when no env var is set.
+  const codePin = ws ? (getWorkspace(ws) || {}).pin : null;
+  const pin = process.env[envName] || codePin;
+  if (!pin || pin.length < (pin === codePin ? 4 : 6)) {
     const error = new Error(`${envName} belum diatur di Vercel (minimal 6 karakter)`);
     error.statusCode = 503;
     throw error;

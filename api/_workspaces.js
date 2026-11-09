@@ -1,11 +1,12 @@
 // Separate accounts ("workspaces") that use the same dashboard with their own data and PIN.
-// Each one lives at temantiket.com/<slug>. Only public labels go here; the PIN is the Vercel
-// env var WORKSPACE_PIN_<SLUG> (slug in capitals, "-" as "_"), e.g. WORKSPACE_PIN_DEMO.
+// Each one lives at temantiket.com/<slug>. The PIN is the Vercel env var WORKSPACE_PIN_<SLUG>
+// (slug in capitals, "-" as "_"), e.g. WORKSPACE_PIN_DEMO. An account may instead set "pin"
+// here, but this repo is public, so such a PIN is public too: only for throwaway demo data.
 //
 // To add an account: add an entry below and a rewrite for "/<slug>" in vercel.json, then set
 // its PIN in Vercel.
 const WORKSPACES = {
-  demo: { name: "Demo", owner: "Pemilik Demo" },
+  demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000" },
 };
 
 const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$/;
