@@ -4891,6 +4891,19 @@ body[data-view="pack"] #packSection {
         let activePlanMonth = currentMonthKey();
         let activePlanFilter = 'all';
 
+        // Months whose routine items were already carried over automatically (each month once,
+        // so a routine item deleted from that month stays deleted).
+        const PLAN_SEEDED_KEY = 'dar-plan-seeded-months';
+        let planSeededMonths = (() => {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(PLAN_SEEDED_KEY) || '[]');
+                return Array.isArray(parsed) ? parsed.filter(m => MONTH_KEY_RE.test(m)) : [];
+            } catch (e) {
+                return [];
+            }
+        })();
+        let billingStateReady = false;
+
         const PACK_DEFAULT_CATEGORIES = [
             { id: 'dokumen', name: 'Dokumen & tiket', color: '#1e4f9a' },
             { id: 'uang', name: 'Uang & kartu', color: '#2e7343' },
@@ -5217,6 +5230,9 @@ body[data-view="pack"] #packSection {
                 if (cloudHasPlans || Object.keys(expensePlans).length === 0) {
                     expensePlans = normalizeExpensePlans(state.expensePlans);
                 }
+                if (Array.isArray(state.planSeededMonths)) {
+                    planSeededMonths = [...new Set([...planSeededMonths, ...state.planSeededMonths.filter(m => MONTH_KEY_RE.test(m))])].sort();
+                }
                 if (document.body.dataset.view === 'plan') renderPlanUI();
             }
             if (Array.isArray(state.debts) && state.debts.length > 0) {
@@ -5245,6 +5261,7 @@ body[data-view="pack"] #packSection {
             localStorage.setItem('dar-debts-records', JSON.stringify(debts));
             localStorage.setItem(PAYMENT_LOG_KEY, JSON.stringify(paymentLog));
             localStorage.setItem(EXPENSE_PLANS_KEY, JSON.stringify(expensePlans));
+            localStorage.setItem(PLAN_SEEDED_KEY, JSON.stringify(planSeededMonths));
             localStorage.setItem(PACKING_LISTS_KEY, JSON.stringify(packingLists));
             localStorage.setItem(EXPENSE_LOGS_KEY, JSON.stringify(expenseLogs));
             Object.entries(paymentStatuses).forEach(([id, status]) => {
@@ -5276,6 +5293,13 @@ body[data-view="pack"] #packSection {
             } catch (error) {
                 console.warn("Using local billing state fallback:", error);
             }
+            billingStateReady = true;
+            // Carry routine plan items into the new month only once the latest plans are loaded.
+            if (autoCarryRecurringPlans(currentMonthKey())) {
+                saveLocalBillingState();
+                persistBillingState();
+            }
+            if (document.body.dataset.view === 'plan') renderPlanUI();
             updatePaymentBadges();
             renderProfitUI();
             calculateFinancials();
@@ -5299,6 +5323,7 @@ body[data-view="pack"] #packSection {
                         netProfits,
                         paymentLog,
                         expensePlans,
+                        planSeededMonths,
                         packingLists,
                         expenseLogs,
                         customInvoices,
@@ -6578,12 +6603,62 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function shiftPlanMonth(delta) {
             activePlanMonth = delta < 0 ? prevMonthKey(activePlanMonth) : nextMonthKey(activePlanMonth);
+            if (autoCarryRecurringPlans(activePlanMonth)) { savePlansAndSync(); return; }
             renderPlanUI();
         }
 
         function goToCurrentPlanMonth() {
             activePlanMonth = currentMonthKey();
+            if (autoCarryRecurringPlans(activePlanMonth)) { savePlansAndSync(); return; }
             renderPlanUI();
+        }
+
+        // Copy the routine items (recurring) of the latest earlier plan into `month`, once per month,
+        // for the current and future months only. Returns how many items were added.
+        function autoCarryRecurringPlans(month) {
+            if (!billingStateReady || !MONTH_KEY_RE.test(month) || month < currentMonthKey()) return 0;
+            if (planSeededMonths.includes(month)) return 0;
+            const source = findPreviousPlanMonth(month);
+            if (!source) return 0;
+            const added = copyRecurringItems(source, month);
+            planSeededMonths = [...planSeededMonths, month].sort();
+            if (added) showToast(`${added} POS RUTIN OTOMATIS DIBAWA KE ${monthLabelOf(month).toUpperCase()}`);
+            return added || -1;
+        }
+
+        // "Syaqqoh November" copied into December becomes "Syaqqoh Desember".
+        function renameForMonth(name, source, month) {
+            const monthName = key => monthLabelOf(key).split(' ')[0];
+            const from = monthName(source), to = monthName(month);
+            if (!from || from === to) return name;
+            return name.replace(new RegExp(`\\b${from}\\b`, 'gi'), to);
+        }
+
+        function copyRecurringItems(source, month) {
+            const existing = planItemsOf(month);
+            const existingNames = new Set(existing.map(p => p.name.toLowerCase()));
+            const toCopy = planItemsOf(source)
+                .filter(p => p.recurring)
+                .map(p => ({ ...p, name: renameForMonth(p.name, source, month) }))
+                .filter(p => !existingNames.has(p.name.toLowerCase()));
+            if (!toCopy.length) return 0;
+            const now = Date.now();
+            const [y, m] = month.split('-').map(Number);
+            const shiftDue = due => {
+                if (!due || !/^\d{4}-\d{2}-\d{2}$/.test(due)) return '';
+                const day = Math.min(Number(due.slice(8, 10)), new Date(y, m, 0).getDate());
+                return `${month}-${String(day).padStart(2, '0')}`;
+            };
+            expensePlans[month] = existing.concat(toCopy.map((p, i) => ({
+                ...p,
+                id: 'plan-' + crypto.randomUUID(),
+                actual: 0,
+                done: false,
+                due: shiftDue(p.due),
+                createdAt: now + i,
+                updatedAt: now + i
+            })));
+            return toCopy.length;
         }
 
         function setPlanFilter(filter, button) {
@@ -6688,27 +6763,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function copyPlanFromPreviousMonth() {
             const source = findPreviousPlanMonth(activePlanMonth);
             if (!source) { showToast('BELUM ADA RENCANA DI BULAN SEBELUMNYA'); return; }
-            const existing = planItemsOf(activePlanMonth);
-            const existingNames = new Set(existing.map(p => p.name.toLowerCase()));
-            const toCopy = planItemsOf(source).filter(p => p.recurring && !existingNames.has(p.name.toLowerCase()));
-            if (!toCopy.length) { showToast('SEMUA POS RUTIN SUDAH ADA DI BULAN INI'); return; }
-            const now = Date.now();
-            const shiftDue = due => {
-                if (!due || !/^\d{4}-\d{2}-\d{2}$/.test(due)) return '';
-                const [y, m] = activePlanMonth.split('-').map(Number);
-                const day = Math.min(Number(due.slice(8, 10)), new Date(y, m, 0).getDate());
-                return `${activePlanMonth}-${String(day).padStart(2, '0')}`;
-            };
-            expensePlans[activePlanMonth] = existing.concat(toCopy.map((p, i) => ({
-                ...p,
-                id: 'plan-' + crypto.randomUUID(),
-                actual: 0,
-                done: false,
-                due: shiftDue(p.due),
-                createdAt: now + i,
-                updatedAt: now + i
-            })));
-            showToast(`${toCopy.length} POS RUTIN DISALIN DARI ${monthLabelOf(source).toUpperCase()}`);
+            const added = copyRecurringItems(source, activePlanMonth);
+            if (!added) { showToast('SEMUA POS RUTIN SUDAH ADA DI BULAN INI'); return; }
+            showToast(`${added} POS RUTIN DISALIN DARI ${monthLabelOf(source).toUpperCase()}`);
             savePlansAndSync();
         }
 
@@ -6804,7 +6861,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const source = findPreviousPlanMonth(month);
             const copyBtn = document.getElementById('planCopyBtn');
             const names = new Set(items.map(p => p.name.toLowerCase()));
-            const copyable = source ? planItemsOf(source).filter(p => p.recurring && !names.has(p.name.toLowerCase())).length : 0;
+            const copyable = source ? planItemsOf(source).filter(p => p.recurring && !names.has(renameForMonth(p.name, source, month).toLowerCase())).length : 0;
             copyBtn.hidden = !copyable || items.length === 0;
             copyBtn.textContent = copyable ? `+ Salin ${copyable} pos rutin dari ${monthLabelOf(source)}` : '';
 
@@ -7395,8 +7452,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             if (action.name === 'tandai_rencana') return { title: a.done ? 'Tandai rencana selesai' : 'Buka lagi rencana', detail: posName(a.pos_id) || a.pos_id };
             if (action.name === 'tambah_rencana') {
                 const cat = PLAN_CATEGORY_MAP[a.category] || PLAN_CATEGORY_MAP.lainnya;
-                return { title: 'Tambah rencana', detail: `${a.name} · ${formatIDR(Math.round(a.planned) || 0)} · ${cat.label}${a.due ? ' · ' + formatShortDate(a.due) : ''}` };
+                return { title: a.rutin ? 'Tambah rencana rutin' : 'Tambah rencana', detail: `${a.name} · ${formatIDR(Math.round(a.planned) || 0)} · ${cat.label}${a.due ? ' · ' + formatShortDate(a.due) : ''}${a.rutin ? ' · rutin tiap bulan' : ''}` };
             }
+            if (action.name === 'ubah_rutin') return { title: a.rutin ? 'Jadikan rutin tiap bulan' : 'Berhenti rutin', detail: posName(a.pos_id) || a.pos_id };
             if (action.name === 'ubah_status_invoice') {
                 const inv = invoiceItems.find(i => i.id === a.invoice_id);
                 const label = a.status === 'PAID' ? 'Lunas' : a.status === 'DP' ? `DP ${formatIDR(Math.round(a.dp_amount) || 0)}` : 'Belum lunas';
@@ -7426,11 +7484,19 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 return item.done ? 'Ditandai selesai' : 'Dibuka lagi';
             }
             if (action.name === 'tambah_rencana') {
-                const created = normalizePlanItem({ name: a.name, category: a.category, planned: a.planned, actual: 0, due: /^\d{4}-\d{2}-\d{2}$/.test(a.due || '') ? a.due : '', notes: a.notes || '', recurring: false, createdAt: Date.now() });
+                const created = normalizePlanItem({ name: a.name, category: a.category, planned: a.planned, actual: 0, due: /^\d{4}-\d{2}-\d{2}$/.test(a.due || '') ? a.due : '', notes: a.notes || '', recurring: a.rutin === true, createdAt: Date.now() });
                 if (!created) throw new Error('Data rencana tidak lengkap');
                 expensePlans[month] = planItemsOf(month).concat(created);
                 saveLocalBillingState(); renderPlanUI(); persistBillingState();
-                return 'Ditambahkan';
+                return created.recurring ? 'Ditambahkan, rutin tiap bulan' : 'Ditambahkan';
+            }
+            if (action.name === 'ubah_rutin') {
+                const item = Object.keys(expensePlans).map(m => planItemsOf(m).find(p => p.id === a.pos_id)).find(Boolean);
+                if (!item) throw new Error('Rencana tidak ditemukan');
+                item.recurring = Boolean(a.rutin);
+                item.updatedAt = Date.now();
+                saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                return item.recurring ? 'Jadi rutin tiap bulan' : 'Tidak rutin lagi';
             }
             if (action.name === 'ubah_status_invoice') {
                 const inv = invoiceItems.find(i => i.id === a.invoice_id);
