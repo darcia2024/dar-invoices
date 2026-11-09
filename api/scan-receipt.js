@@ -2,7 +2,7 @@
 // OpenRouter and returns the spending transactions it finds. Images are only forwarded to the
 // API, never stored. Set OPENROUTER_API_KEY (and optionally OPENROUTER_MODEL) on Vercel.
 const { hasValidSession, requestWorkspace } = require("./_session");
-const { getWorkspace } = require("./_workspaces");
+const { getWorkspace, aiEnabled } = require("./_workspaces");
 const { demoScan, pause } = require("./_demo-ai");
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
@@ -68,7 +68,7 @@ module.exports = async function handler(req, res) {
     const wsSlug = requestWorkspace(req);
     if (!hasValidSession(req, wsSlug)) return res.status(401).json({ error: "Unauthorized" });
     const workspace = wsSlug ? getWorkspace(wsSlug) : null;
-    const aiOff = Boolean(workspace && workspace.ai === false);
+    const aiOff = !aiEnabled(workspace);
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey && !aiOff) {
       return res.status(503).json({ error: "OPENROUTER_API_KEY belum diatur di Vercel. Scan struk belum bisa dipakai." });

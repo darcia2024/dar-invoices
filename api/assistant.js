@@ -3,7 +3,7 @@
 // plan item done, ...). Actions are only proposals: the dashboard shows them and runs them after
 // the user confirms. Nothing here writes to the database.
 const { hasValidSession, requestWorkspace } = require("./_session");
-const { getWorkspace } = require("./_workspaces");
+const { getWorkspace, aiEnabled } = require("./_workspaces");
 const { demoAssistant, pause } = require("./_demo-ai");
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
@@ -148,7 +148,7 @@ module.exports = async function handler(req, res) {
     const wsSlug = requestWorkspace(req);
     if (!hasValidSession(req, wsSlug)) return res.status(401).json({ error: "Unauthorized" });
     const workspace = wsSlug ? getWorkspace(wsSlug) : null;
-    if (workspace && workspace.ai === false) {
+    if (!aiEnabled(workspace)) {
       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
       const history = (Array.isArray(body.messages) ? body.messages : []).filter((m) => m && typeof m.content === "string");
       if (!history.length) return res.status(400).json({ error: "Pesan kosong." });

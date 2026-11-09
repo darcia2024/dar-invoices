@@ -5,11 +5,26 @@
 //
 // To add an account: add an entry below and a rewrite for "/<slug>" in vercel.json, then set
 // its PIN in Vercel.
+//
+// AI (assistant + receipt scan through OpenRouter) is OFF unless granted. Without it, both
+// answer with templates (api/_demo-ai.js) and cost nothing. Grant it with:
+//   aiUntil: "2026-12-10"  -> real AI through that day (Jakarta time); the monthly AI add-on:
+//                            each payment of Rp30.000 moves this date one month further
+//   ai: true               -> real AI with no end date
+// Lifetime customer without AI:  rina: { name: "Rina Studio", owner: "Rina" },
 const WORKSPACES = {
-  // ai: false -> the assistant and receipt scan answer with templates (api/_demo-ai.js) and
-  // never call OpenRouter, so a public PIN cannot run up the AI bill.
-  demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000", ai: false },
+  demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000" },
 };
+
+function todayJakarta() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" });
+}
+
+function aiEnabled(ws) {
+  if (!ws) return true; // DAR's own dashboard
+  if (ws.ai === true) return true;
+  return typeof ws.aiUntil === "string" && /^\d{4}-\d{2}-\d{2}$/.test(ws.aiUntil) && todayJakarta() <= ws.aiUntil;
+}
 
 const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$/;
 
@@ -23,4 +38,4 @@ function pinEnvName(slug) {
   return `WORKSPACE_PIN_${slug.toUpperCase().replace(/-/g, "_")}`;
 }
 
-module.exports = { WORKSPACES, getWorkspace, pinEnvName };
+module.exports = { WORKSPACES, getWorkspace, pinEnvName, aiEnabled };
