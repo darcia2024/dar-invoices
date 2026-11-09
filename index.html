@@ -2536,6 +2536,10 @@ body[data-view="pack"] #packSection {
                         </div>
                         <div class="pack-summary-pct" id="packSummaryPct">0%</div>
                     </div>
+                    <div class="pack-countdown" id="packCountdown" hidden>
+                        <div class="pack-countdown-label">Hitung mundur berangkat</div>
+                        <div class="pack-countdown-units"></div>
+                    </div>
                     <div class="plan-bar"><div class="plan-bar-fill" id="packSummaryBar" style="width:0%"></div></div>
                     <div class="pack-summary-counts" id="packSummaryCounts"></div>
                 </div>
@@ -4504,15 +4508,24 @@ body[data-view="pack"] #packSection {
                     <label class="wide-field">Nama trip
                         <input type="text" id="packTripNameInput" required maxlength="60" placeholder="Contoh: Berangkat ke Kairo, Mudik Desember">
                     </label>
-                    <label>Tanggal berangkat (Opsional)
-                        <input type="date" id="packTripDate">
+                    <label class="plan-check-field wide-field">
+                        <span><input type="checkbox" id="packTripHasSchedule" onchange="togglePackScheduleFields()"> Atur jadwal berangkat</span>
+                        <small>Opsional. Kalau diisi, muncul hitung mundur sampai waktu berangkat.</small>
                     </label>
-                    <label>Tujuan (Opsional)
+                    <div class="pack-schedule-fields wide-field" id="packTripScheduleFields" hidden>
+                        <label>Tanggal berangkat
+                            <input type="date" id="packTripDate">
+                        </label>
+                        <label>Jam berangkat (Opsional)
+                            <input type="time" id="packTripTime">
+                        </label>
+                    </div>
+                    <label class="wide-field">Tujuan (Opsional)
                         <input type="text" id="packTripDest" maxlength="60" placeholder="Contoh: Kairo, Mesir">
                     </label>
                     <label class="plan-check-field" id="packTripCopyField">
                         <span><input type="checkbox" id="packTripUseTemplate" checked> Langsung isi daftar umum</span>
-                        <small>Dokumen, pakaian, mandi, obat, elektronik, ibadah, bayi, dll. Bisa dihapus yang nggak perlu.</small>
+                        <small>Dokumen, pakaian, mandi, obat, elektronik, ibadah, bayi, oleh-oleh, dll. Bisa dihapus yang nggak perlu.</small>
                     </label>
                     <label id="packTripCopyFromField">Salin barang dari trip lain (Opsional)
                         <select id="packTripCopyFrom"></select>
@@ -4530,12 +4543,17 @@ body[data-view="pack"] #packSection {
 
     <dialog id="packItemDialog" class="invoice-manager-dialog" aria-labelledby="packItemTitle">
         <div class="manager-heading">
-            <h2 id="packItemTitle">Ubah Barang</h2>
+            <h2 id="packItemTitle">Detail Barang</h2>
             <button type="button" aria-label="Tutup" onclick="document.getElementById('packItemDialog').close()">×</button>
         </div>
         <div class="manager-content">
             <form id="packItemForm" onsubmit="handlePackItemSubmit(event)">
                 <input type="hidden" id="packItemEditId" value="">
+                <div class="pack-item-sheet-meta" id="packItemMeta"></div>
+                <label class="pack-packed-toggle">
+                    <input type="checkbox" id="packItemPacked">
+                    <span><b>Sudah dikemas</b><small>Centang kalau barang ini sudah masuk koper.</small></span>
+                </label>
                 <div class="draft-fields">
                     <label>Nama barang
                         <input type="text" id="packItemName" required maxlength="80">
@@ -4546,8 +4564,8 @@ body[data-view="pack"] #packSection {
                     <label>Jumlah
                         <input type="number" id="packItemQty" min="1" max="99" value="1">
                     </label>
-                    <label>Catatan (Opsional)
-                        <input type="text" id="packItemNote" maxlength="120" placeholder="Contoh: taruh di tas kabin">
+                    <label class="wide-field">Catatan (Opsional)
+                        <textarea id="packItemNote" rows="2" maxlength="120" placeholder="Contoh: taruh di tas kabin, pinjam dari kakak"></textarea>
                     </label>
                 </div>
                 <div class="pack-dialog-actions">
@@ -4810,9 +4828,10 @@ body[data-view="pack"] #packSection {
             { id: 'ibadah', name: 'Ibadah', color: '#a16207' },
             { id: 'bayi', name: 'Bayi & anak', color: '#be185d' },
             { id: 'makanan', name: 'Makanan & minuman', color: '#9a3412' },
+            { id: 'oleh', name: 'Oleh-oleh', color: '#7c2d12' },
             { id: 'lainnya', name: 'Lainnya', color: '#5f5a4d' }
         ];
-        const PACK_EXTRA_COLORS = ['#4f63c9', '#8a5a2b', '#4d7c0f', '#7c2d12', '#155e75', '#86198f'];
+        const PACK_EXTRA_COLORS = ['#4f63c9', '#8a5a2b', '#4d7c0f', '#155e75', '#86198f', '#475569'];
         const PACK_TEMPLATE = {
             dokumen: ['Paspor', 'Visa / e-VOA', 'Tiket pesawat (PDF + cetak)', 'KTP', 'Bukti booking hotel', 'Fotokopi paspor & visa', 'Asuransi perjalanan'],
             uang: ['Dompet', 'Kartu ATM / debit', 'Uang tunai rupiah', 'Uang tunai mata uang tujuan'],
@@ -4823,6 +4842,7 @@ body[data-view="pack"] #packSection {
             ibadah: ['Sajadah', "Al-Qur'an kecil", 'Sarung / mukena'],
             bayi: ['Popok', 'Susu & botol', ['Baju bayi', 5], 'Tisu basah', 'Stroller'],
             makanan: ['Snack perjalanan', 'Botol minum'],
+            oleh: ['Oleh-oleh keluarga', 'Titipan teman (cek daftarnya)', 'Makanan khas', 'Tas / kardus oleh-oleh'],
             lainnya: ['Kunci rumah', 'Kantong laundry', 'Bantal leher']
         };
 
@@ -6844,7 +6864,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             return {
                 id: typeof raw.id === 'string' && raw.id ? raw.id : packId('trip'),
                 name,
-                date: typeof raw.date === 'string' ? raw.date : '',
+                date: typeof raw.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.date) ? raw.date : '',
+                time: typeof raw.time === 'string' && /^\d{2}:\d{2}$/.test(raw.time) ? raw.time : '',
                 destination: String(raw.destination || '').slice(0, 60),
                 categories,
                 items,
@@ -6925,6 +6946,56 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             if (selected && trip.categories.some(c => c.id === selected)) select.value = selected;
         }
 
+        function togglePackScheduleFields() {
+            const on = document.getElementById('packTripHasSchedule').checked;
+            document.getElementById('packTripScheduleFields').hidden = !on;
+            document.getElementById('packTripDate').required = on;
+        }
+
+        function packDepartureDate(trip) {
+            if (!trip || !trip.date) return null;
+            const [y, m, d] = trip.date.split('-').map(Number);
+            const [hh, mm] = (trip.time || '00:00').split(':').map(Number);
+            return new Date(y, m - 1, d, hh, mm);
+        }
+
+        function updatePackCountdown() {
+            const box = document.getElementById('packCountdown');
+            if (!box) return;
+            const trip = activePackTrip();
+            const target = packDepartureDate(trip);
+            box.hidden = !target;
+            if (!target) return;
+            const units = box.querySelector('.pack-countdown-units');
+            const label = box.querySelector('.pack-countdown-label');
+            const now = new Date();
+            if (!trip.time) {
+                // Without a time, count whole calendar days.
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const days = Math.round((target - today) / 86400000);
+                label.textContent = days > 0 ? 'Menuju hari berangkat' : (days === 0 ? 'Hari ini berangkat!' : 'Sudah berangkat');
+                units.innerHTML = days > 0 ? `<div><b>${days}</b><span>hari</span></div>` : '';
+                box.classList.toggle('is-today', days === 0);
+                box.classList.toggle('is-past', days < 0);
+                return;
+            }
+            let diff = Math.floor((target - now) / 1000);
+            box.classList.toggle('is-past', diff <= 0);
+            box.classList.toggle('is-today', diff > 0 && diff < 86400);
+            if (diff <= 0) {
+                label.textContent = 'Sudah berangkat';
+                units.innerHTML = '';
+                return;
+            }
+            const d = Math.floor(diff / 86400); diff %= 86400;
+            const h = Math.floor(diff / 3600); diff %= 3600;
+            const m = Math.floor(diff / 60); const sec = diff % 60;
+            label.textContent = 'Hitung mundur berangkat';
+            const pad = n => String(n).padStart(2, '0');
+            units.innerHTML = `<div><b>${d}</b><span>hari</span></div><div><b>${pad(h)}</b><span>jam</span></div><div><b>${pad(m)}</b><span>menit</span></div><div><b>${pad(sec)}</b><span>detik</span></div>`;
+        }
+        setInterval(() => { if (document.body.dataset.view === 'pack') updatePackCountdown(); }, 1000);
+
         function openPackTripDialog(editId = null) {
             const trip = editId ? packingLists.find(t => t.id === editId) : null;
             document.getElementById('packTripForm').reset();
@@ -6932,6 +7003,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             document.getElementById('packTripTitle').textContent = trip ? 'Ubah Trip' : 'Trip Baru';
             document.getElementById('packTripNameInput').value = trip ? trip.name : '';
             document.getElementById('packTripDate').value = trip ? trip.date : '';
+            document.getElementById('packTripTime').value = trip ? trip.time : '';
+            document.getElementById('packTripHasSchedule').checked = Boolean(trip && trip.date);
+            togglePackScheduleFields();
             document.getElementById('packTripDest').value = trip ? trip.destination : '';
             document.getElementById('packTripDeleteBtn').hidden = !trip;
             document.getElementById('packTripCopyField').hidden = Boolean(trip);
@@ -6946,16 +7020,18 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             event.preventDefault();
             const editId = document.getElementById('packTripEditId').value;
             const name = document.getElementById('packTripNameInput').value.trim();
-            const date = document.getElementById('packTripDate').value;
+            const hasSchedule = document.getElementById('packTripHasSchedule').checked;
+            const date = hasSchedule ? document.getElementById('packTripDate').value : '';
+            const time = hasSchedule && date ? document.getElementById('packTripTime').value : '';
             const destination = document.getElementById('packTripDest').value.trim();
             if (!name) return;
             if (editId) {
                 const trip = packingLists.find(t => t.id === editId);
                 if (!trip) return;
-                Object.assign(trip, { name, date, destination });
+                Object.assign(trip, { name, date, time, destination });
                 showToast('TRIP DIPERBARUI');
             } else {
-                const trip = normalizePackTrip({ name, date, destination, categories: [], items: [] });
+                const trip = normalizePackTrip({ name, date, time, destination, categories: [], items: [] });
                 const copyFrom = packingLists.find(t => t.id === document.getElementById('packTripCopyFrom').value);
                 if (copyFrom) {
                     trip.categories = copyFrom.categories.map(c => ({ ...c }));
@@ -7029,6 +7105,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             fillPackCategorySelect(document.getElementById('packItemCategory'), trip, item.categoryId);
             document.getElementById('packItemQty').value = item.qty;
             document.getElementById('packItemNote').value = item.note;
+            document.getElementById('packItemPacked').checked = item.packed;
+            document.getElementById('packItemTitle').textContent = item.name;
+            const cat = trip.categories.find(c => c.id === item.categoryId);
+            document.getElementById('packItemMeta').innerHTML = `<span class="pack-meta-chip" style="--cat:${cat ? cat.color : '#5f5a4d'}"><i></i>${escapeHTML(cat ? cat.name : '')}</span><span>${escapeHTML(trip.name)}</span>`;
             document.getElementById('packItemDialog').showModal();
         }
 
@@ -7043,6 +7123,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             item.categoryId = document.getElementById('packItemCategory').value;
             item.qty = Math.min(99, Math.max(1, Math.round(Number(document.getElementById('packItemQty').value)) || 1));
             item.note = document.getElementById('packItemNote').value.trim().slice(0, 120);
+            item.packed = document.getElementById('packItemPacked').checked;
             document.getElementById('packItemDialog').close();
             savePackAndSync();
         }
@@ -7100,19 +7181,6 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             savePackAndSync();
         }
 
-        function packDaysLeftText(date) {
-            if (!date) return '';
-            const [y, m, d] = date.split('-').map(Number);
-            const target = new Date(y, m - 1, d);
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const diff = Math.round((target - today) / 86400000);
-            if (diff > 1) return `${diff} hari lagi`;
-            if (diff === 1) return 'Besok berangkat';
-            if (diff === 0) return 'Berangkat hari ini';
-            return 'Sudah lewat';
-        }
-
         function renderPackUI() {
             const select = document.getElementById('packTripSelect');
             if (!select) return;
@@ -7134,9 +7202,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const packed = trip.items.filter(i => i.packed).length;
             const pct = total ? Math.round((packed / total) * 100) : 0;
             document.getElementById('packTripName').textContent = trip.name;
-            const meta = [trip.destination, trip.date ? formatShortDate(trip.date) : '', packDaysLeftText(trip.date)].filter(Boolean);
+            const meta = [trip.destination, trip.date ? formatShortDate(trip.date) + (trip.time ? ' · ' + trip.time : '') : 'Jadwal berangkat belum diatur'].filter(Boolean);
             document.getElementById('packTripMeta').textContent = meta.join(' · ');
             document.getElementById('packSummaryPct').textContent = pct + '%';
+            updatePackCountdown();
             const bar = document.getElementById('packSummaryBar');
             bar.style.width = pct + '%';
             bar.classList.toggle('is-complete', total > 0 && packed === total);
@@ -7175,15 +7244,15 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                                 const id = escapeHTML(item.id);
                                 return `
                                 <li class="pack-item${item.packed ? ' is-packed' : ''}">
-                                    <label class="pack-check">
+                                    <label class="pack-check" title="Centang kalau sudah masuk koper">
                                         <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackItem('${id}')" aria-label="Sudah dikemas: ${escapeHTML(item.name)}">
+                                    </label>
+                                    <button type="button" class="pack-item-open" onclick="openPackItemDialog('${id}')" aria-label="Buka detail ${escapeHTML(item.name)}">
                                         <span class="pack-item-text">
                                             <span class="pack-item-name">${escapeHTML(item.name)}${item.qty > 1 ? ` <em>×${item.qty}</em>` : ''}</span>
                                             ${item.note ? `<small>${escapeHTML(item.note)}</small>` : ''}
                                         </span>
-                                    </label>
-                                    <button type="button" class="pack-icon-btn" onclick="openPackItemDialog('${id}')" aria-label="Ubah ${escapeHTML(item.name)}">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                        <svg class="pack-item-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                     </button>
                                     <button type="button" class="pack-icon-btn is-danger" onclick="deletePackItem('${id}')" aria-label="Hapus ${escapeHTML(item.name)}">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>

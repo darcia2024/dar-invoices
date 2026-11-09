@@ -2534,7 +2534,11 @@ body[data-view="pack"] .filter-section { display: none !important; }
 .pack-item-list { list-style: none; margin: 0; padding: 0; }
 .pack-item { display: flex; align-items: center; gap: 2px; border-bottom: 1px solid #efeadf; }
 .pack-item:last-child { border-bottom: 0; }
-.pack-check { flex: 1; display: flex; align-items: flex-start; gap: 10px; padding: 8px 2px; cursor: pointer; min-width: 0; }
+.pack-check { display: flex; align-items: center; padding: 8px 8px 8px 2px; cursor: pointer; flex-shrink: 0; align-self: stretch; }
+.pack-item-open { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 8px 4px; font: inherit; text-align: left; cursor: pointer; border-radius: 7px; color: inherit; }
+.pack-item-open:hover { background: #f6f2e8; }
+.pack-item-open .pack-item-text { flex: 1; }
+.pack-item-chevron { color: #b8b1a0; flex-shrink: 0; }
 .pack-check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: #2e7343; flex-shrink: 0; cursor: pointer; }
 .pack-item-text { display: flex; flex-direction: column; min-width: 0; }
 .pack-item-name { font-size: 13px; color: #24241f; overflow-wrap: anywhere; }
@@ -2574,9 +2578,40 @@ body[data-view="pack"] .filter-section { display: none !important; }
     #packSection .debt-filter-pills .month-pill-btn { flex-shrink: 0; min-height: 32px; padding: 6px 11px; font-size: 10.5px; }
     .pack-category-list { columns: 1; }
     .pack-cat-card { padding: 10px 11px 6px; margin-bottom: 10px; }
-    .pack-check { padding: 9px 2px; }
+    .pack-check { padding: 9px 8px 9px 2px; }
+    .pack-item-open { padding: 9px 4px; }
     .pack-check input { width: 20px; height: 20px; }
     .pack-item-name { font-size: 13.5px; }
     .pack-icon-btn { width: 34px; height: 34px; }
     .pack-inline-add input { font-size: 16px; }
+}
+
+/* Packing: departure countdown + item detail popup */
+.pack-countdown { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #272722; color: #fffdf5; border-radius: 12px; padding: 12px 14px; margin: 4px 0 12px; }
+.pack-countdown[hidden] { display: none; }
+.pack-countdown-label { font-size: 11.5px; opacity: .85; }
+.pack-countdown-units { display: flex; gap: 8px; }
+.pack-countdown-units div { min-width: 54px; text-align: center; background: #3a3a33; border-radius: 9px; padding: 6px 8px; }
+.pack-countdown-units b { display: block; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.pack-countdown-units span { font-size: 10px; opacity: .75; }
+.pack-countdown.is-today { background: #9e2d22; }
+.pack-countdown.is-today .pack-countdown-units div { background: #b3392d; }
+.pack-countdown.is-past { background: #ece7d8; color: #5c584c; }
+.pack-schedule-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.pack-schedule-fields[hidden] { display: none; }
+.pack-item-sheet-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 11.5px; color: #7a7567; margin: -8px 0 14px; }
+.pack-meta-chip { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: #34332f; background: #f1ede3; border-radius: 99px; padding: 3px 10px; }
+.pack-meta-chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--cat); }
+.manager-content .pack-packed-toggle { display: flex; align-items: center; gap: 12px; background: #f2f8f3; border: 1px solid #cae3cf; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; cursor: pointer; }
+.manager-content .pack-packed-toggle input { width: 22px; height: 22px; margin: 0; padding: 0; accent-color: #2e7343; flex-shrink: 0; }
+.pack-packed-toggle span { display: flex; flex-direction: column; }
+.pack-packed-toggle b { font-size: 13.5px; font-weight: 600; color: #205c31; }
+.pack-packed-toggle small { font-size: 11px; color: #5c584c; }
+@media (max-width: 600px) {
+    .pack-countdown { padding: 10px 11px; gap: 8px; }
+    .pack-countdown-units { width: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+    .pack-countdown-units div { min-width: 0; padding: 5px 4px; }
+    .pack-countdown-units b { font-size: 18px; }
+    .pack-schedule-fields { grid-template-columns: 1fr; }
+    #packItemDialog .manager-heading h2 { font-size: 19px; overflow-wrap: anywhere; }
 }
