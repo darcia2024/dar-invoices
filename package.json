@@ -1,8 +1,0 @@
-{
-  "name": "dar-invoices",
-  "private": true,
-  "description": "DAR invoice workspace (static pages + Vercel API functions)",
-  "dependencies": {
-    "@anthropic-ai/sdk": "^1.6.0"
-  }
-}

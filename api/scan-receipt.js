@@ -1,9 +1,10 @@
-// Reads screenshots of receipts / transfer proofs / e-wallet history with Claude and returns
-// the spending transactions it finds. Images are only forwarded to the API, never stored.
-const { Anthropic } = require("@anthropic-ai/sdk");
+// Reads screenshots of receipts / transfer proofs / e-wallet history with a vision model on
+// OpenRouter and returns the spending transactions it finds. Images are only forwarded to the
+// API, never stored. Set OPENROUTER_API_KEY (and optionally OPENROUTER_MODEL) on Vercel.
 const { hasValidSession } = require("./_session");
 
-const MODEL = "claude-opus-5-5";
+const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+const DEFAULT_MODEL = "anthropic/claude-haiku-5.5";
 const MAX_IMAGES = 5;
 const MAX_IMAGE_BASE64 = 1_400_000; // ~1 MB per image after the browser downscales it
 const MEDIA_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
@@ -63,8 +64,9 @@ module.exports = async function handler(req, res) {
 
   try {
     if (!hasValidSession(req)) return res.status(401).json({ error: "Unauthorized" });
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return res.status(503).json({ error: "ANTHROPIC_API_KEY belum diatur di Vercel. Scan struk belum bisa dipakai." });
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    if (!apiKey) {
+      return res.status(503).json({ error: "OPENROUTER_API_KEY belum diatur di Vercel. Scan struk belum bisa dipakai." });
     }
 
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
@@ -87,28 +89,60 @@ module.exports = async function handler(req, res) {
     const content = [];
     images.forEach((img, i) => {
       content.push({ type: "text", text: `Screenshot ${i}:` });
-      content.push({ type: "image", source: { type: "base64", media_type: img.mediaType, data: img.data } });
+      content.push({ type: "image_url", image_url: { url: `data:${img.mediaType};base64,${img.data}` } });
     });
     content.push({ type: "text", text: buildPrompt(posOptions, today) });
 
-    const client = new Anthropic({ timeout: 55_000, maxRetries: 1 });
-    const response = await client.beta.messages.create({
-      model: MODEL,
-      max_tokens: 8000,
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-      output_config: { effort: "low", format: { type: "json_schema", schema: RESULT_SCHEMA } },
-      messages: [{ role: "user", content }],
-    });
-
-    if (response.stop_reason === "refusal") {
-      return res.status(422).json({ error: "Gambar tidak bisa diproses. Coba screenshot lain." });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 55_000);
+    let apiResponse;
+    try {
+      apiResponse = await fetch(OPENROUTER_URL, {
+        method: "POST",
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://temantiket.com",
+          "X-Title": "DAR Invoices",
+        },
+        body: JSON.stringify({
+          model: process.env.OPENROUTER_MODEL || DEFAULT_MODEL,
+          max_tokens: 4000,
+          messages: [{ role: "user", content }],
+          response_format: { type: "json_schema", json_schema: { name: "receipt_transactions", strict: true, schema: RESULT_SCHEMA } },
+          provider: { require_parameters: true },
+        }),
+      });
+    } finally {
+      clearTimeout(timer);
     }
-    if (response.stop_reason === "max_tokens") {
+
+    const data = await apiResponse.json().catch(() => ({}));
+    if (!apiResponse.ok) {
+      const status = apiResponse.status;
+      console.error("OpenRouter error:", status, data && data.error);
+      if (status === 401 || status === 403) return res.status(503).json({ error: "API key OpenRouter ditolak. Cek OPENROUTER_API_KEY di Vercel." });
+      if (status === 402) return res.status(503).json({ error: "Saldo OpenRouter habis. Isi kredit dulu di openrouter.ai." });
+      if (status === 429) return res.status(429).json({ error: "Terlalu banyak permintaan. Coba lagi sebentar." });
+      return res.status(502).json({ error: "Gagal membaca struk. Coba lagi." });
+    }
+
+    const choice = data.choices && data.choices[0];
+    if (!choice || !choice.message) return res.status(502).json({ error: "Gagal membaca struk. Coba lagi." });
+    if (choice.finish_reason === "length") {
       return res.status(422).json({ error: "Terlalu banyak transaksi sekaligus. Coba scan lebih sedikit gambar." });
     }
-    const text = response.content.filter((b) => b.type === "text").map((b) => b.text).join("");
-    const parsed = JSON.parse(text);
+    const raw = typeof choice.message.content === "string"
+      ? choice.message.content
+      : (choice.message.content || []).map((part) => part.text || "").join("");
+    let parsed;
+    try {
+      parsed = JSON.parse(raw.replace(/^```(?:json)?\s*|\s*```$/g, ""));
+    } catch (e) {
+      console.error("Unparseable model output:", raw.slice(0, 500));
+      return res.status(502).json({ error: "Hasil bacaan tidak terbaca. Coba lagi." });
+    }
     const validPos = new Set(posOptions.map((p) => p.id));
     const transactions = (parsed.transactions || [])
       .filter((t) => Number.isFinite(t.amount) && t.amount > 0)
@@ -125,11 +159,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ transactions, notes: String(parsed.notes || "").slice(0, 400) });
   } catch (error) {
-    const status = error && error.status;
-    if (status === 401 || status === 403) {
-      return res.status(503).json({ error: "API key Anthropic ditolak. Cek ANTHROPIC_API_KEY di Vercel." });
-    }
-    if (status === 429) return res.status(429).json({ error: "Terlalu banyak permintaan. Coba lagi sebentar." });
+    if (error && error.name === "AbortError") return res.status(504).json({ error: "Waktu baca struk habis. Coba lagi dengan gambar lebih sedikit." });
     console.error("scan-receipt failed:", error);
     return res.status(502).json({ error: "Gagal membaca struk. Coba lagi." });
   }
