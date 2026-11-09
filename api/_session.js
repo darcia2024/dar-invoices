@@ -123,7 +123,47 @@ async function redisCommand(command) {
   return payload.result;
 }
 
+// A PIN changed from the dashboard ("Ganti PIN") is stored as a scrypt hash in Redis and
+// then replaces the env/code PIN for that account.
+function pinKey(ws) {
+  return `dar-invoices:pin:${ws || "dar"}`;
+}
+
+function hashPin(pin) {
+  const salt = crypto.randomBytes(16).toString("base64url");
+  const hash = crypto.scryptSync(String(pin), salt, 32).toString("base64url");
+  return `scrypt$${salt}$${hash}`;
+}
+
+function hashMatches(input, stored) {
+  const [kind, salt, hash] = String(stored).split("$");
+  if (kind !== "scrypt" || !salt || !hash) return false;
+  const expected = Buffer.from(hash, "base64url");
+  const given = crypto.scryptSync(String(input || ""), salt, expected.length);
+  return crypto.timingSafeEqual(expected, given);
+}
+
+async function storedPinHash(ws) {
+  try {
+    return await redisCommand(["GET", pinKey(ws)]);
+  } catch (e) {
+    return null; // Redis unreachable: fall back to the env/code PIN
+  }
+}
+
+async function verifyPin(input, ws = null) {
+  const stored = await storedPinHash(ws);
+  if (stored) return hashMatches(input, stored);
+  return pinMatches(input, ws);
+}
+
+async function savePin(ws, pin) {
+  await redisCommand(["SET", pinKey(ws), hashPin(pin)]);
+}
+
 module.exports = {
+  verifyPin,
+  savePin,
   createSessionCookie,
   clearSessionCookie,
   hasValidSession,

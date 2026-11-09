@@ -1,4 +1,4 @@
-const { createSessionCookie, pinMatches, redisCommand } = require("./_session");
+const { createSessionCookie, verifyPin, redisCommand } = require("./_session");
 const { getWorkspace } = require("./_workspaces");
 
 const MAX_FAILURES = 8;
@@ -48,7 +48,7 @@ module.exports = async function handler(req, res) {
       return res.status(429).json({ error: "Terlalu banyak percobaan. Coba lagi 15 menit lagi." });
     }
 
-    if (!pinMatches(body.pin, ws)) {
+    if (!(await verifyPin(body.pin, ws))) {
       await recordFailure(key);
       await new Promise((resolve) => setTimeout(resolve, 600));
       return res.status(401).json({ error: "PIN belum sesuai. Coba lagi." });

@@ -48,6 +48,8 @@ button:active { transform: translateY(1px); }
 .workspace-sidebar { position: fixed; inset: 16px auto 16px 16px; width: 202px; background: #faf9f3; border-radius: 18px; padding: 28px 16px 18px; display: flex; flex-direction: column; z-index: 10; }
 .workspace-sidebar-top { display: flex; flex-direction: column; }
 .mobile-lock-btn { display: none; }
+.mobile-top-actions { display: flex; align-items: center; gap: 6px; }
+.sidebar-account button + button { padding-top: 6px; }
 .workspace-brand { display: flex; align-items: baseline; gap: 7px; color: #24241f; text-decoration: none; font-size: 25px; font-weight: 700; letter-spacing: -1.3px; padding: 0 12px 40px; }
 .workspace-brand span { font-size: 13px; font-weight: 400; letter-spacing: -.3px; }
 .sidebar-caption { padding: 0 12px 12px; color: #686458; font-size: 11px; }
