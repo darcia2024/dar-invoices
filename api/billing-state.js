@@ -194,6 +194,8 @@ function mergeState(state) {
     bankCopyTemplate: state && typeof state.bankCopyTemplate === "string" ? state.bankCopyTemplate : null,
     // { [invoiceId]: [{ month: "YYYY-MM", amount, date }] } — the month each payment arrived.
     // { "YYYY-MM": [{ id, name, category, planned, actual, done, due, notes }] } — monthly spending plan.
+    // [{ id, name, date, destination, categories: [{ id, name, color }], items: [{ id, name, qty, packed, categoryId, note }] }]
+    packingLists: state && Array.isArray(state.packingLists) ? state.packingLists : [],
     expensePlans: state && state.expensePlans && typeof state.expensePlans === "object" && !Array.isArray(state.expensePlans) ? state.expensePlans : {},
     paymentLog: state && state.paymentLog && typeof state.paymentLog === "object" && !Array.isArray(state.paymentLog) ? state.paymentLog : {},
     paymentStatuses: {

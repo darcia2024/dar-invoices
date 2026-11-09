@@ -1977,11 +1977,11 @@ body[data-view="debt"] .stats-bar {
     .debt-amount-remaining { font-size: 13px; }
 }
 
-/* Mobile: nav as a 4-up tab grid so every section is visible without sideways scrolling */
+/* Mobile: nav as a 5-up tab grid so every section is visible without sideways scrolling */
 @media (max-width: 600px) {
     .workspace-sidebar nav {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 6px;
         overflow: visible;
         margin-inline: 0;
@@ -2487,4 +2487,96 @@ body[data-view="plan"] .filter-section { display: none !important; }
 .dev-avatar img { width: 100%; height: 100%; object-fit: contain; display: block; }
 @media (max-width: 600px) {
     .workspace-brand .brand-mascot { width: 32px; height: 32px; }
+}
+
+/* ========================================================
+   BARANG BAWAAN (TRAVEL PACKING LIST)
+   ======================================================== */
+#packSection { display: none; }
+body[data-view="pack"] #packSection { display: block; }
+body[data-view="pack"] .goal-tracker-card,
+body[data-view="pack"] .filter-section { display: none !important; }
+
+.pack-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.pack-trip-picker, .pack-toolbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pack-trip-label { font-size: 11px; color: #7a7567; }
+#packTripSelect { font: inherit; font-size: 13px; font-weight: 600; color: #24241f; background: #fffdf8; border: 1px solid #ded8cb; border-radius: 10px; padding: 9px 12px; min-width: 200px; max-width: 100%; }
+.pack-toolbar .month-pill-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.pack-summary-card { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; }
+.pack-summary-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 10px; }
+.pack-trip-name { font-size: 17px; font-weight: 600; color: #24241f; letter-spacing: -0.3px; }
+.pack-trip-meta { font-size: 11.5px; color: #686150; margin-top: 2px; }
+.pack-summary-pct { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; color: #24241f; }
+.plan-bar-fill.is-complete { background: #2e7343; }
+.pack-summary-counts { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11.5px; color: #5c584c; margin-top: 10px; }
+.pack-summary-counts b { color: #24241f; font-weight: 600; }
+
+.pack-quick-add { display: grid; grid-template-columns: minmax(0, 1fr) 200px 70px auto; gap: 8px; margin-bottom: 14px; }
+.pack-quick-add input, .pack-quick-add select { font: inherit; font-size: 13px; color: #24241f; background: #fffdf8; border: 1px solid #cfc7b4; border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.pack-quick-add .create-invoice-btn { border-radius: 10px; }
+
+.pack-filter-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.pack-filter-row .debt-search-box { max-width: 260px; min-width: 180px; }
+
+.pack-category-list { columns: 3 300px; column-gap: 14px; }
+.pack-cat-card { break-inside: avoid; background: #fffdf8; border: 1px solid #ded8cb; border-top: 3px solid var(--cat); border-radius: 12px; padding: 12px 12px 8px; margin-bottom: 14px; display: inline-block; width: 100%; }
+.pack-cat-card.is-complete { background: #f4f9f4; }
+.pack-cat-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.pack-cat-title { display: inline-flex; align-items: center; gap: 7px; border: 0; background: none; padding: 0; font: inherit; font-size: 13px; font-weight: 600; color: #24241f; cursor: pointer; text-align: left; }
+.pack-cat-title i { width: 9px; height: 9px; border-radius: 50%; background: var(--cat); flex-shrink: 0; }
+.pack-cat-title:hover { text-decoration: underline; text-decoration-color: #c4bdae; }
+.pack-cat-count { font-size: 11px; color: #6a6557; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pack-cat-card.is-complete .pack-cat-count { color: #2e7343; font-weight: 600; }
+.pack-cat-bar { height: 3px; background: #ece7d8; border-radius: 99px; margin: 8px 0 4px; overflow: hidden; }
+.pack-cat-bar div { height: 100%; background: var(--cat); border-radius: inherit; }
+
+.pack-item-list { list-style: none; margin: 0; padding: 0; }
+.pack-item { display: flex; align-items: center; gap: 2px; border-bottom: 1px solid #efeadf; }
+.pack-item:last-child { border-bottom: 0; }
+.pack-check { flex: 1; display: flex; align-items: flex-start; gap: 10px; padding: 8px 2px; cursor: pointer; min-width: 0; }
+.pack-check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: #2e7343; flex-shrink: 0; cursor: pointer; }
+.pack-item-text { display: flex; flex-direction: column; min-width: 0; }
+.pack-item-name { font-size: 13px; color: #24241f; overflow-wrap: anywhere; }
+.pack-item-name em { font-style: normal; font-size: 11px; color: #7a7567; margin-left: 2px; }
+.pack-item-text small { font-size: 10.5px; color: #7a7567; line-height: 1.4; }
+.pack-item.is-packed .pack-item-name { color: #8a8474; text-decoration: line-through; text-decoration-color: #b8b1a0; }
+.pack-icon-btn { width: 30px; height: 30px; border: 0; background: none; color: #8a8474; border-radius: 7px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pack-icon-btn:hover { background: #f1ede3; color: #24241f; }
+.pack-icon-btn.is-danger:hover { background: #fdf0ee; color: #9e2d22; }
+.pack-item-empty { font-size: 11.5px; color: #8a8474; padding: 8px 2px; }
+.pack-inline-add input { width: 100%; font: inherit; font-size: 12px; border: 1px dashed #d6cfbf; background: transparent; border-radius: 8px; padding: 7px 9px; margin-top: 6px; color: #24241f; }
+.pack-inline-add input:focus { outline: none; border-style: solid; border-color: #8a8474; background: #fff; }
+.pack-dialog-actions { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.manager-content .plan-check-field[hidden], .manager-content label[hidden] { display: none !important; }
+
+@media (max-width: 600px) {
+    .workspace-sidebar nav .sidebar-link { font-size: 10px; padding: 7px 2px; }
+    body[data-view="pack"] .board-tabs { display: none; }
+    .pack-toolbar { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; }
+    .pack-trip-picker { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; }
+    .pack-trip-label { display: none; }
+    #packTripSelect { min-width: 0; padding: 9px 10px; }
+    .pack-trip-picker .month-pill-btn, .pack-toolbar-actions .month-pill-btn { min-height: 38px; font-size: 11px; padding: 6px 9px; white-space: nowrap; }
+    .pack-toolbar-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .pack-summary-card { padding: 12px 13px; border-radius: 12px; margin-bottom: 10px; }
+    .pack-trip-name { font-size: 15px; }
+    .pack-summary-pct { font-size: 19px; }
+    .pack-summary-counts { gap: 10px; font-size: 11px; margin-top: 8px; }
+    .pack-quick-add { grid-template-columns: minmax(0, 1fr) 56px; gap: 6px; margin-bottom: 10px; }
+    .pack-quick-add input[type="text"] { grid-column: 1 / -1; }
+    .pack-quick-add select { grid-column: 1 / 2; }
+    .pack-quick-add .create-invoice-btn { grid-column: 1 / -1; min-height: 40px; }
+    .pack-quick-add input, .pack-quick-add select { font-size: 16px; padding: 9px 10px; }
+    .pack-filter-row { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 10px; }
+    .pack-filter-row .debt-search-box { max-width: none; min-width: 0; width: 100%; }
+    #packSection .debt-filter-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 5px; width: 100%; }
+    #packSection .debt-filter-pills .month-pill-btn { flex-shrink: 0; min-height: 32px; padding: 6px 11px; font-size: 10.5px; }
+    .pack-category-list { columns: 1; }
+    .pack-cat-card { padding: 10px 11px 6px; margin-bottom: 10px; }
+    .pack-check { padding: 9px 2px; }
+    .pack-check input { width: 20px; height: 20px; }
+    .pack-item-name { font-size: 13.5px; }
+    .pack-icon-btn { width: 34px; height: 34px; }
+    .pack-inline-add input { font-size: 16px; }
 }

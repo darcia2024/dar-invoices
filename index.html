@@ -1963,6 +1963,19 @@ body[data-view="plan"] #debtSection {
 body[data-view="plan"] #planSection {
     display: block !important;
 }
+body[data-view="pack"] .board-only,
+body[data-view="pack"] .report-only,
+body[data-view="pack"] .stats-bar,
+body[data-view="pack"] .bank-tracker-card,
+body[data-view="pack"] .invoice-tools,
+body[data-view="pack"] .board-tabs,
+body[data-view="pack"] #debtSection,
+body[data-view="pack"] #planSection {
+    display: none !important;
+}
+body[data-view="pack"] #packSection {
+    display: block !important;
+}
 
 </style>
     <link rel="stylesheet" href="/dashboard.css">
@@ -2002,6 +2015,7 @@ body[data-view="plan"] #planSection {
             <button class="sidebar-link" data-view="report" aria-pressed="false" onclick="setWorkspaceView('report')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span> Laporan keuangan</button>
             <button class="sidebar-link" data-view="debt" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg></span> Hutang &amp; Piutang</button>
             <button class="sidebar-link" data-view="plan" aria-pressed="false" onclick="setWorkspaceView('plan')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 15h3M8 18h6"/></svg></span> Rencana pengeluaran</button>
+            <button class="sidebar-link" data-view="pack" aria-pressed="false" onclick="setWorkspaceView('pack')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18M10 13v2h4v-2"/></svg></span> Barang bawaan</button>
             <button class="sidebar-link mobile-lock" onclick="lockAdminDashboard()">Kunci</button>
         </nav>
         <div class="sidebar-note"><span>Catatan workspace</span><p>Status pembayaran dan profit bisa dikelola langsung dari kartu invoice.</p></div>
@@ -2494,6 +2508,61 @@ body[data-view="plan"] #planSection {
 
             <div id="planItemList" class="debt-card-list">
                 <!-- Dynamically populated by JS -->
+            </div>
+        </div>
+
+        <!-- Barang Bawaan (Travel Packing List) Section -->
+        <div id="packSection">
+            <div class="pack-toolbar">
+                <div class="pack-trip-picker">
+                    <label for="packTripSelect" class="pack-trip-label">Trip</label>
+                    <select id="packTripSelect" onchange="selectPackTrip(this.value)" aria-label="Pilih trip"></select>
+                    <button type="button" class="month-pill-btn" onclick="openPackTripDialog()">+ Trip baru</button>
+                    <button type="button" class="month-pill-btn" id="packEditTripBtn" onclick="openPackTripDialog(activePackTripId)">Ubah</button>
+                </div>
+                <div class="pack-toolbar-actions">
+                    <button type="button" class="month-pill-btn" onclick="fillPackTemplate()">Isi daftar umum</button>
+                    <button type="button" class="month-pill-btn" onclick="resetPackChecks()">Reset centang</button>
+                    <button type="button" class="month-pill-btn" onclick="openPackCategoryDialog()">+ Kategori</button>
+                </div>
+            </div>
+
+            <div id="packTripBody">
+                <div class="pack-summary-card">
+                    <div class="pack-summary-head">
+                        <div>
+                            <div class="pack-trip-name" id="packTripName">—</div>
+                            <div class="pack-trip-meta" id="packTripMeta"></div>
+                        </div>
+                        <div class="pack-summary-pct" id="packSummaryPct">0%</div>
+                    </div>
+                    <div class="plan-bar"><div class="plan-bar-fill" id="packSummaryBar" style="width:0%"></div></div>
+                    <div class="pack-summary-counts" id="packSummaryCounts"></div>
+                </div>
+
+                <form class="pack-quick-add" onsubmit="handlePackQuickAdd(event)">
+                    <input type="text" id="packQuickName" maxlength="80" placeholder="Tambah barang… (contoh: Paspor, Charger HP)" aria-label="Nama barang" required>
+                    <select id="packQuickCategory" aria-label="Kategori"></select>
+                    <input type="number" id="packQuickQty" min="1" max="99" value="1" aria-label="Jumlah">
+                    <button type="submit" class="create-invoice-btn">Tambah</button>
+                </form>
+
+                <div class="pack-filter-row">
+                    <div class="debt-filter-pills">
+                        <button class="month-pill-btn active" data-pack-filter="all" onclick="setPackFilter('all', this)">Semua</button>
+                        <button class="month-pill-btn" data-pack-filter="todo" onclick="setPackFilter('todo', this)">Belum dikemas</button>
+                        <button class="month-pill-btn" data-pack-filter="done" onclick="setPackFilter('done', this)">Sudah dikemas</button>
+                    </div>
+                    <div class="debt-search-box">
+                        <input type="search" id="packSearchInput" class="search-input" placeholder="Cari barang…" aria-label="Cari barang" oninput="renderPackUI()">
+                    </div>
+                </div>
+
+                <div id="packCategoryList" class="pack-category-list"></div>
+            </div>
+            <div id="packEmptyState" class="debt-empty-state" hidden>
+                Belum ada trip. Bikin trip dulu, misalnya <strong>Mudik Desember</strong> atau <strong>Berangkat ke Kairo</strong>.
+                <div class="plan-empty-actions"><button type="button" class="create-invoice-btn" onclick="openPackTripDialog()">+ Trip baru</button></div>
             </div>
         </div>
 
@@ -4422,6 +4491,96 @@ body[data-view="plan"] #planSection {
         </div>
     </dialog>
 
+    <!-- DIALOG BARANG BAWAAN -->
+    <dialog id="packTripDialog" class="invoice-manager-dialog" aria-labelledby="packTripTitle">
+        <div class="manager-heading">
+            <h2 id="packTripTitle">Trip Baru</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('packTripDialog').close()">×</button>
+        </div>
+        <div class="manager-content">
+            <form id="packTripForm" onsubmit="handlePackTripSubmit(event)">
+                <input type="hidden" id="packTripEditId" value="">
+                <div class="draft-fields">
+                    <label class="wide-field">Nama trip
+                        <input type="text" id="packTripNameInput" required maxlength="60" placeholder="Contoh: Berangkat ke Kairo, Mudik Desember">
+                    </label>
+                    <label>Tanggal berangkat (Opsional)
+                        <input type="date" id="packTripDate">
+                    </label>
+                    <label>Tujuan (Opsional)
+                        <input type="text" id="packTripDest" maxlength="60" placeholder="Contoh: Kairo, Mesir">
+                    </label>
+                    <label class="plan-check-field" id="packTripCopyField">
+                        <span><input type="checkbox" id="packTripUseTemplate" checked> Langsung isi daftar umum</span>
+                        <small>Dokumen, pakaian, mandi, obat, elektronik, ibadah, bayi, dll. Bisa dihapus yang nggak perlu.</small>
+                    </label>
+                    <label id="packTripCopyFromField">Salin barang dari trip lain (Opsional)
+                        <select id="packTripCopyFrom"></select>
+                    </label>
+                </div>
+                <div class="pack-dialog-actions">
+                    <button type="button" class="delete-invoice-btn" id="packTripDeleteBtn" onclick="deletePackTrip()">Hapus trip ini</button>
+                    <span style="flex:1"></span>
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('packTripDialog').close()">Batal</button>
+                    <button type="submit" class="create-invoice-btn">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog id="packItemDialog" class="invoice-manager-dialog" aria-labelledby="packItemTitle">
+        <div class="manager-heading">
+            <h2 id="packItemTitle">Ubah Barang</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('packItemDialog').close()">×</button>
+        </div>
+        <div class="manager-content">
+            <form id="packItemForm" onsubmit="handlePackItemSubmit(event)">
+                <input type="hidden" id="packItemEditId" value="">
+                <div class="draft-fields">
+                    <label>Nama barang
+                        <input type="text" id="packItemName" required maxlength="80">
+                    </label>
+                    <label>Kategori
+                        <select id="packItemCategory"></select>
+                    </label>
+                    <label>Jumlah
+                        <input type="number" id="packItemQty" min="1" max="99" value="1">
+                    </label>
+                    <label>Catatan (Opsional)
+                        <input type="text" id="packItemNote" maxlength="120" placeholder="Contoh: taruh di tas kabin">
+                    </label>
+                </div>
+                <div class="pack-dialog-actions">
+                    <button type="button" class="delete-invoice-btn" onclick="deletePackItem(document.getElementById('packItemEditId').value, true)">Hapus barang</button>
+                    <span style="flex:1"></span>
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('packItemDialog').close()">Batal</button>
+                    <button type="submit" class="create-invoice-btn">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog id="packCategoryDialog" class="invoice-manager-dialog" aria-labelledby="packCategoryTitle">
+        <div class="manager-heading">
+            <h2 id="packCategoryTitle">Kategori Baru</h2>
+            <button type="button" aria-label="Tutup" onclick="document.getElementById('packCategoryDialog').close()">×</button>
+        </div>
+        <div class="manager-content">
+            <form id="packCategoryForm" onsubmit="handlePackCategorySubmit(event)">
+                <input type="hidden" id="packCategoryEditId" value="">
+                <label>Nama kategori
+                    <input type="text" id="packCategoryName" required maxlength="40" placeholder="Contoh: Oleh-oleh, Perlengkapan kerja">
+                </label>
+                <div class="pack-dialog-actions">
+                    <button type="button" class="delete-invoice-btn" id="packCategoryDeleteBtn" onclick="deletePackCategory()">Hapus kategori</button>
+                    <span style="flex:1"></span>
+                    <button type="button" class="month-pill-btn" onclick="document.getElementById('packCategoryDialog').close()">Batal</button>
+                    <button type="submit" class="create-invoice-btn">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
     <!-- DIALOG PAYMENT / CICILAN -->
     <dialog id="debtPaymentDialog" class="invoice-manager-dialog" aria-labelledby="debtPaymentTitle">
         <div class="manager-heading">
@@ -4640,6 +4799,44 @@ body[data-view="plan"] #planSection {
         })();
         let activePlanMonth = currentMonthKey();
         let activePlanFilter = 'all';
+
+        const PACK_DEFAULT_CATEGORIES = [
+            { id: 'dokumen', name: 'Dokumen & tiket', color: '#1e4f9a' },
+            { id: 'uang', name: 'Uang & kartu', color: '#2e7343' },
+            { id: 'pakaian', name: 'Pakaian', color: '#6d3fb0' },
+            { id: 'mandi', name: 'Perlengkapan mandi', color: '#0e7490' },
+            { id: 'obat', name: 'Obat & kesehatan', color: '#b3392d' },
+            { id: 'elektronik', name: 'Elektronik', color: '#3f3d36' },
+            { id: 'ibadah', name: 'Ibadah', color: '#a16207' },
+            { id: 'bayi', name: 'Bayi & anak', color: '#be185d' },
+            { id: 'makanan', name: 'Makanan & minuman', color: '#9a3412' },
+            { id: 'lainnya', name: 'Lainnya', color: '#5f5a4d' }
+        ];
+        const PACK_EXTRA_COLORS = ['#4f63c9', '#8a5a2b', '#4d7c0f', '#7c2d12', '#155e75', '#86198f'];
+        const PACK_TEMPLATE = {
+            dokumen: ['Paspor', 'Visa / e-VOA', 'Tiket pesawat (PDF + cetak)', 'KTP', 'Bukti booking hotel', 'Fotokopi paspor & visa', 'Asuransi perjalanan'],
+            uang: ['Dompet', 'Kartu ATM / debit', 'Uang tunai rupiah', 'Uang tunai mata uang tujuan'],
+            pakaian: [['Baju harian', 5], ['Celana', 3], ['Pakaian dalam', 5], ['Kaos kaki', 4], 'Jaket', ['Baju tidur', 2], 'Sandal'],
+            mandi: ['Sikat & pasta gigi', 'Sabun & sampo', 'Handuk', 'Deodoran', 'Skincare'],
+            obat: ['Obat pribadi', 'Paracetamol', 'Minyak kayu putih', 'Masker', 'Plester'],
+            elektronik: ['HP + charger', 'Powerbank', 'Adaptor colokan universal', 'Earphone', 'Laptop + charger'],
+            ibadah: ['Sajadah', "Al-Qur'an kecil", 'Sarung / mukena'],
+            bayi: ['Popok', 'Susu & botol', ['Baju bayi', 5], 'Tisu basah', 'Stroller'],
+            makanan: ['Snack perjalanan', 'Botol minum'],
+            lainnya: ['Kunci rumah', 'Kantong laundry', 'Bantal leher']
+        };
+
+        const PACKING_LISTS_KEY = 'dar-packing-lists';
+        const PACK_ACTIVE_TRIP_KEY = 'dar-packing-active-trip';
+        let packingLists = (() => {
+            try {
+                return normalizePackingLists(JSON.parse(localStorage.getItem(PACKING_LISTS_KEY) || '[]'));
+            } catch (e) {
+                return [];
+            }
+        })();
+        let activePackTripId = (() => { try { return localStorage.getItem(PACK_ACTIVE_TRIP_KEY) || ''; } catch (e) { return ''; } })();
+        let activePackFilter = 'all';
 
 
         function currentMonthKey(date = new Date()) {
@@ -4897,6 +5094,13 @@ body[data-view="plan"] #planSection {
             if (state.paymentLog && typeof state.paymentLog === 'object' && !Array.isArray(state.paymentLog)) {
                 paymentLog = state.paymentLog;
             }
+            if (Array.isArray(state.packingLists)) {
+                // Never-saved cloud copy comes back empty: keep trips made on this device until they sync.
+                if (state.packingLists.length > 0 || packingLists.length === 0) {
+                    packingLists = normalizePackingLists(state.packingLists);
+                }
+                if (document.body.dataset.view === 'pack') renderPackUI();
+            }
             if (state.expensePlans && typeof state.expensePlans === 'object' && !Array.isArray(state.expensePlans)) {
                 // A cloud copy that was never saved comes back empty: keep plans made on this device until they sync.
                 const cloudHasPlans = Object.keys(state.expensePlans).length > 0;
@@ -4931,6 +5135,7 @@ body[data-view="plan"] #planSection {
             localStorage.setItem('dar-debts-records', JSON.stringify(debts));
             localStorage.setItem(PAYMENT_LOG_KEY, JSON.stringify(paymentLog));
             localStorage.setItem(EXPENSE_PLANS_KEY, JSON.stringify(expensePlans));
+            localStorage.setItem(PACKING_LISTS_KEY, JSON.stringify(packingLists));
             Object.entries(paymentStatuses).forEach(([id, status]) => {
                 localStorage.setItem("status_" + id, status);
             });
@@ -4983,6 +5188,7 @@ body[data-view="plan"] #planSection {
                         netProfits,
                         paymentLog,
                         expensePlans,
+                        packingLists,
                         customInvoices,
                         deletedInvoiceIds,
                         purgedInvoiceIds,
@@ -6609,6 +6815,390 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             }).join('');
         }
 
+        // =========================================================================
+        // BARANG BAWAAN (TRAVEL PACKING LIST)
+        // =========================================================================
+        function packId(prefix) { return prefix + '-' + crypto.randomUUID(); }
+
+        function normalizePackTrip(raw) {
+            if (!raw || typeof raw !== 'object') return null;
+            const name = String(raw.name || '').trim().slice(0, 60);
+            if (!name) return null;
+            const categories = (Array.isArray(raw.categories) ? raw.categories : [])
+                .filter(c => c && typeof c.id === 'string' && String(c.name || '').trim())
+                .map(c => ({ id: c.id, name: String(c.name).trim().slice(0, 40), color: typeof c.color === 'string' ? c.color : '#5f5a4d' }));
+            if (!categories.length) PACK_DEFAULT_CATEGORIES.forEach(c => categories.push({ ...c }));
+            const catIds = new Set(categories.map(c => c.id));
+            const fallbackCat = catIds.has('lainnya') ? 'lainnya' : categories[categories.length - 1].id;
+            const items = (Array.isArray(raw.items) ? raw.items : [])
+                .filter(i => i && String(i.name || '').trim())
+                .map(i => ({
+                    id: typeof i.id === 'string' && i.id ? i.id : packId('item'),
+                    name: String(i.name).trim().slice(0, 80),
+                    qty: Math.min(99, Math.max(1, Math.round(Number(i.qty)) || 1)),
+                    packed: Boolean(i.packed),
+                    categoryId: catIds.has(i.categoryId) ? i.categoryId : fallbackCat,
+                    note: String(i.note || '').slice(0, 120),
+                    createdAt: Number(i.createdAt) || Date.now()
+                }));
+            return {
+                id: typeof raw.id === 'string' && raw.id ? raw.id : packId('trip'),
+                name,
+                date: typeof raw.date === 'string' ? raw.date : '',
+                destination: String(raw.destination || '').slice(0, 60),
+                categories,
+                items,
+                createdAt: Number(raw.createdAt) || Date.now(),
+                updatedAt: Number(raw.updatedAt) || Date.now()
+            };
+        }
+
+        function normalizePackingLists(value) {
+            return (Array.isArray(value) ? value : []).map(normalizePackTrip).filter(Boolean);
+        }
+
+        function activePackTrip() {
+            return packingLists.find(t => t.id === activePackTripId) || null;
+        }
+
+        function savePackAndSync() {
+            const trip = activePackTrip();
+            if (trip) trip.updatedAt = Date.now();
+            saveLocalBillingState();
+            renderPackUI();
+            persistBillingState();
+        }
+
+        function selectPackTrip(id) {
+            activePackTripId = id;
+            try { localStorage.setItem(PACK_ACTIVE_TRIP_KEY, id); } catch (e) {}
+            renderPackUI();
+        }
+
+        function setPackFilter(filter, button) {
+            activePackFilter = filter;
+            document.querySelectorAll('[data-pack-filter]').forEach(btn => btn.classList.toggle('active', btn === button));
+            renderPackUI();
+        }
+
+        function addTemplateItems(trip) {
+            const existing = new Set(trip.items.map(i => i.name.toLowerCase()));
+            const catIds = new Set(trip.categories.map(c => c.id));
+            let added = 0;
+            Object.entries(PACK_TEMPLATE).forEach(([catId, list]) => {
+                if (!catIds.has(catId)) {
+                    const def = PACK_DEFAULT_CATEGORIES.find(c => c.id === catId);
+                    if (!def) return;
+                    trip.categories.push({ ...def });
+                    catIds.add(catId);
+                }
+                list.forEach((entry, i) => {
+                    const [name, qty] = Array.isArray(entry) ? entry : [entry, 1];
+                    if (existing.has(name.toLowerCase())) return;
+                    existing.add(name.toLowerCase());
+                    trip.items.push({ id: packId('item'), name, qty, packed: false, categoryId: catId, note: '', createdAt: Date.now() + added });
+                    added++;
+                });
+            });
+            return added;
+        }
+
+        function fillPackTemplate() {
+            const trip = activePackTrip();
+            if (!trip) return;
+            const added = addTemplateItems(trip);
+            showToast(added ? `${added} BARANG UMUM DITAMBAHKAN` : 'SEMUA BARANG UMUM SUDAH ADA');
+            if (added) savePackAndSync();
+        }
+
+        function resetPackChecks() {
+            const trip = activePackTrip();
+            if (!trip || !trip.items.some(i => i.packed)) return;
+            if (!confirm('Hapus semua centang di trip ini? Barangnya tetap ada.')) return;
+            trip.items.forEach(i => { i.packed = false; });
+            showToast('CENTANG DIRESET');
+            savePackAndSync();
+        }
+
+        function fillPackCategorySelect(select, trip, selected) {
+            select.innerHTML = trip.categories.map(c => `<option value="${escapeHTML(c.id)}">${escapeHTML(c.name)}</option>`).join('');
+            if (selected && trip.categories.some(c => c.id === selected)) select.value = selected;
+        }
+
+        function openPackTripDialog(editId = null) {
+            const trip = editId ? packingLists.find(t => t.id === editId) : null;
+            document.getElementById('packTripForm').reset();
+            document.getElementById('packTripEditId').value = trip ? trip.id : '';
+            document.getElementById('packTripTitle').textContent = trip ? 'Ubah Trip' : 'Trip Baru';
+            document.getElementById('packTripNameInput').value = trip ? trip.name : '';
+            document.getElementById('packTripDate').value = trip ? trip.date : '';
+            document.getElementById('packTripDest').value = trip ? trip.destination : '';
+            document.getElementById('packTripDeleteBtn').hidden = !trip;
+            document.getElementById('packTripCopyField').hidden = Boolean(trip);
+            const copyField = document.getElementById('packTripCopyFromField');
+            copyField.hidden = Boolean(trip) || packingLists.length === 0;
+            document.getElementById('packTripCopyFrom').innerHTML = '<option value="">— Jangan salin —</option>' +
+                packingLists.map(t => `<option value="${escapeHTML(t.id)}">${escapeHTML(t.name)} (${t.items.length} barang)</option>`).join('');
+            document.getElementById('packTripDialog').showModal();
+        }
+
+        function handlePackTripSubmit(event) {
+            event.preventDefault();
+            const editId = document.getElementById('packTripEditId').value;
+            const name = document.getElementById('packTripNameInput').value.trim();
+            const date = document.getElementById('packTripDate').value;
+            const destination = document.getElementById('packTripDest').value.trim();
+            if (!name) return;
+            if (editId) {
+                const trip = packingLists.find(t => t.id === editId);
+                if (!trip) return;
+                Object.assign(trip, { name, date, destination });
+                showToast('TRIP DIPERBARUI');
+            } else {
+                const trip = normalizePackTrip({ name, date, destination, categories: [], items: [] });
+                const copyFrom = packingLists.find(t => t.id === document.getElementById('packTripCopyFrom').value);
+                if (copyFrom) {
+                    trip.categories = copyFrom.categories.map(c => ({ ...c }));
+                    trip.items = copyFrom.items.map(i => ({ ...i, id: packId('item'), packed: false }));
+                } else if (document.getElementById('packTripUseTemplate').checked) {
+                    addTemplateItems(trip);
+                }
+                packingLists.unshift(trip);
+                activePackTripId = trip.id;
+                try { localStorage.setItem(PACK_ACTIVE_TRIP_KEY, trip.id); } catch (e) {}
+                showToast('TRIP BARU DIBUAT');
+            }
+            document.getElementById('packTripDialog').close();
+            savePackAndSync();
+        }
+
+        function deletePackTrip() {
+            const id = document.getElementById('packTripEditId').value;
+            const trip = packingLists.find(t => t.id === id);
+            if (!trip || !confirm(`Hapus trip "${trip.name}" beserta ${trip.items.length} barangnya?`)) return;
+            packingLists = packingLists.filter(t => t.id !== id);
+            activePackTripId = packingLists[0] ? packingLists[0].id : '';
+            document.getElementById('packTripDialog').close();
+            showToast('TRIP DIHAPUS');
+            saveLocalBillingState();
+            renderPackUI();
+            persistBillingState();
+        }
+
+        function handlePackQuickAdd(event) {
+            event.preventDefault();
+            const trip = activePackTrip();
+            const nameEl = document.getElementById('packQuickName');
+            const name = nameEl.value.trim();
+            if (!trip || !name) return;
+            const categoryId = document.getElementById('packQuickCategory').value;
+            const qty = Math.min(99, Math.max(1, Math.round(Number(document.getElementById('packQuickQty').value)) || 1));
+            trip.items.push({ id: packId('item'), name: name.slice(0, 80), qty, packed: false, categoryId, note: '', createdAt: Date.now() });
+            nameEl.value = '';
+            document.getElementById('packQuickQty').value = 1;
+            savePackAndSync();
+            nameEl.focus();
+        }
+
+        function addPackItemInline(event, categoryId) {
+            event.preventDefault();
+            const trip = activePackTrip();
+            const input = event.target.querySelector('input');
+            const name = (input.value || '').trim();
+            if (!trip || !name) return;
+            trip.items.push({ id: packId('item'), name: name.slice(0, 80), qty: 1, packed: false, categoryId, note: '', createdAt: Date.now() });
+            savePackAndSync();
+            const again = document.querySelector(`[data-pack-inline="${CSS.escape(categoryId)}"] input`);
+            if (again) again.focus();
+        }
+
+        function togglePackItem(id) {
+            const trip = activePackTrip();
+            const item = trip && trip.items.find(i => i.id === id);
+            if (!item) return;
+            item.packed = !item.packed;
+            savePackAndSync();
+        }
+
+        function openPackItemDialog(id) {
+            const trip = activePackTrip();
+            const item = trip && trip.items.find(i => i.id === id);
+            if (!item) return;
+            document.getElementById('packItemEditId').value = item.id;
+            document.getElementById('packItemName').value = item.name;
+            fillPackCategorySelect(document.getElementById('packItemCategory'), trip, item.categoryId);
+            document.getElementById('packItemQty').value = item.qty;
+            document.getElementById('packItemNote').value = item.note;
+            document.getElementById('packItemDialog').showModal();
+        }
+
+        function handlePackItemSubmit(event) {
+            event.preventDefault();
+            const trip = activePackTrip();
+            const item = trip && trip.items.find(i => i.id === document.getElementById('packItemEditId').value);
+            if (!item) return;
+            const name = document.getElementById('packItemName').value.trim();
+            if (!name) return;
+            item.name = name.slice(0, 80);
+            item.categoryId = document.getElementById('packItemCategory').value;
+            item.qty = Math.min(99, Math.max(1, Math.round(Number(document.getElementById('packItemQty').value)) || 1));
+            item.note = document.getElementById('packItemNote').value.trim().slice(0, 120);
+            document.getElementById('packItemDialog').close();
+            savePackAndSync();
+        }
+
+        function deletePackItem(id, fromDialog = false) {
+            const trip = activePackTrip();
+            const item = trip && trip.items.find(i => i.id === id);
+            if (!item) return;
+            trip.items = trip.items.filter(i => i.id !== id);
+            if (fromDialog) document.getElementById('packItemDialog').close();
+            showToast(`"${item.name.toUpperCase()}" DIHAPUS`);
+            savePackAndSync();
+        }
+
+        function openPackCategoryDialog(editId = null) {
+            const trip = activePackTrip();
+            if (!trip) return;
+            const cat = editId ? trip.categories.find(c => c.id === editId) : null;
+            document.getElementById('packCategoryEditId').value = cat ? cat.id : '';
+            document.getElementById('packCategoryTitle').textContent = cat ? 'Ubah Kategori' : 'Kategori Baru';
+            document.getElementById('packCategoryName').value = cat ? cat.name : '';
+            document.getElementById('packCategoryDeleteBtn').hidden = !cat;
+            document.getElementById('packCategoryDialog').showModal();
+        }
+
+        function handlePackCategorySubmit(event) {
+            event.preventDefault();
+            const trip = activePackTrip();
+            const name = document.getElementById('packCategoryName').value.trim().slice(0, 40);
+            if (!trip || !name) return;
+            const editId = document.getElementById('packCategoryEditId').value;
+            if (editId) {
+                const cat = trip.categories.find(c => c.id === editId);
+                if (cat) cat.name = name;
+            } else {
+                const used = new Set(trip.categories.map(c => c.color));
+                const color = PACK_EXTRA_COLORS.find(c => !used.has(c)) || PACK_EXTRA_COLORS[trip.categories.length % PACK_EXTRA_COLORS.length];
+                trip.categories.push({ id: packId('cat'), name, color });
+            }
+            document.getElementById('packCategoryDialog').close();
+            savePackAndSync();
+        }
+
+        function deletePackCategory() {
+            const trip = activePackTrip();
+            const id = document.getElementById('packCategoryEditId').value;
+            const cat = trip && trip.categories.find(c => c.id === id);
+            if (!cat) return;
+            if (trip.categories.length <= 1) { showToast('MINIMAL HARUS ADA SATU KATEGORI'); return; }
+            const count = trip.items.filter(i => i.categoryId === id).length;
+            if (!confirm(count ? `Hapus kategori "${cat.name}" beserta ${count} barang di dalamnya?` : `Hapus kategori "${cat.name}"?`)) return;
+            trip.categories = trip.categories.filter(c => c.id !== id);
+            trip.items = trip.items.filter(i => i.categoryId !== id);
+            document.getElementById('packCategoryDialog').close();
+            savePackAndSync();
+        }
+
+        function packDaysLeftText(date) {
+            if (!date) return '';
+            const [y, m, d] = date.split('-').map(Number);
+            const target = new Date(y, m - 1, d);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const diff = Math.round((target - today) / 86400000);
+            if (diff > 1) return `${diff} hari lagi`;
+            if (diff === 1) return 'Besok berangkat';
+            if (diff === 0) return 'Berangkat hari ini';
+            return 'Sudah lewat';
+        }
+
+        function renderPackUI() {
+            const select = document.getElementById('packTripSelect');
+            if (!select) return;
+            if (!activePackTrip() && packingLists.length) activePackTripId = packingLists[0].id;
+            const trip = activePackTrip();
+            const hasTrip = Boolean(trip);
+            document.getElementById('packTripBody').hidden = !hasTrip;
+            document.getElementById('packEmptyState').hidden = hasTrip;
+            document.getElementById('packEditTripBtn').disabled = !hasTrip;
+            document.querySelectorAll('.pack-toolbar-actions button').forEach(b => { b.disabled = !hasTrip; });
+            select.innerHTML = packingLists.length
+                ? packingLists.map(t => `<option value="${escapeHTML(t.id)}">${escapeHTML(t.name)}</option>`).join('')
+                : '<option value="">Belum ada trip</option>';
+            select.disabled = !packingLists.length;
+            if (!hasTrip) return;
+            select.value = trip.id;
+
+            const total = trip.items.length;
+            const packed = trip.items.filter(i => i.packed).length;
+            const pct = total ? Math.round((packed / total) * 100) : 0;
+            document.getElementById('packTripName').textContent = trip.name;
+            const meta = [trip.destination, trip.date ? formatShortDate(trip.date) : '', packDaysLeftText(trip.date)].filter(Boolean);
+            document.getElementById('packTripMeta').textContent = meta.join(' · ');
+            document.getElementById('packSummaryPct').textContent = pct + '%';
+            const bar = document.getElementById('packSummaryBar');
+            bar.style.width = pct + '%';
+            bar.classList.toggle('is-complete', total > 0 && packed === total);
+            document.getElementById('packSummaryCounts').innerHTML = total
+                ? `<span><b>${packed}</b> sudah dikemas</span><span><b>${total - packed}</b> belum</span><span><b>${total}</b> barang · ${trip.categories.length} kategori</span>`
+                : '<span>Daftar masih kosong. Tambah barang di bawah, atau klik "Isi daftar umum".</span>';
+
+            const quickCat = document.getElementById('packQuickCategory');
+            const keep = quickCat.value;
+            fillPackCategorySelect(quickCat, trip, keep);
+
+            const query = (document.getElementById('packSearchInput').value || '').toLowerCase().trim();
+            const listEl = document.getElementById('packCategoryList');
+            const html = trip.categories.map(cat => {
+                const all = trip.items.filter(i => i.categoryId === cat.id);
+                const catPacked = all.filter(i => i.packed).length;
+                let shown = all;
+                if (activePackFilter === 'todo') shown = shown.filter(i => !i.packed);
+                if (activePackFilter === 'done') shown = shown.filter(i => i.packed);
+                if (query) shown = shown.filter(i => (i.name + ' ' + i.note).toLowerCase().includes(query));
+                if ((activePackFilter !== 'all' || query) && !shown.length) return '';
+                shown = shown.slice().sort((a, b) => (a.packed - b.packed) || (a.createdAt - b.createdAt));
+                const done = all.length > 0 && catPacked === all.length;
+                const catId = escapeHTML(cat.id);
+                return `
+                    <section class="pack-cat-card${done ? ' is-complete' : ''}" style="--cat:${cat.color}">
+                        <header class="pack-cat-head">
+                            <button type="button" class="pack-cat-title" onclick="openPackCategoryDialog('${catId}')" title="Ubah kategori">
+                                <i></i>${escapeHTML(cat.name)}
+                            </button>
+                            <span class="pack-cat-count">${done ? '✓ ' : ''}${catPacked}/${all.length}</span>
+                        </header>
+                        <div class="pack-cat-bar"><div style="width:${all.length ? Math.round((catPacked / all.length) * 100) : 0}%"></div></div>
+                        <ul class="pack-item-list">
+                            ${shown.map(item => {
+                                const id = escapeHTML(item.id);
+                                return `
+                                <li class="pack-item${item.packed ? ' is-packed' : ''}">
+                                    <label class="pack-check">
+                                        <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackItem('${id}')" aria-label="Sudah dikemas: ${escapeHTML(item.name)}">
+                                        <span class="pack-item-text">
+                                            <span class="pack-item-name">${escapeHTML(item.name)}${item.qty > 1 ? ` <em>×${item.qty}</em>` : ''}</span>
+                                            ${item.note ? `<small>${escapeHTML(item.note)}</small>` : ''}
+                                        </span>
+                                    </label>
+                                    <button type="button" class="pack-icon-btn" onclick="openPackItemDialog('${id}')" aria-label="Ubah ${escapeHTML(item.name)}">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                    </button>
+                                    <button type="button" class="pack-icon-btn is-danger" onclick="deletePackItem('${id}')" aria-label="Hapus ${escapeHTML(item.name)}">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                </li>`;
+                            }).join('') || '<li class="pack-item-empty">Belum ada barang.</li>'}
+                        </ul>
+                        <form class="pack-inline-add" data-pack-inline="${catId}" onsubmit="addPackItemInline(event, '${catId}')">
+                            <input type="text" maxlength="80" placeholder="+ Tambah ke ${escapeHTML(cat.name)}" aria-label="Tambah barang ke ${escapeHTML(cat.name)}">
+                        </form>
+                    </section>`;
+            }).join('');
+            listEl.innerHTML = html || '<div class="debt-empty-state">Nggak ada barang yang cocok.</div>';
+        }
+
         function setWorkspaceView(view) {
             document.body.dataset.view = view;
             if (view === 'report') {
@@ -6621,6 +7211,11 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const sub = document.querySelector('.portal-subtitle');
                 if (sub) sub.textContent = 'Pencatatan uang yang harus ditagih (piutang) dan kewajiban bayar (hutang).';
                 renderDebtUI();
+            } else if (view === 'pack') {
+                document.getElementById('workspaceTitle').textContent = 'Barang Bawaan';
+                const sub = document.querySelector('.portal-subtitle');
+                if (sub) sub.textContent = 'Checklist persiapan traveling per trip: centang barang yang sudah masuk koper.';
+                renderPackUI();
             } else if (view === 'plan') {
                 document.getElementById('workspaceTitle').textContent = 'Rencana Pengeluaran';
                 const sub = document.querySelector('.portal-subtitle');
