@@ -1,4 +1,5 @@
 const { hasValidSession, redisCommand, requestWorkspace } = require("./_session");
+const { applySeed } = require("./_seeds");
 
 const STATE_KEY = "dar-invoices:billing-state";
 
@@ -245,6 +246,15 @@ module.exports = async function handler(req, res) {
         const { state: migrated, changed } = applyMigrations(parsed);
         if (changed) {
           const merged = mergeState(migrated);
+          await redisCommand(["SET", key, JSON.stringify(merged)]);
+          return res.status(200).json(merged);
+        }
+      }
+      // New accounts may get sample data once (api/_seeds.js).
+      if (ws) {
+        const seeded = applySeed(ws, parsed || {});
+        if (seeded) {
+          const merged = mergeState(seeded, ws);
           await redisCommand(["SET", key, JSON.stringify(merged)]);
           return res.status(200).json(merged);
         }

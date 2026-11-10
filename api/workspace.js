@@ -53,7 +53,7 @@ function fillPlaceholders(text, ws) {
 // Runs before anything else on the page: tells the dashboard which account it is, keeps this
 // account's browser storage apart from DAR's (same domain), and tags every /api request.
 function bootstrapScript(ws) {
-  const info = JSON.stringify({ slug: ws.slug, name: ws.name, owner: ws.owner || ws.name, home: `/${ws.slug}`, kind: ws.kind || "", currencies: ws.currencies || [] }).replace(/</g, "\\u003c");
+  const info = JSON.stringify({ slug: ws.slug, name: ws.name, owner: ws.owner || ws.name, home: `/${ws.slug}`, kind: ws.kind || "", currencies: ws.currencies || [], banks: ws.banks || [] }).replace(/</g, "\\u003c");
   return `<script>window.DAR_WS=${info};(function(){var p='ws:'+DAR_WS.slug+':',S=Storage.prototype,g=S.getItem,s=S.setItem,r=S.removeItem;` +
     `S.getItem=function(k){return g.call(this,p+k)};S.setItem=function(k,v){return s.call(this,p+k,v)};S.removeItem=function(k){return r.call(this,p+k)};` +
     `var f=window.fetch;window.fetch=function(u,o){if(typeof u==='string'&&u.indexOf('/api/')===0){o=Object.assign({},o);var h=new Headers(o.headers||{});h.set('X-DAR-Workspace',DAR_WS.slug);o.headers=h}return f.call(this,u,o)}})();</script>`;

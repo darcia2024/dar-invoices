@@ -20,7 +20,8 @@ const WORKSPACES = {
   // kind: "exchange" adds the "Tukar" screen (exchange.js) for a money changer.
   // open: true -> no PIN yet: anyone with the link can open and edit this account's data.
   // Remove it (and set WORKSPACE_PIN_ZIAUD) to require a PIN again.
-  ziaud: { name: "Ziaud", owner: "Ziaud", open: true, kind: "exchange", currencies: ["EGP", "USD"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
+  // banks: which rupiah accounts show under saldo (keys from ALL_BANK_ACCOUNTS in index.html).
+  ziaud: { name: "Ziaud", owner: "Ziaud", open: true, kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
 };
 
 function todayJakarta() {

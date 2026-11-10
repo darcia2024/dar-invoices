@@ -21,8 +21,9 @@ let fxMonth = currentMonthKey();
 let fxEditId = '';
 
 function normalizeExchange(value) {
-    const out = { rates: {}, trades: {} };
+    const out = { rates: {}, trades: {}, demo: false };
     if (!value || typeof value !== 'object') return out;
+    out.demo = value.demo === true;
     FX_CURRENCIES.forEach(c => {
         const r = value.rates && value.rates[c];
         out.rates[c] = { sell: Math.max(0, Number(r && r.sell) || 0), buy: Math.max(0, Number(r && r.buy) || 0) };
@@ -42,6 +43,7 @@ function normalizeExchange(value) {
                 note: String(t.note || '').slice(0, 160),
                 bankKey: String(t.bankKey || '').slice(0, 40),
                 bankDelta: Math.round(Number(t.bankDelta) || 0),
+                demo: t.demo === true,
                 createdAt: Number(t.createdAt) || Date.now()
             }));
     });
@@ -77,6 +79,45 @@ function computeExchange() {
         }
     });
     return { stock, result };
+}
+
+// Small inline flags (emoji flags do not show on Windows).
+const FX_FLAGS = {
+    EGP: '<rect width="30" height="20" fill="#fff"/><rect width="30" height="6.67" fill="#ce1126"/><rect y="13.33" width="30" height="6.67" fill="#000"/><path d="M15 7.4l1.6 1.2-.4 2.6h-2.4l-.4-2.6z" fill="#c09300"/><rect x="13.6" y="11.3" width="2.8" height=".9" fill="#c09300"/>',
+    USD: '<rect width="30" height="20" fill="#fff"/>' + [0, 2, 4, 6, 8, 10, 12].map(i => `<rect y="${(i * 20) / 13}" width="30" height="${20 / 13}" fill="#b22234"/>`).join('') + '<rect width="13" height="10.77" fill="#3c3b6e"/>' + [[2.2, 2], [5.4, 2], [8.6, 2], [11, 2], [3.8, 4.6], [7, 4.6], [10.2, 4.6], [2.2, 7.2], [5.4, 7.2], [8.6, 7.2], [11, 7.2]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".55" fill="#fff"/>`).join(''),
+    SAR: '<rect width="30" height="20" fill="#006c35"/><rect x="8" y="12.5" width="14" height="1" fill="#fff"/>',
+    EUR: '<rect width="30" height="20" fill="#039"/><circle cx="15" cy="10" r="5" fill="none" stroke="#fc0" stroke-width="1" stroke-dasharray="1 1.6"/>'
+};
+
+function fxFlag(c, cls = 'fx-flag') {
+    const body = FX_FLAGS[c];
+    return body ? `<svg class="${cls}" viewBox="0 0 30 20" aria-hidden="true"><clipPath id="fxf-${c}-${cls}"><rect width="30" height="20" rx="2.5"/></clipPath><g clip-path="url(#fxf-${c}-${cls})">${body}</g></svg>` : '';
+}
+
+// Foreign cash shown under saldo next to the rupiah accounts; valued at purchase price (modal).
+function exchangeCashSummary() {
+    const { stock } = computeExchange();
+    let valueIdr = 0;
+    const html = FX_CURRENCIES.map(c => {
+        const s = stock[c];
+        const value = Math.round(Math.max(0, s.qty) * s.avg);
+        valueIdr += value;
+        return `
+        <div class="bank-item-card fx-cash-card">
+            <div class="bank-item-top">
+                <div class="bank-item-brand">${fxFlag(c, 'fx-flag is-lg')}<span class="bank-tag-primary">Cash ${c}</span></div>
+            </div>
+            <div class="bank-account-num">Simpanan cash · ${FX_NAMES[c] || c}</div>
+            <div class="bank-balance-amount${s.qty < 0 ? ' fx-minus' : ''}">${fxQty(s.qty)} ${c}</div>
+            <div class="fx-cash-value">≈ ${formatIDR(value)}${s.avg ? ` · modal ${fxRate(Math.round(s.avg * 100) / 100)}` : ''}</div>
+            <button type="button" class="bank-copy-btn" onclick="openFxStockDialog('${c}')">Ubah jumlah cash</button>
+        </div>`;
+    }).join('');
+    return { html, valueIdr };
+}
+
+function fxDefaultBank() {
+    return lastExpenseBank() || (BANK_ACCOUNTS.length === 1 ? BANK_ACCOUNTS[0].key : '');
 }
 
 function fxQty(n) {
@@ -151,6 +192,10 @@ function ensureExchangeUI() {
     const section = document.createElement('div');
     section.id = 'exchangeSection';
     section.innerHTML = `
+        <div class="fx-demo-banner" id="fxDemoBanner" hidden>
+            <div><b>Ini data contoh.</b> Kurs, stok, transaksi, dan saldo SeaBank di bawah cuma ilustrasi biar kebayang cara pakainya.</div>
+            <button type="button" class="month-pill-btn" onclick="clearFxDemo()">Hapus data contoh</button>
+        </div>
         <div class="fx-toolbar">
             <button type="button" class="create-invoice-btn" onclick="openFxDialog('jual')">+ Jual ke pelanggan</button>
             <button type="button" class="month-pill-btn" onclick="openFxDialog('beli')">+ Beli / restok</button>
@@ -243,8 +288,31 @@ function shiftFxMonth(delta) {
     renderExchangeUI();
 }
 
+function fxHasDemo() {
+    return exchangeState.demo || fxAllTrades().some(t => t.demo);
+}
+
+// Remove the sample data from api/_seeds.js: sample trades, sample kurs and the sample SeaBank
+// balance. Trades the owner added stay.
+function clearFxDemo() {
+    if (!confirm('Hapus semua data contoh (transaksi, kurs, stok, dan saldo SeaBank contoh)? Transaksi yang kamu catat sendiri tetap ada.')) return;
+    Object.keys(exchangeState.trades).forEach(month => {
+        exchangeState.trades[month] = exchangeState.trades[month].filter(t => !t.demo);
+        if (!exchangeState.trades[month].length) delete exchangeState.trades[month];
+    });
+    if (exchangeState.demo) {
+        FX_CURRENCIES.forEach(c => { exchangeState.rates[c] = { sell: 0, buy: 0 }; });
+        bankBalances.seabank = 0;
+        bankBalancesUpdatedAt = '';
+    }
+    exchangeState.demo = false;
+    saveExchangeAndSync();
+    showToast('DATA CONTOH DIHAPUS · SIAP DIPAKAI');
+}
+
 function renderExchangeUI() {
     ensureExchangeUI();
+    document.getElementById('fxDemoBanner').hidden = !fxHasDemo();
     const { stock, result } = computeExchange();
     document.getElementById('fxCards').innerHTML = FX_CURRENCIES.map(c => {
         const s = stock[c];
@@ -252,7 +320,8 @@ function renderExchangeUI() {
         const margin = rate.sell && s.avg ? rate.sell - s.avg : 0;
         return `
         <div class="fx-card">
-            <div class="fx-card-head"><b>${c}</b><span>${FX_NAMES[c] || ''}</span></div>
+            <div class="fx-card-head">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b><span>${FX_NAMES[c] || ''}</span></div>
+            <div class="fx-stock-label">Simpanan cash</div>
             <div class="fx-stock${s.qty < 0 ? ' is-minus' : ''}">${fxQty(s.qty)} <small>${c}</small></div>
             <div class="fx-rows">
                 <div><span>Kurs jual</span><b>${rate.sell ? fxRate(rate.sell) : '<em>belum diatur</em>'}</b></div>
@@ -300,7 +369,7 @@ function renderExchangeUI() {
                 return `
                 <button type="button" class="log-row fx-row is-${t.type}" onclick="openFxDialog('', '${escapeHTML(t.id)}')">
                     <span class="log-row-main">
-                        <span class="log-row-title"><em class="fx-tag">${FX_TYPES[t.type].short}</em> ${fxQty(Math.abs(t.qty))} ${t.currency}${t.customer ? ' · ' + escapeHTML(t.customer) : ''}</span>
+                        <span class="log-row-title"><em class="fx-tag">${FX_TYPES[t.type].short}</em> ${fxFlag(t.currency)} ${fxQty(Math.abs(t.qty))} ${t.currency}${t.customer ? ' · ' + escapeHTML(t.customer) : ''}</span>
                         <span class="log-row-pos">${t.type === 'koreksi' ? (t.qty > 0 ? '+' : '−') + fxQty(Math.abs(t.qty)) + ' ' + t.currency : 'kurs ' + fxRate(t.rate)} · ${sub}${t.bankKey ? ' · ' + escapeHTML(bankNameOf(t.bankKey)) : ''}</span>
                     </span>
                     <span class="log-row-amount">${t.type === 'koreksi' ? '' : (t.type === 'jual' ? '+' : '−') + formatIDR(t.idr)}</span>
@@ -395,7 +464,7 @@ function openFxDialog(type, editId = '') {
     document.getElementById('fxDialogTitle').textContent = trade ? 'Ubah transaksi' : 'Transaksi baru';
     document.getElementById('fxDeleteBtn').hidden = !trade;
     document.getElementById('fxNotaBtn').hidden = !trade;
-    document.getElementById('fxBank').innerHTML = bankOptionsHTML(trade ? trade.bankKey : lastExpenseBank());
+    document.getElementById('fxBank').innerHTML = bankOptionsHTML(trade ? trade.bankKey : fxDefaultBank());
     document.getElementById('fxDate').value = trade ? trade.date : localDateKey();
     if (trade) {
         document.getElementById('fxCurrency').value = trade.currency;
@@ -512,8 +581,9 @@ function handleFxRatesSubmit(event) {
     showToast('KURS DISIMPAN');
 }
 
-function openFxStockDialog() {
+function openFxStockDialog(currency) {
     ensureExchangeUI();
+    if (currency) document.getElementById('fxStockCurrency').value = currency;
     fillFxStockForm();
     document.getElementById('fxStockDialog').showModal();
 }

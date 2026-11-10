@@ -8596,7 +8596,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         // =========================================================================
         // BANK BALANCES TRACKER MANAGEMENT
         // =========================================================================
-        const BANK_ACCOUNTS = [
+        // Every account type the dashboard knows. DAR uses its usual seven; a separate account can
+        // pick its own list with `banks` in api/_workspaces.js (e.g. Ziaud: SeaBank only).
+        const ALL_BANK_ACCOUNTS = [
+            { key: 'seabank', name: 'SeaBank', bankName: 'SeaBank', logo: '/bank-logos/seabank.png', tag: 'Bank digital' },
             { key: 'mandiri', name: 'Mandiri', bankName: 'Bank Mandiri', logo: '/bank-logos/mandiri.webp', tag: 'Rek. utama' },
             { key: 'jago', name: 'Jago', bankName: 'Bank Jago', logo: '/bank-logos/jago.svg', tag: 'Bank digital' },
             { key: 'blu', name: 'blu', bankName: 'blu by BCA Digital', logo: '/bank-logos/blu.png', tag: 'Bank digital' },
@@ -8605,6 +8608,12 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             { key: 'dana', name: 'DANA', bankName: 'DANA', logo: '/bank-logos/dana.svg', tag: 'E-wallet', wallet: true },
             { key: 'mayar', name: 'Mayar', bankName: 'Mayar Wallet', logo: '/bank-logos/mayar.png', tag: 'Wallet bisnis', wallet: true }
         ];
+        const BANK_ACCOUNTS = (() => {
+            const wanted = window.DAR_WS && Array.isArray(window.DAR_WS.banks) && window.DAR_WS.banks.length
+                ? window.DAR_WS.banks
+                : ['mandiri', 'jago', 'blu', 'line', 'gopay', 'dana', 'mayar'];
+            return wanted.map(key => ALL_BANK_ACCOUNTS.find(acc => acc.key === key)).filter(Boolean);
+        })();
 
         const DEFAULT_BANK_BALANCES = /*ws:{}*/ /*dar-only*/{
             mandiri: 2556495,
@@ -8674,8 +8683,13 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         function renderBankBalancesUI() {
             const total = BANK_ACCOUNTS.reduce((sum, acc) => sum + (Number(bankBalances[acc.key]) || 0), 0);
+            // Money changers also keep foreign cash (exchange.js): shown as extra cards, and its
+            // value at purchase price is added to the total.
+            const cash = typeof exchangeCashSummary === 'function' ? exchangeCashSummary() : null;
             const totalEl = document.getElementById('totalLiquidCashVal');
-            if (totalEl) totalEl.innerText = formatIDR(total);
+            if (totalEl) totalEl.innerText = formatIDR(total + (cash ? cash.valueIdr : 0));
+            const totalLabel = document.querySelector('.bank-total-label');
+            if (totalLabel && cash) totalLabel.textContent = 'Total rupiah + cash valas';
             if (document.body.dataset.view === 'plan') renderPlanUI();
             const updatedEl = document.getElementById('bankUpdatedAt');
             if (updatedEl) updatedEl.textContent = bankBalancesUpdatedAt ? `· per ${formatShortDate(bankBalancesUpdatedAt)}` : '';
@@ -8700,7 +8714,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
                     <button type="button" class="bank-copy-btn" onclick="copyBankAccount('${acc.key}')">Salin rekening</button>
                 </div>`;
-            }).join('');
+            }).join('') + (cash ? cash.html : '');
         }
 
         function buildBankCopyText(acc) {

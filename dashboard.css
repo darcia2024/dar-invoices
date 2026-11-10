@@ -3103,6 +3103,17 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-type-switch button.active { background: #292b24; border-color: #292b24; color: #fffdf3; }
 .fx-preview { display: grid; gap: 4px; font-size: 12.5px; color: #4b483f; background: #f6f2e8; border-radius: 10px; padding: 10px 12px; margin-top: 12px; }
 .fx-preview:empty { display: none; }
+.fx-demo-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #fff4d6; border: 1px solid #ecd28f; color: #5a4a1c; border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; font-size: 12.5px; line-height: 1.45; }
+.fx-demo-banner[hidden] { display: none; }
+.fx-demo-banner > div { flex: 1 1 220px; }
+.fx-flag { display: inline-block; width: 18px; height: 12px; vertical-align: -1px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .12); flex-shrink: 0; }
+.fx-flag.is-lg { width: 27px; height: 18px; border-radius: 3px; }
+.fx-card-head { align-items: center; }
+.fx-stock-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .3px; color: #7a7567; margin-top: 10px; }
+.fx-stock { margin-top: 2px; }
+.fx-cash-card .bank-item-brand { display: flex; align-items: center; gap: 8px; }
+.fx-cash-value { font-size: 11.5px; color: #686150; margin: 2px 0 10px; font-variant-numeric: tabular-nums; }
+.fx-cash-card .bank-balance-amount.fx-minus { color: #9e2d22; }
 @media (max-width: 600px) {
     .fx-toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .fx-toolbar .create-invoice-btn { grid-column: 1 / -1; min-height: 42px; }
