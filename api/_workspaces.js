@@ -17,7 +17,8 @@ const WORKSPACES = {
   // Akun Lifetime (sold 2026-11-10). PIN: Vercel env WORKSPACE_PIN_JULIAN.
   julian: { name: "Julian", owner: "Julian", mascot: true },
   // Akun Lifetime (2026-11-10). PIN: Vercel env WORKSPACE_PIN_ZIAUD.
-  ziaud: { name: "Ziaud", owner: "Ziaud", business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
+  // kind: "exchange" adds the "Tukar" screen (exchange.js) for a money changer.
+  ziaud: { name: "Ziaud", owner: "Ziaud", kind: "exchange", currencies: ["EGP", "USD"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
 };
 
 function todayJakarta() {

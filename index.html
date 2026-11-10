@@ -5400,6 +5400,7 @@ body[data-view="pack"] #packSection {
                 saveLocalBankBalances();
                 renderBankBalancesUI();
             }
+            if (state.exchange && typeof applyExchangeState === 'function') applyExchangeState(state.exchange);
         }
 
         function saveLocalBillingState() {
@@ -5479,7 +5480,9 @@ body[data-view="pack"] #packSection {
                         bankBalances,
                         bankBalancesUpdatedAt,
                         bankAccountDetails,
-                        bankCopyTemplate
+                        bankCopyTemplate,
+                        // Currency-exchange accounts only (exchange.js); left out for everyone else.
+                        exchange: typeof exchangeState === 'object' ? exchangeState : undefined
                     })
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
@@ -8040,6 +8043,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 bulan_rencana_aktif: month,
                 saldo_bank: { total: cash, per_akun: Object.fromEntries(BANK_ACCOUNTS.map(a => [a.name, Number(bankBalances[a.key]) || 0])), diperbarui: bankBalancesUpdatedAt || null },
                 rekening: BANK_ACCOUNTS.map(a => ({ key: a.key, nama: a.bankName })),
+                penukaran_valas: typeof exchangeAssistantContext === 'function' ? exchangeAssistantContext() : undefined,
                 rencana_bulan_aktif: planOf(month),
                 catatan_pengeluaran_bulan_aktif: logList(month),
                 rencana_bulan_lalu_ringkas: planItemsOf(prev).length ? { bulan: prev, total_anggaran: planItemsOf(prev).reduce((s, p) => s + p.planned, 0), total_terpakai: planItemsOf(prev).reduce((s, p) => s + p.actual, 0) } : null,
@@ -8569,6 +8573,13 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const sub = document.querySelector('.portal-subtitle');
                 if (sub) sub.textContent = 'Anggaran pengeluaran tiap bulan: rencanakan, catat realisasinya, jaga tetap di bawah pemasukan.';
                 renderPlanUI();
+            } else if (view === 'tukar' && typeof renderExchangeUI === 'function') {
+                // Currency-exchange accounts (exchange.js)
+                document.getElementById('workspaceTitle').textContent = 'Penukaran Valas';
+                const sub = document.querySelector('.portal-subtitle');
+                if (sub) sub.textContent = 'Kurs, stok valas, dan untung tiap transaksi tukar.';
+                renderBankBalancesUI();
+                renderExchangeUI();
             } else {
                 document.getElementById('workspaceTitle').textContent = 'Invoice';
                 const sub = document.querySelector('.portal-subtitle');
@@ -8787,6 +8798,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             // The balances just typed already include every spending recorded so far, so deleting
             // one of those later must not add its amount back.
             Object.values(expenseLogs).forEach(list => list.forEach(log => { log.bankCut = 0; }));
+            if (typeof exchangeOnManualBankUpdate === 'function') exchangeOnManualBankUpdate();
             saveLocalBillingState();
             saveLocalBankBalances();
             renderBankBalancesUI();

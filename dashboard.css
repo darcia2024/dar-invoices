@@ -3059,3 +3059,58 @@ html.is-standalone button, html.is-standalone .sidebar-link, html.is-standalone 
     /* Full-screen assistant respects the notch / Dynamic Island */
     html.is-standalone .ai-panel { padding-top: env(safe-area-inset-top); }
 }
+
+/* ---- Tukar valas (exchange.js, money-changer accounts only) ---- */
+#exchangeSection { display: none; }
+body[data-view="tukar"] #exchangeSection { display: block; }
+body[data-view="tukar"] .board-only,
+body[data-view="tukar"] .report-only,
+body[data-view="tukar"] .stats-bar,
+body[data-view="tukar"] .invoice-tools,
+body[data-view="tukar"] .board-tabs,
+body[data-view="tukar"] .goal-tracker-card,
+body[data-view="tukar"] .filter-section,
+body[data-view="tukar"] #debtSection,
+body[data-view="tukar"] #planSection,
+body[data-view="tukar"] #packSection { display: none !important; }
+.fx-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.fx-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.fx-card { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 16px 18px; }
+.fx-card-head { display: flex; align-items: baseline; gap: 8px; }
+.fx-card-head b { font-size: 13px; letter-spacing: .5px; color: #24241f; }
+.fx-card-head span { font-size: 11.5px; color: #7a7567; }
+.fx-stock { font-size: 28px; font-weight: 600; letter-spacing: -0.8px; color: #24241f; font-variant-numeric: tabular-nums; margin: 6px 0 10px; }
+.fx-stock small { font-size: 13px; font-weight: 500; color: #7a7567; letter-spacing: 0; }
+.fx-rows { display: grid; gap: 5px; border-top: 1px solid #ece6d8; padding-top: 10px; }
+.fx-rows div { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: #5c584c; }
+.fx-rows b { color: #24241f; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fx-rows em { font-style: normal; font-weight: 500; color: #9e2d22; }
+.fx-stock.is-minus, .fx-rows b.is-minus, .fx-preview b.is-minus { color: #9e2d22; }
+.fx-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.fx-stats div { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fx-stats span { font-size: 10.5px; color: #7a7567; text-transform: uppercase; letter-spacing: .3px; }
+.fx-stats b { font-size: 17px; color: #24241f; font-variant-numeric: tabular-nums; letter-spacing: -0.3px; }
+.fx-stats div:first-child b { color: #1f5f33; }
+.fx-stats small { font-size: 10.5px; color: #7a7567; overflow-wrap: anywhere; }
+.fx-month-nav { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; font-weight: 600; font-size: 13.5px; color: #24241f; }
+#fxList { display: grid; gap: 10px; background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 12px 14px; margin-bottom: 18px; }
+.fx-tag { font-style: normal; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: 2px 6px; border-radius: 5px; background: #e4f0e6; color: #1f5f33; margin-right: 2px; }
+.fx-row.is-beli .fx-tag { background: #e3eaf7; color: #1e4f9a; }
+.fx-row.is-koreksi .fx-tag { background: #eeeae0; color: #5f5a4d; }
+.fx-row.is-jual .log-row-amount { color: #1f5f33; }
+.fx-type-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+.fx-type-switch button { font: inherit; font-size: 13px; font-weight: 600; padding: 10px; border-radius: 10px; border: 1px solid #d8d0bf; background: #fffdf6; color: #4b483f; cursor: pointer; }
+.fx-type-switch button.active { background: #292b24; border-color: #292b24; color: #fffdf3; }
+.fx-preview { display: grid; gap: 4px; font-size: 12.5px; color: #4b483f; background: #f6f2e8; border-radius: 10px; padding: 10px 12px; margin-top: 12px; }
+.fx-preview:empty { display: none; }
+@media (max-width: 600px) {
+    .fx-toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .fx-toolbar .create-invoice-btn { grid-column: 1 / -1; min-height: 42px; }
+    .fx-toolbar .month-pill-btn { min-height: 38px; font-size: 11px; }
+    .fx-toolbar .month-pill-btn:last-child { grid-column: 1 / -1; }
+    .fx-card { padding: 13px 14px; }
+    .fx-stock { font-size: 24px; }
+    .fx-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .fx-stats b { font-size: 15px; }
+    #fxList { padding: 10px 11px; }
+}
