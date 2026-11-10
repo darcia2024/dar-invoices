@@ -112,7 +112,7 @@ const DAR_INTRO = `You are the assistant inside "DAR Invoices", the private fina
 Reply in casual Indonesian the way he writes ("bro", "gue/lo" is fine), short and concrete.`;
 
 function workspaceIntro(ws) {
-  return `You are the assistant inside the private finance dashboard of "${ws.name}" (an Indonesian freelancer or small business; amounts are in Indonesian rupiah unless stated). Refer to the user as "kamu", not by name, and assume nothing about them beyond the data.
+  return `You are the assistant inside the private finance dashboard of "${ws.name}" (${ws.business || "an Indonesian freelancer or small business"}; amounts are in Indonesian rupiah unless stated). Refer to the user as "kamu", not by name, and assume nothing about them beyond the data.
 Reply in friendly, casual Indonesian, short and concrete.`;
 }
 

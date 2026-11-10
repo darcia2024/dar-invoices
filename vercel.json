@@ -50,6 +50,10 @@
       "destination": "/api/workspace?ws=julian"
     },
     {
+      "source": "/ziaud",
+      "destination": "/api/workspace?ws=ziaud"
+    },
+    {
       "source": "/:ws/manifest.webmanifest",
       "destination": "/api/workspace?ws=:ws&asset=manifest"
     },
