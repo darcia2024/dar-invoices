@@ -18,7 +18,9 @@ const WORKSPACES = {
   julian: { name: "Julian", owner: "Julian", mascot: true },
   // Akun Lifetime (2026-11-10). PIN: Vercel env WORKSPACE_PIN_ZIAUD.
   // kind: "exchange" adds the "Tukar" screen (exchange.js) for a money changer.
-  ziaud: { name: "Ziaud", owner: "Ziaud", kind: "exchange", currencies: ["EGP", "USD"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
+  // open: true -> no PIN yet: anyone with the link can open and edit this account's data.
+  // Remove it (and set WORKSPACE_PIN_ZIAUD) to require a PIN again.
+  ziaud: { name: "Ziaud", owner: "Ziaud", open: true, kind: "exchange", currencies: ["EGP", "USD"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
 };
 
 function todayJakarta() {

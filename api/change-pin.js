@@ -22,6 +22,9 @@ module.exports = async function handler(req, res) {
     const ws = requestWorkspace(req);
     if (!hasValidSession(req, ws)) return res.status(401).json({ error: "Sesi habis. Masuk lagi dulu." });
     const workspace = ws ? getWorkspace(ws) : null;
+    if (workspace && workspace.open) {
+      return res.status(403).json({ error: "Akun ini belum pakai PIN." });
+    }
     if (workspace && workspace.pin) {
       return res.status(403).json({ error: "PIN akun demo tidak bisa diganti." });
     }

@@ -64,6 +64,11 @@ function readCookie(req, name) {
 }
 
 function hasValidSession(req, ws = null) {
+  // An account marked open (no PIN yet) needs no session. Never applies to DAR (ws null).
+  if (ws) {
+    const account = getWorkspace(ws);
+    if (account && account.open === true) return true;
+  }
   const value = readCookie(req, cookieName(ws));
   if (!value) return false;
   const [expires, signature] = value.split(".");

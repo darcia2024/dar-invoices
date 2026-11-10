@@ -66,6 +66,8 @@ function dashboardPage(ws) {
     .replace(/<!--ws:([\s\S]*?)-->/g, "$1")
     .replace(/\/\*ws:([\s\S]*?)\*\//g, "$1");
   html = mustReplace(html, '<meta charset="UTF-8">', `<meta charset="UTF-8">\n    ${bootstrapScript(ws)}`);
+  // No PIN yet: nothing to lock or change, so hide those buttons.
+  if (ws.open) html = mustReplace(html, '<link rel="stylesheet" href="/dashboard.css">', '<link rel="stylesheet" href="/dashboard.css">\n    <style>.mobile-top-actions, .sidebar-account button, .sidebar-link.mobile-lock { display: none !important; }</style>');
   // Money changers get the "Tukar" screen; deferred, so it runs after the dashboard script.
   if (ws.kind === "exchange") html = mustReplace(html, '<link rel="stylesheet" href="/dashboard.css">', '<link rel="stylesheet" href="/dashboard.css">\n    <script src="/exchange.js" defer></script>');
   return applyBrand(fillPlaceholders(html, ws), ws);
