@@ -5459,9 +5459,15 @@ body[data-view="pack"] #packSection {
             renderDebtUI();
         }
 
+        // Several saves can be in flight when entries are made quickly. Only the newest save's
+        // reply may replace the screen's data: an older reply would undo entries made after it
+        // was sent, and the next save would then drop them on the server too.
+        let persistSeq = 0;
+
         async function persistBillingState() {
             saveLocalBillingState();
             setInvoiceSyncStatus('Tersimpan di perangkat. Menyinkronkan…');
+            const seq = ++persistSeq;
             try {
                 const response = await fetch("/api/billing-state", {
                     method: "PUT",
@@ -5493,6 +5499,7 @@ body[data-view="pack"] #packSection {
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
                 const state = await response.json();
+                if (seq !== persistSeq) return; // a newer save is on its way; its reply counts
                 invoiceMetadataPending = false;
                 applyBillingState(state);
                 saveLocalBillingState();
