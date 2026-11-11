@@ -3115,6 +3115,20 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-dir button span { display: block; font-size: 11px; color: #6b675b; }
 .fx-dir button[aria-checked="true"] { background: #30352b; border-color: #30352b; color: #fffdf3; }
 .fx-dir button[aria-checked="true"] span { color: #d9d6c9; }
+.fx-dir-pair { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; font-style: normal; }
+.fx-dir-pair .fx-flag { width: 24px; height: 16px; }
+.fx-pair-arrow { font-size: 12px; opacity: .7; }
+.fx-label-flag { display: inline-flex; align-items: center; gap: 6px; }
+/* Catat tukar: "Dari" (what the customer hands over) on the left, "Ke" on the right */
+.fx-pair-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: #30352b; color: #fffdf3; border-radius: 12px; padding: 12px 14px; margin-bottom: 4px; }
+.fx-pair-head b { font-size: 15px; font-weight: 600; margin-left: 4px; }
+.fx-pair-head > span:last-child { font-size: 12px; color: #d9d6c9; margin-left: auto; }
+.fx-side { display: grid; gap: 4px; align-content: start; border: 1px solid #e2dccb; border-radius: 12px; padding: 12px; min-width: 0; }
+.fx-side.is-in { background: #f3f8ef; }
+.fx-side.is-out { background: #fbf3ef; }
+.fx-side label small { font-weight: 400; color: #6b675b; }
+.fx-flip { grid-column: 1 / -1; justify-self: center; }
+.fx-row .log-row-title .fx-flag { vertical-align: -2px; }
 .fx-preview:empty { display: none; }
 .fx-demo-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #fff4d6; border: 1px solid #ecd28f; color: #5a4a1c; border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; font-size: 12.5px; line-height: 1.45; }
 .fx-demo-banner[hidden] { display: none; }

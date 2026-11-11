@@ -52,7 +52,7 @@ function defaultHoldings() {
 }
 
 function normalizeExchange(value) {
-    const out = { rates: {}, assetRates: {}, buyRates: {}, holdings: defaultHoldings(), deals: [], incomes: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
+    const out = { rates: {}, assetRates: {}, buyRates: {}, crossRates: {}, holdings: defaultHoldings(), deals: [], incomes: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
     FX_CURRENCIES.forEach(c => {
         const r = value && value.rates && value.rates[c];
         out.rates[c] = { sell: Math.max(0, Number(r && r.sell) || 0), buy: Math.max(0, Number(r && r.buy) || 0) };
@@ -116,11 +116,22 @@ function normalizeExchange(value) {
         bankKey: String(d.bankKey || '').slice(0, 40),
         bankDelta: Math.round(Number(d.bankDelta) || 0),
         modal: Math.max(0, Number(d.modal) || 0),
-        dir: d.dir === 'beli' ? 'beli' : 'jual',
+        dir: d.dir === 'beli' ? 'beli' : (d.dir === 'swap' && FX_CURRENCIES.includes(d.currency2) && Number(d.qty2) > 0 ? 'swap' : 'jual'),
+        // Foreign ↔ foreign ("swap"): the second currency that came in, and where it went.
+        currency2: FX_CURRENCIES.includes(d.currency2) ? d.currency2 : '',
+        qty2: Math.round((Number(d.qty2) || 0) * 100) / 100,
+        holdingId2: String(d.holdingId2 || ''),
+        holdDelta2: Math.round((Number(d.holdDelta2) || 0) * 100) / 100,
+        modal2: Math.max(0, Number(d.modal2) || 0),
         by: String(d.by || '').slice(0, 40),
         demo: d.demo === true,
         createdAt: Number(d.createdAt) || Date.now()
     }));
+    // Last kurs used per foreign pair, e.g. { "USD-EGP": 62.5 } (EGP per 1 USD).
+    out.crossRates = {};
+    Object.entries(value.crossRates || {}).forEach(([k, v]) => {
+        if (/^[A-Z]{3}-[A-Z]{3}$/.test(k) && Number(v) > 0) out.crossRates[k] = Math.round(Number(v) * 100) / 100;
+    });
     // Other income (not from tukar): rupiah into a bank. bankAdd is what was added to that bank.
     out.incomes = (Array.isArray(value.incomes) ? value.incomes : []).filter(x => x && Number(x.amount) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(x.date || '')).map(x => ({
         id: String(x.id || 'inc-' + crypto.randomUUID()).slice(0, 80),
@@ -1429,27 +1440,59 @@ function removeHolding(id) {
 }
 
 // ---------- Catat tukar ----------
-// One line per hand-over: who got how many pounds/dollars, from which place, and the rupiah
-// that actually came into which bank. The place goes down, the bank goes up, and the profit is
-// the rupiah minus the amount at the owner's kurs modal of that moment.
-// Kasih (jual): rupiah in minus the pounds at kurs modal. Terima (beli): the pounds received at
-// kurs modal minus the rupiah paid for them.
+// One line per exchange, in any direction between rupiah and the account's currencies:
+// - "jual"  kasih pound/dollar, terima rupiah (currency/qty/holdingId out, idr/bankKey in)
+// - "beli"  kasih rupiah, terima pound/dollar (idr/bankKey out, currency/qty/holdingId in)
+// - "swap"  kasih one foreign currency, terima another (currency/qty/holdingId out,
+//           currency2/qty2/holdingId2 in)
+// The place or bank on each side moves by its amount. Profit compares both sides at the owner's
+// kurs modal of the moment the line was first saved.
+const FX_STRENGTH = { IDR: 0, EGP: 1, MYR: 2, SAR: 2, USD: 3, EUR: 4 };
+const DEAL_CURRENCIES = ['IDR', ...FX_CURRENCIES];
+
 function dealProfit(d) {
+    if (d.dir === 'swap') return d.modal && d.modal2 ? Math.round(d.qty2 * d.modal2 - d.qty * d.modal) : 0;
     if (!d.modal) return 0;
     const atModal = Math.round(d.qty * d.modal);
     return d.dir === 'beli' ? atModal - d.idr : d.idr - atModal;
 }
 
-// Rupiah in from "kasih" minus rupiah out for "terima".
+// Rupiah in from "jual" minus rupiah out for "beli" (a swap moves no rupiah).
 function dealRupiahNet(list) {
-    return list.reduce((s, d) => s + (d.dir === 'beli' ? -d.idr : d.idr), 0);
+    return list.reduce((s, d) => s + (d.dir === 'beli' ? -d.idr : d.dir === 'swap' ? 0 : d.idr), 0);
 }
 
 function dealProfitSum(list) {
     return list.reduce((s, d) => s + dealProfit(d), 0);
 }
 
+// What leaves and what arrives, whatever the direction.
+function dealSides(d) {
+    if (d.dir === 'beli') return { out: { c: 'IDR', amount: d.idr }, in: { c: d.currency, amount: d.qty } };
+    if (d.dir === 'swap') return { out: { c: d.currency, amount: d.qty }, in: { c: d.currency2, amount: d.qty2 } };
+    return { out: { c: d.currency, amount: d.qty }, in: { c: 'IDR', amount: d.idr } };
+}
+
+// The kurs is always "weaker per 1 stronger": Rp per 1 EGP, Rp per 1 USD, EGP per 1 USD.
+function dealPairOf(outC, inC) {
+    const outStrong = (FX_STRENGTH[outC] ?? 1) > (FX_STRENGTH[inC] ?? 1);
+    return { strong: outStrong ? outC : inC, weak: outStrong ? inC : outC, outStrong };
+}
+
+function dealRateOf(d) {
+    const s = dealSides(d);
+    const p = dealPairOf(s.out.c, s.in.c);
+    const strongAmt = p.outStrong ? s.out.amount : s.in.amount;
+    const weakAmt = p.outStrong ? s.in.amount : s.out.amount;
+    return strongAmt ? Math.round(weakAmt / strongAmt * 100) / 100 : 0;
+}
+
+function dealRateText(rate, weak, strong) {
+    return weak === 'IDR' ? `${fxRate(rate)} per 1 ${strong}` : `${fxQty(rate)} ${weak} per 1 ${strong}`;
+}
+
 let dealEditId = '';
+let dealLastTyped = 'rate';
 
 function ensureDealDialog() {
     if (document.getElementById('fxDealDialog')) return;
@@ -1457,22 +1500,26 @@ function ensureDealDialog() {
     dialog.id = 'fxDealDialog';
     dialog.className = 'invoice-manager-dialog';
     dialog.setAttribute('aria-labelledby', 'fxDealTitle');
+    const options = DEAL_CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('');
     dialog.innerHTML = `
         <div class="manager-heading"><h2 id="fxDealTitle">Catat tukar</h2><button type="button" aria-label="Tutup" onclick="document.getElementById('fxDealDialog').close()">×</button></div>
         <div class="manager-content">
             <form onsubmit="handleDealSubmit(event)">
-                <div class="fx-dir" role="radiogroup" aria-label="Arah tukar">
-                    <button type="button" role="radio" data-deal-dir="jual" onclick="setDealDir('jual')"><b>Kasih pound/dollar</b><span>terima rupiah</span></button>
-                    <button type="button" role="radio" data-deal-dir="beli" onclick="setDealDir('beli')"><b>Terima pound/dollar</b><span>kirim rupiah</span></button>
-                </div>
                 <div class="draft-fields">
-                    <label class="wide-field"><span id="fxDealNameLabel">Ke siapa / tempat</span><input type="text" id="fxDealName" maxlength="80" list="fxNameList" autocomplete="off" placeholder="Pilih atau ketik nama, contoh: Buust"></label>
-                    <label class="wide-field">Mata uang<select id="fxDealCurrency" onchange="onDealCurrency()">${FX_CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('')}</select></label>
-                    <label><span id="fxDealQtyLabel">Jumlah keluar</span><input type="number" id="fxDealQty" min="0.01" step="0.01" inputmode="decimal" required placeholder="Contoh: 40000" oninput="onDealQty()"></label>
-                    <label><span id="fxDealHoldingLabel">Diambil dari</span><select id="fxDealHolding" onchange="renderDealPreview()"></select></label>
-                    <label>Kurs (Rp per 1)<input type="number" id="fxDealRate" min="0" step="0.01" inputmode="decimal" placeholder="Contoh: 340" oninput="onDealRate()"></label>
-                    <label><span id="fxDealIdrLabel">Rupiah masuk (sesuai di bank)</span><input type="text" id="fxDealIdr" inputmode="numeric" required placeholder="Contoh: 13.600.000" oninput="onDealIdr(this)"></label>
-                    <label><span id="fxDealBankLabel">Masuk ke bank</span><select id="fxDealBank" onchange="renderDealPreview()"></select></label>
+                    <div class="wide-field fx-pair-head" id="fxDealPairHead" aria-live="polite"></div>
+                    <label class="wide-field">Dengan siapa<input type="text" id="fxDealName" maxlength="80" list="fxNameList" autocomplete="off" placeholder="Pilih atau ketik nama, contoh: Buust"></label>
+                    <div class="fx-side is-in">
+                        <label>Dari <small>(uang yang orang kasih ke kamu)</small><select id="fxDealIn" onchange="onDealPair('in')">${options}</select></label>
+                        <label>Jumlah<input type="text" id="fxDealInAmt" inputmode="decimal" required autocomplete="off" oninput="onDealAmount('in', this)"></label>
+                        <label><span id="fxDealInToLabel">Masuk ke</span><select id="fxDealInTo" onchange="renderDealPreview()"></select></label>
+                    </div>
+                    <div class="fx-side is-out">
+                        <label>Ke <small>(uang yang orang terima dari kamu)</small><select id="fxDealOut" onchange="onDealPair('out')">${options}</select></label>
+                        <label>Jumlah<input type="text" id="fxDealOutAmt" inputmode="decimal" required autocomplete="off" oninput="onDealAmount('out', this)"></label>
+                        <label><span id="fxDealOutFromLabel">Diambil dari</span><select id="fxDealOutFrom" onchange="renderDealPreview()"></select></label>
+                    </div>
+                    <button type="button" class="month-pill-btn fx-flip" onclick="flipDeal()">⇄ Balik arah</button>
+                    <label><span class="fx-label-flag"><span id="fxDealRateFlags"></span><span id="fxDealRateLabel">Kurs</span></span><input type="text" id="fxDealRate" inputmode="decimal" autocomplete="off" placeholder="Contoh: 340" oninput="onDealRate()"></label>
                     <label>Tanggal<input type="date" id="fxDealDate" required></label>
                 </div>
                 <div class="fx-preview" id="fxDealPreview"></div>
@@ -1485,67 +1532,162 @@ function ensureDealDialog() {
             </form>
         </div>`;
     document.body.appendChild(dialog);
-    if (!FX_CHIP_SELECTS.includes('fxDealCurrency')) FX_CHIP_SELECTS.push('fxDealCurrency');
+    ['fxDealOut', 'fxDealIn'].forEach(id => { if (!FX_CHIP_SELECTS.includes(id)) FX_CHIP_SELECTS.push(id); });
 }
 
-function dealHoldingOptions(currency, selected) {
+// Rupiah is typed as 13.600.000; pounds/dollars may have decimals (1.250,50 or 1250.5).
+function parseDealAmount(text, currency) {
+    const raw = String(text || '').trim();
+    if (currency === 'IDR') return Math.round(Number(raw.replace(/[^0-9]/g, '')) || 0);
+    const clean = raw.replace(/\s/g, '');
+    const normal = /,\d{1,2}$/.test(clean) ? clean.replace(/\./g, '').replace(',', '.') : clean.replace(/,/g, '');
+    return Math.round((Number(normal) || 0) * 100) / 100;
+}
+
+function showDealAmount(n, currency) {
+    if (!n) return '';
+    return currency === 'IDR' ? Math.round(n).toLocaleString('id-ID') : String(Math.round(n * 100) / 100);
+}
+
+// Where one side's money comes from or goes to: a bank for rupiah, a place in Aset otherwise.
+function dealSourceOptions(currency, selected, side) {
+    if (currency === 'IDR') return bankOptionsHTML(selected);
     const list = exchangeState.holdings.filter(h => h.currency === currency);
     return list.map(h => `<option value="${escapeHTML(h.id)}"${h.id === selected ? ' selected' : ''}>${escapeHTML(h.label || h.currency)} · ${fxQty(h.amount)} ${h.currency}</option>`).join('')
-        + `<option value=""${selected === '' ? ' selected' : ''}>${dealDir === 'beli' ? 'Tidak ke tempat di Aset' : 'Tidak dari tempat di Aset'}</option>`;
+        + `<option value=""${selected === '' ? ' selected' : ''}>${side === 'in' ? 'Tidak ke tempat di Aset' : 'Tidak dari tempat di Aset'}</option>`;
 }
 
-// ---------- Direction and kurs ----------
-// The kurs and the rupiah follow each other: type the kurs and the rupiah is amount × kurs; type
-// the rupiah (e.g. the exact transfer) and the kurs is worked out. Whichever was typed last wins
-// when the amount changes.
-let dealDir = 'jual';
-let dealLastTyped = 'rate';
-
-function dealDefaultRate(currency) {
-    return dealDir === 'beli' ? (exchangeState.buyRates[currency] || 0) : (exchangeState.rates[currency].sell || 0);
+function dealDefaultSource(currency) {
+    if (currency === 'IDR') return lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || '';
+    return (exchangeState.holdings.find(h => h.currency === currency) || {}).id || '';
 }
 
-function setDealDir(dir, keepNumbers = false) {
-    dealDir = dir === 'beli' ? 'beli' : 'jual';
-    const beli = dealDir === 'beli';
-    document.querySelectorAll('[data-deal-dir]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.dealDir === dealDir)));
-    document.getElementById('fxDealNameLabel').textContent = beli ? 'Dari siapa' : 'Ke siapa / tempat';
-    document.getElementById('fxDealQtyLabel').textContent = beli ? 'Jumlah masuk' : 'Jumlah keluar';
-    document.getElementById('fxDealHoldingLabel').textContent = beli ? 'Masuk ke' : 'Diambil dari';
-    document.getElementById('fxDealIdrLabel').textContent = beli ? 'Rupiah keluar (yang ditransfer)' : 'Rupiah masuk (sesuai di bank)';
-    document.getElementById('fxDealBankLabel').textContent = beli ? 'Dari bank' : 'Masuk ke bank';
-    const holding = document.getElementById('fxDealHolding');
-    const c = document.getElementById('fxDealCurrency').value;
-    holding.innerHTML = dealHoldingOptions(c, holding.value || (exchangeState.holdings.find(h => h.currency === c) || {}).id || '');
-    if (!keepNumbers) {
-        const rate = dealDefaultRate(c);
-        document.getElementById('fxDealRate').value = rate || '';
-        dealLastTyped = 'rate';
-        fillDealIdrFromRate();
+function dealPair() {
+    return { outC: document.getElementById('fxDealOut').value, inC: document.getElementById('fxDealIn').value };
+}
+
+// Default kurs for a pair: kasih valas → its last kurs; terima valas → kurs beli; valas ↔ valas →
+// the last kurs used for that pair.
+function dealDefaultRate(outC, inC) {
+    if (inC === 'IDR') return exchangeState.rates[outC] ? exchangeState.rates[outC].sell || 0 : 0;
+    if (outC === 'IDR') return exchangeState.buyRates[inC] || 0;
+    const p = dealPairOf(outC, inC);
+    return exchangeState.crossRates[`${p.strong}-${p.weak}`] || 0;
+}
+
+// Names as Ziaud says them: what the customer hands over → what they get ("Indo → Cai").
+const DEAL_PLACE_NAMES = { IDR: 'Indo', EGP: 'Cai', USD: 'Dollar' };
+const DEAL_CURRENCY_NAMES = { IDR: 'Rupiah', EGP: 'Pound', USD: 'Dollar' };
+
+function renderDealLabels() {
+    const { outC, inC } = dealPair();
+    const p = dealPairOf(outC, inC);
+    const name = c => DEAL_CURRENCY_NAMES[c] || FX_NAMES[c] || c;
+    document.getElementById('fxDealPairHead').innerHTML = `${fxFlag(inC, 'fx-flag is-lg')}<span class="fx-pair-arrow" aria-hidden="true">→</span>${fxFlag(outC, 'fx-flag is-lg')}<b>${escapeHTML(name(inC))} ke ${escapeHTML(name(outC))}</b><span>${escapeHTML(DEAL_PLACE_NAMES[inC] || inC)} → ${escapeHTML(DEAL_PLACE_NAMES[outC] || outC)}</span>`;
+    document.getElementById('fxDealOutFromLabel').textContent = outC === 'IDR' ? 'Dari bank' : 'Diambil dari';
+    document.getElementById('fxDealInToLabel').textContent = inC === 'IDR' ? 'Masuk ke bank' : 'Masuk ke';
+    document.getElementById('fxDealOutAmt').placeholder = outC === 'IDR' ? 'Contoh: 3.400.000' : 'Contoh: 10000';
+    document.getElementById('fxDealInAmt').placeholder = inC === 'IDR' ? 'Contoh: 3.400.000' : 'Contoh: 10000';
+    document.getElementById('fxDealRateFlags').innerHTML = fxFlag(p.weak) + fxFlag(p.strong);
+    document.getElementById('fxDealRateLabel').textContent = p.weak === 'IDR' ? `Kurs (Rp per 1 ${p.strong})` : `Kurs (${p.weak} per 1 ${p.strong})`;
+}
+
+function setDealSources(keepOut, keepIn) {
+    const { outC, inC } = dealPair();
+    const outSel = document.getElementById('fxDealOutFrom');
+    const inSel = document.getElementById('fxDealInTo');
+    outSel.innerHTML = dealSourceOptions(outC, keepOut !== undefined ? keepOut : dealDefaultSource(outC), 'out');
+    inSel.innerHTML = dealSourceOptions(inC, keepIn !== undefined ? keepIn : dealDefaultSource(inC), 'in');
+}
+
+// Picking a currency: the two sides must differ and one of them is at most rupiah once.
+function onDealPair(changed) {
+    const outSel = document.getElementById('fxDealOut');
+    const inSel = document.getElementById('fxDealIn');
+    if (outSel.value === inSel.value) {
+        const other = changed === 'out' ? inSel : outSel;
+        const mine = changed === 'out' ? outSel.value : inSel.value;
+        other.value = mine === 'IDR' ? FX_CURRENCIES[0] : 'IDR';
     }
+    setDealSources();
+    document.getElementById('fxDealRate').value = dealDefaultRate(outSel.value, inSel.value) || '';
+    dealLastTyped = 'rate';
+    fillDealFromRate('out');
+    renderDealLabels();
+    renderFxChips();
     renderDealPreview();
 }
 
-function fillDealIdrFromRate() {
-    const qty = Number(document.getElementById('fxDealQty').value) || 0;
-    const rate = Number(document.getElementById('fxDealRate').value) || 0;
-    if (qty && rate) document.getElementById('fxDealIdr').value = Math.round(qty * rate).toLocaleString('id-ID');
+function flipDeal() {
+    const outSel = document.getElementById('fxDealOut');
+    const inSel = document.getElementById('fxDealIn');
+    const outAmt = document.getElementById('fxDealOutAmt');
+    const inAmt = document.getElementById('fxDealInAmt');
+    [outSel.value, inSel.value] = [inSel.value, outSel.value];
+    [outAmt.value, inAmt.value] = [inAmt.value, outAmt.value];
+    setDealSources();
+    document.getElementById('fxDealRate').value = dealDefaultRate(outSel.value, inSel.value) || document.getElementById('fxDealRate').value;
+    dealLastTyped = 'rate';
+    fillDealFromRate('out');
+    renderDealLabels();
+    renderFxChips();
+    renderDealPreview();
 }
 
-function fillDealRateFromIdr() {
-    const qty = Number(document.getElementById('fxDealQty').value) || 0;
-    const idr = Number(document.getElementById('fxDealIdr').value.replace(/[^0-9]/g, '')) || 0;
-    if (qty && idr) document.getElementById('fxDealRate').value = Math.round(idr / qty * 100) / 100;
+function readDealRate() {
+    return parseDealAmount(document.getElementById('fxDealRate').value, 'EGP');
 }
 
-function onDealQty() {
-    if (dealLastTyped === 'idr') fillDealRateFromIdr(); else fillDealIdrFromRate();
+// From one side's amount and the kurs, work out the other side.
+function fillDealFromRate(from) {
+    const { outC, inC } = dealPair();
+    const p = dealPairOf(outC, inC);
+    const rate = readDealRate();
+    const src = document.getElementById(from === 'out' ? 'fxDealOutAmt' : 'fxDealInAmt');
+    const dst = document.getElementById(from === 'out' ? 'fxDealInAmt' : 'fxDealOutAmt');
+    const srcC = from === 'out' ? outC : inC;
+    const dstC = from === 'out' ? inC : outC;
+    const amount = parseDealAmount(src.value, srcC);
+    if (!amount || !rate) return;
+    const srcStrong = from === 'out' ? p.outStrong : !p.outStrong;
+    dst.value = showDealAmount(srcStrong ? amount * rate : amount / rate, dstC);
+}
+
+function fillDealRateFromAmounts() {
+    const { outC, inC } = dealPair();
+    const p = dealPairOf(outC, inC);
+    const outAmt = parseDealAmount(document.getElementById('fxDealOutAmt').value, outC);
+    const inAmt = parseDealAmount(document.getElementById('fxDealInAmt').value, inC);
+    if (!outAmt || !inAmt) return;
+    const strongAmt = p.outStrong ? outAmt : inAmt;
+    const weakAmt = p.outStrong ? inAmt : outAmt;
+    document.getElementById('fxDealRate').value = Math.round(weakAmt / strongAmt * 100) / 100;
+}
+
+// The side typed first is the one given; the kurs fills the other. Typing the second side too
+// (e.g. the exact transfer) works the kurs out instead.
+let dealFirstSide = 'out';
+function onDealAmount(side, input) {
+    const { outC, inC } = dealPair();
+    const c = side === 'out' ? outC : inC;
+    if (c === 'IDR') {
+        const n = parseDealAmount(input.value, 'IDR');
+        input.value = n ? n.toLocaleString('id-ID') : '';
+    }
+    if (dealLastTyped === 'rate' || dealFirstSide === side) {
+        dealFirstSide = side;
+        dealLastTyped = 'rate';
+        fillDealFromRate(side);
+    } else {
+        dealLastTyped = 'amount';
+        fillDealRateFromAmounts();
+    }
     renderDealPreview();
 }
 
 function onDealRate() {
     dealLastTyped = 'rate';
-    fillDealIdrFromRate();
+    fillDealFromRate(dealFirstSide);
     renderDealPreview();
 }
 
@@ -1558,91 +1700,105 @@ function openDealDialog(id = '') {
     document.getElementById('fxDealDelete').hidden = !d;
     document.getElementById('fxDealError').textContent = '';
     document.getElementById('fxDealName').value = d ? d.name : '';
-    document.getElementById('fxDealCurrency').value = d ? d.currency : FX_CURRENCIES[0];
-    document.getElementById('fxDealQty').value = d ? d.qty : '';
-    document.getElementById('fxDealIdr').value = d ? d.idr.toLocaleString('id-ID') : '';
     document.getElementById('fxDealDate').value = d ? d.date : localDateKey();
     renderNameList();
-    document.getElementById('fxDealBank').innerHTML = bankOptionsHTML(d ? d.bankKey : (lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || ''));
-    dealDir = d && d.dir === 'beli' ? 'beli' : 'jual';
-    document.getElementById('fxDealHolding').innerHTML = dealHoldingOptions(document.getElementById('fxDealCurrency').value, d ? d.holdingId : (exchangeState.holdings.find(h => h.currency === document.getElementById('fxDealCurrency').value) || {}).id || '');
     if (d) {
-        document.getElementById('fxDealRate').value = d.qty ? Math.round(d.idr / d.qty * 100) / 100 : '';
-        dealLastTyped = 'idr';
-        setDealDir(dealDir, true);
+        const s = dealSides(d);
+        document.getElementById('fxDealOut').value = s.out.c;
+        document.getElementById('fxDealIn').value = s.in.c;
+        document.getElementById('fxDealOutAmt').value = showDealAmount(s.out.amount, s.out.c);
+        document.getElementById('fxDealInAmt').value = showDealAmount(s.in.amount, s.in.c);
+        document.getElementById('fxDealRate').value = dealRateOf(d) || '';
+        const outSrc = d.dir === 'beli' ? d.bankKey : d.holdingId;
+        const inSrc = d.dir === 'beli' ? d.holdingId : d.dir === 'swap' ? d.holdingId2 : d.bankKey;
+        setDealSources(outSrc, inSrc);
+        dealLastTyped = 'amount';
+        dealFirstSide = 'out';
     } else {
-        setDealDir(dealDir);
+        const outC = document.getElementById('fxDealOut').value;
+        if (!outC || outC === document.getElementById('fxDealIn').value || !DEAL_CURRENCIES.includes(outC)) {
+            document.getElementById('fxDealOut').value = FX_CURRENCIES[0];
+            document.getElementById('fxDealIn').value = 'IDR';
+        }
+        document.getElementById('fxDealOutAmt').value = '';
+        document.getElementById('fxDealInAmt').value = '';
+        setDealSources();
+        document.getElementById('fxDealRate').value = dealDefaultRate(dealPair().outC, dealPair().inC) || '';
+        dealLastTyped = 'rate';
+        dealFirstSide = 'out';
     }
+    renderDealLabels();
     renderFxChips();
     renderDealPreview();
     document.getElementById('fxDealDialog').showModal();
-    if (!d) {
-        const dialog = document.getElementById('fxDealDialog');
-        setTimeout(() => { if (!/^(INPUT|SELECT)$/.test((document.activeElement || {}).tagName || '')) document.getElementById('fxDealName').focus(); }, 30);
-    }
+    if (!d) setTimeout(() => { if (!/^(INPUT|SELECT)$/.test((document.activeElement || {}).tagName || '')) document.getElementById('fxDealName').focus(); }, 30);
 }
 
-function onDealCurrency() {
-    const c = document.getElementById('fxDealCurrency').value;
-    document.getElementById('fxDealHolding').innerHTML = dealHoldingOptions(c, (exchangeState.holdings.find(h => h.currency === c) || {}).id || '');
-    const rate = dealDefaultRate(c);
-    document.getElementById('fxDealRate').value = rate || '';
-    dealLastTyped = 'rate';
-    fillDealIdrFromRate();
-    renderDealPreview();
-}
-
-function onDealIdr(input) {
-    const value = Math.round(Number(String(input.value).replace(/[^0-9]/g, '')) || 0);
-    input.value = value ? value.toLocaleString('id-ID') : '';
-    dealLastTyped = 'idr';
-    fillDealRateFromIdr();
-    renderDealPreview();
-}
-
+// The form as a deal record (without ids, deltas and modal).
 function readDeal() {
-    return {
-        name: document.getElementById('fxDealName').value.trim().slice(0, 80),
-        currency: document.getElementById('fxDealCurrency').value,
-        qty: Math.round((Number(document.getElementById('fxDealQty').value) || 0) * 100) / 100,
-        holdingId: document.getElementById('fxDealHolding').value,
-        idr: Math.round(Number(document.getElementById('fxDealIdr').value.replace(/[^0-9]/g, '')) || 0),
-        bankKey: document.getElementById('fxDealBank').value,
-        date: document.getElementById('fxDealDate').value || localDateKey(),
-        dir: dealDir
-    };
+    const { outC, inC } = dealPair();
+    const outAmt = parseDealAmount(document.getElementById('fxDealOutAmt').value, outC);
+    const inAmt = parseDealAmount(document.getElementById('fxDealInAmt').value, inC);
+    const outSrc = document.getElementById('fxDealOutFrom').value;
+    const inSrc = document.getElementById('fxDealInTo').value;
+    const base = { name: document.getElementById('fxDealName').value.trim().slice(0, 80), date: document.getElementById('fxDealDate').value || localDateKey() };
+    if (inC === 'IDR') return { ...base, dir: 'jual', currency: outC, qty: outAmt, holdingId: outSrc, idr: inAmt, bankKey: inSrc };
+    if (outC === 'IDR') return { ...base, dir: 'beli', currency: inC, qty: inAmt, holdingId: inSrc, idr: outAmt, bankKey: outSrc };
+    return { ...base, dir: 'swap', currency: outC, qty: outAmt, holdingId: outSrc, currency2: inC, qty2: inAmt, holdingId2: inSrc, idr: 0, bankKey: '' };
+}
+
+function dealModals(d) {
+    return { modal: exchangeState.assetRates[d.currency] || 0, modal2: d.dir === 'swap' ? (exchangeState.assetRates[d.currency2] || 0) : 0 };
 }
 
 function renderDealPreview() {
     const d = readDeal();
-    const beli = d.dir === 'beli';
-    const modal = exchangeState.assetRates[d.currency] || 0;
+    const s = dealSides(d);
     const lines = [];
-    if (d.qty && d.idr) {
-        const profit = dealProfit({ ...d, modal });
-        lines.push(`<div class="fx-must-get"><span>Kurs <b>${fxRate(Math.round(d.idr / d.qty * 100) / 100)}</b></span>${modal ? `<span>untung <b class="is-profit ${profit < 0 ? 'is-minus' : ''}">${formatIDR(profit)}</b></span>` : ''}</div>`);
-        lines.push(modal ? `Modal ${fxRate(modal)} × ${fxQty(d.qty)} ${d.currency} = ${formatIDR(Math.round(d.qty * modal))}` : `Isi <b>kurs modal ${d.currency}</b> di Aset biar untungnya kehitung.`);
+    if (s.out.amount && s.in.amount) {
+        const m = dealModals(d);
+        const p = dealPairOf(s.out.c, s.in.c);
+        const profit = dealProfit({ ...d, ...m });
+        const known = d.dir === 'swap' ? m.modal && m.modal2 : m.modal;
+        lines.push(`<div class="fx-must-get"><span>Kurs <b>${dealRateText(dealRateOf(d), p.weak, p.strong)}</b></span>${known ? `<span>untung <b class="is-profit ${profit < 0 ? 'is-minus' : ''}">${formatIDR(profit)}</b></span>` : ''}</div>`);
+        if (!known) {
+            const missing = d.dir === 'swap' ? [d.currency, d.currency2].filter(c => !exchangeState.assetRates[c]) : [d.currency];
+            lines.push(`Isi <b>kurs modal ${missing.join(' & ')}</b> di Aset biar untungnya kehitung.`);
+        } else if (d.dir === 'swap') {
+            lines.push(`Nilai di kurs modal: terima ${formatIDR(Math.round(d.qty2 * m.modal2))} − kasih ${formatIDR(Math.round(d.qty * m.modal))}`);
+        } else {
+            lines.push(`Modal ${fxRate(m.modal)} × ${fxQty(d.qty)} ${d.currency} = ${formatIDR(Math.round(d.qty * m.modal))}`);
+        }
     }
     const old = exchangeState.deals.find(x => x.id === dealEditId);
-    const h = exchangeState.holdings.find(x => x.id === d.holdingId);
-    if (h && d.qty) {
-        const back = old && old.holdingId === h.id ? (old.holdDelta || 0) : 0;
-        const now = h.amount + back;
-        const after = Math.round((now + (beli ? d.qty : -d.qty)) * 100) / 100;
-        lines.push(`${escapeHTML(h.label || h.currency)}: ${fxQty(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${fxQty(after)} ${d.currency}</b>`);
-    }
+    const placeLine = (id, amount, currency, sign) => {
+        const h = exchangeState.holdings.find(x => x.id === id);
+        if (!h || !amount) return;
+        let back = 0;
+        if (old && old.holdingId === id) back += old.holdDelta || 0;
+        if (old && old.holdingId2 === id) back -= old.holdDelta2 || 0;
+        const now = Math.round((h.amount + back) * 100) / 100;
+        const after = Math.round((now + sign * amount) * 100) / 100;
+        lines.push(`${escapeHTML(h.label || h.currency)}: ${fxQty(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${fxQty(after)} ${currency}</b>`);
+    };
+    if (d.dir === 'jual') placeLine(d.holdingId, d.qty, d.currency, -1);
+    if (d.dir === 'beli') placeLine(d.holdingId, d.qty, d.currency, 1);
+    if (d.dir === 'swap') { placeLine(d.holdingId, d.qty, d.currency, -1); placeLine(d.holdingId2, d.qty2, d.currency2, 1); }
     if (isBankKey(d.bankKey) && d.idr) {
         const now = (Number(bankBalances[d.bankKey]) || 0) - (old && old.bankKey === d.bankKey ? old.bankDelta : 0);
-        const after = now + (beli ? -d.idr : d.idr);
+        const after = now + (d.dir === 'beli' ? -d.idr : d.idr);
         lines.push(`Saldo ${escapeHTML(bankNameOf(d.bankKey))} ${formatIDR(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${formatIDR(after)}</b>`);
     }
     document.getElementById('fxDealPreview').innerHTML = lines.map(l => `<div>${l}</div>`).join('');
 }
 
-// Undo (sign -1) or apply (+1) a deal's effect on the place and the bank.
+// Undo (sign -1) or apply (+1) a deal's effect on the places and the bank.
+// holdDelta leaves holdingId (negative when it arrives there), holdDelta2 arrives in holdingId2.
 function applyDeal(d, sign) {
     const h = exchangeState.holdings.find(x => x.id === d.holdingId);
     if (h && d.holdDelta) h.amount = Math.round((h.amount - sign * d.holdDelta) * 100) / 100;
+    const h2 = d.holdingId2 ? exchangeState.holdings.find(x => x.id === d.holdingId2) : null;
+    if (h2 && d.holdDelta2) h2.amount = Math.round((h2.amount + sign * d.holdDelta2) * 100) / 100;
     if (d.bankDelta && isBankKey(d.bankKey)) bankBalances[d.bankKey] = (Number(bankBalances[d.bankKey]) || 0) + sign * d.bankDelta;
 }
 
@@ -1650,40 +1806,49 @@ function handleDealSubmit(event) {
     event.preventDefault();
     const input = readDeal();
     const error = document.getElementById('fxDealError');
-    if (input.qty <= 0 || input.idr <= 0) { error.textContent = input.dir === 'beli' ? 'Isi jumlah yang masuk dan rupiah yang ditransfer.' : 'Isi jumlah yang keluar dan rupiah yang masuk.'; return; }
+    const s = dealSides(input);
+    if (!(s.out.amount > 0) || !(s.in.amount > 0)) { error.textContent = 'Isi jumlah yang kamu kasih dan yang kamu terima.'; return; }
     const old = exchangeState.deals.find(x => x.id === dealEditId);
     if (old) {
         applyDeal(old, -1);
         exchangeState.deals = exchangeState.deals.filter(x => x.id !== old.id);
     }
-    rememberExpenseBank(input.bankKey);
+    if (isBankKey(input.bankKey)) rememberExpenseBank(input.bankKey);
+    const isPlace = id => exchangeState.holdings.some(h => h.id === id);
+    const counts = !(bankBalancesUpdatedAt && input.date < bankBalancesUpdatedAt);
+    const m = dealModals(input);
+    const sameAsOld = old && old.dir === input.dir && old.currency === input.currency && (input.dir !== 'swap' || old.currency2 === input.currency2);
     const deal = {
         id: old ? old.id : 'deal-' + crypto.randomUUID(),
         ...input,
         bankKey: isBankKey(input.bankKey) ? input.bankKey : '',
-        // holdDelta leaves the place, bankDelta arrives in the bank; both turn around for "terima".
-        holdDelta: exchangeState.holdings.some(h => h.id === input.holdingId) ? (input.dir === 'beli' ? -input.qty : input.qty) : 0,
+        holdDelta: isPlace(input.holdingId) ? (input.dir === 'beli' ? -input.qty : input.qty) : 0,
+        holdDelta2: input.dir === 'swap' && isPlace(input.holdingId2) ? input.qty2 : 0,
         // Same rule as spendings: a date before the last typed balance is already inside it.
-        bankDelta: isBankKey(input.bankKey) && !(bankBalancesUpdatedAt && input.date < bankBalancesUpdatedAt) ? (input.dir === 'beli' ? -input.idr : input.idr) : 0,
+        bankDelta: isBankKey(input.bankKey) && counts ? (input.dir === 'beli' ? -input.idr : input.idr) : 0,
         by: old ? (old.by || '') : recordedBy(),
         // Keep the kurs modal of the first save, so changing the kurs later leaves old profits.
-        modal: old && old.currency === input.currency && old.modal ? old.modal : (exchangeState.assetRates[input.currency] || 0),
+        modal: sameAsOld && old.modal ? old.modal : m.modal,
+        modal2: sameAsOld && old.modal2 ? old.modal2 : m.modal2,
         createdAt: old ? old.createdAt : Date.now()
     };
     applyDeal(deal, 1);
     exchangeState.deals.push(deal);
-    // The next "kasih" starts from the kurs used this time (kurs beli has its own setting).
-    if (deal.dir !== 'beli') exchangeState.rates[deal.currency].sell = Math.round(deal.idr / deal.qty * 100) / 100;
+    // The next exchange of the same kind starts from this kurs (kurs beli has its own setting).
+    if (deal.dir === 'jual') exchangeState.rates[deal.currency].sell = dealRateOf(deal);
+    if (deal.dir === 'swap') { const p = dealPairOf(deal.currency, deal.currency2); exchangeState.crossRates[`${p.strong}-${p.weak}`] = dealRateOf(deal); }
     reportMonth = deal.date.slice(0, 7);
     document.getElementById('fxDealDialog').close();
     saveExchangeAndSync();
-    showToast(deal.modal ? `TERCATAT · UNTUNG ${formatIDR(dealProfit(deal))}` : 'TERCATAT');
+    const known = deal.dir === 'swap' ? deal.modal && deal.modal2 : deal.modal;
+    showToast(known ? `TERCATAT · UNTUNG ${formatIDR(dealProfit(deal))}` : 'TERCATAT');
 }
 
 function deleteDeal() {
     const d = exchangeState.deals.find(x => x.id === dealEditId);
     if (!d) return;
-    if (!confirm(`Hapus catatan tukar ${d.name ? d.name + ' ' : ''}${fxQty(d.qty)} ${d.currency} (${formatIDR(d.idr)})?\nJumlah di Aset dan saldo bank dikembalikan.`)) return;
+    const s = dealSides(d);
+    if (!confirm(`Hapus catatan tukar ${d.name ? d.name + ': ' : ''}${fxAmount(s.in.amount, s.in.c)} → ${fxAmount(s.out.amount, s.out.c)}?\nJumlah di Aset dan saldo bank dikembalikan.`)) return;
     applyDeal(d, -1);
     exchangeState.deals = exchangeState.deals.filter(x => x.id !== d.id);
     document.getElementById('fxDealDialog').close();
@@ -1897,15 +2062,20 @@ function renderNameList() {
 }
 
 // One tukar line: "kasih" brings rupiah in (+), "terima" sends rupiah out (−).
+// Read the customer's way: what they handed over → what they got, e.g. "Rupiah ke Pound".
 function dealRowHTML(d, withDate = false) {
-    const beli = d.dir === 'beli';
+    const s = dealSides(d);
+    const p = dealPairOf(s.out.c, s.in.c);
+    const name = c => DEAL_CURRENCY_NAMES[c] || c;
+    const known = d.dir === 'swap' ? d.modal && d.modal2 : d.modal;
+    const amount = d.dir === 'swap' ? `${fxQty(d.qty2)} ${d.currency2}` : `${d.dir === 'beli' ? '−' : '+'}${formatIDR(d.idr)}`;
     return `
-        <button type="button" class="log-row fx-row ${beli ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
+        <button type="button" class="log-row fx-row ${d.dir === 'beli' ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
             <span class="log-row-main">
-                <span class="log-row-title">${fxFlag(d.currency)} ${beli ? 'Terima ' : ''}${fxQty(d.qty)} ${d.currency}${d.name ? (beli ? ' dari ' : ' · ') + escapeHTML(d.name) : ''}</span>
-                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
+                <span class="log-row-title">${fxFlag(s.in.c)}→${fxFlag(s.out.c)} ${escapeHTML(name(s.in.c))} ke ${escapeHTML(name(s.out.c))} · ${fxAmount(s.out.amount, s.out.c)}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
+                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)} · ${known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
             </span>
-            <span class="log-row-amount">${beli ? '−' : '+'}${formatIDR(d.idr)}</span>
+            <span class="log-row-amount">${amount}</span>
         </button>`;
 }
 
