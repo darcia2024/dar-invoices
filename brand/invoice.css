@@ -34,8 +34,8 @@ button { font: inherit; cursor: pointer; }
 
 /* Toolbar above the paper */
 .inv-tools { max-width: 760px; margin: 0 auto 14px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
-.inv-tools button { border: 0; border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 600; background: #e8e2d2; color: var(--text); }
-.inv-tools button.primary { background: var(--dark); color: #fffdf3; }
+.inv-tools button { border: 1px solid #bdb3a0; border-radius: 10px; padding: 9px 14px; font-size: 12px; font-weight: 600; background: transparent; color: var(--text); }
+.inv-tools button.primary { border-color: var(--dark); background: var(--dark); color: #fffdf3; }
 
 /* Paper */
 .inv { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 36px 36px 30px; }
@@ -47,12 +47,15 @@ button { font: inherit; cursor: pointer; }
 .inv-title { text-align: right; }
 .inv-title h1 { font-size: 26px; font-weight: 600; letter-spacing: -.5px; line-height: 1.1; }
 .inv-title .no { color: var(--muted); font-size: 12px; margin-top: 6px; }
-.pill { display: inline-block; margin-top: 10px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-.pill.unpaid { background: var(--unpaid-bg); color: var(--unpaid); }
-.pill.paid { background: var(--paid-bg); color: var(--paid); }
+.pill { display: inline-block; margin-top: 10px; padding: 3px 10px; border: 1px solid currentColor; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.pill.unpaid { color: var(--unpaid); }
+.pill.paid { color: var(--paid); }
 
-.inv-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 28px 0 24px; }
-.inv-meta div { background: var(--soft); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+/* Lines only, no filled boxes: a ruled row of columns split by hairlines */
+.inv-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 30px 0 28px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--line); }
+.inv-meta div { padding: 14px 16px; min-width: 0; }
+.inv-meta div:first-child { padding-left: 0; }
+.inv-meta div + div { border-left: 1px solid var(--line); }
 .label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
 .inv-meta strong { display: block; font-weight: 600; overflow-wrap: anywhere; }
 .inv-meta span:not(.label) { display: block; color: var(--muted); font-size: 12px; }
@@ -65,17 +68,20 @@ button { font: inherit; cursor: pointer; }
 .inv-items .desc { color: var(--muted); font-size: 12px; margin-top: 3px; }
 .inv-items .incl { color: var(--muted); font-size: 12px; }
 
-.inv-total { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 16px; padding: 16px 18px; background: var(--dark); color: #fffdf3; border-radius: 14px; }
-.inv-total span { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-.inv-total strong { font-size: 22px; font-weight: 700; }
-.inv-words { text-align: right; color: var(--muted); font-size: 11px; font-style: italic; margin-top: 6px; }
+.inv-items tbody tr:last-child td { border-bottom: 0; }
+.inv-total { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0 14px; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); }
+.inv-total span { font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; }
+.inv-total strong { font-size: 24px; font-weight: 700; letter-spacing: -.5px; }
+.inv-words { text-align: right; color: var(--muted); font-size: 11px; font-style: italic; margin-top: 8px; }
 
-.inv-foot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-.inv-foot > div { border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-width: 0; }
+.inv-foot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 30px; border-top: 1px solid var(--line); }
+.inv-foot > div { padding: 16px 16px 0; min-width: 0; }
+.inv-foot > div:first-child { padding-left: 0; }
+.inv-foot > div + div { border-left: 1px solid var(--line); }
 .inv-foot strong { font-weight: 600; }
 .inv-foot .acc { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.inv-foot .acc button { border: 0; border-radius: 8px; padding: 3px 9px; font-size: 11px; font-weight: 600; background: #e8e2d2; }
-.inv-notes { margin-top: 18px; color: var(--muted); font-size: 12px; }
+.inv-foot .acc button { border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; background: transparent; color: var(--text); }
+.inv-notes { margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
 .inv-notes li { margin-left: 16px; }
 
 .inv-toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: var(--dark); color: #fffdf3; padding: 10px 16px; border-radius: 10px; font-size: 12px; transition: .2s; }
@@ -87,7 +93,10 @@ button { font: inherit; cursor: pointer; }
     .inv-head { flex-direction: column; gap: 18px; }
     .inv-title { text-align: left; }
     .inv-meta, .inv-foot { grid-template-columns: 1fr; }
-    .inv-meta { margin: 20px 0; }
+    .inv-meta { margin: 22px 0; }
+    .inv-meta div, .inv-foot > div { padding-left: 0; padding-right: 0; }
+    .inv-meta div + div, .inv-foot > div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .inv-foot > div { padding-bottom: 14px; }
     .inv-total strong { font-size: 19px; }
 }
 
@@ -96,5 +105,5 @@ button { font: inherit; cursor: pointer; }
     body { background: #fff; padding: 0; }
     .inv-gate, .inv-tools, .inv-toast, .inv-foot .acc button { display: none !important; }
     .inv { max-width: none; border: 0; border-radius: 0; padding: 0; background: #fff; }
-    .inv-meta div, .inv-total, .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
