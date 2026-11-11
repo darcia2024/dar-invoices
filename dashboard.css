@@ -3106,6 +3106,12 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-demo-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #fff4d6; border: 1px solid #ecd28f; color: #5a4a1c; border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; font-size: 12.5px; line-height: 1.45; }
 .fx-demo-banner[hidden] { display: none; }
 .fx-demo-banner > div { flex: 1 1 220px; }
+.fx-hidden-select { position: absolute !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important; }
+.fx-cur-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.fx-cur-chips button { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 12px; border-radius: 10px; border: 1px solid #d8d0bf; background: #fffdf6; color: #4b483f; cursor: pointer; }
+.fx-cur-chips button.active { background: #292b24; border-color: #292b24; color: #fffdf3; }
+.fx-cur-chips button.active .fx-flag { box-shadow: 0 0 0 1px rgba(255, 255, 255, .5); }
+.fx-stats span .fx-flag { vertical-align: -2px; margin-right: 2px; }
 .fx-pane-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #ebe6d9; border-radius: 12px; padding: 4px; margin-bottom: 14px; }
 .fx-pane-tabs button { font: inherit; font-size: 13px; font-weight: 600; border: 0; border-radius: 9px; padding: 9px 10px; background: transparent; color: #5c584c; cursor: pointer; }
 .fx-pane-tabs button.active { background: #fffdf8; color: #24241f; box-shadow: 0 1px 3px rgba(60, 50, 30, .12); }

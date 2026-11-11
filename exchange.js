@@ -120,6 +120,37 @@ function fxAmount(amount, currency) {
     return currency === 'IDR' ? formatIDR(amount) : `${fxQty(amount)} ${currency}`;
 }
 
+// Currency pickers as flag buttons: the <select> stays (hidden) and keeps the logic; the
+// buttons just set it.
+const FX_CHIP_SELECTS = ['fxCurrency', 'fxMoveCurrency', 'fxStockCurrency'];
+
+function renderFxChips() {
+    FX_CHIP_SELECTS.forEach(id => {
+        const select = document.getElementById(id);
+        if (!select) return;
+        let box = select.parentNode.querySelector(`.fx-cur-chips[data-for="${id}"]`);
+        if (!box) {
+            box = document.createElement('div');
+            box.className = 'fx-cur-chips';
+            box.dataset.for = id;
+            select.classList.add('fx-hidden-select');
+            select.after(box);
+        }
+        box.innerHTML = [...select.options].map(o => `
+            <button type="button" class="${o.value === select.value ? 'active' : ''}" aria-pressed="${o.value === select.value}" onclick="pickFxChip('${id}', '${o.value}')">
+                ${fxFlag(o.value, 'fx-flag is-lg')}<span>${o.value}</span>
+            </button>`).join('');
+    });
+}
+
+function pickFxChip(id, value) {
+    const select = document.getElementById(id);
+    if (!select || select.value === value) return;
+    select.value = value;
+    select.dispatchEvent(new Event('change'));
+    renderFxChips();
+}
+
 function fxAllTrades() {
     return Object.values(exchangeState.trades).flat();
 }
@@ -153,6 +184,7 @@ function computeExchange() {
 
 // Small inline flags (emoji flags do not show on Windows).
 const FX_FLAGS = {
+    IDR: '<rect width="30" height="10" fill="#e70011"/><rect y="10" width="30" height="10" fill="#fff"/>',
     EGP: '<rect width="30" height="20" fill="#fff"/><rect width="30" height="6.67" fill="#ce1126"/><rect y="13.33" width="30" height="6.67" fill="#000"/><path d="M15 7.4l1.6 1.2-.4 2.6h-2.4l-.4-2.6z" fill="#c09300"/><rect x="13.6" y="11.3" width="2.8" height=".9" fill="#c09300"/>',
     USD: '<rect width="30" height="20" fill="#fff"/>' + [0, 2, 4, 6, 8, 10, 12].map(i => `<rect y="${(i * 20) / 13}" width="30" height="${20 / 13}" fill="#b22234"/>`).join('') + '<rect width="13" height="10.77" fill="#3c3b6e"/>' + [[2.2, 2], [5.4, 2], [8.6, 2], [11, 2], [3.8, 4.6], [7, 4.6], [10.2, 4.6], [2.2, 7.2], [5.4, 7.2], [8.6, 7.2], [11, 7.2]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".55" fill="#fff"/>`).join(''),
     SAR: '<rect width="30" height="20" fill="#006c35"/><rect x="8" y="12.5" width="14" height="1" fill="#fff"/>',
@@ -580,6 +612,7 @@ function setFxType(type) {
 }
 
 function onFxCurrencyChange() {
+    renderFxChips();
     const c = document.getElementById('fxCurrency').value;
     const rate = exchangeState.rates[c] || {};
     const { stock } = computeExchange();
@@ -664,6 +697,7 @@ function openFxDialog(type, editId = '') {
     document.getElementById('fxDate').value = trade ? trade.date : localDateKey();
     if (trade) {
         document.getElementById('fxCurrency').value = trade.currency;
+        renderFxChips();
         document.getElementById('fxQty').value = trade.qty;
         document.getElementById('fxRate').value = trade.rate;
         document.getElementById('fxIdr').value = trade.idr;
@@ -785,6 +819,7 @@ function openFxStockDialog(currency) {
 }
 
 function fillFxStockForm() {
+    renderFxChips();
     const c = document.getElementById('fxStockCurrency').value;
     const s = computeExchange().stock[c];
     document.getElementById('fxStockQty').value = Math.round(s.qty * 100) / 100;
@@ -829,7 +864,7 @@ function renderDepositUI() {
     const { byPerson, totals } = depositBalances();
     const people = exchangeState.deposits.people;
     document.getElementById('fxDepositCount').textContent = people.length || '';
-    const totalCard = c => `<div><span>${c === 'IDR' ? 'Titipan rupiah' : 'Titipan ' + c}</span><b>${fxAmount(totals[c], c)}</b><small>${people.filter(p => byPerson[p.id][c]).length} orang</small></div>`;
+    const totalCard = c => `<div><span>${fxFlag(c)} ${c === 'IDR' ? 'Titipan rupiah' : 'Titipan ' + c}</span><b>${fxAmount(totals[c], c)}</b><small>${people.filter(p => byPerson[p.id][c]).length} orang</small></div>`;
     document.getElementById('fxDepositTotals').innerHTML = FX_DEPOSIT_CURRENCIES.map(totalCard).join('') +
         `<div><span>Orang</span><b>${people.length}</b><small>${Object.entries(FX_DEPOSIT_KINDS).map(([k, v]) => people.filter(p => p.kind === k).length + ' ' + v.label.toLowerCase()).join(' · ')}</small></div>`;
     const list = document.getElementById('fxDepositList');
@@ -840,7 +875,7 @@ function renderDepositUI() {
     const order = { investor: 0, pekerja: 1, lainnya: 2 };
     list.innerHTML = people.slice().sort((a, b) => order[a.kind] - order[b.kind] || a.name.localeCompare(b.name)).map(p => {
         const bal = byPerson[p.id];
-        const parts = FX_DEPOSIT_CURRENCIES.filter(c => bal[c]).map(c => `<span class="fx-dep-amount">${c === 'IDR' ? '' : fxFlag(c)} ${fxAmount(bal[c], c)}</span>`);
+        const parts = FX_DEPOSIT_CURRENCIES.filter(c => bal[c]).map(c => `<span class="fx-dep-amount">${fxFlag(c)} ${fxAmount(bal[c], c)}</span>`);
         const last = exchangeState.deposits.moves.filter(m => m.personId === p.id).sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt)[0];
         return `
         <button type="button" class="fx-dep-row" onclick="openDepositHistory('${escapeHTML(p.id)}')">
@@ -946,6 +981,7 @@ function setDepositMoveType(type, pickCurrency = false) {
 }
 
 function onDepositMoveChange() {
+    renderFxChips();
     const c = document.getElementById('fxMoveCurrency').value;
     const kirim = fxMoveType === 'kirim';
     document.getElementById('fxMoveRateLabel').hidden = !kirim;
@@ -1098,7 +1134,7 @@ function renderDepositHistory() {
     const parts = FX_DEPOSIT_CURRENCIES.filter(c => bal[c]);
     document.getElementById('fxHistoryBalance').innerHTML = `
         <span>${FX_DEPOSIT_KINDS[p.kind].label}${p.phone ? ' · ' + escapeHTML(p.phone) : ''}${p.note ? ' · ' + escapeHTML(p.note) : ''}</span>
-        <b>${parts.length ? parts.map(c => (c === 'IDR' ? '' : fxFlag(c, 'fx-flag is-lg') + ' ') + fxAmount(bal[c], c)).join('<br>') : 'Saldo 0'}</b>`;
+        <b>${parts.length ? parts.map(c => fxFlag(c, 'fx-flag is-lg') + ' ' + fxAmount(bal[c], c)).join('<br>') : 'Saldo 0'}</b>`;
     const moves = exchangeState.deposits.moves.filter(m => m.personId === p.id).sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
     document.getElementById('fxHistoryList').innerHTML = moves.length ? moves.map(m => `
         <div class="fx-move-row is-${m.type}">
