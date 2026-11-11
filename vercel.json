@@ -340,6 +340,14 @@
       "destination": "/bangbabas/index.html"
     },
     {
+      "source": "/dar/azam",
+      "destination": "/azam/index.html"
+    },
+    {
+      "source": "/dar/bangbabas",
+      "destination": "/bangbabas/index.html"
+    },
+    {
       "source": "/zalvice",
       "destination": "/zalvice/index.html"
     },
