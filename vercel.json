@@ -336,6 +336,10 @@
       "destination": "/azam/index.html"
     },
     {
+      "source": "/bangbabas",
+      "destination": "/bangbabas/index.html"
+    },
+    {
       "source": "/zalvice",
       "destination": "/zalvice/index.html"
     },

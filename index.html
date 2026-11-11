@@ -4428,6 +4428,60 @@ body[data-view="pack"] #packSection {
                     <span>Buka Invoice Kolohaga</span>
                 </a>
             </div>
+
+            <!-- Bang Babas - Website Testimoni Muthowif Card -->
+            <div class="invoice-card" id="card-bangbabas" data-id="bangbabas" data-month="2026-11" data-amount="650000" data-client="bang babas website testimoni muthowif jamaah 650000 650rb #inv/bb/2026/11/001 november 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Bang Babas (Website Testimoni Muthowif)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('bangbabas')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/BB/2026/11/001 &bull; Website Testimoni</span>
+                        <span class="month-tag">November 2026</span>
+                    </div>
+
+                    <div class="project-desc">
+                        Pembuatan website testimoni muthowif. Total: Rp 650.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/bangbabas</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/bangbabas')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptBangBabas()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 650.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValBangbabas">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValBangbabas">Rp 650.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('bangbabas')">Edit profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/bangbabas" class="action-btn">
+                    <span>Buka Invoice Bang Babas</span>
+                </a>
+            </div>
             <!--/dar-only-->
         </div>
 
@@ -4975,7 +5029,8 @@ body[data-view="pack"] #packSection {
             masakbar: "PAID",
             "talkhisan-hamasah": "UNPAID",
             katalis: "DP",
-            azam: "UNPAID"
+            azam: "UNPAID",
+            bangbabas: "UNPAID"
         }/*/dar-only*/;
 
         function getStoredNumber(key, fallback) {
@@ -5030,7 +5085,8 @@ body[data-view="pack"] #packSection {
             masakbar: 150000,
             "talkhisan-hamasah": 1200000,
             katalis: 10000000,
-            azam: 300000
+            azam: 300000,
+            bangbabas: 650000
         }/*/dar-only*/;
 
         // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
@@ -5404,7 +5460,8 @@ body[data-view="pack"] #packSection {
             { id: "masakbar", name: "Mas Akbar (Google AI Pro & Canva Pro)", month: "2026-10", monthLabel: "Oktober 2026", gross: 150000 },
             { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 },
             { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 },
-            { id: "azam", name: "Ziaudin Azzam (Sistem Keuangan KOLOHAGA + AI)", month: "2026-11", monthLabel: "November 2026", gross: 300000 }
+            { id: "azam", name: "Ziaudin Azzam (Sistem Keuangan KOLOHAGA + AI)", month: "2026-11", monthLabel: "November 2026", gross: 300000 },
+            { id: "bangbabas", name: "Bang Babas (Website Testimoni Muthowif)", month: "2026-11", monthLabel: "November 2026", gross: 650000 }
         ]/*/dar-only*/;
 
         function formatIDR(num) {
@@ -10633,6 +10690,30 @@ Terima kasih Mas! 🙏`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA KOLOHAGA BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptBangBabas() {
+            const waScript = `Halo Bang Babas 👋
+
+Berikut invoice untuk pembuatan website testimoni muthowif:
+
+🔗 Link Invoice: https://temantiket.com/bangbabas
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+💰 Total: Rp 650.000 (Enam Ratus Lima Puluh Ribu Rupiah)
+
+💳 Bisa transfer ke salah satu (a.n. Daru Fahmaa Muliawan):
+• Mandiri: 1550010616962
+• Jago: 100598361895
+• GoPay: 081311506025
+
+Terima kasih Bang! 🙏`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA BANG BABAS BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
