@@ -52,11 +52,13 @@ function defaultHoldings() {
 }
 
 function normalizeExchange(value) {
-    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], incomes: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
+    const out = { rates: {}, assetRates: {}, buyRates: {}, holdings: defaultHoldings(), deals: [], incomes: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
     FX_CURRENCIES.forEach(c => {
         const r = value && value.rates && value.rates[c];
         out.rates[c] = { sell: Math.max(0, Number(r && r.sell) || 0), buy: Math.max(0, Number(r && r.buy) || 0) };
         out.assetRates[c] = Math.max(0, Number(value && value.assetRates && value.assetRates[c]) || 0);
+        // Kurs beli set under Update saldo (pound/dollar → rupiah).
+        out.buyRates[c] = Math.max(0, Number(value && value.buyRates && value.buyRates[c]) || 0);
     });
     if (!value || typeof value !== 'object') return out;
     if (Array.isArray(value.holdings)) {
@@ -114,6 +116,7 @@ function normalizeExchange(value) {
         bankKey: String(d.bankKey || '').slice(0, 40),
         bankDelta: Math.round(Number(d.bankDelta) || 0),
         modal: Math.max(0, Number(d.modal) || 0),
+        dir: d.dir === 'beli' ? 'beli' : 'jual',
         by: String(d.by || '').slice(0, 40),
         demo: d.demo === true,
         createdAt: Number(d.createdAt) || Date.now()
@@ -558,6 +561,14 @@ function ensureExchangeUI() {
                 <div class="fx-asset-rates">${FX_CURRENCIES.map(c => `
                     <label class="fx-asset-rate">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b>
                         <input type="number" min="0" step="0.01" inputmode="decimal" data-asset-rate="${c}" placeholder="Rp per 1 ${c}" oninput="onAssetRate(this)">
+                    </label>`).join('')}
+                </div>
+            </div>
+            <div class="fx-quick">
+                <div class="fx-quick-head"><b>Kurs beli</b><span>Rupiah per 1 yang kamu bayar kalau orang nuker pound/dollar ke rupiah. Otomatis dipakai di Catat tukar, tetap bisa diubah per transaksi.</span></div>
+                <div class="fx-asset-rates">${FX_CURRENCIES.map(c => `
+                    <label class="fx-asset-rate">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b>
+                        <input type="number" min="0" step="0.01" inputmode="decimal" data-buy-rate="${c}" placeholder="Rp per 1 ${c}" oninput="onBuyRate(this)">
                     </label>`).join('')}
                 </div>
             </div>
@@ -1138,6 +1149,9 @@ function renderAssetPane() {
         document.querySelectorAll('[data-asset-rate]').forEach(input => {
             input.value = exchangeState.assetRates[input.dataset.assetRate] || '';
         });
+        document.querySelectorAll('[data-buy-rate]').forEach(input => {
+            input.value = exchangeState.buyRates[input.dataset.buyRate] || '';
+        });
         document.getElementById('fxHoldingList').innerHTML = exchangeState.holdings.map(h => `
             <div class="fx-asset-row" data-holding="${escapeHTML(h.id)}">
                 <span class="fx-asset-flag">${fxFlag(h.currency, 'fx-flag is-lg')}</span>
@@ -1366,6 +1380,12 @@ function onAssetRate(input) {
     queueAssetSave();
 }
 
+// Kurs beli: what the owner pays per 1 when someone swaps pounds/dollars into rupiah.
+function onBuyRate(input) {
+    exchangeState.buyRates[input.dataset.buyRate] = Math.max(0, Number(input.value) || 0);
+    queueAssetSave();
+}
+
 function onHoldingInput(id, field, input) {
     const h = exchangeState.holdings.find(x => x.id === id);
     if (!h) return;
@@ -1412,8 +1432,17 @@ function removeHolding(id) {
 // One line per hand-over: who got how many pounds/dollars, from which place, and the rupiah
 // that actually came into which bank. The place goes down, the bank goes up, and the profit is
 // the rupiah minus the amount at the owner's kurs modal of that moment.
+// Kasih (jual): rupiah in minus the pounds at kurs modal. Terima (beli): the pounds received at
+// kurs modal minus the rupiah paid for them.
 function dealProfit(d) {
-    return d.modal ? d.idr - Math.round(d.qty * d.modal) : 0;
+    if (!d.modal) return 0;
+    const atModal = Math.round(d.qty * d.modal);
+    return d.dir === 'beli' ? atModal - d.idr : d.idr - atModal;
+}
+
+// Rupiah in from "kasih" minus rupiah out for "terima".
+function dealRupiahNet(list) {
+    return list.reduce((s, d) => s + (d.dir === 'beli' ? -d.idr : d.idr), 0);
 }
 
 function dealProfitSum(list) {
@@ -1432,13 +1461,18 @@ function ensureDealDialog() {
         <div class="manager-heading"><h2 id="fxDealTitle">Catat tukar</h2><button type="button" aria-label="Tutup" onclick="document.getElementById('fxDealDialog').close()">×</button></div>
         <div class="manager-content">
             <form onsubmit="handleDealSubmit(event)">
+                <div class="fx-dir" role="radiogroup" aria-label="Arah tukar">
+                    <button type="button" role="radio" data-deal-dir="jual" onclick="setDealDir('jual')"><b>Kasih pound/dollar</b><span>terima rupiah</span></button>
+                    <button type="button" role="radio" data-deal-dir="beli" onclick="setDealDir('beli')"><b>Terima pound/dollar</b><span>kirim rupiah</span></button>
+                </div>
                 <div class="draft-fields">
-                    <label class="wide-field">Ke siapa / tempat<input type="text" id="fxDealName" maxlength="80" list="fxNameList" autocomplete="off" placeholder="Pilih atau ketik nama, contoh: Buust"></label>
+                    <label class="wide-field"><span id="fxDealNameLabel">Ke siapa / tempat</span><input type="text" id="fxDealName" maxlength="80" list="fxNameList" autocomplete="off" placeholder="Pilih atau ketik nama, contoh: Buust"></label>
                     <label class="wide-field">Mata uang<select id="fxDealCurrency" onchange="onDealCurrency()">${FX_CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('')}</select></label>
-                    <label>Jumlah keluar<input type="number" id="fxDealQty" min="0.01" step="0.01" inputmode="decimal" required placeholder="Contoh: 40000" oninput="renderDealPreview()"></label>
-                    <label>Diambil dari<select id="fxDealHolding" onchange="renderDealPreview()"></select></label>
-                    <label>Rupiah masuk (sesuai di bank)<input type="text" id="fxDealIdr" inputmode="numeric" required placeholder="Contoh: 13.600.000" oninput="onDealIdr(this)"></label>
-                    <label>Masuk ke bank<select id="fxDealBank" onchange="renderDealPreview()"></select></label>
+                    <label><span id="fxDealQtyLabel">Jumlah keluar</span><input type="number" id="fxDealQty" min="0.01" step="0.01" inputmode="decimal" required placeholder="Contoh: 40000" oninput="onDealQty()"></label>
+                    <label><span id="fxDealHoldingLabel">Diambil dari</span><select id="fxDealHolding" onchange="renderDealPreview()"></select></label>
+                    <label>Kurs (Rp per 1)<input type="number" id="fxDealRate" min="0" step="0.01" inputmode="decimal" placeholder="Contoh: 340" oninput="onDealRate()"></label>
+                    <label><span id="fxDealIdrLabel">Rupiah masuk (sesuai di bank)</span><input type="text" id="fxDealIdr" inputmode="numeric" required placeholder="Contoh: 13.600.000" oninput="onDealIdr(this)"></label>
+                    <label><span id="fxDealBankLabel">Masuk ke bank</span><select id="fxDealBank" onchange="renderDealPreview()"></select></label>
                     <label>Tanggal<input type="date" id="fxDealDate" required></label>
                 </div>
                 <div class="fx-preview" id="fxDealPreview"></div>
@@ -1457,7 +1491,62 @@ function ensureDealDialog() {
 function dealHoldingOptions(currency, selected) {
     const list = exchangeState.holdings.filter(h => h.currency === currency);
     return list.map(h => `<option value="${escapeHTML(h.id)}"${h.id === selected ? ' selected' : ''}>${escapeHTML(h.label || h.currency)} · ${fxQty(h.amount)} ${h.currency}</option>`).join('')
-        + `<option value=""${selected === '' ? ' selected' : ''}>Tidak dari tempat di Aset</option>`;
+        + `<option value=""${selected === '' ? ' selected' : ''}>${dealDir === 'beli' ? 'Tidak ke tempat di Aset' : 'Tidak dari tempat di Aset'}</option>`;
+}
+
+// ---------- Direction and kurs ----------
+// The kurs and the rupiah follow each other: type the kurs and the rupiah is amount × kurs; type
+// the rupiah (e.g. the exact transfer) and the kurs is worked out. Whichever was typed last wins
+// when the amount changes.
+let dealDir = 'jual';
+let dealLastTyped = 'rate';
+
+function dealDefaultRate(currency) {
+    return dealDir === 'beli' ? (exchangeState.buyRates[currency] || 0) : (exchangeState.rates[currency].sell || 0);
+}
+
+function setDealDir(dir, keepNumbers = false) {
+    dealDir = dir === 'beli' ? 'beli' : 'jual';
+    const beli = dealDir === 'beli';
+    document.querySelectorAll('[data-deal-dir]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.dealDir === dealDir)));
+    document.getElementById('fxDealNameLabel').textContent = beli ? 'Dari siapa' : 'Ke siapa / tempat';
+    document.getElementById('fxDealQtyLabel').textContent = beli ? 'Jumlah masuk' : 'Jumlah keluar';
+    document.getElementById('fxDealHoldingLabel').textContent = beli ? 'Masuk ke' : 'Diambil dari';
+    document.getElementById('fxDealIdrLabel').textContent = beli ? 'Rupiah keluar (yang ditransfer)' : 'Rupiah masuk (sesuai di bank)';
+    document.getElementById('fxDealBankLabel').textContent = beli ? 'Dari bank' : 'Masuk ke bank';
+    const holding = document.getElementById('fxDealHolding');
+    const c = document.getElementById('fxDealCurrency').value;
+    holding.innerHTML = dealHoldingOptions(c, holding.value || (exchangeState.holdings.find(h => h.currency === c) || {}).id || '');
+    if (!keepNumbers) {
+        const rate = dealDefaultRate(c);
+        document.getElementById('fxDealRate').value = rate || '';
+        dealLastTyped = 'rate';
+        fillDealIdrFromRate();
+    }
+    renderDealPreview();
+}
+
+function fillDealIdrFromRate() {
+    const qty = Number(document.getElementById('fxDealQty').value) || 0;
+    const rate = Number(document.getElementById('fxDealRate').value) || 0;
+    if (qty && rate) document.getElementById('fxDealIdr').value = Math.round(qty * rate).toLocaleString('id-ID');
+}
+
+function fillDealRateFromIdr() {
+    const qty = Number(document.getElementById('fxDealQty').value) || 0;
+    const idr = Number(document.getElementById('fxDealIdr').value.replace(/[^0-9]/g, '')) || 0;
+    if (qty && idr) document.getElementById('fxDealRate').value = Math.round(idr / qty * 100) / 100;
+}
+
+function onDealQty() {
+    if (dealLastTyped === 'idr') fillDealRateFromIdr(); else fillDealIdrFromRate();
+    renderDealPreview();
+}
+
+function onDealRate() {
+    dealLastTyped = 'rate';
+    fillDealIdrFromRate();
+    renderDealPreview();
 }
 
 function openDealDialog(id = '') {
@@ -1475,7 +1564,15 @@ function openDealDialog(id = '') {
     document.getElementById('fxDealDate').value = d ? d.date : localDateKey();
     renderNameList();
     document.getElementById('fxDealBank').innerHTML = bankOptionsHTML(d ? d.bankKey : (lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || ''));
+    dealDir = d && d.dir === 'beli' ? 'beli' : 'jual';
     document.getElementById('fxDealHolding').innerHTML = dealHoldingOptions(document.getElementById('fxDealCurrency').value, d ? d.holdingId : (exchangeState.holdings.find(h => h.currency === document.getElementById('fxDealCurrency').value) || {}).id || '');
+    if (d) {
+        document.getElementById('fxDealRate').value = d.qty ? Math.round(d.idr / d.qty * 100) / 100 : '';
+        dealLastTyped = 'idr';
+        setDealDir(dealDir, true);
+    } else {
+        setDealDir(dealDir);
+    }
     renderFxChips();
     renderDealPreview();
     document.getElementById('fxDealDialog').showModal();
@@ -1488,12 +1585,18 @@ function openDealDialog(id = '') {
 function onDealCurrency() {
     const c = document.getElementById('fxDealCurrency').value;
     document.getElementById('fxDealHolding').innerHTML = dealHoldingOptions(c, (exchangeState.holdings.find(h => h.currency === c) || {}).id || '');
+    const rate = dealDefaultRate(c);
+    document.getElementById('fxDealRate').value = rate || '';
+    dealLastTyped = 'rate';
+    fillDealIdrFromRate();
     renderDealPreview();
 }
 
 function onDealIdr(input) {
     const value = Math.round(Number(String(input.value).replace(/[^0-9]/g, '')) || 0);
     input.value = value ? value.toLocaleString('id-ID') : '';
+    dealLastTyped = 'idr';
+    fillDealRateFromIdr();
     renderDealPreview();
 }
 
@@ -1505,29 +1608,33 @@ function readDeal() {
         holdingId: document.getElementById('fxDealHolding').value,
         idr: Math.round(Number(document.getElementById('fxDealIdr').value.replace(/[^0-9]/g, '')) || 0),
         bankKey: document.getElementById('fxDealBank').value,
-        date: document.getElementById('fxDealDate').value || localDateKey()
+        date: document.getElementById('fxDealDate').value || localDateKey(),
+        dir: dealDir
     };
 }
 
 function renderDealPreview() {
     const d = readDeal();
+    const beli = d.dir === 'beli';
     const modal = exchangeState.assetRates[d.currency] || 0;
     const lines = [];
     if (d.qty && d.idr) {
-        const profit = modal ? d.idr - Math.round(d.qty * modal) : 0;
-        lines.push(`<div class="fx-must-get"><span>Kurs jadi <b>${fxRate(Math.round(d.idr / d.qty * 100) / 100)}</b></span>${modal ? `<span>untung <b class="is-profit ${profit < 0 ? 'is-minus' : ''}">${formatIDR(profit)}</b></span>` : ''}</div>`);
+        const profit = dealProfit({ ...d, modal });
+        lines.push(`<div class="fx-must-get"><span>Kurs <b>${fxRate(Math.round(d.idr / d.qty * 100) / 100)}</b></span>${modal ? `<span>untung <b class="is-profit ${profit < 0 ? 'is-minus' : ''}">${formatIDR(profit)}</b></span>` : ''}</div>`);
         lines.push(modal ? `Modal ${fxRate(modal)} × ${fxQty(d.qty)} ${d.currency} = ${formatIDR(Math.round(d.qty * modal))}` : `Isi <b>kurs modal ${d.currency}</b> di Aset biar untungnya kehitung.`);
     }
+    const old = exchangeState.deals.find(x => x.id === dealEditId);
     const h = exchangeState.holdings.find(x => x.id === d.holdingId);
     if (h && d.qty) {
-        const back = dealEditId && (exchangeState.deals.find(x => x.id === dealEditId) || {}).holdingId === h.id ? (exchangeState.deals.find(x => x.id === dealEditId).holdDelta || 0) : 0;
+        const back = old && old.holdingId === h.id ? (old.holdDelta || 0) : 0;
         const now = h.amount + back;
-        lines.push(`${escapeHTML(h.label || h.currency)}: ${fxQty(now)} → <b class="${now - d.qty < 0 ? 'is-minus' : ''}">${fxQty(Math.round((now - d.qty) * 100) / 100)} ${d.currency}</b>`);
+        const after = Math.round((now + (beli ? d.qty : -d.qty)) * 100) / 100;
+        lines.push(`${escapeHTML(h.label || h.currency)}: ${fxQty(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${fxQty(after)} ${d.currency}</b>`);
     }
     if (isBankKey(d.bankKey) && d.idr) {
-        const old = exchangeState.deals.find(x => x.id === dealEditId);
         const now = (Number(bankBalances[d.bankKey]) || 0) - (old && old.bankKey === d.bankKey ? old.bankDelta : 0);
-        lines.push(`Saldo ${escapeHTML(bankNameOf(d.bankKey))} ${formatIDR(now)} → <b>${formatIDR(now + d.idr)}</b>`);
+        const after = now + (beli ? -d.idr : d.idr);
+        lines.push(`Saldo ${escapeHTML(bankNameOf(d.bankKey))} ${formatIDR(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${formatIDR(after)}</b>`);
     }
     document.getElementById('fxDealPreview').innerHTML = lines.map(l => `<div>${l}</div>`).join('');
 }
@@ -1543,7 +1650,7 @@ function handleDealSubmit(event) {
     event.preventDefault();
     const input = readDeal();
     const error = document.getElementById('fxDealError');
-    if (input.qty <= 0 || input.idr <= 0) { error.textContent = 'Isi jumlah yang keluar dan rupiah yang masuk.'; return; }
+    if (input.qty <= 0 || input.idr <= 0) { error.textContent = input.dir === 'beli' ? 'Isi jumlah yang masuk dan rupiah yang ditransfer.' : 'Isi jumlah yang keluar dan rupiah yang masuk.'; return; }
     const old = exchangeState.deals.find(x => x.id === dealEditId);
     if (old) {
         applyDeal(old, -1);
@@ -1554,9 +1661,10 @@ function handleDealSubmit(event) {
         id: old ? old.id : 'deal-' + crypto.randomUUID(),
         ...input,
         bankKey: isBankKey(input.bankKey) ? input.bankKey : '',
-        holdDelta: exchangeState.holdings.some(h => h.id === input.holdingId) ? input.qty : 0,
+        // holdDelta leaves the place, bankDelta arrives in the bank; both turn around for "terima".
+        holdDelta: exchangeState.holdings.some(h => h.id === input.holdingId) ? (input.dir === 'beli' ? -input.qty : input.qty) : 0,
         // Same rule as spendings: a date before the last typed balance is already inside it.
-        bankDelta: isBankKey(input.bankKey) && !(bankBalancesUpdatedAt && input.date < bankBalancesUpdatedAt) ? input.idr : 0,
+        bankDelta: isBankKey(input.bankKey) && !(bankBalancesUpdatedAt && input.date < bankBalancesUpdatedAt) ? (input.dir === 'beli' ? -input.idr : input.idr) : 0,
         by: old ? (old.by || '') : recordedBy(),
         // Keep the kurs modal of the first save, so changing the kurs later leaves old profits.
         modal: old && old.currency === input.currency && old.modal ? old.modal : (exchangeState.assetRates[input.currency] || 0),
@@ -1564,6 +1672,8 @@ function handleDealSubmit(event) {
     };
     applyDeal(deal, 1);
     exchangeState.deals.push(deal);
+    // The next "kasih" starts from the kurs used this time (kurs beli has its own setting).
+    if (deal.dir !== 'beli') exchangeState.rates[deal.currency].sell = Math.round(deal.idr / deal.qty * 100) / 100;
     reportMonth = deal.date.slice(0, 7);
     document.getElementById('fxDealDialog').close();
     saveExchangeAndSync();
@@ -1761,7 +1871,7 @@ function renderDailyReport() {
         rows.push(`
             <div class="fx-history-row fx-daily-row" role="row">
                 <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}</span>
-                <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dd.reduce((s, x) => s + x.idr, 0))}` : '<i>-</i>'}</span>
+                <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dealRupiahNet(dd))}` : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pemasukan">${dd.length || ii.length ? formatIDR(profit) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pengeluaran">${ss.length ? formatIDR(spent) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Bersih hari ini"><b class="${profit - spent < 0 ? 'is-minus' : ''}">${formatIDR(profit - spent)}</b></span>
@@ -1786,6 +1896,19 @@ function renderNameList() {
     document.getElementById('fxNameList').innerHTML = [...names].sort((a, b) => a.localeCompare(b)).map(n => `<option value="${escapeHTML(n)}"></option>`).join('');
 }
 
+// One tukar line: "kasih" brings rupiah in (+), "terima" sends rupiah out (−).
+function dealRowHTML(d, withDate = false) {
+    const beli = d.dir === 'beli';
+    return `
+        <button type="button" class="log-row fx-row ${beli ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
+            <span class="log-row-main">
+                <span class="log-row-title">${fxFlag(d.currency)} ${beli ? 'Terima ' : ''}${fxQty(d.qty)} ${d.currency}${d.name ? (beli ? ' dari ' : ' · ') + escapeHTML(d.name) : ''}</span>
+                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
+            </span>
+            <span class="log-row-amount">${beli ? '−' : '+'}${formatIDR(d.idr)}</span>
+        </button>`;
+}
+
 // One person's tukar over all months, newest first, with totals.
 function renderPersonHistory(who) {
     const key = who.toLowerCase();
@@ -1793,16 +1916,9 @@ function renderPersonHistory(who) {
     document.getElementById('fxReportMonth').textContent = `Riwayat "${who}"`;
     document.getElementById('fxReportStats').innerHTML = `
         <div><span>Untung dari orang ini</span><b>${formatIDR(dealProfitSum(deals))}</b><small>${deals.length} kali tukar</small></div>
-        <div><span>Rupiah masuk</span><b>${formatIDR(deals.reduce((s, d) => s + d.idr, 0))}</b><small>${FX_CURRENCIES.map(c => fxQty(deals.filter(d => d.currency === c).reduce((s, d) => s + d.qty, 0)) + ' ' + c).join(' · ')}</small></div>`;
+        <div><span>Rupiah bersih dari tukar</span><b>${formatIDR(dealRupiahNet(deals))}</b><small>${FX_CURRENCIES.map(c => fxQty(deals.filter(d => d.currency === c).reduce((s, d) => s + d.qty, 0)) + ' ' + c).join(' · ')}</small></div>`;
     const list = document.getElementById('fxReportList');
-    list.innerHTML = deals.length ? `<div class="log-day">${deals.map(d => `
-        <button type="button" class="log-row fx-row is-jual" onclick="openDealDialog('${escapeHTML(d.id)}')">
-            <span class="log-row-main">
-                <span class="log-row-title">${fxFlag(d.currency)} ${fxQty(d.qty)} ${d.currency} · ${escapeHTML(d.name)}</span>
-                <span class="log-row-pos">${escapeHTML(formatShortDate(d.date))} · kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
-            </span>
-            <span class="log-row-amount">+${formatIDR(d.idr)}</span>
-        </button>`).join('')}</div>` : `<div class="log-empty">Belum ada catatan tukar untuk "${escapeHTML(who)}".</div>`;
+    list.innerHTML = deals.length ? `<div class="log-day">${deals.map(d => dealRowHTML(d, true)).join('')}</div>` : `<div class="log-empty">Belum ada catatan tukar untuk "${escapeHTML(who)}".</div>`;
 }
 
 function renderReportPane() {
@@ -1826,7 +1942,7 @@ function renderReportPane() {
         <div><span>Pendapatan</span><b>${formatIDR(income)}</b><small>untung tukar ${formatIDR(fromTukar)} · pemasukan lain ${formatIDR(otherIn)}</small></div>
         <div><span>Pengeluaran</span><b>${formatIDR(spent)}</b><small>${spends.length} catatan</small></div>
         <div><span>Bersih</span><b class="${income - spent < 0 ? 'is-minus' : ''}">${formatIDR(income - spent)}</b><small>pendapatan − pengeluaran</small></div>
-        <div><span>Rupiah masuk dari tukar</span><b>${formatIDR(deals.reduce((s, d) => s + d.idr, 0))}</b><small>${FX_CURRENCIES.map(c => fxQty(deals.filter(d => d.currency === c).reduce((s, d) => s + d.qty, 0)) + ' ' + c).join(' · ')}</small></div>`;
+        <div><span>Rupiah dari tukar</span><b>${formatIDR(dealRupiahNet(deals))}</b><small>masuk ${formatIDR(deals.filter(d => d.dir !== 'beli').reduce((s, d) => s + d.idr, 0))} · keluar ${formatIDR(deals.filter(d => d.dir === 'beli').reduce((s, d) => s + d.idr, 0))}</small></div>`;
     const days = {};
     const dayOf = date => (days[date] = days[date] || { deals: [], spends: [], incomes: [] });
     deals.forEach(d => { dayOf(d.date).deals.push(d); });
@@ -1856,14 +1972,7 @@ function renderReportPane() {
                 </span>
                 <span class="log-row-amount">+${formatIDR(x.amount)}</span>
             </button>`).join('')}
-            ${day.deals.sort((a, b) => b.createdAt - a.createdAt).map(d => `
-            <button type="button" class="log-row fx-row is-jual" onclick="openDealDialog('${escapeHTML(d.id)}')">
-                <span class="log-row-main">
-                    <span class="log-row-title">${fxFlag(d.currency)} ${fxQty(d.qty)} ${d.currency}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
-                    <span class="log-row-pos">kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
-                </span>
-                <span class="log-row-amount">+${formatIDR(d.idr)}</span>
-            </button>`).join('')}
+            ${day.deals.sort((a, b) => b.createdAt - a.createdAt).map(d => dealRowHTML(d)).join('')}
             ${day.spends.sort((a, b) => b.createdAt - a.createdAt).map(l => `
             <button type="button" class="log-row fx-row is-beli" onclick="openReportExpenseEdit('${escapeHTML(l.id)}')">
                 <span class="log-row-main">
@@ -2202,11 +2311,12 @@ function exchangeAssistantContext() {
             hutang_rupiah: t.hutang,
             rupiah_di_bank: Object.fromEntries(BANK_ACCOUNTS.map(acc => [acc.name, Number(bankBalances[acc.key]) || 0])),
             kurs_pemilik_rp_per_1: exchangeState.assetRates,
+            kurs_beli_rp_per_1: exchangeState.buyRates,
             valas: exchangeState.holdings.filter(h => h.amount).map(h => ({ tempat: h.label, mata_uang: h.currency, jumlah: h.amount, dalam_rupiah: assetIdr(h.amount, h.currency) })),
             kurs_belum_diisi: t.missingRate
         },
         tukar_terakhir: exchangeState.deals.slice().sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt).slice(0, 30)
-            .map(d => ({ tanggal: d.date, ke: d.name || null, mata_uang: d.currency, jumlah: d.qty, rupiah_masuk: d.idr, untung: dealProfit(d) })),
+            .map(d => ({ tanggal: d.date, arah: d.dir === 'beli' ? 'terima valas, kirim rupiah' : 'kasih valas, terima rupiah', orang: d.name || null, mata_uang: d.currency, jumlah: d.qty, rupiah: d.idr, kurs: Math.round(d.idr / d.qty * 100) / 100, untung: dealProfit(d) })),
         untung_tukar_bulan_ini: dealProfitSum(exchangeState.deals.filter(d => d.date.slice(0, 7) === currentMonthKey())),
         titipan_orang: (() => {
             const { byPerson, totals } = depositBalances();
