@@ -18,10 +18,9 @@ const WORKSPACES = {
   julian: { name: "Julian", owner: "Julian", mascot: true },
   // Akun Lifetime (2026-11-10). PIN: Vercel env WORKSPACE_PIN_ZIAUD.
   // kind: "exchange" adds the "Tukar" screen (exchange.js) for a money changer.
-  // open: true -> no PIN yet: anyone with the link can open and edit this account's data.
-  // Remove it (and set WORKSPACE_PIN_ZIAUD) to require a PIN again.
+  // (open: true would skip the PIN: anyone with the link could open and edit the data.)
   // banks: which rupiah accounts show under saldo (keys from ALL_BANK_ACCOUNTS in index.html).
-  ziaud: { name: "Ziaud", owner: "Ziaud", open: true, kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
+  ziaud: { name: "Ziaud", owner: "Ziaud", kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank"], business: "a currency exchange business: changing Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for customers" },
 };
 
 function todayJakarta() {
