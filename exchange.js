@@ -109,6 +109,7 @@ function normalizeExchange(value) {
         bankDelta: Math.round(Number(d.bankDelta) || 0),
         modal: Math.max(0, Number(d.modal) || 0),
         by: String(d.by || '').slice(0, 40),
+        demo: d.demo === true,
         createdAt: Number(d.createdAt) || Date.now()
     }));
     return out;
@@ -413,7 +414,7 @@ function ensureExchangeUI() {
     section.id = 'exchangeSection';
     section.innerHTML = `
         <div class="fx-demo-banner" id="fxDemoBanner" hidden>
-            <div><b>Ada data contoh.</b> Orang-orang di Titipan cuma ilustrasi biar kebayang cara pakainya.</div>
+            <div><b>Ini data contoh.</b> Saldo, catat tukar, titipan, talangan, pengeluaran, dan laporan bulanan di sini cuma gambaran cara pakainya. Kalau mau mulai pakai beneran, klik Hapus data contoh.</div>
             <button type="button" class="month-pill-btn" onclick="clearFxDemo()">Hapus data contoh</button>
         </div>
         <div class="fx-pane-tabs" role="tablist" aria-label="Bagian aset">
@@ -701,13 +702,15 @@ function shiftFxMonth(delta) {
 }
 
 function fxHasDemo() {
-    return exchangeState.demo || fxAllTrades().some(t => t.demo) || exchangeState.deposits.people.some(p => p.demo);
+    return exchangeState.demo || fxAllTrades().some(t => t.demo) || exchangeState.deposits.people.some(p => p.demo)
+        || exchangeState.deals.some(d => d.demo) || debts.some(d => d.demo);
 }
 
-// Remove the sample data from api/_seeds.js: sample trades, sample kurs and the sample SeaBank
-// balance. Trades the owner added stay.
+// Remove the sample data from api/_seeds.js (everything marked demo: tukar, titipan, talangan,
+// spending, plans; and while the account is still the sample one, its saldo, kurs, valas and
+// monthly report). What the owner entered himself stays.
 function clearFxDemo() {
-    if (!confirm('Hapus semua data contoh (transaksi, titipan, kurs, stok, dan saldo SeaBank contoh)? Yang kamu catat sendiri tetap ada.')) return;
+    if (!confirm('Hapus semua data contoh? Saldo bank, pound & dollar, kurs, laporan bulanan, catat tukar, titipan, talangan, dan pengeluaran contoh dihapus. Yang kamu catat sendiri tetap ada.')) return;
     const demoPeople = new Set(exchangeState.deposits.people.filter(p => p.demo).map(p => p.id));
     exchangeState.deposits.moves.filter(m => m.demo || demoPeople.has(m.personId)).forEach(m => removeDepositMove(m, false));
     exchangeState.deposits.people = exchangeState.deposits.people.filter(p => !demoPeople.has(p.id));
@@ -715,12 +718,26 @@ function clearFxDemo() {
         exchangeState.trades[month] = exchangeState.trades[month].filter(t => !t.demo);
         if (!exchangeState.trades[month].length) delete exchangeState.trades[month];
     });
+    exchangeState.deals = exchangeState.deals.filter(d => !d.demo);
+    debts = debts.filter(d => !d.demo);
+    Object.keys(expenseLogs).forEach(month => {
+        expenseLogs[month] = expenseLogs[month].filter(l => !l.demo);
+        if (!expenseLogs[month].length) delete expenseLogs[month];
+    });
+    Object.keys(expensePlans).forEach(month => {
+        expensePlans[month] = (expensePlans[month] || []).filter(p => !p.demo);
+    });
     if (exchangeState.demo) {
-        FX_CURRENCIES.forEach(c => { exchangeState.rates[c] = { sell: 0, buy: 0 }; });
-        bankBalances.seabank = 0;
+        FX_CURRENCIES.forEach(c => { exchangeState.rates[c] = { sell: 0, buy: 0 }; exchangeState.assetRates[c] = 0; });
+        exchangeState.holdings.forEach(h => { h.amount = 0; });
+        exchangeState.assetHistory = {};
+        BANK_ACCOUNTS.forEach(acc => { bankBalances[acc.key] = 0; });
         bankBalancesUpdatedAt = '';
     }
     exchangeState.demo = false;
+    saveLocalBillingState();
+    renderDebtUI();
+    if (document.body.dataset.view === 'plan') renderPlanUI();
     saveExchangeAndSync();
     showToast('DATA CONTOH DIHAPUS · SIAP DIPAKAI');
 }

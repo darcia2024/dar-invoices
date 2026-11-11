@@ -1,5 +1,5 @@
 const { hasValidSession, redisCommand, requestWorkspace } = require("./_session");
-const { applySeed } = require("./_seeds");
+const { applySeed, pendingBackups } = require("./_seeds");
 
 const STATE_KEY = "dar-invoices:billing-state";
 
@@ -252,8 +252,13 @@ module.exports = async function handler(req, res) {
       }
       // One-time changes per account (api/_seeds.js), e.g. removing Ziaud's sample data.
       if (ws) {
+        const backups = pendingBackups(ws, parsed || {});
         const seeded = applySeed(ws, parsed || {});
         if (seeded) {
+          // A seed that replaces the data keeps a copy of what was there under its own key.
+          for (const id of backups) {
+            if (saved) await redisCommand(["SET", `${key}:backup:${id}`, saved]);
+          }
           const merged = mergeState(seeded, ws);
           await redisCommand(["SET", key, JSON.stringify(merged)]);
           return res.status(200).json(merged);

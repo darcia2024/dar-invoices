@@ -7038,6 +7038,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 recurring: raw.recurring !== false,
                 due: typeof raw.due === 'string' ? raw.due : '',
                 notes: String(raw.notes || '').slice(0, 240),
+                ...(raw.demo === true ? { demo: true } : {}), // sample data ("Hapus data contoh")
                 createdAt: Number(raw.createdAt) || Date.now(),
                 updatedAt: Number(raw.updatedAt) || Number(raw.createdAt) || Date.now()
             };
@@ -7444,6 +7445,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     bankKey: typeof l.bankKey === 'string' ? l.bankKey.slice(0, 40) : '',
                     bankCut: Math.max(0, Math.round(Number(l.bankCut)) || 0),
                     by: String(l.by || '').slice(0, 40),
+                    ...(l.demo === true ? { demo: true } : {}),
                     createdAt: Number(l.createdAt) || Date.now()
                 }));
             });
