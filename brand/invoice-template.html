@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--
+  DAR invoice template. Copy to <slug>/index.html, replace every value marked here,
+  then add "/<slug>" to vercel.json and a card + invoiceItems entry in index.html.
+  Look and PIN/copy behaviour come from /brand/invoice.css and /brand/invoice.js.
+  Status pill: class "pill unpaid" (Belum dibayar) or "pill paid" (Lunas).
+  An included item: <td class="incl">Termasuk</td> instead of a price.
+--><html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #INV/XX/2026/MM/001 · Nama Proyek</title>
+    <link rel="icon" href="/brand/favicon-64.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/brand/invoice.css">
+</head>
+<body data-account="1550010616962">
+
+    <div class="inv-gate" id="invGate">
+        <div class="inv-gate-card">
+            <img src="/brand/dar-mascot-128.png" alt="" width="56" height="56">
+            <h1>Invoice untuk Nama Klien</h1>
+            <p>Masukkan PIN untuk membuka</p>
+            <input id="invPin" type="text" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="••••" aria-label="PIN">
+            <div class="err" id="invPinErr"></div>
+            <button type="button" id="invPinBtn">Buka invoice</button>
+        </div>
+    </div>
+
+    <div class="inv-tools">
+        <button type="button" onclick="copyAccount()">Salin rekening</button>
+        <button type="button" class="primary" onclick="printInvoice()">Simpan PDF / Cetak</button>
+    </div>
+
+    <main class="inv">
+        <header class="inv-head">
+            <div class="inv-brand">
+                <img src="/brand/dar-mascot-128.png" alt="" width="44" height="44">
+                <div><b>DAR</b><small>Invoices</small></div>
+            </div>
+            <div class="inv-title">
+                <h1>Invoice</h1>
+                <div class="no">#INV/XX/2026/MM/001</div>
+                <span class="pill unpaid">Belum dibayar</span>
+            </div>
+        </header>
+
+        <section class="inv-meta">
+            <div>
+                <span class="label">Untuk</span>
+                <strong>Nama Klien</strong>
+                <span>Nama usaha</span>
+            </div>
+            <div>
+                <span class="label">Tanggal</span>
+                <strong>1 Januari 2026</strong>
+            </div>
+            <div>
+                <span class="label">Proyek</span>
+                <strong>Nama proyek</strong>
+                <span>keterangan singkat</span>
+            </div>
+        </section>
+
+        <table class="inv-items">
+            <thead>
+                <tr><th>Item</th><th>Harga</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="item">Nama item</div>
+                        <div class="desc">Penjelasan singkat</div>
+                    </td>
+                    <td class="num">Rp 0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="inv-total">
+            <span>Total</span>
+            <strong class="num">Rp 0</strong>
+        </div>
+        <div class="inv-words">nol rupiah</div>
+
+        <section class="inv-foot">
+            <div>
+                <span class="label">Bayar ke</span>
+                <strong>Bank Mandiri</strong><br>
+                <div class="acc"><span class="num">1550010616962</span><button type="button" onclick="copyAccount()">Salin</button></div>
+                a.n. Daru Fahmaa Muliawan
+            </div>
+            <div>
+                <span class="label">Dari</span>
+                <strong>Daru Fahmaa Muliawan</strong><br>
+                Web Developer &amp; Desainer Grafis<br>
+                WA 081311506025
+            </div>
+        </section>
+
+        <ul class="inv-notes">
+            <li>Catatan atau ketentuan.</li>
+        </ul>
+    </main>
+
+    <script src="/brand/invoice.js"></script>
+</body>
+</html>

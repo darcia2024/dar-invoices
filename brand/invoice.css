@@ -1,0 +1,100 @@
+/* Shared invoice look, same palette and type as the dashboard (dashboard.css).
+   A page using it: brand/invoice-template.html. */
+:root {
+    --bg: #f1eddf;
+    --card: #fffdf5;
+    --soft: #f6f2e6;
+    --line: #e2dccb;
+    --text: #252520;
+    --muted: #6b675b;
+    --dark: #30352b;
+    --paid: #305d46;
+    --paid-bg: #e2ecdc;
+    --unpaid: #814637;
+    --unpaid-bg: #f9ded1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--text); font: 14px/1.6 'Sora', system-ui, sans-serif; padding: 28px 16px 56px; }
+button { font: inherit; cursor: pointer; }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* PIN gate */
+.inv-gate { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: grid; place-items: center; padding: 16px; }
+.inv-gate.open { display: none; }
+.inv-gate-card { width: min(360px, 100%); background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; text-align: center; }
+.inv-gate-card img { width: 56px; height: 56px; display: block; margin: 0 auto 14px; }
+.inv-gate-card h1 { font-size: 18px; font-weight: 600; }
+.inv-gate-card p { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.inv-gate-card input { width: 100%; margin-top: 18px; padding: 12px; border: 1px solid #bdb3a0; border-radius: 10px; background: #fff; font: 600 20px/1 'Sora', sans-serif; letter-spacing: 8px; text-align: center; }
+.inv-gate-card .err { color: var(--unpaid); font-size: 12px; margin-top: 8px; min-height: 18px; }
+.inv-gate-card button { width: 100%; margin-top: 6px; padding: 12px; border: 0; border-radius: 10px; background: var(--dark); color: #fffdf3; font-weight: 600; }
+.shake { animation: shake .35s; }
+@keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* Toolbar above the paper */
+.inv-tools { max-width: 760px; margin: 0 auto 14px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.inv-tools button { border: 0; border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 600; background: #e8e2d2; color: var(--text); }
+.inv-tools button.primary { background: var(--dark); color: #fffdf3; }
+
+/* Paper */
+.inv { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 36px 36px 30px; }
+.inv-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.inv-brand { display: flex; align-items: center; gap: 10px; }
+.inv-brand img { width: 44px; height: 44px; display: block; }
+.inv-brand b { display: block; font-size: 22px; font-weight: 700; letter-spacing: -.5px; line-height: 1; }
+.inv-brand small { display: block; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.inv-title { text-align: right; }
+.inv-title h1 { font-size: 26px; font-weight: 600; letter-spacing: -.5px; line-height: 1.1; }
+.inv-title .no { color: var(--muted); font-size: 12px; margin-top: 6px; }
+.pill { display: inline-block; margin-top: 10px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.pill.unpaid { background: var(--unpaid-bg); color: var(--unpaid); }
+.pill.paid { background: var(--paid-bg); color: var(--paid); }
+
+.inv-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 28px 0 24px; }
+.inv-meta div { background: var(--soft); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+.label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.inv-meta strong { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.inv-meta span:not(.label) { display: block; color: var(--muted); font-size: 12px; }
+
+.inv-items { width: 100%; border-collapse: collapse; }
+.inv-items th { text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; border-bottom: 1px solid var(--line); }
+.inv-items th:last-child, .inv-items td:last-child { text-align: right; padding-left: 16px; }
+.inv-items td { padding: 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.inv-items .item { font-weight: 600; }
+.inv-items .desc { color: var(--muted); font-size: 12px; margin-top: 3px; }
+.inv-items .incl { color: var(--muted); font-size: 12px; }
+
+.inv-total { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 16px; padding: 16px 18px; background: var(--dark); color: #fffdf3; border-radius: 14px; }
+.inv-total span { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.inv-total strong { font-size: 22px; font-weight: 700; }
+.inv-words { text-align: right; color: var(--muted); font-size: 11px; font-style: italic; margin-top: 6px; }
+
+.inv-foot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.inv-foot > div { border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-width: 0; }
+.inv-foot strong { font-weight: 600; }
+.inv-foot .acc { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.inv-foot .acc button { border: 0; border-radius: 8px; padding: 3px 9px; font-size: 11px; font-weight: 600; background: #e8e2d2; }
+.inv-notes { margin-top: 18px; color: var(--muted); font-size: 12px; }
+.inv-notes li { margin-left: 16px; }
+
+.inv-toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: var(--dark); color: #fffdf3; padding: 10px 16px; border-radius: 10px; font-size: 12px; transition: .2s; }
+.inv-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 600px) {
+    body { padding: 16px 12px 40px; }
+    .inv { padding: 22px 18px; border-radius: 16px; }
+    .inv-head { flex-direction: column; gap: 18px; }
+    .inv-title { text-align: left; }
+    .inv-meta, .inv-foot { grid-template-columns: 1fr; }
+    .inv-meta { margin: 20px 0; }
+    .inv-total strong { font-size: 19px; }
+}
+
+@page { size: A4; margin: 14mm; }
+@media print {
+    body { background: #fff; padding: 0; }
+    .inv-gate, .inv-tools, .inv-toast, .inv-foot .acc button { display: none !important; }
+    .inv { max-width: none; border: 0; border-radius: 0; padding: 0; background: #fff; }
+    .inv-meta div, .inv-total, .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
