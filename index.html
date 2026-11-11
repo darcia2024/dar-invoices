@@ -6400,23 +6400,37 @@ body[data-view="pack"] #packSection {
                 banner.hidden = true;
                 return;
             }
-            const whenText = days => days < 0 ? `lewat ${-days} hari` : days === 0 ? 'hari ini' : 'besok';
+            // One row per record: a coloured status (late / today / tomorrow), who, and how much.
+            const status = days => days < 0
+                ? { cls: 'is-late', text: `Lewat ${-days} hari` }
+                : days === 0 ? { cls: 'is-today', text: 'Hari ini' } : { cls: 'is-soon', text: 'Besok' };
             const rows = due.slice(0, 4).map(({ d, days }) => {
                 const left = Math.max(0, d.amount - (d.paid || 0));
-                const who = d.type === 'piutang' ? `${escapeInvoiceText(d.name)} bayar ke kamu` : `Kamu bayar ke ${escapeInvoiceText(d.name)}`;
-                return `<li class="${days <= 0 ? 'is-urgent' : ''}"><b>${who} ${debtMoney(left, d)}</b> <span>· ${whenText(days)}</span></li>`;
+                const s = status(days);
+                const what = d.type === 'piutang' ? 'Tagih' : 'Bayar ke';
+                return `
+                    <li><button type="button" class="debt-due-row" onclick="openDueDebts()">
+                        <span class="debt-due-pill ${s.cls}">${s.text}</span>
+                        <span class="debt-due-name"><small>${what}</small>${escapeInvoiceText(d.name)}</span>
+                        <b class="debt-due-amount">${debtMoney(left, d)}</b>
+                    </button></li>`;
             }).join('');
+            const dueNow = due.filter(x => x.days <= 0).length;
+            const summary = dueNow
+                ? `${dueNow} perlu ditagih sekarang${due.length > dueNow ? ` · ${due.length - dueNow} besok` : ''}`
+                : `${due.length} jatuh tempo besok`;
             banner.innerHTML = `
-                <div class="debt-due-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></div>
-                <div class="debt-due-body">
-                    <div class="debt-due-title">Pengingat jatuh tempo</div>
-                    <ul>${rows}</ul>
-                    ${due.length > 4 ? `<div class="debt-due-more">+${due.length - 4} lagi</div>` : ''}
+                <div class="debt-due-head">
+                    <div class="debt-due-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></div>
+                    <div class="debt-due-heading">
+                        <div class="debt-due-title">Pengingat jatuh tempo</div>
+                        <div class="debt-due-summary">${summary}</div>
+                    </div>
+                    <button type="button" class="create-invoice-btn debt-due-open" onclick="openDueDebts()">Lihat semua</button>
+                    <button type="button" class="debt-due-close" aria-label="Tutup pengingat untuk hari ini" title="Tutup untuk hari ini" onclick="hideDebtDueBanner('${signature}')">×</button>
                 </div>
-                <div class="debt-due-actions">
-                    <button type="button" class="create-invoice-btn" onclick="openDueDebts()">Lihat</button>
-                    <button type="button" class="month-pill-btn" onclick="hideDebtDueBanner('${signature}')">Tutup</button>
-                </div>`;
+                <ul class="debt-due-list">${rows}</ul>
+                ${due.length > 4 ? `<button type="button" class="debt-due-more" onclick="openDueDebts()">+${due.length - 4} lagi</button>` : ''}`;
             banner.hidden = false;
         }
 
