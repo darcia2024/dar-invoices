@@ -2698,11 +2698,11 @@ body[data-view="pack"] .filter-section { display: none !important; }
 .pack-summary-counts .pack-count-done b { color: #1f5f33; }
 
 /* Sidebar brand lockup: mascot badge + stacked wordmark */
-.workspace-sidebar .workspace-brand { display: flex; align-items: center; gap: 12px; padding: 4px 12px 0; margin-bottom: 34px; text-decoration: none; color: #24241f; letter-spacing: 0; font-size: inherit; }
+.workspace-sidebar .workspace-brand { display: flex; align-items: center; gap: 10px; padding: 4px 4px 0; margin-bottom: 34px; text-decoration: none; color: #24241f; letter-spacing: 0; font-size: inherit; }
 .workspace-sidebar .workspace-brand .brand-mark { flex-shrink: 0; display: block; font-size: 0; line-height: 0; background: none; }
 .workspace-sidebar .workspace-brand .brand-mascot { width: 46px; height: 46px; display: block; margin: 0; }
-.workspace-sidebar .workspace-brand .brand-text { display: flex !important; flex-direction: column; align-items: flex-start; gap: 3px; font-size: inherit; line-height: 1; color: inherit; }
-.workspace-sidebar .workspace-brand .brand-text b { font-size: 24px; font-weight: 700; letter-spacing: -1px; line-height: .95; }
+.workspace-sidebar .workspace-brand .brand-text { display: flex !important; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; font-size: inherit; line-height: 1; color: inherit; }
+.workspace-sidebar .workspace-brand .brand-text b { font-size: 22px; font-weight: 700; letter-spacing: -1px; line-height: .95; }
 .workspace-sidebar .workspace-brand .brand-text small { font-size: 10px; font-weight: 600; letter-spacing: 2.2px; text-transform: uppercase; color: #7a7567; line-height: 1; }
 @media (max-width: 850px) {
     .workspace-sidebar .workspace-brand { padding: 0; margin: 0; gap: 9px; }

@@ -198,11 +198,63 @@ function withSampleV2(state) {
   return { appliedMigrations: state.appliedMigrations || [], bankAccountDetails: state.bankAccountDetails || null, ...sampleV2() };
 }
 
+// Removes sample v2 the way the "Hapus data contoh" button does: every record marked demo, and
+// while the account still shows the sample, its balances, kurs, holdings and asset reports.
+// Entries recorded by hand stay.
+function withoutSampleV2(state) {
+  const list = (v) => (Array.isArray(v) ? v : []);
+  const obj = (v) => (v && typeof v === "object" ? v : {});
+  const byMonth = (map, keepEmpty) => {
+    const out = {};
+    Object.entries(obj(map)).forEach(([month, items]) => {
+      const kept = list(items).filter((x) => x && !x.demo);
+      if (kept.length || keepEmpty) out[month] = kept;
+    });
+    return out;
+  };
+  const exchange = obj(state.exchange);
+  const wasDemo = exchange.demo === true;
+  const deposits = obj(exchange.deposits);
+  const demoPeople = new Set(list(deposits.people).filter((p) => p && p.demo).map((p) => p.id));
+  const next = {
+    ...exchange,
+    demo: false,
+    trades: byMonth(exchange.trades),
+    deals: list(exchange.deals).filter((d) => d && !d.demo),
+    deposits: {
+      ...deposits,
+      people: list(deposits.people).filter((p) => p && !demoPeople.has(p.id)),
+      moves: list(deposits.moves).filter((m) => m && !m.demo && !demoPeople.has(m.personId)),
+    },
+  };
+  if (wasDemo) {
+    const zeroRates = {};
+    const zeroAsset = {};
+    Object.keys({ ...obj(exchange.rates), ...obj(exchange.assetRates) }).forEach((c) => { zeroRates[c] = { sell: 0, buy: 0 }; zeroAsset[c] = 0; });
+    next.rates = zeroRates;
+    next.assetRates = zeroAsset;
+    next.holdings = list(exchange.holdings).map((h) => ({ ...h, amount: 0 }));
+    next.assetHistory = {};
+    next.assetDaily = {};
+  }
+  const balances = obj(state.bankBalances);
+  return {
+    ...state,
+    exchange: next,
+    debts: list(state.debts).filter((d) => d && !d.demo),
+    expenseLogs: byMonth(state.expenseLogs),
+    expensePlans: byMonth(state.expensePlans, true),
+    ...(wasDemo ? { bankBalances: Object.fromEntries(Object.keys(balances).map((k) => [k, 0])), bankBalancesUpdatedAt: "" } : {}),
+  };
+}
+
 const SEEDS = {
   ziaud: [
     { id: "ziaud-bersih-v1", apply: withoutDemo },
     { id: "ziaud-contoh-v2", apply: withSampleV2, backup: true },
     { id: "ziaud-contoh-v2-harian", apply: withDailySample },
+    // 2026-11-11: Ziaud starts entering his own data; the sample goes (kept as a backup).
+    { id: "ziaud-bersih-v2", apply: withoutSampleV2, backup: true },
   ],
 };
 
@@ -230,4 +282,4 @@ function applySeed(ws, state) {
   return changed ? current : null;
 }
 
-module.exports = { applySeed, pendingBackups, withoutDemo, sampleV2 };
+module.exports = { applySeed, pendingBackups, withoutDemo, withoutSampleV2, sampleV2 };
