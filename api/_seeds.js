@@ -36,10 +36,46 @@ function withoutDemo(state) {
   };
 }
 
-const SEEDS = {
-  ziaud: [{ id: "ziaud-bersih-v1", apply: withoutDemo }],
-};
+// "Uang orang" from Ziaud's notebook (page dated 9/10), confirmed by Daru on 2026-11-11. The
+// list holds other people's names and money, and this repo is public, so it lives in the
+// Vercel env var ZIAUD_TITIPAN_BUKU, as JSON: [["Name", "IDR" | "EGP" | "USD", amount, "note"]].
+// Pound amounts stay in pounds (the rupiah written next to them goes in the note). No bank is
+// moved: this money is already inside his balances. Until the env var is set the seed waits.
+function notebookTitipan() {
+  try {
+    const list = JSON.parse(process.env.ZIAUD_TITIPAN_BUKU || "null");
+    if (!Array.isArray(list)) return null;
+    return list.filter((row) => Array.isArray(row) && String(row[0] || "").trim() && ["IDR", "EGP", "USD"].includes(row[1]) && Number(row[2]) > 0)
+      .map(([name, currency, amount, note]) => [String(name).trim().slice(0, 80), currency, Number(amount), String(note || "").slice(0, 100)]);
+  } catch (e) {
+    return null;
+  }
+}
 
+function withNotebookTitipan(state) {
+  const list = notebookTitipan() || [];
+  const exchange = state.exchange && typeof state.exchange === "object" ? state.exchange : {};
+  const deposits = exchange.deposits && typeof exchange.deposits === "object" ? exchange.deposits : {};
+  const people = Array.isArray(deposits.people) ? deposits.people.slice() : [];
+  const moves = Array.isArray(deposits.moves) ? deposits.moves.slice() : [];
+  const taken = new Set(people.map((p) => String(p.name || "").toLowerCase()));
+  list.forEach(([name, currency, amount, note], i) => {
+    if (taken.has(name.toLowerCase())) return; // already entered by hand
+    const id = `dep-buku-${i + 1}`;
+    const createdAt = Date.UTC(2026, 9, 9) + i * 60000;
+    people.push({ id, name, kind: "lainnya", phone: "", note: "", createdAt });
+    moves.push({ id: `${id}-m`, personId: id, type: "setor", currency, amount, rate: 0, idr: 0, date: "2026-10-09", bankKey: "", bankDelta: 0, tradeId: "", note: note ? `Dari catatan buku 9/10 · ${note}` : "Dari catatan buku 9/10", createdAt });
+  });
+  return { ...state, exchange: { ...exchange, deposits: { people, moves } } };
+}
+
+const SEEDS = {
+  ziaud: [
+    { id: "ziaud-bersih-v1", apply: withoutDemo },
+    // ready: not marked as applied (so it runs later) while the env var is missing.
+    { id: "ziaud-titipan-buku-v1", apply: withNotebookTitipan, ready: () => Boolean(notebookTitipan()) },
+  ],
+};
 // Applies every seed of the account not applied yet; returns the new state, or null when
 // nothing changed.
 function applySeed(ws, state) {
@@ -50,6 +86,7 @@ function applySeed(ws, state) {
   seeds.forEach((seed) => {
     const applied = Array.isArray(current.appliedMigrations) ? current.appliedMigrations : [];
     if (applied.includes(seed.id)) return;
+    if (seed.ready && !seed.ready()) return;
     const next = seed.apply(current);
     current = { ...(next || current), appliedMigrations: [...applied, seed.id] };
     changed = true;
