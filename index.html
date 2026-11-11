@@ -4904,6 +4904,15 @@ body[data-view="pack"] #packSection {
     <!-- Toast Component -->
     <div id="toast" class="toast">LINK BERHASIL DISALIN!</div>
 
+    <script>
+        // Lock the page behind an open pop-up (dashboard.css does it with :has(); this covers
+        // browsers without it). Watches every <dialog> opening or closing, including ones added later.
+        (function () {
+            function sync() { document.documentElement.classList.toggle('dialog-lock', !!document.querySelector('dialog[open]')); }
+            new MutationObserver(sync).observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['open'], childList: true });
+            document.addEventListener('close', sync, true);
+        })();
+    </script>
     <script src="/invoice-manager.js"></script>
     <script>
         let activeMonthFilter = "all";
