@@ -3078,6 +3078,8 @@ body[data-view="tukar"] #debtSection,
 body[data-view="tukar"] #planSection,
 body[data-view="tukar"] #packSection { display: none !important; }
 .fx-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.fx-toolbar .fx-in-btn { color: #305d46; }
+.fx-toolbar .fx-out-btn { color: #814637; }
 .fx-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 14px; }
 .fx-card { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 16px 18px; }
 .fx-card-head { display: flex; align-items: baseline; gap: 8px; }
@@ -3178,7 +3180,7 @@ body[data-view="tukar"] #packSection { display: none !important; }
     .fx-toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .fx-toolbar .create-invoice-btn { grid-column: 1 / -1; min-height: 42px; }
     .fx-toolbar .month-pill-btn { min-height: 38px; font-size: 11px; }
-    .fx-toolbar .month-pill-btn:last-child { grid-column: 1 / -1; }
+    .fx-toolbar .month-pill-btn:last-child:not(.fx-out-btn) { grid-column: 1 / -1; }
     .fx-card { padding: 13px 14px; }
     .fx-stock { font-size: 24px; }
     .fx-stats { grid-template-columns: 1fr 1fr; gap: 8px; }

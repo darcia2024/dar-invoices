@@ -7723,9 +7723,14 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         }
 
         function bankOptionsHTML(selected) {
-            return '<option value="">Tunai / bukan dari rekening</option>' + BANK_ACCOUNTS.map(acc =>
+            return BANK_ACCOUNTS.map(acc =>
                 `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)} · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}</option>`
-            ).join('');
+            ).join('') + `<option value=""${selected === '' ? ' selected' : ''}>Tunai (saldo bank tidak berubah)</option>`;
+        }
+
+        // The account a new entry starts on: the one used last, else the first one.
+        function defaultEntryBank() {
+            return lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || '';
         }
 
         function bankNameOf(key) {
@@ -7834,7 +7839,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             document.getElementById('expenseLogNote').value = log ? (log.note || log.merchant) : (pos ? pos.name : '');
             fillLogPosSelect(document.getElementById('expenseLogPos'), month, log ? log.posId : posId);
             renderExpenseLogPosInfo();
-            document.getElementById('expenseLogBank').innerHTML = bankOptionsHTML(log ? log.bankKey : lastExpenseBank());
+            document.getElementById('expenseLogBank').innerHTML = bankOptionsHTML(log ? log.bankKey : defaultEntryBank());
             renderExpenseLogBankInfo();
             document.getElementById('expenseLogDialog').showModal();
             setTimeout(() => document.getElementById('expenseLogAmount').focus(), 30);
@@ -8130,7 +8135,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 ? `Ketemu ${scanResults.length} transaksi. Cek dulu nominal, tanggal, dan posnya, lalu simpan yang dicentang.`
                 : 'Nggak ada transaksi yang kebaca dari screenshot ini.';
             document.getElementById('scanReviewHint').textContent = hint + (notes.length ? ' Catatan: ' + notes.join(' ') : '');
-            document.getElementById('scanBank').innerHTML = bankOptionsHTML(lastExpenseBank());
+            document.getElementById('scanBank').innerHTML = bankOptionsHTML(defaultEntryBank());
             renderScanResults();
         }
 
@@ -8284,7 +8289,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function aiActionBank(action) {
             const a = action.args || {};
             if (typeof action.bank === 'string') return isBankKey(action.bank) ? action.bank : '';
-            return isBankKey(a.bank) ? a.bank : lastExpenseBank();
+            return isBankKey(a.bank) ? a.bank : defaultEntryBank();
         }
 
         function setAiActionBank(msgIndex, actionIndex, key) {

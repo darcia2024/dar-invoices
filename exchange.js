@@ -52,7 +52,7 @@ function defaultHoldings() {
 }
 
 function normalizeExchange(value) {
-    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
+    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], incomes: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
     FX_CURRENCIES.forEach(c => {
         const r = value && value.rates && value.rates[c];
         out.rates[c] = { sell: Math.max(0, Number(r && r.sell) || 0), buy: Math.max(0, Number(r && r.buy) || 0) };
@@ -117,6 +117,17 @@ function normalizeExchange(value) {
         by: String(d.by || '').slice(0, 40),
         demo: d.demo === true,
         createdAt: Number(d.createdAt) || Date.now()
+    }));
+    // Other income (not from tukar): rupiah into a bank. bankAdd is what was added to that bank.
+    out.incomes = (Array.isArray(value.incomes) ? value.incomes : []).filter(x => x && Number(x.amount) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(x.date || '')).map(x => ({
+        id: String(x.id || 'inc-' + crypto.randomUUID()).slice(0, 80),
+        date: x.date,
+        amount: Math.round(Number(x.amount)),
+        note: String(x.note || '').slice(0, 160),
+        bankKey: String(x.bankKey || '').slice(0, 40),
+        bankAdd: Math.max(0, Math.round(Number(x.bankAdd) || 0)),
+        by: String(x.by || '').slice(0, 40),
+        createdAt: Number(x.createdAt) || Date.now()
     }));
     return out;
 }
@@ -304,7 +315,7 @@ function exchangeCashSummary() {
 }
 
 function fxDefaultBank() {
-    return lastExpenseBank() || (BANK_ACCOUNTS.length === 1 ? BANK_ACCOUNTS[0].key : '');
+    return defaultEntryBank();
 }
 
 function fxQty(n) {
@@ -351,6 +362,7 @@ function exchangeOnManualBankUpdate() {
     fxAllTrades().forEach(t => { t.bankDelta = 0; });
     exchangeState.deals.forEach(d => { d.bankDelta = 0; });
     exchangeState.deposits.moves.forEach(m => { m.bankDelta = 0; });
+    exchangeState.incomes.forEach(x => { x.bankAdd = 0; });
     saveExchangeLocal();
 }
 
@@ -432,7 +444,8 @@ function ensureExchangeUI() {
         <div id="fxReportPane" hidden>
             <div class="fx-toolbar">
                 <button type="button" class="create-invoice-btn" onclick="openDealDialog()">+ Catat tukar</button>
-                <button type="button" class="month-pill-btn" onclick="openReportExpense()">+ Catat pengeluaran</button>
+                <button type="button" class="month-pill-btn fx-in-btn" onclick="openIncomeDialog()">+ Pemasukan</button>
+                <button type="button" class="month-pill-btn fx-out-btn" onclick="openReportExpense()">+ Pengeluaran</button>
             </div>
             <label class="fx-who-search">Riwayat per orang
                 <input type="search" id="fxReportWho" list="fxNameList" autocomplete="off" placeholder="Ketik atau pilih nama" oninput="renderReportPane()">
@@ -451,6 +464,8 @@ function ensureExchangeUI() {
             <button type="button" class="fx-investor-line" id="fxInvestorLine" onclick="setFxPane('titipan')" hidden></button>
             <div class="fx-toolbar">
                 <button type="button" class="create-invoice-btn" onclick="openDealDialog()">+ Catat tukar</button>
+                <button type="button" class="month-pill-btn fx-in-btn" onclick="openIncomeDialog()">+ Pemasukan</button>
+                <button type="button" class="month-pill-btn fx-out-btn" onclick="openReportExpense()">+ Pengeluaran</button>
                 <button type="button" class="month-pill-btn" onclick="setFxPane('laporan')">Lihat laporan</button>
             </div>
             <div class="bank-tracker-card fx-own is-expanded">
@@ -1335,6 +1350,7 @@ function flushAssetSave() {
         Object.values(expenseLogs).forEach(list => list.forEach(log => { if (assetDirtyBanks.has(log.bankKey)) log.bankCut = 0; }));
         fxAllTrades().forEach(t => { if (assetDirtyBanks.has(t.bankKey)) t.bankDelta = 0; });
         exchangeState.deposits.moves.forEach(m => { if (assetDirtyBanks.has(m.bankKey)) m.bankDelta = 0; });
+        exchangeState.incomes.forEach(x => { if (assetDirtyBanks.has(x.bankKey)) x.bankAdd = 0; });
         exchangeState.deals.forEach(d => { if (assetDirtyBanks.has(d.bankKey)) d.bankDelta = 0; });
         assetDirtyBanks.clear();
     }
@@ -1565,6 +1581,135 @@ function deleteDeal() {
     showToast('CATATAN TUKAR DIHAPUS');
 }
 
+// ---------- Pemasukan: other rupiah income, straight into a bank ----------
+// Like a spending in reverse: saving adds the amount to the chosen bank, editing or deleting
+// takes exactly that amount back out. An income dated before the last "Update saldo" is already
+// inside that balance, so it changes nothing.
+let incomeEditId = '';
+
+function ensureIncomeDialog() {
+    if (document.getElementById('fxIncomeDialog')) return;
+    const dialog = document.createElement('dialog');
+    dialog.id = 'fxIncomeDialog';
+    dialog.className = 'invoice-manager-dialog';
+    dialog.setAttribute('aria-labelledby', 'fxIncomeTitle');
+    dialog.innerHTML = `
+        <div class="manager-heading"><h2 id="fxIncomeTitle">Catat pemasukan</h2><button type="button" aria-label="Tutup" onclick="document.getElementById('fxIncomeDialog').close()">×</button></div>
+        <div class="manager-content">
+            <form onsubmit="handleIncomeSubmit(event)">
+                <div class="draft-fields">
+                    <label>Nominal (Rp)<input type="text" id="fxIncomeAmount" inputmode="numeric" required placeholder="Contoh: 500.000" oninput="onIncomeAmount(this)"></label>
+                    <label>Tanggal<input type="date" id="fxIncomeDate" required onchange="renderIncomePreview()"></label>
+                    <label class="wide-field">Dari / keterangan<input type="text" id="fxIncomeNote" maxlength="160" list="fxNameList" autocomplete="off" placeholder="Contoh: fee jasa, transfer dari Bang Ja"></label>
+                    <label class="wide-field">Masuk ke bank<select id="fxIncomeBank" required onchange="renderIncomePreview()"></select></label>
+                </div>
+                <div class="fx-preview" id="fxIncomePreview"></div>
+                <p class="draft-error" id="fxIncomeError" role="alert"></p>
+                <div class="pack-dialog-actions">
+                    <button type="button" class="delete-invoice-btn" id="fxIncomeDelete" onclick="deleteIncome()">Hapus</button>
+                    <span style="flex:1"></span>
+                    <button type="submit" class="create-invoice-btn">Simpan</button>
+                </div>
+            </form>
+        </div>`;
+    document.body.appendChild(dialog);
+}
+
+function incomeBankOptions(selected) {
+    return BANK_ACCOUNTS.map(acc => `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)} · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}</option>`).join('');
+}
+
+function onIncomeAmount(input) {
+    const digits = input.value.replace(/[^0-9]/g, '');
+    input.value = digits ? Number(digits).toLocaleString('id-ID') : '';
+    renderIncomePreview();
+}
+
+function readIncomeAmount() {
+    return Number((document.getElementById('fxIncomeAmount').value || '').replace(/[^0-9]/g, '')) || 0;
+}
+
+function renderIncomePreview() {
+    const el = document.getElementById('fxIncomePreview');
+    const key = document.getElementById('fxIncomeBank').value;
+    const amount = readIncomeAmount();
+    const date = document.getElementById('fxIncomeDate').value;
+    if (!isBankKey(key) || !amount) { el.innerHTML = ''; return; }
+    const old = incomeEditId ? exchangeState.incomes.find(x => x.id === incomeEditId) : null;
+    const now = (Number(bankBalances[key]) || 0) - (old && old.bankKey === key ? old.bankAdd : 0);
+    el.innerHTML = bankBalancesUpdatedAt && date < bankBalancesUpdatedAt
+        ? `<div>Saldo ${escapeHTML(bankNameOf(key))} tidak berubah: tanggalnya sebelum saldo terakhir diperbarui.</div>`
+        : `<div>Saldo ${escapeHTML(bankNameOf(key))} ${formatIDR(now)} → <b>${formatIDR(now + amount)}</b></div>`;
+}
+
+function openIncomeDialog(id = '') {
+    ensureExchangeUI();
+    ensureIncomeDialog();
+    const x = id ? exchangeState.incomes.find(i => i.id === id) : null;
+    incomeEditId = x ? x.id : '';
+    document.getElementById('fxIncomeTitle').textContent = x ? 'Ubah pemasukan' : 'Catat pemasukan';
+    document.getElementById('fxIncomeDelete').hidden = !x;
+    document.getElementById('fxIncomeError').textContent = '';
+    document.getElementById('fxIncomeAmount').value = x ? x.amount.toLocaleString('id-ID') : '';
+    document.getElementById('fxIncomeDate').value = x ? x.date : localDateKey();
+    document.getElementById('fxIncomeNote').value = x ? x.note : '';
+    renderNameList();
+    document.getElementById('fxIncomeBank').innerHTML = incomeBankOptions(x && isBankKey(x.bankKey) ? x.bankKey : (lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || ''));
+    renderIncomePreview();
+    document.getElementById('fxIncomeDialog').showModal();
+    if (!x) setTimeout(() => document.getElementById('fxIncomeAmount').focus(), 30);
+}
+
+function undoIncomeBank(x) {
+    if (x.bankAdd > 0 && isBankKey(x.bankKey)) bankBalances[x.bankKey] = (Number(bankBalances[x.bankKey]) || 0) - x.bankAdd;
+    x.bankAdd = 0;
+}
+
+function applyIncomeBank(x) {
+    x.bankAdd = 0;
+    if (!isBankKey(x.bankKey)) return;
+    if (bankBalancesUpdatedAt && x.date < bankBalancesUpdatedAt) return;
+    bankBalances[x.bankKey] = (Number(bankBalances[x.bankKey]) || 0) + x.amount;
+    x.bankAdd = x.amount;
+}
+
+function afterIncomeChange(message) {
+    document.getElementById('fxIncomeDialog').close();
+    saveLocalBankBalances();
+    renderBankBalancesUI();
+    saveExchangeAndSync();
+    showToast(message);
+}
+
+function handleIncomeSubmit(event) {
+    event.preventDefault();
+    const amount = readIncomeAmount();
+    const date = document.getElementById('fxIncomeDate').value;
+    const bankKey = document.getElementById('fxIncomeBank').value;
+    const error = document.getElementById('fxIncomeError');
+    if (!amount || !date) { error.textContent = 'Isi nominal dan tanggalnya.'; return; }
+    if (!isBankKey(bankKey)) { error.textContent = 'Pilih bank tempat uangnya masuk.'; return; }
+    rememberExpenseBank(bankKey);
+    const fields = { amount, date, bankKey, note: document.getElementById('fxIncomeNote').value.trim().slice(0, 160) };
+    let x = incomeEditId ? exchangeState.incomes.find(i => i.id === incomeEditId) : null;
+    if (x) { undoIncomeBank(x); Object.assign(x, fields); }
+    else {
+        x = { id: 'inc-' + crypto.randomUUID(), ...fields, bankAdd: 0, by: recordedBy(), createdAt: Date.now() };
+        exchangeState.incomes.push(x);
+    }
+    applyIncomeBank(x);
+    afterIncomeChange(x.bankAdd ? `PEMASUKAN TERCATAT · SALDO ${bankNameOf(bankKey).toUpperCase()} ${formatIDR(Number(bankBalances[bankKey]) || 0)}` : 'PEMASUKAN TERCATAT');
+}
+
+function deleteIncome() {
+    const x = exchangeState.incomes.find(i => i.id === incomeEditId);
+    if (!x) return;
+    if (!confirm(`Hapus pemasukan ${formatIDR(x.amount)}${x.note ? ' (' + x.note + ')' : ''}?${x.bankAdd ? `\nSaldo ${bankNameOf(x.bankKey)} dikurangi lagi ${formatIDR(x.bankAdd)}.` : ''}`)) return;
+    undoIncomeBank(x);
+    exchangeState.incomes = exchangeState.incomes.filter(i => i.id !== x.id);
+    afterIncomeChange('PEMASUKAN DIHAPUS');
+}
+
 // ---------- Laporan: pendapatan (untung tukar) vs pengeluaran ----------
 let reportMonth = currentMonthKey();
 
@@ -1594,6 +1739,7 @@ function renderDailyReport() {
     const lastDay = reportMonth === today.slice(0, 7) ? Number(today.slice(8, 10)) : new Date(y, m, 0).getDate();
     const deals = exchangeState.deals.filter(d => d.date.slice(0, 7) === reportMonth);
     const spends = expenseLogs[reportMonth] || [];
+    const others = exchangeState.incomes.filter(x => x.date.slice(0, 7) === reportMonth);
     const snapDays = Object.keys(exchangeState.assetDaily).sort();
     const snapBefore = day => {
         for (let i = snapDays.length - 1; i >= 0; i--) if (snapDays[i] < day) return exchangeState.assetDaily[snapDays[i]];
@@ -1604,9 +1750,10 @@ function renderDailyReport() {
         const day = `${reportMonth}-${String(d).padStart(2, '0')}`;
         const dd = deals.filter(x => x.date === day);
         const ss = spends.filter(x => x.date === day);
+        const ii = others.filter(x => x.date === day);
         const snap = exchangeState.assetDaily[day];
-        if (!dd.length && !ss.length && !snap) continue;
-        const profit = dealProfitSum(dd);
+        if (!dd.length && !ss.length && !ii.length && !snap) continue;
+        const profit = dealProfitSum(dd) + ii.reduce((s, x) => s + x.amount, 0);
         const spent = ss.reduce((s, l) => s + l.amount, 0);
         const prev = snap ? snapBefore(day) : null;
         const change = snap && prev ? snap.total - prev.total : null;
@@ -1615,7 +1762,7 @@ function renderDailyReport() {
             <div class="fx-history-row fx-daily-row" role="row">
                 <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}</span>
                 <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dd.reduce((s, x) => s + x.idr, 0))}` : '<i>-</i>'}</span>
-                <span role="cell" data-label="Untung">${dd.length ? formatIDR(profit) : '<i>-</i>'}</span>
+                <span role="cell" data-label="Pemasukan">${dd.length || ii.length ? formatIDR(profit) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pengeluaran">${ss.length ? formatIDR(spent) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Bersih hari ini"><b class="${profit - spent < 0 ? 'is-minus' : ''}">${formatIDR(profit - spent)}</b></span>
                 <span role="cell" data-label="Aset bersih" class="is-total">${snap ? `<b>${formatIDR(snap.total)}</b>${change === null ? '' : `<small class="${change < 0 ? 'is-down' : 'is-up'}">${change < 0 ? '▼' : '▲'} ${formatIDR(Math.abs(change))}</small>`}` : '<i>-</i>'}</span>
@@ -1625,7 +1772,7 @@ function renderDailyReport() {
         <div class="fx-daily-head"><b>Laporan harian</b><span>Aset bersih dicatat otomatis di akhir tiap hari.</span></div>
         ${rows.length ? `<div class="fx-history-table fx-daily-table" role="table">
             <div class="fx-history-row fx-daily-row is-head" role="row">
-                <span role="columnheader">Tanggal</span><span role="columnheader">Tukar</span><span role="columnheader">Untung</span>
+                <span role="columnheader">Tanggal</span><span role="columnheader">Tukar</span><span role="columnheader">Pemasukan</span>
                 <span role="columnheader">Pengeluaran</span><span role="columnheader">Bersih hari ini</span><span role="columnheader">Aset bersih</span>
             </div>${rows.join('')}</div>` : `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(reportMonth))}.</div>`}`;
 }
@@ -1670,19 +1817,24 @@ function renderReportPane() {
     document.getElementById('fxReportMonth').textContent = monthLabelOf(reportMonth);
     const deals = exchangeState.deals.filter(d => d.date.slice(0, 7) === reportMonth);
     const spends = (expenseLogs[reportMonth] || []).slice();
-    const income = dealProfitSum(deals);
+    const others = exchangeState.incomes.filter(x => x.date.slice(0, 7) === reportMonth);
+    const fromTukar = dealProfitSum(deals);
+    const otherIn = others.reduce((s, x) => s + x.amount, 0);
+    const income = fromTukar + otherIn;
     const spent = spends.reduce((s, l) => s + l.amount, 0);
     document.getElementById('fxReportStats').innerHTML = `
-        <div><span>Pendapatan (untung tukar)</span><b>${formatIDR(income)}</b><small>${deals.length} kali tukar</small></div>
+        <div><span>Pendapatan</span><b>${formatIDR(income)}</b><small>untung tukar ${formatIDR(fromTukar)} · pemasukan lain ${formatIDR(otherIn)}</small></div>
         <div><span>Pengeluaran</span><b>${formatIDR(spent)}</b><small>${spends.length} catatan</small></div>
         <div><span>Bersih</span><b class="${income - spent < 0 ? 'is-minus' : ''}">${formatIDR(income - spent)}</b><small>pendapatan − pengeluaran</small></div>
         <div><span>Rupiah masuk dari tukar</span><b>${formatIDR(deals.reduce((s, d) => s + d.idr, 0))}</b><small>${FX_CURRENCIES.map(c => fxQty(deals.filter(d => d.currency === c).reduce((s, d) => s + d.qty, 0)) + ' ' + c).join(' · ')}</small></div>`;
     const days = {};
-    deals.forEach(d => { (days[d.date] = days[d.date] || { deals: [], spends: [] }).deals.push(d); });
-    spends.forEach(l => { (days[l.date] = days[l.date] || { deals: [], spends: [] }).spends.push(l); });
+    const dayOf = date => (days[date] = days[date] || { deals: [], spends: [], incomes: [] });
+    deals.forEach(d => { dayOf(d.date).deals.push(d); });
+    spends.forEach(l => { dayOf(l.date).spends.push(l); });
+    others.forEach(x => { dayOf(x.date).incomes.push(x); });
     const dates = Object.keys(days).sort().reverse();
     if (!dates.length) {
-        list.innerHTML = `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(reportMonth))}. Klik <b>+ Catat tukar</b> tiap kali kasih pound/dollar ke orang.</div>`;
+        list.innerHTML = `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(reportMonth))}. Klik <b>+ Catat tukar</b> tiap kali kasih pound/dollar ke orang, <b>+ Pemasukan</b> atau <b>+ Pengeluaran</b> untuk uang masuk dan keluar lainnya.</div>`;
         return;
     }
     const today = localDateKey();
@@ -1691,10 +1843,19 @@ function renderReportPane() {
         const [yy, mm, dd] = date.split('-').map(Number);
         const label = new Date(yy, mm - 1, dd).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' });
         const dayIncome = dealProfitSum(day.deals);
+        const dayOther = day.incomes.reduce((s, x) => s + x.amount, 0);
         const daySpent = day.spends.reduce((s, l) => s + l.amount, 0);
         return `
         <div class="log-day">
-            <div class="log-day-head"><span>${date === today ? 'Hari ini · ' : ''}${escapeHTML(label)}</span><b>untung ${formatIDR(dayIncome)}${daySpent ? ` · keluar ${formatIDR(daySpent)}` : ''}</b></div>
+            <div class="log-day-head"><span>${date === today ? 'Hari ini · ' : ''}${escapeHTML(label)}</span><b>${day.deals.length ? `untung ${formatIDR(dayIncome)}` : ''}${dayOther ? `${day.deals.length ? ' · ' : ''}masuk ${formatIDR(dayOther)}` : ''}${daySpent ? `${day.deals.length || dayOther ? ' · ' : ''}keluar ${formatIDR(daySpent)}` : ''}</b></div>
+            ${day.incomes.sort((a, b) => b.createdAt - a.createdAt).map(x => `
+            <button type="button" class="log-row fx-row is-jual" onclick="openIncomeDialog('${escapeHTML(x.id)}')">
+                <span class="log-row-main">
+                    <span class="log-row-title">${escapeHTML(x.note || 'Pemasukan')}</span>
+                    <span class="log-row-pos">pemasukan${x.bankKey ? ' · ' + escapeHTML(bankNameOf(x.bankKey)) : ''} ${byTag(x)}</span>
+                </span>
+                <span class="log-row-amount">+${formatIDR(x.amount)}</span>
+            </button>`).join('')}
             ${day.deals.sort((a, b) => b.createdAt - a.createdAt).map(d => `
             <button type="button" class="log-row fx-row is-jual" onclick="openDealDialog('${escapeHTML(d.id)}')">
                 <span class="log-row-main">
