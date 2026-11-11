@@ -3106,6 +3106,36 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-demo-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #fff4d6; border: 1px solid #ecd28f; color: #5a4a1c; border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; font-size: 12.5px; line-height: 1.45; }
 .fx-demo-banner[hidden] { display: none; }
 .fx-demo-banner > div { flex: 1 1 220px; }
+.fx-pane-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #ebe6d9; border-radius: 12px; padding: 4px; margin-bottom: 14px; }
+.fx-pane-tabs button { font: inherit; font-size: 13px; font-weight: 600; border: 0; border-radius: 9px; padding: 9px 10px; background: transparent; color: #5c584c; cursor: pointer; }
+.fx-pane-tabs button.active { background: #fffdf8; color: #24241f; box-shadow: 0 1px 3px rgba(60, 50, 30, .12); }
+.fx-pane-tabs b { font-size: 11px; color: #7a7567; font-weight: 600; }
+.fx-cash-split { font-size: 11.5px; color: #5c584c; margin: 2px 0 6px; line-height: 1.45; }
+.fx-cash-split b { color: #24241f; font-variant-numeric: tabular-nums; }
+.fx-cash-split b.fx-minus { color: #9e2d22; }
+#fxDepositList { display: grid; gap: 8px; margin-bottom: 18px; }
+.fx-dep-row { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left; font: inherit; background: #fffdf8; border: 1px solid #ded8cb; border-radius: 12px; padding: 12px 14px; cursor: pointer; color: inherit; }
+.fx-dep-row:hover { border-color: #c9bfa9; }
+.fx-dep-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.fx-dep-name { font-size: 14px; font-weight: 600; color: #24241f; overflow-wrap: anywhere; }
+.fx-dep-meta { font-size: 11px; color: #7a7567; }
+.fx-dep-balances { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+.fx-dep-amount { display: inline-flex; align-items: center; gap: 5px; font-size: 13.5px; font-weight: 600; color: #24241f; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fx-dep-amount.is-zero { color: #9a9483; font-weight: 500; font-size: 12px; }
+.fx-tag.is-investor { background: #f3e8d2; color: #8a5a12; }
+.fx-tag.is-pekerja { background: #e3eaf7; color: #1e4f9a; }
+.fx-tag.is-lainnya { background: #eeeae0; color: #5f5a4d; }
+.fx-type-switch.is-3 { grid-template-columns: repeat(3, 1fr); }
+.fx-history-balance { display: flex; flex-direction: column; gap: 6px; background: #f6f2e8; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
+.fx-history-balance span { font-size: 11.5px; color: #686150; }
+.fx-history-balance b { font-size: 20px; color: #24241f; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.fx-history-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.fx-move-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #ece6d8; }
+.fx-move-row.is-setor .fx-tag { background: #e4f0e6; color: #1f5f33; }
+.fx-move-row.is-ambil .fx-tag { background: #f6e3df; color: #9e2d22; }
+.fx-move-row.is-kirim .fx-tag { background: #e3eaf7; color: #1e4f9a; }
+.fx-move-del { border: 0; background: none; color: #9a9483; font-size: 18px; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
+.fx-move-del:hover { background: #f6e3df; color: #9e2d22; }
 .fx-flag { display: inline-block; width: 18px; height: 12px; vertical-align: -1px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, .12); flex-shrink: 0; }
 .fx-flag.is-lg { width: 27px; height: 18px; border-radius: 3px; }
 .fx-card-head { align-items: center; }

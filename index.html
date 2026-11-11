@@ -8711,6 +8711,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     </div>
                     <div class="bank-account-num${number ? '' : ' is-empty'}">${number ? escapeHTML(number) : (acc.wallet ? 'No. HP belum diisi' : 'No. rekening belum diisi')}</div>
                     <div class="bank-balance-amount">${formatIDR(val)}</div>
+                    ${typeof exchangeBankNote === 'function' ? exchangeBankNote(acc.key) : ''}
                     <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
                     <button type="button" class="bank-copy-btn" onclick="copyBankAccount('${acc.key}')">Salin rekening</button>
                 </div>`;
