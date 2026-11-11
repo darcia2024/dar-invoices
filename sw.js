@@ -44,6 +44,32 @@ self.addEventListener('message', (event) => {
   }
 });
 
+// Phone notifications (api/cron-reminders.js, api/push.js): { title, body, url, tag }.
+self.addEventListener('push', (event) => {
+  let message = {};
+  try { message = event.data ? event.data.json() : {}; } catch (e) { message = { body: event.data ? event.data.text() : '' }; }
+  event.waitUntil(self.registration.showNotification(message.title || 'Pengingat', {
+    body: message.body || 'Ada talangan yang jatuh tempo. Buka aplikasinya.',
+    icon: '/brand/icon-192.png',
+    badge: '/brand/icon-192.png',
+    tag: message.tag || 'dar-reminder',
+    renotify: true,
+    data: { url: message.url || '/' },
+  }));
+});
+
+// Tapping the notification opens (or focuses) the account it is about.
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = new URL((event.notification.data && event.notification.data.url) || '/', self.location.origin).href;
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windows) => {
+      const open = windows.find((w) => w.url.split('?')[0] === url);
+      return open ? open.focus() : self.clients.openWindow(url);
+    }),
+  );
+});
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;

@@ -2398,6 +2398,7 @@ body[data-view="pack"] #packSection {
             <div class="debt-toolbar">
                 <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                     <button class="create-invoice-btn" onclick="openDebtComposer()">+ Catat Hutang / Piutang</button>
+                    <span class="push-box" id="pushBox"></span>
                     <div class="debt-filter-pills">
                         <button class="month-pill-btn active" data-debt-filter="all" onclick="setDebtFilter('all', this)">Semua</button>
                         <button class="month-pill-btn" data-debt-filter="piutang" onclick="setDebtFilter('piutang', this)">Piutang (Hak Tagih)</button>
@@ -6418,6 +6419,109 @@ body[data-view="pack"] #packSection {
                 </div>`;
             banner.hidden = false;
         }
+
+        // ---------- Phone notifications (api/push.js, api/cron-reminders.js) ----------
+        // Each phone turns them on once; every morning the server sends what is due that day,
+        // even with the app closed. iPhone needs the app added to the Home Screen first.
+        function pushSupported() {
+            return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+        }
+
+        function isIphoneBrowserTab() {
+            const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+            const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+            return ios && !standalone;
+        }
+
+        async function currentPushSubscription() {
+            if (!pushSupported()) return null;
+            const reg = await navigator.serviceWorker.getRegistration('/');
+            return reg ? reg.pushManager.getSubscription() : null;
+        }
+
+        async function renderPushBox() {
+            const box = document.getElementById('pushBox');
+            if (!box) return;
+            if (!pushSupported()) {
+                box.innerHTML = isIphoneBrowserTab()
+                    ? `<span class="push-hint">Notifikasi HP di iPhone: tombol Bagikan → <b>Tambah ke Layar Utama</b>, buka dari ikon itu, lalu nyalakan di sini.</span>`
+                    : '';
+                return;
+            }
+            const sub = await currentPushSubscription().catch(() => null);
+            if (sub && Notification.permission === 'granted') {
+                box.innerHTML = `<span class="push-on">🔔 Notifikasi HP aktif</span>
+                    <button type="button" class="month-pill-btn" onclick="testPush()">Kirim tes</button>
+                    <button type="button" class="month-pill-btn" onclick="disablePush()">Matikan</button>`;
+            } else if (Notification.permission === 'denied') {
+                box.innerHTML = `<span class="push-hint">Notifikasi diblokir di browser ini. Buka pengaturan situs, izinkan Notifikasi, lalu muat ulang.</span>`;
+            } else {
+                box.innerHTML = `<button type="button" class="month-pill-btn push-enable" onclick="enablePush()">🔔 Nyalakan notifikasi HP</button>`;
+            }
+        }
+
+        async function pushRequest(action, subscription) {
+            const response = await fetch('/api/push', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ action, subscription })
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(data.error || 'Gagal');
+            return data;
+        }
+
+        async function enablePush() {
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission !== 'granted') {
+                    showToast('NOTIFIKASI BELUM DIIZINKAN');
+                    renderPushBox();
+                    return;
+                }
+                const reg = await navigator.serviceWorker.register('/sw.js');
+                await navigator.serviceWorker.ready;
+                const keyResponse = await fetch('/api/push', { credentials: 'same-origin' });
+                const { publicKey } = await keyResponse.json();
+                const raw = atob(publicKey.replace(/-/g, '+').replace(/_/g, '/'));
+                const key = Uint8Array.from(raw, ch => ch.charCodeAt(0));
+                const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
+                await pushRequest('subscribe', sub.toJSON());
+                await pushRequest('test', sub.toJSON());
+                showToast('NOTIFIKASI AKTIF · CEK NOTIFIKASI TES');
+            } catch (error) {
+                console.warn('Push setup failed:', error);
+                showToast(('NOTIFIKASI GAGAL: ' + (error.message || '')).toUpperCase().slice(0, 90));
+            }
+            renderPushBox();
+        }
+
+        async function testPush() {
+            try {
+                const sub = await currentPushSubscription();
+                if (!sub) return renderPushBox();
+                await pushRequest('test', sub.toJSON());
+                showToast('NOTIFIKASI TES DIKIRIM');
+            } catch (error) {
+                showToast(('TES GAGAL: ' + (error.message || '')).toUpperCase().slice(0, 90));
+                renderPushBox();
+            }
+        }
+
+        async function disablePush() {
+            try {
+                const sub = await currentPushSubscription();
+                if (sub) {
+                    await pushRequest('unsubscribe', sub.toJSON()).catch(() => {});
+                    await sub.unsubscribe();
+                }
+                showToast('NOTIFIKASI HP DIMATIKAN');
+            } catch (error) {}
+            renderPushBox();
+        }
+
+        setTimeout(renderPushBox, 300);
 
         function hideDebtDueBanner(signature) {
             try { localStorage.setItem(DEBT_BANNER_KEY, signature); } catch (e) {}
