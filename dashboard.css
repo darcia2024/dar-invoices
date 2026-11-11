@@ -1979,11 +1979,14 @@ body[data-view="debt"] .stats-bar {
     .debt-amount-remaining { font-size: 13px; }
 }
 
-/* Mobile: nav as a 5-up tab grid so every section is visible without sideways scrolling */
+/* Mobile: nav as a tab grid, one equal column per visible section (5 on DAR, 3 on Kolohaga),
+   so every section is visible without sideways scrolling */
 @media (max-width: 600px) {
     .workspace-sidebar nav {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(0, 1fr);
         gap: 6px;
         overflow: visible;
         margin-inline: 0;
@@ -3028,7 +3031,7 @@ html.is-standalone button, html.is-standalone .sidebar-link, html.is-standalone 
     /* Native-style bottom tab bar */
     html.is-standalone .workspace-sidebar nav {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
-        display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0;
+        display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0;
         margin: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
         background: rgba(250, 248, 238, .86);
         -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px);
