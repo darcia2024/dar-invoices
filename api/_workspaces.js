@@ -21,7 +21,9 @@ const WORKSPACES = {
   // holds (InstaPay, cash) at his own rate, all added up; plus Titipan (money held for others).
   // (open: true would skip the PIN: anyone with the link could open and edit the data.)
   // banks: which rupiah accounts show under saldo (keys from ALL_BANK_ACCOUNTS in index.html).
-  ziaud: { name: "Ziaud", owner: "Ziaud", kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank", "jago", "bca", "bri"], business: "a person in Egypt who changes Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for people at prices he sets per person; he tracks his total assets (rupiah in SeaBank, Jago, BCA, BRI plus pounds/dollars in InstaPay and cash, valued at his own rate), money he holds for others, and loans (talangan) he gives" },
+  // users: more people on the same data, each with their own PIN (Vercel env
+  // WORKSPACE_PIN_<SLUG>_<ID>, e.g. WORKSPACE_PIN_ZIAUD_ILHAM). Every entry shows who made it.
+  ziaud: { name: "Ziaud", owner: "Ziaud", users: [{ id: "ilham", name: "Ilham" }], kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank", "jago", "bca", "bri"], business: "a person in Egypt who changes Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for people at prices he sets per person; he tracks his total assets (rupiah in SeaBank, Jago, BCA, BRI plus pounds/dollars in InstaPay and cash, valued at his own rate), money he holds for others, and loans (talangan) he gives" },
 };
 
 function todayJakarta() {

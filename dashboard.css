@@ -3065,11 +3065,11 @@ html.is-standalone button, html.is-standalone .sidebar-link, html.is-standalone 
 body[data-view="tukar"] #exchangeSection { display: block; }
 body[data-view="tukar"] .board-only,
 body[data-view="tukar"] .report-only,
-body[data-view="tukar"] .stats-bar,
+body[data-view="tukar"] .stats-bar:not(.fx-asset-stats),
 body[data-view="tukar"] .invoice-tools,
 body[data-view="tukar"] .board-tabs,
 body[data-view="tukar"] .goal-tracker-card,
-body[data-view="tukar"] .bank-tracker-card,
+body[data-view="tukar"] .bank-tracker-card:not(.fx-own),
 body[data-view="tukar"] .filter-section,
 body[data-view="tukar"] #debtSection,
 body[data-view="tukar"] #planSection,
@@ -3183,7 +3183,22 @@ body[data-view="tukar"] #packSection { display: none !important; }
     #fxList { padding: 10px 11px; }
 }
 
-/* Aset screen (exchange.js) */
+/* Aset screen (exchange.js): DAR's stat cards and saldo card, numbers typed in a dialog */
+.fx-asset-stats .stat-card[role="button"] { cursor: pointer; }
+.fx-asset-stats .stat-card[role="button"]:hover { filter: brightness(.98); }
+.fx-asset-stats .stat-note { font-size: 11.5px; color: rgba(36, 36, 31, .7); margin-top: 4px; line-height: 1.35; }
+.bank-tracker-card.fx-own { margin-bottom: 18px; }
+.fx-who-search { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5c584c; margin-bottom: 12px; }
+.fx-who-search input { font: inherit; font-size: 15px; padding: 9px 12px; border: 1px solid #cfc6b3; border-radius: 10px; background: #fffdf6; color: #24241f; }
+.fx-month-nav[hidden] { display: none; }
+.fx-investor-line { display: block; width: 100%; text-align: left; font: inherit; font-size: 12.5px; color: #4b483f; background: #fffdf8; border: 1px dashed #cfc6b3; border-radius: 12px; padding: 10px 14px; margin: -8px 0 14px; cursor: pointer; }
+.fx-investor-line[hidden] { display: none; }
+.fx-investor-line b { color: #24241f; }
+.by-tag { display: inline-block; font-size: 10.5px; font-weight: 600; color: #4f63c9; background: #eef0fb; border-radius: 6px; padding: 1px 6px; margin-left: 2px; white-space: nowrap; }
+.fx-tile-name { font-size: 13px; color: #24241f; }
+.fx-sub-warn { color: #b4541e; font-weight: 600; }
+.fx-link-btn { border: 0; background: none; padding: 0; font: inherit; color: #1e4f9a; text-decoration: underline; cursor: pointer; }
+#fxAssetDialog .fx-quick, #fxAssetDialog .fx-asset-group { margin-bottom: 12px; }
 #fxAssetPane[hidden] { display: none; }
 .fx-asset-total { background: #292b24; color: #f3efe2; border-radius: 16px; padding: 16px 18px; margin-bottom: 14px; display: grid; gap: 3px; }
 .fx-asset-total > span { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: #c9c3b1; }

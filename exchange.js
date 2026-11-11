@@ -20,8 +20,9 @@ const FX_TYPES = {
 // currency), kirim (a worker's foreign balance is paid out in rupiah: the foreign cash stays
 // with the owner and becomes his own stock through a linked "beli" trade).
 const FX_DEPOSIT_KINDS = {
-    investor: { label: 'Investor', hint: 'Investasi rupiah' },
+    investor: { label: 'Investor', hint: 'Dana investor' },
     pekerja: { label: 'Pekerja', hint: 'Titip gaji (pound)' },
+    pelanggan: { label: 'Belum diserahkan', hint: 'Pelanggan sudah transfer, dananya belum diserahkan' },
     lainnya: { label: 'Titipan', hint: 'Titipan lain (mis. dollar)' }
 };
 const FX_MOVE_TYPES = {
@@ -99,6 +100,7 @@ function normalizeExchange(value) {
         bankKey: String(d.bankKey || '').slice(0, 40),
         bankDelta: Math.round(Number(d.bankDelta) || 0),
         modal: Math.max(0, Number(d.modal) || 0),
+        by: String(d.by || '').slice(0, 40),
         createdAt: Number(d.createdAt) || Date.now()
     }));
     return out;
@@ -131,6 +133,7 @@ function normalizeDeposits(value) {
         bankDelta: Math.round(Number(m.bankDelta) || 0),
         tradeId: String(m.tradeId || ''),
         note: String(m.note || '').slice(0, 160),
+        by: String(m.by || '').slice(0, 40),
         demo: m.demo === true,
         createdAt: Number(m.createdAt) || Date.now()
     }));
@@ -240,12 +243,17 @@ function assetIdr(amount, currency) {
 
 // Everything added up, the way the owner keeps it in his notebook:
 //   aset = pegangan (bank + pounds/dollars held) + talangan (what people owe him)
-//          - uang orang (titipan & investors, money he still has to give back) - his own debts
+//          - uang orang (titipan, money he still has to hand over) - his own debts
+// Investor money is shown apart and is NOT in the formula yet (to be confirmed by the owner).
 function assetTotals() {
     const bank = BANK_ACCOUNTS.reduce((s, acc) => s + (Number(bankBalances[acc.key]) || 0), 0);
     const valas = exchangeState.holdings.reduce((s, h) => s + assetIdr(h.amount, h.currency), 0);
-    const held = depositBalances().totals;
-    const titipan = held.IDR + FX_CURRENCIES.reduce((s, c) => s + assetIdr(held[c], c), 0);
+    const { totals: held, byPerson } = depositBalances();
+    const inIdr = bal => bal.IDR + FX_CURRENCIES.reduce((s, c) => s + assetIdr(bal[c], c), 0);
+    // Investor money is its own pos and stays out of the formula until the owner says how it
+    // should count. Everything else people left with him is "uang orang".
+    const investor = exchangeState.deposits.people.filter(p => p.kind === 'investor').reduce((s, p) => s + inIdr(byPerson[p.id]), 0);
+    const titipan = inIdr(held) - investor;
     const open = (typeof debts !== 'undefined' && Array.isArray(debts) ? debts : []).filter(d => getDebtStatus(d) !== 'SETTLED');
     const left = d => Math.max(0, d.amount - (d.paid || 0));
     const talangan = open.filter(d => d.type === 'piutang').reduce((s, d) => s + debtIdr(left(d), d), 0);
@@ -257,7 +265,7 @@ function assetTotals() {
     ]);
     const missingRate = FX_CURRENCIES.filter(c => !exchangeState.assetRates[c] && used.has(c));
     const pegangan = bank + valas;
-    return { bank, valas, pegangan, talangan, titipan, hutang, total: pegangan + talangan - titipan - hutang, missingRate };
+    return { bank, valas, pegangan, talangan, titipan, investor, hutang, total: pegangan + talangan - titipan - hutang, missingRate };
 }
 
 // Foreign money shown under saldo next to the rupiah accounts, valued at the owner's rate.
@@ -379,6 +387,8 @@ function ensureExchangeUI() {
             const link = nav.querySelector(`[data-view="${view}"]`);
             if (link) link.style.setProperty('display', 'none', 'important');
         });
+        const sideNote = document.querySelector('.sidebar-note p');
+        if (sideNote) sideNote.textContent = 'Saldo bank, pound & dollar diatur dari Update saldo. Tiap tukar dicatat lewat + Catat tukar.';
         // His word for money lent out is "talangan".
         const debtLink = nav.querySelector('[data-view="debt"]');
         if (debtLink) {
@@ -403,11 +413,15 @@ function ensureExchangeUI() {
             <button type="button" role="tab" data-fx-pane="laporan" onclick="setFxPane('laporan')">Laporan</button>
             <button type="button" role="tab" data-fx-pane="titipan" onclick="setFxPane('titipan')">Titipan <b id="fxDepositCount"></b></button>
         </div>
+        <datalist id="fxNameList"></datalist>
         <div id="fxReportPane" hidden>
             <div class="fx-toolbar">
                 <button type="button" class="create-invoice-btn" onclick="openDealDialog()">+ Catat tukar</button>
                 <button type="button" class="month-pill-btn" onclick="openReportExpense()">+ Catat pengeluaran</button>
             </div>
+            <label class="fx-who-search">Riwayat per orang
+                <input type="search" id="fxReportWho" list="fxNameList" autocomplete="off" placeholder="Ketik atau pilih nama" oninput="renderReportPane()">
+            </label>
             <div class="fx-month-nav">
                 <button type="button" class="plan-nav-btn" onclick="shiftReportMonth(-1)" aria-label="Bulan sebelumnya">‹</button>
                 <span id="fxReportMonth"></span>
@@ -417,29 +431,35 @@ function ensureExchangeUI() {
             <div id="fxReportList"></div>
         </div>
         <div id="fxAssetPane">
-            <div class="fx-asset-total" id="fxAssetTotal"></div>
+            <div class="stats-bar fx-asset-stats" id="fxAssetStats"></div>
+            <button type="button" class="fx-investor-line" id="fxInvestorLine" onclick="setFxPane('titipan')" hidden></button>
             <div class="fx-toolbar">
                 <button type="button" class="create-invoice-btn" onclick="openDealDialog()">+ Catat tukar</button>
                 <button type="button" class="month-pill-btn" onclick="setFxPane('laporan')">Lihat laporan</button>
             </div>
-            <div class="fx-quick">
-                <div class="fx-quick-head"><b>Kurs modal kamu</b><span>Rupiah per 1. Dipakai buat ngerupiahin pound &amp; dollar, dan buat hitung untung tiap tukar.</span></div>
-                <div class="fx-asset-rates">${FX_CURRENCIES.map(c => `
-                    <label class="fx-asset-rate">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b>
-                        <input type="number" min="0" step="0.01" inputmode="decimal" data-asset-rate="${c}" placeholder="Rp per 1 ${c}" oninput="onAssetRate(this)">
-                    </label>`).join('')}
+            <div class="bank-tracker-card fx-own is-expanded">
+                <div class="bank-tracker-header">
+                    <div class="bank-header-left">
+                        <div class="bank-icon-badge" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        </div>
+                        <div>
+                            <div class="bank-tracker-title">Pegangan: Rekening &amp; Valas</div>
+                            <div class="bank-tracker-subtitle" id="fxAssetSub"></div>
+                        </div>
+                    </div>
+                    <div class="bank-header-right">
+                        <div class="bank-total-pill">
+                            <span class="bank-total-label">Total pegangan</span>
+                            <span class="bank-total-val" id="fxPeganganVal">Rp 0</span>
+                        </div>
+                        <button type="button" class="bank-edit-btn" onclick="openAssetDialog()">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Update saldo
+                        </button>
+                    </div>
                 </div>
+                <div class="bank-grid" id="fxAssetGrid"></div>
             </div>
-            <div class="fx-asset-group">
-                <div class="fx-asset-head"><b>Pound &amp; dollar</b><span id="fxValasSum"></span></div>
-                <div id="fxHoldingList"></div>
-                <button type="button" class="month-pill-btn fx-asset-add" onclick="addHolding()">+ Tambah tempat (mis. rekening Mesir)</button>
-            </div>
-            <div class="fx-asset-group">
-                <div class="fx-asset-head"><b>Rupiah di bank</b><span id="fxBankSum"></span></div>
-                <div id="fxAssetBankList"></div>
-            </div>
-            <p class="bank-cut-hint">Tinggal ketik angkanya, semua otomatis tersimpan dan dijumlah.</p>
         </div>
         <div id="fxDepositPane" hidden>
             <div class="fx-toolbar">
@@ -479,6 +499,37 @@ function ensureExchangeUI() {
         </div>`;
     const anchor = document.querySelector('.stats-bar');
     anchor.parentNode.insertBefore(section, anchor);
+
+    // Typing the numbers happens here, like DAR's "Update saldo".
+    const assetDialog = document.createElement('dialog');
+    assetDialog.id = 'fxAssetDialog';
+    assetDialog.className = 'invoice-manager-dialog';
+    assetDialog.setAttribute('aria-labelledby', 'fxAssetDialogTitle');
+    assetDialog.innerHTML = `
+        <div class="manager-heading"><h2 id="fxAssetDialogTitle">Update saldo &amp; kurs</h2><button type="button" aria-label="Tutup" onclick="closeAssetDialog()">×</button></div>
+        <div class="manager-content">
+            <div class="fx-quick">
+                <div class="fx-quick-head"><b>Kurs modal kamu</b><span>Rupiah per 1. Dipakai buat ngerupiahin pound &amp; dollar, dan buat hitung untung tiap tukar.</span></div>
+                <div class="fx-asset-rates">${FX_CURRENCIES.map(c => `
+                    <label class="fx-asset-rate">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b>
+                        <input type="number" min="0" step="0.01" inputmode="decimal" data-asset-rate="${c}" placeholder="Rp per 1 ${c}" oninput="onAssetRate(this)">
+                    </label>`).join('')}
+                </div>
+            </div>
+            <div class="fx-asset-group">
+                <div class="fx-asset-head"><b>Pound &amp; dollar</b><span id="fxValasSum"></span></div>
+                <div id="fxHoldingList"></div>
+                <button type="button" class="month-pill-btn fx-asset-add" onclick="addHolding()">+ Tambah tempat (mis. rekening Mesir)</button>
+            </div>
+            <div class="fx-asset-group">
+                <div class="fx-asset-head"><b>Rupiah di bank</b><span id="fxBankSum"></span></div>
+                <div id="fxAssetBankList"></div>
+            </div>
+            <p class="bank-cut-hint">Tinggal ketik angkanya, semua otomatis tersimpan dan dijumlah. No. rekening buat tombol "Salin rekening" diatur di <button type="button" class="fx-link-btn" onclick="closeAssetDialog(); openBankBalanceModal()">No. rekening</button>.</p>
+            <div class="pack-dialog-actions"><span style="flex:1"></span><button type="button" class="create-invoice-btn" onclick="closeAssetDialog()">Selesai</button></div>
+        </div>
+    `;
+    document.body.appendChild(assetDialog);
 
     const dialog = document.createElement('dialog');
     dialog.id = 'fxDialog';
@@ -1017,7 +1068,8 @@ function setFxPane(pane) {
 // Rows are built once and then only their numbers change while typing; changes are saved a
 // moment after the last keystroke.
 function renderAssetPane() {
-    const pane = document.getElementById('fxAssetPane');
+    // Don't rebuild the rows under someone typing in the Update saldo dialog.
+    const pane = document.getElementById('fxAssetDialog');
     if (!pane) return;
     const typing = document.activeElement && pane.contains(document.activeElement) && /^(INPUT|SELECT)$/.test(document.activeElement.tagName);
     if (!typing) {
@@ -1047,6 +1099,15 @@ function renderAssetPane() {
     renderAssetNumbers();
 }
 
+const FX_STAT_ICONS = {
+    total: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
+    pegangan: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>',
+    talangan: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>',
+    titipan: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'
+};
+
+// The Aset screen in DAR's dashboard style: four stat cards on top, then the "Status saldo"
+// card with one tile per bank and per foreign-money place. Numbers are typed in the dialog.
 function renderAssetNumbers() {
     const t = assetTotals();
     exchangeState.holdings.forEach(h => {
@@ -1059,23 +1120,76 @@ function renderAssetNumbers() {
     const today = localDateKey();
     const profitToday = dealProfitSum(exchangeState.deals.filter(d => d.date === today));
     const profitMonth = dealProfitSum(exchangeState.deals.filter(d => d.date.slice(0, 7) === today.slice(0, 7)));
-    const row = (label, value, sign, onclick) => `
-        <button type="button" class="fx-asset-line" ${onclick ? `onclick="${onclick}"` : 'disabled'}>
-            <span>${sign} ${label}</span><b>${formatIDR(value)}</b>
-        </button>`;
-    const lines = [
-        `<div class="fx-asset-lines">
-            ${row(`Pegangan <small>bank ${formatIDR(t.bank)} · pound &amp; dollar ${formatIDR(t.valas)}</small>`, t.pegangan, '', '')}
-            ${row('Talangan <small>orang ngutang ke kamu</small>', t.talangan, '+', "setWorkspaceView('debt')")}
-            ${row('Uang orang <small>titipan &amp; investor</small>', t.titipan, '−', "setFxPane('titipan')")}
-            ${t.hutang ? row('Hutang kamu', t.hutang, '−', "setWorkspaceView('debt')") : ''}
-        </div>`,
-        `<div class="fx-asset-parts">Untung tukar hari ini <b>${formatIDR(profitToday)}</b> · bulan ini <b>${formatIDR(profitMonth)}</b></div>`
-    ];
-    if (t.missingRate.length) lines.push(`<div class="fx-asset-warn">Kurs ${t.missingRate.join(' & ')} belum diisi, jadi yang ${t.missingRate.join('/')} belum ikut dihitung.</div>`);
-    document.getElementById('fxAssetTotal').innerHTML = `<span>Total aset bersih</span><b class="${t.total < 0 ? 'is-minus' : ''}">${formatIDR(t.total)}</b>${lines.join('')}`;
+
+    const card = (cls, icon, title, value, note, onclick) => `
+        <div class="stat-card ${cls}"${onclick ? ` role="button" tabindex="0" onclick="${onclick}"` : ''}>
+            <div class="stat-icon">${FX_STAT_ICONS[icon]}</div>
+            <div>
+                <div class="stat-info-title">${title}</div>
+                <div class="stat-info-val">${value}</div>
+                <div class="stat-note">${note}</div>
+            </div>
+        </div>`;
+    document.getElementById('fxAssetStats').innerHTML = [
+        card('profit-stat', 'total', 'Total aset bersih', formatIDR(t.total), `untung tukar hari ini ${formatIDR(profitToday)} · bulan ini ${formatIDR(profitMonth)}`),
+        card('total-stat', 'pegangan', 'Pegangan', formatIDR(t.pegangan), `bank ${formatIDR(t.bank)} · valas ${formatIDR(t.valas)}`, 'openAssetDialog()'),
+        card('paid-stat', 'talangan', '+ Talangan', formatIDR(t.talangan), 'orang ngutang ke kamu', "setWorkspaceView('debt')"),
+        card('unpaid-stat', 'titipan', '− Uang orang', formatIDR(t.titipan + t.hutang), t.hutang ? `titipan ${formatIDR(t.titipan)} · hutang ${formatIDR(t.hutang)}` : 'masih harus diserahkan', "setFxPane('titipan')")
+    ].join('');
+    const investorEl = document.getElementById('fxInvestorLine');
+    investorEl.hidden = !t.investor;
+    investorEl.innerHTML = `<b>Dana investor ${formatIDR(t.investor)}</b> <span>· pos terpisah, belum ikut dihitung di total aset bersih (cara hitungnya nunggu konfirmasi)</span>`;
+
+    document.getElementById('fxPeganganVal').textContent = formatIDR(t.pegangan);
+    const rates = FX_CURRENCIES.map(c => `${c} ${exchangeState.assetRates[c] ? fxRate(exchangeState.assetRates[c]) : 'belum diisi'}`).join(' · ');
+    document.getElementById('fxAssetSub').innerHTML = `Kurs modal: ${rates}` + (t.missingRate.length ? ` <b class="fx-sub-warn">· isi kurs ${t.missingRate.join(' & ')} biar ikut dihitung</b>` : '');
+
+    // Same tiles as DAR's bank cards; the share bar is of the whole pegangan.
+    const tile = (brand, tag, pct, sub, amount, extra, button) => `
+        <div class="bank-item-card">
+            <div class="bank-item-top">
+                <div class="bank-item-brand">${brand}<span class="bank-tag-primary">${tag}</span></div>
+                <span class="bank-item-pct">${pct}%</span>
+            </div>
+            <div class="bank-account-num${sub.empty ? ' is-empty' : ''}">${sub.text}</div>
+            <div class="bank-balance-amount">${amount}</div>
+            ${extra}
+            <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
+            ${button}
+        </div>`;
+    const pctOf = v => t.pegangan > 0 ? (v > 0 && Math.round(v / t.pegangan * 100) === 0 ? '&lt;1' : Math.round(v / t.pegangan * 100)) : 0;
+    const banks = BANK_ACCOUNTS.map(acc => {
+        const val = Number(bankBalances[acc.key]) || 0;
+        const { number } = accountDetail(acc.key);
+        return tile(`<img class="bank-logo-img" src="${acc.logo}" alt="${escapeHTML(acc.name)}" loading="lazy">`, acc.tag, pctOf(val),
+            { text: number ? escapeHTML(number) : 'No. rekening belum diisi', empty: !number },
+            formatIDR(val), '',
+            `<button type="button" class="bank-copy-btn" onclick="copyBankAccount('${acc.key}')">Salin rekening</button>`);
+    });
+    const places = exchangeState.holdings.map(h => {
+        const idr = assetIdr(h.amount, h.currency);
+        return tile(`${fxFlag(h.currency, 'fx-flag is-lg')}<b class="fx-tile-name">${escapeHTML(h.label || h.currency)}</b>`, FX_NAMES[h.currency] || h.currency, pctOf(idr),
+            { text: exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(idr)}` : 'kurs belum diisi', empty: !exchangeState.assetRates[h.currency] },
+            `${fxQty(h.amount)} ${h.currency}`, '',
+            `<button type="button" class="bank-copy-btn" onclick="openAssetDialog()">Ubah jumlah</button>`);
+    });
+    document.getElementById('fxAssetGrid').innerHTML = banks.concat(places).join('');
 }
 
+function openAssetDialog() {
+    ensureExchangeUI();
+    const dialog = document.getElementById('fxAssetDialog');
+    document.activeElement && document.activeElement.blur && document.activeElement.blur();
+    renderAssetPane();
+    if (!dialog.open) dialog.showModal();
+}
+
+function closeAssetDialog() {
+    const dialog = document.getElementById('fxAssetDialog');
+    if (dialog.open) dialog.close();
+    if (assetSaveTimer) flushAssetSave();
+    renderAssetPane();
+}
 let assetSaveTimer = null;
 const assetDirtyBanks = new Set();
 
@@ -1177,7 +1291,7 @@ function ensureDealDialog() {
         <div class="manager-content">
             <form onsubmit="handleDealSubmit(event)">
                 <div class="draft-fields">
-                    <label class="wide-field">Ke siapa / tempat<input type="text" id="fxDealName" maxlength="80" placeholder="Contoh: Buust"></label>
+                    <label class="wide-field">Ke siapa / tempat<input type="text" id="fxDealName" maxlength="80" list="fxNameList" autocomplete="off" placeholder="Pilih atau ketik nama, contoh: Buust"></label>
                     <label class="wide-field">Mata uang<select id="fxDealCurrency" onchange="onDealCurrency()">${FX_CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('')}</select></label>
                     <label>Jumlah keluar<input type="number" id="fxDealQty" min="0.01" step="0.01" inputmode="decimal" required placeholder="Contoh: 40000" oninput="renderDealPreview()"></label>
                     <label>Diambil dari<select id="fxDealHolding" onchange="renderDealPreview()"></select></label>
@@ -1217,6 +1331,7 @@ function openDealDialog(id = '') {
     document.getElementById('fxDealQty').value = d ? d.qty : '';
     document.getElementById('fxDealIdr').value = d ? d.idr.toLocaleString('id-ID') : '';
     document.getElementById('fxDealDate').value = d ? d.date : localDateKey();
+    renderNameList();
     document.getElementById('fxDealBank').innerHTML = bankOptionsHTML(d ? d.bankKey : (lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || ''));
     document.getElementById('fxDealHolding').innerHTML = dealHoldingOptions(document.getElementById('fxDealCurrency').value, d ? d.holdingId : (exchangeState.holdings.find(h => h.currency === document.getElementById('fxDealCurrency').value) || {}).id || '');
     renderFxChips();
@@ -1300,6 +1415,7 @@ function handleDealSubmit(event) {
         holdDelta: exchangeState.holdings.some(h => h.id === input.holdingId) ? input.qty : 0,
         // Same rule as spendings: a date before the last typed balance is already inside it.
         bankDelta: isBankKey(input.bankKey) && !(bankBalancesUpdatedAt && input.date < bankBalancesUpdatedAt) ? input.idr : 0,
+        by: old ? (old.by || '') : recordedBy(),
         // Keep the kurs modal of the first save, so changing the kurs later leaves old profits.
         modal: old && old.currency === input.currency && old.modal ? old.modal : (exchangeState.assetRates[input.currency] || 0),
         createdAt: old ? old.createdAt : Date.now()
@@ -1342,9 +1458,41 @@ function openReportExpenseEdit(id) {
     openExpenseLogDialog(id);
 }
 
+// Names already used anywhere (tukar, titipan, talangan), so a regular is picked, not retyped.
+function renderNameList() {
+    const names = new Set();
+    exchangeState.deals.forEach(d => d.name && names.add(d.name));
+    exchangeState.deposits.people.forEach(p => names.add(p.name));
+    (typeof debts !== 'undefined' && Array.isArray(debts) ? debts : []).forEach(d => d.name && names.add(d.name));
+    document.getElementById('fxNameList').innerHTML = [...names].sort((a, b) => a.localeCompare(b)).map(n => `<option value="${escapeHTML(n)}"></option>`).join('');
+}
+
+// One person's tukar over all months, newest first, with totals.
+function renderPersonHistory(who) {
+    const key = who.toLowerCase();
+    const deals = exchangeState.deals.filter(d => (d.name || '').toLowerCase().includes(key)).sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+    document.getElementById('fxReportMonth').textContent = `Riwayat "${who}"`;
+    document.getElementById('fxReportStats').innerHTML = `
+        <div><span>Untung dari orang ini</span><b>${formatIDR(dealProfitSum(deals))}</b><small>${deals.length} kali tukar</small></div>
+        <div><span>Rupiah masuk</span><b>${formatIDR(deals.reduce((s, d) => s + d.idr, 0))}</b><small>${FX_CURRENCIES.map(c => fxQty(deals.filter(d => d.currency === c).reduce((s, d) => s + d.qty, 0)) + ' ' + c).join(' · ')}</small></div>`;
+    const list = document.getElementById('fxReportList');
+    list.innerHTML = deals.length ? `<div class="log-day">${deals.map(d => `
+        <button type="button" class="log-row fx-row is-jual" onclick="openDealDialog('${escapeHTML(d.id)}')">
+            <span class="log-row-main">
+                <span class="log-row-title">${fxFlag(d.currency)} ${fxQty(d.qty)} ${d.currency} · ${escapeHTML(d.name)}</span>
+                <span class="log-row-pos">${escapeHTML(formatShortDate(d.date))} · kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
+            </span>
+            <span class="log-row-amount">+${formatIDR(d.idr)}</span>
+        </button>`).join('')}</div>` : `<div class="log-empty">Belum ada catatan tukar untuk "${escapeHTML(who)}".</div>`;
+}
+
 function renderReportPane() {
     const list = document.getElementById('fxReportList');
     if (!list) return;
+    renderNameList();
+    const who = (document.getElementById('fxReportWho').value || '').trim();
+    document.querySelector('#fxReportPane .fx-month-nav').hidden = Boolean(who);
+    if (who) { renderPersonHistory(who); return; }
     document.getElementById('fxReportMonth').textContent = monthLabelOf(reportMonth);
     const deals = exchangeState.deals.filter(d => d.date.slice(0, 7) === reportMonth);
     const spends = (expenseLogs[reportMonth] || []).slice();
@@ -1377,7 +1525,7 @@ function renderReportPane() {
             <button type="button" class="log-row fx-row is-jual" onclick="openDealDialog('${escapeHTML(d.id)}')">
                 <span class="log-row-main">
                     <span class="log-row-title">${fxFlag(d.currency)} ${fxQty(d.qty)} ${d.currency}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
-                    <span class="log-row-pos">kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'kurs modal belum diisi'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''}</span>
+                    <span class="log-row-pos">kurs ${fxRate(Math.round(d.idr / d.qty * 100) / 100)} · ${d.modal ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
                 </span>
                 <span class="log-row-amount">+${formatIDR(d.idr)}</span>
             </button>`).join('')}
@@ -1385,7 +1533,7 @@ function renderReportPane() {
             <button type="button" class="log-row fx-row is-beli" onclick="openReportExpenseEdit('${escapeHTML(l.id)}')">
                 <span class="log-row-main">
                     <span class="log-row-title">${escapeHTML(l.note || l.merchant || 'Pengeluaran')}</span>
-                    <span class="log-row-pos">pengeluaran${l.bankKey ? ' · ' + escapeHTML(bankNameOf(l.bankKey)) : ''}</span>
+                    <span class="log-row-pos">pengeluaran${l.bankKey ? ' · ' + escapeHTML(bankNameOf(l.bankKey)) : ''} ${byTag(l)}</span>
                 </span>
                 <span class="log-row-amount">−${formatIDR(l.amount)}</span>
             </button>`).join('')}
@@ -1409,7 +1557,7 @@ function renderDepositUI() {
         list.innerHTML = '<div class="log-empty">Belum ada titipan. Klik <b>+ Orang baru</b> untuk investor atau pekerja yang nitip uang, lalu <b>+ Setor / nitip</b>.</div>';
         return;
     }
-    const order = { investor: 0, pekerja: 1, lainnya: 2 };
+    const order = { investor: 0, pekerja: 1, pelanggan: 2, lainnya: 3 };
     list.innerHTML = people.slice().sort((a, b) => order[a.kind] - order[b.kind] || a.name.localeCompare(b.name)).map(p => {
         const bal = byPerson[p.id];
         const parts = FX_DEPOSIT_CURRENCIES.filter(c => bal[c]).map(c => `<span class="fx-dep-amount">${fxFlag(c)} ${fxAmount(bal[c], c)}</span>`);
@@ -1614,6 +1762,7 @@ function handleDepositMoveSubmit(event) {
         bankDelta: 0,
         tradeId: '',
         demo: false,
+        by: recordedBy(),
         createdAt: Date.now()
     };
     move.bankDelta = depositBankDeltaFor(move);
@@ -1677,7 +1826,7 @@ function renderDepositHistory() {
         <div class="fx-move-row is-${m.type}">
             <span class="log-row-main">
                 <span class="log-row-title"><em class="fx-tag">${FX_MOVE_TYPES[m.type].short}</em> ${m.type === 'setor' ? '+' : '−'}${fxAmount(m.amount, m.currency)}</span>
-                <span class="log-row-pos">${escapeHTML(formatShortDate(m.date))}${m.type === 'kirim' ? ` · dikirim ${formatIDR(m.idr)} (kurs ${fxRate(m.rate)})` : ''}${m.bankKey ? ' · ' + escapeHTML(bankNameOf(m.bankKey)) : ''}${m.note ? ' · ' + escapeHTML(m.note) : ''}</span>
+                <span class="log-row-pos">${escapeHTML(formatShortDate(m.date))}${m.type === 'kirim' ? ` · dikirim ${formatIDR(m.idr)} (kurs ${fxRate(m.rate)})` : ''}${m.bankKey ? ' · ' + escapeHTML(bankNameOf(m.bankKey)) : ''}${m.note ? ' · ' + escapeHTML(m.note) : ''} ${byTag(m)}</span>
             </span>
             <button type="button" class="fx-move-del" onclick="deleteDepositMove('${escapeHTML(m.id)}')" aria-label="Hapus mutasi">×</button>
         </div>`).join('') : '<div class="log-empty">Belum ada mutasi.</div>';
@@ -1709,11 +1858,12 @@ function exchangeAssistantContext() {
     const t = assetTotals();
     return {
         aset: {
-            rumus: 'total bersih = pegangan + talangan - uang orang (titipan & investor) - hutang',
+            rumus: 'total bersih = pegangan + talangan - uang orang (titipan) - hutang; dana investor terpisah, belum masuk rumus',
             total_bersih_rupiah: t.total,
             pegangan_rupiah: t.pegangan,
             talangan_rupiah: t.talangan,
             uang_orang_rupiah: t.titipan,
+            dana_investor_rupiah_belum_masuk_rumus: t.investor,
             hutang_rupiah: t.hutang,
             rupiah_di_bank: Object.fromEntries(BANK_ACCOUNTS.map(acc => [acc.name, Number(bankBalances[acc.key]) || 0])),
             kurs_pemilik_rp_per_1: exchangeState.assetRates,

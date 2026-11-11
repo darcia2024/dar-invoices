@@ -4,7 +4,7 @@
 // balances or contacts reach the page. Data is stored per account by api/billing-state.js.
 const fs = require("fs");
 const path = require("path");
-const { hasValidSession } = require("./_session");
+const { sessionUser } = require("./_session");
 const { getWorkspace } = require("./_workspaces");
 
 const files = {};
@@ -52,25 +52,32 @@ function fillPlaceholders(text, ws) {
 
 // Runs before anything else on the page: tells the dashboard which account it is, keeps this
 // account's browser storage apart from DAR's (same domain), and tags every /api request.
-function bootstrapScript(ws) {
-  const info = JSON.stringify({ slug: ws.slug, name: ws.name, owner: ws.owner || ws.name, home: `/${ws.slug}`, kind: ws.kind || "", currencies: ws.currencies || [], banks: ws.banks || [] }).replace(/</g, "\\u003c");
+// Who is signed in, for "dicatat oleh" on every entry: the owner or one of ws.users.
+function personOf(ws, who) {
+  const user = who && who !== "owner" ? (ws.users || []).find((u) => u.id === who) : null;
+  return user ? { id: user.id, name: user.name, owner: false } : { id: "owner", name: ws.owner || ws.name, owner: true };
+}
+
+function bootstrapScript(ws, who) {
+  const info = JSON.stringify({ slug: ws.slug, name: ws.name, owner: ws.owner || ws.name, user: personOf(ws, who), team: (ws.users || []).length > 0, home: `/${ws.slug}`, kind: ws.kind || "", currencies: ws.currencies || [], banks: ws.banks || [] }).replace(/</g, "\\u003c");
   return `<script>window.DAR_WS=${info};(function(){var p='ws:'+DAR_WS.slug+':',S=Storage.prototype,g=S.getItem,s=S.setItem,r=S.removeItem;` +
     `S.getItem=function(k){return g.call(this,p+k)};S.setItem=function(k,v){return s.call(this,p+k,v)};S.removeItem=function(k){return r.call(this,p+k)};` +
     `var f=window.fetch;window.fetch=function(u,o){if(typeof u==='string'&&u.indexOf('/api/')===0){o=Object.assign({},o);var h=new Headers(o.headers||{});h.set('X-DAR-Workspace',DAR_WS.slug);o.headers=h}return f.call(this,u,o)}})();</script>`;
 }
 
-function dashboardPage(ws) {
+function dashboardPage(ws, who = "owner") {
   let html = readFile("index.html")
     .replace(/<!--dar-only-->[\s\S]*?<!--\/dar-only-->/g, "")
     .replace(/\/\*dar-only\*\/[\s\S]*?\/\*\/dar-only\*\//g, "")
     .replace(/<!--ws:([\s\S]*?)-->/g, "$1")
     .replace(/\/\*ws:([\s\S]*?)\*\//g, "$1");
-  html = mustReplace(html, '<meta charset="UTF-8">', `<meta charset="UTF-8">\n    ${bootstrapScript(ws)}`);
+  html = mustReplace(html, '<meta charset="UTF-8">', `<meta charset="UTF-8">\n    ${bootstrapScript(ws, who)}`);
   // No PIN yet: nothing to lock or change, so hide those buttons.
   if (ws.open) html = mustReplace(html, '<link rel="stylesheet" href="/dashboard.css">', '<link rel="stylesheet" href="/dashboard.css">\n    <style>.mobile-top-actions, .sidebar-account button, .sidebar-link.mobile-lock { display: none !important; }</style>');
   // Money changers get the "Tukar" screen; deferred, so it runs after the dashboard script.
   if (ws.kind === "exchange") html = mustReplace(html, '<link rel="stylesheet" href="/dashboard.css">', '<link rel="stylesheet" href="/dashboard.css">\n    <script src="/exchange.js" defer></script>');
-  return applyBrand(fillPlaceholders(html, ws), ws);
+  // The sidebar names the person signed in.
+  return applyBrand(fillPlaceholders(html, { ...ws, owner: personOf(ws, who).name }), ws);
 }
 
 function loginPage(ws) {
@@ -122,7 +129,8 @@ module.exports = function handler(req, res) {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("X-Robots-Tag", "noindex, nofollow");
-    return res.status(200).send(hasValidSession(req, ws.slug) ? dashboardPage(ws) : loginPage(ws));
+    const who = sessionUser(req, ws.slug);
+    return res.status(200).send(who ? dashboardPage(ws, who) : loginPage(ws));
   } catch (error) {
     console.error("workspace page failed:", error);
     res.setHeader("Cache-Control", "no-store");
