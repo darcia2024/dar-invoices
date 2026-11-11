@@ -81,6 +81,27 @@ button { font: inherit; cursor: pointer; }
 .inv-foot strong { font-weight: 600; }
 .inv-foot .acc { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .inv-foot .acc button { border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; background: transparent; color: var(--text); }
+/* Optional add-ons: the client ticks what they want, the total follows */
+.inv-addons { margin-top: 26px; }
+.inv-addons > .label { margin-bottom: 4px; }
+.inv-addons > p { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.addon { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line); cursor: pointer; }
+.addon:last-of-type { border-bottom: 1px solid var(--line); }
+.addon input { position: absolute; opacity: 0; pointer-events: none; }
+.addon .box { width: 20px; height: 20px; margin-top: 1px; border: 1.5px solid #bdb3a0; border-radius: 6px; display: grid; place-items: center; transition: background .15s, border-color .15s; }
+.addon .box::after { content: ""; width: 10px; height: 6px; border: 2px solid #fffdf3; border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px, -1px); opacity: 0; }
+.addon input:checked + .box { background: var(--paid); border-color: var(--paid); }
+.addon input:checked + .box::after { opacity: 1; }
+.addon input:focus-visible + .box { outline: 2px solid var(--text); outline-offset: 2px; }
+.addon .item { font-weight: 600; }
+.addon .desc { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.addon .price { font-weight: 600; white-space: nowrap; }
+.addon:hover .box { border-color: var(--text); }
+.inv-total .with { display: block; font-size: 11px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); margin-top: 4px; }
+.inv-confirm { display: none; margin-top: 12px; text-align: right; }
+.inv-confirm.show { display: block; }
+.inv-confirm a { display: inline-block; border-radius: 10px; padding: 9px 14px; font-size: 12px; font-weight: 600; background: var(--paid); color: #fffdf3; text-decoration: none; }
+
 /* Payment accounts: compact, side by side; the holder's name is said once in the label */
 .inv-pay { margin-top: 30px; }
 .inv-pay .label b { color: var(--text); font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 12px; }
@@ -139,6 +160,9 @@ button { font: inherit; cursor: pointer; }
     body { background: #fff; padding: 0; }
     .inv-gate, .inv-tools, .inv-toast, .inv-foot .acc button, .inv-pay button { display: none !important; }
     .inv-sign { break-inside: avoid; }
+    .addon:not(.on), .inv-confirm, .inv-addons > p { display: none !important; }
+    .inv-addons:not(.has-on) { display: none; }
+    .addon .box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .inv { max-width: none; border: 0; border-radius: 0; padding: 0; background: #fff; }
     .pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }

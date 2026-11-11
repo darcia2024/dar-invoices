@@ -54,4 +54,52 @@
         if (btn) copy(btn.dataset.copy, btn.dataset.label || "Nomor");
     });
     window.printInvoice = function () { window.print(); };
+
+    // Optional add-ons: <section class="inv-addons" data-base="650000" data-wa="62813..."> with
+    // <label class="addon"><input type="checkbox" data-price="200000" data-name="Domain .com 1 tahun">…</label>.
+    // Ticking one updates the total, the words under it, and a WhatsApp confirmation link.
+    const addons = document.querySelector(".inv-addons");
+    if (addons) {
+        const base = Number(addons.dataset.base) || 0;
+        const totalEl = document.querySelector(".inv-total strong");
+        const labelEl = document.querySelector(".inv-total span");
+        const wordsEl = document.querySelector(".inv-words");
+        const confirm = document.querySelector(".inv-confirm");
+        const confirmLink = confirm && confirm.querySelector("a");
+        const invoiceNo = (document.querySelector(".inv-title .no") || {}).textContent || "";
+        const rupiah = (n) => "Rp " + n.toLocaleString("id-ID");
+        const words = (n) => {
+            const units = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
+            const say = (x) => {
+                if (x < 12) return units[x];
+                if (x < 20) return say(x - 10) + " belas";
+                if (x < 100) return say(Math.floor(x / 10)) + " puluh" + (x % 10 ? " " + say(x % 10) : "");
+                if (x < 200) return "seratus" + (x - 100 ? " " + say(x - 100) : "");
+                if (x < 1000) return say(Math.floor(x / 100)) + " ratus" + (x % 100 ? " " + say(x % 100) : "");
+                if (x < 2000) return "seribu" + (x - 1000 ? " " + say(x - 1000) : "");
+                if (x < 1e6) return say(Math.floor(x / 1000)) + " ribu" + (x % 1000 ? " " + say(x % 1000) : "");
+                if (x < 1e9) return say(Math.floor(x / 1e6)) + " juta" + (x % 1e6 ? " " + say(x % 1e6) : "");
+                return say(Math.floor(x / 1e9)) + " miliar" + (x % 1e9 ? " " + say(x % 1e9) : "");
+            };
+            return n ? say(n) + " rupiah" : "nol rupiah";
+        };
+        const refresh = () => {
+            const picked = [...addons.querySelectorAll("input[type=checkbox]")].filter((i) => i.checked);
+            addons.querySelectorAll(".addon").forEach((row) => row.classList.toggle("on", row.querySelector("input").checked));
+            addons.classList.toggle("has-on", picked.length > 0);
+            const extra = picked.reduce((sum, i) => sum + Number(i.dataset.price || 0), 0);
+            totalEl.textContent = rupiah(base + extra);
+            labelEl.innerHTML = picked.length ? "Total<small class=\"with\">termasuk " + picked.length + " add-on</small>" : "Total";
+            if (wordsEl) wordsEl.textContent = words(base + extra);
+            if (confirm && confirmLink) {
+                confirm.classList.toggle("show", picked.length > 0);
+                const text = `Halo, untuk invoice ${invoiceNo.trim()} saya mau tambah:\n` +
+                    picked.map((i) => `- ${i.dataset.name} (${rupiah(Number(i.dataset.price))})`).join("\n") +
+                    `\nTotal jadi ${rupiah(base + extra)}.`;
+                confirmLink.href = `https://wa.me/${addons.dataset.wa}?text=${encodeURIComponent(text)}`;
+            }
+        };
+        addons.addEventListener("change", refresh);
+        refresh();
+    }
 })();

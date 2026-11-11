@@ -276,7 +276,7 @@ let invoiceCssCache = '';
 async function invoiceCss() {
     if (invoiceCssCache) return invoiceCssCache;
     try {
-        const response = await fetch('/brand/invoice.css?v=7');
+        const response = await fetch('/brand/invoice.css?v=8');
         if (response.ok) invoiceCssCache = await response.text();
     } catch (error) {}
     return invoiceCssCache;
