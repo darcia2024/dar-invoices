@@ -88,8 +88,8 @@ button { font: inherit; cursor: pointer; }
 .inv-pay li { padding: 12px 14px 0; min-width: 0; }
 .inv-pay li:first-child { padding-left: 0; }
 .inv-pay li + li { border-left: 1px solid var(--line); }
-.inv-pay .logo { height: 18px; display: flex; align-items: center; margin-bottom: 6px; }
-.inv-pay .logo img { max-height: 18px; max-width: 80px; width: auto; height: auto; display: block; }
+.inv-pay .logo { height: 30px; display: flex; align-items: center; margin-bottom: 8px; }
+.inv-pay .logo img { max-height: 30px; max-width: 120px; width: auto; height: auto; display: block; }
 .inv-pay .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .inv-pay .acct { font-weight: 600; font-size: 14px; }
 .inv-pay button { border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; background: transparent; color: var(--text); }
@@ -128,8 +128,8 @@ button { font: inherit; cursor: pointer; }
     .inv-pay ul { grid-template-columns: 1fr; }
     .inv-pay li { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
     .inv-pay li + li { border-left: 0; border-top: 1px solid var(--line); }
-    .inv-pay .logo { width: 64px; flex-shrink: 0; margin: 0; }
-    .inv-pay .logo img { max-width: 64px; }
+    .inv-pay .logo { width: 92px; height: 26px; flex-shrink: 0; margin: 0; }
+    .inv-pay .logo img { max-width: 92px; max-height: 26px; }
     .inv-pay .row { flex: 1; justify-content: space-between; flex-wrap: nowrap; }
     .inv-sign { grid-template-columns: 1fr; gap: 16px; }
     .inv-sign .sig { justify-self: end; }

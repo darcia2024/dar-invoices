@@ -276,7 +276,7 @@ let invoiceCssCache = '';
 async function invoiceCss() {
     if (invoiceCssCache) return invoiceCssCache;
     try {
-        const response = await fetch('/brand/invoice.css?v=5');
+        const response = await fetch('/brand/invoice.css?v=6');
         if (response.ok) invoiceCssCache = await response.text();
     } catch (error) {}
     return invoiceCssCache;
@@ -298,7 +298,7 @@ async function openGeneratedInvoice(id) {
     const pill = status === 'PAID' ? '<span class="pill paid">Lunas</span>' : status === 'DP' ? '<span class="pill unpaid">DP</span>' : '<span class="pill unpaid">Belum dibayar</span>';
     const holders = [...new Set(issuer.accounts.map(a => a.holder))];
     const oneHolder = holders.length === 1 ? holders[0] : '';
-    const payRows = issuer.accounts.map(a => `<li><span class="logo"><img src="${e(a.logo)}" alt="${e(a.bank)}" height="18"></span><span class="row"><span class="acct num">${e(a.number)}</span><button type="button" data-copy="${e(a.number)}">Salin</button></span>${oneHolder ? '' : `<span class="holder" style="display:block;font-size:12px;color:#6b675b">a.n. ${e(a.holder)}</span>`}</li>`).join('');
+    const payRows = issuer.accounts.map(a => `<li><span class="logo"><img src="${e(a.logo)}" alt="${e(a.bank)}" height="30"></span><span class="row"><span class="acct num">${e(a.number)}</span><button type="button" data-copy="${e(a.number)}">Salin</button></span>${oneHolder ? '' : `<span class="holder" style="display:block;font-size:12px;color:#6b675b">a.n. ${e(a.holder)}</span>`}</li>`).join('');
     const pay = issuer.accounts.length ? `<section class="inv-pay"><span class="label">Bayar ke${issuer.accounts.length > 1 ? ' salah satu' : ''}${oneHolder ? ` · a.n. <b>${e(oneHolder)}</b>` : ''}</span><ul>${payRows}</ul></section>` : '';
     const balanceRows = paid > 0 ? `<tr><td>Sudah dibayar</td><td class="num">− ${formatIDR(paid)}</td></tr>` : '';
     const html = `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Invoice ${e(item.reference)}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet"><style>${css}</style></head><body>
