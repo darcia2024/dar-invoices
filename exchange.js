@@ -31,6 +31,7 @@ const FX_MOVE_TYPES = {
     kirim: { label: 'Kirim rupiah', short: 'Kirim' }
 };
 const FX_DEPOSIT_CURRENCIES = ['IDR', ...FX_CURRENCIES];
+const ASSET_HISTORY_FIELDS = ['total', 'pegangan', 'bank', 'valas', 'talangan', 'titipan', 'investor', 'hutang', 'profit', 'spent'];
 
 let exchangeState = (() => {
     try { return normalizeExchange(JSON.parse(localStorage.getItem(FX_LOCAL_KEY) || 'null')); } catch (e) { return normalizeExchange(null); }
@@ -51,7 +52,7 @@ function defaultHoldings() {
 }
 
 function normalizeExchange(value) {
-    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], trades: {}, demo: false, deposits: { people: [], moves: [] } };
+    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], assetHistory: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
     FX_CURRENCIES.forEach(c => {
         const r = value && value.rates && value.rates[c];
         out.rates[c] = { sell: Math.max(0, Number(r && r.sell) || 0), buy: Math.max(0, Number(r && r.buy) || 0) };
@@ -88,6 +89,13 @@ function normalizeExchange(value) {
             }));
     });
     out.deposits = normalizeDeposits(value.deposits);
+    // Monthly asset report: the last known numbers of each month.
+    out.assetHistory = {};
+    Object.entries(value.assetHistory || {}).forEach(([month, s]) => {
+        if (!/^\d{4}-\d{2}$/.test(month) || !s || typeof s !== 'object') return;
+        out.assetHistory[month] = Object.fromEntries(ASSET_HISTORY_FIELDS.map(k => [k, Math.round(Number(s[k]) || 0)]));
+        out.assetHistory[month].at = /^\d{4}-\d{2}-\d{2}$/.test(s.at || '') ? s.at : `${month}-01`;
+    });
     out.deals = (Array.isArray(value.deals) ? value.deals : []).filter(d => d && FX_CURRENCIES.includes(d.currency) && Number(d.qty) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(d.date || '')).map(d => ({
         id: String(d.id || 'deal-' + crypto.randomUUID()).slice(0, 80),
         date: d.date,
@@ -459,6 +467,20 @@ function ensureExchangeUI() {
                     </div>
                 </div>
                 <div class="bank-grid" id="fxAssetGrid"></div>
+            </div>
+            <div class="bank-tracker-card fx-own is-expanded">
+                <div class="bank-tracker-header">
+                    <div class="bank-header-left">
+                        <div class="bank-icon-badge" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+                        </div>
+                        <div>
+                            <div class="bank-tracker-title">Laporan Aset per Bulan</div>
+                            <div class="bank-tracker-subtitle">Angka akhir tiap bulan. Bulan ini ikut berubah tiap ada catatan baru.</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="fxAssetHistory"></div>
             </div>
         </div>
         <div id="fxDepositPane" hidden>
@@ -1099,6 +1121,11 @@ function renderAssetPane() {
     renderAssetNumbers();
 }
 
+// Logos for foreign-money places, matched on the name the owner gave the place.
+const PLACE_LOGOS = [
+    { match: /insta\s*pay/i, src: '/bank-logos/instapay.png' }
+];
+
 const FX_STAT_ICONS = {
     total: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
     pegangan: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>',
@@ -1168,12 +1195,75 @@ function renderAssetNumbers() {
     });
     const places = exchangeState.holdings.map(h => {
         const idr = assetIdr(h.amount, h.currency);
-        return tile(`${fxFlag(h.currency, 'fx-flag is-lg')}<b class="fx-tile-name">${escapeHTML(h.label || h.currency)}</b>`, FX_NAMES[h.currency] || h.currency, pctOf(idr),
+        // Places with a known logo show it, like the bank tiles; others show the flag and name.
+        const logo = PLACE_LOGOS.find(p => p.match.test(h.label || ''));
+        const brand = logo
+            ? `<img class="bank-logo-img" src="${logo.src}" alt="${escapeHTML(h.label)}" loading="lazy">`
+            : `${fxFlag(h.currency, 'fx-flag is-lg')}<b class="fx-tile-name">${escapeHTML(h.label || h.currency)}</b>`;
+        return tile(brand, FX_NAMES[h.currency] || h.currency, pctOf(idr),
             { text: exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(idr)}` : 'kurs belum diisi', empty: !exchangeState.assetRates[h.currency] },
             `${fxQty(h.amount)} ${h.currency}`, '',
             `<button type="button" class="bank-copy-btn" onclick="openAssetDialog()">Ubah jumlah</button>`);
     });
     document.getElementById('fxAssetGrid').innerHTML = banks.concat(places).join('');
+    renderAssetHistory(t);
+}
+
+// ---------- Laporan aset per bulan ----------
+// The current month's numbers are kept up to date as things change; when a month is over its
+// last numbers stay as that month's line. Months before this started have no line.
+function snapshotAssets(t) {
+    const month = currentMonthKey();
+    const spent = (expenseLogs[month] || []).reduce((s, l) => s + l.amount, 0);
+    const snap = {
+        total: t.total, pegangan: t.pegangan, bank: t.bank, valas: t.valas, talangan: t.talangan,
+        titipan: t.titipan, investor: t.investor, hutang: t.hutang,
+        profit: dealProfitSum(exchangeState.deals.filter(d => d.date.slice(0, 7) === month)), spent
+    };
+    const old = exchangeState.assetHistory[month];
+    if (old && ASSET_HISTORY_FIELDS.every(k => old[k] === Math.round(snap[k] || 0))) return;
+    // Nothing entered yet: no line for an empty account.
+    if (!old && !t.pegangan && !t.talangan && !t.titipan && !t.investor) return;
+    exchangeState.assetHistory[month] = { ...Object.fromEntries(ASSET_HISTORY_FIELDS.map(k => [k, Math.round(snap[k] || 0)])), at: localDateKey() };
+    saveExchangeLocal(); // goes to the cloud with the next save
+}
+
+function renderAssetHistory(t) {
+    snapshotAssets(t);
+    const el = document.getElementById('fxAssetHistory');
+    const months = Object.keys(exchangeState.assetHistory).sort().reverse().slice(0, 12);
+    if (!months.length) {
+        el.innerHTML = '<div class="log-empty">Laporan bulanan mulai terisi begitu saldo diisi lewat <b>Update saldo</b>.</div>';
+        return;
+    }
+    const now = currentMonthKey();
+    const change = (month, key) => {
+        const prev = exchangeState.assetHistory[prevMonthKey(month)];
+        if (!prev) return '';
+        const d = exchangeState.assetHistory[month][key] - prev[key];
+        return `<small class="${d < 0 ? 'is-down' : 'is-up'}">${d < 0 ? '▼' : '▲'} ${formatIDR(Math.abs(d))}</small>`;
+    };
+    el.innerHTML = `
+        <div class="fx-history-table" role="table">
+            <div class="fx-history-row is-head" role="row">
+                <span role="columnheader">Bulan</span><span role="columnheader">Aset bersih</span><span role="columnheader">Pegangan</span>
+                <span role="columnheader">+ Talangan</span><span role="columnheader">− Uang orang</span><span role="columnheader">Untung tukar</span><span role="columnheader">Pengeluaran</span>
+            </div>
+            ${months.map(m => {
+                const s = exchangeState.assetHistory[m];
+                return `
+                <div class="fx-history-row" role="row">
+                    <span role="cell" data-label="Bulan"><b>${escapeHTML(monthLabelOf(m))}</b>${m === now ? '<small>berjalan</small>' : `<small>per ${escapeHTML(formatShortDate(s.at))}</small>`}</span>
+                    <span role="cell" data-label="Aset bersih" class="is-total"><b class="${s.total < 0 ? 'is-minus' : ''}">${formatIDR(s.total)}</b>${change(m, 'total')}</span>
+                    <span role="cell" data-label="Pegangan">${formatIDR(s.pegangan)}</span>
+                    <span role="cell" data-label="+ Talangan">${formatIDR(s.talangan)}</span>
+                    <span role="cell" data-label="− Uang orang">${formatIDR(s.titipan + s.hutang)}</span>
+                    <span role="cell" data-label="Untung tukar">${formatIDR(s.profit)}</span>
+                    <span role="cell" data-label="Pengeluaran">${formatIDR(s.spent)}</span>
+                </div>`;
+            }).join('')}
+        </div>
+        ${months.some(m => exchangeState.assetHistory[m].investor) ? '<p class="bank-cut-hint">Dana investor tidak termasuk di aset bersih (masih nunggu konfirmasi cara hitungnya).</p>' : ''}`;
 }
 
 function openAssetDialog() {
