@@ -52,7 +52,7 @@ function defaultHoldings() {
 }
 
 function normalizeExchange(value) {
-    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], assetHistory: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
+    const out = { rates: {}, assetRates: {}, holdings: defaultHoldings(), deals: [], assetHistory: {}, assetDaily: {}, trades: {}, demo: false, deposits: { people: [], moves: [] } };
     FX_CURRENCIES.forEach(c => {
         const r = value && value.rates && value.rates[c];
         out.rates[c] = { sell: Math.max(0, Number(r && r.sell) || 0), buy: Math.max(0, Number(r && r.buy) || 0) };
@@ -95,6 +95,12 @@ function normalizeExchange(value) {
         if (!/^\d{4}-\d{2}$/.test(month) || !s || typeof s !== 'object') return;
         out.assetHistory[month] = Object.fromEntries(ASSET_HISTORY_FIELDS.map(k => [k, Math.round(Number(s[k]) || 0)]));
         out.assetHistory[month].at = /^\d{4}-\d{2}-\d{2}$/.test(s.at || '') ? s.at : `${month}-01`;
+    });
+    // Daily report: the aset bersih at the end of each day (last 62 days kept).
+    out.assetDaily = {};
+    Object.keys(value.assetDaily || {}).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort().slice(-62).forEach(day => {
+        const s = value.assetDaily[day];
+        if (s && typeof s === 'object') out.assetDaily[day] = { total: Math.round(Number(s.total) || 0), pegangan: Math.round(Number(s.pegangan) || 0) };
     });
     out.deals = (Array.isArray(value.deals) ? value.deals : []).filter(d => d && FX_CURRENCIES.includes(d.currency) && Number(d.qty) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(d.date || '')).map(d => ({
         id: String(d.id || 'deal-' + crypto.randomUUID()).slice(0, 80),
@@ -437,6 +443,7 @@ function ensureExchangeUI() {
                 <button type="button" class="plan-nav-btn" onclick="shiftReportMonth(1)" aria-label="Bulan berikutnya">›</button>
             </div>
             <div class="fx-stats" id="fxReportStats"></div>
+            <div class="fx-daily-card" id="fxDailyReport"></div>
             <div id="fxReportList"></div>
         </div>
         <div id="fxAssetPane">
@@ -731,6 +738,7 @@ function clearFxDemo() {
         FX_CURRENCIES.forEach(c => { exchangeState.rates[c] = { sell: 0, buy: 0 }; exchangeState.assetRates[c] = 0; });
         exchangeState.holdings.forEach(h => { h.amount = 0; });
         exchangeState.assetHistory = {};
+        exchangeState.assetDaily = {};
         BANK_ACCOUNTS.forEach(acc => { bankBalances[acc.key] = 0; });
         bankBalancesUpdatedAt = '';
     }
@@ -1238,9 +1246,20 @@ function snapshotAssets(t) {
         profit: dealProfitSum(exchangeState.deals.filter(d => d.date.slice(0, 7) === month)), spent
     };
     const old = exchangeState.assetHistory[month];
-    if (old && ASSET_HISTORY_FIELDS.every(k => old[k] === Math.round(snap[k] || 0))) return;
     // Nothing entered yet: no line for an empty account.
     if (!old && !t.pegangan && !t.talangan && !t.titipan && !t.investor) return;
+    const day = localDateKey();
+    const daily = exchangeState.assetDaily[day];
+    const dailyChanged = !daily || daily.total !== Math.round(t.total) || daily.pegangan !== Math.round(t.pegangan);
+    if (dailyChanged) {
+        exchangeState.assetDaily[day] = { total: Math.round(t.total), pegangan: Math.round(t.pegangan) };
+        const days = Object.keys(exchangeState.assetDaily).sort();
+        days.slice(0, Math.max(0, days.length - 62)).forEach(d => delete exchangeState.assetDaily[d]);
+    }
+    if (old && ASSET_HISTORY_FIELDS.every(k => old[k] === Math.round(snap[k] || 0))) {
+        if (dailyChanged) saveExchangeLocal();
+        return;
+    }
     exchangeState.assetHistory[month] = { ...Object.fromEntries(ASSET_HISTORY_FIELDS.map(k => [k, Math.round(snap[k] || 0)])), at: localDateKey() };
     saveExchangeLocal(); // goes to the cloud with the next save
 }
@@ -1565,6 +1584,52 @@ function openReportExpenseEdit(id) {
     openExpenseLogDialog(id);
 }
 
+// ---------- Laporan harian ----------
+// One line per day of the chosen month (newest first): tukar, rupiah in, profit, spending, the
+// day's net, and the aset bersih at the end of that day with its change from the day before.
+function renderDailyReport() {
+    const el = document.getElementById('fxDailyReport');
+    const today = localDateKey();
+    const [y, m] = reportMonth.split('-').map(Number);
+    const lastDay = reportMonth === today.slice(0, 7) ? Number(today.slice(8, 10)) : new Date(y, m, 0).getDate();
+    const deals = exchangeState.deals.filter(d => d.date.slice(0, 7) === reportMonth);
+    const spends = expenseLogs[reportMonth] || [];
+    const snapDays = Object.keys(exchangeState.assetDaily).sort();
+    const snapBefore = day => {
+        for (let i = snapDays.length - 1; i >= 0; i--) if (snapDays[i] < day) return exchangeState.assetDaily[snapDays[i]];
+        return null;
+    };
+    const rows = [];
+    for (let d = lastDay; d >= 1; d--) {
+        const day = `${reportMonth}-${String(d).padStart(2, '0')}`;
+        const dd = deals.filter(x => x.date === day);
+        const ss = spends.filter(x => x.date === day);
+        const snap = exchangeState.assetDaily[day];
+        if (!dd.length && !ss.length && !snap) continue;
+        const profit = dealProfitSum(dd);
+        const spent = ss.reduce((s, l) => s + l.amount, 0);
+        const prev = snap ? snapBefore(day) : null;
+        const change = snap && prev ? snap.total - prev.total : null;
+        const label = new Date(y, m - 1, d).toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
+        rows.push(`
+            <div class="fx-history-row fx-daily-row" role="row">
+                <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}</span>
+                <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dd.reduce((s, x) => s + x.idr, 0))}` : '<i>-</i>'}</span>
+                <span role="cell" data-label="Untung">${dd.length ? formatIDR(profit) : '<i>-</i>'}</span>
+                <span role="cell" data-label="Pengeluaran">${ss.length ? formatIDR(spent) : '<i>-</i>'}</span>
+                <span role="cell" data-label="Bersih hari ini"><b class="${profit - spent < 0 ? 'is-minus' : ''}">${formatIDR(profit - spent)}</b></span>
+                <span role="cell" data-label="Aset bersih" class="is-total">${snap ? `<b>${formatIDR(snap.total)}</b>${change === null ? '' : `<small class="${change < 0 ? 'is-down' : 'is-up'}">${change < 0 ? '▼' : '▲'} ${formatIDR(Math.abs(change))}</small>`}` : '<i>-</i>'}</span>
+            </div>`);
+    }
+    el.innerHTML = `
+        <div class="fx-daily-head"><b>Laporan harian</b><span>Aset bersih dicatat otomatis di akhir tiap hari.</span></div>
+        ${rows.length ? `<div class="fx-history-table fx-daily-table" role="table">
+            <div class="fx-history-row fx-daily-row is-head" role="row">
+                <span role="columnheader">Tanggal</span><span role="columnheader">Tukar</span><span role="columnheader">Untung</span>
+                <span role="columnheader">Pengeluaran</span><span role="columnheader">Bersih hari ini</span><span role="columnheader">Aset bersih</span>
+            </div>${rows.join('')}</div>` : `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(reportMonth))}.</div>`}`;
+}
+
 // Names already used anywhere (tukar, titipan, talangan), so a regular is picked, not retyped.
 function renderNameList() {
     const names = new Set();
@@ -1599,7 +1664,9 @@ function renderReportPane() {
     renderNameList();
     const who = (document.getElementById('fxReportWho').value || '').trim();
     document.querySelector('#fxReportPane .fx-month-nav').hidden = Boolean(who);
+    document.getElementById('fxDailyReport').hidden = Boolean(who);
     if (who) { renderPersonHistory(who); return; }
+    renderDailyReport();
     document.getElementById('fxReportMonth').textContent = monthLabelOf(reportMonth);
     const deals = exchangeState.deals.filter(d => d.date.slice(0, 7) === reportMonth);
     const spends = (expenseLogs[reportMonth] || []).slice();

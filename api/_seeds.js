@@ -126,6 +126,7 @@ function sampleV2() {
     deals,
     deposits: { people, moves },
     assetHistory: history,
+    assetDaily: dailySample(),
   };
 
   // Talangan: one due today (the reminder shows), one tomorrow, one late, one partly paid, one
@@ -173,6 +174,25 @@ function sampleV2() {
   };
 }
 
+// Sample daily report: aset bersih at the end of the last 10 days, rising slowly (today's line
+// is written by the screen itself).
+function dailySample() {
+  const out = {};
+  for (let ago = 10; ago >= 1; ago--) {
+    const step = 10 - ago;
+    out[jakartaDate(-ago)] = { total: 79800000 + step * 210000 + (step % 3 === 0 ? -150000 : 0), pegangan: 85600000 + step * 160000 };
+  }
+  return out;
+}
+
+// Adds the daily sample to an account still showing sample v2 (it came before the daily report).
+function withDailySample(state) {
+  const exchange = state.exchange && typeof state.exchange === "object" ? state.exchange : null;
+  if (!exchange || exchange.demo !== true) return null;
+  if (exchange.assetDaily && Object.keys(exchange.assetDaily).length) return null;
+  return { ...state, exchange: { ...exchange, assetDaily: dailySample() } };
+}
+
 // Replaces the account's data with sample v2 (the old data is backed up, see above).
 function withSampleV2(state) {
   return { appliedMigrations: state.appliedMigrations || [], bankAccountDetails: state.bankAccountDetails || null, ...sampleV2() };
@@ -182,6 +202,7 @@ const SEEDS = {
   ziaud: [
     { id: "ziaud-bersih-v1", apply: withoutDemo },
     { id: "ziaud-contoh-v2", apply: withSampleV2, backup: true },
+    { id: "ziaud-contoh-v2-harian", apply: withDailySample },
   ],
 };
 
