@@ -40,10 +40,10 @@ button { font: inherit; cursor: pointer; }
 /* Paper */
 .inv { max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 36px 36px 30px; }
 .inv-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
-.inv-brand { display: flex; align-items: center; gap: 10px; }
-.inv-brand img { width: 44px; height: 44px; display: block; }
-.inv-brand b { display: block; font-size: 22px; font-weight: 700; letter-spacing: -.5px; line-height: 1; }
-.inv-brand small { display: block; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.inv-brand { display: flex; align-items: center; gap: 14px; }
+.inv-brand img { width: 68px; height: 68px; display: block; }
+.inv-brand b { display: block; font-size: 32px; font-weight: 700; letter-spacing: -.8px; line-height: 1; }
+.inv-brand small { display: block; font-size: 11px; font-weight: 600; letter-spacing: 2.6px; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
 .inv-title { text-align: right; }
 .inv-title h1 { font-size: 26px; font-weight: 600; letter-spacing: -.5px; line-height: 1.1; }
 .inv-title .no { color: var(--muted); font-size: 12px; margin-top: 6px; }
@@ -88,8 +88,8 @@ button { font: inherit; cursor: pointer; }
 .inv-pay li { padding: 12px 14px 0; min-width: 0; }
 .inv-pay li:first-child { padding-left: 0; }
 .inv-pay li + li { border-left: 1px solid var(--line); }
-.inv-pay .logo { height: 30px; display: flex; align-items: center; margin-bottom: 8px; }
-.inv-pay .logo img { max-height: 30px; max-width: 120px; width: auto; height: auto; display: block; }
+.inv-pay .logo { height: 18px; display: flex; align-items: center; margin-bottom: 6px; }
+.inv-pay .logo img { max-height: 18px; max-width: 80px; width: auto; height: auto; display: block; }
 .inv-pay .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .inv-pay .acct { font-weight: 600; font-size: 14px; }
 .inv-pay button { border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; font-size: 11px; font-weight: 600; background: transparent; color: var(--text); }
@@ -113,8 +113,8 @@ button { font: inherit; cursor: pointer; }
     .inv-tools button { padding: 10px 8px; }
     .inv { padding: 22px 18px 24px; border-radius: 16px; }
     .inv-head { flex-direction: row; align-items: center; gap: 12px; }
-    .inv-brand img { width: 36px; height: 36px; }
-    .inv-brand b { font-size: 19px; }
+    .inv-brand { gap: 10px; }
+    .inv-brand b { font-size: 25px; }
     .inv-title h1 { font-size: 22px; }
     .inv-title .no { font-size: 11px; margin-top: 2px; }
     .pill { margin-top: 6px; }
@@ -128,8 +128,8 @@ button { font: inherit; cursor: pointer; }
     .inv-pay ul { grid-template-columns: 1fr; }
     .inv-pay li { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
     .inv-pay li + li { border-left: 0; border-top: 1px solid var(--line); }
-    .inv-pay .logo { width: 92px; height: 26px; flex-shrink: 0; margin: 0; }
-    .inv-pay .logo img { max-width: 92px; max-height: 26px; }
+    .inv-pay .logo { width: 64px; flex-shrink: 0; margin: 0; }
+    .inv-pay .logo img { max-width: 64px; }
     .inv-pay .row { flex: 1; justify-content: space-between; flex-wrap: nowrap; }
     .inv-sign { grid-template-columns: 1fr; gap: 16px; }
     .inv-sign .sig { justify-self: end; }
