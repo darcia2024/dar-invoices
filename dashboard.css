@@ -3069,6 +3069,7 @@ body[data-view="tukar"] .stats-bar,
 body[data-view="tukar"] .invoice-tools,
 body[data-view="tukar"] .board-tabs,
 body[data-view="tukar"] .goal-tracker-card,
+body[data-view="tukar"] .bank-tracker-card,
 body[data-view="tukar"] .filter-section,
 body[data-view="tukar"] #debtSection,
 body[data-view="tukar"] #planSection,
@@ -3114,16 +3115,14 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-rate-row { display: grid; grid-template-columns: 86px 1fr 1fr; gap: 8px; align-items: end; }
 .fx-rate-cur { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; padding-bottom: 10px; }
 .fx-rate-row label { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px; color: #7a7567; text-transform: uppercase; letter-spacing: .3px; }
-.fx-rate-row input, .fx-calc-fields input { font: inherit; font-size: 16px; font-weight: 600; color: #24241f; background: #fffdf6; border: 1px solid #cfc6b3; border-radius: 9px; padding: 9px 10px; width: 100%; min-width: 0; font-variant-numeric: tabular-nums; }
-.fx-rate-row input:focus, .fx-calc-fields input:focus { outline: none; border-color: #43473b; }
-.fx-calc { border-top: 1px dashed #ddd4c0; padding-top: 12px; display: grid; gap: 10px; }
-.fx-calc-title { font-size: 13px; font-weight: 600; color: #24241f; }
-.fx-calc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.fx-calc-fields label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #5c584c; }
-.fx-calc-result { font-size: 12.5px; color: #4b483f; background: #f6f2e8; border-radius: 10px; padding: 10px 12px; display: grid; gap: 3px; }
-.fx-calc-result:empty { display: none; }
-.fx-calc-big { font-size: 17px; color: #24241f; font-variant-numeric: tabular-nums; }
-.fx-calc-big b { color: #1f5f33; }
+.fx-rate-row input { font: inherit; font-size: 16px; font-weight: 600; color: #24241f; background: #fffdf6; border: 1px solid #cfc6b3; border-radius: 9px; padding: 9px 10px; width: 100%; min-width: 0; font-variant-numeric: tabular-nums; }
+.fx-rate-row input:focus { outline: none; border-color: #43473b; }
+.fx-must-get { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; color: #4b483f; }
+.fx-must-get b { font-size: 20px; color: #24241f; font-variant-numeric: tabular-nums; }
+.fx-must-get .is-profit { font-size: 15px; color: #1f5f33; }
+.fx-more { margin-top: 10px; font-size: 12.5px; color: #5c584c; }
+.fx-more summary { cursor: pointer; padding: 6px 0; font-weight: 600; }
+.fx-more .draft-fields { margin-top: 8px; }
 @media (max-width: 600px) {
     .fx-quick { padding: 12px 13px; }
     .fx-rate-row { grid-template-columns: 70px 1fr 1fr; gap: 6px; }
@@ -3134,7 +3133,7 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-cur-chips button.active { background: #292b24; border-color: #292b24; color: #fffdf3; }
 .fx-cur-chips button.active .fx-flag { box-shadow: 0 0 0 1px rgba(255, 255, 255, .5); }
 .fx-stats span .fx-flag { vertical-align: -2px; margin-right: 2px; }
-.fx-pane-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #ebe6d9; border-radius: 12px; padding: 4px; margin-bottom: 14px; }
+.fx-pane-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; background: #ebe6d9; border-radius: 12px; padding: 4px; margin-bottom: 14px; }
 .fx-pane-tabs button { font: inherit; font-size: 13px; font-weight: 600; border: 0; border-radius: 9px; padding: 9px 10px; background: transparent; color: #5c584c; cursor: pointer; }
 .fx-pane-tabs button.active { background: #fffdf8; color: #24241f; box-shadow: 0 1px 3px rgba(60, 50, 30, .12); }
 .fx-pane-tabs b { font-size: 11px; color: #7a7567; font-weight: 600; }
@@ -3182,4 +3181,65 @@ body[data-view="tukar"] #packSection { display: none !important; }
     .fx-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
     .fx-stats b { font-size: 15px; }
     #fxList { padding: 10px 11px; }
+}
+
+/* Aset screen (exchange.js) */
+#fxAssetPane[hidden] { display: none; }
+.fx-asset-total { background: #292b24; color: #f3efe2; border-radius: 16px; padding: 16px 18px; margin-bottom: 14px; display: grid; gap: 3px; }
+.fx-asset-total > span { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: #c9c3b1; }
+.fx-asset-total > b { font-size: 30px; font-weight: 700; color: #fffdf3; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.fx-asset-parts { font-size: 12.5px; color: #d9d3c2; }
+.fx-asset-parts b { color: #fffdf3; }
+.fx-asset-warn { font-size: 12.5px; color: #ffcf8a; }
+.fx-asset-rates { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+.fx-asset-rate { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 8px; font-size: 13px; }
+.fx-asset-rate input, .fx-asset-row input, .fx-asset-row select { font: inherit; font-size: 16px; color: #24241f; background: #fffdf6; border: 1px solid #cfc6b3; border-radius: 9px; padding: 8px 10px; width: 100%; min-width: 0; font-variant-numeric: tabular-nums; }
+.fx-asset-rate input:focus, .fx-asset-row input:focus, .fx-asset-row select:focus { outline: none; border-color: #43473b; }
+.fx-asset-group { background: #fffdf8; border: 1px solid #ded8cb; border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; display: grid; gap: 8px; }
+.fx-asset-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 14px; color: #24241f; }
+.fx-asset-head span { font-weight: 700; font-variant-numeric: tabular-nums; }
+.fx-asset-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1.3fr) auto 28px; align-items: center; gap: 8px; }
+.fx-asset-row.is-bank { grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1.6fr); }
+.fx-asset-flag { display: grid; place-items: center; }
+.fx-asset-flag .bank-logo-img { max-width: 34px; height: 16px; }
+.fx-asset-row input.fx-asset-label { font-size: 14px; font-weight: 600; }
+.fx-asset-name { font-size: 14px; font-weight: 600; color: #24241f; }
+.fx-asset-amount { display: flex; align-items: center; gap: 6px; }
+.fx-asset-amount input { font-weight: 600; text-align: right; }
+.fx-asset-amount select { width: auto; flex: none; font-size: 13px; padding: 8px 6px; }
+.fx-asset-amount em { font-style: normal; font-size: 13px; color: #7a7567; }
+.fx-asset-idr { min-width: 118px; font-size: 12.5px; color: #1f5f33; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.fx-asset-idr i { color: #b4541e; font-style: normal; font-weight: 500; }
+.fx-asset-remove { border: 0; background: transparent; color: #9a9384; font-size: 20px; line-height: 1; cursor: pointer; border-radius: 8px; height: 32px; }
+.fx-asset-remove:hover { background: #f1ece0; color: #b42318; }
+.fx-asset-add { justify-self: start; }
+@media (max-width: 600px) {
+    .fx-asset-total > b { font-size: 26px; }
+    .fx-asset-row { grid-template-columns: 28px minmax(0, 1fr) 28px; row-gap: 6px; }
+    .fx-asset-row .fx-asset-amount { grid-column: 2 / 3; }
+    .fx-asset-row .fx-asset-idr { grid-column: 2 / 3; grid-row: 3; }
+    .fx-asset-row .fx-asset-remove { grid-column: 3; grid-row: 1; }
+    .fx-asset-row.is-bank { grid-template-columns: 28px minmax(0, .8fr) minmax(0, 1.4fr); }
+    .fx-asset-row.is-bank .fx-asset-amount { grid-column: auto; }
+}
+
+/* Jatuh tempo reminder (hutang & piutang) */
+.debt-due-banner { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; background: #fff1e6; border: 1px solid #f0c39b; color: #5b3517; border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
+.debt-due-banner[hidden] { display: none; }
+.debt-due-icon { width: 34px; height: 34px; border-radius: 10px; background: #b4541e; color: #fff; display: grid; place-items: center; flex: none; }
+.debt-due-body { flex: 1 1 220px; min-width: 0; }
+.debt-due-title { font-size: 13.5px; font-weight: 700; color: #3f240f; margin-bottom: 3px; }
+.debt-due-body ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 12.5px; }
+.debt-due-body li b { font-weight: 600; }
+.debt-due-body li span { color: #8a5a35; }
+.debt-due-body li.is-urgent span { color: #b42318; font-weight: 600; }
+.debt-due-more { font-size: 12px; color: #8a5a35; margin-top: 2px; }
+.debt-due-actions { display: flex; gap: 6px; align-items: center; margin-left: auto; }
+.debt-due-hint { display: block; font-size: 11px; color: #7a7567; margin-top: 3px; font-weight: 400; }
+.sidebar-link { position: relative; }
+.nav-due-badge { margin-left: auto; flex: none; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #c2410c; color: #fff; font-size: 10.5px; font-weight: 700; line-height: 18px; text-align: center; }
+.nav-due-badge[hidden] { display: none; }
+@media (max-width: 600px) {
+    .debt-due-actions { width: 100%; margin-left: 46px; }
+    .workspace-sidebar nav .nav-due-badge { position: absolute; top: 3px; right: 6px; margin: 0; }
 }

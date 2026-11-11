@@ -250,7 +250,7 @@ module.exports = async function handler(req, res) {
           return res.status(200).json(merged);
         }
       }
-      // New accounts may get sample data once (api/_seeds.js).
+      // One-time changes per account (api/_seeds.js), e.g. removing Ziaud's sample data.
       if (ws) {
         const seeded = applySeed(ws, parsed || {});
         if (seeded) {

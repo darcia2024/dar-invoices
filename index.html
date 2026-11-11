@@ -2063,6 +2063,8 @@ body[data-view="pack"] #packSection {
             </div>
         </div>
 
+        <div class="debt-due-banner" id="debtDueBanner" role="status" hidden></div>
+
         <div class="invoice-tools">
             <button class="create-invoice-btn" onclick="openInvoiceComposer()">+ Buat invoice</button>
             <button class="month-pill-btn" onclick="openInvoiceTrash()">Sampah <span id="trashCount">0</span></button>
@@ -4483,9 +4485,10 @@ body[data-view="pack"] #packSection {
                     </label>
                     <label>Jatuh Tempo / Janji Bayar (Opsional)
                         <input type="date" id="debtDue">
+                        <small class="debt-due-hint">Pas tanggal ini muncul pengingat di dashboard. Bisa juga dipasang di kalender HP.</small>
                     </label>
-                    <label class="wide-field">Keterangan / Keperluan
-                        <textarea id="debtNotes" rows="2" required placeholder="Contoh: Pinjaman dana talangan tiket pesawat, jasa desain logo, dll."></textarea>
+                    <label class="wide-field">Keterangan / Keperluan (Opsional)
+                        <textarea id="debtNotes" rows="2" placeholder="Contoh: Pinjaman dana talangan tiket pesawat, jasa desain logo, dll."></textarea>
                     </label>
                 </div>
                 <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
@@ -6306,6 +6309,126 @@ body[data-view="pack"] #packSection {
             return 'UNPAID';
         }
 
+        // ---------- Jatuh tempo reminders ----------
+        // Days from today to the due date (negative = late), or null without a due date.
+        function debtDueDays(debt) {
+            if (!debt || !/^\d{4}-\d{2}-\d{2}$/.test(debt.due || '')) return null;
+            const [y, m, d] = debt.due.split('-').map(Number);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            return Math.round((new Date(y, m - 1, d) - today) / 86400000);
+        }
+
+        const DEBT_BANNER_KEY = 'dar-debt-due-hidden';
+
+        // Unpaid records that are late, due today or due tomorrow show on every screen until
+        // closed for the day (a new record coming due shows it again).
+        function renderDebtDueBanner() {
+            const banner = document.getElementById('debtDueBanner');
+            const due = debts
+                .filter(d => getDebtStatus(d) !== 'SETTLED')
+                .map(d => ({ d, days: debtDueDays(d) }))
+                .filter(x => x.days !== null && x.days <= 1)
+                .sort((a, b) => a.days - b.days);
+            const urgent = due.filter(x => x.days <= 0).length;
+            const navBtn = document.querySelector('.sidebar-link[data-view="debt"]');
+            if (navBtn) {
+                let badge = navBtn.querySelector('.nav-due-badge');
+                if (urgent && !badge) {
+                    badge = document.createElement('b');
+                    badge.className = 'nav-due-badge';
+                    navBtn.appendChild(badge);
+                }
+                if (badge) {
+                    badge.textContent = urgent;
+                    badge.hidden = !urgent;
+                    badge.setAttribute('aria-label', `${urgent} jatuh tempo`);
+                }
+            }
+            if (!banner) return;
+            const signature = localDateKey() + ':' + due.map(x => x.d.id + x.d.due).join(',');
+            let hidden = '';
+            try { hidden = localStorage.getItem(DEBT_BANNER_KEY) || ''; } catch (e) {}
+            if (!due.length || hidden === signature) {
+                banner.hidden = true;
+                return;
+            }
+            const whenText = days => days < 0 ? `lewat ${-days} hari` : days === 0 ? 'hari ini' : 'besok';
+            const rows = due.slice(0, 4).map(({ d, days }) => {
+                const left = Math.max(0, d.amount - (d.paid || 0));
+                const who = d.type === 'piutang' ? `${escapeInvoiceText(d.name)} bayar ke kamu` : `Kamu bayar ke ${escapeInvoiceText(d.name)}`;
+                return `<li class="${days <= 0 ? 'is-urgent' : ''}"><b>${who} ${formatIDR(left)}</b> <span>· ${whenText(days)}</span></li>`;
+            }).join('');
+            banner.innerHTML = `
+                <div class="debt-due-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></div>
+                <div class="debt-due-body">
+                    <div class="debt-due-title">Pengingat jatuh tempo</div>
+                    <ul>${rows}</ul>
+                    ${due.length > 4 ? `<div class="debt-due-more">+${due.length - 4} lagi</div>` : ''}
+                </div>
+                <div class="debt-due-actions">
+                    <button type="button" class="create-invoice-btn" onclick="openDueDebts()">Lihat</button>
+                    <button type="button" class="month-pill-btn" onclick="hideDebtDueBanner('${signature}')">Tutup</button>
+                </div>`;
+            banner.hidden = false;
+        }
+
+        function hideDebtDueBanner(signature) {
+            try { localStorage.setItem(DEBT_BANNER_KEY, signature); } catch (e) {}
+            document.getElementById('debtDueBanner').hidden = true;
+        }
+
+        function openDueDebts() {
+            const unpaid = document.querySelector('[data-debt-filter="unpaid"]');
+            setDebtFilter('unpaid', unpaid);
+            setWorkspaceView('debt');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Puts the due date in the phone's own calendar, so it rings even when the dashboard
+        // is closed: an .ics file on iPhone/iPad (opens "Add to Calendar"), Google Calendar
+        // elsewhere (opens the Calendar app on Android).
+        function addDebtToCalendar(id) {
+            const item = debts.find(d => d.id === id);
+            if (!item || !item.due) return;
+            const left = Math.max(0, item.amount - (item.paid || 0));
+            const title = item.type === 'piutang'
+                ? `Tagih ${item.name} ${formatIDR(left)}`
+                : `Bayar ke ${item.name} ${formatIDR(left)}`;
+            const details = [item.notes, item.phone ? `WA: ${item.phone}` : ''].filter(Boolean).join('\n');
+            const [y, m, d] = item.due.split('-').map(Number);
+            const ymd = dt => [dt.getFullYear(), String(dt.getMonth() + 1).padStart(2, '0'), String(dt.getDate()).padStart(2, '0')].join('');
+            const start = ymd(new Date(y, m - 1, d));
+            const end = ymd(new Date(y, m - 1, d + 1));
+            const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent) && !/Chrome|CriOS|Android/.test(navigator.userAgent);
+            if (isApple) {
+                const esc = s => String(s).replace(/[\\;,]/g, c => '\\' + c).replace(/\n/g, '\\n');
+                const ics = [
+                    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DAR//Pengingat//ID', 'BEGIN:VEVENT',
+                    `UID:${item.id}-${item.due}@temantiket.com`,
+                    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`,
+                    `DTSTART;VALUE=DATE:${start}`, `DTEND;VALUE=DATE:${end}`,
+                    `SUMMARY:${esc(title)}`, details ? `DESCRIPTION:${esc(details)}` : '',
+                    // 08:00 on the day (all-day events start at 00:00).
+                    'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${esc(title)}`, 'TRIGGER:PT8H', 'END:VALARM',
+                    'END:VEVENT', 'END:VCALENDAR'
+                ].filter(Boolean).join('\r\n');
+                const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `pengingat-${item.name.replace(/[^\w-]+/g, '-').toLowerCase()}.ics`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+            } else {
+                const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+                    + `&text=${encodeURIComponent(title)}&dates=${start}/${end}`
+                    + (details ? `&details=${encodeURIComponent(details)}` : '');
+                window.open(url, '_blank', 'noopener');
+            }
+        }
+
         function setDebtFilter(filter, button) {
             activeDebtFilter = filter;
             document.querySelectorAll('[data-debt-filter]').forEach(btn => btn.classList.remove('active'));
@@ -6378,6 +6501,7 @@ body[data-view="pack"] #packSection {
             const date = document.getElementById('debtDate').value;
             const due = document.getElementById('debtDue').value;
             const notes = document.getElementById('debtNotes').value.trim();
+            const debtDueBefore = editId ? ((debts.find(d => d.id === editId) || {}).due || '') : '';
 
             if (!name || !amount || amount <= 0) {
                 showToast("MOHON ISI NAMA DAN NOMINAL DENGAN BENAR");
@@ -6427,6 +6551,15 @@ body[data-view="pack"] #packSection {
             saveLocalBillingState();
             renderDebtUI();
             persistBillingState();
+
+            // A new or moved due date: offer a reminder in the phone's own calendar, which rings
+            // even when the dashboard is closed.
+            const saved = debts.find(d => d.id === (editId || debts[0].id));
+            const oldDue = editId ? (debtDueBefore || '') : '';
+            if (saved && due && due >= localDateKey() && due !== oldDue && paid < amount
+                && confirm(`Pasang pengingat di kalender HP untuk tanggal ${formatShortDate(due)}?`)) {
+                addDebtToCalendar(saved.id);
+            }
         }
 
         function deleteDebtRecord(id) {
@@ -6538,11 +6671,13 @@ body[data-view="pack"] #packSection {
         }
 
         function copyDebtWaScript(id) {
-            const item = debts.find(d => d.id === id);
+            let item = debts.find(d => d.id === id);
             if (!item) return;
 
             const remaining = Math.max(0, item.amount - (item.paid || 0));
             const status = getDebtStatus(item);
+            // The notes are optional; without them the message just says "pinjaman".
+            item = { ...item, notes: item.notes || 'pinjaman' };
             let msg = '';
 
             if (item.type === 'piutang') {
@@ -6588,6 +6723,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         }
 
         function renderDebtUI() {
+            renderDebtDueBanner();
             const listEl = document.getElementById('debtCardList');
             if (!listEl) return;
 
@@ -6673,6 +6809,11 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const aSettled = getDebtStatus(a) === 'SETTLED';
                 const bSettled = getDebtStatus(b) === 'SETTLED';
                 if (aSettled !== bSettled) return aSettled ? 1 : -1;
+                // Due today, tomorrow or already late goes to the top.
+                const aDue = !aSettled && debtDueDays(a) !== null && debtDueDays(a) <= 1;
+                const bDue = !bSettled && debtDueDays(b) !== null && debtDueDays(b) <= 1;
+                if (aDue !== bDue) return aDue ? -1 : 1;
+                if (aDue && bDue) return a.due.localeCompare(b.due);
                 return (b.createdAt || 0) - (a.createdAt || 0);
             });
 
@@ -6691,6 +6832,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 }
 
                 const isOverdue = item.due && item.due < todayStr && status !== 'SETTLED';
+                const dueDays = status === 'SETTLED' ? null : debtDueDays(item);
+                const dueWord = dueDays === 0 ? ' (Hari ini!)' : dueDays === 1 ? ' (Besok)' : dueDays > 1 && dueDays <= 7 ? ` (${dueDays} hari lagi)` : '';
 
                 return `
                     <div class="debt-item-card ${isPiutang ? 'type-piutang' : 'type-hutang'}">
@@ -6707,7 +6850,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             <div class="debt-notes">${escapeInvoiceText(item.notes)}</div>
                             <div class="debt-meta-tags">
                                 <span class="debt-meta-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Transaksi: ${escapeInvoiceText(item.date)}</span>
-                                ${item.due ? `<span class="debt-meta-tag ${isOverdue ? 'overdue' : ''}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg> Jatuh Tempo: ${escapeInvoiceText(item.due)}${isOverdue ? ' (Lewat Tempo!)' : ''}</span>` : ''}
+                                ${item.due ? `<span class="debt-meta-tag ${isOverdue || dueDays === 0 ? 'overdue' : ''}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg> Jatuh Tempo: ${escapeInvoiceText(formatShortDate(item.due) || item.due)}${isOverdue ? ' (Lewat Tempo!)' : dueWord}</span>` : ''}
                                 ${item.phone ? `<span class="debt-meta-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> ${escapeInvoiceText(item.phone)}</span>` : ''}
                             </div>
                         </div>
@@ -6732,6 +6875,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             <button class="debt-action-btn btn-wa" onclick="copyDebtWaScript('${item.id}')" title="Salin pesan WhatsApp santun">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Salin WA
                             </button>
+                            ${item.due && status !== 'SETTLED' && item.due >= todayStr ? `<button class="debt-action-btn" onclick="addDebtToCalendar('${item.id}')" title="Pasang pengingat di kalender HP">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg> Ingatkan di HP
+                            </button>` : ''}
                             <button class="debt-action-btn" onclick="openDebtComposer('${item.id}')" title="Edit rincian catatan">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit
                             </button>
@@ -8575,9 +8721,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 renderPlanUI();
             } else if (view === 'tukar' && typeof renderExchangeUI === 'function') {
                 // Currency-exchange accounts (exchange.js)
-                document.getElementById('workspaceTitle').textContent = 'Penukaran Valas';
+                document.getElementById('workspaceTitle').textContent = 'Aset';
                 const sub = document.querySelector('.portal-subtitle');
-                if (sub) sub.textContent = 'Kurs, stok valas, dan untung tiap transaksi tukar.';
+                if (sub) sub.textContent = 'Saldo bank, pound & dollar yang kamu pegang, semuanya dijumlah jadi satu.';
                 renderBankBalancesUI();
                 renderExchangeUI();
             } else {
@@ -8602,6 +8748,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             { key: 'seabank', name: 'SeaBank', bankName: 'SeaBank', logo: '/bank-logos/seabank.png', tag: 'Bank digital' },
             { key: 'mandiri', name: 'Mandiri', bankName: 'Bank Mandiri', logo: '/bank-logos/mandiri.webp', tag: 'Rek. utama' },
             { key: 'jago', name: 'Jago', bankName: 'Bank Jago', logo: '/bank-logos/jago.svg', tag: 'Bank digital' },
+            { key: 'bca', name: 'BCA', bankName: 'Bank BCA', logo: '/bank-logos/bca.svg', tag: 'Bank' },
+            { key: 'bri', name: 'BRI', bankName: 'Bank BRI', logo: '/bank-logos/bri.svg', tag: 'Bank' },
             { key: 'blu', name: 'blu', bankName: 'blu by BCA Digital', logo: '/bank-logos/blu.png', tag: 'Bank digital' },
             { key: 'line', name: 'LINE Bank', bankName: 'LINE Bank', logo: '/bank-logos/linebank.png', tag: 'Bank digital' },
             { key: 'gopay', name: 'GoPay', bankName: 'GoPay', logo: '/bank-logos/gopay.svg', tag: 'E-wallet', wallet: true },
@@ -8689,7 +8837,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const totalEl = document.getElementById('totalLiquidCashVal');
             if (totalEl) totalEl.innerText = formatIDR(total + (cash ? cash.valueIdr : 0));
             const totalLabel = document.querySelector('.bank-total-label');
-            if (totalLabel && cash) totalLabel.textContent = 'Total rupiah + cash valas';
+            if (totalLabel && cash) totalLabel.textContent = 'Total aset (rupiah + valas)';
             if (document.body.dataset.view === 'plan') renderPlanUI();
             const updatedEl = document.getElementById('bankUpdatedAt');
             if (updatedEl) updatedEl.textContent = bankBalancesUpdatedAt ? `· per ${formatShortDate(bankBalancesUpdatedAt)}` : '';
