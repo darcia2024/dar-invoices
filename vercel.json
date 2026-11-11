@@ -333,19 +333,11 @@
     },
     {
       "source": "/azam",
-      "destination": "/azam/index.html"
+      "destination": "/dar/azam/index.html"
     },
     {
       "source": "/bangbabas",
-      "destination": "/bangbabas/index.html"
-    },
-    {
-      "source": "/dar/azam",
-      "destination": "/azam/index.html"
-    },
-    {
-      "source": "/dar/bangbabas",
-      "destination": "/bangbabas/index.html"
+      "destination": "/dar/bangbabas/index.html"
     },
     {
       "source": "/zalvice",

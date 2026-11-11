@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  DAR invoice template. Copy to <slug>/index.html, replace every value marked here,
-  then add "/dar/<slug>" (DAR's own invoices live under /dar/) to vercel.json and a card + invoiceItems entry in index.html.
+  DAR invoice template. Copy to dar/<slug>/index.html (served at /dar/<slug>), replace every value marked here,
+  (no vercel.json rule needed for /dar/<slug>; Vercel ignores /dar/* rewrites) and a card + invoiceItems entry in index.html.
   Look and PIN/copy behaviour come from /brand/invoice.css and /brand/invoice.js.
   Status pill: class "pill unpaid" (Belum dibayar) or "pill paid" (Lunas).
   An included item: <td class="incl">Termasuk</td> instead of a price.
