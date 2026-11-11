@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
       const status = await sendPush(sub, {
         title: "Notifikasi aktif",
         body: "Pengingat jatuh tempo talangan bakal muncul di HP ini tiap pagi.",
-        url: ws ? `/${ws}` : "/",
+        url: ws ? `/${ws}` : "/dar",
         tag: "dar-test",
       });
       if (status === 404 || status === 410) {

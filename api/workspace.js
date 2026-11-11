@@ -89,7 +89,7 @@ function loginPage(ws) {
   html = mustReplace(html, '<div class="classified-stamp">Keuangan agency</div>', '<div class="classified-stamp">Keuangan pribadi &amp; usaha</div>');
   html = mustReplace(html, "Masuk untuk mengelola tagihan dan melihat pendapatan agency.", `Masuk ke workspace ${escapeHtml(ws.name)} untuk mengelola tagihan dan keuangan.`);
   html = mustReplace(html, "JSON.stringify({ pin: input.value.trim() })", `JSON.stringify({ pin: input.value.trim(), workspace: ${JSON.stringify(ws.slug)} })`);
-  html = mustReplace(html, "window.location.replace('/');", `window.location.replace(${JSON.stringify(`/${ws.slug}`)});`);
+  html = mustReplace(html, "window.location.replace('/dar');", `window.location.replace(${JSON.stringify(`/${ws.slug}`)});`);
   return applyBrand(html, ws);
 }
 

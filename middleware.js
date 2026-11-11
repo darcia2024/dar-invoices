@@ -1,7 +1,10 @@
-// Gate the admin dashboard on the server: without a valid session cookie the
-// dashboard HTML (which embeds financial data) is never sent; the login page is served instead.
+// Routes the root and gates the admin dashboard on the server.
+// - "/" is the public landing page (landing.html).
+// - "/dar" is Daru's dashboard: without a valid session cookie the dashboard HTML (which
+//   embeds financial data) is never sent; the login page is served instead.
+// - "/index" and "/index.html" are the dashboard file itself, so they only redirect to /dar.
 export const config = {
-  matcher: ['/', '/index', '/index.html'],
+  matcher: ['/', '/index', '/index.html', '/dar'],
 };
 
 const COOKIE_NAME = 'dar_admin';
@@ -39,15 +42,19 @@ async function hasValidSession(request) {
   return diff === 0;
 }
 
-export default async function middleware(request) {
-  if (await hasValidSession(request)) {
-    return new Response(null, { headers: { 'x-middleware-next': '1', 'Cache-Control': 'no-store' } });
-  }
+function rewriteTo(request, path) {
+  // cleanUrls serves <name>.html at /<name>; "/" is index.html (the dashboard).
   return new Response(null, {
-    headers: {
-      // cleanUrls serves admin-login.html at /admin-login (the .html path only redirects).
-      'x-middleware-rewrite': new URL('/admin-login', request.url).toString(),
-      'Cache-Control': 'no-store',
-    },
+    headers: { 'x-middleware-rewrite': new URL(path, request.url).toString(), 'Cache-Control': 'no-store' },
   });
+}
+
+export default async function middleware(request) {
+  const { pathname, search, searchParams } = new URL(request.url);
+  // Home Screen apps installed before the move still start at "/?source=pwa".
+  if (pathname === '/' && searchParams.get('source') !== 'pwa') return rewriteTo(request, '/landing');
+  if (pathname !== '/dar') {
+    return new Response(null, { status: 307, headers: { Location: new URL(`/dar${search}`, request.url).toString(), 'Cache-Control': 'no-store' } });
+  }
+  return rewriteTo(request, (await hasValidSession(request)) ? '/' : '/admin-login');
 }

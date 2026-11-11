@@ -2020,7 +2020,7 @@ body[data-view="pack"] #packSection {
 
     <aside class="workspace-sidebar">
         <div class="workspace-sidebar-top">
-            <!--dar-only--><a class="workspace-brand" href="/" aria-label="DAR Invoices"><span class="brand-mark"><img class="brand-mascot" src="/brand/dar-mascot-128.png" alt="" width="40" height="40"></span><span class="brand-text"><b>DAR</b><small>Invoices</small></span></a><!--/dar-only-->
+            <!--dar-only--><a class="workspace-brand" href="/dar" aria-label="DAR Invoices"><span class="brand-mark"><img class="brand-mascot" src="/brand/dar-mascot-128.png" alt="" width="40" height="40"></span><span class="brand-text"><b>DAR</b><small>Invoices</small></span></a><!--/dar-only-->
             <!--ws:<a class="workspace-brand" href="{{WS_HOME}}" aria-label="{{WS_NAME}}"><span class="brand-mark"><img class="brand-mascot" src="/brand/dar-mascot-128.png" alt="" width="40" height="40"></span><span class="brand-text"><b>{{WS_NAME}}</b><small>Invoices</small></span></a>-->
             <div class="mobile-top-actions">
                 <button class="mobile-lock-btn" onclick="openPinDialog()" aria-label="Ganti PIN">
@@ -4858,7 +4858,7 @@ body[data-view="pack"] #packSection {
         // Mengunci workspace = menghapus sesi di server, lalu kembali ke halaman login.
         let workspaceLocked = false;
         // A separate account lives at /<slug> (window.DAR_WS comes from api/workspace.js).
-        const DASHBOARD_HOME = (window.DAR_WS && window.DAR_WS.home) || '/';
+        const DASHBOARD_HOME = (window.DAR_WS && window.DAR_WS.home) || '/dar';
 
         function lockAdminDashboard() {
             if (workspaceLocked) return;
@@ -4920,7 +4920,7 @@ body[data-view="pack"] #packSection {
             const link = event.target.closest && event.target.closest('a[href]');
             if (!link || link.target === '_blank') return;
             const url = new URL(link.href, location.href);
-            const isDashboard = url.origin === location.origin && ['/', '/index', '/index.html', DASHBOARD_HOME].includes(url.pathname);
+            const isDashboard = url.origin === location.origin && ['/dar', '/index', '/index.html', DASHBOARD_HOME].includes(url.pathname);
             if (url.protocol.startsWith('http') && !isDashboard) {
                 event.preventDefault();
                 window.open(url.href, '_blank', 'noopener');

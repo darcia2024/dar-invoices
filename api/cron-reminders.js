@@ -42,7 +42,7 @@ function dueMessage(state, ws, today) {
   return {
     title: todayCount ? `Jatuh tempo hari ini: ${todayCount}` : `Talangan lewat tempo: ${due.length}`,
     body: lines.join("\n"),
-    url: ws ? `/${ws}` : "/",
+    url: ws ? `/${ws}` : "/dar",
     tag: `dar-due-${today}`,
   };
 }

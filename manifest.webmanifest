@@ -4,7 +4,7 @@
   "short_name": "DAR",
   "description": "Invoice, keuangan, rencana pengeluaran, dan asisten DAR.",
   "lang": "id",
-  "start_url": "/?source=pwa",
+  "start_url": "/dar?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

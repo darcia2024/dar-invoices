@@ -88,7 +88,7 @@
                     credentials: 'same-origin',
                 });
                 if (response.ok) {
-                    window.location.replace('/');
+                    window.location.replace('/dar');
                     return;
                 }
                 const data = await response.json().catch(() => ({}));

@@ -1,7 +1,7 @@
 // DAR Invoices service worker: makes the dashboard open instantly from the Home Screen and
 // still show the last loaded version when offline. Only the dashboard and its own assets are
 // handled; client invoice pages and /api are always left to the network.
-const VERSION = 'dar-pwa-v1';
+const VERSION = 'dar-pwa-v2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const ASSET_CACHE = `${VERSION}-assets`;
 
@@ -15,7 +15,7 @@ const PRECACHE = [
   '/brand/apple-touch-icon.png',
 ];
 
-const DASHBOARD_PAGES = new Set(['/', '/index', '/index.html', '/admin-login']);
+const DASHBOARD_PAGES = new Set(['/dar', '/admin-login']);
 const ASSET_PREFIXES = ['/brand/', '/bank-logos/'];
 const ASSET_FILES = new Set(['/dashboard.css', '/invoice-manager.js', '/manifest.webmanifest']);
 const FONT_HOSTS = new Set(['fonts.googleapis.com', 'fonts.gstatic.com']);
@@ -54,14 +54,14 @@ self.addEventListener('push', (event) => {
     badge: '/brand/icon-192.png',
     tag: message.tag || 'dar-reminder',
     renotify: true,
-    data: { url: message.url || '/' },
+    data: { url: message.url || '/dar' },
   }));
 });
 
 // Tapping the notification opens (or focuses) the account it is about.
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = new URL((event.notification.data && event.notification.data.url) || '/', self.location.origin).href;
+  const url = new URL((event.notification.data && event.notification.data.url) || '/dar', self.location.origin).href;
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windows) => {
       const open = windows.find((w) => w.url.split('?')[0] === url);
