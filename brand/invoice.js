@@ -42,9 +42,16 @@
         el._t = setTimeout(() => el.classList.remove("show"), 2400);
     }
 
+    function copy(number, label) {
+        navigator.clipboard.writeText(number).then(() => toast(`${label} disalin`), () => toast(number));
+    }
     window.copyAccount = function () {
-        const number = document.body.dataset.account || "";
-        navigator.clipboard.writeText(number).then(() => toast("Nomor rekening disalin"), () => toast(number));
+        copy(document.body.dataset.account || "", "Nomor rekening");
     };
+    // Each payment row: <button data-copy="number" data-label="Nomor Jago">Salin</button>
+    document.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-copy]");
+        if (btn) copy(btn.dataset.copy, btn.dataset.label || "Nomor");
+    });
     window.printInvoice = function () { window.print(); };
 })();

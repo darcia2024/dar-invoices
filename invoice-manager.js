@@ -247,26 +247,76 @@ function parseInvoiceBrief(text) {
 
 // Who the invoice is from: DAR, or a separate account (window.DAR_WS) with the accounts it
 // filled in under Update saldo.
+// Who the invoice is from: DAR (Mandiri, Jago, GoPay and Daru's signature), or a separate
+// account (window.DAR_WS) with the accounts and signature it filled in under Update saldo.
 function invoiceIssuer() {
     const ws = window.DAR_WS;
-    if (!ws) return {brand:'DAR Invoices', name:'Daru Fahmaa Muliawan', footer:'<strong>Pembayaran Bank Mandiri</strong><br>1550010616962 · Daru Fahmaa Muliawan<br>WhatsApp: 081311506025'};
-    const rows = (typeof BANK_ACCOUNTS !== 'undefined' ? BANK_ACCOUNTS : [])
-        .map(acc => ({acc, detail: accountDetail(acc.key)}))
+    const origin = location.origin;
+    const all = typeof BANK_ACCOUNTS !== 'undefined' ? BANK_ACCOUNTS : [];
+    const wanted = ws ? all : ['mandiri', 'jago', 'gopay'].map(key => all.find(acc => acc.key === key)).filter(Boolean);
+    const accounts = wanted
+        .map(acc => ({ acc, detail: accountDetail(acc.key) }))
         .filter(row => row.detail.number)
-        .map(row => `${escapeInvoiceText(row.acc.bankName)} ${escapeInvoiceText(row.detail.number)} · ${escapeInvoiceText(row.detail.holder)}`);
-    return {brand:ws.name, name:ws.owner || ws.name, footer: rows.length ? '<strong>Pembayaran</strong><br>' + rows.join('<br>') : ''};
+        .map(row => ({ bank: row.acc.bankName, logo: origin + row.acc.logo, number: row.detail.number, holder: row.detail.holder }));
+    const sidebarMascot = document.querySelector('.workspace-brand .brand-mascot');
+    const signature = typeof invoiceSignature === 'string' && invoiceSignature ? invoiceSignature : (ws ? '' : origin + '/brand/ttd-daru.png');
+    return {
+        brand: ws ? ws.name : 'DAR',
+        mascot: sidebarMascot ? sidebarMascot.src : origin + '/brand/dar-mascot-128.png',
+        name: ws ? (ws.owner || ws.name) : 'Daru Fahmaa Muliawan',
+        role: ws ? '' : 'Web Developer & Desainer Grafis',
+        contact: ws ? '' : 'WA 081311506025',
+        accounts,
+        signature,
+    };
 }
 
-function openGeneratedInvoice(id) {
+// The shared invoice look (/brand/invoice.css), inlined so a downloaded file keeps it offline.
+let invoiceCssCache = '';
+async function invoiceCss() {
+    if (invoiceCssCache) return invoiceCssCache;
+    try {
+        const response = await fetch('/brand/invoice.css?v=5');
+        if (response.ok) invoiceCssCache = await response.text();
+    } catch (error) {}
+    return invoiceCssCache;
+}
+
+function invoiceDateText(iso) {
+    const d = new Date(iso + 'T12:00:00');
+    return isNaN(d) ? iso : d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+async function openGeneratedInvoice(id) {
     const item = customInvoices.find(candidate => candidate.id === id);
     if (!item) return;
-    const paid = paymentStatuses[id] === 'PAID' ? item.gross : paymentStatuses[id] === 'DP' ? (dpAmounts[id] || 0) : 0;
+    const status = paymentStatuses[id] || 'UNPAID';
+    const paid = status === 'PAID' ? item.gross : status === 'DP' ? (dpAmounts[id] || 0) : 0;
     const issuer = invoiceIssuer();
-    const html = `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeInvoiceText(item.reference)}</title><style>body{font:15px/1.7 Arial,sans-serif;color:#282820;background:#f2eee2;margin:0;padding:32px}main{max-width:760px;margin:auto;background:#fffdf6;padding:40px;border-radius:16px}header{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid #ddd4c0;padding-bottom:24px}h1{font-size:32px;margin:0}h2{font-size:20px}p{white-space:pre-wrap;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;margin:32px 0}td,th{padding:14px 0;border-bottom:1px solid #ddd4c0;text-align:left}td:last-child,th:last-child{text-align:right}button{padding:12px 18px;border:0;background:#282820;color:white;border-radius:8px;cursor:pointer}footer{border-top:1px solid #ddd4c0;margin-top:32px;padding-top:20px}@media(max-width:600px){body{padding:12px}main{padding:20px}header{display:block}}@media print{body{background:white;padding:0}main{padding:15px}button{display:none}}</style></head><body><main><header><div><h1>Invoice</h1><p>${escapeInvoiceText(item.reference)}</p></div><div><strong>${escapeInvoiceText(issuer.brand)}</strong><br>${escapeInvoiceText(issuer.name)}</div></header><h2>Kepada ${escapeInvoiceText(item.name)}</h2><p>Tanggal: ${escapeInvoiceText(item.date)}${item.due ? '\nJatuh tempo: ' + escapeInvoiceText(item.due) : ''}</p><p>${escapeInvoiceText(item.description)}</p><table><tr><th>Rincian pembayaran</th><th>Rupiah</th></tr><tr><td>Total invoice</td><td>${formatIDR(item.gross)}</td></tr><tr><td>Sudah dibayar</td><td>${formatIDR(paid)}</td></tr><tr><th>Sisa pembayaran</th><th>${formatIDR(item.gross-paid)}</th></tr></table>${issuer.footer ? `<footer>${issuer.footer}</footer>` : ''}<p><button onclick="window.print()">Cetak / Simpan PDF</button></p></main></body></html>`;
+    const e = escapeInvoiceText;
+    const css = await invoiceCss();
+    const pill = status === 'PAID' ? '<span class="pill paid">Lunas</span>' : status === 'DP' ? '<span class="pill unpaid">DP</span>' : '<span class="pill unpaid">Belum dibayar</span>';
+    const holders = [...new Set(issuer.accounts.map(a => a.holder))];
+    const oneHolder = holders.length === 1 ? holders[0] : '';
+    const payRows = issuer.accounts.map(a => `<li><span class="logo"><img src="${e(a.logo)}" alt="${e(a.bank)}" height="18"></span><span class="row"><span class="acct num">${e(a.number)}</span><button type="button" data-copy="${e(a.number)}">Salin</button></span>${oneHolder ? '' : `<span class="holder" style="display:block;font-size:12px;color:#6b675b">a.n. ${e(a.holder)}</span>`}</li>`).join('');
+    const pay = issuer.accounts.length ? `<section class="inv-pay"><span class="label">Bayar ke${issuer.accounts.length > 1 ? ' salah satu' : ''}${oneHolder ? ` · a.n. <b>${e(oneHolder)}</b>` : ''}</span><ul>${payRows}</ul></section>` : '';
+    const balanceRows = paid > 0 ? `<tr><td>Sudah dibayar</td><td class="num">− ${formatIDR(paid)}</td></tr>` : '';
+    const html = `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Invoice ${e(item.reference)}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet"><style>${css}</style></head><body>
+<div class="inv-tools"><button type="button" class="primary" onclick="window.print()">Simpan PDF / Cetak</button></div>
+<main class="inv">
+<header class="inv-head"><div class="inv-brand"><img src="${e(issuer.mascot)}" alt="" width="44" height="44"><div><b>${e(issuer.brand)}</b><small>Invoices</small></div></div><div class="inv-title"><h1>Invoice</h1><div class="no">${e(item.reference)}</div>${pill}</div></header>
+<section class="inv-meta"><div><span class="label">Untuk</span><strong>${e(item.name)}</strong></div><div><span class="label">Tanggal</span><strong>${e(invoiceDateText(item.date))}</strong></div><div><span class="label">Jatuh tempo</span><strong>${item.due ? e(invoiceDateText(item.due)) : '-'}</strong></div></section>
+<table class="inv-items"><thead><tr><th>Item</th><th>Harga</th></tr></thead><tbody><tr><td><div class="desc" style="color:inherit;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere">${e(item.description)}</div></td><td class="num">${formatIDR(item.gross)}</td></tr>${balanceRows}</tbody></table>
+<div class="inv-total"><span>${paid > 0 ? 'Sisa bayar' : 'Total'}</span><strong class="num">${formatIDR(item.gross - paid)}</strong></div>
+${pay}
+<section class="inv-sign"><div class="from"><span class="label">Dari</span><strong>${e(issuer.name)}</strong>${issuer.role ? `<span>${e(issuer.role)}</span>` : ''}${issuer.contact ? `<span>${e(issuer.contact)}</span>` : ''}</div>${issuer.signature ? `<div class="sig"><span class="label">Hormat saya</span><img src="${e(issuer.signature)}" alt="Tanda tangan ${e(issuer.name)}"><strong>${e(issuer.name)}</strong></div>` : ''}</section>
+</main>
+<script>document.addEventListener('click',function(ev){var b=ev.target.closest('[data-copy]');if(b&&navigator.clipboard){navigator.clipboard.writeText(b.dataset.copy);b.textContent='Tersalin';setTimeout(function(){b.textContent='Salin'},1500);}});<\/script>
+</body></html>`;
     const content = managerDialog('Invoice siap');
     content.innerHTML = '<p>Periksa dokumen di bawah. Unduh HTML untuk menyimpan dokumen, atau buka dokumen lalu pilih Cetak / Simpan PDF. Dokumen unduhan dapat dibagikan; alamat preview hanya berlaku di browser ini.</p><div class="document-actions"></div><iframe title="Preview invoice" class="invoice-preview"></iframe>';
     content.querySelector('iframe').setAttribute('sandbox','');
-    content.querySelector('iframe').srcdoc = html.replace('<p><button onclick="window.print()">Cetak / Simpan PDF</button></p>', '');
+    content.querySelector('iframe').srcdoc = html.replace('<div class="inv-tools"><button type="button" class="primary" onclick="window.print()">Simpan PDF / Cetak</button></div>', '');
     const url = URL.createObjectURL(new Blob([html], {type:'text/html'}));
     const open = document.createElement('a');
     open.className = 'create-invoice-btn';

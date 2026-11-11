@@ -204,6 +204,8 @@ function mergeState(state, ws = null) {
     bankBalancesUpdatedAt: state && typeof state.bankBalancesUpdatedAt === "string" ? state.bankBalancesUpdatedAt : null,
     bankAccountDetails: state && state.bankAccountDetails && typeof state.bankAccountDetails === "object" ? state.bankAccountDetails : null,
     bankCopyTemplate: state && typeof state.bankCopyTemplate === "string" ? state.bankCopyTemplate : null,
+    // The account owner's signature for invoices: a small PNG made in the dashboard (Update saldo).
+    invoiceSignature: state && typeof state.invoiceSignature === "string" && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(state.invoiceSignature) && state.invoiceSignature.length <= 200000 ? state.invoiceSignature : null,
     // { [invoiceId]: [{ month: "YYYY-MM", amount, date }] } — the month each payment arrived.
     // { "YYYY-MM": [{ id, name, category, planned, actual, done, due, notes }] } — monthly spending plan.
     // [{ id, name, date, destination, categories: [{ id, name, color }], items: [{ id, name, qty, packed, categoryId, note }] }]

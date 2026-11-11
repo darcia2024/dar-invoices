@@ -5464,7 +5464,8 @@ body[data-view="pack"] #packSection {
             if (typeof state.bankCopyTemplate === 'string' && state.bankCopyTemplate.trim()) {
                 bankCopyTemplate = state.bankCopyTemplate;
             }
-            if (state.bankBalances || state.bankAccountDetails || state.bankCopyTemplate) {
+            if ('invoiceSignature' in state) invoiceSignature = state.invoiceSignature || '';
+            if (state.bankBalances || state.bankAccountDetails || state.bankCopyTemplate || 'invoiceSignature' in state) {
                 saveLocalBankBalances();
                 renderBankBalancesUI();
             }
@@ -5555,6 +5556,7 @@ body[data-view="pack"] #packSection {
                         bankBalancesUpdatedAt,
                         bankAccountDetails,
                         bankCopyTemplate,
+                        invoiceSignature,
                         // Currency-exchange accounts only (exchange.js); left out for everyone else.
                         exchange: typeof exchangeState === 'object' ? exchangeState : undefined
                     })
@@ -9102,8 +9104,11 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         let bankBalancesUpdatedAt = DEFAULT_BANK_UPDATED_AT;
         let bankAccountDetails = {};
         let bankCopyTemplate = DEFAULT_BANK_COPY_TEMPLATE;
+        // Signature printed on invoices made here: a transparent PNG data URL ('' = none).
+        let invoiceSignature = '';
         try {
             const stored = JSON.parse(localStorage.getItem(BANK_STORAGE_KEY) || 'null');
+            if (stored && typeof stored.signature === 'string') invoiceSignature = stored.signature;
             if (stored && stored.balances) {
                 bankBalances = { ...DEFAULT_BANK_BALANCES, ...stored.balances };
                 bankBalancesUpdatedAt = stored.updatedAt || DEFAULT_BANK_UPDATED_AT;
@@ -9124,7 +9129,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     balances: bankBalances,
                     updatedAt: bankBalancesUpdatedAt,
                     details: bankAccountDetails,
-                    template: bankCopyTemplate
+                    template: bankCopyTemplate,
+                    signature: invoiceSignature
                 }));
             } catch (e) {
                 console.warn("Saving bank balances to localStorage failed:", e);
@@ -9236,13 +9242,118 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     <label class="bank-template-field">Template salin rekening
                         <textarea id="bankCopyTemplateInput" class="search-input" rows="3">${escapeHTML(bankCopyTemplate)}</textarea>
                         <small>Pakai {bank}, {label} (No. rekening / No. HP), {nomor}, dan {nama}. Contoh hasil muncul saat tombol "Salin rekening" diklik.</small>
-                    </label>`;
+                    </label>
+                    <fieldset class="sig-field">
+                        <legend>Tanda tangan untuk invoice</legend>
+                        <div class="sig-preview" id="sigPreview"></div>
+                        <canvas id="sigPad" class="sig-pad" width="600" height="220" hidden aria-label="Area tanda tangan"></canvas>
+                        <div class="sig-actions">
+                            <label class="month-pill-btn sig-upload">Upload foto<input type="file" accept="image/*" id="sigFile" hidden></label>
+                            <button type="button" class="month-pill-btn" id="sigDrawBtn">Tanda tangan di layar</button>
+                            <button type="button" class="month-pill-btn" id="sigClearBtn">Hapus</button>
+                        </div>
+                        <small>Foto tanda tangan di kertas putih, latarnya otomatis dibuang. Muncul di invoice yang dibuat dari "Buat invoice".</small>
+                    </fieldset>`;
+                setupSignatureField();
             }
             const modal = document.getElementById('bankBalanceModal');
             if (modal) {
                 if (typeof modal.showModal === 'function') modal.showModal();
                 else modal.style.display = 'block';
             }
+        }
+
+        // ---------- Invoice signature (Update saldo) ----------
+        // Both a photo and a drawing end up as a small transparent PNG: dark ink kept, paper
+        // removed, trimmed to the ink and scaled to 160px tall. Saved with Simpan, like the rest.
+        let pendingSignature = null; // null = unchanged; '' = removed; data URL = new
+        function signatureSrc() {
+            const value = pendingSignature !== null ? pendingSignature : invoiceSignature;
+            if (value) return value;
+            return window.DAR_WS ? '' : '/brand/ttd-daru.png';
+        }
+        function renderSignaturePreview() {
+            const box = document.getElementById('sigPreview');
+            if (!box) return;
+            const src = signatureSrc();
+            box.innerHTML = src ? `<img src="${src}" alt="Tanda tangan">` : '<span>Belum ada tanda tangan</span>';
+        }
+        function inkToSignature(source, width, height, threshold) {
+            const c = document.createElement('canvas');
+            c.width = width; c.height = height;
+            const ctx = c.getContext('2d');
+            ctx.drawImage(source, 0, 0, width, height);
+            const img = ctx.getImageData(0, 0, width, height);
+            const d = img.data;
+            let minX = width, minY = height, maxX = -1, maxY = -1;
+            for (let i = 0; i < d.length; i += 4) {
+                const light = (d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11);
+                const alpha = d[i + 3] === 0 ? 0 : Math.max(0, Math.min(255, (threshold - light) * 255 / 60));
+                d[i] = 30; d[i + 1] = 30; d[i + 2] = 28; d[i + 3] = Math.min(alpha, d[i + 3]);
+                if (d[i + 3] > 40) {
+                    const p = i / 4, x = p % width, y = (p - x) / width;
+                    if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y;
+                }
+            }
+            if (maxX < 0) return '';
+            ctx.putImageData(img, 0, 0);
+            const pad = 6, w = maxX - minX + 1 + pad * 2, h = maxY - minY + 1 + pad * 2;
+            const outH = 160, outW = Math.max(1, Math.round(w * outH / h));
+            const out = document.createElement('canvas');
+            out.width = Math.min(outW, 640); out.height = outH;
+            out.getContext('2d').drawImage(c, minX - pad, minY - pad, w, h, 0, 0, out.width, outH);
+            return out.toDataURL('image/png');
+        }
+        function setupSignatureField() {
+            pendingSignature = null;
+            renderSignaturePreview();
+            const file = document.getElementById('sigFile');
+            const pad = document.getElementById('sigPad');
+            const drawBtn = document.getElementById('sigDrawBtn');
+            file.onchange = () => {
+                const f = file.files && file.files[0];
+                if (!f) return;
+                const url = URL.createObjectURL(f);
+                const img = new Image();
+                img.onload = () => {
+                    const scale = Math.min(1, 1200 / Math.max(img.width, img.height));
+                    const result = inkToSignature(img, Math.round(img.width * scale), Math.round(img.height * scale), 150);
+                    URL.revokeObjectURL(url);
+                    if (!result) { showToast('TANDA TANGAN TIDAK TERBACA, COBA FOTO LEBIH JELAS'); return; }
+                    pendingSignature = result;
+                    pad.hidden = true;
+                    drawBtn.textContent = 'Tanda tangan di layar';
+                    renderSignaturePreview();
+                };
+                img.src = url;
+                file.value = '';
+            };
+            document.getElementById('sigClearBtn').onclick = () => {
+                pendingSignature = '';
+                pad.hidden = true;
+                drawBtn.textContent = 'Tanda tangan di layar';
+                renderSignaturePreview();
+            };
+            drawBtn.onclick = () => {
+                if (!pad.hidden) {
+                    const result = inkToSignature(pad, pad.width, pad.height, 200);
+                    if (result) pendingSignature = result;
+                    pad.hidden = true;
+                    drawBtn.textContent = 'Tanda tangan di layar';
+                    renderSignaturePreview();
+                    return;
+                }
+                pad.hidden = false;
+                drawBtn.textContent = 'Pakai tanda tangan ini';
+                const ctx = pad.getContext('2d');
+                ctx.clearRect(0, 0, pad.width, pad.height);
+                ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#1e1e1c';
+                let drawing = false;
+                const point = e => { const r = pad.getBoundingClientRect(); return [(e.clientX - r.left) * pad.width / r.width, (e.clientY - r.top) * pad.height / r.height]; };
+                pad.onpointerdown = e => { drawing = true; pad.setPointerCapture(e.pointerId); const [x, y] = point(e); ctx.beginPath(); ctx.moveTo(x, y); e.preventDefault(); };
+                pad.onpointermove = e => { if (!drawing) return; const [x, y] = point(e); ctx.lineTo(x, y); ctx.stroke(); e.preventDefault(); };
+                pad.onpointerup = pad.onpointercancel = () => { drawing = false; };
+            };
         }
 
         function closeBankBalanceModal() {
@@ -9267,6 +9378,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             });
             const templateInput = document.getElementById('bankCopyTemplateInput');
             if (templateInput) bankCopyTemplate = templateInput.value.trim() || DEFAULT_BANK_COPY_TEMPLATE;
+            if (pendingSignature !== null) { invoiceSignature = pendingSignature; pendingSignature = null; }
             const now = new Date();
             bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
             // The balances just typed already include every spending recorded so far, so deleting

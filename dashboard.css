@@ -3311,3 +3311,14 @@ body[data-view="tukar"] #packSection { display: none !important; }
     .debt-due-banner { padding: 12px; } .debt-due-open { padding: 8px 12px !important; } .debt-due-summary { font-size: 12px; } .debt-due-list { grid-template-columns: 1fr; }
     .workspace-sidebar nav .nav-due-badge { position: absolute; top: 3px; right: 6px; margin: 0; }
 }
+
+/* Signature for invoices (Update saldo dialog) */
+.sig-field { border: 1px solid #ddd4c0; border-radius: 12px; padding: 14px; margin-top: 14px; display: grid; gap: 10px; min-width: 0; }
+.sig-field legend { font-size: 12px; font-weight: 600; padding: 0 6px; }
+.sig-preview { min-height: 84px; display: grid; place-items: center; background: #fffdf6; border-radius: 8px; }
+.sig-preview img { max-height: 80px; max-width: 100%; }
+.sig-preview span { color: #6b675b; font-size: 12px; }
+.sig-pad { width: 100%; height: auto; aspect-ratio: 600 / 220; background: #fff; border: 1px dashed #bdb3a0; border-radius: 8px; touch-action: none; cursor: crosshair; }
+.sig-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.sig-upload { cursor: pointer; }
+.sig-field small { color: #6b675b; font-size: 11px; line-height: 1.5; }
