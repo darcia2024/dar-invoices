@@ -4474,10 +4474,13 @@ body[data-view="pack"] #packSection {
                     <label>No. WhatsApp / Kontak (Opsional)
                         <input type="tel" id="debtPhone" placeholder="Contoh: 08123456789">
                     </label>
-                    <label>Total Nominal (Rp)
+                    <label id="debtCurrencyLabel" hidden>Mata uang
+                        <select id="debtCurrency"></select>
+                    </label>
+                    <label>Total Nominal
                         <input type="number" id="debtAmount" min="1" step="1" required placeholder="Contoh: 1500000">
                     </label>
-                    <label>Sudah Dibayar / Dicicil Awal (Rp)
+                    <label>Sudah Dibayar / Dicicil Awal
                         <input type="number" id="debtPaid" min="0" step="1" value="0" required placeholder="0">
                     </label>
                     <label>Tanggal Transaksi
@@ -6309,6 +6312,27 @@ body[data-view="pack"] #packSection {
             return 'UNPAID';
         }
 
+        // ---------- Currency of a record ----------
+        // Records are rupiah, except on accounts with foreign money (kind "exchange"), where a
+        // talangan can also be in pounds or dollars (currency: "EGP" / "USD").
+        const DEBT_CURRENCIES = ['IDR', ...((window.DAR_WS && window.DAR_WS.kind === 'exchange' && window.DAR_WS.currencies) || [])];
+
+        function debtCurrency(item) {
+            return item && DEBT_CURRENCIES.includes(item.currency) ? item.currency : 'IDR';
+        }
+
+        function debtMoney(amount, item) {
+            const c = debtCurrency(item);
+            return c === 'IDR' ? formatIDR(amount) : `${(Number(amount) || 0).toLocaleString('id-ID', { maximumFractionDigits: 2 })} ${c}`;
+        }
+
+        // In rupiah for totals: foreign amounts at the owner's kurs modal (exchange.js).
+        function debtIdr(amount, item) {
+            const c = debtCurrency(item);
+            if (c === 'IDR') return Number(amount) || 0;
+            return typeof assetIdr === 'function' ? assetIdr(amount, c) : 0;
+        }
+
         // ---------- Jatuh tempo reminders ----------
         // Days from today to the due date (negative = late), or null without a due date.
         function debtDueDays(debt) {
@@ -6357,7 +6381,7 @@ body[data-view="pack"] #packSection {
             const rows = due.slice(0, 4).map(({ d, days }) => {
                 const left = Math.max(0, d.amount - (d.paid || 0));
                 const who = d.type === 'piutang' ? `${escapeInvoiceText(d.name)} bayar ke kamu` : `Kamu bayar ke ${escapeInvoiceText(d.name)}`;
-                return `<li class="${days <= 0 ? 'is-urgent' : ''}"><b>${who} ${formatIDR(left)}</b> <span>· ${whenText(days)}</span></li>`;
+                return `<li class="${days <= 0 ? 'is-urgent' : ''}"><b>${who} ${debtMoney(left, d)}</b> <span>· ${whenText(days)}</span></li>`;
             }).join('');
             banner.innerHTML = `
                 <div class="debt-due-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg></div>
@@ -6393,8 +6417,8 @@ body[data-view="pack"] #packSection {
             if (!item || !item.due) return;
             const left = Math.max(0, item.amount - (item.paid || 0));
             const title = item.type === 'piutang'
-                ? `Tagih ${item.name} ${formatIDR(left)}`
-                : `Bayar ke ${item.name} ${formatIDR(left)}`;
+                ? `Tagih ${item.name} ${debtMoney(left, item)}`
+                : `Bayar ke ${item.name} ${debtMoney(left, item)}`;
             const details = [item.notes, item.phone ? `WA: ${item.phone}` : ''].filter(Boolean).join('\n');
             const [y, m, d] = item.due.split('-').map(Number);
             const ymd = dt => [dt.getFullYear(), String(dt.getMonth() + 1).padStart(2, '0'), String(dt.getDate()).padStart(2, '0')].join('');
@@ -6465,6 +6489,10 @@ body[data-view="pack"] #packSection {
 
             form.reset();
             const today = localDateKey();
+            const currencySelect = document.getElementById('debtCurrency');
+            document.getElementById('debtCurrencyLabel').hidden = DEBT_CURRENCIES.length < 2;
+            currencySelect.innerHTML = DEBT_CURRENCIES.map(c => `<option value="${c}">${c === 'IDR' ? 'Rupiah (IDR)' : c}</option>`).join('');
+            currencySelect.value = editId ? debtCurrency(debts.find(d => d.id === editId)) : 'IDR';
 
             if (editId) {
                 const item = debts.find(d => d.id === editId);
@@ -6501,6 +6529,7 @@ body[data-view="pack"] #packSection {
             const date = document.getElementById('debtDate').value;
             const due = document.getElementById('debtDue').value;
             const notes = document.getElementById('debtNotes').value.trim();
+            const currency = DEBT_CURRENCIES.includes(document.getElementById('debtCurrency').value) ? document.getElementById('debtCurrency').value : 'IDR';
             const debtDueBefore = editId ? ((debts.find(d => d.id === editId) || {}).due || '') : '';
 
             if (!name || !amount || amount <= 0) {
@@ -6526,6 +6555,7 @@ body[data-view="pack"] #packSection {
                         date,
                         due,
                         notes,
+                        currency,
                         updatedAt: Date.now()
                     };
                     showToast("CATATAN BERHASIL DIPERBARUI!");
@@ -6541,6 +6571,7 @@ body[data-view="pack"] #packSection {
                     date,
                     due,
                     notes,
+                    currency,
                     createdAt: Date.now()
                 };
                 debts.unshift(newItem);
@@ -6566,7 +6597,7 @@ body[data-view="pack"] #packSection {
             const item = debts.find(d => d.id === id);
             if (!item) return;
             const label = item.type === 'piutang' ? 'piutang dari ' + item.name : 'hutang ke ' + item.name;
-            if (!confirm(`Hapus catatan ${label} (${formatIDR(item.amount)})?`)) return;
+            if (!confirm(`Hapus catatan ${label} (${debtMoney(item.amount, item)})?`)) return;
 
             debts = debts.filter(d => d.id !== id);
             saveLocalBillingState();
@@ -6589,15 +6620,15 @@ body[data-view="pack"] #packSection {
             document.getElementById('debtPaymentInfo').innerHTML = `
                 <div><strong>${isPiutang ? '🟢 Pihak yang Berhutang:' : '🔴 Kewajiban Hutang Kepada:'}</strong> ${escapeInvoiceText(item.name)}</div>
                 <div><strong>Keperluan:</strong> ${escapeInvoiceText(item.notes)}</div>
-                <div><strong>Total Transaksi:</strong> ${formatIDR(item.amount)}</div>
-                <div><strong>Sudah Dibayar:</strong> ${formatIDR(item.paid || 0)}</div>
+                <div><strong>Total Transaksi:</strong> ${debtMoney(item.amount, item)}</div>
+                <div><strong>Sudah Dibayar:</strong> ${debtMoney(item.paid || 0, item)}</div>
                 <div style="font-size: 13px; font-weight: 700; color: ${isPiutang ? '#065f46' : '#991b1b'}; margin-top: 4px;">
-                    Sisa ${isPiutang ? 'yang Harus Ditagih:' : 'Kewajiban Bayar:'} ${formatIDR(remaining)}
+                    Sisa ${isPiutang ? 'yang Harus Ditagih:' : 'Kewajiban Bayar:'} ${debtMoney(remaining, item)}
                 </div>
             `;
 
             document.getElementById('debtPaymentInput').value = remaining > 0 ? remaining : '';
-            document.getElementById('quickSettleBtn').textContent = `✓ Lunaskan Penuh (${formatIDR(remaining)})`;
+            document.getElementById('quickSettleBtn').textContent = `✓ Lunaskan Penuh (${debtMoney(remaining, item)})`;
 
             const dialog = document.getElementById('debtPaymentDialog');
             if (!dialog.open) dialog.showModal();
@@ -6682,16 +6713,16 @@ body[data-view="pack"] #packSection {
 
             if (item.type === 'piutang') {
                 if (status === 'SETTLED') {
-                    msg = `Halo ${item.name}, terima kasih banyak ya! Pembayaran untuk ${item.notes} sebesar ${formatIDR(item.amount)} sudah lunas tercatat. Semoga berkah dan sehat sukses selalu! 🙏✨`;
+                    msg = `Halo ${item.name}, terima kasih banyak ya! Pembayaran untuk ${item.notes} sebesar ${debtMoney(item.amount, item)} sudah lunas tercatat. Semoga berkah dan sehat sukses selalu! 🙏✨`;
                 } else {
                     const dueText = item.due ? ` (target jatuh tempo: ${item.due})` : '';
                     msg = `Halo ${item.name}, semoga sehat selalu ya. 🙏✨
 
 Sekadar mengingatkan catatan terkait ${item.notes}:
-💰 Total: ${formatIDR(item.amount)}
-${(item.paid || 0) > 0 ? `💳 Sudah dicicil: ${formatIDR(item.paid)}
-👉 Sisa yang belum: ${formatIDR(remaining)}
-` : `👉 Sisa yang belum: ${formatIDR(remaining)}
+💰 Total: ${debtMoney(item.amount, item)}
+${(item.paid || 0) > 0 ? `💳 Sudah dicicil: ${debtMoney(item.paid, item)}
+👉 Sisa yang belum: ${debtMoney(remaining, item)}
+` : `👉 Sisa yang belum: ${debtMoney(remaining, item)}
 `}${dueText}
 
 Nanti kalau sudah ada kelonggaran, bisa ditransfer ke rekening resmi:
@@ -6701,15 +6732,15 @@ Terima kasih banyak sebelumnya ya! 😊🤝`;
                 }
             } else {
                 if (status === 'SETTLED') {
-                    msg = `Halo ${item.name}, alhamdulillah kewajiban pembayaran/hutang saya untuk ${item.notes} sebesar ${formatIDR(item.amount)} sudah lunas saya bayarkan ya. Terima kasih banyak atas kepercayaan dan bantuannya selama ini! 🙏✨`;
+                    msg = `Halo ${item.name}, alhamdulillah kewajiban pembayaran/hutang saya untuk ${item.notes} sebesar ${debtMoney(item.amount, item)} sudah lunas saya bayarkan ya. Terima kasih banyak atas kepercayaan dan bantuannya selama ini! 🙏✨`;
                 } else {
                     msg = `Halo ${item.name}, terima kasih banyak atas kesabarannya ya. 🙏✨
 
 Kewajiban hutang saya untuk ${item.notes}:
-💰 Total: ${formatIDR(item.amount)}
-${(item.paid || 0) > 0 ? `💳 Sudah saya cicil: ${formatIDR(item.paid)}
-👉 Sisa kewajiban saya: ${formatIDR(remaining)}
-` : `👉 Sisa kewajiban saya: ${formatIDR(remaining)}
+💰 Total: ${debtMoney(item.amount, item)}
+${(item.paid || 0) > 0 ? `💳 Sudah saya cicil: ${debtMoney(item.paid, item)}
+👉 Sisa kewajiban saya: ${debtMoney(remaining, item)}
+` : `👉 Sisa kewajiban saya: ${debtMoney(remaining, item)}
 `}
 InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. Terima kasih banyak ya! 🙏😊`;
                 }
@@ -6736,14 +6767,15 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             debts.forEach(item => {
                 const remaining = Math.max(0, item.amount - (item.paid || 0));
                 const status = getDebtStatus(item);
+                // Pounds and dollars count in rupiah at the kurs modal (exchange accounts).
                 if (status === 'SETTLED') {
                     settledCount++;
-                    settledAmount += item.amount;
+                    settledAmount += debtIdr(item.amount, item);
                 } else {
                     if (item.type === 'piutang') {
-                        activePiutang += remaining;
+                        activePiutang += debtIdr(remaining, item);
                     } else {
-                        activeHutang += remaining;
+                        activeHutang += debtIdr(remaining, item);
                     }
                 }
             });
@@ -6826,7 +6858,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 if (status === 'SETTLED') {
                     statusBadgeHtml = `<span class="debt-status-pill debt-status-settled"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Lunas</span>`;
                 } else if (status === 'PARTIAL') {
-                    statusBadgeHtml = `<span class="debt-status-pill debt-status-partial"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg> Dicicil (${formatIDR(item.paid)})</span>`;
+                    statusBadgeHtml = `<span class="debt-status-pill debt-status-partial"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg> Dicicil (${debtMoney(item.paid, item)})</span>`;
                 } else {
                     statusBadgeHtml = `<span class="debt-status-pill debt-status-unpaid"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Belum Lunas</span>`;
                 }
@@ -6857,9 +6889,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
                         <div class="debt-amount-col">
                             <div class="debt-amount-label">TOTAL TRANSAKSI</div>
-                            <div class="debt-amount-total">${formatIDR(item.amount)}</div>
+                            <div class="debt-amount-total">${debtMoney(item.amount, item)}</div>
                             <div class="debt-amount-remaining" style="color: ${status === 'SETTLED' ? '#047857' : isPiutang ? '#065f46' : '#991b1b'};">
-                                ${status === 'SETTLED' ? '<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Sudah Lunas</span>' : `Sisa: <span>${formatIDR(remaining)}</span>`}
+                                ${status === 'SETTLED' ? '<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Sudah Lunas</span>' : `Sisa: <span>${debtMoney(remaining, item)}</span>`}
                             </div>
                         </div>
 

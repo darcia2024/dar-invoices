@@ -238,14 +238,26 @@ function assetIdr(amount, currency) {
     return Math.round((Number(amount) || 0) * (exchangeState.assetRates[currency] || 0));
 }
 
-// Everything added up for the Aset screen and the saldo card.
+// Everything added up, the way the owner keeps it in his notebook:
+//   aset = pegangan (bank + pounds/dollars held) + talangan (what people owe him)
+//          - uang orang (titipan & investors, money he still has to give back) - his own debts
 function assetTotals() {
     const bank = BANK_ACCOUNTS.reduce((s, acc) => s + (Number(bankBalances[acc.key]) || 0), 0);
     const valas = exchangeState.holdings.reduce((s, h) => s + assetIdr(h.amount, h.currency), 0);
     const held = depositBalances().totals;
     const titipan = held.IDR + FX_CURRENCIES.reduce((s, c) => s + assetIdr(held[c], c), 0);
-    const missingRate = FX_CURRENCIES.filter(c => !exchangeState.assetRates[c] && exchangeState.holdings.some(h => h.currency === c && h.amount));
-    return { bank, valas, total: bank + valas, titipan, missingRate };
+    const open = (typeof debts !== 'undefined' && Array.isArray(debts) ? debts : []).filter(d => getDebtStatus(d) !== 'SETTLED');
+    const left = d => Math.max(0, d.amount - (d.paid || 0));
+    const talangan = open.filter(d => d.type === 'piutang').reduce((s, d) => s + debtIdr(left(d), d), 0);
+    const hutang = open.filter(d => d.type === 'hutang').reduce((s, d) => s + debtIdr(left(d), d), 0);
+    const used = new Set([
+        ...exchangeState.holdings.filter(h => h.amount).map(h => h.currency),
+        ...FX_CURRENCIES.filter(c => held[c]),
+        ...open.map(debtCurrency)
+    ]);
+    const missingRate = FX_CURRENCIES.filter(c => !exchangeState.assetRates[c] && used.has(c));
+    const pegangan = bank + valas;
+    return { bank, valas, pegangan, talangan, titipan, hutang, total: pegangan + talangan - titipan - hutang, missingRate };
 }
 
 // Foreign money shown under saldo next to the rupiah accounts, valued at the owner's rate.
@@ -367,6 +379,13 @@ function ensureExchangeUI() {
             const link = nav.querySelector(`[data-view="${view}"]`);
             if (link) link.style.setProperty('display', 'none', 'important');
         });
+        // His word for money lent out is "talangan".
+        const debtLink = nav.querySelector('[data-view="debt"]');
+        if (debtLink) {
+            const text = [...debtLink.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim());
+            if (text) text.textContent = ' Talangan & hutang';
+            debtLink.dataset.short = 'Talangan';
+        }
     }
     // A spending saved from the Laporan tab shows up there right away.
     const expenseDialog = document.getElementById('expenseLogDialog');
@@ -1037,19 +1056,24 @@ function renderAssetNumbers() {
     });
     document.getElementById('fxValasSum').textContent = formatIDR(t.valas);
     document.getElementById('fxBankSum').textContent = formatIDR(t.bank);
-    const piutang = typeof debts !== 'undefined' && Array.isArray(debts)
-        ? debts.filter(d => d.type === 'piutang').reduce((s, d) => s + Math.max(0, d.amount - (d.paid || 0)), 0) : 0;
     const today = localDateKey();
     const profitToday = dealProfitSum(exchangeState.deals.filter(d => d.date === today));
     const profitMonth = dealProfitSum(exchangeState.deals.filter(d => d.date.slice(0, 7) === today.slice(0, 7)));
+    const row = (label, value, sign, onclick) => `
+        <button type="button" class="fx-asset-line" ${onclick ? `onclick="${onclick}"` : 'disabled'}>
+            <span>${sign} ${label}</span><b>${formatIDR(value)}</b>
+        </button>`;
     const lines = [
-        `<div class="fx-asset-parts">Bank ${formatIDR(t.bank)} · Pound &amp; dollar ${formatIDR(t.valas)}</div>`,
+        `<div class="fx-asset-lines">
+            ${row(`Pegangan <small>bank ${formatIDR(t.bank)} · pound &amp; dollar ${formatIDR(t.valas)}</small>`, t.pegangan, '', '')}
+            ${row('Talangan <small>orang ngutang ke kamu</small>', t.talangan, '+', "setWorkspaceView('debt')")}
+            ${row('Uang orang <small>titipan &amp; investor</small>', t.titipan, '−', "setFxPane('titipan')")}
+            ${t.hutang ? row('Hutang kamu', t.hutang, '−', "setWorkspaceView('debt')") : ''}
+        </div>`,
         `<div class="fx-asset-parts">Untung tukar hari ini <b>${formatIDR(profitToday)}</b> · bulan ini <b>${formatIDR(profitMonth)}</b></div>`
     ];
-    if (t.missingRate.length) lines.push(`<div class="fx-asset-warn">Kurs ${t.missingRate.join(' & ')} belum diisi, jadi belum ikut dihitung.</div>`);
-    if (t.titipan > 0) lines.push(`<div class="fx-asset-parts">Termasuk titipan orang ${formatIDR(t.titipan)} · milik sendiri <b>${formatIDR(t.total - t.titipan)}</b></div>`);
-    if (piutang > 0) lines.push(`<div class="fx-asset-parts">Belum termasuk talangan di orang ${formatIDR(piutang)}</div>`);
-    document.getElementById('fxAssetTotal').innerHTML = `<span>Total aset</span><b>${formatIDR(t.total)}</b>${lines.join('')}`;
+    if (t.missingRate.length) lines.push(`<div class="fx-asset-warn">Kurs ${t.missingRate.join(' & ')} belum diisi, jadi yang ${t.missingRate.join('/')} belum ikut dihitung.</div>`);
+    document.getElementById('fxAssetTotal').innerHTML = `<span>Total aset bersih</span><b class="${t.total < 0 ? 'is-minus' : ''}">${formatIDR(t.total)}</b>${lines.join('')}`;
 }
 
 let assetSaveTimer = null;
@@ -1685,7 +1709,12 @@ function exchangeAssistantContext() {
     const t = assetTotals();
     return {
         aset: {
-            total_rupiah: t.total,
+            rumus: 'total bersih = pegangan + talangan - uang orang (titipan & investor) - hutang',
+            total_bersih_rupiah: t.total,
+            pegangan_rupiah: t.pegangan,
+            talangan_rupiah: t.talangan,
+            uang_orang_rupiah: t.titipan,
+            hutang_rupiah: t.hutang,
             rupiah_di_bank: Object.fromEntries(BANK_ACCOUNTS.map(acc => [acc.name, Number(bankBalances[acc.key]) || 0])),
             kurs_pemilik_rp_per_1: exchangeState.assetRates,
             valas: exchangeState.holdings.filter(h => h.amount).map(h => ({ tempat: h.label, mata_uang: h.currency, jumlah: h.amount, dalam_rupiah: assetIdr(h.amount, h.currency) })),
