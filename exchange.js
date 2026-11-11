@@ -336,6 +336,26 @@ function ensureExchangeUI() {
             <div id="fxDepositList"></div>
         </div>
         <div id="fxTradePane">
+        <div class="fx-quick">
+            <div class="fx-quick-head"><b>Kurs hari ini</b><span>Ubah kurs di sini, semua hitungan ikut otomatis.</span></div>
+            <div class="fx-rate-rows">${FX_CURRENCIES.map(c => `
+                <div class="fx-rate-row">
+                    <span class="fx-rate-cur">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b></span>
+                    <label>Jual<input type="number" min="0" step="0.01" inputmode="decimal" data-quick-rate="${c}:sell" onchange="saveQuickRate(this)"></label>
+                    <label>Beli<input type="number" min="0" step="0.01" inputmode="decimal" data-quick-rate="${c}:buy" onchange="saveQuickRate(this)"></label>
+                </div>`).join('')}
+            </div>
+            <div class="fx-calc">
+                <div class="fx-calc-title">Hitung cepat</div>
+                <div class="fx-cur-chips" id="fxCalcChips"></div>
+                <div class="fx-calc-fields">
+                    <label>Rupiah dari pelanggan<input type="text" id="fxCalcIdr" inputmode="numeric" placeholder="Contoh: 842.000" oninput="fxCalc('idr')"></label>
+                    <label><span id="fxCalcQtyLabel">Dapat</span><input type="number" id="fxCalcQty" min="0" step="0.01" inputmode="decimal" placeholder="atau isi valasnya" oninput="fxCalc('qty')"></label>
+                </div>
+                <div class="fx-calc-result" id="fxCalcResult"></div>
+                <button type="button" class="create-invoice-btn" id="fxCalcRecordBtn" onclick="fxCalcRecord()" hidden>Catat transaksi ini</button>
+            </div>
+        </div>
         <div class="fx-toolbar">
             <button type="button" class="create-invoice-btn" onclick="openFxDialog('jual')">+ Jual ke pelanggan</button>
             <button type="button" class="month-pill-btn" onclick="openFxDialog('beli')">+ Beli / restok</button>
@@ -367,11 +387,11 @@ function ensureExchangeUI() {
                     <button type="button" data-fx-type="beli" onclick="setFxType('beli')">Beli / restok</button>
                 </div>
                 <div class="draft-fields">
-                    <label>Mata uang<select id="fxCurrency" onchange="onFxCurrencyChange()">${FX_CURRENCIES.map(c => `<option value="${c}">${c} · ${FX_NAMES[c] || c}</option>`).join('')}</select></label>
-                    <label>Tanggal<input type="date" id="fxDate" required onchange="renderFxPreview()"></label>
+                    <label class="wide-field">Mata uang<select id="fxCurrency" onchange="onFxCurrencyChange()">${FX_CURRENCIES.map(c => `<option value="${c}">${c} · ${FX_NAMES[c] || c}</option>`).join('')}</select></label>
+                    <label class="wide-field" id="fxIdrLabel">Rupiah dari pelanggan<input type="number" id="fxIdr" min="1" step="1" inputmode="numeric" required placeholder="Ketik rupiahnya, valas dihitung otomatis" oninput="fxRecalc('idr')"></label>
                     <label>Jumlah valas<input type="number" id="fxQty" min="0.01" step="0.01" inputmode="decimal" required oninput="fxRecalc('qty')"></label>
                     <label>Kurs (Rp per 1)<input type="number" id="fxRate" min="0.01" step="0.01" inputmode="decimal" required oninput="fxRecalc('rate')"></label>
-                    <label class="wide-field">Total rupiah<input type="number" id="fxIdr" min="1" step="1" inputmode="numeric" required oninput="fxRecalc('idr')"></label>
+                    <label>Tanggal<input type="date" id="fxDate" required onchange="renderFxPreview()"></label>
                     <label class="wide-field" id="fxBankLabel">Rupiah masuk ke<select id="fxBank" onchange="renderFxPreview()"></select></label>
                     <label>Nama pelanggan<input type="text" id="fxCustomer" maxlength="80" placeholder="Opsional"></label>
                     <label>Catatan<input type="text" id="fxNote" maxlength="160" placeholder="Opsional"></label>
@@ -531,6 +551,7 @@ function renderExchangeUI() {
     document.getElementById('fxTradePane').hidden = fxPane !== 'trade';
     document.getElementById('fxDepositPane').hidden = fxPane !== 'titipan';
     renderDepositUI();
+    renderFxQuick();
     const held = depositBalances().totals;
     const { stock, result } = computeExchange();
     document.getElementById('fxCards').innerHTML = FX_CURRENCIES.map(c => {
@@ -599,6 +620,101 @@ function renderExchangeUI() {
     }).join('');
 }
 
+// ---------- Kurs hari ini + hitung cepat ----------
+let fxCalcCur = FX_CURRENCIES[0];
+let fxCalcSource = 'idr';
+
+function renderFxQuick() {
+    document.querySelectorAll('[data-quick-rate]').forEach(input => {
+        if (input === document.activeElement) return;
+        const [c, field] = input.dataset.quickRate.split(':');
+        const value = (exchangeState.rates[c] || {})[field];
+        input.value = value || '';
+        input.placeholder = field === 'sell' ? 'kurs jual' : 'kurs beli';
+    });
+    document.getElementById('fxCalcChips').innerHTML = FX_CURRENCIES.map(c => `
+        <button type="button" class="${c === fxCalcCur ? 'active' : ''}" aria-pressed="${c === fxCalcCur}" onclick="setFxCalcCur('${c}')">${fxFlag(c, 'fx-flag is-lg')}<span>${c}</span></button>`).join('');
+    document.getElementById('fxCalcQtyLabel').textContent = `Dapat ${fxCalcCur}`;
+    fxCalc(fxCalcSource, true);
+}
+
+function saveQuickRate(input) {
+    const [c, field] = input.dataset.quickRate.split(':');
+    const value = Math.max(0, Number(input.value) || 0);
+    exchangeState.rates[c] = exchangeState.rates[c] || { sell: 0, buy: 0 };
+    if (exchangeState.rates[c][field] === value) return;
+    exchangeState.rates[c][field] = value;
+    saveExchangeAndSync();
+    showToast(value ? `KURS ${field === 'sell' ? 'JUAL' : 'BELI'} ${c} JADI ${fxRate(value).toUpperCase()}` : `KURS ${c} DIKOSONGKAN`);
+}
+
+function setFxCalcCur(c) {
+    fxCalcCur = c;
+    renderFxQuick();
+}
+
+function fxDigits(text) {
+    return Math.round(Number(String(text || '').replace(/[^0-9]/g, '')) || 0);
+}
+
+// Type rupiah (or the foreign amount) and get the other side at today's kurs jual. Money
+// changers hand out whole notes, so it also shows the whole amount and the change to return.
+function fxCalc(source, quiet = false) {
+    fxCalcSource = source;
+    const idrEl = document.getElementById('fxCalcIdr');
+    const qtyEl = document.getElementById('fxCalcQty');
+    const out = document.getElementById('fxCalcResult');
+    const btn = document.getElementById('fxCalcRecordBtn');
+    const rate = (exchangeState.rates[fxCalcCur] || {}).sell || 0;
+    let idr = fxDigits(idrEl.value);
+    let qty = Number(qtyEl.value) || 0;
+    if (source === 'idr' && !quiet && idrEl.value) {
+        // Show the typed rupiah with thousand dots while typing.
+        const caretAtEnd = idrEl.selectionStart === idrEl.value.length;
+        idrEl.value = idr ? idr.toLocaleString('id-ID') : '';
+        if (caretAtEnd) idrEl.setSelectionRange(idrEl.value.length, idrEl.value.length);
+    }
+    if (!rate) {
+        out.innerHTML = `Isi <b>kurs jual ${fxCalcCur}</b> di atas dulu.`;
+        btn.hidden = true;
+        return;
+    }
+    if (source === 'idr') {
+        qty = idr ? Math.round(idr / rate * 100) / 100 : 0;
+        qtyEl.value = qty || '';
+    } else {
+        idr = qty ? Math.round(qty * rate) : 0;
+        idrEl.value = idr ? idr.toLocaleString('id-ID') : '';
+    }
+    if (!idr || !qty) {
+        out.innerHTML = `Kurs jual ${fxFlag(fxCalcCur)} ${fxRate(rate)} / ${fxCalcCur}`;
+        btn.hidden = true;
+        return;
+    }
+    const s = computeExchange().stock[fxCalcCur];
+    const lines = [`<div class="fx-calc-big">${formatIDR(idr)} → <b>${fxQty(qty)} ${fxCalcCur}</b></div>`, `<div>kurs ${fxRate(rate)}${s.avg ? ` · untung ≈ <b>${formatIDR(Math.round(idr - qty * s.avg))}</b>` : ''}</div>`];
+    const whole = Math.floor(qty);
+    if (source === 'idr' && whole > 0 && whole !== qty) {
+        lines.push(`<div>Uang pas: kasih <b>${fxQty(whole)} ${fxCalcCur}</b>, kembalikan <b>${formatIDR(idr - Math.round(whole * rate))}</b></div>`);
+    }
+    out.innerHTML = lines.join('');
+    btn.hidden = false;
+}
+
+function fxCalcRecord() {
+    const idr = fxDigits(document.getElementById('fxCalcIdr').value);
+    const qty = Number(document.getElementById('fxCalcQty').value) || 0;
+    if (!idr || !qty) return;
+    openFxDialog('jual');
+    document.getElementById('fxCurrency').value = fxCalcCur;
+    onFxCurrencyChange();
+    document.getElementById('fxIdr').value = idr;
+    document.getElementById('fxQty').value = qty;
+    fxLastEdited = 'idr';
+    renderFxPreview();
+    setTimeout(() => document.getElementById('fxCustomer').focus(), 40);
+}
+
 // ---------- Trade dialog ----------
 let fxType = 'jual';
 let fxLastEdited = 'qty';
@@ -607,6 +723,7 @@ function setFxType(type) {
     fxType = type;
     document.querySelectorAll('[data-fx-type]').forEach(b => b.classList.toggle('active', b.dataset.fxType === type));
     document.getElementById('fxBankLabel').firstChild.textContent = type === 'jual' ? 'Rupiah masuk ke' : 'Rupiah keluar dari';
+    document.getElementById('fxIdrLabel').firstChild.textContent = type === 'jual' ? 'Rupiah dari pelanggan' : 'Rupiah yang dibayar';
     if (!fxEditId) onFxCurrencyChange();
     renderFxPreview();
 }
@@ -704,10 +821,10 @@ function openFxDialog(type, editId = '') {
         document.getElementById('fxCustomer').value = trade.customer;
         document.getElementById('fxNote').value = trade.note;
     }
-    fxLastEdited = 'qty';
+    fxLastEdited = trade ? 'qty' : 'idr';
     setFxType(trade ? trade.type : (type || 'jual'));
     document.getElementById('fxDialog').showModal();
-    if (!trade) setTimeout(() => document.getElementById('fxQty').focus(), 30);
+    if (!trade) setTimeout(() => document.getElementById('fxIdr').focus(), 30);
 }
 
 function handleFxSubmit(event) {
