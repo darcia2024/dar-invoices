@@ -86,6 +86,7 @@ const defaultState = {
     masakbar2: "UNPAID",
     "talkhisan-hamasah": "UNPAID",
     hamasahinternational: "PAID",
+    azam: "UNPAID",
   },
   dpAmounts: {
     tehumi: 100000,
@@ -127,6 +128,7 @@ const defaultState = {
     masakbar: 100000,
     masakbar2: 50000,
     "talkhisan-hamasah": 1200000,
+    azam: 300000,
   },
 };
 

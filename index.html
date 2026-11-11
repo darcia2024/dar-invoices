@@ -4374,6 +4374,60 @@ body[data-view="pack"] #packSection {
                     <span>Buka Invoice Katalis ERP</span>
                 </a>
             </div>
+
+            <!-- Ziaudin Azzam (KOLOHAGA) - Sistem Catat Keuangan + AI Card -->
+            <div class="invoice-card" id="card-azam" data-id="azam" data-month="2026-11" data-amount="300000" data-client="ziaudin azzam ajam azam kolohaga sistem catat keuangan ai aset tukar titipan talangan 300000 300rb #inv/kh/2026/11/001 november 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Ziaudin Azzam (Sistem Keuangan KOLOHAGA + AI)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('azam')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/KH/2026/11/001 &bull; Sistem Keuangan + AI</span>
+                        <span class="month-tag">November 2026</span>
+                    </div>
+
+                    <div class="project-desc">
+                        Sistem catat keuangan KOLOHAGA (aset bank &amp; EGP/USD, catat tukar, titipan, talangan, laporan harian &amp; bulanan, 2 akun) plus asisten AI. Total: Rp 300.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/azam</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/azam')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptAzam()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 300.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValAzam">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValAzam">Rp 300.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('azam')">Edit profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/azam" class="action-btn">
+                    <span>Buka Invoice Kolohaga</span>
+                </a>
+            </div>
             <!--/dar-only-->
         </div>
 
@@ -4920,7 +4974,8 @@ body[data-view="pack"] #packSection {
             "underrated-ai": "PAID",
             masakbar: "PAID",
             "talkhisan-hamasah": "UNPAID",
-            katalis: "DP"
+            katalis: "DP",
+            azam: "UNPAID"
         }/*/dar-only*/;
 
         function getStoredNumber(key, fallback) {
@@ -4974,7 +5029,8 @@ body[data-view="pack"] #packSection {
             "underrated-ai": 450000,
             masakbar: 150000,
             "talkhisan-hamasah": 1200000,
-            katalis: 10000000
+            katalis: 10000000,
+            azam: 300000
         }/*/dar-only*/;
 
         // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
@@ -5347,7 +5403,8 @@ body[data-view="pack"] #packSection {
             { id: "underrated-ai", name: "Owner Barber Underrated (Add-on AI Smart System)", month: "2026-10", monthLabel: "Oktober 2026", gross: 500000 },
             { id: "masakbar", name: "Mas Akbar (Google AI Pro & Canva Pro)", month: "2026-10", monthLabel: "Oktober 2026", gross: 150000 },
             { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 },
-            { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 }
+            { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 },
+            { id: "azam", name: "Ziaudin Azzam (Sistem Keuangan KOLOHAGA + AI)", month: "2026-11", monthLabel: "November 2026", gross: 300000 }
         ]/*/dar-only*/;
 
         function formatIDR(num) {
@@ -10434,6 +10491,36 @@ Dokumen proposal resmi, breakdown teknis, serta opsi cetak/unduh PDF dapat dicek
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA UNDERRATED AI BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptAzam() {
+            const waScript = `Halo Mas Azam 👋
+
+Berikut invoice untuk Sistem Catat Keuangan KOLOHAGA + AI:
+
+🔗 Link Invoice: https://temantiket.com/azam
+🔑 Kode PIN Akses: 0001 (atau 050900)
+
+📋 Yang sudah termasuk:
+1. Sistem catat keuangan KOLOHAGA (temantiket.com/ziaud)
+   • Aset: SeaBank, Jago, BCA, BRI, InstaPay & cash EGP/USD, total otomatis
+   • Catat tukar, titipan uang orang & investor, talangan/hutang + pengingat di HP
+   • Laporan harian & bulanan, rencana pengeluaran, 2 akun (Ziaud & Ilham)
+2. Asisten AI: tanya keuangan lewat chat, catat cepat, scan struk
+
+💰 Total: Rp 300.000 (Tiga Ratus Ribu Rupiah)
+
+💳 Rekening Pembayaran:
+Bank Mandiri: 1550010616962
+a.n. Daru Fahmaa Muliawan
+
+Terima kasih Mas! 🙏`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA KOLOHAGA BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

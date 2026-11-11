@@ -332,6 +332,14 @@
       "destination": "/kolohaga/index.html"
     },
     {
+      "source": "/azam",
+      "destination": "/azam/index.html"
+    },
+    {
+      "source": "/Azam",
+      "destination": "/azam/index.html"
+    },
+    {
       "source": "/zalvice",
       "destination": "/zalvice/index.html"
     },
