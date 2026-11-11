@@ -16,7 +16,8 @@ const WORKSPACES = {
   demo: { name: "Demo", owner: "Pemilik Demo", pin: "0000" },
   // Akun Lifetime (sold 2026-11-10). PIN: Vercel env WORKSPACE_PIN_JULIAN.
   julian: { name: "Julian", owner: "Julian", mascot: true },
-  // Akun Lifetime (2026-11-10). PIN: Vercel env WORKSPACE_PIN_ZIAUD.
+  // Akun Lifetime (2026-11-10). PIN: Vercel env WORKSPACE_PIN_ZIAUD. Shown as "Kolohaga";
+  // AI included (invoice /azam, 2026-11-11).
   // kind: "exchange" adds the "Aset" screen (exchange.js): rupiah per bank + pounds/dollars he
   // holds (InstaPay, cash) at his own rate, all added up; plus Titipan (money held for others).
   // (open: true would skip the PIN: anyone with the link could open and edit the data.)
@@ -24,7 +25,7 @@ const WORKSPACES = {
   // users: more people on the same data, each with their own PIN (Vercel env
   // WORKSPACE_PIN_<SLUG>_<ID>, e.g. WORKSPACE_PIN_ZIAUD_ILHAM). Every entry shows who made it.
   // tz: the day for due-date reminders on the phone (default Asia/Jakarta). Ziaud lives in Cairo.
-  ziaud: { name: "Kolohaga", owner: "Ziaud", mascot: true, users: [{ id: "ilham", name: "Ilham" }], tz: "Africa/Cairo", kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank", "jago", "bca", "bri"], business: "a person in Egypt who changes Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for people at prices he sets per person; he tracks his total assets (rupiah in SeaBank, Jago, BCA, BRI plus pounds/dollars in InstaPay and cash, valued at his own rate), money he holds for others, and loans (talangan) he gives" },
+  ziaud: { name: "Kolohaga", owner: "Ziaud", mascot: true, ai: true, users: [{ id: "ilham", name: "Ilham" }], tz: "Africa/Cairo", kind: "exchange", currencies: ["EGP", "USD"], banks: ["seabank", "jago", "bca", "bri"], business: "a person in Egypt who changes Indonesian rupiah into Egyptian pounds (EGP) or US dollars (USD) for people at prices he sets per person; he tracks his total assets (rupiah in SeaBank, Jago, BCA, BRI plus pounds/dollars in InstaPay and cash, valued at his own rate), money he holds for others, and loans (talangan) he gives" },
 };
 
 function todayJakarta() {
