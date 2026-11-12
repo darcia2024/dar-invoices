@@ -55,12 +55,14 @@ function fillPlaceholders(text, ws) {
 // Who is signed in, for "dicatat oleh" on every entry: the owner or one of ws.users.
 function personOf(ws, who) {
   const user = who && who !== "owner" ? (ws.users || []).find((u) => u.id === who) : null;
-  return user ? { id: user.id, name: user.name, owner: false } : { id: "owner", name: ws.owner || ws.name, owner: true };
+  return user ? { id: user.id, name: user.name, owner: false, limited: user.limited === true } : { id: "owner", name: ws.owner || ws.name, owner: true };
 }
 
 function bootstrapScript(ws, who) {
   const info = JSON.stringify({ slug: ws.slug, name: ws.name, owner: ws.owner || ws.name, user: personOf(ws, who), team: (ws.users || []).length > 0, home: `/${ws.slug}`, kind: ws.kind || "", currencies: ws.currencies || [], banks: ws.banks || [] }).replace(/</g, "\\u003c");
-  return `<script>window.DAR_WS=${info};(function(){var p='ws:'+DAR_WS.slug+':',S=Storage.prototype,g=S.getItem,s=S.setItem,r=S.removeItem;` +
+  // A limited person gets browser storage of their own, so nothing the owner left on a shared
+  // phone shows up for them; the html class hides the parts of the page that are not theirs.
+  return `<script>window.DAR_WS=${info};if(DAR_WS.user.limited)document.documentElement.classList.add('is-limited');(function(){var p='ws:'+DAR_WS.slug+':'+(DAR_WS.user.limited?'u-'+DAR_WS.user.id+':':''),S=Storage.prototype,g=S.getItem,s=S.setItem,r=S.removeItem;` +
     `S.getItem=function(k){return g.call(this,p+k)};S.setItem=function(k,v){return s.call(this,p+k,v)};S.removeItem=function(k){return r.call(this,p+k)};` +
     `var f=window.fetch;window.fetch=function(u,o){if(typeof u==='string'&&u.indexOf('/api/')===0){o=Object.assign({},o);var h=new Headers(o.headers||{});h.set('X-DAR-Workspace',DAR_WS.slug);o.headers=h}return f.call(this,u,o)}})();</script>`;
 }

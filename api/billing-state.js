@@ -1,5 +1,7 @@
-const { hasValidSession, redisCommand, requestWorkspace } = require("./_session");
+const { sessionUser, redisCommand, requestWorkspace } = require("./_session");
 const { applySeed, pendingBackups } = require("./_seeds");
+const { getWorkspace } = require("./_workspaces");
+const { limitedUser, limitedView, mergeLimited } = require("./_limited");
 
 const STATE_KEY = "dar-invoices:billing-state";
 
@@ -240,10 +242,28 @@ module.exports = async function handler(req, res) {
 
   try {
     const ws = requestWorkspace(req);
-    if (!hasValidSession(req, ws)) {
+    const who = sessionUser(req, ws);
+    if (!who) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     const key = stateKey(ws);
+    // A limited person (e.g. the one who only enters records) sees and saves their own records only.
+    const limited = limitedUser(ws ? getWorkspace(ws) : null, who);
+    if (limited) {
+      if (req.method === "GET") {
+        const saved = await redisCommand(["GET", key]);
+        return res.status(200).json(limitedView(mergeState(saved ? JSON.parse(saved) : null, ws), limited.name));
+      }
+      if (req.method === "PUT" || req.method === "POST") {
+        const incoming = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+        const saved = await redisCommand(["GET", key]);
+        const state = mergeState(mergeLimited(saved ? JSON.parse(saved) : {}, incoming, limited.name), ws);
+        await redisCommand(["SET", key, JSON.stringify(state)]);
+        return res.status(200).json(limitedView(state, limited.name));
+      }
+      res.setHeader("Allow", "GET, PUT, POST");
+      return res.status(405).json({ error: "Method not allowed" });
+    }
 
     if (req.method === "GET") {
       const saved = await redisCommand(["GET", key]);

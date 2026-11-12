@@ -3240,11 +3240,19 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-daily-head b { font-size: 14px; color: #24241f; }
 .fx-daily-head span { font-size: 11.5px; color: #7a7567; }
 .fx-daily-row { grid-template-columns: 1.1fr 1.5fr 1fr 1fr 1fr 1.3fr; }
+/* A limited login (users[].limited): only entering and their own daily report. The server sends
+   nothing else; this just keeps the empty parts off the screen. */
+html.is-limited .fx-pane-tabs, html.is-limited #fxAssetPane, html.is-limited #fxDepositPane,
+html.is-limited #fxReportStats, html.is-limited .ai-fab, html.is-limited #debtDueBanner,
+html.is-limited .workspace-sidebar nav [data-view="debt"], html.is-limited .workspace-sidebar nav [data-view="plan"],
+html.is-limited .fx-daily-row .is-total, html.is-limited .fx-demo-banner { display: none !important; }
+html.is-limited .fx-daily-row { grid-template-columns: 1.1fr 1.5fr 1fr 1fr 1fr; }
 .fx-daily-row i { font-style: normal; color: #b5ae9e; }
 @media (max-width: 760px) {
     .fx-daily-card { padding: 12px; }
     .fx-daily-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px 12px; }
     .fx-daily-row .is-total { grid-column: 2; grid-row: 1; text-align: right; align-items: flex-end; }
+    html.is-limited .fx-daily-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 .fx-who-search { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #5c584c; margin-bottom: 12px; }
 .fx-who-search input { font: inherit; font-size: 15px; padding: 9px 12px; border: 1px solid #cfc6b3; border-radius: 10px; background: #fffdf6; color: #24241f; }

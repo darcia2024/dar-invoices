@@ -38,7 +38,10 @@ let exchangeState = (() => {
 })();
 let fxMonth = currentMonthKey();
 let fxEditId = '';
-let fxPane = 'aset';
+// A limited login (users[].limited, e.g. the one who only enters records): the server sends
+// just their own records, so this screen shows only entering and their own daily report.
+const FX_LIMITED = !!(window.DAR_WS && window.DAR_WS.user && window.DAR_WS.user.limited);
+let fxPane = FX_LIMITED ? 'laporan' : 'aset';
 
 // Aset: foreign money the owner holds, per place (InstaPay, cash...), typed in directly and
 // valued in rupiah at his own rate (assetRates, Rp per 1).
@@ -429,7 +432,13 @@ function ensureExchangeUI() {
             if (link) link.style.setProperty('display', 'none', 'important');
         });
         const sideNote = document.querySelector('.sidebar-note p');
-        if (sideNote) sideNote.textContent = 'Saldo bank, pound & dollar diatur dari Update saldo. Tiap tukar dicatat lewat + Catat tukar.';
+        if (sideNote) sideNote.textContent = FX_LIMITED
+            ? 'Catat tiap tukar, pemasukan, dan pengeluaran di sini. Laporan harianmu langsung terlihat di bawahnya.'
+            : 'Saldo bank, pound & dollar diatur dari Update saldo. Tiap tukar dicatat lewat + Catat tukar.';
+        if (FX_LIMITED) {
+            button.dataset.short = 'Laporan';
+            button.lastChild.textContent = ' Laporan saya';
+        }
         // His word for money lent out is "talangan".
         const debtLink = nav.querySelector('[data-view="debt"]');
         if (debtLink) {
@@ -1144,7 +1153,7 @@ let fxPersonEditId = '';
 // The owner wanted no buy/sell bookkeeping: the screen is Aset + Titipan. The trade pane
 // stays in the code (titipan "kirim rupiah" still records a linked trade) but has no tab.
 function setFxPane(pane) {
-    fxPane = ['titipan', 'laporan'].includes(pane) ? pane : 'aset';
+    fxPane = FX_LIMITED ? 'laporan' : (['titipan', 'laporan'].includes(pane) ? pane : 'aset');
     renderExchangeUI();
 }
 
@@ -1553,7 +1562,7 @@ function showDealAmount(n, currency) {
 function dealSourceOptions(currency, selected, side) {
     if (currency === 'IDR') return bankOptionsHTML(selected);
     const list = exchangeState.holdings.filter(h => h.currency === currency);
-    return list.map(h => `<option value="${escapeHTML(h.id)}"${h.id === selected ? ' selected' : ''}>${escapeHTML(h.label || h.currency)} · ${fxQty(h.amount)} ${h.currency}</option>`).join('')
+    return list.map(h => `<option value="${escapeHTML(h.id)}"${h.id === selected ? ' selected' : ''}>${escapeHTML(h.label || h.currency)}${FX_LIMITED ? '' : ` · ${fxQty(h.amount)} ${h.currency}`}</option>`).join('')
         + `<option value=""${selected === '' ? ' selected' : ''}>${side === 'in' ? 'Tidak ke tempat di Aset' : 'Tidak dari tempat di Aset'}</option>`;
 }
 
@@ -1755,6 +1764,15 @@ function renderDealPreview() {
     const d = readDeal();
     const s = dealSides(d);
     const lines = [];
+    if (FX_LIMITED) {
+        // No kurs modal, profit or balances for a limited login: just the kurs of this exchange.
+        if (s.out.amount && s.in.amount) {
+            const p = dealPairOf(s.out.c, s.in.c);
+            lines.push(`<div class="fx-must-get"><span>Kurs <b>${dealRateText(dealRateOf(d), p.weak, p.strong)}</b></span></div>`);
+        }
+        document.getElementById('fxDealPreview').innerHTML = lines.map(l => `<div>${l}</div>`).join('');
+        return;
+    }
     if (s.out.amount && s.in.amount) {
         const m = dealModals(d);
         const p = dealPairOf(s.out.c, s.in.c);
@@ -1891,7 +1909,7 @@ function ensureIncomeDialog() {
 }
 
 function incomeBankOptions(selected) {
-    return BANK_ACCOUNTS.map(acc => `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)} · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}</option>`).join('');
+    return BANK_ACCOUNTS.map(acc => `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)}${FX_LIMITED ? '' : ` · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}`}</option>`).join('');
 }
 
 function onIncomeAmount(input) {
@@ -1909,7 +1927,7 @@ function renderIncomePreview() {
     const key = document.getElementById('fxIncomeBank').value;
     const amount = readIncomeAmount();
     const date = document.getElementById('fxIncomeDate').value;
-    if (!isBankKey(key) || !amount) { el.innerHTML = ''; return; }
+    if (!isBankKey(key) || !amount || FX_LIMITED) { el.innerHTML = ''; return; }
     const old = incomeEditId ? exchangeState.incomes.find(x => x.id === incomeEditId) : null;
     const now = (Number(bankBalances[key]) || 0) - (old && old.bankKey === key ? old.bankAdd : 0);
     el.innerHTML = bankBalancesUpdatedAt && date < bankBalancesUpdatedAt
@@ -2044,7 +2062,7 @@ function renderDailyReport() {
             </div>`);
     }
     el.innerHTML = `
-        <div class="fx-daily-head"><b>Laporan harian</b><span>Aset bersih dicatat otomatis di akhir tiap hari.</span></div>
+        <div class="fx-daily-head"><b>${FX_LIMITED ? 'Laporan harian saya' : 'Laporan harian'}</b><span>${FX_LIMITED ? 'Yang kamu catat tiap hari. Ziaud menerima ringkasannya tiap pagi.' : 'Aset bersih dicatat otomatis di akhir tiap hari.'}</span></div>
         ${rows.length ? `<div class="fx-history-table fx-daily-table" role="table">
             <div class="fx-history-row fx-daily-row is-head" role="row">
                 <span role="columnheader">Tanggal</span><span role="columnheader">Tukar</span><span role="columnheader">Pemasukan</span>
@@ -2073,7 +2091,7 @@ function dealRowHTML(d, withDate = false) {
         <button type="button" class="log-row fx-row ${d.dir === 'beli' ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
             <span class="log-row-main">
                 <span class="log-row-title">${fxFlag(s.in.c)}→${fxFlag(s.out.c)} ${escapeHTML(name(s.in.c))} ke ${escapeHTML(name(s.out.c))} · ${fxAmount(s.out.amount, s.out.c)}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
-                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)} · ${known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)'}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
+                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}${FX_LIMITED ? '' : ' · ' + (known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)')}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
             </span>
             <span class="log-row-amount">${amount}</span>
         </button>`;

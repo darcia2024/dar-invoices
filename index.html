@@ -5588,6 +5588,15 @@ body[data-view="pack"] #packSection {
             renderDebtUI();
         }
 
+        // Accounts used by more than one person: when the app comes back to the screen, fetch what
+        // the others recorded meanwhile, so the next save starts from the latest data. Skipped
+        // while a form is open, so nothing being typed is replaced.
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState !== 'visible' || !(window.DAR_WS && DAR_WS.team) || !billingStateReady) return;
+            if (document.querySelector('dialog[open]')) return;
+            loadBillingState().then(() => { if (document.body.dataset.view === 'tukar' && typeof renderExchangeUI === 'function') { renderBankBalancesUI(); renderExchangeUI(); } });
+        });
+
         // Several saves can be in flight when entries are made quickly. Only the newest save's
         // reply may replace the screen's data: an older reply would undo entries made after it
         // was sent, and the next save would then drop them on the server too.
@@ -7732,8 +7741,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         }
 
         function bankOptionsHTML(selected) {
+            // A limited login never sees balances, so its list shows bank names only.
+            const showSaldo = !(window.DAR_WS && DAR_WS.user && DAR_WS.user.limited);
             return BANK_ACCOUNTS.map(acc =>
-                `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)} · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}</option>`
+                `<option value="${acc.key}"${acc.key === selected ? ' selected' : ''}>${escapeHTML(acc.name)}${showSaldo ? ` · saldo ${formatIDR(Number(bankBalances[acc.key]) || 0)}` : ''}</option>`
             ).join('') + `<option value=""${selected === '' ? ' selected' : ''}>Tunai (saldo bank tidak berubah)</option>`;
         }
 
@@ -7858,6 +7869,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function renderExpenseLogBankInfo() {
             const info = document.getElementById('expenseLogBankInfo');
             const key = document.getElementById('expenseLogBank').value;
+            if (window.DAR_WS && DAR_WS.user && DAR_WS.user.limited) { info.textContent = isBankKey(key) ? `Dicatat keluar dari ${bankNameOf(key)}.` : 'Dibayar tunai.'; return; }
             if (!isBankKey(key)) { info.textContent = 'Saldo rekening tidak berubah.'; return; }
             const month = document.getElementById('expenseLogEditMonth').value || activePlanMonth;
             const editLog = logsOf(month).find(l => l.id === document.getElementById('expenseLogEditId').value);
@@ -9105,9 +9117,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 renderPlanUI();
             } else if (view === 'tukar' && typeof renderExchangeUI === 'function') {
                 // Currency-exchange accounts (exchange.js)
-                document.getElementById('workspaceTitle').textContent = 'Aset';
+                const limited = window.DAR_WS && DAR_WS.user && DAR_WS.user.limited;
+                document.getElementById('workspaceTitle').textContent = limited ? 'Laporan harian saya' : 'Aset';
                 const sub = document.querySelector('.portal-subtitle');
-                if (sub) sub.textContent = 'Saldo bank, pound & dollar yang kamu pegang, semuanya dijumlah jadi satu.';
+                if (sub) sub.textContent = limited ? 'Semua tukar, pemasukan, dan pengeluaran yang kamu catat, per hari.' : 'Saldo bank, pound & dollar yang kamu pegang, semuanya dijumlah jadi satu.';
                 renderBankBalancesUI();
                 renderExchangeUI();
             } else {
