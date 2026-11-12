@@ -2035,7 +2035,7 @@ function renderDailyReport() {
         const label = new Date(y, m - 1, d).toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
         rows.push(`
             <div class="fx-history-row fx-daily-row" role="row">
-                <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}</span>
+                <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}${(() => { const who = [...new Set([...dd, ...ss, ...ii].map(x => x.by).filter(Boolean))]; return who.length ? `<small>oleh ${escapeHTML(who.join(', '))}</small>` : ''; })()}</span>
                 <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dealRupiahNet(dd))}` : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pemasukan">${dd.length || ii.length ? formatIDR(profit) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pengeluaran">${ss.length ? formatIDR(spent) : '<i>-</i>'}</span>

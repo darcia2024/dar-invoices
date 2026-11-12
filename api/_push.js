@@ -83,8 +83,10 @@ function subId(endpoint) {
   return crypto.createHash("sha256").update(String(endpoint)).digest("base64url").slice(0, 24);
 }
 
-async function saveSubscription(ws, subscription, user) {
-  const record = { endpoint: subscription.endpoint, keys: { p256dh: subscription.keys.p256dh, auth: subscription.keys.auth }, user, createdAt: Date.now() };
+// user: the person's name; userId: their login ("owner" or a users[].id), so a message can go to
+// the owner's phones only.
+async function saveSubscription(ws, subscription, user, userId) {
+  const record = { endpoint: subscription.endpoint, keys: { p256dh: subscription.keys.p256dh, auth: subscription.keys.auth }, user, userId: userId || "", createdAt: Date.now() };
   await redisCommand(["HSET", subsKey(ws), subId(subscription.endpoint), JSON.stringify(record)]);
 }
 
@@ -103,9 +105,9 @@ async function listSubscriptions(ws) {
   return out;
 }
 
-// Sends to every device of the account and drops the ones that are gone.
-async function sendToAccount(ws, message) {
-  const subs = await listSubscriptions(ws);
+// Sends to every device of the account (or only those `only` accepts) and drops the ones that are gone.
+async function sendToAccount(ws, message, only) {
+  const subs = (await listSubscriptions(ws)).filter((sub) => !only || only(sub));
   let sent = 0;
   for (const sub of subs) {
     try {

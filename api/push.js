@@ -28,7 +28,7 @@ module.exports = async function handler(req, res) {
     if (body.action === "subscribe") {
       const account = ws ? getWorkspace(ws) : null;
       const person = who === "owner" ? (account ? account.owner || account.name : "DAR") : ((account && (account.users || []).find((u) => u.id === who)) || {}).name || who;
-      await saveSubscription(ws, sub, person);
+      await saveSubscription(ws, sub, person, who);
       return res.status(200).json({ ok: true });
     }
     if (body.action === "test") {
