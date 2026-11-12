@@ -70,6 +70,8 @@ button:active { transform: translateY(1px); }
 .sidebar-account button { background: transparent; border: 0; text-align: left; padding: 16px 0 0; cursor: pointer; color: #514d42; font-size: 11px; }
 .portal-container { max-width: 1600px; margin: auto; }
 .portal-header { text-align: left; margin: 0 0 26px; padding: 0; border: 0; background: none; box-shadow: none; }
+.portal-greeting { margin: 0 0 6px; font-size: 15px; font-weight: 500; color: #24241f; letter-spacing: -0.2px; }
+.portal-greeting:empty { display: none; }
 .portal-badge { border: 0; background: none; padding: 0; margin: 0 0 10px; font-size: 10px; color: #666256; letter-spacing: 0; box-shadow: none; }
 .portal-title { color: #24241f; font-size: 30px; letter-spacing: -1.3px; font-weight: 500; line-height: 1.25; margin-bottom: 8px; text-transform: none; text-shadow: none; }
 .portal-subtitle { color: #666256; font-size: 12px; max-width: none; margin: 0; }

@@ -2052,6 +2052,16 @@ body[data-view="pack"] #packSection {
         <div class="portal-header">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
+                    <p class="portal-greeting" id="portalGreeting"></p>
+                    <script>
+                        // "Halo, <name>": whoever is signed in (the owner or a team member); Daru on DAR's own dashboard.
+                        (function () {
+                            var ws = window.DAR_WS;
+                            var name = ws ? ((ws.user && ws.user.name) || ws.owner || ws.name) : 'Daru';
+                            var el = document.getElementById('portalGreeting');
+                            el.textContent = 'Halo, ' + name;
+                        })();
+                    </script>
                     <div class="portal-badge">
                         Workspace / Keuangan
                     </div>
