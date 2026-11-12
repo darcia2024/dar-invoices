@@ -2322,6 +2322,15 @@ html, body { touch-action: manipulation; }
     transition: background .18s ease, color .18s ease, border-color .18s ease;
 }
 .bank-copy-btn:hover { background: #272722; border-color: #272722; color: #fff; }
+.bank-card-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.bank-card-actions .bank-copy-btn { margin-top: 0; flex: 1 1 auto; text-align: center; white-space: nowrap; }
+.quick-amount-dialog { max-width: 420px; }
+.quick-amount-field { display: grid; gap: 6px; font-size: 13px; font-weight: 600; }
+.quick-amount-input { display: flex; align-items: center; gap: 8px; }
+.quick-amount-input > span { font-weight: 700; color: #514f43; min-width: 26px; }
+.quick-amount-input input { flex: 1; min-width: 0; font-size: 20px; font-weight: 700; }
+.quick-amount-hint { margin: 8px 0 14px; font-size: 12px; color: #6c685b; line-height: 1.45; }
+.quick-amount-hint:empty { display: none; }
 .bank-modal-group { border: 1px solid #e4ddcd; border-radius: 12px; padding: 10px 12px 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
 .bank-modal-group legend { display: flex; align-items: center; gap: 8px; padding: 0 6px; font-size: 10px; color: #666256; text-transform: uppercase; }
 .bank-modal-group label, .bank-template-field { display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #36362d; }

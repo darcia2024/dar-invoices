@@ -9262,9 +9262,98 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     <div class="bank-balance-amount">${formatIDR(val)}</div>
                     ${typeof exchangeBankNote === 'function' ? exchangeBankNote(acc.key) : ''}
                     <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
-                    <button type="button" class="bank-copy-btn" onclick="copyBankAccount('${acc.key}')">Salin rekening</button>
+                    ${bankCardActions(acc.key)}
                 </div>`;
             }).join('') + (cash ? cash.html : '');
+        }
+
+        // The buttons under a bank card, here and in Aset: change just this balance, copy the account.
+        function bankCardActions(key) {
+            const edit = document.documentElement.classList.contains('is-limited') ? '' : `<button type="button" class="bank-copy-btn" onclick="openBankAmountEdit('${key}')">Ubah saldo</button>`;
+            return `<div class="bank-card-actions">${edit}<button type="button" class="bank-copy-btn" onclick="copyBankAccount('${key}')">Salin rekening</button></div>`;
+        }
+
+        // ---------- Ubah jumlah: one card's amount, without opening all of Update saldo ----------
+        // opts: { title, label, value, currency ('IDR' or a foreign code), onSave(newValue) }
+        let quickAmountSave = null;
+        let quickAmountCurrency = 'IDR';
+        function parseQuickAmount(text, currency) {
+            const raw = String(text || '').replace(/\s/g, '');
+            if (currency === 'IDR') return Math.round(Number(raw.replace(/[^0-9]/g, '')) || 0);
+            const normal = /,\d{1,2}$/.test(raw) ? raw.replace(/\./g, '').replace(',', '.') : raw.replace(/,/g, '');
+            return Math.max(0, Math.round((Number(normal) || 0) * 100) / 100);
+        }
+        function openAmountDialog(opts) {
+            let dialog = document.getElementById('quickAmountDialog');
+            if (!dialog) {
+                dialog = document.createElement('dialog');
+                dialog.id = 'quickAmountDialog';
+                dialog.className = 'invoice-manager-dialog quick-amount-dialog';
+                dialog.setAttribute('aria-labelledby', 'quickAmountTitle');
+                dialog.innerHTML = `
+                    <div class="manager-heading"><h2 id="quickAmountTitle">Ubah jumlah</h2><button type="button" aria-label="Tutup" onclick="document.getElementById('quickAmountDialog').close()">×</button></div>
+                    <div class="manager-content">
+                        <form onsubmit="handleQuickAmountSubmit(event)">
+                            <label class="quick-amount-field"><span id="quickAmountLabel">Jumlah sekarang</span>
+                                <span class="quick-amount-input"><span id="quickAmountUnit"></span><input type="text" id="quickAmountInput" class="search-input" inputmode="decimal" autocomplete="off" oninput="onQuickAmountInput(this)"></span>
+                            </label>
+                            <p class="quick-amount-hint" id="quickAmountHint"></p>
+                            <div class="pack-dialog-actions"><span style="flex:1"></span><button type="submit" class="create-invoice-btn">Simpan</button></div>
+                        </form>
+                    </div>`;
+                document.body.appendChild(dialog);
+            }
+            quickAmountSave = opts.onSave;
+            quickAmountCurrency = opts.currency || 'IDR';
+            const isIdr = quickAmountCurrency === 'IDR';
+            document.getElementById('quickAmountTitle').textContent = opts.title;
+            document.getElementById('quickAmountLabel').textContent = opts.label || 'Jumlah sekarang';
+            document.getElementById('quickAmountUnit').textContent = isIdr ? 'Rp' : quickAmountCurrency;
+            document.getElementById('quickAmountHint').textContent = opts.hint || '';
+            const input = document.getElementById('quickAmountInput');
+            input.inputMode = isIdr ? 'numeric' : 'decimal';
+            input.value = opts.value ? (isIdr ? Math.round(opts.value).toLocaleString('id-ID') : String(opts.value)) : '';
+            dialog.showModal();
+            setTimeout(() => { input.focus(); input.select(); }, 30);
+        }
+        function onQuickAmountInput(input) {
+            if (quickAmountCurrency !== 'IDR') return;
+            const n = parseQuickAmount(input.value, 'IDR');
+            input.value = n ? n.toLocaleString('id-ID') : '';
+        }
+        function handleQuickAmountSubmit(event) {
+            event.preventDefault();
+            const value = parseQuickAmount(document.getElementById('quickAmountInput').value, quickAmountCurrency);
+            document.getElementById('quickAmountDialog').close();
+            if (quickAmountSave) quickAmountSave(value);
+        }
+
+        function openBankAmountEdit(key) {
+            const acc = BANK_ACCOUNTS.find(a => a.key === key);
+            if (!acc) return;
+            openAmountDialog({
+                title: `Ubah saldo ${acc.name}`,
+                label: `Saldo ${acc.name} sekarang`,
+                value: Number(bankBalances[key]) || 0,
+                currency: 'IDR',
+                hint: 'Ketik saldo yang ada di rekening sekarang. Catatan lama di rekening ini dianggap sudah masuk di angka ini.',
+                onSave: value => {
+                    bankBalances[key] = value;
+                    if (typeof exchangeOnBankAmountEdit === 'function') {
+                        exchangeOnBankAmountEdit(key);
+                    } else {
+                        const now = new Date();
+                        bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                        // Spendings already recorded on this account are inside the typed balance.
+                        Object.values(expenseLogs).forEach(list => list.forEach(log => { if (log.bankKey === key) log.bankCut = 0; }));
+                        saveLocalBillingState();
+                        saveLocalBankBalances();
+                        renderBankBalancesUI();
+                        persistBillingState();
+                    }
+                    showToast(`SALDO ${acc.name.toUpperCase()} JADI ${formatIDR(value).toUpperCase()}`);
+                }
+            });
         }
 
         function buildBankCopyText(acc) {

@@ -345,7 +345,7 @@ function exchangeCashSummary() {
             <div class="bank-account-num">${h.kind === 'orang' ? 'Dipegang orang · ' : ''}${FX_NAMES[h.currency] || h.currency}</div>
             <div class="bank-balance-amount">${fxAmount(h.amount, h.currency)}</div>
             <div class="fx-cash-value">${h.currency === 'IDR' ? 'Rupiah tunai' : exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(value)} · kurs ${kursText(exchangeState.assetRates[h.currency], h.currency)}` : 'kurs belum diisi'}</div>
-            <button type="button" class="bank-copy-btn" onclick="setWorkspaceView('tukar')">Ubah di Aset</button>
+            <button type="button" class="bank-copy-btn" onclick="openHoldingAmountEdit('${escapeHTML(h.id)}')">Ubah jumlah</button>
         </div>`;
     }).join('');
     return { html, valueIdr };
@@ -427,6 +427,35 @@ function exchangeOnManualBankUpdate() {
     exchangeState.deposits.moves.forEach(m => { m.bankDelta = 0; });
     exchangeState.incomes.forEach(x => { x.bankAdd = 0; });
     saveExchangeLocal();
+}
+
+// One bank changed from its card ("Ubah saldo"): like typing it in Update saldo.
+function exchangeOnBankAmountEdit(key) {
+    assetDirtyBanks.add(key);
+    flushAssetSave();
+    renderAssetPane();
+    renderExchangeUI();
+}
+
+// One place in Aset changed from its card ("Ubah jumlah").
+function openHoldingAmountEdit(id) {
+    const h = exchangeState.holdings.find(x => x.id === id);
+    if (!h) return;
+    const name = placeName(h) || FX_NAMES[h.currency] || h.currency;
+    openAmountDialog({
+        title: `Ubah jumlah ${name}`,
+        label: `${h.currency === 'IDR' ? 'Rupiah' : FX_NAMES[h.currency] || h.currency} di ${name} sekarang`,
+        value: h.amount,
+        currency: h.currency,
+        hint: h.kind === 'orang' ? 'Uang kamu yang lagi dipegang orang ini.' : 'Ketik jumlah yang ada sekarang.',
+        onSave: value => {
+            h.amount = value;
+            flushAssetSave();
+            renderAssetPane();
+            renderExchangeUI();
+            showToast(`${name.toUpperCase()} JADI ${fxAmount(value, h.currency).toUpperCase()}`);
+        }
+    });
 }
 
 // Rupiah side of a titipan move: setor IDR adds to the account, ambil IDR and kirim take out.
@@ -1321,7 +1350,7 @@ function renderAssetNumbers() {
         return tile(`<img class="bank-logo-img" src="${acc.logo}" alt="${escapeHTML(acc.name)}" loading="lazy">`, acc.tag, pctOf(val),
             { text: number ? escapeHTML(number) : 'No. rekening belum diisi', empty: !number },
             formatIDR(val), '',
-            `<button type="button" class="bank-copy-btn" onclick="copyBankAccount('${acc.key}')">Salin rekening</button>`);
+            bankCardActions(acc.key));
     });
     const places = exchangeState.holdings.map(h => {
         const idr = assetIdr(h.amount, h.currency);
@@ -1333,7 +1362,7 @@ function renderAssetNumbers() {
         return tile(brand, h.kind === 'orang' ? `Dipegang orang · ${FX_NAMES[h.currency] || h.currency}` : (FX_NAMES[h.currency] || h.currency), pctOf(idr),
             { text: h.currency === 'IDR' ? 'Rupiah tunai' : rateKnown(h.currency) ? `≈ ${formatIDR(idr)}` : 'kurs belum diisi', empty: !rateKnown(h.currency) },
             fxAmount(h.amount, h.currency), '',
-            `<button type="button" class="bank-copy-btn" onclick="openAssetDialog()">Ubah jumlah</button>`);
+            `<button type="button" class="bank-copy-btn" onclick="openHoldingAmountEdit('${escapeHTML(h.id)}')">Ubah jumlah</button>`);
     });
     document.getElementById('fxAssetGrid').innerHTML = banks.concat(places).join('');
     renderAssetHistory(t);
