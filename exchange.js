@@ -130,6 +130,8 @@ function normalizeExchange(value) {
         holdingId2: String(d.holdingId2 || ''),
         holdDelta2: Math.round((Number(d.holdDelta2) || 0) * 100) / 100,
         modal2: Math.max(0, Number(d.modal2) || 0),
+        // Restok (e.g. pound from a TKW): its kurs became the kurs modal.
+        restock: d.dir === 'beli' && d.restock === true,
         by: String(d.by || '').slice(0, 40),
         demo: d.demo === true,
         createdAt: Number(d.createdAt) || Date.now()
@@ -342,7 +344,7 @@ function exchangeCashSummary() {
             </div>
             <div class="bank-account-num">${h.kind === 'orang' ? 'Dipegang orang · ' : ''}${FX_NAMES[h.currency] || h.currency}</div>
             <div class="bank-balance-amount">${fxAmount(h.amount, h.currency)}</div>
-            <div class="fx-cash-value">${h.currency === 'IDR' ? 'Rupiah tunai' : exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(value)} · kurs ${fxRate(exchangeState.assetRates[h.currency])}` : 'kurs belum diisi'}</div>
+            <div class="fx-cash-value">${h.currency === 'IDR' ? 'Rupiah tunai' : exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(value)} · kurs ${kursText(exchangeState.assetRates[h.currency], h.currency)}` : 'kurs belum diisi'}</div>
             <button type="button" class="bank-copy-btn" onclick="setWorkspaceView('tukar')">Ubah di Aset</button>
         </div>`;
     }).join('');
@@ -359,6 +361,32 @@ function fxQty(n) {
 
 function fxRate(n) {
     return 'Rp ' + (Number(n) || 0).toLocaleString('id-ID', { maximumFractionDigits: 2 });
+}
+
+// Pound ↔ rupiah is typed and shown the way Ziaud says it: pound per Rp 1 juta
+// ("3.000" = 3.000 EGP for Rp 1.000.000). Inside, every kurs stays "Rp per 1 EGP".
+const KURS_PER_JUTA = ['EGP'];
+function isPerJuta(c) {
+    return KURS_PER_JUTA.includes(c);
+}
+
+// A kurs (Rp per 1) as the number to put in an input.
+function kursToField(rate, c) {
+    if (!rate) return '';
+    if (!isPerJuta(c)) return Math.round(rate * 100) / 100;
+    const v = 1e6 / rate;
+    return Math.abs(v - Math.round(v)) < 0.05 ? Math.round(v) : Math.round(v * 100) / 100;
+}
+
+// What was typed in an input, back to Rp per 1.
+function kursFromField(value, c) {
+    const n = Math.max(0, Number(value) || 0);
+    return n && isPerJuta(c) ? 1e6 / n : n;
+}
+
+function kursText(rate, c) {
+    if (!rate) return '-';
+    return isPerJuta(c) ? `${fxQty(kursToField(rate, c))} ${c} per Rp 1 jt` : fxRate(rate);
 }
 
 function saveExchangeLocal() {
@@ -595,18 +623,18 @@ function ensureExchangeUI() {
         <div class="manager-heading"><h2 id="fxAssetDialogTitle">Update saldo &amp; kurs</h2><button type="button" aria-label="Tutup" onclick="closeAssetDialog()">×</button></div>
         <div class="manager-content">
             <div class="fx-quick">
-                <div class="fx-quick-head"><b>Kurs modal kamu</b><span>Rupiah per 1. Dipakai buat ngerupiahin pound &amp; dollar, dan buat hitung untung tiap tukar.</span></div>
+                <div class="fx-quick-head"><b>Kurs modal kamu</b><span>Harga stok kamu. Pound: berapa pound per Rp 1 juta (contoh 3000). Dollar: rupiah per 1 dollar. Otomatis ikut kurs restok terakhir di Catat tukar, tetap bisa diubah di sini. Dipakai buat ngerupiahin pound &amp; dollar dan hitung untung tiap tukar.</span></div>
                 <div class="fx-asset-rates">${FX_CURRENCIES.map(c => `
                     <label class="fx-asset-rate">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b>
-                        <input type="number" min="0" step="0.01" inputmode="decimal" data-asset-rate="${c}" placeholder="Rp per 1 ${c}" oninput="onAssetRate(this)">
+                        <input type="number" min="0" step="0.01" inputmode="decimal" data-asset-rate="${c}" placeholder="${isPerJuta(c) ? `${c} per Rp 1 juta` : `Rp per 1 ${c}`}" oninput="onAssetRate(this)">
                     </label>`).join('')}
                 </div>
             </div>
             <div class="fx-quick">
-                <div class="fx-quick-head"><b>Kurs beli</b><span>Rupiah per 1 yang kamu bayar kalau orang nuker pound/dollar ke rupiah. Otomatis dipakai di Catat tukar, tetap bisa diubah per transaksi.</span></div>
+                <div class="fx-quick-head"><b>Kurs beli</b><span>Kurs kalau orang nuker pound/dollar ke rupiah (pound per Rp 1 juta, rupiah per 1 dollar). Otomatis dipakai di Catat tukar, tetap bisa diubah per transaksi.</span></div>
                 <div class="fx-asset-rates">${FX_CURRENCIES.map(c => `
                     <label class="fx-asset-rate">${fxFlag(c, 'fx-flag is-lg')}<b>${c}</b>
-                        <input type="number" min="0" step="0.01" inputmode="decimal" data-buy-rate="${c}" placeholder="Rp per 1 ${c}" oninput="onBuyRate(this)">
+                        <input type="number" min="0" step="0.01" inputmode="decimal" data-buy-rate="${c}" placeholder="${isPerJuta(c) ? `${c} per Rp 1 juta` : `Rp per 1 ${c}`}" oninput="onBuyRate(this)">
                     </label>`).join('')}
                 </div>
             </div>
@@ -1193,10 +1221,10 @@ function renderAssetPane() {
     const typing = document.activeElement && pane.contains(document.activeElement) && /^(INPUT|SELECT)$/.test(document.activeElement.tagName);
     if (!typing) {
         document.querySelectorAll('[data-asset-rate]').forEach(input => {
-            input.value = exchangeState.assetRates[input.dataset.assetRate] || '';
+            input.value = kursToField(exchangeState.assetRates[input.dataset.assetRate], input.dataset.assetRate);
         });
         document.querySelectorAll('[data-buy-rate]').forEach(input => {
-            input.value = exchangeState.buyRates[input.dataset.buyRate] || '';
+            input.value = kursToField(exchangeState.buyRates[input.dataset.buyRate], input.dataset.buyRate);
         });
         const row = h => `
             <div class="fx-asset-row" data-holding="${escapeHTML(h.id)}">
@@ -1270,7 +1298,7 @@ function renderAssetNumbers() {
     investorEl.innerHTML = `<b>Dana investor ${formatIDR(t.investor)}</b> <span>· pos terpisah, belum ikut dihitung di total aset bersih (cara hitungnya nunggu konfirmasi)</span>`;
 
     document.getElementById('fxPeganganVal').textContent = formatIDR(t.pegangan);
-    const rates = FX_CURRENCIES.map(c => `${c} ${exchangeState.assetRates[c] ? fxRate(exchangeState.assetRates[c]) : 'belum diisi'}`).join(' · ');
+    const rates = FX_CURRENCIES.map(c => `${c} ${exchangeState.assetRates[c] ? kursText(exchangeState.assetRates[c], c) : 'belum diisi'}`).join(' · ');
     document.getElementById('fxAssetSub').innerHTML = `Kurs modal: ${rates}` + (t.missingRate.length ? ` <b class="fx-sub-warn">· isi kurs ${t.missingRate.join(' & ')} biar ikut dihitung</b>` : '');
 
     // Same tiles as DAR's bank cards; the share bar is of the whole pegangan.
@@ -1424,13 +1452,13 @@ function flushAssetSave() {
 }
 
 function onAssetRate(input) {
-    exchangeState.assetRates[input.dataset.assetRate] = Math.max(0, Number(input.value) || 0);
+    exchangeState.assetRates[input.dataset.assetRate] = kursFromField(input.value, input.dataset.assetRate);
     queueAssetSave();
 }
 
 // Kurs beli: what the owner pays per 1 when someone swaps pounds/dollars into rupiah.
 function onBuyRate(input) {
-    exchangeState.buyRates[input.dataset.buyRate] = Math.max(0, Number(input.value) || 0);
+    exchangeState.buyRates[input.dataset.buyRate] = kursFromField(input.value, input.dataset.buyRate);
     queueAssetSave();
 }
 
@@ -1527,16 +1555,30 @@ function dealPairOf(outC, inC) {
     return { strong: outStrong ? outC : inC, weak: outStrong ? inC : outC, outStrong };
 }
 
+// Unrounded, so a kurs typed as pound per Rp 1 juta comes back as the same round number.
 function dealRateOf(d) {
     const s = dealSides(d);
     const p = dealPairOf(s.out.c, s.in.c);
     const strongAmt = p.outStrong ? s.out.amount : s.in.amount;
     const weakAmt = p.outStrong ? s.in.amount : s.out.amount;
-    return strongAmt ? Math.round(weakAmt / strongAmt * 100) / 100 : 0;
+    return strongAmt ? weakAmt / strongAmt : 0;
 }
 
 function dealRateText(rate, weak, strong) {
-    return weak === 'IDR' ? `${fxRate(rate)} per 1 ${strong}` : `${fxQty(rate)} ${weak} per 1 ${strong}`;
+    if (weak === 'IDR') return isPerJuta(strong) ? kursText(rate, strong) : `${fxRate(rate)} per 1 ${strong}`;
+    return `${fxQty(rate)} ${weak} per 1 ${strong}`;
+}
+
+// The kurs field of Catat tukar: pound ↔ rupiah is typed as pound per Rp 1 juta.
+function dealFieldPerJuta() {
+    const { outC, inC } = dealPair();
+    const p = dealPairOf(outC, inC);
+    return p.weak === 'IDR' && isPerJuta(p.strong) ? p.strong : '';
+}
+
+function setDealRateField(rate) {
+    const c = dealFieldPerJuta();
+    document.getElementById('fxDealRate').value = !rate ? '' : c ? kursToField(rate, c) : Math.round(rate * 100) / 100;
 }
 
 let dealEditId = '';
@@ -1569,6 +1611,7 @@ function ensureDealDialog() {
                     <button type="button" class="month-pill-btn fx-flip" onclick="flipDeal()">⇄ Balik arah</button>
                     <label><span class="fx-label-flag"><span id="fxDealRateFlags"></span><span id="fxDealRateLabel">Kurs</span></span><input type="text" id="fxDealRate" inputmode="decimal" autocomplete="off" placeholder="Contoh: 340" oninput="onDealRate()"></label>
                     <label>Tanggal<input type="date" id="fxDealDate" required></label>
+                    <label class="wide-field fx-restock" id="fxDealRestockRow"><input type="checkbox" id="fxDealRestock" checked onchange="renderDealPreview()"><span>Ini restok (mis. dari TKW): kurs ini jadi <b>kurs modal</b> buat hitung untung jual berikutnya</span></label>
                 </div>
                 <div class="fx-preview" id="fxDealPreview"></div>
                 <p class="draft-error" id="fxDealError" role="alert"></p>
@@ -1639,7 +1682,10 @@ function renderDealLabels() {
     document.getElementById('fxDealOutAmt').placeholder = outC === 'IDR' ? 'Contoh: 3.400.000' : 'Contoh: 10000';
     document.getElementById('fxDealInAmt').placeholder = inC === 'IDR' ? 'Contoh: 3.400.000' : 'Contoh: 10000';
     document.getElementById('fxDealRateFlags').innerHTML = fxFlag(p.weak) + fxFlag(p.strong);
-    document.getElementById('fxDealRateLabel').textContent = p.weak === 'IDR' ? `Kurs (Rp per 1 ${p.strong})` : `Kurs (${p.weak} per 1 ${p.strong})`;
+    const perJuta = dealFieldPerJuta();
+    document.getElementById('fxDealRateLabel').textContent = perJuta ? `Kurs (${perJuta} per Rp 1 juta)` : p.weak === 'IDR' ? `Kurs (Rp per 1 ${p.strong})` : `Kurs (${p.weak} per 1 ${p.strong})`;
+    document.getElementById('fxDealRate').placeholder = perJuta ? 'Contoh: 2950' : p.weak === 'IDR' ? 'Contoh: 16500' : 'Contoh: 50';
+    document.getElementById('fxDealRestockRow').hidden = outC !== 'IDR';
 }
 
 function setDealSources(keepOut, keepIn) {
@@ -1660,7 +1706,7 @@ function onDealPair(changed) {
         other.value = mine === 'IDR' ? FX_CURRENCIES[0] : 'IDR';
     }
     setDealSources();
-    document.getElementById('fxDealRate').value = dealDefaultRate(outSel.value, inSel.value) || '';
+    setDealRateField(dealDefaultRate(outSel.value, inSel.value));
     dealLastTyped = 'rate';
     fillDealFromRate('out');
     renderDealLabels();
@@ -1676,7 +1722,8 @@ function flipDeal() {
     [outSel.value, inSel.value] = [inSel.value, outSel.value];
     [outAmt.value, inAmt.value] = [inAmt.value, outAmt.value];
     setDealSources();
-    document.getElementById('fxDealRate').value = dealDefaultRate(outSel.value, inSel.value) || document.getElementById('fxDealRate').value;
+    // Flipping keeps the same pair, so the typed kurs still reads the same way.
+    setDealRateField(dealDefaultRate(outSel.value, inSel.value) || readDealRate());
     dealLastTyped = 'rate';
     fillDealFromRate('out');
     renderDealLabels();
@@ -1684,8 +1731,11 @@ function flipDeal() {
     renderDealPreview();
 }
 
+// Always Rp per 1 (or weaker per 1 stronger), whatever way it was typed.
 function readDealRate() {
-    return parseDealAmount(document.getElementById('fxDealRate').value, 'EGP');
+    const typed = parseDealAmount(document.getElementById('fxDealRate').value, 'EGP');
+    const c = dealFieldPerJuta();
+    return c ? kursFromField(typed, c) : typed;
 }
 
 // From one side's amount and the kurs, work out the other side.
@@ -1711,7 +1761,7 @@ function fillDealRateFromAmounts() {
     if (!outAmt || !inAmt) return;
     const strongAmt = p.outStrong ? outAmt : inAmt;
     const weakAmt = p.outStrong ? inAmt : outAmt;
-    document.getElementById('fxDealRate').value = Math.round(weakAmt / strongAmt * 100) / 100;
+    setDealRateField(weakAmt / strongAmt);
 }
 
 // The side typed first is the one given; the kurs fills the other. Typing the second side too
@@ -1758,7 +1808,8 @@ function openDealDialog(id = '') {
         document.getElementById('fxDealIn').value = s.in.c;
         document.getElementById('fxDealOutAmt').value = showDealAmount(s.out.amount, s.out.c);
         document.getElementById('fxDealInAmt').value = showDealAmount(s.in.amount, s.in.c);
-        document.getElementById('fxDealRate').value = dealRateOf(d) || '';
+        document.getElementById('fxDealRestock').checked = !!d.restock;
+        setDealRateField(dealRateOf(d));
         const outSrc = d.dir === 'beli' ? d.bankKey : d.holdingId;
         const inSrc = d.dir === 'beli' ? d.holdingId : d.dir === 'swap' ? d.holdingId2 : d.bankKey;
         setDealSources(outSrc, inSrc);
@@ -1773,7 +1824,8 @@ function openDealDialog(id = '') {
         document.getElementById('fxDealOutAmt').value = '';
         document.getElementById('fxDealInAmt').value = '';
         setDealSources();
-        document.getElementById('fxDealRate').value = dealDefaultRate(dealPair().outC, dealPair().inC) || '';
+        document.getElementById('fxDealRestock').checked = true;
+        setDealRateField(dealDefaultRate(dealPair().outC, dealPair().inC));
         dealLastTyped = 'rate';
         dealFirstSide = 'out';
     }
@@ -1793,11 +1845,13 @@ function readDeal() {
     const inSrc = document.getElementById('fxDealInTo').value;
     const base = { name: document.getElementById('fxDealName').value.trim().slice(0, 80), date: document.getElementById('fxDealDate').value || localDateKey() };
     if (inC === 'IDR') return { ...base, dir: 'jual', currency: outC, qty: outAmt, holdingId: outSrc, idr: inAmt, bankKey: inSrc };
-    if (outC === 'IDR') return { ...base, dir: 'beli', currency: inC, qty: inAmt, holdingId: inSrc, idr: outAmt, bankKey: outSrc };
+    if (outC === 'IDR') return { ...base, dir: 'beli', currency: inC, qty: inAmt, holdingId: inSrc, idr: outAmt, bankKey: outSrc, restock: document.getElementById('fxDealRestock').checked };
     return { ...base, dir: 'swap', currency: outC, qty: outAmt, holdingId: outSrc, currency2: inC, qty2: inAmt, holdingId2: inSrc, idr: 0, bankKey: '' };
 }
 
+// A restok is bought at its own kurs: no profit on it, and that kurs becomes the kurs modal.
 function dealModals(d) {
+    if (d.dir === 'beli' && d.restock && d.qty > 0 && d.idr > 0) return { modal: d.idr / d.qty, modal2: 0 };
     return { modal: exchangeState.assetRates[d.currency] || 0, modal2: d.dir === 'swap' ? (exchangeState.assetRates[d.currency2] || 0) : 0 };
 }
 
@@ -1810,11 +1864,17 @@ function renderDealPreview() {
         if (s.out.amount && s.in.amount) {
             const p = dealPairOf(s.out.c, s.in.c);
             lines.push(`<div class="fx-must-get"><span>Kurs <b>${dealRateText(dealRateOf(d), p.weak, p.strong)}</b></span></div>`);
+            if (d.restock) lines.push(`Restok: kurs ini jadi kurs modal ${d.currency}.`);
         }
         document.getElementById('fxDealPreview').innerHTML = lines.map(l => `<div>${l}</div>`).join('');
         return;
     }
-    if (s.out.amount && s.in.amount) {
+    if (s.out.amount && s.in.amount && d.restock) {
+        const p = dealPairOf(s.out.c, s.in.c);
+        const was = exchangeState.assetRates[d.currency];
+        lines.push(`<div class="fx-must-get"><span>Kurs <b>${dealRateText(dealRateOf(d), p.weak, p.strong)}</b></span><span>restok, belum ada untung</span></div>`);
+        lines.push(`Kurs modal ${d.currency}: ${was ? kursText(was, d.currency) : 'kosong'} → <b>${kursText(d.idr / d.qty, d.currency)}</b>. Untung dihitung pas pound/dollar ini dijual.`);
+    } else if (s.out.amount && s.in.amount) {
         const m = dealModals(d);
         const p = dealPairOf(s.out.c, s.in.c);
         const profit = dealProfit({ ...d, ...m });
@@ -1826,7 +1886,7 @@ function renderDealPreview() {
         } else if (d.dir === 'swap') {
             lines.push(`Nilai di kurs modal: terima ${formatIDR(Math.round(d.qty2 * m.modal2))} − kasih ${formatIDR(Math.round(d.qty * m.modal))}`);
         } else {
-            lines.push(`Modal ${fxRate(m.modal)} × ${fxQty(d.qty)} ${d.currency} = ${formatIDR(Math.round(d.qty * m.modal))}`);
+            lines.push(`Modal ${kursText(m.modal, d.currency)} × ${fxQty(d.qty)} ${d.currency} = ${formatIDR(Math.round(d.qty * m.modal))}`);
         }
     }
     const old = exchangeState.deals.find(x => x.id === dealEditId);
@@ -1887,7 +1947,8 @@ function handleDealSubmit(event) {
         bankDelta: isBankKey(input.bankKey) && counts ? (input.dir === 'beli' ? -input.idr : input.idr) : 0,
         by: old ? (old.by || '') : recordedBy(),
         // Keep the kurs modal of the first save, so changing the kurs later leaves old profits.
-        modal: sameAsOld && old.modal ? old.modal : m.modal,
+        // A restok always uses its own kurs.
+        modal: !input.restock && sameAsOld && old.modal && !old.restock ? old.modal : m.modal,
         modal2: sameAsOld && old.modal2 ? old.modal2 : m.modal2,
         createdAt: old ? old.createdAt : Date.now()
     };
@@ -1896,9 +1957,14 @@ function handleDealSubmit(event) {
     // The next exchange of the same kind starts from this kurs (kurs beli has its own setting).
     if (deal.dir === 'jual') exchangeState.rates[deal.currency].sell = dealRateOf(deal);
     if (deal.dir === 'swap') { const p = dealPairOf(deal.currency, deal.currency2); exchangeState.crossRates[`${p.strong}-${p.weak}`] = dealRateOf(deal); }
+    // The newest restok sets the kurs modal (an older one edited later leaves it alone).
+    const newestRestock = deal.restock && !exchangeState.deals.some(x => x.id !== deal.id && x.restock && x.currency === deal.currency
+        && (x.date > deal.date || (x.date === deal.date && x.createdAt > deal.createdAt)));
+    if (newestRestock && !FX_LIMITED) exchangeState.assetRates[deal.currency] = deal.idr / deal.qty;
     reportMonth = deal.date.slice(0, 7);
     document.getElementById('fxDealDialog').close();
     saveExchangeAndSync();
+    if (deal.restock) { showToast(`TERCATAT · KURS MODAL ${deal.currency} ${kursText(deal.idr / deal.qty, deal.currency).toUpperCase()}`); return; }
     const known = deal.dir === 'swap' ? dealModal(deal) && dealModal(deal, 2) : dealModal(deal);
     showToast(known ? `TERCATAT · UNTUNG ${formatIDR(dealProfit(deal))}` : 'TERCATAT');
 }
@@ -2095,7 +2161,7 @@ function renderDailyReport() {
         rows.push(`
             <div class="fx-history-row fx-daily-row" role="row">
                 <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}${(() => { const who = [...new Set([...dd, ...ss, ...ii].map(x => x.by).filter(Boolean))]; return who.length ? `<small>oleh ${escapeHTML(who.join(', '))}</small>` : ''; })()}</span>
-                <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dealRupiahNet(dd))}` : '<i>-</i>'}</span>
+                <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dealRupiahNet(dd))}${FX_LIMITED ? '' : `<small>untung tukar ${formatIDR(dealProfitSum(dd))}</small>`}` : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pemasukan">${dd.length || ii.length ? formatIDR(profit) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Pengeluaran">${ss.length ? formatIDR(spent) : '<i>-</i>'}</span>
                 <span role="cell" data-label="Bersih hari ini"><b class="${profit - spent < 0 ? 'is-minus' : ''}">${formatIDR(profit - spent)}</b></span>
@@ -2132,7 +2198,7 @@ function dealRowHTML(d, withDate = false) {
         <button type="button" class="log-row fx-row ${d.dir === 'beli' ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
             <span class="log-row-main">
                 <span class="log-row-title">${fxFlag(s.in.c)}→${fxFlag(s.out.c)} ${escapeHTML(name(s.in.c))} ke ${escapeHTML(name(s.out.c))} · ${fxAmount(s.out.amount, s.out.c)}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
-                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}${FX_LIMITED ? '' : ' · ' + (known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)')}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
+                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}${d.restock ? ' · restok, jadi kurs modal' : FX_LIMITED ? '' : ' · ' + (known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)')}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
             </span>
             <span class="log-row-amount">${amount}</span>
         </button>`;

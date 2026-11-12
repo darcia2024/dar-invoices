@@ -96,7 +96,7 @@ function bankMove(state, key, delta) {
 }
 
 // The parts of a record that matter; a record whose core did not change keeps its stored effect.
-const dealCore = (d) => JSON.stringify([d.dir, d.date, d.name, d.currency, d.qty, d.holdingId, d.idr, d.bankKey, d.currency2, d.qty2, d.holdingId2]);
+const dealCore = (d) => JSON.stringify([d.dir, d.date, d.name, d.currency, d.qty, d.holdingId, d.idr, d.bankKey, d.currency2, d.qty2, d.holdingId2, !!d.restock]);
 const incomeCore = (x) => JSON.stringify([x.date, x.amount, x.note, x.bankKey]);
 const logCore = (l) => JSON.stringify([l.date, l.amount, l.note, l.merchant, l.posId, l.bankKey]);
 
@@ -123,6 +123,7 @@ function mergeLimited(previous, incoming, name) {
       currency: String(d.currency || ""), qty: round2(num(d.qty)), holdingId: String(d.holdingId || ""),
       idr: Math.round(num(d.idr)), bankKey: String(d.bankKey || ""),
       currency2: String(d.currency2 || ""), qty2: round2(num(d.qty2)), holdingId2: String(d.holdingId2 || ""),
+      restock: d.dir === "beli" && d.restock === true,
       by: name, demo: false, createdAt: num(d.createdAt) || Date.now(),
     };
     const old = oldDeals.get(d.id);
@@ -131,15 +132,22 @@ function mergeLimited(previous, incoming, name) {
     return {
       ...clean,
       ...(same ? { bankDelta: old.bankDelta || 0, holdDelta: old.holdDelta || 0, holdDelta2: old.holdDelta2 || 0 } : dealEffect(clean, state)),
-      modal: old && old.currency === clean.currency && old.dir === clean.dir && old.modal ? old.modal : num(rates[clean.currency]),
+      // A restok is bought at its own kurs (no profit on it).
+      modal: clean.restock && clean.idr > 0 ? clean.idr / clean.qty : old && !old.restock && old.currency === clean.currency && old.dir === clean.dir && old.modal ? old.modal : num(rates[clean.currency]),
       modal2: clean.dir === "swap" ? (old && old.currency2 === clean.currency2 && old.modal2 ? old.modal2 : num(rates[clean.currency2])) : 0,
       _same: same,
     };
   });
   const keptIds = new Set(newDeals.map((d) => d.id));
   oldDeals.forEach((d, id) => { if (!keptIds.has(id) || !newDeals.find((n) => n.id === id)._same) applyDeal(state, d, -1); });
+  const changed = newDeals.filter((d) => !d._same);
   newDeals.forEach((d) => { if (!d._same) applyDeal(state, d, 1); delete d._same; });
   ex.deals = [...list(ex.deals).filter((d) => !mine(d)), ...newDeals];
+  // A new or changed restok that is the newest one of its currency sets the owner's kurs modal.
+  changed.filter((d) => d.restock && d.qty > 0 && d.idr > 0).forEach((d) => {
+    const newer = ex.deals.some((x) => x.id !== d.id && x.restock && x.currency === d.currency && (x.date > d.date || (x.date === d.date && num(x.createdAt) > num(d.createdAt))));
+    if (!newer) ex.assetRates = { ...obj(ex.assetRates), [d.currency]: d.idr / d.qty };
+  });
 
   // Pemasukan
   const oldIncomes = new Map(list(ex.incomes).filter(mine).map((x) => [x.id, x]));

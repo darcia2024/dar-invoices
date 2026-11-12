@@ -3132,6 +3132,9 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-side.is-out { background: #fbf3ef; }
 .fx-side label small { font-weight: 400; color: #6b675b; }
 .fx-flip { grid-column: 1 / -1; justify-self: center; }
+.fx-restock { display: flex !important; flex-direction: row !important; align-items: flex-start; gap: 9px; font-size: 13px; font-weight: 500; line-height: 1.4; cursor: pointer; }
+.fx-restock[hidden] { display: none !important; }
+.fx-restock input[type="checkbox"] { width: 17px; height: 17px; min-height: 0; margin: 1px 0 0; padding: 0; flex: none; accent-color: var(--accent, #2f6e4f); }
 .fx-row .log-row-title .fx-flag { vertical-align: -2px; }
 .fx-preview:empty { display: none; }
 .fx-demo-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #fff4d6; border: 1px solid #ecd28f; color: #5a4a1c; border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; font-size: 12.5px; line-height: 1.45; }
