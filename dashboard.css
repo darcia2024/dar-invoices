@@ -3301,6 +3301,10 @@ html.is-limited .fx-daily-row { grid-template-columns: 1.1fr 1.5fr 1fr 1fr 1fr; 
 .fx-asset-remove { border: 0; background: transparent; color: #9a9384; font-size: 20px; line-height: 1; cursor: pointer; border-radius: 8px; height: 32px; }
 .fx-asset-remove:hover { background: #f1ece0; color: #b42318; }
 .fx-asset-add { justify-self: start; }
+.fx-asset-adds { display: flex; gap: 8px; flex-wrap: wrap; }
+.fx-asset-name-cell { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.fx-asset-name-cell .fx-asset-label { flex: 1; min-width: 0; }
+.fx-asset-prefix { font-size: 13px; font-weight: 600; color: #6b675b; }
 @media (max-width: 600px) {
     .fx-asset-total > b { font-size: 26px; }
     .fx-asset-row { grid-template-columns: 28px minmax(0, 1fr) 28px; row-gap: 6px; }

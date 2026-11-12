@@ -53,7 +53,8 @@ function limitedView(state, name) {
       buyRates: obj(ex.buyRates),
       crossRates: obj(ex.crossRates),
       assetRates: {},
-      holdings: list(ex.holdings).map((h) => ({ id: h.id, label: h.label, currency: h.currency, amount: 0 })),
+      // The owner's own places only (names, no amounts); pockets other people hold stay private.
+      holdings: list(ex.holdings).filter((h) => h.kind !== "orang").map((h) => ({ id: h.id, label: h.label, currency: h.currency, amount: 0 })),
       deals: list(ex.deals).filter(mine).map((d) => ({ ...d, modal: 0, modal2: 0 })),
       incomes: list(ex.incomes).filter(mine),
       deposits: { people: [], moves: [] },

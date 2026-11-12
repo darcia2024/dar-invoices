@@ -8,7 +8,9 @@
 // are recomputed from all trades in date order, so editing or deleting one keeps everything
 // consistent. Rupiah received or paid moves the chosen saldo account, like spendings do.
 const FX_CURRENCIES = (window.DAR_WS && window.DAR_WS.currencies && window.DAR_WS.currencies.length ? window.DAR_WS.currencies : ['EGP', 'USD']);
-const FX_NAMES = { EGP: 'Pound Mesir', USD: 'Dollar AS', SAR: 'Riyal Saudi', EUR: 'Euro', MYR: 'Ringgit' };
+const FX_NAMES = { IDR: 'Rupiah', EGP: 'Pound Mesir', USD: 'Dollar AS', SAR: 'Riyal Saudi', EUR: 'Euro', MYR: 'Ringgit' };
+// Places in Aset may hold rupiah too (cash rupiah), besides the account's foreign currencies.
+const HOLDING_CURRENCIES = ['IDR', ...FX_CURRENCIES];
 const FX_LOCAL_KEY = 'dar-exchange';
 const FX_TYPES = {
     jual: { label: 'Jual ke pelanggan', short: 'Jual' },
@@ -65,9 +67,11 @@ function normalizeExchange(value) {
     });
     if (!value || typeof value !== 'object') return out;
     if (Array.isArray(value.holdings)) {
-        out.holdings = value.holdings.filter(h => h && FX_CURRENCIES.includes(h.currency)).slice(0, 20).map(h => ({
+        out.holdings = value.holdings.filter(h => h && HOLDING_CURRENCIES.includes(h.currency)).slice(0, 40).map(h => ({
             id: String(h.id || 'hold-' + crypto.randomUUID()).slice(0, 80),
             label: String(h.label || '').slice(0, 40),
+            // "orang": the owner's money that someone else holds (label = that person's name).
+            kind: h.kind === 'orang' ? 'orang' : '',
             currency: h.currency,
             amount: Math.round((Number(h.amount) || 0) * 100) / 100
         }));
@@ -281,7 +285,19 @@ function fxFlag(c, cls = 'fx-flag') {
 
 // Rupiah value of a foreign amount at the owner's own rate (0 while no rate is set).
 function assetIdr(amount, currency) {
+    if (currency === 'IDR') return Math.round(Number(amount) || 0);
     return Math.round((Number(amount) || 0) * (exchangeState.assetRates[currency] || 0));
+}
+
+// Rupiah needs no kurs; pounds/dollars need the owner's kurs modal to be counted.
+function rateKnown(currency) {
+    return currency === 'IDR' || !!exchangeState.assetRates[currency];
+}
+
+// How a place is called on screen: "InstaPay", "Cash", or "Di Afifah" for money someone holds.
+function placeName(h) {
+    if (h.kind === 'orang') return `Di ${h.label || '…'}`;
+    return h.label || h.currency;
 }
 
 // Everything added up, the way the owner keeps it in his notebook:
@@ -290,7 +306,9 @@ function assetIdr(amount, currency) {
 // Investor money is shown apart and is NOT in the formula yet (to be confirmed by the owner).
 function assetTotals() {
     const bank = BANK_ACCOUNTS.reduce((s, acc) => s + (Number(bankBalances[acc.key]) || 0), 0);
-    const valas = exchangeState.holdings.reduce((s, h) => s + assetIdr(h.amount, h.currency), 0);
+    // Places the owner holds (pounds, dollars, cash rupiah) and pockets of his money others hold.
+    const valas = exchangeState.holdings.filter(h => h.kind !== 'orang').reduce((s, h) => s + assetIdr(h.amount, h.currency), 0);
+    const orang = exchangeState.holdings.filter(h => h.kind === 'orang').reduce((s, h) => s + assetIdr(h.amount, h.currency), 0);
     const { totals: held, byPerson } = depositBalances();
     const inIdr = bal => bal.IDR + FX_CURRENCIES.reduce((s, c) => s + assetIdr(bal[c], c), 0);
     // Investor money is its own pos and stays out of the formula until the owner says how it
@@ -307,8 +325,8 @@ function assetTotals() {
         ...open.map(debtCurrency)
     ]);
     const missingRate = FX_CURRENCIES.filter(c => !exchangeState.assetRates[c] && used.has(c));
-    const pegangan = bank + valas;
-    return { bank, valas, pegangan, talangan, titipan, investor, hutang, total: pegangan + talangan - titipan - hutang, missingRate };
+    const pegangan = bank + valas + orang;
+    return { bank, valas, orang, pegangan, talangan, titipan, investor, hutang, total: pegangan + talangan - titipan - hutang, missingRate };
 }
 
 // Foreign money shown under saldo next to the rupiah accounts, valued at the owner's rate.
@@ -320,11 +338,11 @@ function exchangeCashSummary() {
         return `
         <div class="bank-item-card fx-cash-card">
             <div class="bank-item-top">
-                <div class="bank-item-brand">${fxFlag(h.currency, 'fx-flag is-lg')}<span class="bank-tag-primary">${escapeHTML(h.label || h.currency)}</span></div>
+                <div class="bank-item-brand">${fxFlag(h.currency, 'fx-flag is-lg')}<span class="bank-tag-primary">${escapeHTML(placeName(h))}</span></div>
             </div>
-            <div class="bank-account-num">${FX_NAMES[h.currency] || h.currency}</div>
-            <div class="bank-balance-amount">${fxQty(h.amount)} ${h.currency}</div>
-            <div class="fx-cash-value">${exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(value)} · kurs ${fxRate(exchangeState.assetRates[h.currency])}` : 'kurs belum diisi'}</div>
+            <div class="bank-account-num">${h.kind === 'orang' ? 'Dipegang orang · ' : ''}${FX_NAMES[h.currency] || h.currency}</div>
+            <div class="bank-balance-amount">${fxAmount(h.amount, h.currency)}</div>
+            <div class="fx-cash-value">${h.currency === 'IDR' ? 'Rupiah tunai' : exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(value)} · kurs ${fxRate(exchangeState.assetRates[h.currency])}` : 'kurs belum diisi'}</div>
             <button type="button" class="bank-copy-btn" onclick="setWorkspaceView('tukar')">Ubah di Aset</button>
         </div>`;
     }).join('');
@@ -593,9 +611,17 @@ function ensureExchangeUI() {
                 </div>
             </div>
             <div class="fx-asset-group">
-                <div class="fx-asset-head"><b>Pound &amp; dollar</b><span id="fxValasSum"></span></div>
+                <div class="fx-asset-head"><b>Pegangan kamu</b><span id="fxValasSum"></span></div>
                 <div id="fxHoldingList"></div>
-                <button type="button" class="month-pill-btn fx-asset-add" onclick="addHolding()">+ Tambah tempat (mis. rekening Mesir)</button>
+                <div class="fx-asset-adds">
+                    <button type="button" class="month-pill-btn fx-asset-add" onclick="addHolding()">+ Tambah tempat (mis. rekening Mesir)</button>
+                    <button type="button" class="month-pill-btn fx-asset-add" onclick="addHolding('', 'IDR', 'Cash Rupiah')">+ Cash rupiah</button>
+                </div>
+            </div>
+            <div class="fx-asset-group">
+                <div class="fx-asset-head"><b>Dipegang orang</b><span>uang kamu yang ada di orang lain</span></div>
+                <div id="fxHoldingOrangList"></div>
+                <button type="button" class="month-pill-btn fx-asset-add" onclick="addHolding('orang')">+ Kantong dipegang orang</button>
             </div>
             <div class="fx-asset-group">
                 <div class="fx-asset-head"><b>Rupiah di bank</b><span id="fxBankSum"></span></div>
@@ -1172,19 +1198,19 @@ function renderAssetPane() {
         document.querySelectorAll('[data-buy-rate]').forEach(input => {
             input.value = exchangeState.buyRates[input.dataset.buyRate] || '';
         });
-        document.getElementById('fxHoldingList').innerHTML = exchangeState.holdings.map(h => `
+        const row = h => `
             <div class="fx-asset-row" data-holding="${escapeHTML(h.id)}">
                 <span class="fx-asset-flag">${fxFlag(h.currency, 'fx-flag is-lg')}</span>
-                <input type="text" class="fx-asset-label" maxlength="40" value="${escapeHTML(h.label)}" placeholder="Nama tempat" aria-label="Nama tempat" oninput="onHoldingInput('${escapeHTML(h.id)}', 'label', this)">
+                <span class="fx-asset-name-cell">${h.kind === 'orang' ? '<span class="fx-asset-prefix">Di</span>' : ''}<input type="text" class="fx-asset-label" maxlength="40" value="${escapeHTML(h.label)}" placeholder="${h.kind === 'orang' ? 'Nama orang' : 'Nama tempat'}" aria-label="${h.kind === 'orang' ? 'Nama orang yang pegang' : 'Nama tempat'}" oninput="onHoldingInput('${escapeHTML(h.id)}', 'label', this)"></span>
                 <span class="fx-asset-amount">
-                    <input type="number" min="0" step="0.01" inputmode="decimal" value="${h.amount || ''}" placeholder="0" aria-label="Jumlah ${h.currency}" oninput="onHoldingInput('${escapeHTML(h.id)}', 'amount', this)">
-                    ${FX_CURRENCIES.length > 1
-                        ? `<select aria-label="Mata uang" onchange="onHoldingInput('${escapeHTML(h.id)}', 'currency', this)">${FX_CURRENCIES.map(c => `<option value="${c}"${c === h.currency ? ' selected' : ''}>${c}</option>`).join('')}</select>`
-                        : `<em>${h.currency}</em>`}
+                    <input type="number" min="0" step="${h.currency === 'IDR' ? '1' : '0.01'}" inputmode="decimal" value="${h.amount || ''}" placeholder="0" aria-label="Jumlah ${h.currency}" oninput="onHoldingInput('${escapeHTML(h.id)}', 'amount', this)">
+                    <select aria-label="Mata uang" onchange="onHoldingInput('${escapeHTML(h.id)}', 'currency', this)">${HOLDING_CURRENCIES.map(c => `<option value="${c}"${c === h.currency ? ' selected' : ''}>${c}</option>`).join('')}</select>
                 </span>
                 <span class="fx-asset-idr" data-holding-idr="${escapeHTML(h.id)}"></span>
-                <button type="button" class="fx-asset-remove" aria-label="Hapus ${escapeHTML(h.label || h.currency)}" onclick="removeHolding('${escapeHTML(h.id)}')">×</button>
-            </div>`).join('') || '<div class="log-empty">Belum ada. Klik <b>+ Tambah tempat</b>.</div>';
+                <button type="button" class="fx-asset-remove" aria-label="Hapus ${escapeHTML(placeName(h))}" onclick="removeHolding('${escapeHTML(h.id)}')">×</button>
+            </div>`;
+        document.getElementById('fxHoldingList').innerHTML = exchangeState.holdings.filter(h => h.kind !== 'orang').map(row).join('') || '<div class="log-empty">Belum ada. Klik <b>+ Tambah tempat</b>.</div>';
+        document.getElementById('fxHoldingOrangList').innerHTML = exchangeState.holdings.filter(h => h.kind === 'orang').map(row).join('') || '<div class="log-empty">Belum ada. Klik <b>+ Kantong dipegang orang</b>, isi nama orangnya dan jumlahnya.</div>';
         document.getElementById('fxAssetBankList').innerHTML = BANK_ACCOUNTS.map(acc => `
             <div class="fx-asset-row is-bank">
                 <span class="fx-asset-flag"><img class="bank-logo-img" src="${acc.logo}" alt="" loading="lazy"></span>
@@ -1214,9 +1240,11 @@ function renderAssetNumbers() {
     exchangeState.holdings.forEach(h => {
         const el = document.querySelector(`[data-holding-idr="${CSS.escape(h.id)}"]`);
         if (!el) return;
-        el.innerHTML = !h.amount ? '' : exchangeState.assetRates[h.currency] ? `= ${formatIDR(assetIdr(h.amount, h.currency))}` : '<i>isi kurs</i>';
+        el.innerHTML = !h.amount || h.currency === 'IDR' ? '' : exchangeState.assetRates[h.currency] ? `= ${formatIDR(assetIdr(h.amount, h.currency))}` : '<i>isi kurs</i>';
     });
     document.getElementById('fxValasSum').textContent = formatIDR(t.valas);
+    const orangSum = document.querySelector('#fxHoldingOrangList') && document.querySelector('#fxHoldingOrangList').previousElementSibling.querySelector('span');
+    if (orangSum) orangSum.textContent = t.orang ? formatIDR(t.orang) : 'uang kamu yang ada di orang lain';
     document.getElementById('fxBankSum').textContent = formatIDR(t.bank);
     const today = localDateKey();
     const profitToday = dealProfitSum(exchangeState.deals.filter(d => d.date === today));
@@ -1233,7 +1261,7 @@ function renderAssetNumbers() {
         </div>`;
     document.getElementById('fxAssetStats').innerHTML = [
         card('profit-stat', 'total', 'Total aset bersih', formatIDR(t.total), `untung tukar hari ini ${formatIDR(profitToday)} · bulan ini ${formatIDR(profitMonth)}`),
-        card('total-stat', 'pegangan', 'Pegangan', formatIDR(t.pegangan), `bank ${formatIDR(t.bank)} · valas ${formatIDR(t.valas)}`, 'openAssetDialog()'),
+        card('total-stat', 'pegangan', 'Pegangan', formatIDR(t.pegangan), `bank ${formatIDR(t.bank)} · valas & cash ${formatIDR(t.valas)}${t.orang ? ` · di orang ${formatIDR(t.orang)}` : ''}`, 'openAssetDialog()'),
         card('paid-stat', 'talangan', '+ Talangan', formatIDR(t.talangan), 'orang ngutang ke kamu', "setWorkspaceView('debt')"),
         card('unpaid-stat', 'titipan', '− Uang orang', formatIDR(t.titipan + t.hutang), t.hutang ? `titipan ${formatIDR(t.titipan)} · hutang ${formatIDR(t.hutang)}` : 'masih harus diserahkan', "setFxPane('titipan')")
     ].join('');
@@ -1270,13 +1298,13 @@ function renderAssetNumbers() {
     const places = exchangeState.holdings.map(h => {
         const idr = assetIdr(h.amount, h.currency);
         // Places with a known logo show it, like the bank tiles; others show the flag and name.
-        const logo = PLACE_LOGOS.find(p => p.match.test(h.label || ''));
+        const logo = h.kind === 'orang' ? null : PLACE_LOGOS.find(p => p.match.test(h.label || ''));
         const brand = logo
             ? `<img class="bank-logo-img" src="${logo.src}" alt="${escapeHTML(h.label)}" loading="lazy">`
-            : `${fxFlag(h.currency, 'fx-flag is-lg')}<b class="fx-tile-name">${escapeHTML(h.label || h.currency)}</b>`;
-        return tile(brand, FX_NAMES[h.currency] || h.currency, pctOf(idr),
-            { text: exchangeState.assetRates[h.currency] ? `≈ ${formatIDR(idr)}` : 'kurs belum diisi', empty: !exchangeState.assetRates[h.currency] },
-            `${fxQty(h.amount)} ${h.currency}`, '',
+            : `${fxFlag(h.currency, 'fx-flag is-lg')}<b class="fx-tile-name">${escapeHTML(placeName(h))}</b>`;
+        return tile(brand, h.kind === 'orang' ? `Dipegang orang · ${FX_NAMES[h.currency] || h.currency}` : (FX_NAMES[h.currency] || h.currency), pctOf(idr),
+            { text: h.currency === 'IDR' ? 'Rupiah tunai' : rateKnown(h.currency) ? `≈ ${formatIDR(idr)}` : 'kurs belum diisi', empty: !rateKnown(h.currency) },
+            fxAmount(h.amount, h.currency), '',
             `<button type="button" class="bank-copy-btn" onclick="openAssetDialog()">Ubah jumlah</button>`);
     });
     document.getElementById('fxAssetGrid').innerHTML = banks.concat(places).join('');
@@ -1411,7 +1439,7 @@ function onHoldingInput(id, field, input) {
     if (!h) return;
     if (field === 'amount') h.amount = Math.max(0, Math.round((Number(input.value) || 0) * 100) / 100);
     else if (field === 'label') h.label = input.value.slice(0, 40);
-    else if (FX_CURRENCIES.includes(input.value)) {
+    else if (HOLDING_CURRENCIES.includes(input.value)) {
         h.currency = input.value;
         const row = input.closest('.fx-asset-row');
         row.querySelector('.fx-asset-flag').innerHTML = fxFlag(h.currency, 'fx-flag is-lg');
@@ -1429,11 +1457,12 @@ function onAssetBank(key, input) {
     queueAssetSave();
 }
 
-function addHolding() {
-    exchangeState.holdings.push({ id: 'hold-' + crypto.randomUUID(), label: '', currency: FX_CURRENCIES[0], amount: 0 });
+// kind "orang": a pocket of the owner's money that someone else holds, named after them.
+function addHolding(kind = '', currency = FX_CURRENCIES[0], label = '') {
+    exchangeState.holdings.push({ id: 'hold-' + crypto.randomUUID(), label, kind: kind === 'orang' ? 'orang' : '', currency, amount: 0 });
     document.activeElement && document.activeElement.blur();
     renderAssetPane();
-    const rows = document.querySelectorAll('#fxHoldingList .fx-asset-label');
+    const rows = document.querySelectorAll(`#${kind === 'orang' ? 'fxHoldingOrangList' : 'fxHoldingList'} ${label ? 'input[type=number]' : '.fx-asset-label'}`);
     if (rows.length) rows[rows.length - 1].focus();
     queueAssetSave();
 }
@@ -1441,7 +1470,7 @@ function addHolding() {
 function removeHolding(id) {
     const h = exchangeState.holdings.find(x => x.id === id);
     if (!h) return;
-    if (h.amount && !confirm(`Hapus ${h.label || h.currency} (${fxQty(h.amount)} ${h.currency})?`)) return;
+    if (h.amount && !confirm(`Hapus ${placeName(h)} (${fxAmount(h.amount, h.currency)})?`)) return;
     exchangeState.holdings = exchangeState.holdings.filter(x => x.id !== id);
     document.activeElement && document.activeElement.blur();
     renderAssetPane();
@@ -1572,13 +1601,15 @@ function showDealAmount(n, currency) {
 function dealSourceOptions(currency, selected, side) {
     if (currency === 'IDR') return bankOptionsHTML(selected);
     const list = exchangeState.holdings.filter(h => h.currency === currency);
-    return list.map(h => `<option value="${escapeHTML(h.id)}"${h.id === selected ? ' selected' : ''}>${escapeHTML(h.label || h.currency)}${FX_LIMITED ? '' : ` · ${fxQty(h.amount)} ${h.currency}`}</option>`).join('')
+    return list.map(h => `<option value="${escapeHTML(h.id)}"${h.id === selected ? ' selected' : ''}>${escapeHTML(placeName(h))}${FX_LIMITED ? '' : ` · ${fxQty(h.amount)} ${h.currency}`}</option>`).join('')
         + `<option value=""${selected === '' ? ' selected' : ''}>${side === 'in' ? 'Tidak ke tempat di Aset' : 'Tidak dari tempat di Aset'}</option>`;
 }
 
 function dealDefaultSource(currency) {
     if (currency === 'IDR') return lastExpenseBank() || (BANK_ACCOUNTS[0] || {}).key || '';
-    return (exchangeState.holdings.find(h => h.currency === currency) || {}).id || '';
+    // The owner's own place first; a pocket someone else holds only when it is the only one.
+    const own = exchangeState.holdings.find(h => h.currency === currency && h.kind !== 'orang');
+    return ((own || exchangeState.holdings.find(h => h.currency === currency)) || {}).id || '';
 }
 
 function dealPair() {
@@ -1807,7 +1838,7 @@ function renderDealPreview() {
         if (old && old.holdingId2 === id) back -= old.holdDelta2 || 0;
         const now = Math.round((h.amount + back) * 100) / 100;
         const after = Math.round((now + sign * amount) * 100) / 100;
-        lines.push(`${escapeHTML(h.label || h.currency)}: ${fxQty(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${fxQty(after)} ${currency}</b>`);
+        lines.push(`${escapeHTML(placeName(h))}: ${fxQty(now)} → <b class="${after < 0 ? 'is-minus' : ''}">${fxQty(after)} ${currency}</b>`);
     };
     if (d.dir === 'jual') placeLine(d.holdingId, d.qty, d.currency, -1);
     if (d.dir === 'beli') placeLine(d.holdingId, d.qty, d.currency, 1);
@@ -2510,7 +2541,7 @@ function exchangeAssistantContext() {
             rupiah_di_bank: Object.fromEntries(BANK_ACCOUNTS.map(acc => [acc.name, Number(bankBalances[acc.key]) || 0])),
             kurs_pemilik_rp_per_1: exchangeState.assetRates,
             kurs_beli_rp_per_1: exchangeState.buyRates,
-            valas: exchangeState.holdings.filter(h => h.amount).map(h => ({ tempat: h.label, mata_uang: h.currency, jumlah: h.amount, dalam_rupiah: assetIdr(h.amount, h.currency) })),
+            valas: exchangeState.holdings.filter(h => h.amount).map(h => ({ tempat: placeName(h), dipegang_orang: h.kind === 'orang', mata_uang: h.currency, jumlah: h.amount, dalam_rupiah: assetIdr(h.amount, h.currency) })),
             kurs_belum_diisi: t.missingRate
         },
         tukar_terakhir: exchangeState.deals.slice().sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt).slice(0, 30)
