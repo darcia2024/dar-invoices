@@ -3254,6 +3254,51 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-daily-head b { font-size: 14px; color: #24241f; }
 .fx-daily-head span { font-size: 11.5px; color: #7a7567; }
 .fx-daily-row { grid-template-columns: 1.1fr 1.5fr 1fr 1fr 1fr 1.3fr; }
+
+/* ---------- Laporan harian table ---------- */
+.fx-dr { margin-top: 10px; display: grid; }
+.fx-dr-row { display: grid; grid-template-columns: minmax(150px, 1.5fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.1fr) minmax(0, 1.3fr); align-items: center; gap: 12px; padding: 11px 10px; border-bottom: 1px solid #ece6d8; }
+.fx-dr.is-limited .fx-dr-row { grid-template-columns: minmax(150px, 1.5fr) repeat(4, minmax(0, 1fr)); }
+.fx-dr-row.is-head { padding-top: 4px; padding-bottom: 8px; border-bottom: 1px solid #d9d2c1; }
+.fx-dr-row.is-head span { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #8a8576; text-align: right; }
+.fx-dr-row.is-head span:first-child { text-align: left; }
+.fx-dr-row.is-today { background: linear-gradient(90deg, rgba(47, 110, 79, .07), rgba(47, 110, 79, 0) 60%); border-radius: 10px; }
+.fx-dr-row.is-foot { border-bottom: 0; border-top: 1px solid #d9d2c1; margin-top: -1px; }
+.fx-dr-date { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.fx-dr-day { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid #d9d2c1; border-radius: 10px; font-size: 14px; font-weight: 700; color: #24241f; font-variant-numeric: tabular-nums; }
+.fx-dr-row.is-today .fx-dr-day { border-color: #2f6e4f; color: #2f6e4f; }
+.fx-dr-date-text { display: grid; min-width: 0; }
+.fx-dr-date-text b { font-size: 13px; font-weight: 600; color: #24241f; text-transform: capitalize; }
+.fx-dr-date-text em { font-style: normal; font-size: 10px; font-weight: 600; color: #2f6e4f; text-transform: none; border: 1px solid #b9d3c3; border-radius: 999px; padding: 0 6px; margin-left: 4px; vertical-align: 1px; }
+.fx-dr-date-text small { font-size: 11px; color: #8a8576; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fx-dr-cell { display: grid; justify-items: end; text-align: right; min-width: 0; }
+.fx-dr-cell small { font-size: 10.5px; color: #8a8576; white-space: nowrap; }
+.fx-dr-cell small.is-up { color: #2f6e4f; }
+.fx-dr-cell small.is-down { color: #a5432f; }
+.fx-dr-num { font-size: 13px; font-weight: 600; color: #24241f; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fx-dr-num.is-in { color: #2f6e4f; }
+.fx-dr-num.is-out { color: #a5432f; }
+.fx-dr-cell.is-net .fx-dr-num { font-size: 14px; font-weight: 700; }
+.fx-dr-none { color: #c3bcaa; }
+.fx-dr-row.is-foot .fx-dr-num { font-weight: 700; }
+@media (max-width: 760px) {
+    .fx-dr { gap: 10px; }
+    .fx-dr-row.is-head { display: none; }
+    .fx-dr-row, .fx-dr.is-limited .fx-dr-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 10px 14px; padding: 12px; border: 1px solid #e4ddcd; border-radius: 14px; }
+    .fx-dr-date { align-self: center; }
+    .fx-dr-row.is-today { background: none; border-color: #b9d3c3; }
+    .fx-dr-row.is-foot { margin-top: 0; border: 1px solid #d9d2c1; border-style: dashed; }
+    .fx-dr-date { grid-column: 1; grid-row: 1; }
+    .fx-dr-cell.is-net { grid-column: 2; grid-row: 1; align-self: center; }
+    .fx-dr-cell.is-net::before { content: "Bersih"; }
+    .fx-dr-cell.is-net .fx-dr-num { font-size: 17px; }
+    .fx-dr-cell { justify-items: start; text-align: left; padding-top: 8px; border-top: 1px solid #f0ebdf; }
+    .fx-dr-cell.is-net { justify-items: end; text-align: right; padding-top: 0; border-top: 0; }
+    .fx-dr-cell::before { content: attr(data-label); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #8a8576; margin-bottom: 1px; }
+    .fx-dr-cell.is-asset { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .fx-dr-cell.is-asset:empty, .fx-dr-cell.is-empty { display: none; }
+    .fx-dr-cell.is-asset::before { width: 100%; }
+}
 /* A limited login (users[].limited): only entering and their own daily report. The server sends
    nothing else; this just keeps the empty parts off the screen. */
 html.is-limited .fx-pane-tabs, html.is-limited #fxAssetPane, html.is-limited #fxDepositPane,

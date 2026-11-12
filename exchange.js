@@ -2174,6 +2174,10 @@ function renderDailyReport() {
         for (let i = snapDays.length - 1; i >= 0; i--) if (snapDays[i] < day) return exchangeState.assetDaily[snapDays[i]];
         return null;
     };
+    // Columns: a limited login has no kurs modal or balances, so no untung and no aset bersih.
+    const money = (n, cls = '') => `<span class="fx-dr-num ${cls}">${formatIDR(n)}</span>`;
+    const none = '<span class="fx-dr-none">–</span>';
+    const sum = { deals: 0, net: 0, profit: 0, income: 0, spent: 0 };
     const rows = [];
     for (let d = lastDay; d >= 1; d--) {
         const day = `${reportMonth}-${String(d).padStart(2, '0')}`;
@@ -2182,28 +2186,46 @@ function renderDailyReport() {
         const ii = others.filter(x => x.date === day);
         const snap = exchangeState.assetDaily[day];
         if (!dd.length && !ss.length && !ii.length && !snap) continue;
-        const profit = dealProfitSum(dd) + ii.reduce((s, x) => s + x.amount, 0);
+        const dealProfitDay = dealProfitSum(dd);
+        const incomeDay = ii.reduce((s, x) => s + x.amount, 0);
         const spent = ss.reduce((s, l) => s + l.amount, 0);
+        const net = (FX_LIMITED ? 0 : dealProfitDay) + incomeDay - spent;
+        sum.deals += dd.length; sum.net += dealRupiahNet(dd); sum.profit += dealProfitDay; sum.income += incomeDay; sum.spent += spent;
         const prev = snap ? snapBefore(day) : null;
         const change = snap && prev ? snap.total - prev.total : null;
-        const label = new Date(y, m - 1, d).toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
+        const date = new Date(y, m - 1, d);
+        const who = [...new Set([...dd, ...ss, ...ii].map(x => x.by).filter(Boolean))];
         rows.push(`
-            <div class="fx-history-row fx-daily-row" role="row">
-                <span role="cell" data-label="Tanggal"><b>${escapeHTML(label)}</b>${day === today ? '<small>hari ini</small>' : ''}${(() => { const who = [...new Set([...dd, ...ss, ...ii].map(x => x.by).filter(Boolean))]; return who.length ? `<small>oleh ${escapeHTML(who.join(', '))}</small>` : ''; })()}</span>
-                <span role="cell" data-label="Tukar">${dd.length ? `${dd.length}× · ${formatIDR(dealRupiahNet(dd))}${FX_LIMITED ? '' : `<small>untung tukar ${formatIDR(dealProfitSum(dd))}</small>`}` : '<i>-</i>'}</span>
-                <span role="cell" data-label="Pemasukan">${dd.length || ii.length ? formatIDR(profit) : '<i>-</i>'}</span>
-                <span role="cell" data-label="Pengeluaran">${ss.length ? formatIDR(spent) : '<i>-</i>'}</span>
-                <span role="cell" data-label="Bersih hari ini"><b class="${profit - spent < 0 ? 'is-minus' : ''}">${formatIDR(profit - spent)}</b></span>
-                <span role="cell" data-label="Aset bersih" class="is-total">${snap ? `<b>${formatIDR(snap.total)}</b>${change === null ? '' : `<small class="${change < 0 ? 'is-down' : 'is-up'}">${change < 0 ? '▼' : '▲'} ${formatIDR(Math.abs(change))}</small>`}` : '<i>-</i>'}</span>
+            <div class="fx-dr-row${day === today ? ' is-today' : ''}" role="row">
+                <div class="fx-dr-date" role="cell">
+                    <span class="fx-dr-day">${d}</span>
+                    <span class="fx-dr-date-text"><b>${escapeHTML(date.toLocaleDateString('id-ID', { weekday: 'long' }))}${day === today ? ' <em>hari ini</em>' : ''}</b>${who.length ? `<small>${escapeHTML(who.join(', '))}</small>` : ''}</span>
+                </div>
+                <div class="fx-dr-cell${dd.length ? '' : ' is-empty'}" role="cell" data-label="Tukar">${dd.length ? `<span class="fx-dr-num">${dd.length}×</span><small>${formatIDR(dealRupiahNet(dd))}</small>` : none}</div>
+                ${FX_LIMITED ? '' : `<div class="fx-dr-cell${dd.length ? '' : ' is-empty'}" role="cell" data-label="Untung tukar">${dd.length ? money(dealProfitDay, dealProfitDay < 0 ? 'is-out' : 'is-in') : none}</div>`}
+                <div class="fx-dr-cell${ii.length ? '' : ' is-empty'}" role="cell" data-label="Pemasukan">${ii.length ? money(incomeDay, 'is-in') : none}</div>
+                <div class="fx-dr-cell${ss.length ? '' : ' is-empty'}" role="cell" data-label="Pengeluaran">${ss.length ? money(spent, 'is-out') : none}</div>
+                <div class="fx-dr-cell is-net" role="cell" data-label="Bersih">${money(net, net < 0 ? 'is-out' : net > 0 ? 'is-in' : '')}</div>
+                ${FX_LIMITED ? '' : `<div class="fx-dr-cell is-asset" role="cell" data-label="Aset bersih">${snap ? `<span class="fx-dr-num">${formatIDR(snap.total)}</span>${change === null ? '' : `<small class="${change < 0 ? 'is-down' : 'is-up'}">${change < 0 ? '▼' : '▲'} ${formatIDR(Math.abs(change))}</small>`}` : none}</div>`}
             </div>`);
     }
+    const totalNet = (FX_LIMITED ? 0 : sum.profit) + sum.income - sum.spent;
+    const heads = ['Tanggal', 'Tukar', FX_LIMITED ? '' : 'Untung tukar', 'Pemasukan', 'Pengeluaran', 'Bersih', FX_LIMITED ? '' : 'Aset bersih'].filter(Boolean);
     el.innerHTML = `
-        <div class="fx-daily-head"><b>${FX_LIMITED ? 'Laporan harian saya' : 'Laporan harian'}</b><span>${FX_LIMITED ? 'Yang kamu catat tiap hari. Ziaud menerima ringkasannya tiap pagi.' : 'Aset bersih dicatat otomatis di akhir tiap hari.'}</span></div>
-        ${rows.length ? `<div class="fx-history-table fx-daily-table" role="table">
-            <div class="fx-history-row fx-daily-row is-head" role="row">
-                <span role="columnheader">Tanggal</span><span role="columnheader">Tukar</span><span role="columnheader">Pemasukan</span>
-                <span role="columnheader">Pengeluaran</span><span role="columnheader">Bersih hari ini</span><span role="columnheader">Aset bersih</span>
-            </div>${rows.join('')}</div>` : `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(reportMonth))}.</div>`}`;
+        <div class="fx-daily-head"><b>${FX_LIMITED ? 'Laporan harian saya' : 'Laporan harian'}</b><span>${FX_LIMITED ? 'Yang kamu catat tiap hari. Ziaud menerima ringkasannya tiap pagi.' : 'Bersih = untung tukar + pemasukan − pengeluaran. Aset bersih dicatat otomatis di akhir tiap hari.'}</span></div>
+        ${rows.length ? `<div class="fx-dr${FX_LIMITED ? ' is-limited' : ''}" role="table" aria-label="Laporan harian ${escapeHTML(monthLabelOf(reportMonth))}">
+            <div class="fx-dr-row is-head" role="row">${heads.map(h => `<span role="columnheader">${h}</span>`).join('')}</div>
+            ${rows.join('')}
+            <div class="fx-dr-row is-foot" role="row">
+                <div class="fx-dr-date" role="cell"><span class="fx-dr-date-text"><b>Total ${escapeHTML(monthLabelOf(reportMonth))}</b><small>${rows.length} hari</small></span></div>
+                <div class="fx-dr-cell" role="cell" data-label="Tukar">${sum.deals ? `<span class="fx-dr-num">${sum.deals}×</span><small>${formatIDR(sum.net)}</small>` : none}</div>
+                ${FX_LIMITED ? '' : `<div class="fx-dr-cell" role="cell" data-label="Untung tukar">${money(sum.profit, sum.profit < 0 ? 'is-out' : 'is-in')}</div>`}
+                <div class="fx-dr-cell" role="cell" data-label="Pemasukan">${money(sum.income, 'is-in')}</div>
+                <div class="fx-dr-cell" role="cell" data-label="Pengeluaran">${money(sum.spent, 'is-out')}</div>
+                <div class="fx-dr-cell is-net" role="cell" data-label="Bersih">${money(totalNet, totalNet < 0 ? 'is-out' : 'is-in')}</div>
+                ${FX_LIMITED ? '' : '<div class="fx-dr-cell is-asset" role="cell"></div>'}
+            </div>
+        </div>` : `<div class="log-empty">Belum ada catatan di ${escapeHTML(monthLabelOf(reportMonth))}.</div>`}`;
 }
 
 // Names already used anywhere (tukar, titipan, talangan), so a regular is picked, not retyped.
