@@ -1,0 +1,346 @@
+[
+  {
+    "id": "pip-machinery",
+    "klien": "PIP Machinery",
+    "kategori": "Sistem",
+    "layanan": "Sistem digital lengkap: website pembeli, layar pelanggan, ERP tim, CRM, membership, Pemilih Mesin",
+    "harga": "",
+    "paket": [
+      {
+        "h": 5000000,
+        "n": "Website"
+      },
+      {
+        "h": 10000000,
+        "n": "Bisnis"
+      },
+      {
+        "h": 13000000,
+        "n": "Lengkap"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "batal",
+    "followUp": "",
+    "dibuat": "2026-11-06",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/pitch-deck/",
+    "catatan": "Tahap belum dicek, sesuaikan. Ada demo sistem, demo per layar, dan demo Pemilih Mesin.",
+    "riwayat": [
+      {
+        "t": "2026-11-06",
+        "tahap": "terkirim"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "batal"
+      }
+    ],
+    "diubah": "2026-11-12T19:37:51.825Z"
+  },
+  {
+    "id": "purnama-eskrim",
+    "klien": "Purnama Eskrim",
+    "kategori": "Sistem",
+    "layanan": "Sistem digital (satu pitch deck dengan PIP Machinery)",
+    "harga": "",
+    "paket": [
+      {
+        "h": 5000000,
+        "n": "Website"
+      },
+      {
+        "h": 10000000,
+        "n": "Bisnis"
+      },
+      {
+        "h": 13000000,
+        "n": "Lengkap"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "batal",
+    "followUp": "",
+    "dibuat": "2026-11-06",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/pitch-deck/",
+    "catatan": "Tahap belum dicek, sesuaikan.",
+    "riwayat": [
+      {
+        "t": "2026-11-06",
+        "tahap": "terkirim"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "batal"
+      }
+    ],
+    "diubah": "2026-11-12T19:37:49.805Z"
+  },
+  {
+    "id": "sidi-alief",
+    "klien": "Sidi Alief",
+    "kategori": "Video",
+    "layanan": "Video dakwah umrah motion graphic, 8 topik episode, contoh EP.01, jadwal upload Selasa & Jumat 19.00",
+    "harga": "Rp 900rb – 2,8 jt",
+    "paket": [
+      {
+        "h": 900000,
+        "n": "Perkenalan"
+      },
+      {
+        "h": 2000000,
+        "n": "Rutin"
+      },
+      {
+        "h": 2800000,
+        "n": "Aktif"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "deal",
+    "followUp": "",
+    "dibuat": "2026-11-06",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/jasa-video/",
+    "catatan": "Tahap belum dicek, sesuaikan.",
+    "riwayat": [
+      {
+        "t": "2026-11-06",
+        "tahap": "terkirim"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "deal"
+      }
+    ],
+    "diubah": "2026-11-12T19:18:25.945Z"
+  },
+  {
+    "id": "pgs-tour",
+    "klien": "PGS Tour",
+    "kategori": "Video",
+    "layanan": "Video edukasi umrah, opsi kirim brief konten sendiri",
+    "harga": "Rp 900rb – 2,8 jt",
+    "paket": [
+      {
+        "h": 900000,
+        "n": "Perkenalan"
+      },
+      {
+        "h": 2000000,
+        "n": "Rutin"
+      },
+      {
+        "h": 2800000,
+        "n": "Aktif"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "batal",
+    "followUp": "",
+    "dibuat": "2026-11-07",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/jasa-video-pgs/",
+    "catatan": "Tahap belum dicek, sesuaikan.",
+    "riwayat": [
+      {
+        "t": "2026-11-07",
+        "tahap": "terkirim"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "batal"
+      }
+    ],
+    "diubah": "2026-11-12T19:37:45.911Z"
+  },
+  {
+    "id": "igh-tour",
+    "klien": "IGH Tour",
+    "kategori": "Video",
+    "layanan": "Video edukasi umrah",
+    "harga": "Rp 900rb – 2,8 jt",
+    "paket": [
+      {
+        "h": 900000,
+        "n": "Perkenalan"
+      },
+      {
+        "h": 2000000,
+        "n": "Rutin"
+      },
+      {
+        "h": 2800000,
+        "n": "Aktif"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "terkirim",
+    "followUp": "",
+    "dibuat": "2026-11-07",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/jasa-video-igh/",
+    "catatan": "Tahap belum dicek, sesuaikan.",
+    "riwayat": [
+      {
+        "t": "2026-11-07",
+        "tahap": "terkirim"
+      }
+    ],
+    "diubah": "2026-11-13T00:00:00.000Z"
+  },
+  {
+    "id": "video-travel-umrah-umum",
+    "klien": "Travel umrah & haji (umum)",
+    "kategori": "Video",
+    "layanan": "Video motion graphic untuk travel umrah & haji, tanpa nama klien",
+    "harga": "Rp 900rb – 2,8 jt",
+    "paket": [
+      {
+        "h": 900000,
+        "n": "Perkenalan"
+      },
+      {
+        "h": 2000000,
+        "n": "Rutin"
+      },
+      {
+        "h": 2800000,
+        "n": "Aktif"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "terkirim",
+    "followUp": "",
+    "dibuat": "2026-11-09",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/video-travel-umrah/",
+    "catatan": "Penawaran umum, belum ditujukan ke klien tertentu.",
+    "riwayat": [
+      {
+        "t": "2026-11-09",
+        "tahap": "disiapkan"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "terkirim"
+      }
+    ],
+    "diubah": "2026-11-12T19:17:44.835Z"
+  },
+  {
+    "id": "stroll-around",
+    "klien": "Stroll Around",
+    "kategori": "Sistem",
+    "layanan": "Sistem pendaftaran walking tour: website, QRIS, WhatsApp otomatis, check-in, dasbor",
+    "harga": "Rp 3,5 – 9,5 jt",
+    "paket": [
+      {
+        "h": 3500000,
+        "n": "Rapi"
+      },
+      {
+        "h": 6500000,
+        "n": "Lancar"
+      },
+      {
+        "h": 9500000,
+        "n": "Tumbuh"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "terkirim",
+    "followUp": "",
+    "dibuat": "2026-11-09",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/stroll-around/",
+    "catatan": "Tahap belum dicek, sesuaikan. Ada demo 9 layar.",
+    "riwayat": [
+      {
+        "t": "2026-11-09",
+        "tahap": "terkirim"
+      }
+    ],
+    "diubah": "2026-11-13T00:00:00.000Z"
+  },
+  {
+    "id": "jembar-diesel",
+    "klien": "Toko Jembar Diesel",
+    "kategori": "Sistem",
+    "layanan": "Toko digital: katalog part per mesin, pesan via WA, kasir & stok, buku bon nelayan",
+    "harga": "Rp 5 – 10 jt",
+    "paket": [
+      {
+        "h": 5000000,
+        "n": "Etalase"
+      },
+      {
+        "h": 7500000,
+        "n": "Toko Rapi"
+      },
+      {
+        "h": 10000000,
+        "n": "Juragan"
+      }
+    ],
+    "nilai": 0,
+    "tahap": "terkirim",
+    "followUp": "",
+    "dibuat": "2026-11-10",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/jembar-diesel/",
+    "catatan": "Tahap belum dicek, sesuaikan. Ada demo 8 layar.",
+    "riwayat": [
+      {
+        "t": "2026-11-10",
+        "tahap": "terkirim"
+      }
+    ],
+    "diubah": "2026-11-13T00:00:00.000Z"
+  },
+  {
+    "id": "babas-hasan",
+    "klien": "Ustad Nasrudin Babas Hasan",
+    "kategori": "Website",
+    "layanan": "Web testimoni jamaah + admin panel, add-on rekam suara",
+    "harga": "Rp 650rb + add-on suara Rp 200rb",
+    "paket": [
+      {
+        "h": 650000,
+        "n": "Web testimoni"
+      },
+      {
+        "h": 850000,
+        "n": "Web testimoni + rekam suara"
+      }
+    ],
+    "deal": "Web testimoni",
+    "nilai": 650000,
+    "tahap": "selesai",
+    "followUp": "",
+    "dibuat": "2026-11-10",
+    "kontak": "",
+    "link": "https://darcia2024.github.io/penawarankonsep/babashasan/",
+    "catatan": "Sudah live di babashasan.vercel.app. Nilai deal masih Rp 650rb, tambahkan Rp 200rb kalau add-on suara diambil.",
+    "riwayat": [
+      {
+        "t": "2026-11-10",
+        "tahap": "terkirim"
+      },
+      {
+        "t": "2026-11-11",
+        "tahap": "dikerjakan"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "deal"
+      },
+      {
+        "t": "2026-11-13",
+        "tahap": "selesai"
+      }
+    ],
+    "diubah": "2026-11-12T19:18:20.810Z"
+  }
+]

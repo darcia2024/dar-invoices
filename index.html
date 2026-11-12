@@ -1993,9 +1993,22 @@ body[data-view="pack"] #planSection {
 body[data-view="pack"] #packSection {
     display: block !important;
 }
+/* Penawaran (khusus DAR, offers.css) */
+body[data-view="offer"] .board-only,
+body[data-view="offer"] .report-only,
+body[data-view="offer"] .stats-bar,
+body[data-view="offer"] .bank-tracker-card,
+body[data-view="offer"] .invoice-tools,
+body[data-view="offer"] .board-tabs,
+body[data-view="offer"] #debtSection,
+body[data-view="offer"] #planSection,
+body[data-view="offer"] #packSection {
+    display: none !important;
+}
 
 </style>
     <link rel="stylesheet" href="/dashboard.css">
+    <!--dar-only--><link rel="stylesheet" href="/offers.css"><!--/dar-only-->
 <script>['gesturestart','gesturechange','gestureend'].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault();},{passive:false});});</script>
 </head>
 <body data-view="board">
@@ -2040,6 +2053,7 @@ body[data-view="pack"] #packSection {
             <button class="sidebar-link" data-view="debt" data-short="Hutang" aria-pressed="false" onclick="setWorkspaceView('debt')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg></span> Hutang &amp; Piutang</button>
             <button class="sidebar-link" data-view="plan" data-short="Rencana" aria-pressed="false" onclick="setWorkspaceView('plan')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 15h3M8 18h6"/></svg></span> Rencana pengeluaran</button>
             <button class="sidebar-link" data-view="pack" data-short="Bawaan" aria-pressed="false" onclick="setWorkspaceView('pack')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18M10 13v2h4v-2"/></svg></span> Barang bawaan</button>
+            <!--dar-only--><button class="sidebar-link" data-view="offer" data-short="Penawaran" aria-pressed="false" onclick="setWorkspaceView('offer')"><span aria-hidden="true"><svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><path d="M14 5v12" stroke-dasharray="2 2"/></svg></span> Penawaran</button><!--/dar-only-->
             <button class="sidebar-link mobile-lock" onclick="lockAdminDashboard()">Kunci</button>
         </nav>
         <div class="sidebar-note"><span>Catatan workspace</span><p>Status pembayaran dan profit bisa dikelola langsung dari kartu invoice.</p></div>
@@ -2541,6 +2555,9 @@ body[data-view="pack"] #packSection {
                 Catat pengeluaran
             </button>
         </div>
+
+        <!-- Penawaran: diisi offers.js (khusus DAR) -->
+        <!--dar-only--><div id="offerSection"></div><!--/dar-only-->
 
         <!-- Barang Bawaan (Travel Packing List) Section -->
         <div id="packSection">
@@ -4924,6 +4941,7 @@ body[data-view="pack"] #packSection {
         })();
     </script>
     <script src="/invoice-manager.js"></script>
+    <!--dar-only--><script src="/offers.js"></script><!--/dar-only-->
     <script>
         let activeMonthFilter = "all";
         let activeEditProjectId = null;
@@ -5546,6 +5564,7 @@ body[data-view="pack"] #packSection {
                 renderBankBalancesUI();
             }
             if (state.exchange && typeof applyExchangeState === 'function') applyExchangeState(state.exchange);
+            if (Array.isArray(state.offers) && typeof applyOffersState === 'function') applyOffersState(state.offers);
         }
 
         function saveLocalBillingState() {
@@ -5643,7 +5662,9 @@ body[data-view="pack"] #packSection {
                         bankCopyTemplate,
                         invoiceSignature,
                         // Currency-exchange accounts only (exchange.js); left out for everyone else.
-                        exchange: typeof exchangeState === 'object' ? exchangeState : undefined
+                        exchange: typeof exchangeState === 'object' ? exchangeState : undefined,
+                        // Penawaran (DAR, offers.js); undefined sampai daftarnya termuat, supaya tidak mengosongkan data.
+                        offers: typeof offersForSave === 'function' ? offersForSave() : undefined
                     })
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
@@ -9125,6 +9146,11 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const sub = document.querySelector('.portal-subtitle');
                 if (sub) sub.textContent = 'Anggaran pengeluaran tiap bulan: rencanakan, catat realisasinya, jaga tetap di bawah pemasukan.';
                 renderPlanUI();
+            } else if (view === 'offer') {
+                document.getElementById('workspaceTitle').textContent = 'Penawaran';
+                const sub = document.querySelector('.portal-subtitle');
+                if (sub) sub.textContent = 'Semua penawaran yang udah dilempar, dari diracik sampai beres. Yang deal tinggal dijadiin invoice.';
+                if (typeof renderOffers === 'function') renderOffers();
             } else if (view === 'tukar' && typeof renderExchangeUI === 'function') {
                 // Currency-exchange accounts (exchange.js)
                 const limited = window.DAR_WS && DAR_WS.user && DAR_WS.user.limited;

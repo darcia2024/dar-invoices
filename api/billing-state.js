@@ -2,6 +2,8 @@ const { sessionUser, redisCommand, requestWorkspace } = require("./_session");
 const { applySeed, pendingBackups } = require("./_seeds");
 const { getWorkspace } = require("./_workspaces");
 const { limitedUser, limitedView, mergeLimited } = require("./_limited");
+// Penawaran DAR (menu Penawaran, offers.js): isi awal dipindah dari tracker lama, dipakai sampai daftar pertama kali disimpan.
+const DEFAULT_OFFERS = require("./_offers-seed.json");
 
 const STATE_KEY = "dar-invoices:billing-state";
 
@@ -200,6 +202,8 @@ function mergeState(state, ws = null) {
   return {
     appliedMigrations: state && Array.isArray(state.appliedMigrations) ? state.appliedMigrations : [],
     customInvoices: state && Array.isArray(state.customInvoices) ? state.customInvoices : [],
+    // Penawaran (khusus DAR). Akun lain tidak memakai menu ini, jadi selalu kosong.
+    offers: state && Array.isArray(state.offers) ? state.offers : (ws ? [] : DEFAULT_OFFERS),
     deletedInvoiceIds: state && Array.isArray(state.deletedInvoiceIds) ? state.deletedInvoiceIds : [],
     purgedInvoiceIds: state && Array.isArray(state.purgedInvoiceIds) ? state.purgedInvoiceIds : [],
     // An empty list is the user's choice; only seed the defaults when debts were never saved.

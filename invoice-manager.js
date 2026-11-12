@@ -213,6 +213,8 @@ function openInvoiceComposer() {
         }
         const item = {id:'custom-' + crypto.randomUUID(), custom:true, name:fields.client.value.trim(), reference:fields.reference.value.trim(), description:fields.description.value.trim(), gross, deposit, date:fields.date.value, due:fields.due.value, month:fields.date.value.slice(0,7), monthLabel:new Date(fields.date.value + 'T12:00:00').toLocaleDateString('id-ID',{month:'long',year:'numeric'})};
         customInvoices.push(item);
+        // Invoice dari penawaran yang deal (offers.js): tautkan ke penawarannya.
+        if (typeof window.onCustomInvoiceCreated === 'function') window.onCustomInvoiceCreated(item);
         invoiceMetadataPending = true;
         syncCustomInvoices();
         updatePaymentBadges();
