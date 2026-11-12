@@ -3274,6 +3274,10 @@ html.is-limited .fx-daily-row { grid-template-columns: 1.1fr 1.5fr 1fr 1fr 1fr; 
 .fx-investor-line { display: block; width: 100%; text-align: left; font: inherit; font-size: 12.5px; color: #4b483f; background: #fffdf8; border: 1px dashed #cfc6b3; border-radius: 12px; padding: 10px 14px; margin: -8px 0 14px; cursor: pointer; }
 .fx-investor-line[hidden] { display: none; }
 .fx-investor-line b { color: #24241f; }
+/* Tukar / pemasukan / pengeluaran lines: one wrapping line of text, not flex items. */
+.fx-row .log-row-pos { display: block; line-height: 1.55; }
+.time-tag { font-weight: 700; color: #3c3a31; white-space: nowrap; }
+.time-tag::after { content: " · "; font-weight: 400; color: #8a8576; }
 .by-tag { display: inline-block; font-size: 10.5px; font-weight: 600; color: #4f63c9; background: #eef0fb; border-radius: 6px; padding: 1px 6px; margin-left: 2px; white-space: nowrap; }
 .fx-tile-name { font-size: 13px; color: #24241f; }
 .fx-sub-warn { color: #b4541e; font-weight: 600; }

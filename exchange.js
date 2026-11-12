@@ -2217,9 +2217,27 @@ function renderNameList() {
 
 // One tukar line: "kasih" brings rupiah in (+), "terima" sends rupiah out (−).
 // Read the customer's way: what they handed over → what they got, e.g. "Rupiah ke Pound".
+// "jam 14.32": when the record was first saved (on the phone that saved it).
+function timeTag(record) {
+    const t = Number(record && record.createdAt);
+    if (!t) return '';
+    return `<span class="time-tag">jam ${new Date(t).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span>`;
+}
+
+// Which place in Aset the foreign money left or went to, e.g. "dari InstaPay", "ke Cash".
+function dealPlaceText(d) {
+    const nameOf = id => { const h = exchangeState.holdings.find(x => x.id === id); return h ? placeName(h) : ''; };
+    const parts = [];
+    if (d.dir === 'beli' && nameOf(d.holdingId)) parts.push(`masuk ke ${nameOf(d.holdingId)}`);
+    if (d.dir !== 'beli' && nameOf(d.holdingId)) parts.push(`dari ${nameOf(d.holdingId)}`);
+    if (d.dir === 'swap' && nameOf(d.holdingId2)) parts.push(`masuk ke ${nameOf(d.holdingId2)}`);
+    return parts.map(escapeHTML).join(' · ');
+}
+
 function dealRowHTML(d, withDate = false) {
     const s = dealSides(d);
     const p = dealPairOf(s.out.c, s.in.c);
+    const place = dealPlaceText(d);
     const name = c => DEAL_CURRENCY_NAMES[c] || c;
     const known = d.dir === 'swap' ? dealModal(d) && dealModal(d, 2) : dealModal(d);
     const amount = d.dir === 'swap' ? `${fxQty(d.qty2)} ${d.currency2}` : `${d.dir === 'beli' ? '−' : '+'}${formatIDR(d.idr)}`;
@@ -2227,7 +2245,7 @@ function dealRowHTML(d, withDate = false) {
         <button type="button" class="log-row fx-row ${d.dir === 'beli' ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
             <span class="log-row-main">
                 <span class="log-row-title">${fxFlag(s.in.c)}→${fxFlag(s.out.c)} ${escapeHTML(name(s.in.c))} ke ${escapeHTML(name(s.out.c))} · ${fxAmount(s.out.amount, s.out.c)}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
-                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}${d.restock ? ' · restok, jadi kurs modal' : FX_LIMITED ? '' : ' · ' + (known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)')}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''} ${byTag(d)}</span>
+                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}${timeTag(d)}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}${d.restock ? ' · restok, jadi kurs modal' : FX_LIMITED ? '' : ' · ' + (known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)')}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''}${place ? ' · ' + place : ''} ${byTag(d)}</span>
             </span>
             <span class="log-row-amount">${amount}</span>
         </button>`;
@@ -2288,23 +2306,26 @@ function renderReportPane() {
         return `
         <div class="log-day">
             <div class="log-day-head"><span>${date === today ? 'Hari ini · ' : ''}${escapeHTML(label)}</span><b>${day.deals.length ? `untung ${formatIDR(dayIncome)}` : ''}${dayOther ? `${day.deals.length ? ' · ' : ''}masuk ${formatIDR(dayOther)}` : ''}${daySpent ? `${day.deals.length || dayOther ? ' · ' : ''}keluar ${formatIDR(daySpent)}` : ''}</b></div>
-            ${day.incomes.sort((a, b) => b.createdAt - a.createdAt).map(x => `
+            ${[
+                // Everything of the day in one list, newest first, so it reads in the order it happened.
+                ...day.incomes.map(x => ({ t: Number(x.createdAt) || 0, html: `
             <button type="button" class="log-row fx-row is-jual" onclick="openIncomeDialog('${escapeHTML(x.id)}')">
                 <span class="log-row-main">
                     <span class="log-row-title">${escapeHTML(x.note || 'Pemasukan')}</span>
-                    <span class="log-row-pos">pemasukan${x.bankKey ? ' · ' + escapeHTML(bankNameOf(x.bankKey)) : ''} ${byTag(x)}</span>
+                    <span class="log-row-pos">${timeTag(x)}pemasukan${x.bankKey ? ' · ' + escapeHTML(bankNameOf(x.bankKey)) : ''} ${byTag(x)}</span>
                 </span>
                 <span class="log-row-amount">+${formatIDR(x.amount)}</span>
-            </button>`).join('')}
-            ${day.deals.sort((a, b) => b.createdAt - a.createdAt).map(d => dealRowHTML(d)).join('')}
-            ${day.spends.sort((a, b) => b.createdAt - a.createdAt).map(l => `
+            </button>` })),
+                ...day.deals.map(d => ({ t: Number(d.createdAt) || 0, html: dealRowHTML(d) })),
+                ...day.spends.map(l => ({ t: Number(l.createdAt) || 0, html: `
             <button type="button" class="log-row fx-row is-beli" onclick="openReportExpenseEdit('${escapeHTML(l.id)}')">
                 <span class="log-row-main">
                     <span class="log-row-title">${escapeHTML(l.note || l.merchant || 'Pengeluaran')}</span>
-                    <span class="log-row-pos">pengeluaran${l.bankKey ? ' · ' + escapeHTML(bankNameOf(l.bankKey)) : ''} ${byTag(l)}</span>
+                    <span class="log-row-pos">${timeTag(l)}pengeluaran${l.merchant && l.note ? ' · ' + escapeHTML(l.merchant) : ''}${l.bankKey ? ' · ' + escapeHTML(bankNameOf(l.bankKey)) : ''} ${byTag(l)}</span>
                 </span>
                 <span class="log-row-amount">−${formatIDR(l.amount)}</span>
-            </button>`).join('')}
+            </button>` }))
+            ].sort((a, b) => b.t - a.t).map(x => x.html).join('')}
         </div>`;
     }).join('');
 }
