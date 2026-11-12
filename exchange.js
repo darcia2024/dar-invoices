@@ -2217,13 +2217,6 @@ function renderNameList() {
 
 // One tukar line: "kasih" brings rupiah in (+), "terima" sends rupiah out (−).
 // Read the customer's way: what they handed over → what they got, e.g. "Rupiah ke Pound".
-// "jam 14.32": when the record was first saved (on the phone that saved it).
-function timeTag(record) {
-    const t = Number(record && record.createdAt);
-    if (!t) return '';
-    return `<span class="time-tag">jam ${new Date(t).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span>`;
-}
-
 // Which place in Aset the foreign money left or went to, e.g. "dari InstaPay", "ke Cash".
 function dealPlaceText(d) {
     const nameOf = id => { const h = exchangeState.holdings.find(x => x.id === id); return h ? placeName(h) : ''; };
@@ -2234,6 +2227,28 @@ function dealPlaceText(d) {
     return parts.map(escapeHTML).join(' · ');
 }
 
+// One line of the report as a timeline entry: time on the left, then who / what / details,
+// the amount on the right and small tags (untung, restok, who recorded it) underneath.
+// e: { onclick, kind: 'in'|'out'|'swap', record, withDate, title, what, meta: [], amount, tags: [] }
+function entryHTML(e) {
+    const t = Number(e.record && e.record.createdAt);
+    const time = t ? new Date(t).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : '';
+    const by = e.record && e.record.by && window.DAR_WS && DAR_WS.team ? `<span class="fx-tag-pill is-by">${escapeHTML(e.record.by)}</span>` : '';
+    return `
+        <button type="button" class="fx-entry is-${e.kind}" onclick="${e.onclick}">
+            <span class="fx-entry-time">${e.withDate ? `<small>${escapeHTML(formatShortDate(e.record.date))}</small>` : ''}${time || (e.withDate ? '' : '–')}</span>
+            <span class="fx-entry-card">
+                <span class="fx-entry-head">
+                    <span class="fx-entry-title">${e.title}</span>
+                    <span class="fx-entry-amount">${e.amount}</span>
+                </span>
+                ${e.what ? `<span class="fx-entry-what">${e.what}</span>` : ''}
+                ${e.meta && e.meta.length ? `<span class="fx-entry-meta">${e.meta.filter(Boolean).map(m => `<span>${m}</span>`).join('')}</span>` : ''}
+                ${(e.tags || []).length || by ? `<span class="fx-entry-tags">${(e.tags || []).join('')}${by}</span>` : ''}
+            </span>
+        </button>`;
+}
+
 function dealRowHTML(d, withDate = false) {
     const s = dealSides(d);
     const p = dealPairOf(s.out.c, s.in.c);
@@ -2241,14 +2256,21 @@ function dealRowHTML(d, withDate = false) {
     const name = c => DEAL_CURRENCY_NAMES[c] || c;
     const known = d.dir === 'swap' ? dealModal(d) && dealModal(d, 2) : dealModal(d);
     const amount = d.dir === 'swap' ? `${fxQty(d.qty2)} ${d.currency2}` : `${d.dir === 'beli' ? '−' : '+'}${formatIDR(d.idr)}`;
-    return `
-        <button type="button" class="log-row fx-row ${d.dir === 'beli' ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">
-            <span class="log-row-main">
-                <span class="log-row-title">${fxFlag(s.in.c)}→${fxFlag(s.out.c)} ${escapeHTML(name(s.in.c))} ke ${escapeHTML(name(s.out.c))} · ${fxAmount(s.out.amount, s.out.c)}${d.name ? ' · ' + escapeHTML(d.name) : ''}</span>
-                <span class="log-row-pos">${withDate ? escapeHTML(formatShortDate(d.date)) + ' · ' : ''}${timeTag(d)}kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}${d.restock ? ' · restok, jadi kurs modal' : FX_LIMITED ? '' : ' · ' + (known ? 'untung ' + formatIDR(dealProfit(d)) : 'untung belum bisa dihitung (kurs modal kosong)')}${d.bankKey ? ' · ' + escapeHTML(bankNameOf(d.bankKey)) : ''}${place ? ' · ' + place : ''} ${byTag(d)}</span>
-            </span>
-            <span class="log-row-amount">${amount}</span>
-        </button>`;
+    const profit = dealProfit(d);
+    const tags = [];
+    if (d.restock) tags.push('<span class="fx-tag-pill is-restock">Restok · jadi kurs modal</span>');
+    else if (!FX_LIMITED) tags.push(known ? `<span class="fx-tag-pill ${profit < 0 ? 'is-loss' : 'is-profit'}">untung ${formatIDR(profit)}</span>` : '<span class="fx-tag-pill is-muted">untung belum kehitung</span>');
+    return entryHTML({
+        onclick: `openDealDialog('${escapeHTML(d.id)}')`,
+        kind: d.dir === 'beli' ? 'out' : d.dir === 'swap' ? 'swap' : 'in',
+        record: d,
+        withDate,
+        title: escapeHTML(d.name || 'Tukar'),
+        what: `<span class="fx-entry-flags">${fxFlag(s.in.c)}<i aria-hidden="true">→</i>${fxFlag(s.out.c)}</span>${escapeHTML(name(s.in.c))} ke ${escapeHTML(name(s.out.c))} · <b>${fxAmount(s.out.amount, s.out.c)}</b>`,
+        meta: [`kurs ${dealRateText(dealRateOf(d), p.weak, p.strong)}`, d.bankKey ? escapeHTML(bankNameOf(d.bankKey)) : '', place],
+        amount,
+        tags
+    });
 }
 
 // One person's tukar over all months, newest first, with totals.
@@ -2260,7 +2282,7 @@ function renderPersonHistory(who) {
         <div><span>Untung dari orang ini</span><b>${formatIDR(dealProfitSum(deals))}</b><small>${deals.length} kali tukar</small></div>
         <div><span>Rupiah bersih dari tukar</span><b>${formatIDR(dealRupiahNet(deals))}</b><small>${FX_CURRENCIES.map(c => fxQty(deals.filter(d => d.currency === c).reduce((s, d) => s + d.qty, 0)) + ' ' + c).join(' · ')}</small></div>`;
     const list = document.getElementById('fxReportList');
-    list.innerHTML = deals.length ? `<div class="log-day">${deals.map(d => dealRowHTML(d, true)).join('')}</div>` : `<div class="log-empty">Belum ada catatan tukar untuk "${escapeHTML(who)}".</div>`;
+    list.innerHTML = deals.length ? `<section class="fx-day"><div class="fx-day-list is-dated">${deals.map(d => dealRowHTML(d, true)).join('')}</div></section>` :`<div class="log-empty">Belum ada catatan tukar untuk "${escapeHTML(who)}".</div>`;
 }
 
 function renderReportPane() {
@@ -2303,30 +2325,37 @@ function renderReportPane() {
         const dayIncome = dealProfitSum(day.deals);
         const dayOther = day.incomes.reduce((s, x) => s + x.amount, 0);
         const daySpent = day.spends.reduce((s, l) => s + l.amount, 0);
+        const count = day.deals.length + day.incomes.length + day.spends.length;
+        const sums = [
+            day.deals.length && !FX_LIMITED ? `<span class="fx-day-sum is-profit">untung ${formatIDR(dayIncome)}</span>` : '',
+            dayOther ? `<span class="fx-day-sum is-in">masuk ${formatIDR(dayOther)}</span>` : '',
+            daySpent ? `<span class="fx-day-sum is-out">keluar ${formatIDR(daySpent)}</span>` : ''
+        ].join('');
         return `
-        <div class="log-day">
-            <div class="log-day-head"><span>${date === today ? 'Hari ini · ' : ''}${escapeHTML(label)}</span><b>${day.deals.length ? `untung ${formatIDR(dayIncome)}` : ''}${dayOther ? `${day.deals.length ? ' · ' : ''}masuk ${formatIDR(dayOther)}` : ''}${daySpent ? `${day.deals.length || dayOther ? ' · ' : ''}keluar ${formatIDR(daySpent)}` : ''}</b></div>
+        <section class="fx-day">
+            <header class="fx-day-head">
+                <div class="fx-day-date"><b>${escapeHTML(label)}</b><span>${date === today ? '<em>Hari ini</em> · ' : ''}${count} catatan</span></div>
+                ${sums ? `<div class="fx-day-sums">${sums}</div>` : ''}
+            </header>
+            <div class="fx-day-list">
             ${[
                 // Everything of the day in one list, newest first, so it reads in the order it happened.
-                ...day.incomes.map(x => ({ t: Number(x.createdAt) || 0, html: `
-            <button type="button" class="log-row fx-row is-jual" onclick="openIncomeDialog('${escapeHTML(x.id)}')">
-                <span class="log-row-main">
-                    <span class="log-row-title">${escapeHTML(x.note || 'Pemasukan')}</span>
-                    <span class="log-row-pos">${timeTag(x)}pemasukan${x.bankKey ? ' · ' + escapeHTML(bankNameOf(x.bankKey)) : ''} ${byTag(x)}</span>
-                </span>
-                <span class="log-row-amount">+${formatIDR(x.amount)}</span>
-            </button>` })),
+                ...day.incomes.map(x => ({ t: Number(x.createdAt) || 0, html: entryHTML({
+                    onclick: `openIncomeDialog('${escapeHTML(x.id)}')`, kind: 'in', record: x,
+                    title: escapeHTML(x.note || 'Pemasukan'),
+                    meta: ['Pemasukan', x.bankKey ? `masuk ke ${escapeHTML(bankNameOf(x.bankKey))}` : 'tunai'],
+                    amount: `+${formatIDR(x.amount)}`
+                }) })),
                 ...day.deals.map(d => ({ t: Number(d.createdAt) || 0, html: dealRowHTML(d) })),
-                ...day.spends.map(l => ({ t: Number(l.createdAt) || 0, html: `
-            <button type="button" class="log-row fx-row is-beli" onclick="openReportExpenseEdit('${escapeHTML(l.id)}')">
-                <span class="log-row-main">
-                    <span class="log-row-title">${escapeHTML(l.note || l.merchant || 'Pengeluaran')}</span>
-                    <span class="log-row-pos">${timeTag(l)}pengeluaran${l.merchant && l.note ? ' · ' + escapeHTML(l.merchant) : ''}${l.bankKey ? ' · ' + escapeHTML(bankNameOf(l.bankKey)) : ''} ${byTag(l)}</span>
-                </span>
-                <span class="log-row-amount">−${formatIDR(l.amount)}</span>
-            </button>` }))
+                ...day.spends.map(l => ({ t: Number(l.createdAt) || 0, html: entryHTML({
+                    onclick: `openReportExpenseEdit('${escapeHTML(l.id)}')`, kind: 'out', record: l,
+                    title: escapeHTML(l.note || l.merchant || 'Pengeluaran'),
+                    meta: ['Pengeluaran', l.merchant && l.note ? escapeHTML(l.merchant) : '', l.bankKey ? `dari ${escapeHTML(bankNameOf(l.bankKey))}` : 'tunai'],
+                    amount: `−${formatIDR(l.amount)}`
+                }) }))
             ].sort((a, b) => b.t - a.t).map(x => x.html).join('')}
-        </div>`;
+            </div>
+        </section>`;
     }).join('');
 }
 

@@ -3274,10 +3274,63 @@ html.is-limited .fx-daily-row { grid-template-columns: 1.1fr 1.5fr 1fr 1fr 1fr; 
 .fx-investor-line { display: block; width: 100%; text-align: left; font: inherit; font-size: 12.5px; color: #4b483f; background: #fffdf8; border: 1px dashed #cfc6b3; border-radius: 12px; padding: 10px 14px; margin: -8px 0 14px; cursor: pointer; }
 .fx-investor-line[hidden] { display: none; }
 .fx-investor-line b { color: #24241f; }
-/* Tukar / pemasukan / pengeluaran lines: one wrapping line of text, not flex items. */
-.fx-row .log-row-pos { display: block; line-height: 1.55; }
-.time-tag { font-weight: 700; color: #3c3a31; white-space: nowrap; }
-.time-tag::after { content: " · "; font-weight: 400; color: #8a8576; }
+/* ---------- Laporan: one day = header + a timeline of entries ---------- */
+.fx-day { margin: 0 0 22px; }
+.fx-day-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px 14px; flex-wrap: wrap; padding: 0 2px 10px; margin-bottom: 4px; border-bottom: 1px solid #e4ddcd; }
+.fx-day-date b { display: block; font-size: 15px; font-weight: 600; color: #24241f; letter-spacing: -0.2px; }
+.fx-day-date span { font-size: 11px; color: #8a8576; }
+.fx-day-date em { font-style: normal; font-weight: 600; color: #2f6e4f; }
+.fx-day-sums { display: flex; flex-wrap: wrap; gap: 6px; }
+.fx-day-sum { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; border: 1px solid #e4ddcd; color: #514f43; white-space: nowrap; }
+.fx-day-sum.is-profit, .fx-day-sum.is-in { color: #2f6e4f; border-color: #b9d3c3; }
+.fx-day-sum.is-out { color: #a5432f; border-color: #e6c3b9; }
+
+.fx-day-list { position: relative; display: grid; gap: 0; }
+.fx-entry { position: relative; display: grid; grid-template-columns: 50px minmax(0, 1fr); gap: 0 12px; width: 100%; padding: 8px 0; background: none; border: 0; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.fx-day-list.is-dated .fx-entry { grid-template-columns: 62px minmax(0, 1fr); }
+/* the timeline: a thin line through the time column, a dot per entry */
+.fx-entry::before { content: ""; position: absolute; left: 54px; top: 0; bottom: 0; width: 1px; background: #e4ddcd; }
+.fx-day-list.is-dated .fx-entry::before { left: 66px; }
+.fx-entry:first-child::before { top: 22px; }
+.fx-entry:last-child::before { bottom: calc(100% - 22px); }
+.fx-entry::after { content: ""; position: absolute; left: 50px; top: 18px; width: 9px; height: 9px; border-radius: 50%; background: #fffdf6; border: 2px solid #8a8576; box-sizing: border-box; }
+.fx-day-list.is-dated .fx-entry::after { left: 62px; }
+.fx-entry.is-in::after { border-color: #2f6e4f; }
+.fx-entry.is-out::after { border-color: #a5432f; }
+.fx-entry.is-swap::after { border-color: #4f63c9; }
+.fx-entry-time { padding-top: 13px; font-size: 12px; font-weight: 700; color: #3c3a31; font-variant-numeric: tabular-nums; text-align: left; line-height: 1.25; }
+.fx-entry-time small { display: block; font-size: 10px; font-weight: 500; color: #8a8576; }
+.fx-entry-card { display: grid; gap: 5px; margin-left: 10px; padding: 11px 13px 12px; border: 1px solid #e4ddcd; border-radius: 14px; background: #fffdf6; transition: border-color .15s, box-shadow .15s; }
+.fx-entry:hover .fx-entry-card, .fx-entry:focus-visible .fx-entry-card { border-color: #bdb5a2; box-shadow: 0 2px 10px rgba(36, 36, 31, .06); }
+.fx-entry:focus-visible { outline: none; }
+.fx-entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.fx-entry-title { font-size: 14px; font-weight: 600; color: #24241f; min-width: 0; overflow-wrap: anywhere; }
+.fx-entry-amount { font-size: 14px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; color: #24241f; }
+.fx-entry.is-in .fx-entry-amount { color: #2f6e4f; }
+.fx-entry.is-out .fx-entry-amount { color: #a5432f; }
+.fx-entry-what { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; font-size: 12px; color: #514f43; }
+.fx-entry-what b { font-weight: 600; color: #24241f; }
+.fx-entry-flags { display: inline-flex; align-items: center; gap: 3px; margin-right: 3px; }
+.fx-entry-flags i { font-style: normal; font-size: 10px; color: #8a8576; }
+.fx-entry-meta { display: flex; flex-wrap: wrap; gap: 2px 0; font-size: 11px; color: #8a8576; line-height: 1.5; }
+.fx-entry-meta span:not(:last-child)::after { content: "·"; margin: 0 6px; color: #c3bcaa; }
+.fx-entry-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.fx-tag-pill { font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid #e4ddcd; color: #514f43; white-space: nowrap; }
+.fx-tag-pill.is-profit { color: #2f6e4f; border-color: #b9d3c3; }
+.fx-tag-pill.is-loss { color: #a5432f; border-color: #e6c3b9; }
+.fx-tag-pill.is-restock { color: #8a5a12; border-color: #e5cf9f; }
+.fx-tag-pill.is-by { color: #4f63c9; border-color: #c9cff1; }
+.fx-tag-pill.is-muted { color: #8a8576; }
+@media (max-width: 520px) {
+    .fx-entry { grid-template-columns: 40px minmax(0, 1fr); gap: 0 8px; }
+    .fx-entry::before { left: 44px; }
+    .fx-entry::after { left: 40px; }
+    .fx-entry-time { font-size: 11px; }
+    .fx-entry-card { margin-left: 8px; padding: 10px 11px 11px; }
+    .fx-day-list.is-dated .fx-entry { grid-template-columns: 50px minmax(0, 1fr); }
+    .fx-day-list.is-dated .fx-entry::before { left: 54px; }
+    .fx-day-list.is-dated .fx-entry::after { left: 50px; }
+}
 .by-tag { display: inline-block; font-size: 10.5px; font-weight: 600; color: #4f63c9; background: #eef0fb; border-radius: 6px; padding: 1px 6px; margin-left: 2px; white-space: nowrap; }
 .fx-tile-name { font-size: 13px; color: #24241f; }
 .fx-sub-warn { color: #b4541e; font-weight: 600; }
