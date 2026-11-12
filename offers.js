@@ -53,9 +53,22 @@
         if (!o.followUp || !AKTIF.includes(o.tahap)) return '';
         const t = today(); return o.followUp < t ? 'late' : o.followUp === t ? 'today' : '';
     }
+    // Invoice yang tertaut: buatan sendiri (customInvoices) atau kartu bawaan dashboard (invoiceItems).
     function invoiceOf(o) {
-        if (!o.invoiceId || typeof customInvoices === 'undefined') return null;
-        return customInvoices.find(i => i.id === o.invoiceId && !(typeof deletedInvoiceIds !== 'undefined' && deletedInvoiceIds.includes(i.id))) || null;
+        if (!o.invoiceId || typeof invoiceItems === 'undefined') return null;
+        const gone = id => (typeof deletedInvoiceIds !== 'undefined' && deletedInvoiceIds.includes(id)) || (typeof purgedInvoiceIds !== 'undefined' && purgedInvoiceIds.includes(id));
+        const item = invoiceItems.find(i => i.id === o.invoiceId);
+        if (!item || gone(item.id)) return null;
+        return { id: item.id, label: item.reference || item.name, gross: +item.gross || 0, custom: !!item.custom };
+    }
+    // Buka invoicenya: invoice buatan sendiri dibuka langsung, kartu bawaan ditunjukkan di menu Invoice.
+    function openInvoice(id) {
+        const inv = invoiceItems.find(i => i.id === id);
+        if (inv && inv.custom && typeof openGeneratedInvoice === 'function') { openGeneratedInvoice(id); return; }
+        if (typeof setMonthFilter === 'function') setMonthFilter('all', document.querySelector('[data-filter="all"]'));
+        if (typeof setWorkspaceView === 'function') setWorkspaceView('board');
+        const card = document.getElementById('card-' + id);
+        if (card) { card.scrollIntoView({ block: 'center', behavior: 'smooth' }); card.classList.add('offer-flash'); setTimeout(() => card.classList.remove('offer-flash'), 1800); }
     }
     function banderol(o) {
         const hs = o.paket.map(x => x.h);
@@ -103,7 +116,7 @@
         sec.querySelector('#offerTabs').onclick = e => { const b = e.target.closest('[data-f]'); if (b) { filter = b.dataset.f; render(); } };
         sec.querySelector('#offerGrid').onclick = e => {
             const b = e.target.closest('[data-edit]'); if (b) openForm(offers.find(o => o.id === b.dataset.edit));
-            const iv = e.target.closest('[data-inv]'); if (iv && typeof openGeneratedInvoice === 'function') openGeneratedInvoice(iv.dataset.inv);
+            const iv = e.target.closest('[data-inv]'); if (iv) openInvoice(iv.dataset.inv);
         };
         sec.querySelector('#offerGrid').onchange = e => {
             const sel = e.target.closest('[data-stage]'); if (!sel) return;
@@ -136,7 +149,7 @@
         sec.querySelector('#offerInvBox').onclick = e => {
             const o = offers.find(x => x.id === editId); if (!o) return;
             if (e.target.closest('[data-mkinv]')) makeInvoice(o);
-            if (e.target.closest('[data-openinv]') && typeof openGeneratedInvoice === 'function') { sec.querySelector('#offerDialog').close(); openGeneratedInvoice(o.invoiceId); }
+            if (e.target.closest('[data-openinv]')) { sec.querySelector('#offerDialog').close(); openInvoice(o.invoiceId); }
         };
         form.onsubmit = e => {
             e.preventDefault();
@@ -174,11 +187,11 @@
     }
     function renderInvBox(o) {
         const box = document.getElementById('offerInvBox');
-        if (!o || !(o.nilai > 0)) { box.hidden = true; return; }
-        const inv = invoiceOf(o);
+        const inv = o ? invoiceOf(o) : null;
+        if (!o || (!inv && !(o.nilai > 0))) { box.hidden = true; return; }
         box.hidden = false;
         box.innerHTML = inv
-            ? `<span>Invoice udah dibikin: <b>${esc(inv.reference)}</b> · ${rp(inv.gross)}</span><button type="button" class="offer-btn" data-openinv>Buka invoice</button>`
+            ? `<span>Udah ada invoicenya: <b>${esc(inv.label)}</b> · ${rp(inv.gross)}</span><button type="button" class="offer-btn" data-openinv>${inv.custom ? 'Buka invoice' : 'Lihat di menu Invoice'}</button>`
             : `<span>Deal ${o.deal ? 'paket <b>' + esc(o.deal) + '</b> ' : ''}di <b>${rp(o.nilai)}</b>. Tinggal ditagih.</span><button type="button" class="offer-btn primary" data-mkinv>Bikin invoice</button>`;
     }
     function openForm(o) {
@@ -250,7 +263,7 @@
                 <h4>${esc(o.klien)}</h4>${o.layanan ? `<p class="offer-lay">${esc(o.layanan)}</p>` : ''}
                 <div class="offer-tear" aria-hidden="true"></div>
                 <div class="offer-meta"><div><span class="offer-k">${o.nilai ? 'Deal di' : 'Dibanderol'}</span><span class="offer-v big">${esc(harga)}</span></div><div>${when}</div></div>
-                <div class="offer-row-acts">${inv ? `<button type="button" class="offer-invtag" data-inv="${esc(inv.id)}" title="Buka invoice ${esc(inv.reference)}">Invoice ✓</button>` : ''}${/^https?:\/\//.test(o.link) ? `<a class="offer-ic" href="${esc(o.link)}" target="_blank" rel="noopener" title="Intip halaman penawarannya" aria-label="Buka halaman penawaran ${esc(o.klien)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>` : ''}<button type="button" class="offer-ic" data-edit="${esc(o.id)}" title="Buka catatannya" aria-label="Detail ${esc(o.klien)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div>
+                <div class="offer-row-acts">${inv ? `<button type="button" class="offer-invtag" data-inv="${esc(inv.id)}" title="Lihat invoice ${esc(inv.label)}">Invoice ✓</button>` : ''}${/^https?:\/\//.test(o.link) ? `<a class="offer-ic" href="${esc(o.link)}" target="_blank" rel="noopener" title="Intip halaman penawarannya" aria-label="Buka halaman penawaran ${esc(o.klien)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>` : ''}<button type="button" class="offer-ic" data-edit="${esc(o.id)}" title="Buka catatannya" aria-label="Detail ${esc(o.klien)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div>
             </div></article>`;
         }).join('');
         if (bump) setTimeout(() => { bump = null; }, 900);

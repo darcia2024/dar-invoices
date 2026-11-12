@@ -90,3 +90,6 @@ body[data-view="offer"] #offerSection { display: block; }
     .offer-pk-row { grid-template-columns: minmax(0, 1fr) 104px 32px; }
 }
 @media (prefers-reduced-motion: reduce) { .offer-card, .offer-stage.thunk { animation: none; } .offer-card, .offer-chips button { transition: none; } }
+
+/* Kartu invoice yang dibuka dari penawaran: berkedip sebentar supaya gampang ditemukan */
+.invoice-card.offer-flash { outline: 2px solid #2c7a45; outline-offset: 3px; transition: outline-color .3s; }

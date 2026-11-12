@@ -4,6 +4,33 @@ const { getWorkspace } = require("./_workspaces");
 const { limitedUser, limitedView, mergeLimited } = require("./_limited");
 // Penawaran DAR (menu Penawaran, offers.js): isi awal dipindah dari tracker lama, dipakai sampai daftar pertama kali disimpan.
 const DEFAULT_OFFERS = require("./_offers-seed.json");
+const OFFER_DOCS = require("./_offers-docs.js");
+const OFFER_DOCS_IMPORT = "2026-11-13-penawaran-dari-dokumen";
+
+// Sekali saja (DAR): dokumen "Penawaran & Invoice" yang sudah ada ikut masuk menu Penawaran.
+// Statusnya dari status bayar invoicenya saat ini: lunas = Beres, DP = Lagi digarap, belum = Deal!
+// (atau `unpaid` dari daftarnya). Penawaran yang sudah ada tidak diubah.
+function importOfferDocs(state) {
+  const applied = Array.isArray(state.appliedMigrations) ? state.appliedMigrations : [];
+  if (applied.includes(OFFER_DOCS_IMPORT)) return null;
+  const offers = Array.isArray(state.offers) ? state.offers.slice() : DEFAULT_OFFERS.slice();
+  const statuses = { ...defaultState.paymentStatuses, ...(state.paymentStatuses || {}) };
+  const now = new Date().toISOString(), today = now.slice(0, 10);
+  OFFER_DOCS.forEach((doc) => {
+    if (offers.some((o) => o.id === doc.id)) return;
+    const paid = doc.invoiceId ? statuses[doc.invoiceId] || "UNPAID" : null;
+    const tahap = doc.tahap || (paid === "PAID" ? "selesai" : paid === "DP" ? "dikerjakan" : doc.unpaid || "deal");
+    const dealt = ["deal", "dikerjakan", "selesai"].includes(tahap);
+    const riwayat = [{ tahap: "terkirim", t: doc.dibuat }];
+    if (tahap !== "terkirim") riwayat.push({ tahap, t: today });
+    offers.push({
+      id: doc.id, klien: doc.klien, kategori: doc.kategori, layanan: doc.layanan, harga: "", paket: doc.paket,
+      deal: dealt ? doc.paket[0].n : "", nilai: dealt ? doc.paket[0].h : 0, tahap, followUp: "", dibuat: doc.dibuat,
+      kontak: "", link: doc.link, catatan: doc.catatan || "", invoiceId: doc.invoiceId || "", riwayat, diubah: now,
+    });
+  });
+  return { ...state, offers, appliedMigrations: [...applied, OFFER_DOCS_IMPORT] };
+}
 
 const STATE_KEY = "dar-invoices:billing-state";
 
@@ -274,8 +301,9 @@ module.exports = async function handler(req, res) {
       const parsed = saved ? JSON.parse(saved) : null;
       if (parsed && !ws) {
         const { state: migrated, changed } = applyMigrations(parsed);
-        if (changed) {
-          const merged = mergeState(migrated);
+        const imported = importOfferDocs(migrated);
+        if (changed || imported) {
+          const merged = mergeState(imported || migrated);
           await redisCommand(["SET", key, JSON.stringify(merged)]);
           return res.status(200).json(merged);
         }
