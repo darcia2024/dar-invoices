@@ -1459,10 +1459,20 @@ function removeHolding(id) {
 const FX_STRENGTH = { IDR: 0, EGP: 1, MYR: 2, SAR: 2, USD: 3, EUR: 4 };
 const DEAL_CURRENCIES = ['IDR', ...FX_CURRENCIES];
 
+// A line saved before any kurs modal was set uses today's kurs modal instead, so its profit
+// shows up as soon as the owner fills the kurs in.
+function dealModal(d, which = 1) {
+    const saved = which === 2 ? d.modal2 : d.modal;
+    if (saved) return saved;
+    const c = which === 2 ? d.currency2 : d.currency;
+    return (typeof exchangeState === 'object' && exchangeState.assetRates && exchangeState.assetRates[c]) || 0;
+}
+
 function dealProfit(d) {
-    if (d.dir === 'swap') return d.modal && d.modal2 ? Math.round(d.qty2 * d.modal2 - d.qty * d.modal) : 0;
-    if (!d.modal) return 0;
-    const atModal = Math.round(d.qty * d.modal);
+    const modal = dealModal(d);
+    if (d.dir === 'swap') { const modal2 = dealModal(d, 2); return modal && modal2 ? Math.round(d.qty2 * modal2 - d.qty * modal) : 0; }
+    if (!modal) return 0;
+    const atModal = Math.round(d.qty * modal);
     return d.dir === 'beli' ? atModal - d.idr : d.idr - atModal;
 }
 
@@ -1858,7 +1868,7 @@ function handleDealSubmit(event) {
     reportMonth = deal.date.slice(0, 7);
     document.getElementById('fxDealDialog').close();
     saveExchangeAndSync();
-    const known = deal.dir === 'swap' ? deal.modal && deal.modal2 : deal.modal;
+    const known = deal.dir === 'swap' ? dealModal(deal) && dealModal(deal, 2) : dealModal(deal);
     showToast(known ? `TERCATAT · UNTUNG ${formatIDR(dealProfit(deal))}` : 'TERCATAT');
 }
 
@@ -2085,7 +2095,7 @@ function dealRowHTML(d, withDate = false) {
     const s = dealSides(d);
     const p = dealPairOf(s.out.c, s.in.c);
     const name = c => DEAL_CURRENCY_NAMES[c] || c;
-    const known = d.dir === 'swap' ? d.modal && d.modal2 : d.modal;
+    const known = d.dir === 'swap' ? dealModal(d) && dealModal(d, 2) : dealModal(d);
     const amount = d.dir === 'swap' ? `${fxQty(d.qty2)} ${d.currency2}` : `${d.dir === 'beli' ? '−' : '+'}${formatIDR(d.idr)}`;
     return `
         <button type="button" class="log-row fx-row ${d.dir === 'beli' ? 'is-beli' : 'is-jual'}" onclick="openDealDialog('${escapeHTML(d.id)}')">

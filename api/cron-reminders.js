@@ -61,11 +61,14 @@ function short(n) {
   return `${sign}Rp ${abs.toLocaleString("id-ID")}`;
 }
 
-// Same as dealProfit in exchange.js: each side at the kurs modal of the moment it was saved.
-function dealProfit(d) {
-  if (d.dir === "swap") return d.modal && d.modal2 ? Math.round(d.qty2 * d.modal2 - d.qty * d.modal) : 0;
-  if (!d.modal) return 0;
-  const atModal = Math.round(d.qty * d.modal);
+// Same as dealProfit in exchange.js: each side at the kurs modal of the moment it was saved,
+// or today's kurs modal for a line saved before one was set.
+function dealProfit(d, rates = {}) {
+  const modal = d.modal || Number(rates[d.currency]) || 0;
+  const modal2 = d.modal2 || Number(rates[d.currency2]) || 0;
+  if (d.dir === "swap") return modal && modal2 ? Math.round(d.qty2 * modal2 - d.qty * modal) : 0;
+  if (!modal) return 0;
+  const atModal = Math.round(d.qty * modal);
   return d.dir === "beli" ? atModal - d.idr : d.idr - atModal;
 }
 
@@ -85,8 +88,9 @@ function reportMessage(state, ws, day, tz, owner) {
 
   const lines = [];
   if (deals.length) {
-    const profit = deals.reduce((s, d) => s + dealProfit(d), 0);
-    lines.push(`Tukar ${deals.length}×${deals.some((d) => d.modal) ? ` · untung ${short(profit)}` : ""}`);
+    const rates = ex.assetRates || {};
+    const profit = deals.reduce((s, d) => s + dealProfit(d, rates), 0);
+    lines.push(`Tukar ${deals.length}×${deals.some((d) => d.modal || rates[d.currency]) ? ` · untung ${short(profit)}` : " · untung belum kehitung (kurs modal kosong)"}`);
   }
   const inSum = incomes.reduce((s, x) => s + (Number(x.amount) || 0), 0);
   const outSum = spends.reduce((s, l) => s + (Number(l.amount) || 0), 0);
