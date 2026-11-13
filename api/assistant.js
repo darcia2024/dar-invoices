@@ -292,7 +292,9 @@ module.exports = async function handler(req, res) {
       .filter(Boolean)
       .slice(0, 12);
 
-    return res.status(200).json({ reply: clean(reply, 8000), actions, model: data.model || MODELS[mode] });
+    const u = data.usage || {};
+    const usage = { input: u.prompt_tokens || 0, cached: (u.prompt_tokens_details && u.prompt_tokens_details.cached_tokens) || 0, output: u.completion_tokens || 0 };
+    return res.status(200).json({ reply: clean(reply, 8000), actions, model: data.model || MODELS[mode], usage });
   } catch (error) {
     if (error && error.name === "AbortError") return res.status(504).json({ error: "Asisten kelamaan mikir. Coba lagi." });
     console.error("assistant failed:", error);
