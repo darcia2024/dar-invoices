@@ -2088,7 +2088,7 @@ body[data-view="offer"] #packSection {
         </div>
 
         <div class="debt-due-banner" id="debtDueBanner" role="status" hidden></div>
-        <div class="debt-due-banner inv-due-banner" id="invoiceDueBanner" role="status" hidden></div>
+        <div class="inv-banner" id="invoiceDueBanner" role="status" hidden></div>
 
         <div class="invoice-tools">
             <button class="create-invoice-btn" onclick="openInvoiceComposer()">+ Buat invoice</button>
@@ -6859,27 +6859,33 @@ Kalau sudah transfer, mohon kirim bukti transfernya ya. Terima kasih banyak! �
                 return (cy - y) * 12 + (cm - mo);
             };
             const shown = invoiceBannerAll ? due : due.slice(0, 3);
+            const chatIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.9-.9L3 20l1.1-4.6A8.4 8.4 0 1 1 21 11.5z"></path></svg>';
+            const copyIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>';
             const rows = shown.map(({ i, left }) => `
-                <li class="inv-due-row">
-                    <span class="inv-due-name">${escapeInvoiceText(i.name)}</span>
-                    <b class="debt-due-amount">${formatIDR(left)}</b>
-                    <span class="inv-due-meta"><span class="debt-due-pill ${monthsLate(i.month) >= 2 ? 'is-late' : 'is-today'}">${escapeHTML(i.monthLabel || i.month)}</span>${(paymentStatuses[i.id] || 'UNPAID') === 'DP' ? 'Sudah DP' : 'Belum bayar'}</span>
-                    <span class="inv-due-btns">
-                        <button type="button" class="inv-due-wa" onclick="sendInvoiceReminder('${i.id}')" title="Kirim pengingat lewat WhatsApp">Tagih via WA</button>
-                        <button type="button" class="inv-due-copy" onclick="copyInvoiceReminder('${i.id}')" title="Salin pesan pengingat" aria-label="Salin pesan pengingat">Salin</button>
-                    </span>
+                <li class="ib-row">
+                    <div class="ib-info">
+                        <span class="ib-name">${escapeInvoiceText(i.name)}</span>
+                        <span class="ib-meta"><i class="ib-dot ${monthsLate(i.month) >= 2 ? 'is-late' : ''}" aria-hidden="true"></i>${escapeHTML(i.monthLabel || i.month)} · ${(paymentStatuses[i.id] || 'UNPAID') === 'DP' ? 'Sudah DP' : 'Belum bayar'}</span>
+                    </div>
+                    <b class="ib-amount">${formatIDR(left)}</b>
+                    <div class="ib-actions">
+                        <button type="button" class="ib-wa" onclick="sendInvoiceReminder('${i.id}')" title="Buka WhatsApp dengan pesan pengingat">${chatIcon}<span>Tagih</span></button>
+                        <button type="button" class="ib-copy" onclick="copyInvoiceReminder('${i.id}')" title="Salin pesan pengingat" aria-label="Salin pesan pengingat">${copyIcon}</button>
+                    </div>
                 </li>`).join('');
             banner.innerHTML = `
-                <div class="debt-due-head">
-                    <div class="debt-due-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="12" y2="16"></line></svg></div>
-                    <div class="debt-due-heading">
-                        <div class="debt-due-title">Invoice belum lunas dari bulan lalu</div>
-                        <div class="debt-due-summary">${due.length} invoice · sisa ${formatIDR(total)} · pesan WA udah disiapin</div>
+                <div class="ib-head">
+                    <div>
+                        <span class="ib-eyebrow">Perlu ditagih</span>
+                        <div class="ib-total">${formatIDR(total)}</div>
+                        <div class="ib-sub">${due.length} invoice dari bulan lalu belum lunas · pesan WhatsApp udah disiapin</div>
                     </div>
-                    <button type="button" class="debt-due-close" aria-label="Tutup untuk hari ini" title="Tutup untuk hari ini" onclick="hideInvoiceDueBanner('${signature}')">×</button>
+                    <button type="button" class="ib-close" aria-label="Tutup untuk hari ini" title="Tutup untuk hari ini" onclick="hideInvoiceDueBanner('${signature}')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
                 </div>
-                <ul class="debt-due-list inv-due-list">${rows}</ul>
-                ${due.length > 3 ? `<button type="button" class="debt-due-more inv-due-more" onclick="invoiceBannerAll = !invoiceBannerAll; renderInvoiceDueBanner()">${invoiceBannerAll ? 'Ringkas' : `Lihat semua (${due.length})`}</button>` : ''}`;
+                <ul class="ib-list">${rows}</ul>
+                ${due.length > 3 ? `<button type="button" class="ib-more" onclick="invoiceBannerAll = !invoiceBannerAll; renderInvoiceDueBanner()">${invoiceBannerAll ? 'Ringkas' : `Lihat semua ${due.length} invoice`}</button>` : ''}`;
             banner.hidden = false;
         }
         let invoiceBannerAll = false;
