@@ -8492,6 +8492,10 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const bank = bankNameOf(aiActionBank(action));
                 return { title: 'Catat pengeluaran', detail: `${formatIDR(Math.round(a.amount) || 0)} · ${a.note || '-'}${posName(a.pos_id) ? ' · ' + posName(a.pos_id) : ' · di luar rencana'} · ${a.date ? formatShortDate(a.date) : 'hari ini'}${action.status === 'ok' && bank ? ' · dari ' + bank : ''}` };
             }
+            if (action.name === 'ubah_saldo') {
+                const key = isBankKey(a.bank) ? a.bank : '';
+                return { title: 'Ubah saldo', detail: `${bankNameOf(key) || a.bank}: ${formatIDR(Number(bankBalances[key]) || 0)} → ${formatIDR(Math.round(Number(a.amount)) || 0)}` };
+            }
             if (action.name === 'catat_pemasukan') {
                 const bank = bankNameOf(aiActionBank(action));
                 const inv = a.invoice_id ? invoiceItems.find(i => i.id === a.invoice_id) : null;
@@ -8530,10 +8534,21 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         function runAiAction(action) {
             const a = action.args || {};
             const month = activePlanMonth || currentMonthKey();
+            if (action.name === 'ubah_saldo') {
+                const key = isBankKey(a.bank) ? a.bank : '';
+                if (!key) throw new Error('Rekening tidak dikenal');
+                const amount = Math.round(Number(a.amount));
+                if (!Number.isFinite(amount)) throw new Error('Nominal tidak valid');
+                const before = Number(bankBalances[key]) || 0;
+                setBankBalance(key, amount);
+                return `Saldo ${bankNameOf(key)} ${formatIDR(before)} → ${formatIDR(amount)}`;
+            }
             if (action.name === 'catat_pengeluaran') {
                 const amount = Math.round(Number(a.amount)) || 0;
                 const date = /^\d{4}-\d{2}-\d{2}$/.test(a.date || '') ? a.date : localDateKey();
                 if (amount <= 0) throw new Error('Nominal tidak valid');
+                const recent = Object.values(expenseLogs).flat().find(l => l.date === date && l.amount === amount && Date.now() - (l.createdAt || 0) < 30 * 60000);
+                if (recent && !confirm(`${formatIDR(amount)} tanggal ${formatShortDate(date)} baru aja dicatat${recent.note ? ' (' + recent.note + ')' : ''}. Catat lagi?`)) throw new Error('Sudah tercatat, tidak dicatat dua kali');
                 const bankKey = aiActionBank(action);
                 action.bank = bankKey;
                 rememberExpenseBank(bankKey);
@@ -8548,6 +8563,9 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const amount = Math.round(Number(a.amount)) || 0;
                 const date = /^\d{4}-\d{2}-\d{2}$/.test(a.date || '') ? a.date : localDateKey();
                 if (amount <= 0) throw new Error('Nominal tidak valid');
+                const allIn = [...Object.values(incomeLogs).flat(), ...(typeof exchangeState === 'object' ? exchangeState.incomes : [])];
+                const recentIn = allIn.find(x => x.date === date && x.amount === amount && Date.now() - (x.createdAt || 0) < 30 * 60000);
+                if (recentIn && !confirm(`Pemasukan ${formatIDR(amount)} tanggal ${formatShortDate(date)} baru aja dicatat. Catat lagi?`)) throw new Error('Sudah tercatat, tidak dicatat dua kali');
                 const bankKey = aiActionBank(action);
                 action.bank = bankKey;
                 if (bankKey) rememberExpenseBank(bankKey);
@@ -8827,7 +8845,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 return { id: i.id, klien: i.name, bulan: i.monthLabel, total: i.gross, sudah_dibayar: paid, sisa: Math.max(0, i.gross - paid), status: paymentStatuses[i.id] || 'UNPAID' };
             });
             const planOf = m => planItemsOf(m).map(p => ({ id: p.id, nama: p.name, kategori: (PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya).label, anggaran: p.planned, terpakai: p.actual, selesai: p.done, rutin: p.recurring, tanggal_bayar: p.due || null, catatan: p.notes || null }));
-            const logList = m => logsOf(m).map(l => ({ tanggal: l.date, nominal: l.amount, ket: l.note || l.merchant, pos_id: l.posId || null }));
+            const logList = m => logsOf(m).map(l => ({ tanggal: l.date, nominal: l.amount, ket: l.note || l.merchant, pos_id: l.posId || null, rekening: l.bankKey || null, dicatat: l.createdAt ? new Date(l.createdAt).toISOString().slice(0, 16) : null }));
             const prev = prevMonthKey(month);
             return JSON.stringify({
                 hari_ini: today,
@@ -9593,23 +9611,27 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 currency: 'IDR',
                 hint: 'Ketik saldo yang ada di rekening sekarang. Catatan lama di rekening ini dianggap sudah masuk di angka ini.',
                 onSave: value => {
-                    bankBalances[key] = value;
-                    if (typeof exchangeOnBankAmountEdit === 'function') {
-                        exchangeOnBankAmountEdit(key);
-                    } else {
-                        const now = new Date();
-                        bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-                        // Spendings already recorded on this account are inside the typed balance.
-                        Object.values(expenseLogs).forEach(list => list.forEach(log => { if (log.bankKey === key) log.bankCut = 0; }));
-                        Object.values(incomeLogs).forEach(list => list.forEach(x => { if (x.bankKey === key) x.bankAdd = 0; }));
-                        saveLocalBillingState();
-                        saveLocalBankBalances();
-                        renderBankBalancesUI();
-                        persistBillingState();
-                    }
+                    setBankBalance(key, value);
                     showToast(`SALDO ${acc.name.toUpperCase()} JADI ${formatIDR(value).toUpperCase()}`);
                 }
             });
+        }
+
+        // One account set to what it holds now (card "Ubah saldo" or the assistant): like typing it in
+        // Update saldo, so records already made on that account count as included in this number.
+        function setBankBalance(key, value) {
+            bankBalances[key] = Math.round(Number(value) || 0);
+            if (typeof exchangeOnBankAmountEdit === 'function') {
+                exchangeOnBankAmountEdit(key);
+                return;
+            }
+            bankBalancesUpdatedAt = localDateKey();
+            Object.values(expenseLogs).forEach(list => list.forEach(log => { if (log.bankKey === key) log.bankCut = 0; }));
+            Object.values(incomeLogs).forEach(list => list.forEach(x => { if (x.bankKey === key) x.bankAdd = 0; }));
+            saveLocalBillingState();
+            saveLocalBankBalances();
+            renderBankBalancesUI();
+            persistBillingState();
         }
 
         function buildBankCopyText(acc) {

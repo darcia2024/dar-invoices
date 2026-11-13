@@ -56,6 +56,22 @@ const TOOLS = [
   {
     type: "function",
     function: {
+      name: "ubah_saldo",
+      description: "Propose setting an account's balance to the exact amount the user says it has now (\"saldo Mayar sisa 144rb\", \"update saldo BCA jadi 2jt\"). Like typing it in Update saldo: records already made on that account are treated as included in the new number. Use this, not a pemasukan/pengeluaran, when the user gives the current balance.",
+      parameters: {
+        type: "object",
+        properties: {
+          bank: { type: "string", description: "key from DATA.rekening" },
+          amount: { type: "integer", description: "The new balance in whole rupiah (may be 0)" },
+        },
+        required: ["bank", "amount"],
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "tandai_rencana",
       description: "Propose marking a plan item (pos rencana pengeluaran) done or not done.",
       parameters: {
@@ -154,6 +170,8 @@ function buildPrompts(ws) {
 Mode: ASISTEN. Answer questions about invoices, spending, plans, debts and balances, and draft messages (e.g. polite WhatsApp payment reminders to clients) when asked.
 Routine monthly needs: plan items with rutin=true are copied automatically into each new month's plan (once per month; amount and due day carry over, progress resets). For a new routine need use tambah_rencana with rutin true; to make an existing item routine or stop it repeating use ubah_rutin. Items already marked rutin need nothing more.
 Money in (a client paid, a transfer received, a photo of an incoming transfer) is catat_pemasukan, never catat_pengeluaran; link it to the invoice it pays when that is clear from the data.
+When the user states what an account holds now ("saldo X sisa ...", "update saldo X jadi ..."), call ubah_saldo with that exact amount; never fake it with a correcting pemasukan or pengeluaran. If DATA shows the same spending recorded twice (same date, amount and account, a minute apart), point it out.
+Do not propose a spending or income that is already in DATA (same date, amount and account), e.g. because the user repeated their message; say it is already recorded.
 When the user asks you to record or change something, call the matching tool — the dashboard will show it for the user to confirm, so do not claim it is already saved; say it is waiting for their confirmation. Use ids exactly as in the data. If an amount, item or invoice is ambiguous, ask first instead of calling a tool.`,
   penasehat: `${COMMON}
 Mode: PENASEHAT KEUANGAN (financial advisor). Look at their real cash position, upcoming obligations, income pipeline (unpaid invoices), debts and spending patterns, and give practical, prioritized advice: what to pay first, what to postpone, how much is safe to spend per day, what to chase from clients, and how to build an emergency fund and avoid running short. Be honest when the numbers are tight, and show the arithmetic briefly.
