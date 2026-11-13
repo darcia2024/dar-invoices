@@ -8938,6 +8938,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             aiBusy = false;
             saveAssistantState();
             renderAssistant();
+            loadAiCredit(false);
         }
 
         // A transfer in that looks like a client paying an open invoice: the sender's name matches
@@ -9189,6 +9190,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             aiBusy = false;
             saveAssistantState();
             renderAssistant();
+            loadAiCredit(false);
         }
 
         document.addEventListener('keydown', e => {
