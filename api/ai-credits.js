@@ -3,6 +3,7 @@
 // (OPENROUTER_MANAGEMENT_KEY, made under openrouter.ai Settings → Management keys); the usage of
 // the key the assistant uses comes from the normal OPENROUTER_API_KEY.
 const { hasValidSession, requestWorkspace } = require("./_session");
+const { readAiUsage } = require("./_ai-usage");
 
 async function getJson(url, key) {
   const controller = new AbortController();
@@ -53,6 +54,32 @@ module.exports = async function handler(req, res) {
         usageMonth: num(key.data.usage_monthly),
         keyLimitRemaining: num(key.data.limit_remaining),
       });
+    }
+    if (req.query && req.query.report) {
+      // Whole OpenRouter account per day (last 30 finished UTC days, every app on the account)…
+      if (mgmtKey) {
+        const act = await getJson("https://openrouter.ai/api/v1/activity", mgmtKey);
+        if (act.ok && Array.isArray(act.data)) {
+          const days = {};
+          act.data.forEach((row) => {
+            const date = String(row.date || row.day || "").slice(0, 10);
+            if (!date) return;
+            const cost = num(row.usage) ?? num(row.cost) ?? 0;
+            const d = (days[date] = days[date] || { date, cost: 0, requests: 0, models: {} });
+            d.cost += cost;
+            d.requests += num(row.requests) || 0;
+            const model = String(row.model || row.model_permaslug || "lainnya");
+            d.models[model] = (d.models[model] || 0) + cost;
+          });
+          out.accountDays = Object.values(days)
+            .sort((a, b) => b.date.localeCompare(a.date))
+            .map((d) => ({ ...d, models: Object.entries(d.models).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([model, cost]) => ({ model, cost })) }));
+        } else {
+          out.activityError = act.status === 403 ? "Management key belum boleh baca aktivitas." : "Gagal ambil aktivitas dari OpenRouter.";
+        }
+      }
+      // …and this dashboard's own calls per day and per account (recorded since this feature).
+      out.dashboardDays = await readAiUsage(30);
     }
     return res.status(200).json(out);
   } catch (error) {

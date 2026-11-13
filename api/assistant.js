@@ -5,6 +5,7 @@
 const { hasValidSession, requestWorkspace } = require("./_session");
 const { getWorkspace, aiEnabled } = require("./_workspaces");
 const { demoAssistant, pause } = require("./_demo-ai");
+const { recordAiUsage } = require("./_ai-usage");
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const MODELS = {
@@ -272,6 +273,7 @@ module.exports = async function handler(req, res) {
       const u = data.usage;
       const cached = (u.prompt_tokens_details && u.prompt_tokens_details.cached_tokens) || 0;
       console.log(`assistant ${wsSlug || "dar"} ${mode} ${data.model}: in ${u.prompt_tokens} (cached ${cached}) out ${u.completion_tokens} cost $${u.cost != null ? u.cost : "?"}`);
+      await recordAiUsage(wsSlug, u.cost);
     }
     let reply = typeof message.content === "string"
       ? message.content

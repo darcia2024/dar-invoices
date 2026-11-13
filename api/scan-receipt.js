@@ -4,6 +4,7 @@
 const { hasValidSession, requestWorkspace } = require("./_session");
 const { getWorkspace, aiEnabled } = require("./_workspaces");
 const { demoScan, pause } = require("./_demo-ai");
+const { recordAiUsage } = require("./_ai-usage");
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const DEFAULT_MODEL = "anthropic/claude-haiku-5.5";
@@ -125,6 +126,7 @@ module.exports = async function handler(req, res) {
           messages: [{ role: "user", content }],
           response_format: { type: "json_schema", json_schema: { name: "receipt_transactions", strict: true, schema: RESULT_SCHEMA } },
           provider: { require_parameters: true },
+          usage: { include: true },
         }),
       });
     } finally {
@@ -141,6 +143,7 @@ module.exports = async function handler(req, res) {
       return res.status(502).json({ error: "Gagal membaca struk. Coba lagi." });
     }
 
+    if (data.usage) await recordAiUsage(wsSlug, data.usage.cost);
     const choice = data.choices && data.choices[0];
     if (!choice || !choice.message) return res.status(502).json({ error: "Gagal membaca struk. Coba lagi." });
     if (choice.finish_reason === "length") {
