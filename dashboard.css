@@ -2935,6 +2935,8 @@ body.ai-open .ai-fab { display: none; }
 .ai-act-state { font-size: 12px; color: #6a6557; }
 .ai-act-state.is-ok { color: #1f5f33; font-weight: 600; }
 .ai-act-state.is-err { color: #9e2d22; }
+.ai-credit { display: block; margin-top: 2px; padding: 0; border: 0; background: none; font: inherit; font-size: 11px; color: #6a6557; text-align: left; cursor: pointer; }
+.ai-credit.is-low { color: #b42318; font-weight: 600; }
 .ai-act-undo { border: 1px solid #d9d2c1; background: #fffdf8; color: #4a473e; font: inherit; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 5px 10px; cursor: pointer; }
 .ai-act-undo:hover { background: #ece7d8; }
 .ai-typing { display: inline-flex; gap: 4px; padding: 12px 14px; }

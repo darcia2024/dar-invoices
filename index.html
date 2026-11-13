@@ -4545,6 +4545,7 @@ body[data-view="offer"] #packSection {
             <div class="ai-head-text">
                 <!--dar-only--><b>Asisten DAR</b><!--/dar-only--><!--ws:<b>Asisten</b>-->
                 <small id="aiModeHint">Tanya data keuangan lo, atau suruh nyatat.</small>
+                <!--dar-only--><button type="button" class="ai-credit" id="aiCredit" hidden onclick="loadAiCredit(true)" title="Sisa kredit OpenRouter · klik buat refresh"></button><!--/dar-only-->
             </div>
             <button type="button" class="ai-icon-btn" onclick="clearAssistant()" title="Mulai obrolan baru" aria-label="Mulai obrolan baru">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
@@ -8542,9 +8543,39 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             } catch (e) {}
         }
 
+        // Owner only (/dar): remaining OpenRouter credit, refreshed when the panel opens (at most
+        // once a minute) and after each reply.
+        let aiCreditAt = 0;
+        const USD_IDR = 16500; // rough, only for the "≈ Rp" hint
+        async function loadAiCredit(force) {
+            const el = document.getElementById('aiCredit');
+            if (!el || (!force && Date.now() - aiCreditAt < 60000)) return;
+            aiCreditAt = Date.now();
+            if (force) el.textContent = 'Ngecek kredit…';
+            try {
+                const r = await fetch('/api/ai-credits', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+                const d = await r.json();
+                if (!r.ok) throw new Error(d.error || 'gagal');
+                const usd = n => '$' + (n < 10 ? n.toFixed(2) : n.toFixed(1));
+                const parts = [];
+                if (typeof d.remaining === 'number') {
+                    parts.push(`Sisa kredit ${usd(d.remaining)} (≈ ${formatIDR(Math.round(d.remaining * USD_IDR / 1000) * 1000)})`);
+                    el.classList.toggle('is-low', d.remaining < 1);
+                } else if (d.creditsError) parts.push(d.creditsError);
+                else if (d.needsManagementKey) parts.push('Sisa kredit: pasang OPENROUTER_MANAGEMENT_KEY');
+                if (typeof d.usageMonth === 'number') parts.push(`bulan ini ${usd(d.usageMonth)}`);
+                el.textContent = parts.join(' · ');
+                el.hidden = !parts.length;
+            } catch (e) {
+                el.textContent = 'Sisa kredit belum kebaca';
+                el.hidden = false;
+            }
+        }
+
         function openAssistant() {
             document.getElementById('aiPanel').hidden = false;
             document.body.classList.add('ai-open');
+            loadAiCredit(false);
             renderAssistant();
             setTimeout(() => document.getElementById('aiInput').focus(), 50);
         }
