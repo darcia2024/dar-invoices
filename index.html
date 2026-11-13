@@ -7717,10 +7717,16 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             if (!value || typeof value !== 'object' || Array.isArray(value)) return out;
             Object.entries(value).forEach(([month, list]) => {
                 if (!MONTH_KEY_RE.test(month) || !Array.isArray(list)) return;
-                out[month] = list.filter(l => l && Number(l.amount) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(l.date || '')).map(l => ({
+                // Money changers (exchange.js) may spend pounds/dollars or from a place in Aset:
+                // amount stays the rupiah value (0 while there is no kurs modal), fxAmount/currency
+                // the money itself, holdingId/holdCut the place it left.
+                const foreign = l => typeof l.currency === 'string' && /^[A-Z]{3}$/.test(l.currency) && l.currency !== 'IDR';
+                out[month] = list.filter(l => l && (Number(l.amount) > 0 || (foreign(l) && Number(l.fxAmount) > 0)) && /^\d{4}-\d{2}-\d{2}$/.test(l.date || '')).map(l => ({
                     id: typeof l.id === 'string' && l.id ? l.id : 'log-' + crypto.randomUUID(),
                     date: l.date,
-                    amount: Math.round(Number(l.amount)),
+                    amount: Math.max(0, Math.round(Number(l.amount)) || 0),
+                    ...(foreign(l) ? { currency: l.currency, fxAmount: Math.round(Number(l.fxAmount) * 100) / 100, rate: Math.max(0, Number(l.rate) || 0) } : {}),
+                    ...(typeof l.holdingId === 'string' && l.holdingId ? { holdingId: l.holdingId.slice(0, 80), holdCut: Math.max(0, Math.round((Number(l.holdCut) || 0) * 100) / 100) } : {}),
                     posId: typeof l.posId === 'string' ? l.posId : '',
                     note: String(l.note || '').slice(0, 120),
                     merchant: String(l.merchant || '').slice(0, 80),
@@ -7873,6 +7879,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
         }
 
         function openExpenseLogDialog(editId = null, posId = '') {
+            // Money changers (exchange.js) spend rupiah, pounds or dollars, from a bank or a place.
+            if (typeof openMoneyDialog === 'function') return openMoneyDialog('out', editId || '', posId);
             const month = activePlanMonth;
             const log = editId ? logsOf(month).find(l => l.id === editId) : null;
             document.getElementById('expenseLogForm').reset();

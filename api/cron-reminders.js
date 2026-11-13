@@ -92,9 +92,27 @@ function reportMessage(state, ws, day, tz, owner) {
     const profit = deals.reduce((s, d) => s + dealProfit(d, rates), 0);
     lines.push(`Tukar ${deals.length}×${deals.some((d) => d.modal || rates[d.currency]) ? ` · untung ${short(profit)}` : " · untung belum kehitung (kurs modal kosong)"}`);
   }
-  const inSum = incomes.reduce((s, x) => s + (Number(x.amount) || 0), 0);
-  const outSum = spends.reduce((s, l) => s + (Number(l.amount) || 0), 0);
+  // Rupiah value of pemasukan / pengeluaran (pounds/dollars at their saved kurs, else today's).
+  const rates = ex.assetRates || {};
+  const foreign = (x) => typeof x.currency === "string" && x.currency !== "IDR" && /^[A-Z]{3}$/.test(x.currency);
+  const idrOf = (x) => (foreign(x) ? Math.round((Number(x.fxAmount) || 0) * (Number(x.rate) || Number(rates[x.currency]) || 0)) : Number(x.amount) || 0);
+  const inSum = incomes.reduce((s, x) => s + idrOf(x), 0);
+  const outSum = spends.reduce((s, l) => s + idrOf(l), 0);
   if (inSum || outSum) lines.push([inSum ? `Masuk ${short(inSum)}` : "", outSum ? `Keluar ${short(outSum)}` : ""].filter(Boolean).join(" · "));
+  // Net per currency: both sides of every tukar, pemasukan in, pengeluaran out.
+  const flow = {};
+  const add = (c, n) => { if (c && n) flow[c] = Math.round(((flow[c] || 0) + n) * 100) / 100; };
+  deals.forEach((d) => {
+    const qty = Number(d.qty) || 0;
+    if (d.dir === "beli") { add("IDR", -(Number(d.idr) || 0)); add(d.currency, qty); }
+    else if (d.dir === "swap") { add(d.currency, -qty); add(d.currency2, Number(d.qty2) || 0); }
+    else { add(d.currency, -qty); add("IDR", Number(d.idr) || 0); }
+  });
+  incomes.forEach((x) => add(foreign(x) ? x.currency : "IDR", foreign(x) ? Number(x.fxAmount) || 0 : Number(x.amount) || 0));
+  spends.forEach((l) => add(foreign(l) ? l.currency : "IDR", -(foreign(l) ? Number(l.fxAmount) || 0 : Number(l.amount) || 0)));
+  const flowText = Object.entries(flow).filter(([, n]) => n).sort(([a], [b]) => (a === "IDR" ? -1 : b === "IDR" ? 1 : a.localeCompare(b)))
+    .map(([c, n]) => `${n < 0 ? "−" : "+"}${c === "IDR" ? short(Math.abs(n)).replace(/^−/, "") : `${Math.abs(n).toLocaleString("id-ID", { maximumFractionDigits: 2 })} ${c}`}`);
+  if (flowText.length) lines.push(`Per mata uang: ${flowText.join(" · ")}`);
   if (newDebts.length || paid.length) lines.push([newDebts.length ? `Talangan baru ${newDebts.length}` : "", paid.length ? `dibayar ${paid.length}` : ""].filter(Boolean).join(" · "));
   if (moves.length) lines.push(`Titipan ${moves.length} catatan`);
 

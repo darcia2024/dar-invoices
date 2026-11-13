@@ -3281,6 +3281,14 @@ body[data-view="tukar"] #packSection { display: none !important; }
 .fx-dr-cell.is-net .fx-dr-num { font-size: 14px; font-weight: 700; }
 .fx-dr-none { color: #c3bcaa; }
 .fx-dr-row.is-foot .fx-dr-num { font-weight: 700; }
+/* Per currency, under each day: net (big) with masuk / keluar under it. */
+.fx-dr-cur { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: -2px; padding-left: 44px; }
+.fx-dr-cur-item { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px 5px 8px; border: 1px solid #e4ddcd; border-radius: 10px; }
+.fx-dr-cur-item > span { display: grid; line-height: 1.25; }
+.fx-dr-cur-item b { font-size: 12.5px; font-weight: 700; color: #24241f; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fx-dr-cur-item b.is-in { color: #2f6e4f; }
+.fx-dr-cur-item b.is-out { color: #a5432f; }
+.fx-dr-cur-item small { font-size: 10px; color: #8a8576; white-space: nowrap; }
 @media (max-width: 760px) {
     .fx-dr { gap: 10px; }
     .fx-dr-row.is-head { display: none; }
@@ -3298,6 +3306,9 @@ body[data-view="tukar"] #packSection { display: none !important; }
     .fx-dr-cell.is-asset { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
     .fx-dr-cell.is-asset:empty, .fx-dr-cell.is-empty { display: none; }
     .fx-dr-cell.is-asset::before { width: 100%; }
+    .fx-dr-cur { padding: 10px 0 0; margin-top: 0; border-top: 1px solid #f0ebdf; }
+    .fx-dr-cur::before { content: "Per mata uang"; width: 100%; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: #8a8576; }
+    .fx-dr-cur-item { flex: 1 1 140px; }
 }
 /* A limited login (users[].limited): only entering and their own daily report. The server sends
    nothing else; this just keeps the empty parts off the screen. */
