@@ -8589,14 +8589,14 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const has = d && typeof d.remaining === 'number';
             const usd = n => '$' + (n < 10 ? n.toFixed(2) : n.toFixed(1));
             const low = has && d.remaining < 1;
-            const month = d && typeof d.usageMonth === 'number' ? `Dashboard bulan ini ${usd(d.usageMonth)}` : 'Kredit AI';
+            const month = d && typeof d.usageMonth === 'number' ? `Kredit AI · bulan ini ${usd(d.usageMonth)}` : 'Kredit AI';
             return `
                 <div class="bank-item-card or-card${low ? ' is-low' : ''}" id="orCreditCard">
                     <div class="bank-item-top">
                         <div class="bank-item-brand">
                             <span class="or-wordmark" role="img" aria-label="OpenRouter"><img src="/bank-logos/openrouter.png?v=2" alt="" loading="lazy">OpenRouter</span>
                         </div>
-                        <span class="bank-item-pct">${low ? 'Hampir habis' : 'Kredit AI'}</span>
+                        ${low ? '<span class="bank-item-pct">Menipis</span>' : ''}
                     </div>
                     <div class="bank-account-num">${escapeHTML(month)}</div>
                     <div class="bank-balance-amount">${has ? usd(d.remaining) : d ? '—' : 'Memuat…'}</div>

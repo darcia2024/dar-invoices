@@ -2940,8 +2940,8 @@ body.ai-open .ai-fab { display: none; }
 .or-wordmark { display: inline-flex; align-items: center; gap: 5px; height: 18px; font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: #1a1a18; white-space: nowrap; line-height: 1; }
 .or-wordmark img { height: 13px; width: auto; display: block; }
 @media (max-width: 600px) {
-    .or-wordmark { height: 15px; font-size: 12.5px; gap: 4px; }
-    .or-wordmark img { height: 11px; }
+    .or-wordmark { height: 15px; font-size: 12px; gap: 4px; }
+    .or-wordmark img { height: 10px; }
 }
 .or-card .or-idr { font-size: 12px; color: #7a7567; margin: -2px 0 10px; }
 .or-card.is-low .bank-balance-amount, .or-card.is-low .bank-item-pct { color: #b42318; }
