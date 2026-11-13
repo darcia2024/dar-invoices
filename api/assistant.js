@@ -37,6 +37,25 @@ const TOOLS = [
   {
     type: "function",
     function: {
+      name: "catat_pemasukan",
+      description: "Propose recording one income (money received: a client's transfer, a payment, a refund). The chosen account's balance goes up by the amount. If it is a client paying an invoice in DATA.invoice, give that invoice_id: the invoice then moves to DP or Lunas with the new total paid, so do not also call ubah_status_invoice for it. Use one call per income.",
+      parameters: {
+        type: "object",
+        properties: {
+          amount: { type: "integer", description: "Whole rupiah" },
+          date: { type: "string", description: "YYYY-MM-DD; today if the user did not say" },
+          note: { type: "string", description: "Short Indonesian description, e.g. 'Transfer dari Bang Ja'" },
+          bank: { type: "string", description: "key from DATA.rekening of the account it went into, only if the user said so (e.g. 'masuk Mandiri' -> mandiri); otherwise empty string" },
+          invoice_id: { type: "string", description: "id from DATA.invoice when this pays that invoice, otherwise empty string" },
+        },
+        required: ["amount", "date", "note", "bank", "invoice_id"],
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "tandai_rencana",
       description: "Propose marking a plan item (pos rencana pengeluaran) done or not done.",
       parameters: {
@@ -134,6 +153,7 @@ function buildPrompts(ws) {
   asisten: `${COMMON}
 Mode: ASISTEN. Answer questions about invoices, spending, plans, debts and balances, and draft messages (e.g. polite WhatsApp payment reminders to clients) when asked.
 Routine monthly needs: plan items with rutin=true are copied automatically into each new month's plan (once per month; amount and due day carry over, progress resets). For a new routine need use tambah_rencana with rutin true; to make an existing item routine or stop it repeating use ubah_rutin. Items already marked rutin need nothing more.
+Money in (a client paid, a transfer received, a photo of an incoming transfer) is catat_pemasukan, never catat_pengeluaran; link it to the invoice it pays when that is clear from the data.
 When the user asks you to record or change something, call the matching tool — the dashboard will show it for the user to confirm, so do not claim it is already saved; say it is waiting for their confirmation. Use ids exactly as in the data. If an amount, item or invoice is ambiguous, ask first instead of calling a tool.`,
   penasehat: `${COMMON}
 Mode: PENASEHAT KEUANGAN (financial advisor). Look at their real cash position, upcoming obligations, income pipeline (unpaid invoices), debts and spending patterns, and give practical, prioritized advice: what to pay first, what to postpone, how much is safe to spend per day, what to chase from clients, and how to build an emergency fund and avoid running short. Be honest when the numbers are tight, and show the arithmetic briefly.

@@ -2547,6 +2547,7 @@ body[data-view="offer"] #packSection {
                 <div class="log-stats" id="logStats"></div>
                 <div class="log-day-list" id="logDayList"></div>
                 <button type="button" class="log-more-btn" id="logMoreBtn" onclick="toggleLogShowAll()" hidden></button>
+                <div class="income-log" id="incomeLogList" hidden></div>
             </div>
 
 
@@ -5244,6 +5245,35 @@ body[data-view="offer"] #packSection {
                 return {};
             }
         })();
+        // Pemasukan (money in that is not tied to talangan): { "YYYY-MM": [{ id, date, amount, note,
+        // bankKey, bankAdd, invoiceId, source, by, createdAt }] }. Saving adds the amount to the bank
+        // (unless dated before the last "Update saldo", which already includes it); deleting takes
+        // exactly that back. Money changers (exchange.js) keep theirs in exchangeState.incomes.
+        const INCOME_LOGS_KEY = 'dar-income-logs';
+        function normalizeIncomeLogs(value) {
+            const out = {};
+            if (!value || typeof value !== 'object' || Array.isArray(value)) return out;
+            Object.entries(value).forEach(([month, list]) => {
+                if (!/^\d{4}-\d{2}$/.test(month) || !Array.isArray(list)) return;
+                const items = list.filter(x => x && Number(x.amount) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(x.date || '')).map(x => ({
+                    id: typeof x.id === 'string' && x.id ? x.id : 'inc-' + crypto.randomUUID(),
+                    date: x.date,
+                    amount: Math.round(Number(x.amount)),
+                    note: String(x.note || '').slice(0, 120),
+                    bankKey: typeof x.bankKey === 'string' ? x.bankKey.slice(0, 40) : '',
+                    bankAdd: Math.max(0, Math.round(Number(x.bankAdd)) || 0),
+                    invoiceId: typeof x.invoiceId === 'string' ? x.invoiceId.slice(0, 80) : '',
+                    source: x.source === 'scan' ? 'scan' : 'manual',
+                    by: String(x.by || '').slice(0, 40),
+                    createdAt: Number(x.createdAt) || Date.now()
+                }));
+                if (items.length) out[month] = items;
+            });
+            return out;
+        }
+        let incomeLogs = (() => {
+            try { return normalizeIncomeLogs(JSON.parse(localStorage.getItem(INCOME_LOGS_KEY) || '{}')); } catch (e) { return {}; }
+        })();
         let logShowAll = false;
         let scanImages = [];
         let scanResults = [];
@@ -5525,6 +5555,11 @@ body[data-view="offer"] #packSection {
                     expenseLogs = normalizeExpenseLogs(state.expenseLogs);
                 }
             }
+            if (state.incomeLogs && typeof state.incomeLogs === 'object' && !Array.isArray(state.incomeLogs)) {
+                if (Object.keys(state.incomeLogs).length > 0 || Object.keys(incomeLogs).length === 0) {
+                    incomeLogs = normalizeIncomeLogs(state.incomeLogs);
+                }
+            }
             if (Array.isArray(state.packingLists)) {
                 // Never-saved cloud copy comes back empty: keep trips made on this device until they sync.
                 if (state.packingLists.length > 0 || packingLists.length === 0) {
@@ -5575,6 +5610,7 @@ body[data-view="offer"] #packSection {
             localStorage.setItem(PLAN_SEEDED_KEY, JSON.stringify(planSeededMonths));
             localStorage.setItem(PACKING_LISTS_KEY, JSON.stringify(packingLists));
             localStorage.setItem(EXPENSE_LOGS_KEY, JSON.stringify(expenseLogs));
+            localStorage.setItem(INCOME_LOGS_KEY, JSON.stringify(incomeLogs));
             Object.entries(paymentStatuses).forEach(([id, status]) => {
                 localStorage.setItem("status_" + id, status);
             });
@@ -5656,6 +5692,7 @@ body[data-view="offer"] #packSection {
                         planSeededMonths,
                         packingLists,
                         expenseLogs,
+                        incomeLogs,
                         customInvoices,
                         deletedInvoiceIds,
                         purgedInvoiceIds,
@@ -7851,6 +7888,58 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             return log;
         }
 
+        // A pemasukan: adds to the bank, and when it pays a client invoice, moves that invoice to
+        // DP / Lunas with the new total paid. Money changers keep it in exchangeState.incomes.
+        // Returns { record, invoiceNote }.
+        function addIncomeRecord({ date, amount, note, bankKey, invoiceId, source }) {
+            const key = isBankKey(bankKey) ? bankKey : '';
+            let invoiceNote = '';
+            const inv = invoiceId ? invoiceItems.find(i => i.id === invoiceId && !deletedInvoiceIds.includes(i.id)) : null;
+            if (inv) {
+                const paidNow = Math.min(inv.gross, paidAmountOf(inv) + amount);
+                if (paidNow >= inv.gross) { setPaymentStatus(inv.id, 'PAID'); invoiceNote = `invoice ${inv.name} jadi Lunas`; }
+                else { setPaymentStatus(inv.id, 'DP', paidNow); invoiceNote = `invoice ${inv.name} jadi DP ${formatIDR(paidNow)} (sisa ${formatIDR(inv.gross - paidNow)})`; }
+            }
+            if (typeof exchangeState === 'object' && typeof moveMoney === 'function') {
+                const x = { id: 'inc-' + crypto.randomUUID(), date, amount, note: note.slice(0, 120), bankKey: key, bankAdd: 0, by: recordedBy(), createdAt: Date.now() };
+                exchangeState.incomes.push(x);
+                moveMoney(x, 'in', 1);
+                saveExchangeAndSync();
+                return { record: { ...x, bankAdd: x.bankAdd }, invoiceNote };
+            }
+            const month = date.slice(0, 7);
+            const x = { id: 'inc-' + crypto.randomUUID(), date, amount, note: note.slice(0, 120), bankKey: key, bankAdd: 0, invoiceId: inv ? inv.id : '', source: source === 'scan' ? 'scan' : 'manual', by: recordedBy(), createdAt: Date.now() };
+            if (key && !(bankBalancesUpdatedAt && date < bankBalancesUpdatedAt)) {
+                bankBalances[key] = (Number(bankBalances[key]) || 0) + amount;
+                x.bankAdd = amount;
+            }
+            incomeLogs[month] = (incomeLogs[month] || []).concat(x);
+            saveLocalBankBalances();
+            renderBankBalancesUI();
+            saveLocalBillingState();
+            renderExpenseLogUI();
+            persistBillingState();
+            return { record: x, invoiceNote };
+        }
+
+        function deleteIncomeLog(id) {
+            const month = Object.keys(incomeLogs).find(m => incomeLogs[m].some(x => x.id === id));
+            if (!month) return;
+            const x = incomeLogs[month].find(i => i.id === id);
+            const back = x.bankAdd > 0 && isBankKey(x.bankKey) ? `\nSaldo ${bankNameOf(x.bankKey)} dikurangi lagi ${formatIDR(x.bankAdd)}.` : '';
+            const inv = x.invoiceId ? invoiceItems.find(i => i.id === x.invoiceId) : null;
+            if (!confirm(`Hapus pemasukan ${formatIDR(x.amount)}${x.note ? ' (' + x.note + ')' : ''}?${back}${inv ? `\nStatus invoice ${inv.name} tidak ikut diubah, ubah sendiri kalau perlu.` : ''}`)) return;
+            if (x.bankAdd > 0 && isBankKey(x.bankKey)) bankBalances[x.bankKey] = (Number(bankBalances[x.bankKey]) || 0) - x.bankAdd;
+            incomeLogs[month] = incomeLogs[month].filter(i => i.id !== id);
+            if (!incomeLogs[month].length) delete incomeLogs[month];
+            saveLocalBankBalances();
+            renderBankBalancesUI();
+            saveLocalBillingState();
+            renderExpenseLogUI();
+            persistBillingState();
+            showToast('PEMASUKAN DIHAPUS');
+        }
+
         function clampDateToMonth(month, date) {
             const [y, m] = month.split('-').map(Number);
             const last = `${month}-${String(new Date(y, m, 0).getDate()).padStart(2, '0')}`;
@@ -7986,7 +8075,31 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             return items.find(p => /harian|sehari|makan|dapur/i.test(p.name)) || null;
         }
 
+        // Pemasukan of the month (recorded through the assistant), newest first; a click deletes.
+        function renderIncomeLogUI() {
+            const box = document.getElementById('incomeLogList');
+            if (!box) return;
+            const list = (incomeLogs[activePlanMonth] || []).slice().sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+            box.hidden = !list.length;
+            if (!list.length) { box.innerHTML = ''; return; }
+            const total = list.reduce((s, x) => s + x.amount, 0);
+            box.innerHTML = `
+                <div class="log-day-head"><span>Pemasukan ${escapeHTML(monthLabelOf(activePlanMonth))}</span><b class="income-total">+${formatIDR(total)}</b></div>
+                ${list.map(x => {
+                    const inv = x.invoiceId ? invoiceItems.find(i => i.id === x.invoiceId) : null;
+                    return `
+                    <button type="button" class="log-row is-income" onclick="deleteIncomeLog('${escapeHTML(x.id)}')" title="Klik untuk hapus">
+                        <span class="log-row-main">
+                            <span class="log-row-title">${escapeHTML(x.note || 'Pemasukan')}${x.source === 'scan' ? ' <em class="log-scan-tag">scan</em>' : ''}</span>
+                            <span class="log-row-pos">${escapeHTML(formatShortDate(x.date))}${isBankKey(x.bankKey) ? ' · ke ' + escapeHTML(bankNameOf(x.bankKey)) : ' · tunai'}${inv ? ' · invoice ' + escapeHTML(inv.name) : ''}</span>
+                        </span>
+                        <span class="log-row-amount">+${formatIDR(x.amount)}</span>
+                    </button>`;
+                }).join('')}`;
+        }
+
         function renderExpenseLogUI() {
+            renderIncomeLogUI();
             const listEl = document.getElementById('logDayList');
             if (!listEl) return;
             const month = activePlanMonth;
@@ -8334,6 +8447,11 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const bank = bankNameOf(aiActionBank(action));
                 return { title: 'Catat pengeluaran', detail: `${formatIDR(Math.round(a.amount) || 0)} · ${a.note || '-'}${posName(a.pos_id) ? ' · ' + posName(a.pos_id) : ' · di luar rencana'} · ${a.date ? formatShortDate(a.date) : 'hari ini'}${action.status === 'ok' && bank ? ' · dari ' + bank : ''}` };
             }
+            if (action.name === 'catat_pemasukan') {
+                const bank = bankNameOf(aiActionBank(action));
+                const inv = a.invoice_id ? invoiceItems.find(i => i.id === a.invoice_id) : null;
+                return { title: 'Catat pemasukan', detail: `+${formatIDR(Math.round(a.amount) || 0)} · ${a.note || '-'}${inv ? ' · bayar invoice ' + inv.name : ''} · ${a.date ? formatShortDate(a.date) : 'hari ini'}${action.status === 'ok' && bank ? ' · ke ' + bank : ''}` };
+            }
             if (action.name === 'tandai_rencana') return { title: a.done ? 'Tandai rencana selesai' : 'Buka lagi rencana', detail: posName(a.pos_id) || a.pos_id };
             if (action.name === 'tambah_rencana') {
                 const cat = PLAN_CATEGORY_MAP[a.category] || PLAN_CATEGORY_MAP.lainnya;
@@ -8380,6 +8498,18 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 if (log.bankCut > 0) return `Tercatat, saldo ${bankNameOf(bankKey)} jadi ${formatIDR(Number(bankBalances[bankKey]) || 0)}`;
                 if (bankKey) return `Tercatat (saldo ${bankNameOf(bankKey)} sudah diperbarui setelah tanggal ini, tidak dipotong)`;
                 return 'Tercatat';
+            }
+            if (action.name === 'catat_pemasukan') {
+                const amount = Math.round(Number(a.amount)) || 0;
+                const date = /^\d{4}-\d{2}-\d{2}$/.test(a.date || '') ? a.date : localDateKey();
+                if (amount <= 0) throw new Error('Nominal tidak valid');
+                const bankKey = aiActionBank(action);
+                action.bank = bankKey;
+                if (bankKey) rememberExpenseBank(bankKey);
+                const { record, invoiceNote } = addIncomeRecord({ date, amount, note: String(a.note || 'Pemasukan'), bankKey, invoiceId: a.invoice_id || '', source: a.sumber === 'scan' ? 'scan' : 'manual' });
+                const bankPart = record.bankAdd > 0 ? `saldo ${bankNameOf(bankKey)} jadi ${formatIDR(Number(bankBalances[bankKey]) || 0)}`
+                    : bankKey ? `saldo ${bankNameOf(bankKey)} sudah diperbarui setelah tanggal ini, tidak ditambah` : 'saldo bank tidak diubah';
+                return `Tercatat, ${bankPart}${invoiceNote ? ' · ' + invoiceNote : ''}`;
             }
             if (action.name === 'tandai_rencana') {
                 const item = Object.keys(expensePlans).map(m => planItemsOf(m).find(p => p.id === a.pos_id)).find(Boolean);
@@ -8529,26 +8659,57 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             renderAssistant();
         }
 
+        // A transfer in that looks like a client paying an open invoice: the sender's name matches
+        // the client, or the amount is exactly what is left to pay. Only a single clear match counts.
+        function guessInvoiceForIncome(t) {
+            const open = invoiceItems.filter(i => !deletedInvoiceIds.includes(i.id) && (paymentStatuses[i.id] || 'UNPAID') !== 'PAID');
+            const text = `${t.merchant || ''} ${t.description || ''}`.toLowerCase();
+            const words = name => String(name).toLowerCase().replace(/[()\-,.]/g, ' ').split(/\s+/).filter(w => w.length >= 4 && !['bang', 'ibu', 'pak', 'mas', 'mba', 'owner', 'sistem', 'website', 'desain'].includes(w));
+            const byName = open.filter(i => words(i.name).some(w => text.includes(w)));
+            const byAmount = open.filter(i => i.gross - paidAmountOf(i) === t.amount);
+            const both = byName.filter(i => byAmount.includes(i));
+            if (both.length === 1) return both[0];
+            if (byName.length === 1) return byName[0];
+            if (!byName.length && byAmount.length === 1) return byAmount[0];
+            return null;
+        }
+
         function buildReceiptReply(found, notes) {
             const today = localDateKey();
             const existing = Object.values(expenseLogs).flat();
+            const existingIn = [...Object.values(incomeLogs).flat(), ...(typeof exchangeState === 'object' ? exchangeState.incomes : [])];
             const lines = [];
+            const inLines = [];
             const actions = [];
             const skipped = [];
             found.forEach(t => {
                 const date = t.date || today;
-                const label = t.description || t.merchant || 'Pengeluaran';
-                if (!t.isExpense) { skipped.push(`${formatIDR(t.amount)} · ${label} (uang masuk / pindah rekening, nggak dicatat)`); return; }
+                const kind = t.kind || (t.isExpense ? 'keluar' : 'pindah');
+                const label = t.description || t.merchant || (kind === 'masuk' ? 'Pemasukan' : 'Pengeluaran');
+                const when = t.date ? formatShortDate(date) : 'tanggal nggak kebaca, pakai hari ini';
+                if (kind === 'pindah') { skipped.push(`${formatIDR(t.amount)} · ${label} (pindah antar rekening sendiri, nggak dicatat)`); return; }
+                if (kind === 'masuk') {
+                    if (existingIn.some(x => x.date === date && x.amount === t.amount)) { skipped.push(`${formatIDR(t.amount)} · ${label} (kayaknya udah tercatat ${formatShortDate(date)})`); return; }
+                    const inv = guessInvoiceForIncome(t);
+                    inLines.push(`- **+${formatIDR(t.amount)}** · ${label}${t.merchant && t.description ? ' (dari ' + t.merchant + ')' : ''} · ${when}${inv ? ` · kayaknya bayaran invoice **${inv.name}**` : ''}${t.confidence === 'low' ? ' · kurang jelas, cek lagi' : ''}`);
+                    actions.push({ name: 'catat_pemasukan', args: { amount: t.amount, date, note: label.slice(0, 120), invoice_id: inv ? inv.id : '', sumber: 'scan' } });
+                    return;
+                }
                 if (existing.some(l => l.date === date && l.amount === t.amount)) { skipped.push(`${formatIDR(t.amount)} · ${label} (kayaknya udah tercatat ${formatShortDate(date)})`); return; }
-                lines.push(`- **${formatIDR(t.amount)}** · ${label}${t.merchant && t.description ? ' (' + t.merchant + ')' : ''} · ${t.date ? formatShortDate(date) : 'tanggal nggak kebaca, pakai hari ini'}${t.confidence === 'low' ? ' · kurang jelas, cek lagi' : ''}`);
+                lines.push(`- **${formatIDR(t.amount)}** · ${label}${t.merchant && t.description ? ' (' + t.merchant + ')' : ''} · ${when}${t.confidence === 'low' ? ' · kurang jelas, cek lagi' : ''}`);
                 actions.push({ name: 'catat_pengeluaran', args: { amount: t.amount, date, note: label.slice(0, 120), pos_id: t.posId || '', sumber: 'scan' } });
             });
+            const parts = [];
+            const outs = actions.filter(a => a.name === 'catat_pengeluaran');
+            const ins = actions.filter(a => a.name === 'catat_pemasukan');
+            if (outs.length) parts.push(`Kebaca ${outs.length} pengeluaran, total **${formatIDR(outs.reduce((s, a) => s + a.args.amount, 0))}**:\n${lines.join('\n')}`);
+            if (ins.length) parts.push(`Kebaca ${ins.length} pemasukan, total **+${formatIDR(ins.reduce((s, a) => s + a.args.amount, 0))}**:\n${inLines.join('\n')}`);
             let content;
             if (actions.length) {
-                const total = actions.reduce((s, a) => s + a.args.amount, 0);
-                content = `Kebaca ${actions.length} pengeluaran, total **${formatIDR(total)}**:\n${lines.join('\n')}\nIni dibayar dari rekening apa? Pilih di kolom **Dari**, saldonya langsung kepotong pas lo klik Jalankan.`;
+                const hint = [outs.length ? 'pengeluaran pilih rekening di kolom **Dari**' : '', ins.length ? 'pemasukan pilih rekening tujuannya di kolom **Ke**' : ''].filter(Boolean).join(', ');
+                content = `${parts.join('\n')}\nBuat ${hint}. Saldonya langsung berubah pas lo klik Jalankan.`;
             } else {
-                content = found.length ? 'Nggak ada pengeluaran baru dari struk ini.' : 'Gue nggak nemu transaksi yang kebaca dari foto ini. Coba foto ulang lebih dekat dan terang.';
+                content = found.length ? 'Nggak ada catatan baru dari struk ini.' : 'Gue nggak nemu transaksi yang kebaca dari foto ini. Coba foto ulang lebih dekat dan terang.';
             }
             if (skipped.length) content += `\nDilewati:\n${skipped.map(s => '- ' + s).join('\n')}`;
             if (notes.length) content += `\nCatatan: ${notes.join(' ')}`;
@@ -8576,7 +8737,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     <div class="ai-welcome">
                         <img src="/brand/dar-mascot-128.png" alt="" width="64" height="64">
                         <b>${mode === 'penasehat' ? 'Penasehat keuangan DAR' : 'Halo bro, mau ngapain?'}</b>
-                        <span>${mode === 'penasehat' ? 'Gue lihat saldo, rencana, tagihan, dan pengeluaran lo, terus kasih saran yang realistis.' : 'Gue bisa jawab soal invoice, pengeluaran, rencana, hutang, dan nyatat buat lo. Kirim foto struk lewat tombol kamera, gue catetin pengeluarannya.'}</span>
+                        <span>${mode === 'penasehat' ? 'Gue lihat saldo, rencana, tagihan, dan pengeluaran lo, terus kasih saran yang realistis.' : 'Gue bisa jawab soal invoice, pengeluaran, rencana, hutang, dan nyatat buat lo. Kirim foto struk atau bukti transfer lewat tombol kamera, gue catetin pengeluaran atau pemasukannya.'}</span>
                         <div class="ai-chips">${AI_SUGGESTIONS[mode].map(t => `<button type="button" onclick="sendAssistantMessage(null, ${escapeHTML(JSON.stringify(t))})">${escapeHTML(t)}</button>`).join('')}</div>
                     </div>`;
             } else {
@@ -8589,8 +8750,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                             : a.status === 'batal' ? '<span class="ai-act-state">Dibatalkan</span>'
                             : a.status === 'gagal' ? `<span class="ai-act-state is-err">Gagal: ${escapeHTML(a.result || '')}</span>`
                             : `<span class="ai-act-btns"><button type="button" class="is-yes" onclick="handleAiAction(${i}, ${j}, true)">Jalankan</button><button type="button" onclick="handleAiAction(${i}, ${j}, false)">Batal</button></span>`;
-                        const bankPick = a.name === 'catat_pengeluaran' && !a.status
-                            ? `<label class="ai-act-bank">Dari <select onchange="setAiActionBank(${i}, ${j}, this.value)">${bankOptionsHTML(aiActionBank(a))}</select></label>`
+                        const bankPick = (a.name === 'catat_pengeluaran' || a.name === 'catat_pemasukan') && !a.status
+                            ? `<label class="ai-act-bank">${a.name === 'catat_pemasukan' ? 'Ke' : 'Dari'} <select onchange="setAiActionBank(${i}, ${j}, this.value)">${bankOptionsHTML(aiActionBank(a))}</select></label>`
                             : '';
                         return `<div class="ai-action"><div><b>${escapeHTML(d.title)}</b><span>${escapeHTML(d.detail)}</span></div>${bankPick}${state}</div>`;
                     }).join('');
@@ -8631,6 +8792,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 penukaran_valas: typeof exchangeAssistantContext === 'function' ? exchangeAssistantContext() : undefined,
                 rencana_bulan_aktif: planOf(month),
                 catatan_pengeluaran_bulan_aktif: logList(month),
+                catatan_pemasukan_bulan_aktif: (incomeLogs[month] || []).map(x => ({ tanggal: x.date, nominal: x.amount, ket: x.note, rekening: x.bankKey || null, invoice_id: x.invoiceId || null })),
                 rencana_bulan_lalu_ringkas: planItemsOf(prev).length ? { bulan: prev, total_anggaran: planItemsOf(prev).reduce((s, p) => s + p.planned, 0), total_terpakai: planItemsOf(prev).reduce((s, p) => s + p.actual, 0) } : null,
                 invoice: invoices,
                 pemasukan_per_bulan: monthly,
@@ -9394,6 +9556,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                         bankBalancesUpdatedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
                         // Spendings already recorded on this account are inside the typed balance.
                         Object.values(expenseLogs).forEach(list => list.forEach(log => { if (log.bankKey === key) log.bankCut = 0; }));
+                        Object.values(incomeLogs).forEach(list => list.forEach(x => { if (x.bankKey === key) x.bankAdd = 0; }));
                         saveLocalBillingState();
                         saveLocalBankBalances();
                         renderBankBalancesUI();
@@ -9605,6 +9768,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             // The balances just typed already include every spending recorded so far, so deleting
             // one of those later must not add its amount back.
             Object.values(expenseLogs).forEach(list => list.forEach(log => { log.bankCut = 0; }));
+            Object.values(incomeLogs).forEach(list => list.forEach(x => { x.bankAdd = 0; }));
             if (typeof exchangeOnManualBankUpdate === 'function') exchangeOnManualBankUpdate();
             saveLocalBillingState();
             saveLocalBankBalances();

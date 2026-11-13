@@ -246,6 +246,8 @@ function mergeState(state, ws = null) {
     // [{ id, name, date, destination, categories: [{ id, name, color }], items: [{ id, name, qty, packed, categoryId, note }] }]
     // { "YYYY-MM": [{ id, date, amount, posId, note, merchant, source, createdAt }] } — daily spending log.
     expenseLogs: state && state.expenseLogs && typeof state.expenseLogs === "object" && !Array.isArray(state.expenseLogs) ? state.expenseLogs : {},
+    // { "YYYY-MM": [{ id, date, amount, note, bankKey, bankAdd, invoiceId, source, by, createdAt }] } — pemasukan.
+    incomeLogs: state && state.incomeLogs && typeof state.incomeLogs === "object" && !Array.isArray(state.incomeLogs) ? state.incomeLogs : {},
     packingLists: state && Array.isArray(state.packingLists) ? state.packingLists : [],
     expensePlans: state && state.expensePlans && typeof state.expensePlans === "object" && !Array.isArray(state.expensePlans) ? state.expensePlans : {},
     // Months whose routine plan items were already carried over automatically.

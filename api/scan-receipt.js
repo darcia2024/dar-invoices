@@ -26,9 +26,10 @@ const RESULT_SCHEMA = {
           description: { type: "string", description: "Short Indonesian description of what was bought or paid" },
           pos_id: { type: "string", description: "id of the best matching budget item, or empty string" },
           is_expense: { type: "boolean", description: "false for money coming in, top-ups between own accounts, or refunds" },
+          kind: { type: "string", enum: ["keluar", "masuk", "pindah"], description: "keluar = money spent / sent to someone else; masuk = money received from someone else (client payment, transfer in, refund); pindah = moving money between the person's own accounts or top-up of their own e-wallet" },
           confidence: { type: "string", enum: ["high", "medium", "low"] },
         },
-        required: ["image_index", "date", "amount", "merchant", "description", "pos_id", "is_expense", "confidence"],
+        required: ["image_index", "date", "amount", "merchant", "description", "pos_id", "is_expense", "kind", "confidence"],
         additionalProperties: false,
       },
     },
@@ -44,12 +45,13 @@ function buildPrompt(posOptions, today) {
     : "(no budget items this month)";
   return `These are screenshots from someone in Indonesia tracking daily spending: shop receipts, bank transfer proofs, m-banking or e-wallet (GoPay, DANA, etc.) history, or online order summaries.
 
-Extract every spending transaction you can read.
+Extract every transaction you can read: spending, and also money received (a transfer-in proof, an incoming payment).
 - One shop receipt or order summary is one transaction: use the final amount actually paid (after discounts, including tax and fees), and summarize the items in "description".
-- A transaction-history screenshot can hold several transactions: list each outgoing one separately.
+- A transaction-history screenshot can hold several transactions: list each one separately, outgoing and incoming.
 - Amounts are whole rupiah. "Rp 1.250.000" is 1250000. If a receipt is in another currency (for example EGP / LE), still return the number as written and say so in "description".
 - Dates: return YYYY-MM-DD. Today is ${today}; if the year is missing, use the most recent date that is not in the future. Empty string if no date is visible.
 - Set is_expense to false for incoming money, refunds, or moving money between the person's own accounts, but still list them.
+- kind: "keluar" for spending, "masuk" for money received from someone else (e.g. a client's transfer in: put the sender's name in "merchant"), "pindah" for moving money between the person's own accounts or topping up their own e-wallet.
 - pos_id: pick the budget item below that this spending most likely belongs to, or "" if none fits. Use only ids from this list.
 - Do not invent transactions. If a screenshot has no readable transaction, return nothing for it and mention it in "notes".
 
@@ -164,7 +166,8 @@ module.exports = async function handler(req, res) {
         merchant: String(t.merchant || "").slice(0, 80),
         description: String(t.description || "").slice(0, 160),
         posId: validPos.has(t.pos_id) ? t.pos_id : "",
-        isExpense: t.is_expense !== false,
+        isExpense: t.kind ? t.kind === "keluar" : t.is_expense !== false,
+        kind: ["keluar", "masuk", "pindah"].includes(t.kind) ? t.kind : (t.is_expense === false ? "pindah" : "keluar"),
         confidence: ["high", "medium", "low"].includes(t.confidence) ? t.confidence : "medium",
       }));
 
