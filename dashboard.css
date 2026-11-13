@@ -3017,6 +3017,19 @@ body.ai-open .ai-fab { display: none; }
     .invoice-card.is-open .card-mini { margin-bottom: 10px; }
     .invoice-card.is-open .card-mini-amount { color: #6f6a5c; font-size: 14px; }
 
+    /* Two cards per row; an opened card takes the whole row so its details stay readable. */
+    .board-cards { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px !important; align-items: stretch; }
+    .board-cards > .invoice-card.is-open { grid-column: 1 / -1; }
+    .board-cards > .invoice-card:not(.is-open) { padding: 12px 12px 13px !important; display: flex; flex-direction: column; }
+    .board-cards > .invoice-card:not(.is-open) .card-top { flex-direction: column !important; align-items: flex-start !important; gap: 7px; margin-bottom: 8px; }
+    .board-cards > .invoice-card:not(.is-open) .client-title { font-size: 13.5px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+    .board-cards > .invoice-card:not(.is-open) .status-badge-group { gap: 4px; flex-wrap: wrap; }
+    .board-cards > .invoice-card:not(.is-open) .payment-status-pill { font-size: 9.5px; padding: 4px 8px; }
+    .board-cards > .invoice-card:not(.is-open) .card-mini { margin-top: auto; display: grid; gap: 1px; padding-right: 16px; }
+    .board-cards > .invoice-card:not(.is-open) .card-mini-amount { font-size: 15px; }
+    .board-cards > .invoice-card:not(.is-open) .card-mini-note { font-size: 10.5px; line-height: 1.35; }
+    .board-cards > .invoice-card:not(.is-open) .card-mini-chevron { top: auto; bottom: 6px; width: 7px; height: 7px; }
+
     /* Folded sections */
     .mobile-section-toggle {
         display: block; width: 100%; margin-top: 12px; padding: 10px; border: 1px solid #ddd5c5; border-radius: 10px;
