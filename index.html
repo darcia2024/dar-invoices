@@ -8551,17 +8551,19 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
 
         // Owner only (/dar): remaining OpenRouter credit, refreshed when the panel opens (at most
         // once a minute) and after each reply.
-        let aiCreditAt = 0;
-        const USD_IDR = 16500; // rough, only for the "≈ Rp" hint
+        var aiCreditAt = 0;
+        var USD_IDR = 16500; // rough, only for the "≈ Rp" hint
         async function loadAiCredit(force) {
-            const el = document.getElementById('aiCredit');
-            if (!el || (!force && Date.now() - aiCreditAt < 60000)) return;
+            if (window.DAR_WS || (!force && Date.now() - aiCreditAt < 60000)) return;
+            const el = document.getElementById('aiCredit') || document.createElement('button');
             aiCreditAt = Date.now();
             if (force) el.textContent = 'Ngecek kredit…';
             try {
                 const r = await fetch('/api/ai-credits', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
                 const d = await r.json();
                 if (!r.ok) throw new Error(d.error || 'gagal');
+                aiCreditInfo = d;
+                renderOpenRouterCard();
                 const usd = n => '$' + (n < 10 ? n.toFixed(2) : n.toFixed(1));
                 const parts = [];
                 if (typeof d.remaining === 'number') {
@@ -8576,6 +8578,39 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 el.textContent = 'Sisa kredit belum kebaca';
                 el.hidden = false;
             }
+        }
+
+        // OpenRouter credit as one more card next to the banks (/dar only). It is prepaid AI
+        // credit, not money, so it stays out of the cash total.
+        var aiCreditInfo = null; // var: bank cards can render before this line runs
+        function openRouterCardHTML() {
+            if (window.DAR_WS) return '';
+            const d = aiCreditInfo;
+            const has = d && typeof d.remaining === 'number';
+            const usd = n => '$' + (n < 10 ? n.toFixed(2) : n.toFixed(1));
+            const low = has && d.remaining < 1;
+            const month = d && typeof d.usageMonth === 'number' ? `Dashboard bulan ini ${usd(d.usageMonth)}` : 'Kredit AI';
+            return `
+                <div class="bank-item-card or-card${low ? ' is-low' : ''}" id="orCreditCard">
+                    <div class="bank-item-top">
+                        <div class="bank-item-brand">
+                            <img class="bank-logo-img or-logo" src="/bank-logos/openrouter.png" alt="OpenRouter" loading="lazy">
+                            <span class="bank-tag-primary">Kredit AI</span>
+                        </div>
+                        <span class="bank-item-pct">${low ? 'Hampir habis' : 'OpenRouter'}</span>
+                    </div>
+                    <div class="bank-account-num">${escapeHTML(month)}</div>
+                    <div class="bank-balance-amount">${has ? usd(d.remaining) : d ? '—' : 'Memuat…'}</div>
+                    <div class="or-idr">${has ? '≈ ' + formatIDR(Math.round(d.remaining * USD_IDR / 100) * 100) : d && d.needsManagementKey ? 'Pasang OPENROUTER_MANAGEMENT_KEY' : ''}</div>
+                    <div class="bank-card-actions">
+                        <button type="button" class="bank-copy-btn" onclick="openAiUsageReport()">Laporan harian</button>
+                        <a class="bank-copy-btn" href="https://openrouter.ai/settings/credits" target="_blank" rel="noopener">Top up</a>
+                    </div>
+                </div>`;
+        }
+        function renderOpenRouterCard() {
+            const card = document.getElementById('orCreditCard');
+            if (card) card.outerHTML = openRouterCardHTML();
         }
 
         // Laporan pemakaian AI per hari: the whole OpenRouter account (every app on it, from
@@ -9896,7 +9931,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     <div class="bank-progress-bar"><div class="bank-progress-fill" style="width:${pct}%;"></div></div>
                     ${bankCardActions(acc.key)}
                 </div>`;
-            }).join('') + (cash ? cash.html : '');
+            }).join('') + (cash ? cash.html : '') + (typeof openRouterCardHTML === 'function' ? openRouterCardHTML() : '');
+            if (typeof loadAiCredit === 'function' && !aiCreditInfo) loadAiCredit(false);
         }
 
         // The buttons under a bank card, here and in Aset: change just this balance, copy the account.

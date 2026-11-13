@@ -2937,6 +2937,10 @@ body.ai-open .ai-fab { display: none; }
 .ai-act-state.is-err { color: #9e2d22; }
 .ai-credit { display: block; margin-top: 2px; padding: 0; border: 0; background: none; font: inherit; font-size: 11px; color: #6a6557; text-align: left; cursor: pointer; }
 .ai-credit.is-low { color: #b42318; font-weight: 600; }
+.or-card .or-logo { width: 34px; height: 34px; object-fit: contain; border-radius: 9px; }
+.or-card .or-idr { font-size: 12px; color: #7a7567; margin: -2px 0 10px; }
+.or-card.is-low .bank-balance-amount, .or-card.is-low .bank-item-pct { color: #b42318; }
+.or-card a.bank-copy-btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
 .ai-usage-dialog { max-width: 560px; width: calc(100vw - 32px); }
 .ai-usage-dialog h3 { font-size: 14px; margin: 18px 0 2px; color: #24241f; }
 .ai-usage-note { font-size: 12px; color: #6a6557; margin: 2px 0 8px; }
