@@ -8596,7 +8596,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 return;
             }
             const usd = n => '$' + (n >= 10 ? n.toFixed(1) : n >= 0.1 ? n.toFixed(2) : n.toFixed(3));
-            const rp = n => formatIDR(Math.round(n * USD_IDR / 100) * 100);
+            const rp = n => { const v = n * USD_IDR; return formatIDR(v < 1000 ? Math.max(1, Math.round(v)) : Math.round(v / 100) * 100); };
             const dayLabel = k => new Date(k + 'T12:00:00Z').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
             const shortModel = m => String(m).split('/').pop().replace(/-\d{8}$/, '');
             const days = d.accountDays || [];
