@@ -2937,6 +2937,26 @@ body.ai-open .ai-fab { display: none; }
 .ai-act-state.is-err { color: #9e2d22; }
 .ai-credit { display: block; margin-top: 2px; padding: 0; border: 0; background: none; font: inherit; font-size: 11px; color: #6a6557; text-align: left; cursor: pointer; }
 .ai-credit.is-low { color: #b42318; font-weight: 600; }
+.ai-usage-dialog { max-width: 560px; width: calc(100vw - 32px); }
+.ai-usage-dialog h3 { font-size: 14px; margin: 18px 0 2px; color: #24241f; }
+.ai-usage-note { font-size: 12px; color: #6a6557; margin: 2px 0 8px; }
+.ai-usage-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ai-usage-stats div { background: #f6f3e8; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ai-usage-stats span { font-size: 11px; color: #6a6557; }
+.ai-usage-stats b { font-size: 16px; color: #24241f; font-variant-numeric: tabular-nums; }
+.ai-usage-stats b.is-low { color: #b42318; }
+.ai-usage-stats small { font-size: 11px; color: #8a8474; }
+.ai-usage-list { display: grid; gap: 6px; }
+.ai-usage-row { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; grid-template-areas: "date models cost" "date models meta"; align-items: center; gap: 0 10px; border: 1px solid #e6dfcf; border-radius: 10px; padding: 8px 10px; background: #fffdf8; }
+.ai-usage-date { grid-area: date; font-size: 12.5px; font-weight: 600; color: #3a382f; }
+.ai-usage-models { grid-area: models; font-size: 11.5px; color: #6a6557; line-height: 1.35; }
+.ai-usage-row b { grid-area: cost; text-align: right; font-size: 14px; font-variant-numeric: tabular-nums; }
+.ai-usage-row small { grid-area: meta; text-align: right; font-size: 11px; color: #8a8474; white-space: nowrap; }
+@media (max-width: 560px) {
+    .ai-usage-stats { grid-template-columns: 1fr 1fr; }
+    .ai-usage-stats div:last-child { grid-column: 1 / -1; }
+    .ai-usage-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "date cost" "models meta"; gap: 2px 10px; }
+}
 .ai-act-undo { border: 1px solid #d9d2c1; background: #fffdf8; color: #4a473e; font: inherit; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 5px 10px; cursor: pointer; }
 .ai-act-undo:hover { background: #ece7d8; }
 .ai-typing { display: inline-flex; gap: 4px; padding: 12px 14px; }

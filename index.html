@@ -4545,7 +4545,7 @@ body[data-view="offer"] #packSection {
             <div class="ai-head-text">
                 <!--dar-only--><b>Asisten DAR</b><!--/dar-only--><!--ws:<b>Asisten</b>-->
                 <small id="aiModeHint">Tanya data keuangan lo, atau suruh nyatat.</small>
-                <!--dar-only--><button type="button" class="ai-credit" id="aiCredit" hidden onclick="loadAiCredit(true)" title="Sisa kredit OpenRouter · klik buat refresh"></button><!--/dar-only-->
+                <!--dar-only--><button type="button" class="ai-credit" id="aiCredit" hidden onclick="openAiUsageReport()" title="Sisa kredit OpenRouter · klik buat laporan per hari"></button><!--/dar-only-->
             </div>
             <button type="button" class="ai-icon-btn" onclick="clearAssistant()" title="Mulai obrolan baru" aria-label="Mulai obrolan baru">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
@@ -8570,6 +8570,68 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 el.textContent = 'Sisa kredit belum kebaca';
                 el.hidden = false;
             }
+        }
+
+        // Laporan pemakaian AI per hari: the whole OpenRouter account (every app on it, from
+        // OpenRouter) and this dashboard's own calls per account.
+        async function openAiUsageReport() {
+            let dialog = document.getElementById('aiUsageDialog');
+            if (!dialog) {
+                dialog = document.createElement('dialog');
+                dialog.id = 'aiUsageDialog';
+                dialog.className = 'invoice-manager-dialog ai-usage-dialog';
+                dialog.setAttribute('aria-labelledby', 'aiUsageTitle');
+                document.body.appendChild(dialog);
+            }
+            dialog.innerHTML = `<div class="manager-heading"><h2 id="aiUsageTitle">Pemakaian AI per hari</h2><button type="button" aria-label="Tutup" onclick="this.closest('dialog').close()">×</button></div><div class="ai-usage-body"><p class="ai-usage-note">Ngambil data dari OpenRouter…</p></div>`;
+            if (!dialog.open) dialog.showModal();
+            const body = dialog.querySelector('.ai-usage-body');
+            let d;
+            try {
+                const r = await fetch('/api/ai-credits?report=1', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+                d = await r.json();
+                if (!r.ok) throw new Error(d.error || 'Gagal');
+            } catch (e) {
+                body.innerHTML = `<p class="ai-usage-note">Laporan belum bisa diambil: ${escapeHTML(e.message)}</p>`;
+                return;
+            }
+            const usd = n => '$' + (n >= 10 ? n.toFixed(1) : n >= 0.1 ? n.toFixed(2) : n.toFixed(3));
+            const rp = n => formatIDR(Math.round(n * USD_IDR / 100) * 100);
+            const dayLabel = k => new Date(k + 'T12:00:00Z').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+            const shortModel = m => String(m).split('/').pop().replace(/-\d{8}$/, '');
+            const days = d.accountDays || [];
+            const last7 = days.slice(0, 7);
+            const avg = last7.length ? last7.reduce((s, x) => s + x.cost, 0) / last7.length : 0;
+            const parts = [];
+            if (typeof d.remaining === 'number') {
+                const left = avg > 0 ? Math.floor(d.remaining / avg) : null;
+                parts.push(`<div class="ai-usage-stats">
+                    <div><span>Sisa kredit</span><b class="${d.remaining < 1 ? 'is-low' : ''}">${usd(d.remaining)}</b><small>≈ ${rp(d.remaining)}</small></div>
+                    <div><span>Rata-rata 7 hari</span><b>${usd(avg)}/hari</b><small>≈ ${rp(avg)}</small></div>
+                    <div><span>Perkiraan habis</span><b>${left === null ? '-' : left < 1 ? 'Hari ini' : left + ' hari lagi'}</b><small>kalau pemakaian sama</small></div>
+                </div>`);
+            }
+            if (days.length) {
+                parts.push(`<h3>Semua aplikasi di akun OpenRouter</h3><p class="ai-usage-note">Termasuk project lain yang pakai akun yang sama. Data OpenRouter telat 1–2 hari.</p>
+                <div class="ai-usage-list">${days.map(x => `
+                    <div class="ai-usage-row">
+                        <span class="ai-usage-date">${dayLabel(x.date)}</span>
+                        <span class="ai-usage-models">${x.models.map(m => `${escapeHTML(shortModel(m.model))} ${usd(m.cost)}`).join(' · ') || '-'}</span>
+                        <b>${usd(x.cost)}</b>
+                        <small>${x.requests} request · ≈ ${rp(x.cost)}</small>
+                    </div>`).join('')}</div>`);
+            } else if (d.activityError || d.needsManagementKey) {
+                parts.push(`<p class="ai-usage-note">${escapeHTML(d.activityError || 'Pasang OPENROUTER_MANAGEMENT_KEY buat lihat pemakaian seluruh akun.')}</p>`);
+            }
+            const dash = Object.entries(d.dashboardDays || {}).sort((a, b) => b[0].localeCompare(a[0]));
+            parts.push(`<h3>Dashboard ini (asisten + scan struk)</h3>${dash.length ? `<div class="ai-usage-list">${dash.map(([day, accs]) => {
+                const total = Object.values(accs).reduce((s, a) => s + a.cost, 0);
+                const calls = Object.values(accs).reduce((s, a) => s + a.calls, 0);
+                const who = Object.entries(accs).sort((a, b) => b[1].cost - a[1].cost).map(([k, a]) => `${escapeHTML(k === 'dar' ? '/dar' : '/' + k)} ${usd(a.cost)} (${a.calls}×)`).join(' · ');
+                return `<div class="ai-usage-row"><span class="ai-usage-date">${dayLabel(day)}</span><span class="ai-usage-models">${who}</span><b>${usd(total)}</b><small>${calls} pesan · ≈ ${rp(total)}</small></div>`;
+            }).join('')}</div>` : '<p class="ai-usage-note">Belum ada catatan. Mulai dihitung sejak 14 Nov 2026.</p>'}`);
+            body.innerHTML = parts.join('');
+            loadAiCredit(true);
         }
 
         function openAssistant() {
