@@ -207,6 +207,10 @@ function weeklyMessage(state, ws, today) {
   const statuses = (state && state.paymentStatuses) || {};
   const dps = (state && state.dpAmounts) || {};
   const deleted = new Set(list(state && state.deletedInvoiceIds));
+  // Penawaran still being offered / negotiated are not bills yet.
+  list(state && state.offers).forEach((o) => {
+    if (o && o.invoiceId && !o.deal && !["deal", "dikerjakan", "selesai"].includes(o.tahap)) deleted.add(o.invoiceId);
+  });
   const invoices = [...(ws ? [] : darInvoices()), ...list(state && state.customInvoices)]
     .filter((i) => i && i.id && !deleted.has(i.id) && Number(i.gross) > 0);
   const seen = new Set();

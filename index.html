@@ -6797,10 +6797,18 @@ body[data-view="offer"] #packSection {
         // Invoices from earlier months that are still unpaid (or only DP), each with a ready
         // WhatsApp reminder: one tap opens WhatsApp with the message filled in, pick the client.
         const INVOICE_BANNER_KEY = 'dar-invoice-due-hidden';
+        // An invoice whose penawaran (offers.js) is still being offered or negotiated is not a
+        // bill yet: no reminders, and the assistant doesn't count it as owed.
+        function invoiceIsOfferOnly(id) {
+            if (typeof offersForSave !== 'function') return false;
+            const list = offersForSave();
+            const o = Array.isArray(list) ? list.find(x => x && x.invoiceId === id) : null;
+            return Boolean(o && !o.deal && !['deal', 'dikerjakan', 'selesai'].includes(o.tahap));
+        }
         function overdueInvoices() {
             const thisMonth = currentMonthKey();
             return invoiceItems
-                .filter(i => !deletedInvoiceIds.includes(i.id) && i.month && i.month < thisMonth && (paymentStatuses[i.id] || 'UNPAID') !== 'PAID')
+                .filter(i => !deletedInvoiceIds.includes(i.id) && !invoiceIsOfferOnly(i.id) && i.month && i.month < thisMonth && (paymentStatuses[i.id] || 'UNPAID') !== 'PAID')
                 .map(i => ({ i, paid: paidAmountOf(i), left: Math.max(0, i.gross - paidAmountOf(i)) }))
                 .filter(x => x.left > 0)
                 .sort((a, b) => a.i.month.localeCompare(b.i.month));
@@ -9020,7 +9028,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const { monthlyMap } = buildPaymentTimelines();
                 Object.entries(monthlyMap).slice(-6).forEach(([k, r]) => { monthly[k] = { pendapatan_masuk: r.paidGrossTotal, profit_masuk: r.paidNetProfitTotal }; });
             } catch (e) {}
-            const invoices = invoiceItems.filter(i => !deletedInvoiceIds.includes(i.id)).map(i => {
+            const invoices = invoiceItems.filter(i => !deletedInvoiceIds.includes(i.id) && !invoiceIsOfferOnly(i.id)).map(i => {
                 const paid = paidAmountOf(i);
                 return { id: i.id, klien: i.name, bulan: i.monthLabel, total: i.gross, sudah_dibayar: paid, sisa: Math.max(0, i.gross - paid), status: paymentStatuses[i.id] || 'UNPAID' };
             });
