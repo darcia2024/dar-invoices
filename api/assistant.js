@@ -232,14 +232,23 @@ module.exports = async function handler(req, res) {
         },
         body: JSON.stringify({
           model: MODELS[mode],
-          // Accounts sold to others get shorter answers, which also caps what one message costs.
-          max_tokens: workspace ? (mode === "penasehat" ? 1500 : 800) : (mode === "penasehat" ? 3000 : 1500),
+          // The models think before answering and that thinking counts toward this cap, so a low
+          // cap cut answers off. Only the tokens actually written are billed; the cap is a ceiling.
+          // Accounts sold to others keep a lower ceiling per message.
+          max_tokens: workspace ? (mode === "penasehat" ? 3000 : 2000) : (mode === "penasehat" ? 5000 : 3000),
           messages: [
-            { role: "system", content: `${PROMPTS[mode]}\n\nDATA (snapshot taken just now, JSON):\n${context}${workspace ? `\n\nReminder: stay strictly within SCOPE. Out-of-scope requests get exactly: "${OFF_TOPIC_REPLY}"` : ""}` },
+            // Instructions + DATA stay the same between messages of one chat (DATA only carries
+            // today's date), so they are cached: later messages read them at ~10% of the price.
+            { role: "system", content: [{
+              type: "text",
+              text: `${PROMPTS[mode]}\n\nDATA (snapshot taken just now, JSON):\n${context}${workspace ? `\n\nReminder: stay strictly within SCOPE. Out-of-scope requests get exactly: "${OFF_TOPIC_REPLY}"` : ""}`,
+              cache_control: { type: "ephemeral" },
+            }] },
             ...history,
           ],
           tools: TOOLS,
           tool_choice: "auto",
+          usage: { include: true },
         }),
       });
     } finally {
@@ -256,11 +265,22 @@ module.exports = async function handler(req, res) {
       return res.status(502).json({ error: "Asisten lagi error. Coba lagi." });
     }
 
-    const message = data.choices && data.choices[0] && data.choices[0].message;
+    const choice = data.choices && data.choices[0];
+    const message = choice && choice.message;
     if (!message) return res.status(502).json({ error: "Asisten lagi error. Coba lagi." });
-    const reply = typeof message.content === "string"
+    if (data.usage) {
+      const u = data.usage;
+      const cached = (u.prompt_tokens_details && u.prompt_tokens_details.cached_tokens) || 0;
+      console.log(`assistant ${wsSlug || "dar"} ${mode} ${data.model}: in ${u.prompt_tokens} (cached ${cached}) out ${u.completion_tokens} cost $${u.cost != null ? u.cost : "?"}`);
+    }
+    let reply = typeof message.content === "string"
       ? message.content
       : (message.content || []).map((part) => part.text || "").join("");
+    if (choice.finish_reason === "length") {
+      reply = reply.trim()
+        ? `${reply.trim()}…\n\n(Jawabannya kepanjangan dan kepotong. Minta bagian yang kamu perlu aja ya.)`
+        : "Pertanyaannya kebanyakan sekaligus, jawabanku kepotong. Coba pecah jadi beberapa pertanyaan ya.";
+    }
     const known = new Set(TOOLS.map((t) => t.function.name));
     const actions = (message.tool_calls || [])
       .filter((call) => call && call.function && known.has(call.function.name))
