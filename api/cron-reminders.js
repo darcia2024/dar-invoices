@@ -141,6 +141,107 @@ function reportMessage(state, ws, day, tz, owner) {
   };
 }
 
+function addDays(day, n) {
+  const d = new Date(`${day}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+// DAR's own invoice cards live in index.html, not in the saved state; read them from there.
+let darInvoicesCache = null;
+function darInvoices() {
+  if (darInvoicesCache) return darInvoicesCache;
+  darInvoicesCache = [];
+  try {
+    const html = require("fs").readFileSync(require("path").join(process.cwd(), "index.html"), "utf8");
+    const start = html.indexOf("const invoiceItems =");
+    const block = start >= 0 ? html.slice(start, html.indexOf("];", start)) : "";
+    const re = /id:\s*"([^"]+)",\s*name:\s*"((?:[^"\\]|\\.)*)",\s*month:\s*"(\d{4}-\d{2})",\s*monthLabel:\s*"[^"]*",\s*gross:\s*(\d+)/g;
+    let m;
+    while ((m = re.exec(block))) darInvoicesCache.push({ id: m[1], name: m[2], month: m[3], gross: Number(m[4]) });
+  } catch (e) {
+    console.warn("weekly: could not read DAR invoices", e.message);
+  }
+  return darInvoicesCache;
+}
+
+// Monday morning: last week's money in and out (with the change from the week before), the
+// biggest spendings, what is still owed by clients, and what is due this week.
+function weeklyMessage(state, ws, today) {
+  const list = (v) => (Array.isArray(v) ? v : []);
+  const live = (x) => x && !x.demo;
+  const ex = (state && state.exchange) || {};
+  const rates = ex.assetRates || {};
+  const foreign = (x) => typeof x.currency === "string" && x.currency !== "IDR" && /^[A-Z]{3}$/.test(x.currency);
+  const idrOf = (x) => (foreign(x) ? Math.round((Number(x.fxAmount) || 0) * (Number(x.rate) || Number(rates[x.currency]) || 0)) : Number(x.amount) || 0);
+  const from = addDays(today, -7), to = addDays(today, -1);
+  const prevFrom = addDays(today, -14), prevTo = addDays(today, -8);
+  const inRange = (d, a, b) => typeof d === "string" && d >= a && d <= b;
+  const allLogs = Object.values((state && state.expenseLogs) || {}).flatMap(list).filter(live);
+  const plans = (state && state.expensePlans) || {};
+  const posName = (l) => {
+    const p = list(plans[String(l.date).slice(0, 7)]).find((x) => x && x.id === l.posId);
+    return p ? p.name : (l.note || l.merchant || "Lainnya");
+  };
+  const week = allLogs.filter((l) => inRange(l.date, from, to));
+  const prevWeek = allLogs.filter((l) => inRange(l.date, prevFrom, prevTo));
+  const out = week.reduce((s, l) => s + idrOf(l), 0);
+  const outPrev = prevWeek.reduce((s, l) => s + idrOf(l), 0);
+  const incomes = [...Object.values((state && state.incomeLogs) || {}).flatMap(list), ...list(ex.incomes)].filter(live);
+  const income = incomes.filter((x) => inRange(x.date, from, to)).reduce((s, x) => s + idrOf(x), 0);
+
+  const lines = [];
+  if (out) {
+    const change = outPrev ? Math.round(((out - outPrev) / outPrev) * 100) : null;
+    lines.push(`Keluar ${short(out)} (${week.length} catatan)${change === null ? "" : change === 0 ? " · sama kayak minggu sebelumnya" : ` · ${change > 0 ? "▲" : "▼"} ${Math.abs(change)}% dari minggu sebelumnya`}`);
+    const byPos = {};
+    week.forEach((l) => { const k = posName(l); byPos[k] = (byPos[k] || 0) + idrOf(l); });
+    const top = Object.entries(byPos).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${k} ${short(v)}`);
+    if (top.length) lines.push(`Terbesar: ${top.join(", ")}`);
+  } else {
+    lines.push("Minggu lalu nggak ada pengeluaran yang dicatat");
+  }
+  if (income) lines.push(`Masuk ${short(income)}`);
+
+  // Client invoices still open (DAR's built-in cards + invoices made in the app).
+  const statuses = (state && state.paymentStatuses) || {};
+  const dps = (state && state.dpAmounts) || {};
+  const deleted = new Set(list(state && state.deletedInvoiceIds));
+  const invoices = [...(ws ? [] : darInvoices()), ...list(state && state.customInvoices)]
+    .filter((i) => i && i.id && !deleted.has(i.id) && Number(i.gross) > 0);
+  const seen = new Set();
+  const open = invoices.filter((i) => !seen.has(i.id) && seen.add(i.id) && (statuses[i.id] || "UNPAID") !== "PAID")
+    .map((i) => Number(i.gross) - ((statuses[i.id] === "DP" && Number(dps[i.id])) || 0))
+    .filter((left) => left > 0);
+  if (open.length) lines.push(`Invoice belum lunas: ${open.length}, sisa ${short(open.reduce((s, n) => s + n, 0))}`);
+
+  // Due this week: talangan / hutang and planned payments with a date.
+  const weekEnd = addDays(today, 6);
+  const debts = list(state && state.debts).filter((d) => live(d) && inRange(d.due, "0000-00-00", weekEnd) && (Number(d.paid) || 0) < (Number(d.amount) || 0));
+  const month = today.slice(0, 7);
+  const planDue = [...new Set([month, weekEnd.slice(0, 7)])].flatMap((m) => list(plans[m]))
+    .filter((p) => p && !p.demo && !p.done && inRange(p.due, today, weekEnd));
+  const dueBits = [];
+  if (debts.length) dueBits.push(`${debts.length} hutang/piutang jatuh tempo`);
+  if (planDue.length) dueBits.push(`${planDue.length} rencana bayar ${short(planDue.reduce((s, p) => s + (Number(p.planned) || 0), 0))}`);
+  if (dueBits.length) lines.push(`Minggu ini: ${dueBits.join(" · ")}`);
+
+  // One plain tip from the numbers (no AI call, free).
+  let tip = "";
+  if (outPrev && out > outPrev * 1.3) tip = "Pengeluaran naik lumayan, cek lagi yang terbesar.";
+  else if (open.length) tip = "Ada invoice yang belum lunas, tombol \"Tagih via WA\" udah siap di dashboard.";
+  else if (income > out && out) tip = "Pemasukan lebih gede dari pengeluaran, mantap. Sisihin buat dana darurat.";
+  if (tip) lines.push(tip);
+
+  const label = (d) => new Date(`${d}T12:00:00Z`).toLocaleDateString("id-ID", { day: "numeric", month: "short", timeZone: "UTC" });
+  return {
+    title: `Ringkasan minggu lalu (${label(from)} – ${label(to)})`,
+    body: lines.join("\n"),
+    url: ws ? `/${ws}` : "/dar",
+    tag: `dar-weekly-${today}`,
+  };
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   const secret = process.env.CRON_SECRET;
@@ -165,6 +266,15 @@ module.exports = async function handler(req, res) {
           report.push({ ws, dailyReport: yesterday, ...(await sendToAccount(ws, reportMessage(state, ws, yesterday, tz, owner), isOwner)) });
         }
       }
+      // Mondays (in the account's own timezone): the weekly summary, to the owner's phones.
+      if (new Date(`${today}T12:00:00Z`).getUTCDay() === 1) {
+        const firstWeekly = await redisCommand(["SET", `dar-invoices:push-weekly:${ws || "dar"}:${today}`, "1", "NX", "EX", 172800]);
+        if (firstWeekly) {
+          const owner = ws ? WORKSPACES[ws].owner || WORKSPACES[ws].name : null;
+          const isOwner = (sub) => !ws || sub.userId === "owner" || (!sub.userId && sub.user === owner);
+          report.push({ ws: ws || "dar", weekly: today, ...(await sendToAccount(ws, weeklyMessage(state, ws, today), isOwner)) });
+        }
+      }
       const message = dueMessage(state, ws, today);
       if (!message) {
         report.push({ ws: ws || "dar", due: 0 });
@@ -186,3 +296,4 @@ module.exports = async function handler(req, res) {
 
 module.exports.dueMessage = dueMessage;
 module.exports.reportMessage = reportMessage;
+module.exports.weeklyMessage = weeklyMessage;

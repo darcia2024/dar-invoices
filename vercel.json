@@ -20,6 +20,9 @@
     },
     "api/workspace.js": {
       "includeFiles": "{index.html,admin-login.html}"
+    },
+    "api/cron-reminders.js": {
+      "includeFiles": "index.html"
     }
   },
   "headers": [

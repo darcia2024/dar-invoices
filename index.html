@@ -2088,6 +2088,7 @@ body[data-view="offer"] #packSection {
         </div>
 
         <div class="debt-due-banner" id="debtDueBanner" role="status" hidden></div>
+        <div class="debt-due-banner inv-due-banner" id="invoiceDueBanner" role="status" hidden></div>
 
         <div class="invoice-tools">
             <button class="create-invoice-btn" onclick="openInvoiceComposer()">+ Buat invoice</button>
@@ -4567,6 +4568,9 @@ body[data-view="offer"] #packSection {
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             </button>
             <textarea id="aiInput" rows="1" maxlength="2000" placeholder="Tulis pesan…" aria-label="Pesan untuk asisten" onkeydown="if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();this.form.requestSubmit();}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea>
+            <button type="button" class="ai-attach-btn ai-mic-btn" id="aiMicBtn" hidden onclick="toggleAssistantVoice()" title="Ngomong aja" aria-label="Catat lewat suara">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1"></path><line x1="12" y1="18" x2="12" y2="22"></line></svg>
+            </button>
             <button type="submit" id="aiSendBtn" aria-label="Kirim">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </button>
@@ -5791,6 +5795,7 @@ body[data-view="offer"] #packSection {
             }
             if (item) recordPaymentChange(id, paidBefore, paidAmountOf(item));
             updatePaymentBadges();
+            renderInvoiceDueBanner();
             calculateFinancials();
             persistBillingState();
             showToast("STATUS PEMBAYARAN DIUBAH MENJADI: " + (status === "PAID" ? "LUNAS" : status === "DP" ? "DIBAYAR DP" : "BELUM LUNAS"));
@@ -6622,6 +6627,7 @@ body[data-view="offer"] #packSection {
         // Unpaid records that are late, due today or due tomorrow show on every screen until
         // closed for the day (a new record coming due shows it again).
         function renderDebtDueBanner() {
+            renderInvoiceDueBanner();
             const banner = document.getElementById('debtDueBanner');
             const due = debts
                 .filter(d => getDebtStatus(d) !== 'SETTLED')
@@ -6787,6 +6793,92 @@ body[data-view="offer"] #packSection {
         }
 
         setTimeout(renderPushBox, 300);
+
+        // Invoices from earlier months that are still unpaid (or only DP), each with a ready
+        // WhatsApp reminder: one tap opens WhatsApp with the message filled in, pick the client.
+        const INVOICE_BANNER_KEY = 'dar-invoice-due-hidden';
+        function overdueInvoices() {
+            const thisMonth = currentMonthKey();
+            return invoiceItems
+                .filter(i => !deletedInvoiceIds.includes(i.id) && i.month && i.month < thisMonth && (paymentStatuses[i.id] || 'UNPAID') !== 'PAID')
+                .map(i => ({ i, paid: paidAmountOf(i), left: Math.max(0, i.gross - paidAmountOf(i)) }))
+                .filter(x => x.left > 0)
+                .sort((a, b) => a.i.month.localeCompare(b.i.month));
+        }
+
+        function invoiceReminderText(id) {
+            const i = invoiceItems.find(x => x.id === id);
+            if (!i) return '';
+            const paid = paidAmountOf(i);
+            const left = Math.max(0, i.gross - paid);
+            return `Halo ${i.name}, semoga sehat selalu ya. 🙏
+
+Izin mengingatkan untuk tagihan ${i.monthLabel || i.month}:
+💰 Total: ${formatIDR(i.gross)}
+${paid > 0 ? `💳 Sudah dibayar: ${formatIDR(paid)}
+` : ''}👉 Sisa: ${formatIDR(left)}
+
+Pembayaran bisa ditransfer ke:
+${paymentAccountLines()}
+
+Kalau sudah transfer, mohon kirim bukti transfernya ya. Terima kasih banyak! 🙏`;
+        }
+
+        function sendInvoiceReminder(id) {
+            const text = invoiceReminderText(id);
+            if (!text) return;
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+        }
+
+        function copyInvoiceReminder(id) {
+            const text = invoiceReminderText(id);
+            if (text) copyText(text);
+        }
+
+        function renderInvoiceDueBanner() {
+            const banner = document.getElementById('invoiceDueBanner');
+            if (!banner) return;
+            const due = overdueInvoices();
+            const signature = localDateKey() + ':' + due.map(x => x.i.id + ':' + x.left).join(',');
+            let hidden = '';
+            try { hidden = localStorage.getItem(INVOICE_BANNER_KEY) || ''; } catch (e) {}
+            if (!due.length || hidden === signature) { banner.hidden = true; return; }
+            const total = due.reduce((s, x) => s + x.left, 0);
+            const monthsLate = m => {
+                const [y, mo] = m.split('-').map(Number);
+                const [cy, cm] = currentMonthKey().split('-').map(Number);
+                return (cy - y) * 12 + (cm - mo);
+            };
+            const shown = invoiceBannerAll ? due : due.slice(0, 3);
+            const rows = shown.map(({ i, left }) => `
+                <li class="inv-due-row">
+                    <span class="inv-due-name">${escapeInvoiceText(i.name)}</span>
+                    <b class="debt-due-amount">${formatIDR(left)}</b>
+                    <span class="inv-due-meta"><span class="debt-due-pill ${monthsLate(i.month) >= 2 ? 'is-late' : 'is-today'}">${escapeHTML(i.monthLabel || i.month)}</span>${(paymentStatuses[i.id] || 'UNPAID') === 'DP' ? 'Sudah DP' : 'Belum bayar'}</span>
+                    <span class="inv-due-btns">
+                        <button type="button" class="inv-due-wa" onclick="sendInvoiceReminder('${i.id}')" title="Kirim pengingat lewat WhatsApp">Tagih via WA</button>
+                        <button type="button" class="inv-due-copy" onclick="copyInvoiceReminder('${i.id}')" title="Salin pesan pengingat" aria-label="Salin pesan pengingat">Salin</button>
+                    </span>
+                </li>`).join('');
+            banner.innerHTML = `
+                <div class="debt-due-head">
+                    <div class="debt-due-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="12" y2="16"></line></svg></div>
+                    <div class="debt-due-heading">
+                        <div class="debt-due-title">Invoice belum lunas dari bulan lalu</div>
+                        <div class="debt-due-summary">${due.length} invoice · sisa ${formatIDR(total)} · pesan WA udah disiapin</div>
+                    </div>
+                    <button type="button" class="debt-due-close" aria-label="Tutup untuk hari ini" title="Tutup untuk hari ini" onclick="hideInvoiceDueBanner('${signature}')">×</button>
+                </div>
+                <ul class="debt-due-list inv-due-list">${rows}</ul>
+                ${due.length > 3 ? `<button type="button" class="debt-due-more inv-due-more" onclick="invoiceBannerAll = !invoiceBannerAll; renderInvoiceDueBanner()">${invoiceBannerAll ? 'Ringkas' : `Lihat semua (${due.length})`}</button>` : ''}`;
+            banner.hidden = false;
+        }
+        let invoiceBannerAll = false;
+
+        function hideInvoiceDueBanner(signature) {
+            try { localStorage.setItem(INVOICE_BANNER_KEY, signature); } catch (e) {}
+            document.getElementById('invoiceDueBanner').hidden = true;
+        }
 
         function hideDebtDueBanner(signature) {
             try { localStorage.setItem(DEBT_BANNER_KEY, signature); } catch (e) {}
@@ -8540,7 +8632,13 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const amount = Math.round(Number(a.amount));
                 if (!Number.isFinite(amount)) throw new Error('Nominal tidak valid');
                 const before = Number(bankBalances[key]) || 0;
+                // Setting a balance marks earlier records of this account as already counted;
+                // remember which, so "Batalkan" can put that back too.
+                const cuts = Object.values(expenseLogs).flat().filter(l => l.bankKey === key && l.bankCut > 0).map(l => [l.id, l.bankCut]);
+                const adds = Object.values(incomeLogs).flat().filter(x => x.bankKey === key && x.bankAdd > 0).map(x => [x.id, x.bankAdd]);
+                const updatedAt = bankBalancesUpdatedAt;
                 setBankBalance(key, amount);
+                action.undo = { type: 'saldo', key, before, cuts, adds, updatedAt };
                 return `Saldo ${bankNameOf(key)} ${formatIDR(before)} → ${formatIDR(amount)}`;
             }
             if (action.name === 'catat_pengeluaran') {
@@ -8555,6 +8653,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const log = addExpenseLog({ date, amount, posId: planItemsOf(date.slice(0, 7)).some(p => p.id === a.pos_id) ? a.pos_id : '', note: String(a.note || '').slice(0, 120), source: a.sumber === 'scan' ? 'scan' : 'manual', bankKey, planMonth: date.slice(0, 7) });
                 afterBankCut([log]);
                 saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                action.undo = { type: 'log', id: log.id, month: date.slice(0, 7) };
                 if (log.bankCut > 0) return `Tercatat, saldo ${bankNameOf(bankKey)} jadi ${formatIDR(Number(bankBalances[bankKey]) || 0)}`;
                 if (bankKey) return `Tercatat (saldo ${bankNameOf(bankKey)} sudah diperbarui setelah tanggal ini, tidak dipotong)`;
                 return 'Tercatat';
@@ -8569,14 +8668,17 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 const bankKey = aiActionBank(action);
                 action.bank = bankKey;
                 if (bankKey) rememberExpenseBank(bankKey);
+                const invBefore = a.invoice_id ? { id: a.invoice_id, status: paymentStatuses[a.invoice_id] || 'UNPAID', dp: dpAmounts[a.invoice_id] || 0 } : null;
                 const { record, invoiceNote } = addIncomeRecord({ date, amount, note: String(a.note || 'Pemasukan'), bankKey, invoiceId: a.invoice_id || '', source: a.sumber === 'scan' ? 'scan' : 'manual' });
                 const bankPart = record.bankAdd > 0 ? `saldo ${bankNameOf(bankKey)} jadi ${formatIDR(Number(bankBalances[bankKey]) || 0)}`
                     : bankKey ? `saldo ${bankNameOf(bankKey)} sudah diperbarui setelah tanggal ini, tidak ditambah` : 'saldo bank tidak diubah';
+                action.undo = { type: 'income', id: record.id, invoice: invoiceNote ? invBefore : null };
                 return `Tercatat, ${bankPart}${invoiceNote ? ' · ' + invoiceNote : ''}`;
             }
             if (action.name === 'tandai_rencana') {
                 const item = Object.keys(expensePlans).map(m => planItemsOf(m).find(p => p.id === a.pos_id)).find(Boolean);
                 if (!item) throw new Error('Rencana tidak ditemukan');
+                action.undo = { type: 'plan', id: item.id, done: item.done, actual: item.actual };
                 item.done = Boolean(a.done);
                 if (item.done && item.actual === 0) item.actual = item.planned;
                 item.updatedAt = Date.now();
@@ -8588,11 +8690,13 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 if (!created) throw new Error('Data rencana tidak lengkap');
                 expensePlans[month] = planItemsOf(month).concat(created);
                 saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                action.undo = { type: 'planAdd', id: created.id, month };
                 return created.recurring ? 'Ditambahkan, rutin tiap bulan' : 'Ditambahkan';
             }
             if (action.name === 'ubah_rutin') {
                 const item = Object.keys(expensePlans).map(m => planItemsOf(m).find(p => p.id === a.pos_id)).find(Boolean);
                 if (!item) throw new Error('Rencana tidak ditemukan');
+                action.undo = { type: 'rutin', id: item.id, recurring: item.recurring };
                 item.recurring = Boolean(a.rutin);
                 item.updatedAt = Date.now();
                 saveLocalBillingState(); renderPlanUI(); persistBillingState();
@@ -8603,6 +8707,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 if (!inv) throw new Error('Invoice tidak ditemukan');
                 const status = ['PAID', 'DP', 'UNPAID'].includes(a.status) ? a.status : null;
                 if (!status) throw new Error('Status tidak valid');
+                action.undo = { type: 'invoice', id: inv.id, status: paymentStatuses[inv.id] || 'UNPAID', dp: dpAmounts[inv.id] || 0 };
                 if (status === 'DP') {
                     const dp = Math.round(Number(a.dp_amount)) || 0;
                     if (dp <= 0 || dp >= inv.gross) throw new Error('Nominal DP tidak valid');
@@ -8632,6 +8737,80 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             }
             saveAssistantState();
             renderAssistant();
+        }
+
+        // "Batalkan" on an action the assistant already ran: puts back exactly what it changed
+        // (the record goes, the bank balance and invoice status return to what they were).
+        function undoAiAction(msgIndex, actionIndex) {
+            const msg = aiState[aiState.mode][msgIndex];
+            const action = msg && msg.actions && msg.actions[actionIndex];
+            const u = action && action.undo;
+            if (!u || action.status !== 'ok') return;
+            const d = describeAiAction(action);
+            if (!confirm(`Batalkan "${d.title}"?\n${d.detail}`)) return;
+            const findPlan = id => Object.keys(expensePlans).map(m => planItemsOf(m).find(p => p.id === id)).find(Boolean);
+            let gone = false;
+            if (u.type === 'saldo') {
+                // Keep whatever moved the balance after the change (a spending recorded since).
+                const since = (Number(bankBalances[u.key]) || 0) - (Number(action.args && action.args.amount) || 0);
+                setBankBalance(u.key, u.before + since);
+                if (typeof exchangeOnBankAmountEdit !== 'function') {
+                    const cuts = new Map(u.cuts || []), adds = new Map(u.adds || []);
+                    Object.values(expenseLogs).flat().forEach(l => { if (cuts.has(l.id)) l.bankCut = cuts.get(l.id); });
+                    Object.values(incomeLogs).flat().forEach(x => { if (adds.has(x.id)) x.bankAdd = adds.get(x.id); });
+                    if (u.updatedAt !== undefined) bankBalancesUpdatedAt = u.updatedAt;
+                    saveLocalBillingState(); saveLocalBankBalances(); persistBillingState();
+                }
+            } else if (u.type === 'log') {
+                const month = Object.keys(expenseLogs).find(m => logsOf(m).some(l => l.id === u.id)) || u.month;
+                const log = logsOf(month).find(l => l.id === u.id);
+                if (!log) gone = true;
+                else {
+                    applyLogToPos(month, log.posId, -log.amount);
+                    if (typeof moveMoney === 'function' && typeof exchangeState === 'object') moveMoney(log, 'out', -1);
+                    else refundBankForLog(log);
+                    expenseLogs[month] = logsOf(month).filter(l => l.id !== u.id);
+                    afterBankCut([]);
+                    savePlansAndSync();
+                }
+            } else if (u.type === 'income') {
+                const fx = typeof exchangeState === 'object' ? exchangeState.incomes.find(x => x.id === u.id) : null;
+                const month = Object.keys(incomeLogs).find(m => incomeLogs[m].some(x => x.id === u.id));
+                if (fx) {
+                    moveMoney(fx, 'in', -1);
+                    exchangeState.incomes = exchangeState.incomes.filter(x => x.id !== u.id);
+                    saveExchangeAndSync();
+                } else if (month) {
+                    const x = incomeLogs[month].find(i => i.id === u.id);
+                    if (x.bankAdd > 0 && isBankKey(x.bankKey)) bankBalances[x.bankKey] = (Number(bankBalances[x.bankKey]) || 0) - x.bankAdd;
+                    incomeLogs[month] = incomeLogs[month].filter(i => i.id !== u.id);
+                    if (!incomeLogs[month].length) delete incomeLogs[month];
+                } else gone = true;
+                if (!gone && u.invoice) setPaymentStatus(u.invoice.id, u.invoice.status, u.invoice.status === 'DP' ? u.invoice.dp : undefined);
+                if (!gone) { saveLocalBankBalances(); renderBankBalancesUI(); saveLocalBillingState(); renderExpenseLogUI(); persistBillingState(); }
+            } else if (u.type === 'plan' || u.type === 'rutin') {
+                const item = findPlan(u.id);
+                if (!item) gone = true;
+                else {
+                    if (u.type === 'plan') { item.done = u.done; item.actual = u.actual; } else item.recurring = u.recurring;
+                    item.updatedAt = Date.now();
+                    saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                }
+            } else if (u.type === 'planAdd') {
+                const month = Object.keys(expensePlans).find(m => planItemsOf(m).some(p => p.id === u.id));
+                if (!month) gone = true;
+                else {
+                    expensePlans[month] = planItemsOf(month).filter(p => p.id !== u.id);
+                    saveLocalBillingState(); renderPlanUI(); persistBillingState();
+                }
+            } else if (u.type === 'invoice') {
+                setPaymentStatus(u.id, u.status, u.status === 'DP' ? u.dp : undefined);
+            }
+            action.status = 'undone';
+            action.result = gone ? 'Sudah dihapus sebelumnya' : 'Dibatalkan, data dikembalikan';
+            saveAssistantState();
+            renderAssistant();
+            showToast(gone ? 'DATANYA SUDAH TIDAK ADA' : 'AKSI DIBATALKAN');
         }
 
         function handleAllAiActions(msgIndex) {
@@ -8809,7 +8988,8 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                     const pendingCount = (m.actions || []).filter(a => !a.status).length;
                     const actions = (m.actions || []).map((a, j) => {
                         const d = describeAiAction(a);
-                        const state = a.status === 'ok' ? `<span class="ai-act-state is-ok">✓ ${escapeHTML(a.result || 'Selesai')}</span>`
+                        const state = a.status === 'ok' ? `<span class="ai-act-state is-ok">✓ ${escapeHTML(a.result || 'Selesai')}</span>${a.undo ? `<button type="button" class="ai-act-undo" onclick="undoAiAction(${i}, ${j})">↶ Batalkan</button>` : ''}`
+                            : a.status === 'undone' ? `<span class="ai-act-state">↶ ${escapeHTML(a.result || 'Dibatalkan')}</span>`
                             : a.status === 'batal' ? '<span class="ai-act-state">Dibatalkan</span>'
                             : a.status === 'gagal' ? `<span class="ai-act-state is-err">Gagal: ${escapeHTML(a.result || '')}</span>`
                             : `<span class="ai-act-btns"><button type="button" class="is-yes" onclick="handleAiAction(${i}, ${j}, true)">Jalankan</button><button type="button" onclick="handleAiAction(${i}, ${j}, false)">Batal</button></span>`;
@@ -8847,6 +9027,26 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const planOf = m => planItemsOf(m).map(p => ({ id: p.id, nama: p.name, kategori: (PLAN_CATEGORY_MAP[p.category] || PLAN_CATEGORY_MAP.lainnya).label, anggaran: p.planned, terpakai: p.actual, selesai: p.done, rutin: p.recurring, tanggal_bayar: p.due || null, catatan: p.notes || null }));
             const logList = m => logsOf(m).map(l => ({ tanggal: l.date, nominal: l.amount, ket: l.note || l.merchant, pos_id: l.posId || null, rekening: l.bankKey || null, dicatat: l.createdAt ? new Date(l.createdAt).toISOString().slice(0, 16) : null }));
             const prev = prevMonthKey(month);
+            // Earlier months, compact, so questions like "bandingin Oktober sama November" work.
+            const pastMonths = [...new Set([...Object.keys(expenseLogs), ...Object.keys(incomeLogs), ...Object.keys(expensePlans)])]
+                .filter(m => m < month).sort().slice(-6);
+            const history = pastMonths.map(m => {
+                const logs = logsOf(m);
+                const byPos = {};
+                logs.forEach(l => {
+                    const p = l.posId ? planItemsOf(m).find(x => x.id === l.posId) : null;
+                    const k = p ? p.name : 'Di luar rencana';
+                    byPos[k] = (byPos[k] || 0) + l.amount;
+                });
+                return {
+                    bulan: m,
+                    total_pengeluaran: logs.reduce((s, l) => s + l.amount, 0),
+                    jumlah_catatan: logs.length,
+                    pengeluaran_per_rencana: Object.entries(byPos).sort((x, y) => y[1] - x[1]).slice(0, 10).map(([nama, total]) => ({ nama, total })),
+                    total_pemasukan_tercatat: (incomeLogs[m] || []).reduce((s, x) => s + x.amount, 0),
+                    total_anggaran_rencana: planItemsOf(m).reduce((s, p) => s + p.planned, 0)
+                };
+            }).filter(h => h.jumlah_catatan || h.total_pemasukan_tercatat || h.total_anggaran_rencana);
             return JSON.stringify({
                 hari_ini: today,
                 bulan_rencana_aktif: month,
@@ -8856,11 +9056,61 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
                 rencana_bulan_aktif: planOf(month),
                 catatan_pengeluaran_bulan_aktif: logList(month),
                 catatan_pemasukan_bulan_aktif: (incomeLogs[month] || []).map(x => ({ tanggal: x.date, nominal: x.amount, ket: x.note, rekening: x.bankKey || null, invoice_id: x.invoiceId || null })),
+                ringkasan_bulan_sebelumnya: history,
+                catatan_pengeluaran_bulan_lalu: logList(prev).slice(-80),
                 rencana_bulan_lalu_ringkas: planItemsOf(prev).length ? { bulan: prev, total_anggaran: planItemsOf(prev).reduce((s, p) => s + p.planned, 0), total_terpakai: planItemsOf(prev).reduce((s, p) => s + p.actual, 0) } : null,
                 invoice: invoices,
                 pemasukan_per_bulan: monthly,
                 hutang_piutang: debts.map(d => ({ jenis: d.type, nama: d.name, total: d.amount, sudah_dibayar: d.paid || 0, sisa: Math.max(0, d.amount - (d.paid || 0)), keterangan: d.notes, jatuh_tempo: d.due || null }))
             });
+        }
+
+        // Voice input: the browser's own speech recognition (free, no API call). Spoken text fills
+        // the chat box and is sent when the user stops talking; anything to save still asks first.
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let aiVoice = null;
+        if (SpeechRec) document.getElementById('aiMicBtn').hidden = false;
+
+        function toggleAssistantVoice() {
+            if (aiVoice) { aiVoice.stop(); return; }
+            if (aiBusy) return;
+            const input = document.getElementById('aiInput');
+            const btn = document.getElementById('aiMicBtn');
+            const before = input.value.trim();
+            const rec = new SpeechRec();
+            rec.lang = 'id-ID';
+            rec.interimResults = true;
+            rec.continuous = false;
+            let finalText = '';
+            let failed = false;
+            rec.onresult = (e) => {
+                let interim = '';
+                finalText = '';
+                for (let i = 0; i < e.results.length; i++) {
+                    if (e.results[i].isFinal) finalText += e.results[i][0].transcript;
+                    else interim += e.results[i][0].transcript;
+                }
+                input.value = [before, (finalText + interim).trim()].filter(Boolean).join(' ');
+                input.dispatchEvent(new Event('input'));
+            };
+            rec.onerror = (e) => {
+                failed = true;
+                if (e.error === 'not-allowed' || e.error === 'service-not-allowed') showToast('Izinin mikrofon dulu di browser ya.');
+                else if (e.error === 'no-speech') showToast('Nggak kedengeran suaranya, coba lagi.');
+                else if (e.error !== 'aborted') showToast('Suara gagal dibaca, coba lagi.');
+            };
+            rec.onend = () => {
+                aiVoice = null;
+                btn.classList.remove('is-listening');
+                btn.setAttribute('aria-label', 'Catat lewat suara');
+                input.placeholder = aiState.mode === 'penasehat' ? 'Tanya soal keuangan…' : 'Catat bensin 20rb…';
+                if (!failed && finalText.trim() && input.value.trim()) sendAssistantMessage(null);
+            };
+            try { rec.start(); } catch (e) { showToast('Mikrofon nggak bisa dipakai di browser ini.'); return; }
+            aiVoice = rec;
+            btn.classList.add('is-listening');
+            btn.setAttribute('aria-label', 'Berhenti merekam');
+            input.placeholder = 'Ngomong aja, aku dengerin…';
         }
 
         async function sendAssistantMessage(event, preset) {
@@ -8879,7 +9129,7 @@ InsyaAllah komitmen pembayaran tetap saya utamakan dan akan segera saya lunasi. 
             const history = list.filter(m => !m.error).map(m => {
                 let content = m.content || '';
                 if (m.actions && m.actions.length) {
-                    content += '\n[Aksi yang diusulkan: ' + m.actions.map(a => `${describeAiAction(a).title} (${describeAiAction(a).detail}) — ${a.status === 'ok' ? 'sudah dijalankan' : a.status === 'batal' ? 'dibatalkan user' : a.status === 'gagal' ? 'gagal' : 'belum dikonfirmasi'}`).join('; ') + ']';
+                    content += '\n[Aksi yang diusulkan: ' + m.actions.map(a => `${describeAiAction(a).title} (${describeAiAction(a).detail}) — ${a.status === 'ok' ? 'sudah dijalankan' : a.status === 'undone' ? 'sudah dijalankan lalu dibatalkan user (data dikembalikan)' : a.status === 'batal' ? 'dibatalkan user' : a.status === 'gagal' ? 'gagal' : 'belum dikonfirmasi'}`).join('; ') + ']';
                 }
                 return { role: m.role, content: content.trim() || '(aksi)' };
             });
