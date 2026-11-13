@@ -5636,6 +5636,7 @@ body[data-view="offer"] #packSection {
                 if (!response.ok) throw new Error("Cloud state unavailable");
                 const state = await response.json();
                 applyBillingState(state);
+                markSynced(state);
                 saveLocalBillingState();
             } catch (error) {
                 console.warn("Using local billing state fallback:", error);
@@ -5657,24 +5658,86 @@ body[data-view="offer"] #packSection {
         // or by the same person on another phone, laptop or tab), so the screen shows the latest
         // balances and the next save starts from them instead of putting older numbers back.
         // Skipped while a form is open, so nothing being typed is replaced.
-        document.addEventListener('visibilitychange', () => {
+        let savesInFlight = 0;
+        let lastSaveFailed = false;
+        function refreshFromServer() {
             if (document.visibilityState !== 'visible' || !billingStateReady) return;
+            // Never while this screen still has something the server has not taken yet.
+            if (savesInFlight > 0 || lastSaveFailed) return;
             if (document.querySelector('dialog[open]')) return;
             loadBillingState().then(() => {
                 renderBankBalancesUI();
+                if (typeof renderExpenseLogUI === 'function' && document.body.dataset.view === 'plan') renderExpenseLogUI();
                 if (document.body.dataset.view === 'tukar' && typeof renderExchangeUI === 'function') renderExchangeUI();
             });
-        });
+        }
+        document.addEventListener('visibilitychange', refreshFromServer);
+        // A screen left open for long (a laptop tab) also picks up changes every minute.
+        setInterval(refreshFromServer, 60000);
 
         // Several saves can be in flight when entries are made quickly. Only the newest save's
         // reply may replace the screen's data: an older reply would undo entries made after it
         // was sent, and the next save would then drop them on the server too.
         let persistSeq = 0;
 
+        function billingPayload() {
+            return {
+                paymentStatuses,
+                dpAmounts,
+                netProfits,
+                paymentLog,
+                expensePlans,
+                planSeededMonths,
+                packingLists,
+                expenseLogs,
+                incomeLogs,
+                customInvoices,
+                deletedInvoiceIds,
+                purgedInvoiceIds,
+                debts,
+                bankBalances,
+                bankBalancesUpdatedAt,
+                bankAccountDetails,
+                bankCopyTemplate,
+                invoiceSignature,
+                // Currency-exchange accounts only (exchange.js); left out for everyone else.
+                exchange: typeof exchangeState === 'object' ? exchangeState : undefined,
+                // Penawaran (DAR, offers.js); undefined sampai daftarnya termuat, supaya tidak mengosongkan data.
+                offers: typeof offersForSave === 'function' ? offersForSave() : undefined
+            };
+        }
+
+        // What this screen last got from (or saved to) the server, per part. A save sends only the
+        // parts changed since then, and the server keeps every other part as it is. So a phone or
+        // tab with older data that edits, say, a packing list can no longer put old balances or
+        // old spendings back over newer ones saved elsewhere.
+        let syncedParts = null;
+        function markSynced(serverState) {
+            const payload = billingPayload();
+            syncedParts = {};
+            Object.entries(payload).forEach(([key, value]) => {
+                if (value === undefined) return;
+                const server = serverState ? serverState[key] : undefined;
+                const serverEmpty = server == null || (typeof server === 'object' && Object.keys(server).length === 0);
+                const localEmpty = value == null || (typeof value === 'object' && Object.keys(value).length === 0);
+                // Something made on this device that the server never had still has to be sent.
+                if (serverEmpty && !localEmpty) return;
+                syncedParts[key] = JSON.stringify(value);
+            });
+        }
+
+        function changedBillingPayload() {
+            const payload = billingPayload();
+            // A limited login (users[].limited) always sends its whole list: the server rebuilds its records from it.
+            if (!syncedParts || (window.DAR_WS && DAR_WS.user && DAR_WS.user.limited)) return payload;
+            return Object.fromEntries(Object.entries(payload).filter(([key, value]) => value !== undefined && JSON.stringify(value) !== syncedParts[key]));
+        }
+
         async function persistBillingState() {
             saveLocalBillingState();
             setInvoiceSyncStatus('Tersimpan di perangkat. Menyinkronkan…');
             const seq = ++persistSeq;
+            savesInFlight++;
             try {
                 const response = await fetch("/api/billing-state", {
                     method: "PUT",
@@ -5683,42 +5746,24 @@ body[data-view="offer"] #packSection {
                         "Content-Type": "application/json"
                     },
                     credentials: "same-origin",
-                    body: JSON.stringify({
-                        paymentStatuses,
-                        dpAmounts,
-                        netProfits,
-                        paymentLog,
-                        expensePlans,
-                        planSeededMonths,
-                        packingLists,
-                        expenseLogs,
-                        incomeLogs,
-                        customInvoices,
-                        deletedInvoiceIds,
-                        purgedInvoiceIds,
-                        debts,
-                        bankBalances,
-                        bankBalancesUpdatedAt,
-                        bankAccountDetails,
-                        bankCopyTemplate,
-                        invoiceSignature,
-                        // Currency-exchange accounts only (exchange.js); left out for everyone else.
-                        exchange: typeof exchangeState === 'object' ? exchangeState : undefined,
-                        // Penawaran (DAR, offers.js); undefined sampai daftarnya termuat, supaya tidak mengosongkan data.
-                        offers: typeof offersForSave === 'function' ? offersForSave() : undefined
-                    })
+                    body: JSON.stringify(changedBillingPayload())
                 });
                 if (!response.ok) throw new Error("Cloud save failed");
                 const state = await response.json();
+                lastSaveFailed = false;
                 if (seq !== persistSeq) return; // a newer save is on its way; its reply counts
                 invoiceMetadataPending = false;
                 applyBillingState(state);
+                markSynced(state);
                 saveLocalBillingState();
                 setInvoiceSyncStatus('Tersimpan dan tersinkron.');
             } catch (error) {
+                lastSaveFailed = true;
                 setInvoiceSyncStatus('Tersimpan di perangkat ini. Sinkron belum berhasil; simpan kembali saat koneksi tersedia.');
                 console.warn("Billing state saved locally only:", error);
                 showToast("DATA TERSIMPAN LOKAL, SINKRON UPSTASH GAGAL");
+            } finally {
+                savesInFlight--;
             }
         }
 
