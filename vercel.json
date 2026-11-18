@@ -75,6 +75,30 @@
       "destination": "/ismu/index.html"
     },
     {
+      "source": "/haarits",
+      "destination": "/haarits/index.html"
+    },
+    {
+      "source": "/muhammad-haarits",
+      "destination": "/haarits/index.html"
+    },
+    {
+      "source": "/voa-haarits",
+      "destination": "/haarits/index.html"
+    },
+    {
+      "source": "/haarits-ramadhani",
+      "destination": "/haarits/index.html"
+    },
+    {
+      "source": "/abdulmalik",
+      "destination": "/haarits/index.html"
+    },
+    {
+      "source": "/dar/haarits",
+      "destination": "/haarits/index.html"
+    },
+    {
       "source": "/ust-ismu",
       "destination": "/ismu/index.html"
     },

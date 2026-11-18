@@ -4511,6 +4511,60 @@ body[data-view="offer"] #packSection {
                     <span>Buka Invoice Bang Babas</span>
                 </a>
             </div>
+
+            <!-- Muhammad Haarits Abdulmalik Ramadhani - VOA Mesir Card -->
+            <div class="invoice-card" id="card-haarits" data-id="haarits" data-month="2026-11" data-amount="5045000" data-client="muhammad haarits abdulmalik ramadhani harits haarit voa mesir visa on arrival airport ground handling kairo cai 5045000 5.045.000 5045rb #inv/tt-voa/2026/11/035 november 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">M. Haarits Abdulmalik Ramadhani (VOA Mesir)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('haarits')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/TT-VOA/2026/11/035 &bull; VOA &amp; Handling</span>
+                        <span class="month-tag">November 2026</span>
+                    </div>
+
+                    <div class="project-desc">
+                        Layanan pengurusan resmi Visa on Arrival (VOA) Republik Arab Mesir dan airport ground handling Bandara Internasional Kairo (CAI) untuk Muhammad Haarits Abdulmalik Ramadhani (1 Pax). Total: Rp 5.045.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/haarits</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/haarits')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptHaarits()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 5.045.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValHaarits">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValHaarits">Rp 5.045.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('haarits')">Edit profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/haarits" class="action-btn">
+                    <span>Buka Invoice VOA Haarits</span>
+                </a>
+            </div>
             <!--/dar-only-->
         </div>
 
@@ -5073,7 +5127,8 @@ body[data-view="offer"] #packSection {
             "talkhisan-hamasah": "UNPAID",
             katalis: "DP",
             azam: "UNPAID",
-            bangbabas: "UNPAID"
+            bangbabas: "UNPAID",
+            haarits: "UNPAID"
         }/*/dar-only*/;
 
         function getStoredNumber(key, fallback) {
@@ -5129,7 +5184,8 @@ body[data-view="offer"] #packSection {
             "talkhisan-hamasah": 1200000,
             katalis: 10000000,
             azam: 300000,
-            bangbabas: 650000
+            bangbabas: 650000,
+            haarits: 5045000
         }/*/dar-only*/;
 
         // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
@@ -5533,7 +5589,8 @@ body[data-view="offer"] #packSection {
             { id: "talkhisan-hamasah", name: "Hamasah (Modul Talkhisan Tafsir & Hadis)", month: "2026-10", monthLabel: "Oktober 2026", gross: 1200000 },
             { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 },
             { id: "azam", name: "Ziaudin Azzam (Sistem Keuangan KOLOHAGA + AI)", month: "2026-11", monthLabel: "November 2026", gross: 300000 },
-            { id: "bangbabas", name: "Bang Babas (Website Testimoni Muthowif)", month: "2026-11", monthLabel: "November 2026", gross: 650000 }
+            { id: "bangbabas", name: "Bang Babas (Website Testimoni Muthowif)", month: "2026-11", monthLabel: "November 2026", gross: 650000 },
+            { id: "haarits", name: "M. Haarits Abdulmalik Ramadhani (VOA Mesir)", month: "2026-11", monthLabel: "November 2026", gross: 5045000 }
         ]/*/dar-only*/;
 
         function formatIDR(num) {
@@ -11509,6 +11566,33 @@ Terima kasih Bang! 🙏`;
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA BANG BABAS BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptHaarits() {
+            const waScript = `Assalamu'alaikum wr. wb. Mas Muhammad Haarits Abdulmalik Ramadhani, berikut kami lampirkan tautan resmi Dokumen Invoice Layanan Visa on Arrival (VOA) Republik Arab Mesir & Airport Ground Handling Bandara Internasional Kairo (CAI):
+
+📄 Tautan Invoice Resmi:
+https://temantiket.com/haarits
+
+📋 Rincian Layanan (1 Pax All-In):
+• Penerbitan Dokumen Resmi Visa on Arrival (VOA) Republik Arab Mesir
+• Pendampingan & Penjemputan Mandub Resmi di Bandara Kairo (CAI)
+• Airport Ground Handling, Pengurusan Stiker Visa & Arrival Card
+• Jaminan Clearance Bandara Bebas Kendala
+• Total Tagihan: Rp 5.045.000 (All-In Tanpa Biaya Tambahan)
+
+💳 Pembayaran dapat ditransfer ke:
+Bank Mandiri
+No. Rekening: 1550010616962
+Atas Nama: Daru
+
+Mohon konfirmasi atau kirimkan bukti transfer setelah transaksi berhasil ya mas. Terima kasih banyak atas kepercayaannya bersama Temantiket! 🙏✈️`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA VOA HAARITS BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });
