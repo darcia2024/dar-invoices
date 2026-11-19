@@ -99,20 +99,36 @@
       "destination": "/haarits/index.html"
     },
     {
+      "source": "/ahmad",
+      "destination": "/ahmad/index.html"
+    },
+    {
+      "source": "/dar/ahmad",
+      "destination": "/ahmad/index.html"
+    },
+    {
+      "source": "/ugc-ahmad",
+      "destination": "/ahmad/index.html"
+    },
+    {
+      "source": "/ahmad-ugc",
+      "destination": "/ahmad/index.html"
+    },
+    {
       "source": "/bedul",
-      "destination": "/bedul/index.html"
+      "destination": "/ahmad/index.html"
     },
     {
       "source": "/dar/bedul",
-      "destination": "/bedul/index.html"
+      "destination": "/ahmad/index.html"
     },
     {
       "source": "/ugc-bedul",
-      "destination": "/bedul/index.html"
+      "destination": "/ahmad/index.html"
     },
     {
       "source": "/bedul-ugc",
-      "destination": "/bedul/index.html"
+      "destination": "/ahmad/index.html"
     },
     {
       "source": "/ust-ismu",
