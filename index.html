@@ -4565,6 +4565,60 @@ body[data-view="offer"] #packSection {
                     <span>Buka Invoice VOA Haarits</span>
                 </a>
             </div>
+
+            <!-- Bedul - UGC Video Marketing + Poster Card -->
+            <div class="invoice-card" id="card-bedul" data-id="bedul" data-month="2026-11" data-amount="300000" data-client="bedul ugc video marketing poster konten promosi desain feed story reels tiktok shorts 300000 300rb #inv/bd/2026/11/001 november 2026">
+                <div>
+                    <div class="card-top">
+                        <div class="client-title">Bedul (UGC Video Marketing + Poster)</div>
+                        <div class="status-badge-group">
+                            <span class="payment-status-pill status-unpaid" onclick="togglePaymentStatus('bedul')">
+                                🔴 BELUM LUNAS
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ref-code">
+                        <span>REF: #INV/BD/2026/11/001 &bull; UGC &amp; Poster</span>
+                        <span class="month-tag">November 2026</span>
+                    </div>
+
+                    <div class="project-desc">
+                        Produksi konten UGC Video Marketing (riset hook, storytelling, shooting &amp; dynamic editing) dan Desain Grafis Poster Marketing Resolusi Tinggi. Total: Rp 300.000.
+                    </div>
+
+                    <div class="slug-box">
+                        <span class="slug-url">temantiket.com/bedul</span>
+                        <div class="btn-row-flex">
+                            <button class="slug-copy-btn" onclick="copySlug('https://temantiket.com/bedul')">Salin Link</button>
+                            <button class="slug-copy-btn" style="background:#ffffff; color:#000000;" onclick="copyWaScriptBedul()">Salin Script WA</button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Net Profit Breakdown Box -->
+                    <div class="financial-breakdown-box">
+                        <div class="fin-row">
+                            <span class="fin-label">TOTAL INVOICE:</span>
+                            <span class="fin-val">Rp 300.000</span>
+                        </div>
+                        <div class="fin-row">
+                            <span class="fin-label">BIAYA OPERASIONAL:</span>
+                            <span class="fin-val" id="costValBedul">Rp 0</span>
+                        </div>
+                        <div class="fin-row net-profit-row">
+                            <span class="fin-label">KEUNTUNGAN BERSIH:</span>
+                            <div class="net-profit-flex">
+                                <span class="net-profit-val" id="profitValBedul">Rp 300.000</span>
+                                <button class="edit-profit-btn" onclick="openProfitModal('bedul')">Edit profit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/bedul" class="action-btn">
+                    <span>Buka Invoice Bedul</span>
+                </a>
+            </div>
             <!--/dar-only-->
         </div>
 
@@ -5128,7 +5182,8 @@ body[data-view="offer"] #packSection {
             katalis: "DP",
             azam: "UNPAID",
             bangbabas: "UNPAID",
-            haarits: "UNPAID"
+            haarits: "UNPAID",
+            bedul: "UNPAID"
         }/*/dar-only*/;
 
         function getStoredNumber(key, fallback) {
@@ -5185,7 +5240,8 @@ body[data-view="offer"] #packSection {
             katalis: 10000000,
             azam: 300000,
             bangbabas: 650000,
-            haarits: 5045000
+            haarits: 5045000,
+            bedul: 300000
         }/*/dar-only*/;
 
         // Note: deletedInvoiceIds and purgedInvoiceIds are already declared in invoice-manager.js
@@ -5590,7 +5646,8 @@ body[data-view="offer"] #packSection {
             { id: "katalis", name: "PT Katalis Lintas Global (Katalis ERP)", month: "2026-10", monthLabel: "Oktober 2026", gross: 10000000 },
             { id: "azam", name: "Ziaudin Azzam (Sistem Keuangan KOLOHAGA + AI)", month: "2026-11", monthLabel: "November 2026", gross: 300000 },
             { id: "bangbabas", name: "Bang Babas (Website Testimoni Muthowif)", month: "2026-11", monthLabel: "November 2026", gross: 650000 },
-            { id: "haarits", name: "M. Haarits Abdulmalik Ramadhani (VOA Mesir)", month: "2026-11", monthLabel: "November 2026", gross: 5045000 }
+            { id: "haarits", name: "M. Haarits Abdulmalik Ramadhani (VOA Mesir)", month: "2026-11", monthLabel: "November 2026", gross: 5045000 },
+            { id: "bedul", name: "Bedul (UGC Video Marketing + Poster)", month: "2026-11", monthLabel: "November 2026", gross: 300000 }
         ]/*/dar-only*/;
 
         function formatIDR(num) {
@@ -11593,6 +11650,32 @@ Mohon konfirmasi atau kirimkan bukti transfer setelah transaksi berhasil ya mas.
 
             navigator.clipboard.writeText(waScript).then(() => {
                 showToast("SCRIPT PESAN WA VOA HAARITS BERHASIL DISALIN!");
+            }).catch(() => {
+                showToast("GAGAL MENYALIN SCRIPT");
+            });
+        }
+
+        function copyWaScriptBedul() {
+            const waScript = `Assalamu'alaikum wr. wb. Mas Bedul, berikut kami lampirkan tautan resmi Dokumen Invoice Layanan UGC Video Marketing & Desain Poster Promosi:
+
+📄 Tautan Invoice Resmi:
+https://temantiket.com/bedul
+
+📋 Rincian Layanan:
+• 1x UGC Video Marketing Promosi (Short-form Video Reels/TikTok/Shorts, riset konsep, shooting, dynamic editing, subtitle)
+• 1x Desain Poster Marketing Visual High-Res (Digital Feed/Story & siap cetak)
+• Total Tagihan: Rp 300.000 (All-In)
+
+💳 Pembayaran dapat ditransfer ke salah satu rekening:
+• Bank Mandiri: 1550010616962
+• Bank Jago: 100598361895
+• GoPay: 081311506025
+a.n. Daru Fahmaa Muliawan
+
+Mohon konfirmasi atau kirimkan bukti transfer setelah pembayaran ya mas. Terima kasih banyak! 🙏✨`;
+
+            navigator.clipboard.writeText(waScript).then(() => {
+                showToast("SCRIPT PESAN WA INVOICE BEDUL BERHASIL DISALIN!");
             }).catch(() => {
                 showToast("GAGAL MENYALIN SCRIPT");
             });

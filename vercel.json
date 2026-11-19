@@ -99,6 +99,22 @@
       "destination": "/haarits/index.html"
     },
     {
+      "source": "/bedul",
+      "destination": "/bedul/index.html"
+    },
+    {
+      "source": "/dar/bedul",
+      "destination": "/bedul/index.html"
+    },
+    {
+      "source": "/ugc-bedul",
+      "destination": "/bedul/index.html"
+    },
+    {
+      "source": "/bedul-ugc",
+      "destination": "/bedul/index.html"
+    },
+    {
       "source": "/ust-ismu",
       "destination": "/ismu/index.html"
     },
