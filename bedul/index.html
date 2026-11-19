@@ -480,6 +480,16 @@
             max-width: 520px;
         }
 
+        .item-no-mobile,
+        .qty-badge-mobile,
+        .item-price-mobile {
+            display: none;
+        }
+
+        .item-top-bar {
+            display: block;
+        }
+
         .td-qty {
             width: 80px;
             text-align: center;
@@ -982,47 +992,98 @@
 
             .table-area {
                 margin-top: 0.5rem;
+                border-top: 1px solid var(--line-strong);
+                border-bottom: 1px solid var(--line);
             }
 
-            .clean-table th {
-                padding: 5px 0;
-                font-size: 0.58rem;
+            /* Full-width Stacked Item List for Mobile */
+            .clean-table thead {
+                display: none !important;
             }
 
-            .clean-table td {
-                padding: 8px 0;
-                font-size: 0.78rem;
+            .clean-table, .clean-table tbody, .clean-table tr {
+                display: block !important;
+                width: 100% !important;
             }
 
-            .td-num {
-                width: 22px;
-                font-size: 0.7rem;
+            .clean-table tr {
+                padding: 10px 0 !important;
+                border-bottom: 1px solid var(--line) !important;
+            }
+
+            .clean-table tr:last-child {
+                border-bottom: none !important;
+            }
+
+            .clean-table td.td-num,
+            .clean-table td.td-qty,
+            .clean-table td.td-amount {
+                display: none !important;
+            }
+
+            .clean-table td.td-content {
+                display: block !important;
+                width: 100% !important;
+                padding: 0 !important;
+                border: none !important;
+            }
+
+            .item-top-bar {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: baseline !important;
+                gap: 8px !important;
+                width: 100% !important;
             }
 
             .item-main-head {
-                font-size: 0.84rem;
-                gap: 5px;
+                font-size: 0.86rem !important;
+                font-weight: 700 !important;
+                color: var(--ink) !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 5px !important;
+                flex-wrap: wrap !important;
+                flex: 1 !important;
+                line-height: 1.3 !important;
             }
 
-            .badge-inline {
-                font-size: 0.58rem;
-                padding: 1px 4px;
+            .item-no-mobile {
+                display: inline !important;
+                font-family: var(--font-mono) !important;
+                font-weight: 700 !important;
+                color: var(--muted) !important;
+            }
+
+            .qty-badge-mobile {
+                display: inline-block !important;
+                font-size: 0.6rem !important;
+                color: var(--muted) !important;
+                background: var(--soft) !important;
+                border: 1px solid var(--line) !important;
+                padding: 1px 5px !important;
+                border-radius: 4px !important;
+                font-weight: 600 !important;
+            }
+
+            .item-price-mobile {
+                display: block !important;
+                font-family: var(--font-mono) !important;
+                font-weight: 700 !important;
+                font-size: 0.92rem !important;
+                color: var(--ink) !important;
+                white-space: nowrap !important;
+                text-align: right !important;
             }
 
             .item-main-desc {
-                font-size: 0.72rem;
-                line-height: 1.35;
-                margin-top: 3px;
-            }
-
-            .td-qty {
-                width: 55px;
-                font-size: 0.72rem;
-            }
-
-            .td-amount {
-                width: 85px;
-                font-size: 0.84rem;
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                font-size: 0.74rem !important;
+                line-height: 1.45 !important;
+                color: var(--muted) !important;
+                margin-top: 5px !important;
             }
 
             .totals-block {
@@ -1331,10 +1392,15 @@
                     <tbody>
                         <tr>
                             <td class="td-num">01</td>
-                            <td>
-                                <div class="item-main-head">
-                                    <span>UGC Video Marketing (Promosi Autentik)</span>
-                                    <span class="badge-inline">Short-form Video</span>
+                            <td class="td-content">
+                                <div class="item-top-bar">
+                                    <div class="item-main-head">
+                                        <span class="item-no-mobile">01. </span>
+                                        <span>UGC Video Marketing (Promosi Autentik)</span>
+                                        <span class="badge-inline">Short-form Video</span>
+                                        <span class="qty-badge-mobile">1 Video</span>
+                                    </div>
+                                    <div class="item-price-mobile">Rp 200.000</div>
                                 </div>
                                 <div class="item-main-desc">
                                     Produksi konten User Generated Content (UGC) video promosi produk yang autentik &amp; engaging. Meliputi riset konsep hook awal yang menarik, storytelling ulasan produk persuasif, pengambilan footage video, perakitan video dinamis dengan pemilihan background audio &amp; subtitle teks on-screen. Format vertikal siap upload (TikTok, Instagram Reels, YouTube Shorts).
@@ -1345,10 +1411,15 @@
                         </tr>
                         <tr>
                             <td class="td-num">02</td>
-                            <td>
-                                <div class="item-main-head">
-                                    <span>Desain Poster Marketing Visual</span>
-                                    <span class="badge-inline">Graphic Design</span>
+                            <td class="td-content">
+                                <div class="item-top-bar">
+                                    <div class="item-main-head">
+                                        <span class="item-no-mobile">02. </span>
+                                        <span>Desain Poster Marketing Visual</span>
+                                        <span class="badge-inline">Graphic Design</span>
+                                        <span class="qty-badge-mobile">1 Desain</span>
+                                    </div>
+                                    <div class="item-price-mobile">Rp 100.000</div>
                                 </div>
                                 <div class="item-main-desc">
                                     Pembuatan grafis poster promosi visual dengan resolusi tinggi (High-Res). Mengusung tata letak estetik, tipografi tajam, penyesuaian copywriting headline &amp; call-to-action yang menarik, serta harmonisasi warna visual produk. Disediakan format digital siap tayang untuk Feed/Story media sosial dan file cetak.
