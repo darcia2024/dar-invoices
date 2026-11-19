@@ -782,71 +782,374 @@
         }
 
         /* ----------------------------------------------------
-           RESPONSIVE MOBILE VIEWPORT (<= 720px)
+           RESPONSIVE MOBILE VIEWPORT (<= 720px) — SUPER COMPACT
         ---------------------------------------------------- */
         @media screen and (max-width: 720px) {
+            body {
+                padding-bottom: 24px;
+                font-size: 14px;
+            }
+
+            .top-action-bar {
+                padding: 6px 10px;
+            }
+
+            .action-bar-inner {
+                gap: 8px;
+            }
+
+            .bar-brand-title {
+                font-size: 0.68rem;
+                gap: 4px;
+            }
+
+            .bar-brand-title span {
+                display: none;
+            }
+
+            .bar-badge-ref {
+                font-size: 0.66rem;
+            }
+
+            .bar-buttons {
+                gap: 4px;
+            }
+
+            .action-btn {
+                font-size: 0.68rem;
+                padding: 4px 8px;
+                border-radius: 6px;
+                gap: 3px;
+            }
+
+            .action-btn svg {
+                width: 11px;
+                height: 11px;
+            }
+
+            .sheet-container {
+                margin: 8px auto 0;
+                padding: 0 8px;
+            }
+
+            .sheet {
+                padding: 14px 12px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(37, 37, 32, 0.04);
+            }
+
+            .top-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                padding-bottom: 10px;
+            }
+
+            .brand-block {
+                gap: 8px;
+            }
+
+            .brand-logo-img {
+                height: 32px;
+            }
+
+            .brand-agency-name {
+                font-size: 1.15rem;
+                line-height: 1;
+            }
+
+            .brand-agency-name span {
+                font-size: 0.75em;
+            }
+
+            .brand-agency-sub {
+                display: none;
+            }
+
+            .doc-meta-right {
+                text-align: right;
+            }
+
+            .doc-meta-right .eyebrow {
+                display: none;
+            }
+
+            .doc-meta-right h1 {
+                font-size: 0.95rem;
+                line-height: 1;
+            }
+
+            .doc-meta-right .doc-ref-num {
+                font-size: 0.68rem;
+                margin-top: 2px;
+            }
+
             .hero-banner {
-                grid-template-columns: 1fr;
-                gap: 14px;
+                grid-template-columns: 1fr auto;
+                align-items: center;
+                padding: 8px 0;
+                gap: 8px;
+            }
+
+            .eyebrow {
+                font-size: 0.6rem;
+                letter-spacing: 0.08em;
+            }
+
+            .hero-amount {
+                font-size: 1.6rem;
+                line-height: 1;
+                margin-top: 2px;
+            }
+
+            .hero-amount span.curr {
+                font-size: 0.5em;
+            }
+
+            .hero-terbilang {
+                font-size: 0.7rem;
+                margin-top: 2px;
             }
 
             .hero-right-meta {
-                align-items: flex-start;
-                text-align: left;
+                align-items: flex-end;
+                text-align: right;
+                gap: 3px;
+            }
+
+            .status-pill-clean {
+                padding: 2px 7px;
+                font-size: 0.62rem;
+            }
+
+            .hero-due-text {
+                font-size: 0.68rem;
+                line-height: 1.2;
+            }
+
+            .hero-due-text strong {
+                font-size: 0.74rem;
+                display: inline;
             }
 
             .meta-strip {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                border-bottom: 1px solid var(--line);
             }
 
             .meta-col {
-                padding: 12px 0;
+                padding: 7px 6px 7px 0;
             }
 
             .meta-col + .meta-col {
-                padding-left: 0;
-                border-left: none;
-                border-top: 1px solid var(--line);
+                padding-left: 6px;
+                border-left: 1px solid var(--line);
+                border-top: none;
             }
 
-            .clean-table th.th-hide-mobile,
-            .clean-table td.td-hide-mobile {
-                display: none;
+            .meta-col:nth-child(3) {
+                grid-column: 1 / -1;
+                border-top: 1px solid var(--line);
+                border-left: none;
+                padding: 5px 0;
+            }
+
+            .meta-val-primary {
+                font-size: 0.84rem;
+                margin-top: 2px;
+                line-height: 1.2;
+            }
+
+            .meta-val-sub {
+                font-size: 0.7rem;
+                margin-top: 2px;
+                line-height: 1.3;
+            }
+
+            .sec-header {
+                margin-top: 0.9rem;
+                gap: 6px;
+            }
+
+            .sec-num {
+                font-size: 0.66rem;
+            }
+
+            .sec-title {
+                font-size: 0.88rem;
+            }
+
+            .table-area {
+                margin-top: 0.5rem;
+            }
+
+            .clean-table th {
+                padding: 5px 0;
+                font-size: 0.58rem;
+            }
+
+            .clean-table td {
+                padding: 8px 0;
+                font-size: 0.78rem;
+            }
+
+            .td-num {
+                width: 22px;
+                font-size: 0.7rem;
+            }
+
+            .item-main-head {
+                font-size: 0.84rem;
+                gap: 5px;
+            }
+
+            .badge-inline {
+                font-size: 0.58rem;
+                padding: 1px 4px;
+            }
+
+            .item-main-desc {
+                font-size: 0.72rem;
+                line-height: 1.35;
+                margin-top: 3px;
+            }
+
+            .td-qty {
+                width: 55px;
+                font-size: 0.72rem;
+            }
+
+            .td-amount {
+                width: 85px;
+                font-size: 0.84rem;
+            }
+
+            .totals-block {
+                margin: 0.5rem 0 0 auto;
+                width: 100%;
+            }
+
+            .totals-row {
+                padding: 2px 0;
+                font-size: 0.74rem;
+            }
+
+            .totals-row.grand-total {
+                margin-top: 4px;
+                padding-top: 6px;
+                font-size: 0.84rem;
+            }
+
+            .totals-row.grand-total b {
+                font-size: 1.1rem;
             }
 
             .settlement-grid {
                 grid-template-columns: 1fr;
-                gap: 1.2rem;
+                margin-top: 0.5rem;
+                padding: 0.7rem 0;
+                gap: 10px;
+            }
+
+            .bank-list {
+                gap: 6px;
+            }
+
+            .bank-item {
+                padding-bottom: 6px;
+            }
+
+            .bank-info-unit {
+                gap: 6px;
+                margin-bottom: 3px;
+            }
+
+            .bank-brand-logo {
+                height: 15px;
+            }
+
+            .acc-copy-row {
+                gap: 8px;
+            }
+
+            .acc-number-digits {
+                font-size: 0.98rem;
+            }
+
+            .acc-copy-mini-btn {
+                padding: 2px 7px;
+                font-size: 0.65rem;
+                border-radius: 4px;
             }
 
             .settle-right-actions {
                 padding-left: 0;
                 border-left: none;
                 border-top: 1px solid var(--line);
-                padding-top: 1.2rem;
+                padding-top: 8px;
+                gap: 6px;
+            }
+
+            .settle-due-summary {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                font-size: 0.72rem;
+            }
+
+            .settle-due-summary strong {
+                font-size: 1rem;
+                margin-top: 0;
+            }
+
+            .btn-payment-action {
+                padding: 7px 12px;
+                font-size: 0.74rem;
+                border-radius: 6px;
+                gap: 4px;
             }
 
             .sign-grid {
                 grid-template-columns: 1fr;
-                gap: 1.4rem;
+                gap: 8px;
+                margin-top: 0.8rem;
+                padding-top: 0.7rem;
+            }
+
+            .notes-list {
+                font-size: 0.7rem;
+                line-height: 1.35;
+                gap: 3px;
             }
 
             .sig-block {
-                align-items: flex-start;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
                 text-align: left;
+                border-top: 1px dashed var(--line);
+                padding-top: 6px;
             }
 
-            .top-header {
-                flex-direction: column;
-                gap: 12px;
+            .sig-img {
+                height: 34px;
+                margin: 0;
             }
 
-            .doc-meta-right {
-                text-align: left;
+            .sig-name {
+                font-size: 0.78rem;
             }
 
-            .bar-brand-title span {
-                display: none;
+            .sig-role {
+                font-size: 0.68rem;
+            }
+
+            .doc-footer {
+                margin-top: 0.9rem;
+                padding-top: 0.6rem;
+                font-size: 0.68rem;
+                gap: 6px;
             }
         }
 
