@@ -30,7 +30,8 @@
         id: String(o.id || ''), klien: String(o.klien || ''), kategori: o.kategori || 'Sistem', layanan: o.layanan || '', harga: o.harga || '',
         paket: Array.isArray(o.paket) ? o.paket.filter(x => x && x.n && +x.h > 0).map(x => ({ n: String(x.n), h: +x.h })) : [],
         deal: o.deal || '', nilai: +o.nilai || 0, tahap: ST[o.tahap] ? o.tahap : 'disiapkan', followUp: o.followUp || '', dibuat: o.dibuat || '',
-        kontak: o.kontak || '', link: o.link || '', catatan: o.catatan || '', invoiceId: o.invoiceId || '',
+        // Saved links from the old domain (temantiket.com expired) point to the current address.
+        kontak: o.kontak || '', link: String(o.link || '').replace(/^https?:\/\/(www\.)?temantiket\.com/i, 'https://invoicesus.vercel.app'), catatan: o.catatan || '', invoiceId: o.invoiceId || '',
         riwayat: Array.isArray(o.riwayat) ? o.riwayat.filter(h => h && ST[h.tahap]) : [], diubah: o.diubah || ''
     });
 

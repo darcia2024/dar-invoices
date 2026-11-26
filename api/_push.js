@@ -8,7 +8,7 @@ const { redisCommand } = require("./_session");
 
 // Public half of the key pair; safe to publish (browsers need it to subscribe).
 const VAPID_PUBLIC_KEY = "BPU5gZZtEaFgLCc0UB_MBzFWBjkuDgMrDjGel9WL-kel5vOZMw4AErcCsKtKWpNCHxKHxXcIphK39E2MW-X7sBs";
-const VAPID_SUBJECT = "https://temantiket.com";
+const VAPID_SUBJECT = "https://invoicesus.vercel.app";
 
 function b64(buf) {
   return Buffer.from(buf).toString("base64url");

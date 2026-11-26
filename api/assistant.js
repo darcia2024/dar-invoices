@@ -228,7 +228,7 @@ module.exports = async function handler(req, res) {
         headers: {
           Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://temantiket.com",
+          "HTTP-Referer": "https://invoicesus.vercel.app",
           "X-Title": "DAR Invoices",
         },
         body: JSON.stringify({

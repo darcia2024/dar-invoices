@@ -1,5 +1,5 @@
 // Separate accounts ("workspaces") that use the same dashboard with their own data and PIN.
-// Each one lives at temantiket.com/<slug>. The PIN is the Vercel env var WORKSPACE_PIN_<SLUG>
+// Each one lives at invoicesus.vercel.app/<slug>. The PIN is the Vercel env var WORKSPACE_PIN_<SLUG>
 // (slug in capitals, "-" as "_"), e.g. WORKSPACE_PIN_DEMO. An account may instead set "pin"
 // here, but this repo is public, so such a PIN is public too: only for throwaway demo data.
 //

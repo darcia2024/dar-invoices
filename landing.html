@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
     <meta property="og:title" content="DAR Invoices">
     <meta property="og:description" content="Tagihan beres, untung kelihatan. Invoice dan keuangan usaha, rapi di HP.">
-    <meta property="og:image" content="https://temantiket.com/brand/icon-512.png">
+    <meta property="og:image" content="https://invoicesus.vercel.app/brand/icon-512.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -350,7 +350,7 @@
                 </div>
                 <span class="owed" id="owed"><small>Belum masuk</small><b class="num" id="owedVal">Rp 1.450.000</b></span>
             </div>
-            <div class="app-link">Link akunmu: <strong id="appLink">temantiket.com/kopi-senja</strong></div>
+            <div class="app-link">Link akunmu: <strong id="appLink">invoicesus.vercel.app/kopi-senja</strong></div>
             <div class="app-tabs"><span class="on">Invoice</span><span>Hutang</span><span>Rencana</span></div>
             <div class="app-rows">
                 <div class="app-row"><div><b>Toko Bunga Arum</b><span class="sub">Desain menu &amp; banner</span></div><span class="num">Rp 1.250.000</span><button type="button" class="pill paid status" data-amount="1250000" data-state="2" aria-label="Status Toko Bunga Arum: Lunas. Klik untuk ubah">Lunas</button></div>
@@ -414,7 +414,7 @@
                 <div class="bubble">Halo Bu Sari,
 
 Berikut invoice pesanan kue ulang tahun:
-Link: temantiket.com/kopi-senja-sari
+Link: invoicesus.vercel.app/kopi-senja-sari
 PIN: 2611
 
 Total: Rp 450.000
@@ -505,7 +505,7 @@ Terima kasih!<time>09.14</time></div>
                 <p>Kamu buat invoice dalam semenit.</p>
             </div>
             <div class="field">
-                <div class="card" data-ui><div class="c-top"><span class="c-name">Pak Hendra</span><span class="pill unpaid">Dibuka</span></div><div class="c-ref">temantiket.com/kopi-senja-hendra</div><div class="pin-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="c-line">Masuk dengan PIN</div></div>
+                <div class="card" data-ui><div class="c-top"><span class="c-name">Pak Hendra</span><span class="pill unpaid">Dibuka</span></div><div class="c-ref">invoicesus.vercel.app/kopi-senja-hendra</div><div class="pin-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="c-line">Masuk dengan PIN</div></div>
                 <p>Klien buka link-nya dengan PIN.</p>
             </div>
             <div class="field">
@@ -526,7 +526,7 @@ Terima kasih!<time>09.14</time></div>
         </div>
         <table class="pkg rise" style="--i:1">
             <tbody>
-                <tr><th scope="row">Alamat sendiri</th><td>temantiket.com/nama-usahamu, dengan nama dan maskot usahamu</td></tr>
+                <tr><th scope="row">Alamat sendiri</th><td>invoicesus.vercel.app/nama-usahamu, dengan nama dan maskot usahamu</td></tr>
                 <tr><th scope="row">Invoice klien</th><td>Link per klien dengan PIN, simpan jadi PDF, pesan WhatsApp siap kirim</td></tr>
                 <tr><th scope="row">Catatan keuangan</th><td>Laporan bulanan, hutang dan piutang, rencana pengeluaran, saldo rekening</td></tr>
                 <tr><th scope="row">Pengingat</th><td>Notifikasi di HP saat ada tagihan atau hutang jatuh tempo</td></tr>
@@ -591,7 +591,7 @@ Terima kasih!<time>09.14</time></div>
         var name = input.value.trim() || 'Nama Usahamu';
         nameEl.textContent = name;
         toastApp.textContent = name;
-        linkEl.textContent = 'temantiket.com/' + slugOf(input.value);
+        linkEl.textContent = 'invoicesus.vercel.app/' + slugOf(input.value);
     }
     update();
 

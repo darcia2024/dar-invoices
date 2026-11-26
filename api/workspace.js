@@ -1,4 +1,4 @@
-// Serves a separate account at temantiket.com/<slug> (see _workspaces.js and the rewrites in
+// Serves a separate account at invoicesus.vercel.app/<slug> (see _workspaces.js and the rewrites in
 // vercel.json). Without that account's session it shows its own PIN login; with it, the
 // dashboard (index.html) with every DAR-only block removed, so none of DAR's invoices,
 // balances or contacts reach the page. Data is stored per account by api/billing-state.js.
